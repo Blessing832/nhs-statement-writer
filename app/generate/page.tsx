@@ -226,6 +226,11 @@ function GeneratePage() {
       body: JSON.stringify(body),
     })
 
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'Server error. Please try again.' }))
+      throw new Error(err.error || 'Server error. Please try again.')
+    }
+
     if (!res.body) throw new Error('No response body')
 
     const reader = res.body.getReader()
@@ -244,18 +249,23 @@ function GeneratePage() {
       for (const block of lines) {
         const dataLine = block.split('\n').find((l) => l.startsWith('data: '))
         if (!dataLine) continue
-        const json = JSON.parse(dataLine.slice(6))
+        let json: Record<string, unknown>
+        try {
+          json = JSON.parse(dataLine.slice(6))
+        } catch {
+          continue
+        }
 
         if (json.type === 'progress') {
-          onProgress(json.message)
+          onProgress(json.message as string)
         } else if (json.type === 'error') {
-          throw new Error(json.error)
+          throw new Error(json.error as string)
         } else if (json.type === 'complete') {
-          return json as Result
+          return json as unknown as Result
         }
       }
     }
-    throw new Error('Stream ended without a result')
+    throw new Error('The request timed out. The job advert page may be slow - please try again.')
   }
 
   const handleGenerate = async (e: React.FormEvent) => {

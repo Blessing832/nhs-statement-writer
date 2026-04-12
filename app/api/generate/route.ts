@@ -69,12 +69,12 @@ export async function POST(req: NextRequest) {
             'x-scraper-secret': SCRAPER_SECRET,
           },
           body: JSON.stringify({ url: vacancy_url }),
-          signal: AbortSignal.timeout(50000),
+          signal: AbortSignal.timeout(28000),
         })
 
         if (!scrapeRes.ok) {
           const scrapeErr = await scrapeRes.json().catch(() => ({ error: 'Failed to read job advert' }))
-          send({ type: 'error', error: `Could not read job advert: ${scrapeErr.error}` })
+          send({ type: 'error', error: `Could not read the job advert page. Please check the URL is correct and try again. (${scrapeErr.error})` })
           controller.close()
           return
         }
@@ -143,6 +143,12 @@ export async function POST(req: NextRequest) {
           message.toLowerCase().includes('overloaded')
         ) {
           send({ type: 'error', error: 'The statement writer is temporarily unavailable. Please contact your administrator.' })
+        } else if (
+          message.toLowerCase().includes('timeout') ||
+          message.toLowerCase().includes('timed out') ||
+          message.toLowerCase().includes('abort')
+        ) {
+          send({ type: 'error', error: 'The job advert page took too long to load. Please try again in a moment.' })
         } else {
           send({ type: 'error', error: message })
         }
