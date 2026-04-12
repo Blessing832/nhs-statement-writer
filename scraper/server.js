@@ -10,17 +10,18 @@ app.use(express.json())
 const PORT = process.env.PORT || 3001
 const SCRAPER_SECRET = process.env.SCRAPER_SECRET || 'changeme'
 
-// Auth middleware
+// Health check must be before auth middleware so Railway can reach it
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' })
+})
+
+// Auth middleware for all other routes
 app.use((req, res, next) => {
   const secret = req.headers['x-scraper-secret']
   if (secret !== SCRAPER_SECRET) {
     return res.status(401).json({ error: 'Unauthorised' })
   }
   next()
-})
-
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok' })
 })
 
 app.post('/scrape', async (req, res) => {
