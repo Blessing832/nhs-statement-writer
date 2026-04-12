@@ -27,6 +27,29 @@ export interface GenerateRequest {
   client_code: string
   vacancy_url: string
   instructions?: string
+  style?: '1' | '2'
+  specificQuestions?: string
+  rewriteInstruction?: string
+  previousStatement?: string
+}
+
+export interface StatementAnalysis {
+  jobSummary: string
+  essentialCriteria: string[]
+  desirableCriteria: string[]
+  keyDuties: string[]
+  candidateStrengths: string[]
+  potentialGaps: string[]
+}
+
+export interface GenerateResult {
+  statement: string
+  duties: string[]
+  analysis: StatementAnalysis | null
+  jobTitle: string
+  organisation: string
+  source?: string
+  promptRegion: 'england-wales' | 'scotland' | 'civil-service' | 'generic'
 }
 
 export interface ScrapeResult {

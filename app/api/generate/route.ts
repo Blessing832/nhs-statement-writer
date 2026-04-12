@@ -10,7 +10,15 @@ const SCRAPER_SECRET = process.env.SCRAPER_SECRET!
 
 export async function POST(req: NextRequest) {
   try {
-    const { client_code, vacancy_url, instructions } = await req.json()
+    const {
+      client_code,
+      vacancy_url,
+      instructions,
+      style,
+      specificQuestions,
+      rewriteInstruction,
+      previousStatement,
+    } = await req.json()
 
     if (!client_code || !vacancy_url) {
       return NextResponse.json({ error: 'Client code and vacancy URL are required' }, { status: 400 })
@@ -58,21 +66,32 @@ export async function POST(req: NextRequest) {
     }
 
     // 4. Generate statement with Claude
-    const { statement, duties } = await generateStatement(client, jobData, instructions)
-
-    // 5. Save to database
-    await supabaseAdmin.from('statements').insert({
-      client_id: client.id,
-      vacancy_url,
-      job_title: jobData.jobTitle,
-      organisation: jobData.organisation,
-      generated_statement: statement,
-      key_duties: duties,
+    const { statement, duties, analysis, promptRegion } = await generateStatement(client, jobData, {
+      instructions,
+      style: style || '1',
+      specificQuestions,
+      rewriteInstruction,
+      previousStatement,
+      vacancyUrl: vacancy_url,
     })
+
+    // 5. Save to database (only for new generations, not rewrites)
+    if (!rewriteInstruction) {
+      await supabaseAdmin.from('statements').insert({
+        client_id: client.id,
+        vacancy_url,
+        job_title: jobData.jobTitle,
+        organisation: jobData.organisation,
+        generated_statement: statement,
+        key_duties: duties,
+      })
+    }
 
     return NextResponse.json({
       statement,
       duties,
+      analysis,
+      promptRegion,
       jobTitle: jobData.jobTitle,
       organisation: jobData.organisation,
       source: jobData.source,
