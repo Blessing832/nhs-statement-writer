@@ -216,15 +216,46 @@ function GeneratePage() {
     if (!clientCode) router.push('/')
   }, [clientCode, router])
 
-  const callGenerate = async (body: Record<string, unknown>) => {
+  const callGenerate = async (
+    body: Record<string, unknown>,
+    onProgress: (msg: string) => void
+  ): Promise<Result> => {
     const res = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
-    const data = await res.json()
-    if (!res.ok) throw new Error(data.error || 'Something went wrong. Please try again.')
-    return data as Result
+
+    if (!res.body) throw new Error('No response body')
+
+    const reader = res.body.getReader()
+    const decoder = new TextDecoder()
+    let buffer = ''
+
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+      buffer += decoder.decode(value, { stream: true })
+
+      // Parse SSE events from buffer
+      const lines = buffer.split('\n\n')
+      buffer = lines.pop() || ''
+
+      for (const block of lines) {
+        const dataLine = block.split('\n').find((l) => l.startsWith('data: '))
+        if (!dataLine) continue
+        const json = JSON.parse(dataLine.slice(6))
+
+        if (json.type === 'progress') {
+          onProgress(json.message)
+        } else if (json.type === 'error') {
+          throw new Error(json.error)
+        } else if (json.type === 'complete') {
+          return json as Result
+        }
+      }
+    }
+    throw new Error('Stream ended without a result')
   }
 
   const handleGenerate = async (e: React.FormEvent) => {
@@ -236,24 +267,22 @@ function GeneratePage() {
     setResult(null)
     setLoadingStep('Reading the job advert...')
 
-    const t1 = setTimeout(() => setLoadingStep('Downloading job description and person specification...'), 4000)
-    const t2 = setTimeout(() => setLoadingStep('Extracting all person spec criteria...'), 12000)
-    const t3 = setTimeout(() => setLoadingStep('Writing your supporting statement...'), 20000)
-
     try {
-      const data = await callGenerate({
-        client_code: clientCode,
-        vacancy_url: vacancyUrl.trim(),
-        style,
-        specificQuestions: specificQuestions.trim() || undefined,
-      })
+      const data = await callGenerate(
+        {
+          client_code: clientCode,
+          vacancy_url: vacancyUrl.trim(),
+          style,
+          specificQuestions: specificQuestions.trim() || undefined,
+        },
+        setLoadingStep
+      )
       setResult(data)
       setShowRewrite(false)
       setRewriteInstruction('')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Network error. Please check your connection and try again.')
     } finally {
-      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3)
       setLoading(false)
       setLoadingStep('')
     }
@@ -264,14 +293,17 @@ function GeneratePage() {
     setRewriting(true)
     setRewriteError('')
     try {
-      const data = await callGenerate({
-        client_code: clientCode,
-        vacancy_url: vacancyUrl.trim(),
-        style,
-        specificQuestions: specificQuestions.trim() || undefined,
-        rewriteInstruction: rewriteInstruction.trim(),
-        previousStatement: result.statement,
-      })
+      const data = await callGenerate(
+        {
+          client_code: clientCode,
+          vacancy_url: vacancyUrl.trim(),
+          style,
+          specificQuestions: specificQuestions.trim() || undefined,
+          rewriteInstruction: rewriteInstruction.trim(),
+          previousStatement: result.statement,
+        },
+        () => {} // rewrite has no progress display
+      )
       setResult(data)
       setShowRewrite(false)
       setRewriteInstruction('')
@@ -283,8 +315,8 @@ function GeneratePage() {
   }
 
   const wc = result ? wordCount(result.statement) : 0
-  const wcLimit = result?.promptRegion === 'scotland' ? 1140 : 1450
-  const wcColour = wc > wcLimit ? 'text-red-600 font-bold' : wc > wcLimit * 0.92 ? 'text-amber-600' : 'text-green-700'
+  const wcLimit = result?.promptRegion === 'scotland' ? 1140 : 1450 // Scotland: 450+450+240=1140
+  const wcColour = wc > wcLimit ? 'text-red-600 font-bold' : wc > wcLimit * 0.93 ? 'text-amber-600' : 'text-green-700'
 
   return (
     <main className="min-h-screen flex flex-col bg-gray-50">
@@ -393,13 +425,13 @@ function GeneratePage() {
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Top bar */}
           <div style={{ backgroundColor: '#003087' }} className="px-4 py-3 flex-shrink-0">
-            <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 flex-wrap">
-              <div>
+            <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="min-w-0">
                 <p className="text-blue-200 text-xs">Statement generated for</p>
-                <h2 className="text-white font-bold text-lg leading-tight">{result.jobTitle}</h2>
-                {result.organisation && <p className="text-blue-200 text-sm">{result.organisation}</p>}
+                <h2 className="text-white font-bold text-base sm:text-lg leading-tight truncate">{result.jobTitle}</h2>
+                {result.organisation && <p className="text-blue-200 text-sm truncate">{result.organisation}</p>}
               </div>
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center gap-2 flex-wrap flex-shrink-0">
                 {result.promptRegion && (
                   <span className="text-xs px-2 py-1 rounded bg-blue-700 text-blue-100 font-medium">
                     {result.promptRegion === 'scotland' ? 'NHS Scotland' : result.promptRegion === 'england-wales' ? 'NHS England/Wales' : 'Generic'}
@@ -430,10 +462,10 @@ function GeneratePage() {
             </div>
           </div>
 
-          {/* Side by side */}
-          <div className="flex-1 flex overflow-hidden">
-            {/* LEFT: Analysis */}
-            <div className="w-80 flex-shrink-0 border-r border-gray-200 bg-white overflow-y-auto">
+          {/* Side by side on desktop, stacked on mobile */}
+          <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+            {/* LEFT: Analysis — full width on mobile, fixed sidebar on desktop */}
+            <div className="md:w-80 md:flex-shrink-0 border-b md:border-b-0 md:border-r border-gray-200 bg-white overflow-y-auto">
               <div className="p-5">
                 <h3 className="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide pb-2 border-b border-gray-100">
                   Pre-Writing Analysis

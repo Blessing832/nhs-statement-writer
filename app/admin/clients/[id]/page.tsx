@@ -137,7 +137,7 @@ export default function EditClientPage() {
 
         {justCreated && (
           <div className="bg-green-50 border border-green-200 rounded-md p-4 mb-6 text-green-800 text-sm font-medium">
-            Client created. Their code is <strong>{client.client_code}</strong> — share this with them now.
+            Client created. Their code is <strong>{client.client_code}</strong> - share this with them now.
           </div>
         )}
 
@@ -195,7 +195,7 @@ export default function EditClientPage() {
                 value={form.special_instructions}
                 onChange={(e) => handleChange('special_instructions', e.target.value)}
                 rows={3}
-                placeholder="e.g. Previous job title must stay as 'Senior Nursing Officer' — do not change or rephrase it. Always highlight her community nursing experience first."
+                placeholder="e.g. Previous job title must stay as 'Senior Nursing Officer' - do not change or rephrase it. Always highlight her community nursing experience first."
                 className="w-full px-4 py-2.5 border border-amber-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none bg-amber-50"
               />
             </Field>

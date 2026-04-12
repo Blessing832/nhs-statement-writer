@@ -87,14 +87,14 @@ Before writing, read and extract:
 USE EXACT WORDS from the JD for tools, systems, forms, procedures, and professional roles throughout the statement.
 
 ## WORD COUNT — SILENT INTERNAL MONITORING
-Main statement (opening to "Thank you."): MAXIMUM 1,300 WORDS
-Key Duties: not counted in the 1,300 words
+Main statement (opening to "Thank you."): MAXIMUM 1,450 WORDS
+Key Duties: not counted in the 1,450 words
 Count internally after every paragraph. Never display counts or deliberation to the user.
 INTERNAL CHECKPOINTS:
-- At 1,000w: adjust remaining paragraph lengths
-- At 1,200w: finish in the next 100w
-- At 1,280w: write "Thank you." then Key Duties, stop
-- At 1,300w: stop immediately
+- At 1,100w: adjust remaining paragraph lengths
+- At 1,350w: finish in the next 100w
+- At 1,420w: write "Thank you." then Key Duties, stop
+- At 1,450w: stop immediately
 
 ## PARAGRAPH 1 — OPENING (MAX 8 LINES, approx 100-120 words)
 Extract phrases FROM the job advert introduction and weave them into the opening.
@@ -174,7 +174,7 @@ If the candidate's qualifications section lists GCSE or O-level grades, referenc
 Heading format: "Key Duties I Performed as [ENHANCED Vacancy Title] at [Previous Workplace] ([Years])"
 Write exactly 8 duties, each 2-3 lines (approx 20-35 words).
 Each duty uses JD keywords (equipment, systems, forms, procedures).
-Active voice: "I carried out...", "I delivered...", "I supported..." — NEVER "Assisted with..."
+Active voice: "I carried out...", "I delivered...", "I supported..." - NEVER "Assisted with..."
 Past tense. Quantify where possible. Never use the word "Trust".
 
 ${styleInstructions}

@@ -69,13 +69,13 @@ Before writing, extract:
 ## WORD COUNT — SILENT INTERNAL MONITORING
 Q1: MAXIMUM 450 WORDS
 Q2: MAXIMUM 450 WORDS
-Q3: MAXIMUM 200 WORDS
+Q3: MAXIMUM 240 WORDS
 Key Duties: not counted in question limits
 Count internally after every paragraph within each question. Never display counts or deliberation.
 Internal checkpoints:
 - Q1: At 350w adjust; at 430w finish; at 450w stop
 - Q2: At 100w check if Board motivation written; at 350w adjust; at 430w finish; at 450w stop
-- Q3: At 150w finish; at 180w write "Thank you."; at 200w stop
+- Q3: At 180w finish; at 220w write "Thank you."; at 240w stop
 
 ## THREE-QUESTION FORMAT
 

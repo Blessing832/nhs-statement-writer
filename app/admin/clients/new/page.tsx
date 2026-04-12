@@ -98,7 +98,7 @@ export default function NewClientPage() {
               <textarea
                 value={form.qualifications}
                 onChange={(e) => handleChange('qualifications', e.target.value)}
-                placeholder="e.g. BSc Nursing (Adult) — University of East London, 2020. NMC Registered (PIN: 20H1234E). Level 3 NVQ Health and Social Care..."
+                placeholder="e.g. BSc Nursing (Adult) - University of East London, 2020. NMC Registered (PIN: 20H1234E). Level 3 NVQ Health and Social Care..."
                 rows={3}
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 resize-none"
               />

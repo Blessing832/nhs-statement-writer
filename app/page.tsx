@@ -39,7 +39,7 @@ export default function Home() {
         <div className="max-w-2xl mx-auto text-center text-white">
           <h2 className="text-3xl font-bold mb-3">NHS &amp; Civil Service Statement Writer</h2>
           <p className="text-lg opacity-90">
-            Professional supporting statements tailored to your job application — generated in minutes.
+            Professional supporting statements tailored to your job application, generated in minutes.
           </p>
         </div>
       </div>
