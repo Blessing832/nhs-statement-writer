@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+:root {
+  --nhs-blue: #003087;
+  --nhs-light-blue: #005eb8;
+  --nhs-aqua: #00b5cc;
+  --nhs-green: #009639;
+  --nhs-warm-grey: #f0f4f5;
+  --background: #f0f4f5;
+  --foreground: #212b32;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
