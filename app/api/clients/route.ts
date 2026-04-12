@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   if (!verifyAdminToken(req)) return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
 
   const body = await req.json()
-  const { full_name, work_history, qualifications, skills, background, subscription_months } = body
+  const { full_name, work_history, qualifications, skills, background, special_instructions, subscription_months } = body
 
   if (!full_name) return NextResponse.json({ error: 'Name required' }, { status: 400 })
 
@@ -38,6 +38,7 @@ export async function POST(req: NextRequest) {
       qualifications: qualifications || '',
       skills: skills || '',
       background: background || '',
+      special_instructions: special_instructions || '',
       subscription_start: start.toISOString(),
       subscription_end: end.toISOString(),
       is_active: true,

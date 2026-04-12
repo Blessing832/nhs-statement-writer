@@ -85,7 +85,8 @@ Skills:
 ${client.skills}
 
 Background & Special Information (NHS experience, tools, projects, volunteer work):
-${client.background}`
+${client.background}
+${client.special_instructions ? `\n## MANDATORY INSTRUCTIONS FOR THIS CLIENT — FOLLOW EXACTLY, DO NOT OVERRIDE\n${client.special_instructions}` : ''}`
 
   const specificQSection = options.specificQuestions
     ? `\n## SPECIFIC APPLICATION QUESTIONS (answer these instead of / in addition to the standard statement)
@@ -172,8 +173,8 @@ export async function generateStatement(
   })
 
   const message = await anthropic.messages.create({
-    model: 'claude-opus-4-6',
-    max_tokens: 4096,
+    model: 'claude-sonnet-4-6',
+    max_tokens: 3000,
     system: systemPrompt,
     messages: [{ role: 'user', content: userPrompt }],
   })

@@ -23,6 +23,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       qualifications: body.qualifications,
       skills: body.skills,
       background: body.background,
+      special_instructions: body.special_instructions ?? '',
       subscription_end: body.subscription_end,
       is_active: body.is_active,
     })

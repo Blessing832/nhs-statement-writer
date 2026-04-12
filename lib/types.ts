@@ -6,6 +6,7 @@ export interface Client {
   qualifications: string
   skills: string
   background: string // NHS experience, tools, projects, volunteer work, special info
+  special_instructions: string // Admin notes that override/constrain the AI, e.g. "do not change job title"
   subscription_start: string
   subscription_end: string
   is_active: boolean

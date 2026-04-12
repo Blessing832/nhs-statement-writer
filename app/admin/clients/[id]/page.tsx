@@ -21,6 +21,7 @@ export default function EditClientPage() {
     qualifications: '',
     skills: '',
     background: '',
+    special_instructions: '',
     subscription_end: '',
     is_active: true,
   })
@@ -41,6 +42,7 @@ export default function EditClientPage() {
           qualifications: data.qualifications,
           skills: data.skills,
           background: data.background,
+          special_instructions: data.special_instructions || '',
           subscription_end: data.subscription_end.split('T')[0],
           is_active: data.is_active,
         })
@@ -171,6 +173,16 @@ export default function EditClientPage() {
               />
             </Field>
 
+            <Field label="Special Instructions for AI" hint="These override the AI. Use for things that must never change, e.g. exact job titles, specific experiences to highlight or exclude.">
+              <textarea
+                value={form.special_instructions}
+                onChange={(e) => handleChange('special_instructions', e.target.value)}
+                rows={3}
+                placeholder="e.g. Previous job title must stay as 'Senior Nursing Officer' — do not change or rephrase it. Always highlight her community nursing experience first."
+                className="w-full px-4 py-2.5 border border-amber-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none bg-amber-50"
+              />
+            </Field>
+
             <Field label="Subscription End Date">
               <div className="flex items-center gap-3 flex-wrap">
                 <input
@@ -242,17 +254,20 @@ export default function EditClientPage() {
 function Field({
   label,
   required,
+  hint,
   children,
 }: {
   label: string
   required?: boolean
+  hint?: string
   children: React.ReactNode
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+      <label className="block text-sm font-medium text-gray-700 mb-1">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
+      {hint && <p className="text-xs text-gray-500 mb-1.5">{hint}</p>}
       {children}
     </div>
   )
