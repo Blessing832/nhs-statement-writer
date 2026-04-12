@@ -90,6 +90,28 @@ ${currDuties}
   URL.revokeObjectURL(url)
 }
 
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <h4 className="font-semibold text-gray-500 mb-2 uppercase tracking-wide text-xs">{title}</h4>
+      {children}
+    </div>
+  )
+}
+
+function BulletList({ items, icon, colour }: { items: string[]; icon: string; colour: string }) {
+  return (
+    <ul className="space-y-1">
+      {items.map((item, i) => (
+        <li key={i} className="flex gap-2 text-gray-700">
+          <span className={`flex-shrink-0 mt-0.5 ${colour}`} dangerouslySetInnerHTML={{ __html: icon }} />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 function AnalysisPanel({ analysis }: { analysis: StatementAnalysis | null }) {
   if (!analysis) return <p className="text-gray-400 text-sm">No analysis available.</p>
 
@@ -101,81 +123,69 @@ function AnalysisPanel({ analysis }: { analysis: StatementAnalysis | null }) {
         </div>
       )}
 
-      {analysis.jobSummary && (
-        <div>
-          <h4 className="font-semibold text-gray-600 mb-1 uppercase tracking-wide text-xs">Role Overview</h4>
-          <p className="text-gray-600 leading-relaxed">{analysis.jobSummary}</p>
+      {analysis.enhancedPreviousTitle && (
+        <div className="rounded-md bg-blue-50 border border-blue-200 px-3 py-2">
+          <p className="text-xs text-blue-600 font-medium mb-0.5">Enhanced Previous Title</p>
+          <p className="text-blue-800 font-semibold text-sm">{analysis.enhancedPreviousTitle}</p>
         </div>
       )}
 
-      {analysis.essentialCriteria?.length > 0 && (
-        <div>
-          <h4 className="font-semibold text-gray-600 mb-2 uppercase tracking-wide text-xs">Essential Criteria</h4>
-          <ul className="space-y-1">
-            {analysis.essentialCriteria.map((c, i) => (
-              <li key={i} className="flex gap-2 text-gray-700">
-                <span className="text-green-600 flex-shrink-0 font-bold mt-0.5">&#10003;</span>
-                <span>{c}</span>
-              </li>
+      {analysis.jobSummary && (
+        <Section title="Role Overview">
+          <p className="text-gray-600 leading-relaxed">{analysis.jobSummary}</p>
+        </Section>
+      )}
+
+      {analysis.advertKeyPhrases?.length ? (
+        <Section title="Advert Key Phrases">
+          <BulletList items={analysis.advertKeyPhrases} icon="&#8220;" colour="text-purple-400" />
+        </Section>
+      ) : null}
+
+      {analysis.jdKeywords?.length ? (
+        <Section title="JD Keywords">
+          <div className="flex flex-wrap gap-1">
+            {analysis.jdKeywords.map((k, i) => (
+              <span key={i} className="text-xs px-1.5 py-0.5 bg-gray-100 text-gray-600 rounded">{k}</span>
             ))}
-          </ul>
-        </div>
+          </div>
+        </Section>
+      ) : null}
+
+      {analysis.essentialCriteria?.length > 0 && (
+        <Section title={`Essential Criteria (${analysis.essentialCriteria.length})`}>
+          <BulletList items={analysis.essentialCriteria} icon="&#10003;" colour="text-green-600 font-bold" />
+        </Section>
       )}
 
       {analysis.desirableCriteria?.length > 0 && (
-        <div>
-          <h4 className="font-semibold text-gray-600 mb-2 uppercase tracking-wide text-xs">Desirable Criteria</h4>
-          <ul className="space-y-1">
-            {analysis.desirableCriteria.map((c, i) => (
-              <li key={i} className="flex gap-2 text-gray-600">
-                <span className="text-blue-400 flex-shrink-0 mt-0.5">&#9702;</span>
-                <span>{c}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Section title="Desirable Criteria">
+          <BulletList items={analysis.desirableCriteria} icon="&#9702;" colour="text-blue-400" />
+        </Section>
       )}
 
+      {analysis.subheadingPlan?.length ? (
+        <Section title="Subheading Plan">
+          <BulletList items={analysis.subheadingPlan} icon="&#8594;" colour="text-gray-400" />
+        </Section>
+      ) : null}
+
       {analysis.keyDuties?.length > 0 && (
-        <div>
-          <h4 className="font-semibold text-gray-600 mb-2 uppercase tracking-wide text-xs">Key Duties</h4>
-          <ul className="space-y-1">
-            {analysis.keyDuties.map((d, i) => (
-              <li key={i} className="flex gap-2 text-gray-600">
-                <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold">&#8226;</span>
-                <span>{d}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Section title="Key Duties">
+          <BulletList items={analysis.keyDuties} icon="&#8226;" colour="" />
+        </Section>
       )}
 
       {analysis.candidateStrengths?.length > 0 && (
-        <div>
-          <h4 className="font-semibold text-gray-600 mb-2 uppercase tracking-wide text-xs">Candidate Strengths</h4>
-          <ul className="space-y-1">
-            {analysis.candidateStrengths.map((s, i) => (
-              <li key={i} className="flex gap-2 text-gray-700">
-                <span className="text-amber-500 flex-shrink-0">&#9733;</span>
-                <span>{s}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Section title="Candidate Strengths">
+          <BulletList items={analysis.candidateStrengths} icon="&#9733;" colour="text-amber-500" />
+        </Section>
       )}
 
       {analysis.potentialGaps?.length > 0 && (
-        <div>
-          <h4 className="font-semibold text-gray-600 mb-2 uppercase tracking-wide text-xs">Areas to Note</h4>
-          <ul className="space-y-1">
-            {analysis.potentialGaps.map((g, i) => (
-              <li key={i} className="flex gap-2 text-amber-700">
-                <span className="flex-shrink-0">&#9888;</span>
-                <span>{g}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Section title="Areas to Note">
+          <BulletList items={analysis.potentialGaps} icon="&#9888;" colour="text-amber-600" />
+        </Section>
       )}
     </div>
   )

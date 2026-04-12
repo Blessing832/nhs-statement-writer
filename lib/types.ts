@@ -38,9 +38,14 @@ export interface GenerateRequest {
 
 export interface StatementAnalysis {
   jobSummary: string
+  enhancedPreviousTitle?: string
+  trustOrOrganisation?: string
+  advertKeyPhrases?: string[]
+  jdKeywords?: string[]
   essentialCriteria: string[]
   desirableCriteria: string[]
   keyDuties: string[]
+  subheadingPlan?: string[]
   candidateStrengths: string[]
   potentialGaps: string[]
   meetsAllEssential?: boolean
