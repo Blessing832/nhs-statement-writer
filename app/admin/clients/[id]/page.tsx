@@ -4,6 +4,18 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Client } from '@/lib/types'
 
+interface StatementLog {
+  id: string
+  vacancy_url: string
+  job_title: string
+  organisation: string
+  is_rewrite: boolean
+  rewrite_instruction?: string
+  created_at: string
+  totalForUrl: number
+  flagged: boolean
+}
+
 export default function EditClientPage() {
   const params = useParams()
   const router = useRouter()
@@ -15,6 +27,7 @@ export default function EditClientPage() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(justCreated ? 'Client created successfully!' : '')
+  const [statementLog, setStatementLog] = useState<StatementLog[]>([])
   const [form, setForm] = useState({
     full_name: '',
     work_history: '',
@@ -30,11 +43,12 @@ export default function EditClientPage() {
 
   useEffect(() => {
     const fetchClient = async () => {
-      const res = await fetch(`/api/clients/${params.id}`, {
-        headers: { 'x-admin-token': token },
-      })
-      if (res.ok) {
-        const data: Client = await res.json()
+      const [clientRes, statementsRes] = await Promise.all([
+        fetch(`/api/clients/${params.id}`, { headers: { 'x-admin-token': token } }),
+        fetch(`/api/admin/clients/${params.id}/statements`, { headers: { 'x-admin-token': token } }),
+      ])
+      if (clientRes.ok) {
+        const data: Client = await clientRes.json()
         setClient(data)
         setForm({
           full_name: data.full_name,
@@ -46,6 +60,9 @@ export default function EditClientPage() {
           subscription_end: data.subscription_end.split('T')[0],
           is_active: data.is_active,
         })
+      }
+      if (statementsRes.ok) {
+        setStatementLog(await statementsRes.json())
       }
       setLoading(false)
     }
@@ -105,7 +122,7 @@ export default function EditClientPage() {
 
       <div className="max-w-3xl mx-auto w-full px-6 py-8">
         <Link href="/admin" className="text-sm text-blue-700 hover:underline mb-6 inline-block">
-          ← Back to dashboard
+          Back to dashboard
         </Link>
 
         {/* Client code banner */}
@@ -246,6 +263,48 @@ export default function EditClientPage() {
             </div>
           </form>
         </div>
+
+        {/* Statement History */}
+        {statementLog.length > 0 && (
+          <div className="bg-white rounded-lg border border-gray-200 mt-6 overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+              <h2 className="font-bold text-gray-900">Statement History</h2>
+              {statementLog.some((s) => s.flagged) && (
+                <span className="text-xs px-2 py-1 rounded bg-red-100 text-red-700 font-medium">
+                  Flag: same link generated more than twice
+                </span>
+              )}
+            </div>
+            <div className="divide-y divide-gray-100">
+              {statementLog.map((s) => (
+                <div key={s.id} className={`px-6 py-3 text-sm ${s.flagged ? 'bg-red-50' : ''}`}>
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-gray-900 truncate">{s.job_title || 'Unknown role'}</p>
+                      <p className="text-gray-500 text-xs truncate">{s.vacancy_url}</p>
+                      {s.is_rewrite && s.rewrite_instruction && (
+                        <p className="text-amber-700 text-xs mt-0.5">Rewrite: {s.rewrite_instruction}</p>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      {s.is_rewrite && (
+                        <span className="text-xs px-2 py-0.5 rounded bg-amber-100 text-amber-700">Rewrite</span>
+                      )}
+                      {s.flagged && (
+                        <span className="text-xs px-2 py-0.5 rounded bg-red-100 text-red-700 font-medium">
+                          {s.totalForUrl}x this URL
+                        </span>
+                      )}
+                      <span className="text-xs text-gray-400">
+                        {new Date(s.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </main>
   )

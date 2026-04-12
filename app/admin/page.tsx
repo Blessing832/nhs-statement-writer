@@ -299,15 +299,37 @@ function ClientTable({
 
 export default function AdminPage() {
   const [token, setToken] = useState<string | null>(null)
+  const [verifying, setVerifying] = useState(true)
 
   useEffect(() => {
     const stored = localStorage.getItem('admin_token')
-    if (stored) setToken(stored)
+    if (!stored) {
+      setVerifying(false)
+      return
+    }
+    fetch('/api/admin/verify', { headers: { 'x-admin-token': stored } })
+      .then((r) => {
+        if (r.ok) setToken(stored)
+        else localStorage.removeItem('admin_token')
+      })
+      .catch(() => localStorage.removeItem('admin_token'))
+      .finally(() => setVerifying(false))
   }, [])
 
   const handleLogout = () => {
     localStorage.removeItem('admin_token')
     setToken(null)
+  }
+
+  if (verifying) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#f0f4f5' }}>
+        <div className="flex items-center gap-3 text-gray-500">
+          <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin" style={{ borderTopColor: '#005eb8' }} />
+          <span>Verifying session...</span>
+        </div>
+      </div>
+    )
   }
 
   if (!token) return <AdminLogin onLogin={setToken} />

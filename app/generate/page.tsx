@@ -5,7 +5,8 @@ import { StatementAnalysis } from '@/lib/types'
 
 interface Result {
   statement: string
-  duties: string[]
+  previousRoleDuties: string[]
+  currentRoleDuties: string[]
   analysis: StatementAnalysis | null
   jobTitle: string
   organisation: string
@@ -14,31 +15,106 @@ interface Result {
 }
 
 function wordCount(text: string): number {
-  return text
-    .trim()
-    .split(/\s+/)
-    .filter((w) => w.length > 0).length
+  return text.trim().split(/\s+/).filter((w) => w.length > 0).length
 }
 
-function AnalysisPanel({ analysis, duties }: { analysis: StatementAnalysis | null; duties: string[] }) {
-  if (!analysis && duties.length === 0) return null
+// Convert **bold** markdown to <strong> for display
+function renderBold(text: string): string {
+  return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+}
+
+// Convert statement text to paragraphs for display
+function StatementDisplay({ text }: { text: string }) {
+  const paragraphs = text.split(/\n\n+/)
+  return (
+    <div className="space-y-3 text-gray-800 leading-relaxed text-sm">
+      {paragraphs.map((para, i) => {
+        const lines = para.split('\n')
+        return (
+          <p key={i}>
+            {lines.map((line, j) => (
+              <span key={j}>
+                {j > 0 && <br />}
+                <span dangerouslySetInnerHTML={{ __html: renderBold(line) }} />
+              </span>
+            ))}
+          </p>
+        )
+      })}
+    </div>
+  )
+}
+
+function downloadAsDoc(result: Result) {
+  const stmtHtml = result.statement
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .split(/\n\n+/)
+    .map((p) => `<p>${p.replace(/\n/g, '<br>')}</p>`)
+    .join('\n')
+
+  const prevDuties = result.previousRoleDuties.length > 0
+    ? `<h2>Key Duties - Previous Role</h2><ul>${result.previousRoleDuties.map((d) => `<li>${d}</li>`).join('')}</ul>`
+    : ''
+
+  const currDuties = result.currentRoleDuties.length > 0
+    ? `<h2>Key Duties - This Role</h2><ul>${result.currentRoleDuties.map((d) => `<li>${d}</li>`).join('')}</ul>`
+    : ''
+
+  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="utf-8"><title>${result.jobTitle}</title>
+<style>
+body { font-family: Arial, sans-serif; font-size: 12pt; line-height: 1.6; margin: 2.5cm; color: #111; }
+h1 { font-size: 16pt; color: #003087; margin-bottom: 4pt; }
+h2 { font-size: 12pt; color: #005eb8; margin-top: 20pt; margin-bottom: 8pt; border-bottom: 1px solid #ccc; padding-bottom: 3pt; }
+p { margin: 0 0 10pt 0; }
+ul { margin: 0 0 12pt 16pt; }
+li { margin-bottom: 4pt; }
+</style>
+</head>
+<body>
+<h1>${result.jobTitle}</h1>
+<p><em>${result.organisation}</em></p>
+<h2>Supporting Statement</h2>
+${stmtHtml}
+${prevDuties}
+${currDuties}
+</body>
+</html>`
+
+  const blob = new Blob(['\ufeff', html], { type: 'application/msword' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `${result.jobTitle.replace(/[^a-z0-9]/gi, '-').toLowerCase()}-statement.doc`
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+function AnalysisPanel({ analysis }: { analysis: StatementAnalysis | null }) {
+  if (!analysis) return <p className="text-gray-400 text-sm">No analysis available.</p>
 
   return (
     <div className="space-y-5 text-sm">
-      {analysis?.jobSummary && (
+      {analysis.meetsAllEssential && (
+        <div className="rounded-md bg-green-50 border border-green-200 px-3 py-2 text-green-800 text-xs font-medium">
+          All essential criteria met
+        </div>
+      )}
+
+      {analysis.jobSummary && (
         <div>
-          <h4 className="font-semibold text-gray-700 mb-1 uppercase tracking-wide text-xs">Role Overview</h4>
+          <h4 className="font-semibold text-gray-600 mb-1 uppercase tracking-wide text-xs">Role Overview</h4>
           <p className="text-gray-600 leading-relaxed">{analysis.jobSummary}</p>
         </div>
       )}
 
-      {analysis?.essentialCriteria && analysis.essentialCriteria.length > 0 && (
+      {analysis.essentialCriteria?.length > 0 && (
         <div>
-          <h4 className="font-semibold text-gray-700 mb-2 uppercase tracking-wide text-xs">Essential Criteria</h4>
+          <h4 className="font-semibold text-gray-600 mb-2 uppercase tracking-wide text-xs">Essential Criteria</h4>
           <ul className="space-y-1">
             {analysis.essentialCriteria.map((c, i) => (
               <li key={i} className="flex gap-2 text-gray-700">
-                <span className="text-green-600 flex-shrink-0 font-bold">✓</span>
+                <span className="text-green-600 flex-shrink-0 font-bold mt-0.5">&#10003;</span>
                 <span>{c}</span>
               </li>
             ))}
@@ -46,13 +122,13 @@ function AnalysisPanel({ analysis, duties }: { analysis: StatementAnalysis | nul
         </div>
       )}
 
-      {analysis?.desirableCriteria && analysis.desirableCriteria.length > 0 && (
+      {analysis.desirableCriteria?.length > 0 && (
         <div>
-          <h4 className="font-semibold text-gray-700 mb-2 uppercase tracking-wide text-xs">Desirable Criteria</h4>
+          <h4 className="font-semibold text-gray-600 mb-2 uppercase tracking-wide text-xs">Desirable Criteria</h4>
           <ul className="space-y-1">
             {analysis.desirableCriteria.map((c, i) => (
               <li key={i} className="flex gap-2 text-gray-600">
-                <span className="text-blue-500 flex-shrink-0">◦</span>
+                <span className="text-blue-400 flex-shrink-0 mt-0.5">&#9702;</span>
                 <span>{c}</span>
               </li>
             ))}
@@ -60,13 +136,13 @@ function AnalysisPanel({ analysis, duties }: { analysis: StatementAnalysis | nul
         </div>
       )}
 
-      {(duties.length > 0 || (analysis?.keyDuties && analysis.keyDuties.length > 0)) && (
+      {analysis.keyDuties?.length > 0 && (
         <div>
-          <h4 className="font-semibold text-gray-700 mb-2 uppercase tracking-wide text-xs">Key Duties</h4>
+          <h4 className="font-semibold text-gray-600 mb-2 uppercase tracking-wide text-xs">Key Duties</h4>
           <ul className="space-y-1">
-            {(analysis?.keyDuties?.length ? analysis.keyDuties : duties).map((d, i) => (
+            {analysis.keyDuties.map((d, i) => (
               <li key={i} className="flex gap-2 text-gray-600">
-                <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold">•</span>
+                <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold">&#8226;</span>
                 <span>{d}</span>
               </li>
             ))}
@@ -74,13 +150,13 @@ function AnalysisPanel({ analysis, duties }: { analysis: StatementAnalysis | nul
         </div>
       )}
 
-      {analysis?.candidateStrengths && analysis.candidateStrengths.length > 0 && (
+      {analysis.candidateStrengths?.length > 0 && (
         <div>
-          <h4 className="font-semibold text-gray-700 mb-2 uppercase tracking-wide text-xs">Candidate Strengths</h4>
+          <h4 className="font-semibold text-gray-600 mb-2 uppercase tracking-wide text-xs">Candidate Strengths</h4>
           <ul className="space-y-1">
             {analysis.candidateStrengths.map((s, i) => (
               <li key={i} className="flex gap-2 text-gray-700">
-                <span className="text-amber-500 flex-shrink-0">★</span>
+                <span className="text-amber-500 flex-shrink-0">&#9733;</span>
                 <span>{s}</span>
               </li>
             ))}
@@ -88,13 +164,13 @@ function AnalysisPanel({ analysis, duties }: { analysis: StatementAnalysis | nul
         </div>
       )}
 
-      {analysis?.potentialGaps && analysis.potentialGaps.length > 0 && (
+      {analysis.potentialGaps?.length > 0 && (
         <div>
-          <h4 className="font-semibold text-gray-700 mb-2 uppercase tracking-wide text-xs">Areas to Note</h4>
+          <h4 className="font-semibold text-gray-600 mb-2 uppercase tracking-wide text-xs">Areas to Note</h4>
           <ul className="space-y-1">
             {analysis.potentialGaps.map((g, i) => (
               <li key={i} className="flex gap-2 text-amber-700">
-                <span className="flex-shrink-0">⚠</span>
+                <span className="flex-shrink-0">&#9888;</span>
                 <span>{g}</span>
               </li>
             ))}
@@ -113,20 +189,16 @@ function GeneratePage() {
   const [vacancyUrl, setVacancyUrl] = useState('')
   const [style, setStyle] = useState<'1' | '2'>('1')
   const [specificQuestions, setSpecificQuestions] = useState('')
-  const [instructions, setInstructions] = useState('')
   const [loading, setLoading] = useState(false)
   const [loadingStep, setLoadingStep] = useState('')
   const [error, setError] = useState('')
   const [result, setResult] = useState<Result | null>(null)
+  const [copied, setCopied] = useState(false)
 
-  // Rewrite state
   const [showRewrite, setShowRewrite] = useState(false)
   const [rewriteInstruction, setRewriteInstruction] = useState('')
   const [rewriting, setRewriting] = useState(false)
   const [rewriteError, setRewriteError] = useState('')
-
-  // Copy state
-  const [copied, setCopied] = useState(false)
 
   const statementRef = useRef<HTMLDivElement>(null)
 
@@ -147,10 +219,7 @@ function GeneratePage() {
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!vacancyUrl.trim()) {
-      setError('Please paste the job vacancy link')
-      return
-    }
+    if (!vacancyUrl.trim()) { setError('Please paste the job vacancy link'); return }
 
     setLoading(true)
     setError('')
@@ -158,15 +227,14 @@ function GeneratePage() {
     setLoadingStep('Reading the job advert...')
 
     const t1 = setTimeout(() => setLoadingStep('Downloading job description and person specification...'), 4000)
-    const t2 = setTimeout(() => setLoadingStep('Analysing person spec and candidate profile...'), 10000)
-    const t3 = setTimeout(() => setLoadingStep('Writing your supporting statement...'), 16000)
+    const t2 = setTimeout(() => setLoadingStep('Extracting all person spec criteria...'), 12000)
+    const t3 = setTimeout(() => setLoadingStep('Writing your supporting statement...'), 20000)
 
     try {
       const data = await callGenerate({
         client_code: clientCode,
         vacancy_url: vacancyUrl.trim(),
         style,
-        instructions: instructions.trim() || undefined,
         specificQuestions: specificQuestions.trim() || undefined,
       })
       setResult(data)
@@ -175,9 +243,7 @@ function GeneratePage() {
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Network error. Please check your connection and try again.')
     } finally {
-      clearTimeout(t1)
-      clearTimeout(t2)
-      clearTimeout(t3)
+      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3)
       setLoading(false)
       setLoadingStep('')
     }
@@ -187,13 +253,11 @@ function GeneratePage() {
     if (!result || !rewriteInstruction.trim()) return
     setRewriting(true)
     setRewriteError('')
-
     try {
       const data = await callGenerate({
         client_code: clientCode,
         vacancy_url: vacancyUrl.trim(),
         style,
-        instructions: instructions.trim() || undefined,
         specificQuestions: specificQuestions.trim() || undefined,
         rewriteInstruction: rewriteInstruction.trim(),
         previousStatement: result.statement,
@@ -208,56 +272,16 @@ function GeneratePage() {
     }
   }
 
-  const handleCopyStatement = () => {
-    if (!result) return
-    navigator.clipboard.writeText(result.statement)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 3000)
-  }
-
-  const handleDownload = () => {
-    if (!result) return
-    const regionLabel =
-      result.promptRegion === 'scotland'
-        ? 'NHS Scotland Application'
-        : result.promptRegion === 'england-wales'
-        ? 'NHS England/Wales Supporting Statement'
-        : 'Supporting Statement'
-
-    const text = [
-      regionLabel.toUpperCase(),
-      `${result.jobTitle} — ${result.organisation}`,
-      '',
-      result.statement,
-      '',
-      'KEY DUTIES AND RESPONSIBILITIES',
-      ...result.duties.map((d) => `• ${d}`),
-    ].join('\n')
-
-    const blob = new Blob([text], { type: 'text/plain' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `statement-${result.jobTitle.replace(/\s+/g, '-').toLowerCase()}.txt`
-    a.click()
-    URL.revokeObjectURL(url)
-  }
-
   const wc = result ? wordCount(result.statement) : 0
-  const wcLimit =
-    result?.promptRegion === 'scotland' ? 1100 : result?.promptRegion === 'england-wales' ? 1300 : 1200
-  const wcColour = wc > wcLimit ? 'text-red-600 font-bold' : wc > wcLimit * 0.9 ? 'text-amber-600' : 'text-green-700'
+  const wcLimit = result?.promptRegion === 'scotland' ? 1140 : 1450
+  const wcColour = wc > wcLimit ? 'text-red-600 font-bold' : wc > wcLimit * 0.92 ? 'text-amber-600' : 'text-green-700'
 
   return (
     <main className="min-h-screen flex flex-col bg-gray-50">
-      {/* Header */}
       <header style={{ backgroundColor: '#003087' }} className="py-4 px-6 flex-shrink-0">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div
-              style={{ backgroundColor: '#005eb8' }}
-              className="w-10 h-10 rounded flex items-center justify-center"
-            >
+            <div style={{ backgroundColor: '#005eb8' }} className="w-10 h-10 rounded flex items-center justify-center">
               <span className="text-white font-bold text-sm">NHS</span>
             </div>
             <h1 className="text-white text-xl font-semibold">Statement Writer</h1>
@@ -267,18 +291,17 @@ function GeneratePage() {
       </header>
       <div style={{ backgroundColor: '#005eb8' }} className="h-1 flex-shrink-0" />
 
-      {/* Input form — only shown when no result */}
+      {/* Input form */}
       {!result && (
         <div className="flex-1 px-4 py-8">
           <div className="max-w-2xl mx-auto">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-1">Generate Your Statement</h2>
               <p className="text-gray-500 text-sm mb-6">
-                Paste the full job advert link. Works with NHS Jobs, Health Jobs UK, and NHS Scotland.
+                Paste the full job advert link below. Works with NHS Jobs, Health Jobs UK, and NHS Scotland.
               </p>
 
               <form onSubmit={handleGenerate} className="space-y-5">
-                {/* URL */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Job Vacancy Link <span className="text-red-500">*</span>
@@ -289,30 +312,22 @@ function GeneratePage() {
                     onChange={(e) => { setVacancyUrl(e.target.value); setError('') }}
                     placeholder="https://www.jobs.nhs.uk/candidate/jobadvert/..."
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-transparent text-sm"
-                    style={{ '--tw-ring-color': '#005eb8' } as React.CSSProperties}
                     disabled={loading}
                   />
                 </div>
 
-                {/* Style selector */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Statement Style
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Statement Style</label>
                   <div className="grid grid-cols-2 gap-3">
                     {[
-                      { val: '1' as const, label: 'Style 1 — Headed Sections', desc: 'Each criterion gets its own heading. Clear and easy to follow.' },
-                      { val: '2' as const, label: 'Style 2 — Flowing Prose', desc: 'Natural, continuous paragraphs without subheadings.' },
+                      { val: '1' as const, label: 'Style 1 - Headed Sections', desc: 'Each criterion gets its own heading.' },
+                      { val: '2' as const, label: 'Style 2 - Flowing Prose', desc: 'Natural paragraphs without subheadings.' },
                     ].map(({ val, label, desc }) => (
                       <button
                         key={val}
                         type="button"
                         onClick={() => setStyle(val)}
-                        className={`text-left p-3 rounded-md border-2 transition-colors ${
-                          style === val
-                            ? 'border-blue-600 bg-blue-50'
-                            : 'border-gray-200 bg-white hover:border-gray-300'
-                        }`}
+                        className={`text-left p-3 rounded-md border-2 transition-colors ${style === val ? 'border-blue-700 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'}`}
                         style={style === val ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff' } : {}}
                       >
                         <p className="font-medium text-sm text-gray-800">{label}</p>
@@ -322,7 +337,6 @@ function GeneratePage() {
                   </div>
                 </div>
 
-                {/* Specific questions */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Specific Questions <span className="text-gray-400">(optional)</span>
@@ -330,32 +344,15 @@ function GeneratePage() {
                   <textarea
                     value={specificQuestions}
                     onChange={(e) => setSpecificQuestions(e.target.value)}
-                    placeholder={`Paste specific application questions here if the job advert asks you to answer set questions, e.g.:\n1. Tell us about your relevant experience (max 300 words)\n2. Why do you want to work for our trust? (max 200 words)`}
+                    placeholder={`If the job advert asks specific questions, paste them here:\n1. Tell us about your relevant experience (max 300 words)\n2. Why do you want to work for us?`}
                     rows={4}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none text-sm resize-none"
                     disabled={loading}
                   />
                 </div>
 
-                {/* Instructions */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Additional Instructions <span className="text-gray-400">(optional)</span>
-                  </label>
-                  <textarea
-                    value={instructions}
-                    onChange={(e) => setInstructions(e.target.value)}
-                    placeholder="e.g. Focus on community nursing experience, highlight ward management skills..."
-                    rows={2}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none text-sm resize-none"
-                    disabled={loading}
-                  />
-                </div>
-
                 {error && (
-                  <div className="bg-red-50 border border-red-200 rounded-md p-3 text-red-700 text-sm">
-                    {error}
-                  </div>
+                  <div className="bg-red-50 border border-red-200 rounded-md p-3 text-red-700 text-sm">{error}</div>
                 )}
 
                 <button
@@ -372,10 +369,7 @@ function GeneratePage() {
 
               {loading && (
                 <div className="mt-5 flex items-center gap-3 text-gray-500">
-                  <div
-                    className="w-5 h-5 border-2 border-gray-200 rounded-full animate-spin flex-shrink-0"
-                    style={{ borderTopColor: '#005eb8' }}
-                  />
+                  <div className="w-5 h-5 border-2 border-gray-200 rounded-full animate-spin flex-shrink-0" style={{ borderTopColor: '#005eb8' }} />
                   <span className="text-sm">{loadingStep}</span>
                 </div>
               )}
@@ -384,43 +378,37 @@ function GeneratePage() {
         </div>
       )}
 
-      {/* Results — side-by-side layout */}
+      {/* Results */}
       {result && (
         <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Top bar with job info + actions */}
+          {/* Top bar */}
           <div style={{ backgroundColor: '#003087' }} className="px-4 py-3 flex-shrink-0">
             <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 flex-wrap">
               <div>
                 <p className="text-blue-200 text-xs">Statement generated for</p>
                 <h2 className="text-white font-bold text-lg leading-tight">{result.jobTitle}</h2>
-                {result.organisation && (
-                  <p className="text-blue-200 text-sm">{result.organisation}</p>
-                )}
+                {result.organisation && <p className="text-blue-200 text-sm">{result.organisation}</p>}
               </div>
               <div className="flex items-center gap-2 flex-wrap">
                 {result.promptRegion && (
                   <span className="text-xs px-2 py-1 rounded bg-blue-700 text-blue-100 font-medium">
-                    {result.promptRegion === 'scotland'
-                      ? 'NHS Scotland'
-                      : result.promptRegion === 'england-wales'
-                      ? 'NHS England/Wales'
-                      : 'Generic'}
+                    {result.promptRegion === 'scotland' ? 'NHS Scotland' : result.promptRegion === 'england-wales' ? 'NHS England/Wales' : 'Generic'}
                   </span>
                 )}
                 <button
-                  onClick={handleCopyStatement}
+                  onClick={() => { navigator.clipboard.writeText(result.statement); setCopied(true); setTimeout(() => setCopied(false), 3000) }}
                   className="text-sm px-3 py-1.5 bg-white text-gray-800 rounded font-medium hover:bg-gray-100 cursor-pointer"
                 >
                   {copied ? 'Copied!' : 'Copy Statement'}
                 </button>
                 <button
-                  onClick={handleDownload}
+                  onClick={() => downloadAsDoc(result)}
                   className="text-sm px-3 py-1.5 text-white rounded font-medium cursor-pointer"
                   style={{ backgroundColor: '#005eb8' }}
                   onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#004a9f')}
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#005eb8')}
                 >
-                  Download .txt
+                  Download .doc
                 </button>
                 <button
                   onClick={() => { setResult(null); setShowRewrite(false); setRewriteInstruction('') }}
@@ -432,42 +420,70 @@ function GeneratePage() {
             </div>
           </div>
 
-          {/* Side-by-side panels */}
+          {/* Side by side */}
           <div className="flex-1 flex overflow-hidden">
-            {/* LEFT: Pre-writing analysis */}
+            {/* LEFT: Analysis */}
             <div className="w-80 flex-shrink-0 border-r border-gray-200 bg-white overflow-y-auto">
               <div className="p-5">
                 <h3 className="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide pb-2 border-b border-gray-100">
                   Pre-Writing Analysis
                 </h3>
-                <AnalysisPanel analysis={result.analysis} duties={result.duties} />
+                <AnalysisPanel analysis={result.analysis} />
               </div>
             </div>
 
-            {/* RIGHT: Statement */}
+            {/* RIGHT: Statement + duties */}
             <div className="flex-1 overflow-y-auto bg-white">
               <div className="p-6 max-w-3xl">
-                {/* Word count */}
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-bold text-gray-800 text-base">Supporting Statement</h3>
                   <span className={`text-sm tabular-nums ${wcColour}`}>
-                    {wc.toLocaleString()} words
-                    {result.promptRegion !== 'generic' && ` / ${wcLimit.toLocaleString()} max`}
+                    {wc.toLocaleString()} words / {wcLimit.toLocaleString()} max
                   </span>
                 </div>
 
-                <div ref={statementRef} className="text-gray-800 leading-relaxed whitespace-pre-wrap text-sm pb-8">
-                  {result.statement}
+                <div ref={statementRef}>
+                  <StatementDisplay text={result.statement} />
                 </div>
 
-                {/* Rewrite section */}
-                <div className="border-t border-gray-100 pt-6 mt-4">
+                {/* Previous Role Duties */}
+                {result.previousRoleDuties?.length > 0 && (
+                  <div className="mt-8 border-t border-gray-100 pt-6">
+                    <h3 className="font-bold text-gray-800 text-sm mb-3">Key Duties - Previous Role <span className="text-gray-400 font-normal">(past tense)</span></h3>
+                    <ul className="space-y-1.5">
+                      {result.previousRoleDuties.map((d, i) => (
+                        <li key={i} className="flex gap-2 text-sm text-gray-700">
+                          <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold">&#8226;</span>
+                          <span>{d}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Current Role Duties */}
+                {result.currentRoleDuties?.length > 0 && (
+                  <div className="mt-6 border-t border-gray-100 pt-6">
+                    <h3 className="font-bold text-gray-800 text-sm mb-3">Key Duties - This Role <span className="text-gray-400 font-normal">(present tense)</span></h3>
+                    <ul className="space-y-1.5">
+                      {result.currentRoleDuties.map((d, i) => (
+                        <li key={i} className="flex gap-2 text-sm text-gray-700">
+                          <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold">&#8226;</span>
+                          <span>{d}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Rewrite */}
+                <div className="border-t border-gray-100 pt-6 mt-6">
                   {!showRewrite ? (
                     <button
                       onClick={() => setShowRewrite(true)}
                       className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-800 cursor-pointer"
                     >
-                      <span style={{ color: '#005eb8' }}>↺</span>
+                      <span style={{ color: '#005eb8' }}>&#8635;</span>
                       Rewrite with instructions
                     </button>
                   ) : (
@@ -476,21 +492,17 @@ function GeneratePage() {
                       <textarea
                         value={rewriteInstruction}
                         onChange={(e) => setRewriteInstruction(e.target.value)}
-                        placeholder="e.g. Make it more concise, strengthen the safeguarding section, use more NHS terminology, change the opening paragraph..."
+                        placeholder="e.g. Make it more concise, strengthen the safeguarding section, change the opening paragraph..."
                         rows={3}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:outline-none"
                       />
-                      {rewriteError && (
-                        <p className="text-red-600 text-xs">{rewriteError}</p>
-                      )}
+                      {rewriteError && <p className="text-red-600 text-xs">{rewriteError}</p>}
                       <div className="flex gap-2">
                         <button
                           onClick={handleRewrite}
                           disabled={rewriting || !rewriteInstruction.trim()}
                           className="px-4 py-2 text-white text-sm font-medium rounded cursor-pointer disabled:opacity-50"
                           style={{ backgroundColor: '#005eb8' }}
-                          onMouseEnter={(e) => { if (!rewriting) e.currentTarget.style.backgroundColor = '#003087' }}
-                          onMouseLeave={(e) => { if (!rewriting) e.currentTarget.style.backgroundColor = '#005eb8' }}
                         >
                           {rewriting ? 'Rewriting...' : 'Rewrite Statement'}
                         </button>

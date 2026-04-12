@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Your subscription has expired. Please contact the administrator.' }, { status: 403 })
     }
 
-    // 3. Call scraper directly (bypass internal API hop to save time)
+    // 3. Call scraper
     const scrapeRes = await fetch(`${SCRAPER_URL}/scrape`, {
       method: 'POST',
       headers: {
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
         'x-scraper-secret': SCRAPER_SECRET,
       },
       body: JSON.stringify({ url: vacancy_url }),
-      signal: AbortSignal.timeout(50000), // 50s timeout
+      signal: AbortSignal.timeout(50000),
     })
 
     if (!scrapeRes.ok) {
@@ -65,8 +65,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Could not extract enough information from the job advert. Please check the URL.' }, { status: 422 })
     }
 
-    // 4. Generate statement with Claude
-    const { statement, duties, analysis, promptRegion } = await generateStatement(client, jobData, {
+    // 4. Generate statement
+    const { statement, previousRoleDuties, currentRoleDuties, analysis, promptRegion } = await generateStatement(client, jobData, {
       instructions,
       style: style || '1',
       specificQuestions,
@@ -75,21 +75,22 @@ export async function POST(req: NextRequest) {
       vacancyUrl: vacancy_url,
     })
 
-    // 5. Save to database (only for new generations, not rewrites)
-    if (!rewriteInstruction) {
-      await supabaseAdmin.from('statements').insert({
-        client_id: client.id,
-        vacancy_url,
-        job_title: jobData.jobTitle,
-        organisation: jobData.organisation,
-        generated_statement: statement,
-        key_duties: duties,
-      })
-    }
+    // 5. Save to database (all generations including rewrites, flagged accordingly)
+    await supabaseAdmin.from('statements').insert({
+      client_id: client.id,
+      vacancy_url,
+      job_title: jobData.jobTitle,
+      organisation: jobData.organisation,
+      generated_statement: statement,
+      key_duties: currentRoleDuties.length > 0 ? currentRoleDuties : (analysis?.keyDuties || []),
+      is_rewrite: !!rewriteInstruction,
+      rewrite_instruction: rewriteInstruction || null,
+    })
 
     return NextResponse.json({
       statement,
-      duties,
+      previousRoleDuties,
+      currentRoleDuties,
       analysis,
       promptRegion,
       jobTitle: jobData.jobTitle,
@@ -100,7 +101,6 @@ export async function POST(req: NextRequest) {
     const message = err instanceof Error ? err.message : 'Unknown error'
     console.error('Generate error:', message)
 
-    // Give applicants a clean message for billing/credit issues
     if (
       message.toLowerCase().includes('credit') ||
       message.toLowerCase().includes('billing') ||

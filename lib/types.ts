@@ -5,8 +5,8 @@ export interface Client {
   work_history: string
   qualifications: string
   skills: string
-  background: string // NHS experience, tools, projects, volunteer work, special info
-  special_instructions: string // Admin notes that override/constrain the AI, e.g. "do not change job title"
+  background: string
+  special_instructions: string
   subscription_start: string
   subscription_end: string
   is_active: boolean
@@ -21,6 +21,8 @@ export interface Statement {
   organisation: string
   generated_statement: string
   key_duties: string[]
+  is_rewrite: boolean
+  rewrite_instruction?: string
   created_at: string
 }
 
@@ -41,11 +43,13 @@ export interface StatementAnalysis {
   keyDuties: string[]
   candidateStrengths: string[]
   potentialGaps: string[]
+  meetsAllEssential?: boolean
 }
 
 export interface GenerateResult {
   statement: string
-  duties: string[]
+  previousRoleDuties: string[]
+  currentRoleDuties: string[]
   analysis: StatementAnalysis | null
   jobTitle: string
   organisation: string
