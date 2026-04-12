@@ -200,7 +200,6 @@ function GeneratePage() {
   const [style, setStyle] = useState<'1' | '2'>('1')
   const [specificQuestions, setSpecificQuestions] = useState('')
   const [loading, setLoading] = useState(false)
-  const [loadingStep, setLoadingStep] = useState('')
   const [error, setError] = useState('')
   const [result, setResult] = useState<Result | null>(null)
   const [copied, setCopied] = useState(false)
@@ -217,8 +216,7 @@ function GeneratePage() {
   }, [clientCode, router])
 
   const callGenerate = async (
-    body: Record<string, unknown>,
-    onProgress: (msg: string) => void
+    body: Record<string, unknown>
   ): Promise<Result> => {
     const res = await fetch('/api/generate', {
       method: 'POST',
@@ -226,46 +224,13 @@ function GeneratePage() {
       body: JSON.stringify(body),
     })
 
+    const data = await res.json().catch(() => ({ error: 'Server error. Please try again.' }))
+
     if (!res.ok) {
-      const err = await res.json().catch(() => ({ error: 'Server error. Please try again.' }))
-      throw new Error(err.error || 'Server error. Please try again.')
+      throw new Error(data.error || 'Server error. Please try again.')
     }
 
-    if (!res.body) throw new Error('No response body')
-
-    const reader = res.body.getReader()
-    const decoder = new TextDecoder()
-    let buffer = ''
-
-    while (true) {
-      const { done, value } = await reader.read()
-      if (done) break
-      buffer += decoder.decode(value, { stream: true })
-
-      // Parse SSE events from buffer
-      const lines = buffer.split('\n\n')
-      buffer = lines.pop() || ''
-
-      for (const block of lines) {
-        const dataLine = block.split('\n').find((l) => l.startsWith('data: '))
-        if (!dataLine) continue
-        let json: Record<string, unknown>
-        try {
-          json = JSON.parse(dataLine.slice(6))
-        } catch {
-          continue
-        }
-
-        if (json.type === 'progress') {
-          onProgress(json.message as string)
-        } else if (json.type === 'error') {
-          throw new Error(json.error as string)
-        } else if (json.type === 'complete') {
-          return json as unknown as Result
-        }
-      }
-    }
-    throw new Error('The request timed out. The job advert page may be slow - please try again.')
+    return data as Result
   }
 
   const handleGenerate = async (e: React.FormEvent) => {
@@ -275,7 +240,6 @@ function GeneratePage() {
     setLoading(true)
     setError('')
     setResult(null)
-    setLoadingStep('Reading the job advert...')
 
     try {
       const data = await callGenerate(
@@ -284,8 +248,7 @@ function GeneratePage() {
           vacancy_url: vacancyUrl.trim(),
           style,
           specificQuestions: specificQuestions.trim() || undefined,
-        },
-        setLoadingStep
+        }
       )
       setResult(data)
       setShowRewrite(false)
@@ -294,7 +257,6 @@ function GeneratePage() {
       setError(err instanceof Error ? err.message : 'Network error. Please check your connection and try again.')
     } finally {
       setLoading(false)
-      setLoadingStep('')
     }
   }
 
@@ -311,8 +273,7 @@ function GeneratePage() {
           specificQuestions: specificQuestions.trim() || undefined,
           rewriteInstruction: rewriteInstruction.trim(),
           previousStatement: result.statement,
-        },
-        () => {} // rewrite has no progress display
+        }
       )
       setResult(data)
       setShowRewrite(false)
@@ -422,7 +383,7 @@ function GeneratePage() {
               {loading && (
                 <div className="mt-5 flex items-center gap-3 text-gray-500">
                   <div className="w-5 h-5 border-2 border-gray-200 rounded-full animate-spin flex-shrink-0" style={{ borderTopColor: '#005eb8' }} />
-                  <span className="text-sm">{loadingStep}</span>
+                  <span className="text-sm">Reading the job advert and writing your statement - this takes up to 60 seconds...</span>
                 </div>
               )}
             </div>
