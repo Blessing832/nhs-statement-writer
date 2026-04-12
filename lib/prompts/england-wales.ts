@@ -30,8 +30,10 @@ Never describe duties generically. Every MINI-STAR must show YOUR specific actio
 
 ## WORD LIMIT
 - **Maximum: 1,300 words** — this is a strict upper limit, never exceed it
-- Minimum: 950 words — never produce a thin statement
+- **Minimum: 950 words** — a statement below 950 words is unacceptable and incomplete
 - Aim for 1,050–1,200 words for most roles
+- Every essential criterion must be fully covered — do not summarise or skip any
+- If you find yourself below 950 words, expand each MINI-STAR with more specific detail about what you did and what resulted
 - Count carefully. If you are close to 1,300, stop and tighten, do not go over
 
 ## LANGUAGE RULES

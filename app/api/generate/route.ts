@@ -99,6 +99,21 @@ export async function POST(req: NextRequest) {
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error'
     console.error('Generate error:', message)
+
+    // Give applicants a clean message for billing/credit issues
+    if (
+      message.toLowerCase().includes('credit') ||
+      message.toLowerCase().includes('billing') ||
+      message.toLowerCase().includes('balance') ||
+      message.toLowerCase().includes('quota') ||
+      message.toLowerCase().includes('overloaded')
+    ) {
+      return NextResponse.json(
+        { error: 'The statement writer is temporarily unavailable. Please contact your administrator.' },
+        { status: 503 }
+      )
+    }
+
     return NextResponse.json({ error: message }, { status: 500 })
   }
 }
