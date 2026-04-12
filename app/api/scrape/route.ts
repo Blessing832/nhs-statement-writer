@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+export const maxDuration = 60
+
 const SCRAPER_URL = process.env.SCRAPER_SERVICE_URL!
 const SCRAPER_SECRET = process.env.SCRAPER_SECRET!
 

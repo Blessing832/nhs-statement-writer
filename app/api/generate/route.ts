@@ -3,6 +3,11 @@ import { supabaseAdmin } from '@/lib/supabase'
 import { generateStatement } from '@/lib/claude'
 import { ScrapeResult } from '@/lib/types'
 
+export const maxDuration = 60
+
+const SCRAPER_URL = process.env.SCRAPER_SERVICE_URL!
+const SCRAPER_SECRET = process.env.SCRAPER_SECRET!
+
 export async function POST(req: NextRequest) {
   try {
     const { client_code, vacancy_url, instructions } = await req.json()
@@ -30,11 +35,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Your subscription has expired. Please contact the administrator.' }, { status: 403 })
     }
 
-    // 3. Scrape the job vacancy
-    const scrapeRes = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/scrape`, {
+    // 3. Call scraper directly (bypass internal API hop to save time)
+    const scrapeRes = await fetch(`${SCRAPER_URL}/scrape`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-scraper-secret': SCRAPER_SECRET,
+      },
       body: JSON.stringify({ url: vacancy_url }),
+      signal: AbortSignal.timeout(50000), // 50s timeout
     })
 
     if (!scrapeRes.ok) {
