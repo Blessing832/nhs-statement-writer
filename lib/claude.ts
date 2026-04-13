@@ -91,27 +91,20 @@ ${client.special_instructions ? `\n## MANDATORY CLIENT-SPECIFIC INSTRUCTIONS - O
 
   const dutiesCount = isScotland ? '6' : '8'
 
-  // --- analysis-only: just job + candidate, output analysis + duties ---
+  // --- analysis-only: extract person spec criteria + write duties ---
   if (outputMode === 'analysis-only') {
     return `${jobSection}
 
 ${clientSection}
 
 ## TASK
-Analyze this job posting and candidate profile. Extract every essential and desirable criterion from the person spec. Identify how the candidate matches the role.
+Extract every essential and desirable criterion from the person specification. Write ${dutiesCount} past-tense key duties based on the candidate's previous role and the job description keywords.
 
 Return ONLY a single valid JSON object - no text before or after:
 {
-  "analysis": {
-    "jobSummary": "1-2 sentence role summary",
-    "enhancedPreviousTitle": "Senior or Lead + exact vacancy title",
-    "essentialCriteria": ["every essential criterion from the person spec"],
-    "desirableCriteria": ["desirable criteria if any"],
-    "candidateStrengths": ["3 specific ways this candidate matches this role"],
-    "potentialGaps": ["essential criteria where evidence is thin"],
-    "meetsAllEssential": true
-  },
-  "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties from candidate's previous role using job description keywords"]
+  "essentialCriteria": ["every essential criterion from the person spec"],
+  "desirableCriteria": ["desirable criteria if any"],
+  "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties using job description keywords"]
 }
 
 CRITICAL:
@@ -269,7 +262,7 @@ async function generateScotlandParallel(
   }
   if (!statementParsed.statement) throw new Error('Claude response missing statement field')
 
-  // Parse analysis + duties (non-critical — degrade gracefully if it fails)
+  // Parse person spec + duties (non-critical — degrade gracefully if it fails)
   let analysis: StatementAnalysis | null = null
   let previousRoleDuties: string[] = []
   const analysisContent = analysisMsg.content[0]
@@ -278,9 +271,22 @@ async function generateScotlandParallel(
     const analysisJsonMatch = cleanedAnalysisText.match(/\{[\s\S]*\}/)
     if (analysisJsonMatch) {
       try {
-        const analysisParsed = JSON.parse(analysisJsonMatch[0])
-        analysis = analysisParsed.analysis || null
+        const analysisParsed: {
+          essentialCriteria?: string[]
+          desirableCriteria?: string[]
+          previousRoleDuties?: string[]
+        } = JSON.parse(analysisJsonMatch[0])
         previousRoleDuties = Array.isArray(analysisParsed.previousRoleDuties) ? analysisParsed.previousRoleDuties : []
+        if (Array.isArray(analysisParsed.essentialCriteria) && analysisParsed.essentialCriteria.length > 0) {
+          analysis = {
+            jobSummary: '',
+            essentialCriteria: analysisParsed.essentialCriteria,
+            desirableCriteria: analysisParsed.desirableCriteria || [],
+            candidateStrengths: [],
+            potentialGaps: [],
+            keyDuties: [],
+          }
+        }
       } catch { /* non-critical */ }
     }
   }

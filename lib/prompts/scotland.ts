@@ -165,25 +165,5 @@ Active voice: "I carried out...", "I delivered...", "I supported..." — never "
 Use JD keywords, Scottish systems where relevant, Scottish legislation where relevant.
 Past tense. Quantify where possible. Never use "Trust" or "Board" in the duties text.
 
-## PRE-WRITING ANALYSIS — OUTPUT IN JSON
-The analysis block must contain:
-- jobSummary: 2-3 sentence summary of the role and Board
-- enhancedPreviousTitle: "Senior/Lead + [exact vacancy title]"
-- trustOrOrganisation: Board name and values
-- advertKeyPhrases: all phrases from job advert introduction
-- jdKeywords: specialty keywords, equipment, IT systems, forms, patient conditions, professional roles, procedures (Scottish systems highlighted)
-- essentialCriteria: EVERY essential criterion from person spec (leave none out)
-- desirableCriteria: desirable criteria (empty array if none)
-- keyDuties: 6-10 main duties from job description
-- subheadingPlan: for Style 1, list each planned subheading with the criteria it groups; empty array for Style 2
-- candidateStrengths: 3-5 specific ways this candidate matches this role
-- potentialGaps: essential criteria where candidate evidence is thin
-- meetsAllEssential: true if candidate has clear evidence for every essential criterion
-
-## OUTPUT FORMAT
-Return a single valid JSON object only — no text before or after:
-{
-  "analysis": { ...as above... },
-  "statement": "the complete three-question response — Q1 labelled, Q2 labelled, Q3 labelled, ending with Thank you.",
-  "previousRoleDuties": ["exactly 6 past-tense duties as Key Duties list"]
-}`
+## OUTPUT
+Write only the three-question response as instructed in the user message. Follow the output format specified in the user message exactly.`

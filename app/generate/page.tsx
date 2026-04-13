@@ -452,7 +452,7 @@ function GeneratePage() {
             <div className="md:w-80 md:flex-shrink-0 border-b md:border-b-0 md:border-r border-gray-200 bg-white overflow-y-auto">
               <div className="p-5">
                 <h3 className="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide pb-2 border-b border-gray-100">
-                  Pre-Writing Analysis
+                  {result.promptRegion === 'scotland' ? 'Person Specification' : 'Pre-Writing Analysis'}
                 </h3>
                 <AnalysisPanel analysis={result.analysis} />
               </div>
