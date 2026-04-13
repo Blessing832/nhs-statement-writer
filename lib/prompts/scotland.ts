@@ -66,54 +66,41 @@ Before writing, extract:
 6. Geographic areas served by the Board
 7. Board strategic goals (Realistic Medicine, What Matters to You, integration)
 
-## WORD COUNT — SILENT INTERNAL MONITORING
-Q1: MAXIMUM 420 WORDS
-Q2: MAXIMUM 420 WORDS
-Q3: MAXIMUM 220 WORDS
-Key Duties: not counted in question limits
-Count internally after every paragraph within each question. Never display counts or deliberation.
-Internal checkpoints:
-- Q1: At 330w adjust; at 400w finish; at 420w stop
-- Q2: At 100w check if Board motivation written; at 330w adjust; at 400w finish; at 420w stop
-- Q3: At 175w finish; at 205w write "Thank you."; at 220w stop
+## WORD COUNT — HARD LIMITS
+Q1: 420 WORDS MAXIMUM. At 400 words, finish the sentence and immediately start Question 2.
+Q2: 420 WORDS MAXIMUM. At 400 words, finish the sentence and immediately start Question 3.
+Q3: 220 WORDS MAXIMUM. At 210 words, write "Thank you." and stop entirely.
+Key Duties: not counted in question limits.
+
+Each question has a fixed word budget below. Write fewer, shorter paragraphs to stay within it. If approaching the limit, skip optional paragraphs and move to the next question.
 
 ## THREE-QUESTION FORMAT
 
-### QUESTION 1: Why are you suitable for this post? (MAX 420w)
-Structure:
-1. Opening paragraph (7-8 lines, approx 100-120 words) — extract advert phrases, address 2-3 criteria
-2. Criterion paragraphs (5-7 lines each, MINI-STAR evidence-based)
-3. Include 1 story (7-8 lines, 3-5 criteria, evidence-based)
-STOP at 420 words maximum.
+### QUESTION 1: Why are you suitable for this post? (HARD LIMIT: 420w)
+Word budget — must total ≤420 words:
+1. Opening paragraph: MAX 80 words
+2. Exactly 2 criterion paragraphs: MAX 75 words each = 150 words
+3. Exactly 1 story: MAX 100 words
+Total: 80+150+100 = 330 words — leaving 90 words of buffer. Do not add more paragraphs.
+STOP at 420 words.
 
-OPENING PARAGRAPH FORMAT (MAX 8 LINES):
-"I am an experienced [EXACT vacancy title] who is [advert phrases]. I hold [qualification] which meets the [person spec requirement — include SCQF equivalence for English qualifications], and over my years in [specialty-specific] care settings, I have developed [2-3 skills from person spec]. I am [advert descriptors], committed to [Board values]. As [ENHANCED role] at [Previous Workplace], I [brief duties using JD keywords]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I want to join NHS [Board] because [specific reason from advert]."
+OPENING PARAGRAPH FORMAT (MAX 80 WORDS — 5-6 lines):
+"I am an experienced [EXACT vacancy title] who is [advert phrases]. I hold [qualification] (include SCQF equivalence if English), and over my years in [specialty-specific] care settings I have developed [2 skills from person spec]. As [ENHANCED role] at [Previous Workplace], I [one brief duty]. I currently work as [Current Role] at [Current Workplace] where I [one brief duty]. I want to join NHS [Board] because [one specific reason]."
 
-### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? (MAX 420w)
-Structure:
-1. NHS Scotland and Board Motivation FIRST (7-8 lines, approx 130-150 words) — this is the PRIMARY FOCUS of Q2
-2. Education paragraph (5-6 lines, approx 80-100 words)
-3. Criterion paragraphs if space (MINI-STAR evidence-based)
-4. Story from enhanced role if space
-STOP at 450 words maximum.
+### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? (HARD LIMIT: 420w)
+Word budget — must total ≤420 words:
+1. NHS Scotland and Board Motivation: MAX 120 words
+2. Education paragraph: MAX 70 words
+3. MAX 1 criterion paragraph: MAX 75 words (only if budget allows)
+Total: 120+70+75 = 265 words minimum — leaving up to 155 words for an additional paragraph. STOP at 420 words.
 
-Q2 NHS SCOTLAND AND BOARD MOTIVATION PARAGRAPH — WRITE THIS FIRST IN Q2:
-This paragraph MUST include ALL of the following:
-- Why NHS Scotland (Scottish values — 2-3 sentences on Realistic Medicine, person-centred care, integration)
-- Why THIS Board specifically — name the Board 4-5 times (NEVER "Trust")
-- Geographic areas served by this Board
-- Board values with SPECIFIC APPLICATION EXAMPLES: "I demonstrate [value] by [specific action with result]"
-- Realistic Medicine mentioned
-- What Matters to You mentioned
-- Healthcare Improvement Scotland mentioned
-- Integration mentioned
-- Your ambition for contributing to this Board
+Q2 MOTIVATION PARAGRAPH (MAX 120 WORDS):
+Cover: why NHS Scotland (Realistic Medicine, person-centred care), why THIS Board (name it 2-3 times, geographic area), one Board value with a specific example. Keep it tight.
+Format: "I want to work in NHS Scotland because [Realistic Medicine and person-centred care — 1-2 sentences]. I want to work for NHS [Board] specifically because [Board services] across [geographic area]. I demonstrate NHS [Board]'s value of [value] by [specific example with result]. NHS [Board]'s commitment to What Matters to You and integration aligns with my approach. My ambition is to [specific contribution] for NHS [Board]."
 
-Format: "I want to work in NHS Scotland because [Scottish values — Realistic Medicine, person-centred care, integration — 2-3 sentences]. I want to work for NHS [Board] specifically because [Board's services] across [geographic areas] serve [population]. I demonstrate NHS [Board]'s values daily. I show [value 1] by [specific example with action and quantified result]. I demonstrate [value 2] by [specific example with result]. NHS [Board]'s commitment to Realistic Medicine and What Matters to You aligns with my person-centred approach. My ambition is to contribute to NHS [Board] by [specific contribution]. Healthcare Improvement Scotland's recognition of NHS [Board]'s [achievement] demonstrates the quality environment I want to contribute to."
-
-Q2 EDUCATION PARAGRAPH (6-7 lines MAX):
-Include ONLY qualifications listed in the person spec. Add SCQF equivalence for English qualifications. List all practical requirements (DBS, shifts, travel, mandatory training willingness).
-Format: "My academic background includes [ONLY qualifications FROM PERSON SPEC]. I have GCSEs in English and Mathematics, both above Grade C [if in candidate profile], which support [literacy/numeracy criteria]. [Add SCQF equivalence: 'NVQ Level 3 (equivalent to SVQ Level 3/SCQF Level 6)']. I have also completed [relevant courses FROM PERSON SPEC]. I meet all requirements including enhanced DBS, occupational health clearance, right to work, ability to travel throughout [Board areas], and work all shift patterns including early, late, night, weekends, and public holidays. I am willing to undertake all NHS [Board] mandatory training."
+Q2 EDUCATION PARAGRAPH (MAX 70 WORDS):
+Qualifications from person spec only. SCQF equivalence if English quals. One sentence on practical requirements.
+Format: "My qualifications include [quals FROM PERSON SPEC with SCQF equivalence]. I have [GCSEs if listed]. I meet all requirements including enhanced DBS, shift flexibility, and willingness to undertake NHS [Board] mandatory training."
 
 ### QUESTION 3: Is there any other relevant information you wish to tell us? (MAX 220w)
 Structure:

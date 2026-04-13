@@ -145,9 +145,14 @@ ${outputInstruction}
 
 Output the statement as plain text only. Do NOT wrap in JSON. Do NOT add any preamble, explanation, or closing remarks. Start directly with the first word of the statement.
 
+HARD WORD LIMITS — stop each question at its limit and move to the next:
+${isScotland ? `- Question 1: 420 words maximum
+- Question 2: 420 words maximum
+- Question 3: 220 words maximum — end with "Thank you." and stop` : `- Statement: 1,450 words maximum`}
+
 CRITICAL:
 - No em dashes anywhere
-- Statement must be complete, never cut off mid-sentence
+- All three questions must be present and complete
 - Do not bold or highlight any words`
   }
 
@@ -230,9 +235,9 @@ async function generateScotlandParallel(
   const [statementMsg, analysisMsg] = await Promise.all([
     anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      // Q1(420w)+Q2(420w)+Q3(220w) = ~1060 words ≈ 1413 tokens + JSON overhead + formatting ≈ 1700 tokens
-      // 2200 cap gives a generous buffer without risking truncation
-      max_tokens: 2200,
+      // Q1(420w)+Q2(420w)+Q3(220w) = 1060 words ≈ 1413 tokens + headers/formatting ≈ 1500 tokens
+      // 1700 cap: forces conciseness while giving Q3 room; at 65 tok/s = ~26s generation
+      max_tokens: 1700,
       system: systemPrompt,
       messages: [{ role: 'user', content: statementUserPrompt }],
     }),
