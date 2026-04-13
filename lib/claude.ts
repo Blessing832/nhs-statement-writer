@@ -148,7 +148,7 @@ Output the statement as plain text only. Do NOT wrap in JSON. Do NOT add any pre
 CRITICAL:
 - No em dashes anywhere
 - Statement must be complete, never cut off mid-sentence
-- Use **double asterisks** around key achievements`
+- Do not bold or highlight any words`
   }
 
   // --- full mode: single call with all fields (England/Wales and generic) ---
@@ -179,7 +179,7 @@ Return ONLY a single valid JSON object - no text before or after:
     "potentialGaps": ["essential criteria where evidence is thin"],
     "meetsAllEssential": true
   },
-  "statement": "the complete statement text with **bold** around key achievements",
+  "statement": "the complete statement text, plain text only, no bold or special formatting",
   "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties from candidate's previous role"]
 }
 
@@ -248,7 +248,7 @@ async function generateScotlandParallel(
   // Statement call returns plain text — no JSON parsing needed
   const statementContent = statementMsg.content[0]
   if (statementContent.type !== 'text') throw new Error('Unexpected response type from Claude')
-  const statement = statementContent.text.trim().replace(/\u2014/g, '-').replace(/--/g, '-')
+  const statement = statementContent.text.trim().replace(/\u2014/g, '-').replace(/--/g, '-').replace(/\*\*/g, '')
   if (!statement) throw new Error('Claude returned an empty statement')
 
   // Parse person spec + duties (non-critical — degrade gracefully if it fails)
@@ -364,7 +364,7 @@ export async function generateStatement(
 
   if (!parsed.statement) throw new Error('Claude response missing statement field')
 
-  const statement = parsed.statement.replace(/\u2014/g, '-').replace(/--/g, '-')
+  const statement = parsed.statement.replace(/\u2014/g, '-').replace(/--/g, '-').replace(/\*\*/g, '')
 
   return {
     statement,
