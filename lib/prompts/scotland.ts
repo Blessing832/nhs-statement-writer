@@ -67,32 +67,32 @@ Before writing, extract:
 7. Board strategic goals (Realistic Medicine, What Matters to You, integration)
 
 ## WORD COUNT — SILENT INTERNAL MONITORING
-Q1: MAXIMUM 450 WORDS
-Q2: MAXIMUM 450 WORDS
-Q3: MAXIMUM 240 WORDS
+Q1: MAXIMUM 380 WORDS
+Q2: MAXIMUM 380 WORDS
+Q3: MAXIMUM 200 WORDS
 Key Duties: not counted in question limits
 Count internally after every paragraph within each question. Never display counts or deliberation.
 Internal checkpoints:
-- Q1: At 350w adjust; at 430w finish; at 450w stop
-- Q2: At 100w check if Board motivation written; at 350w adjust; at 430w finish; at 450w stop
-- Q3: At 180w finish; at 220w write "Thank you."; at 240w stop
+- Q1: At 300w adjust; at 360w finish; at 380w stop
+- Q2: At 100w check if Board motivation written; at 300w adjust; at 360w finish; at 380w stop
+- Q3: At 160w finish; at 185w write "Thank you."; at 200w stop
 
 ## THREE-QUESTION FORMAT
 
-### QUESTION 1: Why are you suitable for this post? (MAX 450w)
+### QUESTION 1: Why are you suitable for this post? (MAX 380w)
 Structure:
 1. Opening paragraph (7-8 lines, approx 100-120 words) — extract advert phrases, address 2-3 criteria
 2. Criterion paragraphs (5-8 lines each, MINI-STAR evidence-based)
-3. Include 1-2 stories (7-8 lines each, 3-5 criteria, evidence-based)
-STOP at 450 words maximum.
+3. Include 1 story (7-8 lines, 3-5 criteria, evidence-based)
+STOP at 380 words maximum.
 
 OPENING PARAGRAPH FORMAT (MAX 8 LINES):
 "I am an experienced [EXACT vacancy title] who is [advert phrases]. I hold [qualification] which meets the [person spec requirement — include SCQF equivalence for English qualifications], and over my years in [specialty-specific] care settings, I have developed [2-3 skills from person spec]. I am [advert descriptors], committed to [Board values]. As [ENHANCED role] at [Previous Workplace], I [brief duties using JD keywords]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I want to join NHS [Board] because [specific reason from advert]."
 
-### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? (MAX 450w)
+### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? (MAX 380w)
 Structure:
-1. NHS Scotland and Board Motivation FIRST (7-8 lines, approx 140-160 words) — this is the PRIMARY FOCUS of Q2
-2. Education paragraph (6-7 lines, approx 90-110 words)
+1. NHS Scotland and Board Motivation FIRST (7-8 lines, approx 120-140 words) — this is the PRIMARY FOCUS of Q2
+2. Education paragraph (5-6 lines, approx 70-90 words)
 3. Criterion paragraphs if space (MINI-STAR evidence-based)
 4. Story from enhanced role if space
 STOP at 450 words maximum.
@@ -117,9 +117,8 @@ Format: "My academic background includes [ONLY qualifications FROM PERSON SPEC].
 
 ### QUESTION 3: Is there any other relevant information you wish to tell us? (MAX 200w)
 Structure:
-1. Any remaining essential criteria not yet addressed (evidence-based)
-2. 6 C's paragraph (5-6 lines, each C with specific example and result)
-3. Closing paragraph (4-5 lines)
+1. 6 C's paragraph (each C with ONE brief specific example)
+2. Closing paragraph (3-4 lines)
 STOP at 200 words maximum.
 
 6 C'S PARAGRAPH (NO SUBHEADING):
@@ -159,9 +158,9 @@ List every essential criterion before writing. Verify every one is addressed.
 Missing even one essential criterion is a failure of this task.
 Ensure at least 2 full paragraphs are about the current role.
 
-## KEY DUTIES — EXACTLY 8 (not counted in question word limits)
+## KEY DUTIES — EXACTLY 5 (not counted in question word limits)
 Heading: "Key Duties I Performed as [ENHANCED Vacancy Title] at [Previous Workplace] ([Years])"
-Exactly 8 duties, each 2-3 lines (approx 20-35 words).
+Exactly 5 duties, each 2 lines (approx 20-28 words).
 Active voice: "I carried out...", "I delivered...", "I supported..." — never "Assisted with..."
 Use JD keywords, Scottish systems where relevant, Scottish legislation where relevant.
 Past tense. Quantify where possible. Never use "Trust" or "Board" in the duties text.
@@ -186,6 +185,5 @@ Return a single valid JSON object only — no text before or after:
 {
   "analysis": { ...as above... },
   "statement": "the complete three-question response — Q1 labelled, Q2 labelled, Q3 labelled, ending with Thank you.",
-  "previousRoleDuties": ["exactly 8 past-tense duties as Key Duties list"],
-  "currentRoleDuties": ["8 present-tense duties describing what someone in this vacancy does day-to-day at NHS [Board]"]
+  "previousRoleDuties": ["exactly 5 past-tense duties as Key Duties list"]
 }`
