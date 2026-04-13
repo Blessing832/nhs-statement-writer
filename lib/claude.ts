@@ -128,13 +128,13 @@ Return ONLY a single valid JSON object - no text before or after:
     "meetsAllEssential": true
   },
   "statement": "the complete statement text with **bold** around key achievements",
-  "previousRoleDuties": ["exactly ${isScotland ? '5' : '8'} past-tense duties from candidate's previous role"]
+  "previousRoleDuties": ["exactly ${isScotland ? '6' : '8'} past-tense duties from candidate's previous role"]
 }
 
 CRITICAL:
 - No em dashes anywhere
 - statement must be complete, never truncated
-- previousRoleDuties must have exactly ${isScotland ? '5' : '8'} items
+- previousRoleDuties must have exactly ${isScotland ? '6' : '8'} items
 - Never use the word Trust in duties
 - essentialCriteria must list EVERY criterion from the person spec`
 }
@@ -168,13 +168,14 @@ export async function generateStatement(
     previousStatement: options.previousStatement,
   })
 
-  // Scotland 3-question: ~1900 tokens output target; England: ~2200 tokens.
-  // Hard cap prevents the 60s Vercel timeout (Sonnet outputs ~65 tok/s).
-  const maxTokens = region === 'scotland' ? 2200 : 2600
-
+  // max_tokens must be high enough that JSON is never truncated.
+  // With word count reductions and compact analysis, natural output is:
+  //   Scotland: ~2300 tokens (~35s at 65 tok/s) — well under 60s
+  //   England:  ~2200 tokens (~34s at 65 tok/s) — well under 60s
+  // 3000 cap gives a safe buffer without risking truncation.
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
-    max_tokens: maxTokens,
+    max_tokens: 3000,
     system: systemPrompt,
     messages: [{ role: 'user', content: userPrompt }],
   })

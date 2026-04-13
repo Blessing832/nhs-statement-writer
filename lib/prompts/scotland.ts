@@ -67,32 +67,32 @@ Before writing, extract:
 7. Board strategic goals (Realistic Medicine, What Matters to You, integration)
 
 ## WORD COUNT — SILENT INTERNAL MONITORING
-Q1: MAXIMUM 380 WORDS
-Q2: MAXIMUM 380 WORDS
-Q3: MAXIMUM 200 WORDS
+Q1: MAXIMUM 420 WORDS
+Q2: MAXIMUM 420 WORDS
+Q3: MAXIMUM 220 WORDS
 Key Duties: not counted in question limits
 Count internally after every paragraph within each question. Never display counts or deliberation.
 Internal checkpoints:
-- Q1: At 300w adjust; at 360w finish; at 380w stop
-- Q2: At 100w check if Board motivation written; at 300w adjust; at 360w finish; at 380w stop
-- Q3: At 160w finish; at 185w write "Thank you."; at 200w stop
+- Q1: At 330w adjust; at 400w finish; at 420w stop
+- Q2: At 100w check if Board motivation written; at 330w adjust; at 400w finish; at 420w stop
+- Q3: At 175w finish; at 205w write "Thank you."; at 220w stop
 
 ## THREE-QUESTION FORMAT
 
-### QUESTION 1: Why are you suitable for this post? (MAX 380w)
+### QUESTION 1: Why are you suitable for this post? (MAX 420w)
 Structure:
 1. Opening paragraph (7-8 lines, approx 100-120 words) — extract advert phrases, address 2-3 criteria
-2. Criterion paragraphs (5-8 lines each, MINI-STAR evidence-based)
+2. Criterion paragraphs (5-7 lines each, MINI-STAR evidence-based)
 3. Include 1 story (7-8 lines, 3-5 criteria, evidence-based)
-STOP at 380 words maximum.
+STOP at 420 words maximum.
 
 OPENING PARAGRAPH FORMAT (MAX 8 LINES):
 "I am an experienced [EXACT vacancy title] who is [advert phrases]. I hold [qualification] which meets the [person spec requirement — include SCQF equivalence for English qualifications], and over my years in [specialty-specific] care settings, I have developed [2-3 skills from person spec]. I am [advert descriptors], committed to [Board values]. As [ENHANCED role] at [Previous Workplace], I [brief duties using JD keywords]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I want to join NHS [Board] because [specific reason from advert]."
 
-### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? (MAX 380w)
+### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? (MAX 420w)
 Structure:
-1. NHS Scotland and Board Motivation FIRST (7-8 lines, approx 120-140 words) — this is the PRIMARY FOCUS of Q2
-2. Education paragraph (5-6 lines, approx 70-90 words)
+1. NHS Scotland and Board Motivation FIRST (7-8 lines, approx 130-150 words) — this is the PRIMARY FOCUS of Q2
+2. Education paragraph (5-6 lines, approx 80-100 words)
 3. Criterion paragraphs if space (MINI-STAR evidence-based)
 4. Story from enhanced role if space
 STOP at 450 words maximum.
@@ -115,11 +115,11 @@ Q2 EDUCATION PARAGRAPH (6-7 lines MAX):
 Include ONLY qualifications listed in the person spec. Add SCQF equivalence for English qualifications. List all practical requirements (DBS, shifts, travel, mandatory training willingness).
 Format: "My academic background includes [ONLY qualifications FROM PERSON SPEC]. I have GCSEs in English and Mathematics, both above Grade C [if in candidate profile], which support [literacy/numeracy criteria]. [Add SCQF equivalence: 'NVQ Level 3 (equivalent to SVQ Level 3/SCQF Level 6)']. I have also completed [relevant courses FROM PERSON SPEC]. I meet all requirements including enhanced DBS, occupational health clearance, right to work, ability to travel throughout [Board areas], and work all shift patterns including early, late, night, weekends, and public holidays. I am willing to undertake all NHS [Board] mandatory training."
 
-### QUESTION 3: Is there any other relevant information you wish to tell us? (MAX 200w)
+### QUESTION 3: Is there any other relevant information you wish to tell us? (MAX 220w)
 Structure:
-1. 6 C's paragraph (each C with ONE brief specific example)
+1. 6 C's paragraph (each C with one brief specific example and result)
 2. Closing paragraph (3-4 lines)
-STOP at 200 words maximum.
+STOP at 220 words maximum.
 
 6 C'S PARAGRAPH (NO SUBHEADING):
 "The 6 C's of Care guide my practice. I provide care and compassion by [specific example with result]. I demonstrate competence by maintaining [specific example — e.g., 100% mandatory training compliance]. I show communication by [specific example with result]. I demonstrate courage by [specific example]. I show commitment by [specific example]. I demonstrate character by [specific example]."
@@ -158,9 +158,9 @@ List every essential criterion before writing. Verify every one is addressed.
 Missing even one essential criterion is a failure of this task.
 Ensure at least 2 full paragraphs are about the current role.
 
-## KEY DUTIES — EXACTLY 5 (not counted in question word limits)
+## KEY DUTIES — EXACTLY 6 (not counted in question word limits)
 Heading: "Key Duties I Performed as [ENHANCED Vacancy Title] at [Previous Workplace] ([Years])"
-Exactly 5 duties, each 2 lines (approx 20-28 words).
+Exactly 6 duties, each 2 lines (approx 20-28 words).
 Active voice: "I carried out...", "I delivered...", "I supported..." — never "Assisted with..."
 Use JD keywords, Scottish systems where relevant, Scottish legislation where relevant.
 Past tense. Quantify where possible. Never use "Trust" or "Board" in the duties text.
@@ -185,5 +185,5 @@ Return a single valid JSON object only — no text before or after:
 {
   "analysis": { ...as above... },
   "statement": "the complete three-question response — Q1 labelled, Q2 labelled, Q3 labelled, ending with Thank you.",
-  "previousRoleDuties": ["exactly 5 past-tense duties as Key Duties list"]
+  "previousRoleDuties": ["exactly 6 past-tense duties as Key Duties list"]
 }`
