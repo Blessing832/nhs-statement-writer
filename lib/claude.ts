@@ -2,7 +2,6 @@ import Anthropic from '@anthropic-ai/sdk'
 import { Client, ScrapeResult, StatementAnalysis } from './types'
 import { getEnglandWalesPrompt } from './prompts/england-wales'
 import { SCOTLAND_PROMPT } from './prompts/scotland'
-import { EVIDENCE_BANK } from './prompts/evidence-bank'
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!,
@@ -53,10 +52,12 @@ function buildUserPrompt(
     specificQuestions?: string
     rewriteInstruction?: string
     previousStatement?: string
+    outputMode?: 'full' | 'statement-only' | 'analysis-only'
   }
 ): string {
   const isScotland = region === 'scotland'
   const isRewrite = !!(options.rewriteInstruction && options.previousStatement)
+  const outputMode = options.outputMode ?? 'full'
 
   // Truncate rawText to keep total input tokens manageable for the 60s Vercel limit.
   // NHS job adverts with PDFs can be 50,000+ chars; 18,000 chars (~4,500 tokens) captures
@@ -88,6 +89,37 @@ Background and Additional Information:
 ${client.background}
 ${client.special_instructions ? `\n## MANDATORY CLIENT-SPECIFIC INSTRUCTIONS - OVERRIDE ALL OTHER RULES WHERE THEY CONFLICT\n${client.special_instructions}` : ''}`
 
+  const dutiesCount = isScotland ? '6' : '8'
+
+  // --- analysis-only: just job + candidate, output analysis + duties ---
+  if (outputMode === 'analysis-only') {
+    return `${jobSection}
+
+${clientSection}
+
+## TASK
+Analyze this job posting and candidate profile. Extract every essential and desirable criterion from the person spec. Identify how the candidate matches the role.
+
+Return ONLY a single valid JSON object - no text before or after:
+{
+  "analysis": {
+    "jobSummary": "1-2 sentence role summary",
+    "enhancedPreviousTitle": "Senior or Lead + exact vacancy title",
+    "essentialCriteria": ["every essential criterion from the person spec"],
+    "desirableCriteria": ["desirable criteria if any"],
+    "candidateStrengths": ["3 specific ways this candidate matches this role"],
+    "potentialGaps": ["essential criteria where evidence is thin"],
+    "meetsAllEssential": true
+  },
+  "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties from candidate's previous role using job description keywords"]
+}
+
+CRITICAL:
+- essentialCriteria must list EVERY criterion from the person spec
+- previousRoleDuties must have exactly ${dutiesCount} items
+- Never use the word Trust in duties`
+  }
+
   const specificQSection = options.specificQuestions
     ? `\n## SPECIFIC APPLICATION QUESTIONS - ANSWER THESE EXACTLY AS WRITTEN\n${options.specificQuestions}`
     : ''
@@ -100,6 +132,35 @@ ${client.special_instructions ? `\n## MANDATORY CLIENT-SPECIFIC INSTRUCTIONS - O
     ? `\n## REWRITE INSTRUCTION\nRewrite the statement below following this instruction exactly: "${options.rewriteInstruction}"\n\nPREVIOUS STATEMENT:\n${options.previousStatement}`
     : ''
 
+  // --- statement-only: full context, output only the statement ---
+  if (outputMode === 'statement-only') {
+    const outputInstruction = isRewrite
+      ? 'Rewrite the statement following the instruction. Keep all strong content. Improve what was asked.'
+      : isScotland
+      ? 'Write all three question answers for this NHS Scotland application following the three-question format in your instructions.'
+      : 'Write the supporting statement for this candidate following the format and rules in your instructions.'
+
+    return `${jobSection}
+
+${clientSection}
+${specificQSection}
+${instructionsSection}
+${rewriteSection}
+
+## TASK
+${outputInstruction}
+
+Return ONLY a single valid JSON object - no text before or after:
+{
+  "statement": "the complete statement text with **bold** around key achievements"
+}
+
+CRITICAL:
+- No em dashes anywhere
+- statement must be complete, never truncated`
+  }
+
+  // --- full mode: single call with all fields (England/Wales and generic) ---
   const outputInstruction = isRewrite
     ? 'Rewrite the statement following the instruction. Keep all strong content. Improve what was asked.'
     : isScotland
@@ -128,15 +189,111 @@ Return ONLY a single valid JSON object - no text before or after:
     "meetsAllEssential": true
   },
   "statement": "the complete statement text with **bold** around key achievements",
-  "previousRoleDuties": ["exactly ${isScotland ? '6' : '8'} past-tense duties from candidate's previous role"]
+  "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties from candidate's previous role"]
 }
 
 CRITICAL:
 - No em dashes anywhere
 - statement must be complete, never truncated
-- previousRoleDuties must have exactly ${isScotland ? '6' : '8'} items
+- previousRoleDuties must have exactly ${dutiesCount} items
 - Never use the word Trust in duties
 - essentialCriteria must list EVERY criterion from the person spec`
+}
+
+// Scotland: two parallel Claude calls to stay within Vercel's 60s limit.
+// Call A (statement-only): ~1600 tokens output, ~25s generation
+// Call B (analysis+duties):  ~500 tokens output,  ~8s generation
+// Promise.all wall time: max(25, 8) + overhead ≈ 35s — well within 60s
+async function generateScotlandParallel(
+  client: Client,
+  jobData: ScrapeResult,
+  options: {
+    instructions?: string
+    specificQuestions?: string
+    rewriteInstruction?: string
+    previousStatement?: string
+  },
+  style: '1' | '2'
+): Promise<{
+  statement: string
+  previousRoleDuties: string[]
+  currentRoleDuties: string[]
+  analysis: StatementAnalysis | null
+  promptRegion: PromptRegion
+}> {
+  const region: PromptRegion = 'scotland'
+  const systemPrompt = buildSystemPrompt(region, style)
+
+  const statementUserPrompt = buildUserPrompt(client, jobData, region, {
+    instructions: options.instructions,
+    specificQuestions: options.specificQuestions,
+    rewriteInstruction: options.rewriteInstruction,
+    previousStatement: options.previousStatement,
+    outputMode: 'statement-only',
+  })
+
+  const analysisUserPrompt = buildUserPrompt(client, jobData, region, {
+    outputMode: 'analysis-only',
+  })
+
+  const [statementMsg, analysisMsg] = await Promise.all([
+    anthropic.messages.create({
+      model: 'claude-sonnet-4-6',
+      // Q1(420w)+Q2(420w)+Q3(220w) = ~1060 words ≈ 1413 tokens + JSON overhead + formatting ≈ 1700 tokens
+      // 2200 cap gives a generous buffer without risking truncation
+      max_tokens: 2200,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: statementUserPrompt }],
+    }),
+    anthropic.messages.create({
+      model: 'claude-sonnet-4-6',
+      // analysis JSON (7 fields) + 6 duties ≈ 400-600 tokens; 700 cap is safe
+      max_tokens: 700,
+      system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile.',
+      messages: [{ role: 'user', content: analysisUserPrompt }],
+    }),
+  ])
+
+  // Parse statement (critical — throw if missing)
+  const statementContent = statementMsg.content[0]
+  if (statementContent.type !== 'text') throw new Error('Unexpected response type from Claude')
+  const cleanedStatementText = statementContent.text.replace(/\u2014/g, '-').replace(/--/g, '-')
+  const statementJsonMatch = cleanedStatementText.match(/\{[\s\S]*\}/)
+  if (!statementJsonMatch) throw new Error('Could not parse Claude response as JSON')
+
+  let statementParsed: { statement?: string }
+  try {
+    statementParsed = JSON.parse(statementJsonMatch[0])
+  } catch {
+    throw new Error('Invalid JSON in Claude response')
+  }
+  if (!statementParsed.statement) throw new Error('Claude response missing statement field')
+
+  // Parse analysis + duties (non-critical — degrade gracefully if it fails)
+  let analysis: StatementAnalysis | null = null
+  let previousRoleDuties: string[] = []
+  const analysisContent = analysisMsg.content[0]
+  if (analysisContent.type === 'text') {
+    const cleanedAnalysisText = analysisContent.text.replace(/\u2014/g, '-').replace(/--/g, '-')
+    const analysisJsonMatch = cleanedAnalysisText.match(/\{[\s\S]*\}/)
+    if (analysisJsonMatch) {
+      try {
+        const analysisParsed = JSON.parse(analysisJsonMatch[0])
+        analysis = analysisParsed.analysis || null
+        previousRoleDuties = Array.isArray(analysisParsed.previousRoleDuties) ? analysisParsed.previousRoleDuties : []
+      } catch { /* non-critical */ }
+    }
+  }
+
+  const statement = statementParsed.statement.replace(/\u2014/g, '-').replace(/--/g, '-')
+
+  return {
+    statement,
+    previousRoleDuties,
+    currentRoleDuties: [],
+    analysis,
+    promptRegion: region,
+  }
 }
 
 export async function generateStatement(
@@ -160,18 +317,28 @@ export async function generateStatement(
   const region = options.vacancyUrl ? detectRegion(options.vacancyUrl) : 'generic'
   const style = options.style || '1'
 
+  // Scotland uses parallel calls to stay within Vercel's 60s serverless limit
+  if (region === 'scotland') {
+    return generateScotlandParallel(client, jobData, {
+      instructions: options.instructions,
+      specificQuestions: options.specificQuestions,
+      rewriteInstruction: options.rewriteInstruction,
+      previousStatement: options.previousStatement,
+    }, style)
+  }
+
+  // England/Wales and generic: single call
   const systemPrompt = buildSystemPrompt(region, style)
   const userPrompt = buildUserPrompt(client, jobData, region, {
     instructions: options.instructions,
     specificQuestions: options.specificQuestions,
     rewriteInstruction: options.rewriteInstruction,
     previousStatement: options.previousStatement,
+    outputMode: 'full',
   })
 
   // max_tokens must be high enough that JSON is never truncated.
-  // With word count reductions and compact analysis, natural output is:
-  //   Scotland: ~2300 tokens (~35s at 65 tok/s) — well under 60s
-  //   England:  ~2200 tokens (~34s at 65 tok/s) — well under 60s
+  // England natural output ~2200 tokens (~34s at 65 tok/s) — well under 60s.
   // 3000 cap gives a safe buffer without risking truncation.
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
