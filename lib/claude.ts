@@ -116,29 +116,27 @@ ${rewriteSection}
 ## TASK
 ${outputInstruction}
 
-Return ONLY a single valid JSON object with this exact structure - no text before or after:
+Return ONLY a single valid JSON object - no text before or after:
 {
   "analysis": {
-    "jobSummary": "2-3 sentence role summary",
-    "essentialCriteria": ["every essential criterion from the person spec - extract them all"],
+    "jobSummary": "1-2 sentence role summary",
+    "enhancedPreviousTitle": "Senior or Lead + exact vacancy title",
+    "essentialCriteria": ["every essential criterion from the person spec"],
     "desirableCriteria": ["desirable criteria if any"],
-    "keyDuties": ["6-10 key duties from the job description"],
-    "candidateStrengths": ["3-5 specific ways this candidate matches this role"],
-    "potentialGaps": ["any essential criteria where evidence is thin"],
+    "candidateStrengths": ["3 specific ways this candidate matches this role"],
+    "potentialGaps": ["essential criteria where evidence is thin"],
     "meetsAllEssential": true
   },
-  "statement": "the complete ready-to-submit statement text with **bold** around key achievements and titles",
-  "previousRoleDuties": ["8 past-tense duties describing candidate's previous role using JD keywords"],
-  "currentRoleDuties": ["8 present-tense duties describing the vacancy role using JD keywords"]
+  "statement": "the complete statement text with **bold** around key achievements",
+  "previousRoleDuties": ["exactly 8 past-tense duties from candidate's previous role"]
 }
 
-CRITICAL REMINDERS:
-- No em dashes (--) anywhere in the output
-- statement must be complete - never truncated or cut short
-- previousRoleDuties and currentRoleDuties must each have exactly 8 items
-- Never use the word Trust in the duties lists
-- meetsAllEssential should be true if candidate evidence covers all essential criteria
-- essentialCriteria must contain EVERY criterion from the person spec - extract them all`
+CRITICAL:
+- No em dashes anywhere
+- statement must be complete, never truncated
+- previousRoleDuties must have exactly 8 items
+- Never use the word Trust in duties
+- essentialCriteria must list EVERY criterion from the person spec`
 }
 
 export async function generateStatement(
@@ -190,7 +188,6 @@ export async function generateStatement(
   let parsed: {
     statement: string
     previousRoleDuties?: string[]
-    currentRoleDuties?: string[]
     analysis?: StatementAnalysis & { meetsAllEssential?: boolean }
   }
 
@@ -202,13 +199,12 @@ export async function generateStatement(
 
   if (!parsed.statement) throw new Error('Claude response missing statement field')
 
-  // Safety net: strip em dashes from statement
   const statement = parsed.statement.replace(/\u2014/g, '-').replace(/--/g, '-')
 
   return {
     statement,
     previousRoleDuties: Array.isArray(parsed.previousRoleDuties) ? parsed.previousRoleDuties : [],
-    currentRoleDuties: Array.isArray(parsed.currentRoleDuties) ? parsed.currentRoleDuties : [],
+    currentRoleDuties: [],
     analysis: parsed.analysis || null,
     promptRegion: region,
   }

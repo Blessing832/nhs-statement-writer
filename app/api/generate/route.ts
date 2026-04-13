@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: message }, { status: 500 })
   }
 
-  const { statement, previousRoleDuties, currentRoleDuties, analysis, promptRegion } = generated
+  const { statement, previousRoleDuties, analysis, promptRegion } = generated
 
   // 3. Save to DB
   await supabaseAdmin.from('statements').insert({
@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
     job_title: (jobData as ScrapeResult).jobTitle,
     organisation: (jobData as ScrapeResult).organisation,
     generated_statement: statement,
-    key_duties: currentRoleDuties.length > 0 ? currentRoleDuties : (analysis?.keyDuties || []),
+    key_duties: previousRoleDuties.length > 0 ? previousRoleDuties : (analysis?.keyDuties || []),
     is_rewrite: !!rewriteInstruction,
     rewrite_instruction: rewriteInstruction || null,
   })
@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({
     statement,
     previousRoleDuties,
-    currentRoleDuties,
+    currentRoleDuties: [],
     analysis,
     promptRegion,
     jobTitle: (jobData as ScrapeResult).jobTitle,
