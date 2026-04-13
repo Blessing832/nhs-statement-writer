@@ -5,13 +5,11 @@ import { ScrapeResult } from '@/lib/types'
 
 export const maxDuration = 60
 
-const SCRAPER_URL = process.env.SCRAPER_SERVICE_URL!
-const SCRAPER_SECRET = process.env.SCRAPER_SECRET!
-
 export async function POST(req: NextRequest) {
   const {
     client_code,
     vacancy_url,
+    jobData,
     instructions,
     style,
     specificQuestions,
@@ -19,8 +17,8 @@ export async function POST(req: NextRequest) {
     previousStatement,
   } = await req.json()
 
-  if (!client_code || !vacancy_url) {
-    return NextResponse.json({ error: 'Client code and vacancy URL are required' }, { status: 400 })
+  if (!client_code || !vacancy_url || !jobData) {
+    return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
   // 1. Look up client
@@ -44,46 +42,10 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // 2. Scrape
-  let scrapeRes: Response
-  try {
-    scrapeRes = await fetch(`${SCRAPER_URL}/scrape`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-scraper-secret': SCRAPER_SECRET,
-      },
-      body: JSON.stringify({ url: vacancy_url }),
-      signal: AbortSignal.timeout(45000),
-    })
-  } catch {
-    return NextResponse.json(
-      { error: 'The job advert page took too long to load. Please try again in a moment.' },
-      { status: 504 }
-    )
-  }
-
-  if (!scrapeRes.ok) {
-    const scrapeErr = await scrapeRes.json().catch(() => ({ error: 'Failed to read job advert' }))
-    return NextResponse.json(
-      { error: `Could not read the job advert page. Please check the URL is correct and try again. (${scrapeErr.error})` },
-      { status: 502 }
-    )
-  }
-
-  const jobData: ScrapeResult = await scrapeRes.json()
-
-  if (!jobData.rawText || jobData.rawText.length < 100) {
-    return NextResponse.json(
-      { error: 'Could not extract enough information from the job advert. Please check the URL.' },
-      { status: 422 }
-    )
-  }
-
-  // 3. Generate
+  // 2. Generate (job data already scraped by client in step 1)
   let generated: Awaited<ReturnType<typeof generateStatement>>
   try {
-    generated = await generateStatement(client, jobData, {
+    generated = await generateStatement(client, jobData as ScrapeResult, {
       instructions,
       style: style || '1',
       specificQuestions,
@@ -112,27 +74,26 @@ export async function POST(req: NextRequest) {
 
   const { statement, previousRoleDuties, currentRoleDuties, analysis, promptRegion } = generated
 
-  // 4. Save to DB
+  // 3. Save to DB
   await supabaseAdmin.from('statements').insert({
     client_id: client.id,
     vacancy_url,
-    job_title: jobData.jobTitle,
-    organisation: jobData.organisation,
+    job_title: (jobData as ScrapeResult).jobTitle,
+    organisation: (jobData as ScrapeResult).organisation,
     generated_statement: statement,
     key_duties: currentRoleDuties.length > 0 ? currentRoleDuties : (analysis?.keyDuties || []),
     is_rewrite: !!rewriteInstruction,
     rewrite_instruction: rewriteInstruction || null,
   })
 
-  // 5. Return result
   return NextResponse.json({
     statement,
     previousRoleDuties,
     currentRoleDuties,
     analysis,
     promptRegion,
-    jobTitle: jobData.jobTitle,
-    organisation: jobData.organisation,
-    source: jobData.source,
+    jobTitle: (jobData as ScrapeResult).jobTitle,
+    organisation: (jobData as ScrapeResult).organisation,
+    source: (jobData as ScrapeResult).source,
   })
 }

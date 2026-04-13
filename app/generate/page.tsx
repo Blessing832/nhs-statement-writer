@@ -200,6 +200,7 @@ function GeneratePage() {
   const [style, setStyle] = useState<'1' | '2'>('1')
   const [specificQuestions, setSpecificQuestions] = useState('')
   const [loading, setLoading] = useState(false)
+  const [loadingStep, setLoadingStep] = useState('')
   const [error, setError] = useState('')
   const [result, setResult] = useState<Result | null>(null)
   const [copied, setCopied] = useState(false)
@@ -216,21 +217,30 @@ function GeneratePage() {
   }, [clientCode, router])
 
   const callGenerate = async (
-    body: Record<string, unknown>
+    body: Record<string, unknown>,
+    onStep: (msg: string) => void
   ): Promise<Result> => {
-    const res = await fetch('/api/generate', {
+    // Step 1: Scrape the job advert (~10-40s)
+    onStep('Reading the job advert...')
+    const scrapeRes = await fetch('/api/scrape', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      body: JSON.stringify({ client_code: body.client_code, url: body.vacancy_url }),
     })
+    const scrapeData = await scrapeRes.json().catch(() => ({ error: 'Server error on scrape.' }))
+    if (!scrapeRes.ok) throw new Error(scrapeData.error || 'Could not read the job advert. Please try again.')
 
-    const data = await res.json().catch(() => ({ error: 'Server error. Please try again.' }))
+    // Step 2: Generate the statement (~15-20s)
+    onStep('Writing your supporting statement...')
+    const genRes = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...body, jobData: scrapeData }),
+    })
+    const genData = await genRes.json().catch(() => ({ error: 'Server error on generate.' }))
+    if (!genRes.ok) throw new Error(genData.error || 'Failed to generate statement. Please try again.')
 
-    if (!res.ok) {
-      throw new Error(data.error || 'Server error. Please try again.')
-    }
-
-    return data as Result
+    return genData as Result
   }
 
   const handleGenerate = async (e: React.FormEvent) => {
@@ -248,7 +258,8 @@ function GeneratePage() {
           vacancy_url: vacancyUrl.trim(),
           style,
           specificQuestions: specificQuestions.trim() || undefined,
-        }
+        },
+        setLoadingStep
       )
       setResult(data)
       setShowRewrite(false)
@@ -257,6 +268,7 @@ function GeneratePage() {
       setError(err instanceof Error ? err.message : 'Network error. Please check your connection and try again.')
     } finally {
       setLoading(false)
+      setLoadingStep('')
     }
   }
 
@@ -273,7 +285,8 @@ function GeneratePage() {
           specificQuestions: specificQuestions.trim() || undefined,
           rewriteInstruction: rewriteInstruction.trim(),
           previousStatement: result.statement,
-        }
+        },
+        () => {}
       )
       setResult(data)
       setShowRewrite(false)
@@ -383,7 +396,7 @@ function GeneratePage() {
               {loading && (
                 <div className="mt-5 flex items-center gap-3 text-gray-500">
                   <div className="w-5 h-5 border-2 border-gray-200 rounded-full animate-spin flex-shrink-0" style={{ borderTopColor: '#005eb8' }} />
-                  <span className="text-sm">Reading the job advert and writing your statement - this takes up to 60 seconds...</span>
+                  <span className="text-sm">{loadingStep || 'Starting...'}</span>
                 </div>
               )}
             </div>
