@@ -145,14 +145,15 @@ ${outputInstruction}
 
 Output the statement as plain text only. Do NOT wrap in JSON. Do NOT add any preamble, explanation, or closing remarks. Start directly with the first word of the statement.
 
-HARD WORD LIMITS — stop each question at its limit and move to the next:
-${isScotland ? `- Question 1: 420 words maximum
+${isScotland ? `The statement is THREE QUESTIONS ONLY — no Key Duties section, no additional sections.
+
+HARD WORD LIMITS — stop each question at its limit and move immediately to the next:
+- Question 1: 420 words maximum
 - Question 2: 420 words maximum
-- Question 3: 220 words maximum — end with "Thank you." and stop` : `- Statement: 1,450 words maximum`}
+- Question 3: 220 words maximum — end with "Thank you." and stop` : `HARD WORD LIMIT: 1,450 words maximum`}
 
 CRITICAL:
 - No em dashes anywhere
-- All three questions must be present and complete
 - Do not bold or highlight any words`
   }
 

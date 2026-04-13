@@ -145,12 +145,5 @@ List every essential criterion before writing. Verify every one is addressed.
 Missing even one essential criterion is a failure of this task.
 Ensure at least 2 full paragraphs are about the current role.
 
-## KEY DUTIES — EXACTLY 6 (not counted in question word limits)
-Heading: "Key Duties I Performed as [ENHANCED Vacancy Title] at [Previous Workplace] ([Years])"
-Exactly 6 duties, each 2 lines (approx 20-28 words).
-Active voice: "I carried out...", "I delivered...", "I supported..." — never "Assisted with..."
-Use JD keywords, Scottish systems where relevant, Scottish legislation where relevant.
-Past tense. Quantify where possible. Never use "Trust" or "Board" in the duties text.
-
 ## OUTPUT
 Write only the three-question response as instructed in the user message. Follow the output format specified in the user message exactly.`
