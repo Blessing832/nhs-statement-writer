@@ -125,7 +125,7 @@ CRITICAL:
     ? `\n## REWRITE INSTRUCTION\nRewrite the statement below following this instruction exactly: "${options.rewriteInstruction}"\n\nPREVIOUS STATEMENT:\n${options.previousStatement}`
     : ''
 
-  // --- statement-only: full context, output only the statement ---
+  // --- statement-only: plain text output (no JSON — avoids newline-escaping failures) ---
   if (outputMode === 'statement-only') {
     const outputInstruction = isRewrite
       ? 'Rewrite the statement following the instruction. Keep all strong content. Improve what was asked.'
@@ -143,14 +143,12 @@ ${rewriteSection}
 ## TASK
 ${outputInstruction}
 
-Return ONLY a single valid JSON object - no text before or after:
-{
-  "statement": "the complete statement text with **bold** around key achievements"
-}
+Output the statement as plain text only. Do NOT wrap in JSON. Do NOT add any preamble, explanation, or closing remarks. Start directly with the first word of the statement.
 
 CRITICAL:
 - No em dashes anywhere
-- statement must be complete, never truncated`
+- Statement must be complete, never cut off mid-sentence
+- Use **double asterisks** around key achievements`
   }
 
   // --- full mode: single call with all fields (England/Wales and generic) ---
@@ -247,20 +245,11 @@ async function generateScotlandParallel(
     }),
   ])
 
-  // Parse statement (critical — throw if missing)
+  // Statement call returns plain text — no JSON parsing needed
   const statementContent = statementMsg.content[0]
   if (statementContent.type !== 'text') throw new Error('Unexpected response type from Claude')
-  const cleanedStatementText = statementContent.text.replace(/\u2014/g, '-').replace(/--/g, '-')
-  const statementJsonMatch = cleanedStatementText.match(/\{[\s\S]*\}/)
-  if (!statementJsonMatch) throw new Error('Could not parse Claude response as JSON')
-
-  let statementParsed: { statement?: string }
-  try {
-    statementParsed = JSON.parse(statementJsonMatch[0])
-  } catch {
-    throw new Error('Invalid JSON in Claude response')
-  }
-  if (!statementParsed.statement) throw new Error('Claude response missing statement field')
+  const statement = statementContent.text.trim().replace(/\u2014/g, '-').replace(/--/g, '-')
+  if (!statement) throw new Error('Claude returned an empty statement')
 
   // Parse person spec + duties (non-critical — degrade gracefully if it fails)
   let analysis: StatementAnalysis | null = null
@@ -290,8 +279,6 @@ async function generateScotlandParallel(
       } catch { /* non-critical */ }
     }
   }
-
-  const statement = statementParsed.statement.replace(/\u2014/g, '-').replace(/--/g, '-')
 
   return {
     statement,
