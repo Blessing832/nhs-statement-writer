@@ -179,27 +179,6 @@ Past tense. Quantify where possible. Never use the word "Trust".
 
 ${styleInstructions}
 
-## PRE-WRITING ANALYSIS — OUTPUT IN JSON
-The analysis block must contain:
-- jobSummary: 2-3 sentence summary of the role
-- enhancedPreviousTitle: "Senior/Lead + [exact vacancy title]"
-- trustOrOrganisation: trust name and values if found
-- advertKeyPhrases: all phrases extracted from job advert introduction
-- jdKeywords: specialty keywords, equipment, IT systems, forms, patient conditions, professional roles, procedures
-- essentialCriteria: EVERY essential criterion from person spec (leave none out)
-- desirableCriteria: desirable criteria (empty array if none)
-- keyDuties: 6-10 main duties from job description
-- subheadingPlan: for Style 1, list each planned subheading with the criteria it groups; empty array for Style 2
-- candidateStrengths: 3-5 specific ways this candidate matches this role
-- potentialGaps: essential criteria where candidate evidence is thin
-- meetsAllEssential: true if candidate has clear evidence for every essential criterion
-
-## OUTPUT FORMAT
-Return a single valid JSON object only — no text before or after:
-{
-  "analysis": { ...as above... },
-  "statement": "the complete main statement from opening to Thank you.",
-  "previousRoleDuties": ["exactly 8 past-tense duties as Key Duties list"],
-  "currentRoleDuties": ["8 present-tense duties describing what someone in this vacancy does day-to-day"]
-}`
+## OUTPUT
+Return the statement as plain text and the analysis as JSON exactly as specified in the user message. Follow the user message output format precisely.`
 }
