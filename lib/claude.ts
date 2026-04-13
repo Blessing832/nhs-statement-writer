@@ -31,19 +31,17 @@ export function detectRegion(url: string): PromptRegion {
 
 function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): string {
   if (region === 'scotland') {
-    return SCOTLAND_PROMPT + '\n\n' + EVIDENCE_BANK
+    return SCOTLAND_PROMPT
   }
   if (region === 'england-wales') {
-    return getEnglandWalesPrompt(style) + '\n\n' + EVIDENCE_BANK
+    return getEnglandWalesPrompt(style)
   }
   return `You are an expert UK job application writer. Write a compelling supporting statement for this NHS or public sector role.
 - Address every essential criterion from the person specification
 - Use NHS language and terminology
 - Write 800-1,200 words
 - Never use em dashes (--). Use hyphens (-) or commas instead
-- Never fabricate experience
-
-${EVIDENCE_BANK}`
+- Never fabricate experience`
 }
 
 function buildUserPrompt(
@@ -60,12 +58,19 @@ function buildUserPrompt(
   const isScotland = region === 'scotland'
   const isRewrite = !!(options.rewriteInstruction && options.previousStatement)
 
+  // Truncate rawText to keep total input tokens manageable for the 60s Vercel limit.
+  // NHS job adverts with PDFs can be 50,000+ chars; 18,000 chars (~4,500 tokens) captures
+  // the full person spec and job description for all typical postings.
+  const rawText = jobData.rawText.length > 18000
+    ? jobData.rawText.slice(0, 18000) + '\n\n[Text truncated for processing — person spec and key criteria above are complete]'
+    : jobData.rawText
+
   const jobSection = `## JOB DETAILS
 Title: ${jobData.jobTitle}
 Organisation: ${jobData.organisation}
 
 ## FULL JOB DESCRIPTION AND PERSON SPECIFICATION (extract ALL criteria from here)
-${jobData.rawText}`
+${rawText}`
 
   const clientSection = `## CANDIDATE PROFILE
 Full Name: ${client.full_name}
