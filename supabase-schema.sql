@@ -53,6 +53,7 @@ create table if not exists applicant_preferences (
   role_keywords text[] not null default '{}',
   employment_type text not null default 'any',
   sources text[] not null default '{"england","scotland","civil-service","healthjobsuk"}',
+  permanent_only boolean not null default false,
   is_active boolean not null default true,
   notes text not null default '',
   created_at timestamptz not null default now(),

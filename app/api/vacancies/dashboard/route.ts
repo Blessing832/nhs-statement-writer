@@ -33,13 +33,13 @@ export async function GET(req: NextRequest) {
     `)
     .eq('status', 'pending')
 
-  // Filter in JS: vacancy must be open and posted within 48h (or no posted date)
-  const cutoff48h = new Date(Date.now() - 48 * 60 * 60 * 1000)
+  // Filter in JS: vacancy must be open and posted within 7 days (or no posted date)
+  const cutoff7d = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
   const matches = (rawMatches || []).filter((m) => {
-    const v = m.vacancy as Vacancy | null
+    const v = m.vacancy as unknown as Vacancy | null
     if (!v) return false
     if (!v.is_open) return false
-    if (v.posted_at && new Date(v.posted_at) < cutoff48h) return false
+    if (v.posted_at && new Date(v.posted_at) < cutoff7d) return false
     return true
   })
 
@@ -62,7 +62,7 @@ export async function GET(req: NextRequest) {
   const allClear: { client_id: string; client_code: string; full_name: string }[] = []
 
   for (const pref of allPrefs || []) {
-    const client = pref.clients as { id: string; client_code: string; full_name: string } | null
+    const client = pref.clients as unknown as { id: string; client_code: string; full_name: string } | null
     if (!client) continue
 
     const clientMatches = clientMatchMap.get(pref.client_id) || []
@@ -75,7 +75,7 @@ export async function GET(req: NextRequest) {
         pending_count: clientMatches.length,
         matches: clientMatches.map((m) => ({
           match_id: m.id,
-          vacancy: m.vacancy as Vacancy,
+          vacancy: m.vacancy as unknown as Vacancy,
         })),
       })
     } else {
