@@ -343,6 +343,8 @@ async function generateParallel(
     .replace(/\u2014/g, '-')
     .replace(/--/g, '-')
     .replace(/\*\*/g, '')
+    // Strip any "Story:", "Scenario:", "Story 1:", "Scenario 2:" labels the model may add
+    .replace(/^(Story|Scenario)\s*\d*\s*:\s*/gim, '')
   if (!statement) throw new Error('Claude returned an empty statement')
 
   // Analysis: small JSON, non-critical

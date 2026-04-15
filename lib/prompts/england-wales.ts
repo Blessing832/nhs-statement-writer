@@ -160,9 +160,13 @@ PARAGRAPH OPENING PATTERNS — rotate, never repeat the same pattern consecutive
 ## STORY PARAGRAPHS — MINIMUM 2 REQUIRED (6-8 lines, 120-150 words)
 Include at least 2 story paragraphs, up to 3. Distribute them throughout the statement — not all at the end.
 Each story addresses 3-5 criteria at once.
-Style 1: Subheading lists ALL criteria the story addresses (using person spec keywords), then the story paragraph — NO "Scenario:" prefix.
+Style 1: Subheading lists ALL criteria the story addresses (using person spec keywords), then jump directly into the paragraph — NO label of any kind before the paragraph text.
 Style 2: Weave naturally through prose.
 Stories use MINI-STAR format with full specific evidence, named professionals, and quantified results.
+
+ABSOLUTE BAN — NEVER write any of these labels before a paragraph:
+"Story:", "Story 1:", "Story 2:", "Scenario:", "Scenario 1:", "Example:", "STAR:", "Case:"
+Just write the paragraph directly. No label. No prefix. No colon introduction.
 
 ## 6 C'S PARAGRAPH (5-6 lines, approx 70-85 words — NO SUBHEADING)
 Each of the 6 C's must have a specific example with a result.
