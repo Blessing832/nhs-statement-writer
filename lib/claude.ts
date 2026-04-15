@@ -132,7 +132,6 @@ Return ONLY a single valid JSON object - no text before or after:
   "jobSummary": "1-2 sentence role summary",
   "essentialCriteria": ["every essential criterion from the person spec"],
   "desirableCriteria": ["desirable criteria if any"],
-  "potentialGaps": ["essential criteria where candidate evidence is thin"],
   "meetsAllEssential": true,
   "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties using job description keywords"]
 }
@@ -215,13 +214,16 @@ HARD WORD LIMITS:
 - Question 1: 420 words maximum
 - Question 2: 420 words maximum
 - Question 3: 220 words maximum — end with "Thank you." and stop`
-  : `HARD WORD LIMIT: 1,450 words for the main statement — end with "Thank you."
+  : `HARD WORD LIMIT: 1,450 words for the main statement — end with "Thank you." and STOP
+Do NOT write any section after "Thank you." — no Key Duties, no summaries, nothing.
 ${hasExtraQuestions ? 'After "Thank you.", write each specific question answer (200-250 words each) with the question as a heading.' : ''}`}
 
 CRITICAL:
 - No em dashes anywhere
 - Do not bold or highlight any words
-- Person specification: address EVERY essential criterion — they may appear at the end of the attached document`
+- Do NOT write a Key Duties section — the statement ends at "Thank you."
+- Address EVERY essential and desirable criterion with specific STAR evidence — the candidate's enhanced title confirms they have performed this work in the same specialty
+- Criteria that appear potentially weak MUST still be addressed confidently with specific evidence from the candidate's history`
   }
 
   // --- full mode: generic/civil-service single call ---
@@ -352,7 +354,6 @@ async function generateParallel(
           jobSummary?: string
           essentialCriteria?: string[]
           desirableCriteria?: string[]
-          potentialGaps?: string[]
           meetsAllEssential?: boolean
           previousRoleDuties?: string[]
         } = JSON.parse(jsonMatch[0])
@@ -366,7 +367,7 @@ async function generateParallel(
             essentialCriteria: p.essentialCriteria,
             desirableCriteria: p.desirableCriteria || [],
             candidateStrengths: [],
-            potentialGaps: p.potentialGaps || [],
+            potentialGaps: [],
             keyDuties: [],
             meetsAllEssential: p.meetsAllEssential,
           }

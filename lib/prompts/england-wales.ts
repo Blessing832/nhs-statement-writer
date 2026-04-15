@@ -40,10 +40,10 @@ SUBHEADING RULES:
 - NEVER use "NHS settings" — use specialty-specific settings only (acute care settings, mental health care settings, community care settings, maternity care settings, care settings)
 - NEVER use generic openers such as "I am a hardworking individual" or "I am passionate about"
 - NEVER use the word "bustling" or "vibrant"
-- NEVER use "Trust" in the Key Duties list
-- NEVER add an "Additional Information" section — stop after Key Duties
+- NEVER write a "Key Duties" section — the statement ends with "Thank you." and nothing follows
+- NEVER add any section after "Thank you." — no Key Duties, no Additional Information, nothing
 - Write in first person active voice throughout ("I carried out...", "I delivered...", "I supported...")
-- The main statement ends with "Thank you." — do not restart after this
+- The statement ends with "Thank you." — stop writing immediately after this
 
 ## VACANCY TITLE ENHANCEMENT RULE
 Step 1: Find the EXACT vacancy title from the job advert.
@@ -86,15 +86,14 @@ Before writing, read and extract:
 
 USE EXACT WORDS from the JD for tools, systems, forms, procedures, and professional roles throughout the statement.
 
-## WORD COUNT — SILENT INTERNAL MONITORING
-Main statement (opening to "Thank you."): MAXIMUM 1,450 WORDS
-Key Duties: not counted in the 1,450 words
+## WORD COUNT — HARD LIMIT
+Statement (opening to "Thank you."): MAXIMUM 1,450 WORDS
 Count internally after every paragraph. Never display counts or deliberation to the user.
 INTERNAL CHECKPOINTS:
-- At 1,100w: adjust remaining paragraph lengths
+- At 1,100w: shorten remaining paragraphs
 - At 1,350w: finish in the next 100w
-- At 1,420w: write "Thank you." then Key Duties, stop
-- At 1,450w: stop immediately
+- At 1,420w: write "Thank you." and stop immediately — nothing follows
+- At 1,450w: stop immediately with "Thank you."
 
 ## PARAGRAPH 1 — OPENING (MAX 8 LINES, approx 100-120 words)
 Extract phrases FROM the job advert introduction and weave them into the opening.

@@ -82,29 +82,51 @@ app.post('/scrape', async (req, res) => {
       return links
         .filter((a) => {
           const href = a.href.toLowerCase()
-          const text = a.textContent.toLowerCase()
+          const text = a.textContent.toLowerCase().trim()
           const isDocFile =
             href.endsWith('.pdf') ||
             href.endsWith('.docx') ||
             href.endsWith('.doc') ||
             href.includes('/document/') ||
             href.includes('/download/') ||
-            href.includes('/attachment/')
+            href.includes('/attachment/') ||
+            href.includes('/file/')
           const isDocLink =
             text.includes('job description') ||
             text.includes('person spec') ||
+            text.includes('person specification') ||
             text.includes('job pack') ||
+            text.includes('job detail') ||
             text.includes('supporting document') ||
-            text.includes('job details') ||
+            text.includes('supporting info') ||
+            text.includes('role profile') ||
+            text.includes('application pack') ||
+            text.includes('information pack') ||
+            text.includes('candidate pack') ||
+            text.includes('additional information') ||
+            text.includes('further information') ||
+            text.includes('recruitment pack') ||
             text.includes('download') ||
+            text.includes('attachment') ||
             isDocFile
-          return isDocLink
+          return isDocLink && href.startsWith('http')
         })
         .map((a) => ({
           href: a.href,
           text: a.textContent.trim(),
+          // Score: higher = more likely to be PS
+          score: (
+            a.textContent.toLowerCase().includes('person spec') ? 10 :
+            a.textContent.toLowerCase().includes('job description') ? 8 :
+            a.textContent.toLowerCase().includes('job pack') ? 7 :
+            a.textContent.toLowerCase().includes('role profile') ? 6 :
+            a.textContent.toLowerCase().includes('application pack') ? 5 : 1
+          ),
         }))
     })
+
+    // Sort: person spec first, then job description, then others
+    docLinks.sort((a, b) => b.score - a.score)
 
     console.log(`Found ${docLinks.length} document links:`, docLinks)
 
@@ -118,18 +140,24 @@ app.post('/scrape', async (req, res) => {
     await browser.close()
     browser = null
 
-    // Download and parse each document
+    // Download and parse each document — limit per-doc to 30k chars, total to 5 docs
+    // PS-scored docs are sorted first so they get priority in combined text
     let combinedDocText = ''
     const downloadedDocs = []
+    const PER_DOC_LIMIT = 30000
 
     for (const link of docLinks.slice(0, 5)) {
-      // max 5 docs
       try {
-        const docText = await downloadAndParseDoc(link.href, cookieHeader)
+        let docText = await downloadAndParseDoc(link.href, cookieHeader)
         if (docText && docText.length > 100) {
+          // Truncate very large docs but keep both start and end (PS often at end)
+          if (docText.length > PER_DOC_LIMIT) {
+            const half = PER_DOC_LIMIT / 2
+            docText = docText.slice(0, half) + '\n\n[...middle omitted...]\n\n' + docText.slice(-half)
+          }
           combinedDocText += `\n\n--- ${link.text || 'Document'} ---\n${docText}`
           downloadedDocs.push(link.text || link.href)
-          console.log(`Parsed doc: ${link.text} (${docText.length} chars)`)
+          console.log(`Parsed doc: ${link.text} (${docText.length} chars after trim)`)
         }
       } catch (err) {
         console.error(`Failed to parse ${link.href}:`, err.message)
@@ -199,12 +227,14 @@ async function downloadAndParseDoc(url, cookieHeader) {
 
 function extractRelevantPageText(text) {
   // Clean up whitespace from page text
-  return text
+  const cleaned = text
     .split('\n')
     .map((l) => l.trim())
     .filter((l) => l.length > 0)
     .join('\n')
-    .substring(0, 8000) // limit to 8k chars
+  // Keep 20k chars: first 14k (job description) + last 6k (person spec at bottom)
+  if (cleaned.length <= 20000) return cleaned
+  return cleaned.slice(0, 14000) + '\n\n[...middle omitted...]\n\n' + cleaned.slice(-6000)
 }
 
 app.listen(PORT, () => {

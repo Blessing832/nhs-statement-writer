@@ -150,11 +150,6 @@ function AnalysisPanel({ analysis, region }: { analysis: StatementAnalysis | nul
         </Section>
       )}
 
-      {analysis.potentialGaps?.length > 0 && (
-        <Section title="Areas to Note">
-          <BulletList items={analysis.potentialGaps} icon="&#9888;" colour="text-amber-600" />
-        </Section>
-      )}
     </div>
   )
 }
