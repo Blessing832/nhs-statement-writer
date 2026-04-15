@@ -8,6 +8,7 @@ const anthropic = new Anthropic({
 })
 
 export type PromptRegion = 'england-wales' | 'scotland' | 'civil-service' | 'generic'
+export type ApplicationMode = 'full' | 'questions-only' | 'statement-questions'
 
 export function detectRegion(url: string): PromptRegion {
   const lower = url.toLowerCase()
@@ -39,6 +40,19 @@ function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): string {
 - Never fabricate experience`
 }
 
+// Smart truncation: take first 12,000 chars (JD) + last 6,000 chars (PS is usually at the bottom).
+// Total = 18,000 chars = same token budget, but now captures person spec tables at the end of PDF documents.
+function buildRawText(rawText: string): string {
+  if (rawText.length <= 18000) return rawText
+  const start = rawText.slice(0, 12000)
+  const end = rawText.slice(-6000)
+  return (
+    start +
+    '\n\n[...middle of document omitted — continuing from near end of document where person specification appears...]\n\n' +
+    end
+  )
+}
+
 function buildUserPrompt(
   client: Client,
   jobData: ScrapeResult,
@@ -48,23 +62,22 @@ function buildUserPrompt(
     specificQuestions?: string
     rewriteInstruction?: string
     previousStatement?: string
-    outputMode?: 'statement-only' | 'analysis-only' | 'full'
+    outputMode?: 'statement-only' | 'questions-only' | 'analysis-only' | 'full'
+    applicationMode?: ApplicationMode
   }
 ): string {
   const isScotland = region === 'scotland'
   const isRewrite = !!(options.rewriteInstruction && options.previousStatement)
   const outputMode = options.outputMode ?? 'full'
   const dutiesCount = isScotland ? '6' : '8'
-
-  const rawText = jobData.rawText.length > 18000
-    ? jobData.rawText.slice(0, 18000) + '\n\n[Text truncated for processing — person spec and key criteria above are complete]'
-    : jobData.rawText
+  const rawText = buildRawText(jobData.rawText)
 
   const jobSection = `## JOB DETAILS
 Title: ${jobData.jobTitle}
 Organisation: ${jobData.organisation}
 
-## FULL JOB DESCRIPTION AND PERSON SPECIFICATION (extract ALL criteria from here)
+## FULL JOB DESCRIPTION AND PERSON SPECIFICATION
+IMPORTANT: The person specification may appear at the END of this document — read the entire text carefully.
 ${rawText}`
 
   const clientSection = `## CANDIDATE PROFILE
@@ -83,7 +96,7 @@ Background and Additional Information:
 ${client.background}
 ${client.special_instructions ? `\n## MANDATORY CLIENT-SPECIFIC INSTRUCTIONS - OVERRIDE ALL OTHER RULES WHERE THEY CONFLICT\n${client.special_instructions}` : ''}`
 
-  // --- analysis-only ---
+  // --- analysis-only: extract criteria + duties ---
   if (outputMode === 'analysis-only') {
     if (isScotland) {
       return `${jobSection}
@@ -91,7 +104,7 @@ ${client.special_instructions ? `\n## MANDATORY CLIENT-SPECIFIC INSTRUCTIONS - O
 ${clientSection}
 
 ## TASK
-Extract every essential and desirable criterion from the person specification. Write ${dutiesCount} past-tense key duties based on the candidate's previous role and the job description keywords.
+Extract every essential and desirable criterion from the person specification. The person spec may be in a table at the END of the document — check thoroughly. Write ${dutiesCount} past-tense key duties based on the candidate's previous role and the job description keywords.
 
 Return ONLY a single valid JSON object - no text before or after:
 {
@@ -101,18 +114,17 @@ Return ONLY a single valid JSON object - no text before or after:
 }
 
 CRITICAL:
-- essentialCriteria must list EVERY criterion from the person spec
+- essentialCriteria must list EVERY criterion from the person spec — check ALL of the document including the end
 - previousRoleDuties must have exactly ${dutiesCount} items
 - Never use the word Trust in duties`
     }
 
-    // England/Wales: full analysis fields
     return `${jobSection}
 
 ${clientSection}
 
 ## TASK
-Analyze this job and candidate. Extract every essential and desirable criterion from the person spec. Identify candidate strengths, gaps, and the enhanced previous title. Write ${dutiesCount} past-tense key duties from the candidate's previous role using job description keywords.
+Extract every essential and desirable criterion from the person specification. The person spec may be in a table at the END of the document — read ALL of the text carefully. Identify the Trust's named values from the job description. Write ${dutiesCount} past-tense key duties from the candidate's previous role.
 
 Return ONLY a single valid JSON object - no text before or after:
 {
@@ -120,20 +132,19 @@ Return ONLY a single valid JSON object - no text before or after:
   "jobSummary": "1-2 sentence role summary",
   "essentialCriteria": ["every essential criterion from the person spec"],
   "desirableCriteria": ["desirable criteria if any"],
-  "candidateStrengths": ["3 specific ways this candidate matches this role"],
-  "potentialGaps": ["essential criteria where evidence is thin"],
+  "potentialGaps": ["essential criteria where candidate evidence is thin"],
   "meetsAllEssential": true,
   "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties using job description keywords"]
 }
 
 CRITICAL:
-- essentialCriteria must list EVERY criterion from the person spec
+- essentialCriteria must list EVERY criterion — check ALL of the document including the end
 - previousRoleDuties must have exactly ${dutiesCount} items
 - Never use the word Trust in duties`
   }
 
   const specificQSection = options.specificQuestions
-    ? `\n## SPECIFIC APPLICATION QUESTIONS - ANSWER THESE EXACTLY AS WRITTEN\n${options.specificQuestions}`
+    ? `\n## SPECIFIC APPLICATION QUESTIONS\n${options.specificQuestions}`
     : ''
   const instructionsSection = options.instructions
     ? `\n## ADMINISTRATOR INSTRUCTIONS\n${options.instructions}`
@@ -142,12 +153,47 @@ CRITICAL:
     ? `\n## REWRITE INSTRUCTION\nRewrite the statement below following this instruction exactly: "${options.rewriteInstruction}"\n\nPREVIOUS STATEMENT:\n${options.previousStatement}`
     : ''
 
-  // --- statement-only: plain text, no JSON (avoids newline-escaping failures in long text) ---
+  // --- questions-only: answer each specific question with STAR evidence ---
+  if (outputMode === 'questions-only') {
+    return `${jobSection}
+
+${clientSection}
+${instructionsSection}
+
+## TASK
+Answer each of the following specific application questions. Do NOT write a full prose statement. Answer each question directly with specific STAR evidence.
+
+For each question:
+- Write 200-250 words per answer
+- Use MINI-STAR: specific situation, specific actions (naming tools/systems/roles from the JD), quantified result
+- Use ONLY evidence from the candidate profile above
+- Reference the Trust's values and terminology from the job description where relevant
+- No em dashes anywhere
+
+Format — write the question heading exactly as given, then the answer directly below:
+
+[Question heading exactly as written]
+[200-250 word STAR answer]
+
+[Next question heading]
+[200-250 word answer]
+
+End the final answer with "Thank you."
+Do NOT add any introduction, summary, or text outside the answers.
+
+QUESTIONS TO ANSWER:
+${options.specificQuestions || ''}`
+  }
+
+  // --- statement-only: full prose statement, plain text ---
   if (outputMode === 'statement-only') {
+    const hasExtraQuestions = !!(options.specificQuestions && options.applicationMode === 'statement-questions')
     const outputInstruction = isRewrite
       ? 'Rewrite the statement following the instruction. Keep all strong content. Improve what was asked.'
       : isScotland
       ? 'Write all three question answers for this NHS Scotland application following the three-question format in your instructions.'
+      : hasExtraQuestions
+      ? 'Write the full supporting statement following your instructions, then write a separate answer for each specific question below (200-250 words each, STAR evidence).'
       : 'Write the supporting statement for this candidate following the format and rules in your instructions.'
 
     return `${jobSection}
@@ -160,20 +206,22 @@ ${rewriteSection}
 ## TASK
 ${outputInstruction}
 
-Output the statement as plain text only. Do NOT wrap in JSON. Do NOT add any preamble, explanation, or closing remarks. Start directly with the first word of the statement.
+Output as plain text only. Do NOT wrap in JSON. Do NOT add any preamble. Start directly with the first word.
 
 ${isScotland
-  ? `The statement is THREE QUESTIONS ONLY — no Key Duties section, no additional sections.
+  ? `The statement is THREE QUESTIONS ONLY — no Key Duties section.
 
-HARD WORD LIMITS — stop each question at its limit and move immediately to the next:
+HARD WORD LIMITS:
 - Question 1: 420 words maximum
 - Question 2: 420 words maximum
 - Question 3: 220 words maximum — end with "Thank you." and stop`
-  : `HARD WORD LIMIT: 1,450 words maximum — end with "Thank you." and stop`}
+  : `HARD WORD LIMIT: 1,450 words for the main statement — end with "Thank you."
+${hasExtraQuestions ? 'After "Thank you.", write each specific question answer (200-250 words each) with the question as a heading.' : ''}`}
 
 CRITICAL:
 - No em dashes anywhere
-- Do not bold or highlight any words`
+- Do not bold or highlight any words
+- Person specification: address EVERY essential criterion — they may appear at the end of the attached document`
   }
 
   // --- full mode: generic/civil-service single call ---
@@ -185,16 +233,15 @@ ${instructionsSection}
 ${rewriteSection}
 
 ## TASK
-Write the supporting statement for this candidate following the format and rules in your instructions.
+Write the supporting statement for this candidate.
 
-Return ONLY a single valid JSON object - no text before or after:
+Return ONLY a single valid JSON object:
 {
   "analysis": {
     "jobSummary": "1-2 sentence role summary",
     "enhancedPreviousTitle": "Senior or Lead + exact vacancy title",
     "essentialCriteria": ["every essential criterion from the person spec"],
     "desirableCriteria": ["desirable criteria if any"],
-    "candidateStrengths": ["3 specific ways this candidate matches this role"],
     "potentialGaps": ["essential criteria where evidence is thin"],
     "meetsAllEssential": true
   },
@@ -211,11 +258,12 @@ CRITICAL:
 }
 
 // Parallel two-call approach for Scotland and England:
-// Call A — statement (plain text): no JSON escaping issues, definite timing
-// Call B — analysis + duties (small JSON): fast, non-critical
-// Promise.all wall time = max(statement_time, analysis_time) + overhead
+// Call A — statement (plain text): no JSON escaping issues, reliable output
+// Call B — analysis + duties (small flat JSON): fast, non-critical
+// Promise.all wall time:
 //   Scotland: max(1700/65≈26s, 700/65≈11s) + ~12s overhead ≈ 38s ✓
 //   England:  max(2300/65≈35s, 900/65≈14s) + ~12s overhead ≈ 47s ✓
+//   Questions-only: max(2000/65≈31s, 700-900/65≈11-14s) + ~12s ≈ 43s ✓
 async function generateParallel(
   client: Client,
   jobData: ScrapeResult,
@@ -224,6 +272,7 @@ async function generateParallel(
     specificQuestions?: string
     rewriteInstruction?: string
     previousStatement?: string
+    applicationMode?: ApplicationMode
   },
   region: 'scotland' | 'england-wales',
   style: '1' | '2'
@@ -235,37 +284,51 @@ async function generateParallel(
   promptRegion: PromptRegion
 }> {
   const isScotland = region === 'scotland'
+  const appMode = options.applicationMode ?? 'full'
   const systemPrompt = buildSystemPrompt(region, style)
+
+  // Determine statement output mode
+  const statementOutputMode =
+    appMode === 'questions-only' ? 'questions-only' : 'statement-only'
 
   const statementUserPrompt = buildUserPrompt(client, jobData, region, {
     ...options,
-    outputMode: 'statement-only',
+    outputMode: statementOutputMode,
   })
 
   const analysisUserPrompt = buildUserPrompt(client, jobData, region, {
     outputMode: 'analysis-only',
   })
 
+  // max_tokens for statement call:
+  //   Scotland: 1060w target → cap 1700 (26s)
+  //   England full: 1450w target → cap 2300 (35s)
+  //   Questions-only: ~6 questions × 225w ≈ 1350w → cap 2000 (31s)
+  let statementMaxTokens: number
+  if (appMode === 'questions-only') {
+    statementMaxTokens = 2000
+  } else if (isScotland) {
+    statementMaxTokens = 1700
+  } else {
+    statementMaxTokens = 2300
+  }
+
   const [statementMsg, analysisMsg] = await Promise.all([
     anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      // Scotland: 1060 target words ≈ 1413 tokens → cap 1700 (26s)
-      // England:  1450 target words ≈ 1933 tokens → cap 2300 (35s)
-      max_tokens: isScotland ? 1700 : 2300,
+      max_tokens: statementMaxTokens,
       system: systemPrompt,
       messages: [{ role: 'user', content: statementUserPrompt }],
     }),
     anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      // Scotland: essentialCriteria + 6 duties ≈ 500 tokens → cap 700
-      // England:  7 analysis fields + 8 duties  ≈ 700 tokens → cap 900
       max_tokens: isScotland ? 700 : 900,
-      system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile.',
+      system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
       messages: [{ role: 'user', content: analysisUserPrompt }],
     }),
   ])
 
-  // Statement: use raw text directly — no JSON parsing
+  // Statement: plain text, use directly
   const statementContent = statementMsg.content[0]
   if (statementContent.type !== 'text') throw new Error('Unexpected response type from Claude')
   const statement = statementContent.text
@@ -275,7 +338,7 @@ async function generateParallel(
     .replace(/\*\*/g, '')
   if (!statement) throw new Error('Claude returned an empty statement')
 
-  // Analysis: small JSON, non-critical — degrade gracefully if it fails
+  // Analysis: small JSON, non-critical
   let analysis: StatementAnalysis | null = null
   let previousRoleDuties: string[] = []
   const analysisContent = analysisMsg.content[0]
@@ -289,7 +352,6 @@ async function generateParallel(
           jobSummary?: string
           essentialCriteria?: string[]
           desirableCriteria?: string[]
-          candidateStrengths?: string[]
           potentialGaps?: string[]
           meetsAllEssential?: boolean
           previousRoleDuties?: string[]
@@ -303,7 +365,7 @@ async function generateParallel(
             enhancedPreviousTitle: p.enhancedPreviousTitle,
             essentialCriteria: p.essentialCriteria,
             desirableCriteria: p.desirableCriteria || [],
-            candidateStrengths: p.candidateStrengths || [],
+            candidateStrengths: [],
             potentialGaps: p.potentialGaps || [],
             keyDuties: [],
             meetsAllEssential: p.meetsAllEssential,
@@ -326,6 +388,7 @@ export async function generateStatement(
     rewriteInstruction?: string
     previousStatement?: string
     vacancyUrl?: string
+    applicationMode?: ApplicationMode
   } = {}
 ): Promise<{
   statement: string
@@ -341,14 +404,14 @@ export async function generateStatement(
     specificQuestions: options.specificQuestions,
     rewriteInstruction: options.rewriteInstruction,
     previousStatement: options.previousStatement,
+    applicationMode: options.applicationMode ?? 'full',
   }
 
-  // Scotland and England both use parallel calls — reliable timing, no JSON escaping issues
   if (region === 'scotland' || region === 'england-wales') {
     return generateParallel(client, jobData, callOptions, region, style)
   }
 
-  // Generic / civil-service: single call (rarely used, no strict timing requirements)
+  // Generic / civil-service: single call
   const systemPrompt = buildSystemPrompt(region, style)
   const userPrompt = buildUserPrompt(client, jobData, region, { ...callOptions, outputMode: 'full' })
 

@@ -112,8 +112,10 @@ function BulletList({ items, icon, colour }: { items: string[]; icon: string; co
   )
 }
 
-function AnalysisPanel({ analysis }: { analysis: StatementAnalysis | null }) {
-  if (!analysis) return <p className="text-gray-400 text-sm">No analysis available.</p>
+function AnalysisPanel({ analysis, region }: { analysis: StatementAnalysis | null; region: string }) {
+  if (!analysis) return (
+    <p className="text-gray-400 text-sm">Person specification not extracted from page — statement was written from job advert text. If the full PS is in an attached document, the statement should still address it.</p>
+  )
 
   return (
     <div className="space-y-5 text-sm">
@@ -123,34 +125,18 @@ function AnalysisPanel({ analysis }: { analysis: StatementAnalysis | null }) {
         </div>
       )}
 
-      {analysis.enhancedPreviousTitle && (
+      {analysis.enhancedPreviousTitle && region !== 'scotland' && (
         <div className="rounded-md bg-blue-50 border border-blue-200 px-3 py-2">
           <p className="text-xs text-blue-600 font-medium mb-0.5">Enhanced Previous Title</p>
           <p className="text-blue-800 font-semibold text-sm">{analysis.enhancedPreviousTitle}</p>
         </div>
       )}
 
-      {analysis.jobSummary && (
+      {analysis.jobSummary && region !== 'scotland' && (
         <Section title="Role Overview">
           <p className="text-gray-600 leading-relaxed">{analysis.jobSummary}</p>
         </Section>
       )}
-
-      {analysis.advertKeyPhrases?.length ? (
-        <Section title="Advert Key Phrases">
-          <BulletList items={analysis.advertKeyPhrases} icon="&#8220;" colour="text-purple-400" />
-        </Section>
-      ) : null}
-
-      {analysis.jdKeywords?.length ? (
-        <Section title="JD Keywords">
-          <div className="flex flex-wrap gap-1">
-            {analysis.jdKeywords.map((k, i) => (
-              <span key={i} className="text-xs px-1.5 py-0.5 bg-gray-100 text-gray-600 rounded">{k}</span>
-            ))}
-          </div>
-        </Section>
-      ) : null}
 
       {analysis.essentialCriteria?.length > 0 && (
         <Section title={`Essential Criteria (${analysis.essentialCriteria.length})`}>
@@ -161,24 +147,6 @@ function AnalysisPanel({ analysis }: { analysis: StatementAnalysis | null }) {
       {analysis.desirableCriteria?.length > 0 && (
         <Section title="Desirable Criteria">
           <BulletList items={analysis.desirableCriteria} icon="&#9702;" colour="text-blue-400" />
-        </Section>
-      )}
-
-      {analysis.subheadingPlan?.length ? (
-        <Section title="Subheading Plan">
-          <BulletList items={analysis.subheadingPlan} icon="&#8594;" colour="text-gray-400" />
-        </Section>
-      ) : null}
-
-      {analysis.keyDuties?.length > 0 && (
-        <Section title="Key Duties">
-          <BulletList items={analysis.keyDuties} icon="&#8226;" colour="" />
-        </Section>
-      )}
-
-      {analysis.candidateStrengths?.length > 0 && (
-        <Section title="Candidate Strengths">
-          <BulletList items={analysis.candidateStrengths} icon="&#9733;" colour="text-amber-500" />
         </Section>
       )}
 
@@ -198,6 +166,7 @@ function GeneratePage() {
 
   const [vacancyUrl, setVacancyUrl] = useState('')
   const [style, setStyle] = useState<'1' | '2'>('1')
+  const [applicationMode, setApplicationMode] = useState<'full' | 'questions-only' | 'statement-questions'>('full')
   const [specificQuestions, setSpecificQuestions] = useState('')
   const [loading, setLoading] = useState(false)
   const [loadingStep, setLoadingStep] = useState('')
@@ -257,6 +226,7 @@ function GeneratePage() {
           client_code: clientCode,
           vacancy_url: vacancyUrl.trim(),
           style,
+          applicationMode,
           specificQuestions: specificQuestions.trim() || undefined,
         },
         setLoadingStep
@@ -343,18 +313,19 @@ function GeneratePage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Statement Style</label>
-                  <div className="grid grid-cols-2 gap-3">
-                    {[
-                      { val: '1' as const, label: 'Style 1 - Headed Sections', desc: 'Each criterion gets its own heading.' },
-                      { val: '2' as const, label: 'Style 2 - Flowing Prose', desc: 'Natural paragraphs without subheadings.' },
-                    ].map(({ val, label, desc }) => (
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Application Type</label>
+                  <div className="space-y-2">
+                    {([
+                      { val: 'full' as const, label: 'Full Statement', desc: 'Complete prose statement covering all person spec criteria.' },
+                      { val: 'questions-only' as const, label: 'Specific Questions Only', desc: 'Paste questions below — each answered with STAR evidence (no full statement).' },
+                      { val: 'statement-questions' as const, label: 'Full Statement + Extra Questions', desc: 'Full statement then separate answers to specific questions.' },
+                    ] as const).map(({ val, label, desc }) => (
                       <button
                         key={val}
                         type="button"
-                        onClick={() => setStyle(val)}
-                        className={`text-left p-3 rounded-md border-2 transition-colors ${style === val ? 'border-blue-700 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'}`}
-                        style={style === val ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff' } : {}}
+                        onClick={() => setApplicationMode(val)}
+                        className={`w-full text-left p-3 rounded-md border-2 transition-colors ${applicationMode === val ? 'border-blue-700 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'}`}
+                        style={applicationMode === val ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff' } : {}}
                       >
                         <p className="font-medium text-sm text-gray-800">{label}</p>
                         <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
@@ -363,19 +334,44 @@ function GeneratePage() {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Specific Questions <span className="text-gray-400">(optional)</span>
-                  </label>
-                  <textarea
-                    value={specificQuestions}
-                    onChange={(e) => setSpecificQuestions(e.target.value)}
-                    placeholder={`If the job advert asks specific questions, paste them here:\n1. Tell us about your relevant experience (max 300 words)\n2. Why do you want to work for us?`}
-                    rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none text-sm resize-none"
-                    disabled={loading}
-                  />
-                </div>
+                {applicationMode !== 'questions-only' && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Statement Style</label>
+                    <div className="grid grid-cols-2 gap-3">
+                      {[
+                        { val: '1' as const, label: 'Style 1 - Headed Sections', desc: 'Each criterion gets its own heading.' },
+                        { val: '2' as const, label: 'Style 2 - Flowing Prose', desc: 'Natural paragraphs without subheadings.' },
+                      ].map(({ val, label, desc }) => (
+                        <button
+                          key={val}
+                          type="button"
+                          onClick={() => setStyle(val)}
+                          className={`text-left p-3 rounded-md border-2 transition-colors ${style === val ? 'border-blue-700 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'}`}
+                          style={style === val ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff' } : {}}
+                        >
+                          <p className="font-medium text-sm text-gray-800">{label}</p>
+                          <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {applicationMode !== 'full' && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Application Questions <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      value={specificQuestions}
+                      onChange={(e) => setSpecificQuestions(e.target.value)}
+                      placeholder={`Paste the application questions exactly as written:\n1. Tell us about your relevant experience (max 300 words)\n2. Why do you want to work for us?\n3. Describe a time you worked as part of a team.`}
+                      rows={5}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none text-sm resize-none"
+                      disabled={loading}
+                    />
+                  </div>
+                )}
 
                 {error && (
                   <div className="bg-red-50 border border-red-200 rounded-md p-3 text-red-700 text-sm">{error}</div>
@@ -454,7 +450,7 @@ function GeneratePage() {
                 <h3 className="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide pb-2 border-b border-gray-100">
                   {result.promptRegion === 'scotland' ? 'Person Specification' : 'Pre-Writing Analysis'}
                 </h3>
-                <AnalysisPanel analysis={result.analysis} />
+                <AnalysisPanel analysis={result.analysis} region={result.promptRegion} />
               </div>
             </div>
 

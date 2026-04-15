@@ -161,6 +161,9 @@ Format: "I want to work at [Trust] because of [vision from advert]. I demonstrat
 
 USE the ENHANCED vacancy title. "Thank you." ends the main statement — do not restart.
 
+## TRUST VALUES — MANDATORY
+Search the job description for the Trust's named values (e.g. PRIDE, CARE, RESPECT, Excellence, Compassion, Integrity — exact names vary by Trust). Include a dedicated paragraph naming each Trust value and demonstrating it with a specific example and quantified result from the candidate's experience.
+
 ## PERSON SPECIFICATION — TOTAL COVERAGE
 Before writing, list every essential criterion. After writing, verify every essential criterion is addressed.
 Missing even one essential criterion is a failure of this task.
@@ -170,15 +173,8 @@ Ensure at least 2 full paragraphs are about the CURRENT role.
 ## GCSE / O-LEVEL GRADES
 If the candidate's qualifications section lists GCSE or O-level grades, reference them specifically when addressing literacy or numeracy criteria.
 
-## KEY DUTIES — EXACTLY 8 (not counted in 1,300 word limit)
-Heading format: "Key Duties I Performed as [ENHANCED Vacancy Title] at [Previous Workplace] ([Years])"
-Write exactly 8 duties, each 2-3 lines (approx 20-35 words).
-Each duty uses JD keywords (equipment, systems, forms, procedures).
-Active voice: "I carried out...", "I delivered...", "I supported..." - NEVER "Assisted with..."
-Past tense. Quantify where possible. Never use the word "Trust".
-
 ${styleInstructions}
 
 ## OUTPUT
-Return the statement as plain text and the analysis as JSON exactly as specified in the user message. Follow the user message output format precisely.`
+Return the statement as plain text exactly as specified in the user message. Follow the user message output format precisely.`
 }
