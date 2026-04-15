@@ -12,9 +12,6 @@ ONE paragraph addresses all 7 criteria using their keywords.
 Person spec has: "Clinical observation skills", "Safe patient handling", "Infection control knowledge", "Health and safety awareness"
 SUBHEADING: "Clinical skills: observations, safe handling, infection control, and health and safety"
 
-Person spec has: "Teamwork", "Communication with MDT", "Collaboration with other professionals"
-SUBHEADING: "Teamwork, communication with MDT, and collaboration"
-
 SUBHEADING RULES:
 - Use keywords FROM person spec in subheading (recruiter must recognise them)
 - Group 3-5 related criteria per subheading
@@ -41,9 +38,33 @@ SUBHEADING RULES:
 - NEVER use generic openers such as "I am a hardworking individual" or "I am passionate about"
 - NEVER use the word "bustling" or "vibrant"
 - NEVER write a "Key Duties" section — the statement ends with "Thank you." and nothing follows
-- NEVER add any section after "Thank you." — no Key Duties, no Additional Information, nothing
+- NEVER add any section after "Thank you." — nothing
 - Write in first person active voice throughout ("I carried out...", "I delivered...", "I supported...")
-- The statement ends with "Thank you." — stop writing immediately after this
+- The statement ends with "Thank you." — stop immediately after this
+
+## BANNED AI CLICHÉS — NEVER USE THESE PHRASES
+The following phrases make the statement sound AI-generated. Never write them:
+"proven track record", "dynamic team", "fast-paced environment", "strong communication skills",
+"attention to detail", "team player", "I am well-versed in", "I excel at", "think outside the box",
+"results-driven", "synergy", "leverage", "multitasking", "go above and beyond",
+"I am skilled in", "I bring", "I possess", "invaluable experience", "seamlessly",
+"I am dedicated to", "I am passionate about", "I thrive in", "I strive to",
+"I pride myself on", "I am committed to ensuring", "I am enthusiastic about"
+Use natural, varied language instead. Write like an experienced professional speaking — not like a template.
+
+## PARAGRAPH LENGTH VARIATION — MANDATORY
+Deliberately vary paragraph lengths across the statement:
+- Some paragraphs: 5 lines (short, punchy)
+- Some paragraphs: 6-7 lines (medium)
+- Story paragraphs: 8 lines (longer)
+No two consecutive paragraphs should be the same number of lines. This produces natural, human-sounding rhythm.
+
+## EMPLOYER NAMING RULE
+When referring to a previous employer: if the candidate's profile identifies it as an NHS Trust or NHS Foundation Trust, you may call it "the Trust." For ALL other previous employers (private hospitals, care homes, community providers, overseas employers), use "the hospital", "the care home", or the workplace name — NEVER "the Trust."
+Apply this check to every paragraph about a previous role.
+
+## EHR AND IT SYSTEMS — MANDATORY
+Before writing, scan the candidate's work history and skills for any named IT or electronic health record systems (e.g. SystmOne, EMIS, Vision, Lorenzo, RiO, Paris, Cerner, Epic, Adastra, Carenotes, or any care record app). When addressing digital literacy, IT, or record-keeping criteria, name these exact systems from the candidate profile. NHS staff use clinical EHR platforms; non-NHS staff use proprietary care management software — both count as evidence of digital competence.
 
 ## VACANCY TITLE ENHANCEMENT RULE
 Step 1: Find the EXACT vacancy title from the job advert.
@@ -68,7 +89,7 @@ CORRECT (evidence-based):
 Every paragraph needs:
 - Specific situation (where, when, what patient group)
 - What I did (specific actions with tools/systems/forms/procedures from the JD)
-- Professionals I worked with (from the JD)
+- Named professionals I worked with — use exact roles from the JD (e.g. registered nurse, occupational therapist, physiotherapist, porter, ward manager, consultant — whatever appears in the JD)
 - Quantified result (numbers, percentages, timeframes)
 
 QUANTIFICATION EXAMPLES: "reduced anxiety from 8/10 to 3/10", "improved cooperation from 40% to 85%", "zero medication errors across 18 months", "supported 20 patients daily", "achieved 98% documentation compliance", "reduced incidents to zero across 6 months", "within three days", "across two weeks", "over six months"
@@ -78,8 +99,8 @@ IF SOMETHING CAN BE MEASURED, MEASURE IT.
 ## READING THE JOB DOCUMENTS — DO THIS FIRST
 Before writing, read and extract:
 1. Job advert introduction — extract key phrases (e.g. "passionate about providing high quality patient care", "looking for a new challenge", "enthusiastic and motivated")
-2. Person specification — list EVERY essential AND desirable criterion
-3. Job description — extract: specialty keywords, equipment names, IT systems, forms/charts, patient conditions, team member roles, procedures and protocols
+2. Person specification — list EVERY essential AND desirable criterion (may be 30+ items)
+3. Job description — extract: specialty, patient conditions/diagnoses, procedures, equipment names, IT systems, forms/charts, team member roles (exact titles from JD), ward/department names
 4. Trust name and values
 5. Exact vacancy title
 6. Specialty and patient population
@@ -97,20 +118,20 @@ INTERNAL CHECKPOINTS:
 
 ## PARAGRAPH 1 — OPENING (MAX 8 LINES, approx 100-120 words)
 Extract phrases FROM the job advert introduction and weave them into the opening.
+Include in the opening: the specific conditions or patient groups the candidate worked with in their previous role that are relevant to this vacancy's specialty (e.g. post-operative patients, patients with [condition from JD], endoscopy recovery, dementia care — match what is in the JD).
 
 Format:
-"I am an experienced [EXACT vacancy title] who is [phrase from advert — e.g., 'passionate about providing high quality patient care and looking for a new challenge']. I hold [qualification from person spec] which meets the [person spec requirement], and over my [X] years in [specialty-specific] care settings, I have developed [2-3 skills from person spec]. I am [advert descriptors — e.g., 'enthusiastic, forward-thinking, and motivated'], and I am committed to [Trust name]'s [Trust values]. My experience as [ENHANCED previous role] at [Previous Workplace] involved [brief duties using JD keywords], and I am currently working as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I want to join [Trust/Department] because [specific reason from advert]."
+"I am an experienced [EXACT vacancy title] who is [phrase from advert]. I hold [qualification from person spec] which meets the [person spec requirement], and over my [X] years in [specialty-specific] care settings, I have developed [2-3 skills from person spec]. As [ENHANCED previous role] at [Previous Workplace], I worked with patients undergoing [specific conditions/procedures matching this vacancy's specialty], alongside [professional roles from JD]. I am currently working as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I want to join [Trust] because [specific reason from advert and Trust values]."
 
 CRITICAL ELEMENTS — ALL must be present:
 1. "I am an experienced [vacancy title] who is [advert phrases]"
 2. Qualification + how it meets person spec requirement
 3. Years in [specialty-specific] care settings
 4. 2-3 skills from person spec
-5. Advert descriptors (enthusiastic, motivated, passionate, forward-thinking)
-6. Trust values mentioned
-7. ENHANCED previous role + brief duties (JD keywords)
-8. Current role + brief duty (JD keywords)
-9. Why this Trust (using advert language)
+5. ENHANCED previous role + specific conditions/procedures from the vacancy specialty
+6. Named professional roles from JD
+7. Current role + brief duty
+8. Why this Trust (Trust values + advert language)
 STOP at 8 lines. Never exceed.
 
 ## NO SEPARATE EDUCATION PARAGRAPH
@@ -136,12 +157,12 @@ PARAGRAPH OPENING PATTERNS — rotate, never repeat the same pattern consecutive
 9. "Supporting patients with [condition from JD] required..."
 10. "I delivered [task] under supervision of [role from JD]..."
 
-## 2-3 STORY PARAGRAPHS (6-8 lines, 120-150 words)
-Include 2-3 story paragraphs distributed throughout the statement, NOT all at the end.
+## STORY PARAGRAPHS — MINIMUM 2 REQUIRED (6-8 lines, 120-150 words)
+Include at least 2 story paragraphs, up to 3. Distribute them throughout the statement — not all at the end.
 Each story addresses 3-5 criteria at once.
 Style 1: Subheading lists ALL criteria the story addresses (using person spec keywords), then the story paragraph — NO "Scenario:" prefix.
 Style 2: Weave naturally through prose.
-Stories use MINI-STAR format with full specific evidence and quantified results.
+Stories use MINI-STAR format with full specific evidence, named professionals, and quantified results.
 
 ## 6 C'S PARAGRAPH (5-6 lines, approx 70-85 words — NO SUBHEADING)
 Each of the 6 C's must have a specific example with a result.
@@ -158,14 +179,16 @@ Format: "I want to work at [Trust] because of [vision from advert]. I demonstrat
 ## CLOSING PARAGRAPH (4-5 lines, approx 50-60 words)
 "I am confident my experience as [ENHANCED vacancy title] at [Previous Workplace], combined with my [qualification from person spec] and [key strength], position me well for this role. I am ready to contribute to [Trust/Department]'s [service/vision from advert] from day one. Thank you."
 
-USE the ENHANCED vacancy title. "Thank you." ends the main statement — do not restart.
+USE the ENHANCED vacancy title. "Thank you." ends the main statement — nothing follows.
 
 ## TRUST VALUES — MANDATORY
 Search the job description for the Trust's named values (e.g. PRIDE, CARE, RESPECT, Excellence, Compassion, Integrity — exact names vary by Trust). Include a dedicated paragraph naming each Trust value and demonstrating it with a specific example and quantified result from the candidate's experience.
 
-## PERSON SPECIFICATION — TOTAL COVERAGE
-Before writing, list every essential criterion. After writing, verify every essential criterion is addressed.
-Missing even one essential criterion is a failure of this task.
+## PERSON SPECIFICATION — 100% COVERAGE — NON-NEGOTIABLE
+Step 1: List every single essential criterion (may be 30+).
+Step 2: Assign every criterion to a paragraph or story before writing.
+Step 3: After writing, check off every criterion. If any are unaddressed, add a paragraph before "Thank you."
+Missing even ONE essential criterion is a complete failure. No exceptions.
 Address desirable criteria where the candidate has relevant evidence.
 Ensure at least 2 full paragraphs are about the CURRENT role.
 
