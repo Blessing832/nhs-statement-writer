@@ -129,6 +129,12 @@ function AdminDashboard({ token, onLogout }: { token: string; onLogout: () => vo
           </div>
           <div className="flex items-center gap-3">
             <Link
+              href="/admin/vacancies"
+              className="px-4 py-2 text-sm font-medium text-white border border-white border-opacity-40 rounded-md hover:bg-white hover:bg-opacity-10"
+            >
+              Vacancy Monitor
+            </Link>
+            <Link
               href="/admin/clients/new"
               className="px-4 py-2 text-sm font-medium text-white rounded-md"
               style={{ backgroundColor: '#009639' }}
