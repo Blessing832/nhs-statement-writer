@@ -62,7 +62,7 @@ export async function GET(req: NextRequest) {
   const allClear: { client_id: string; client_code: string; full_name: string }[] = []
 
   for (const pref of allPrefs || []) {
-    const client = pref.clients as { id: string; client_code: string; full_name: string } | null
+    const client = pref.clients as unknown as { id: string; client_code: string; full_name: string } | null
     if (!client) continue
 
     const clientMatches = clientMatchMap.get(pref.client_id) || []
