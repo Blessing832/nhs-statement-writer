@@ -53,11 +53,11 @@ function downloadAsDoc(result: Result) {
     .join('\n')
 
   const prevDuties = result.previousRoleDuties.length > 0
-    ? `<h2>Key Duties - Previous Role</h2><ul>${result.previousRoleDuties.map((d) => `<li>${d}</li>`).join('')}</ul>`
+    ? `<h2>Key Duties - Previous Role</h2><ol>${result.previousRoleDuties.map((d) => `<li>${d}</li>`).join('')}</ol>`
     : ''
 
   const currDuties = result.currentRoleDuties.length > 0
-    ? `<h2>Key Duties - This Role</h2><ul>${result.currentRoleDuties.map((d) => `<li>${d}</li>`).join('')}</ul>`
+    ? `<h2>Key Duties - This Role</h2><ol>${result.currentRoleDuties.map((d) => `<li>${d}</li>`).join('')}</ol>`
     : ''
 
   const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
@@ -277,7 +277,16 @@ function GeneratePage() {
             </div>
             <h1 className="text-white text-xl font-semibold">Statement Writer</h1>
           </div>
-          <span className="text-white text-sm opacity-75">Code: {clientCode}</span>
+          <div className="flex items-center gap-3">
+            <span className="text-white text-sm opacity-75">Code: {clientCode}</span>
+            <button
+              onClick={() => router.push('/')}
+              className="px-3 py-1.5 text-xs text-white border border-white border-opacity-40 rounded hover:bg-white hover:bg-opacity-10 cursor-pointer"
+              title="Sign out — you will need to enter your code again"
+            >
+              Sign Out
+            </button>
+          </div>
         </div>
       </header>
       <div style={{ backgroundColor: '#005eb8' }} className="h-1 flex-shrink-0" />
@@ -467,14 +476,14 @@ function GeneratePage() {
                 {result.previousRoleDuties?.length > 0 && (
                   <div className="mt-8 border-t border-gray-100 pt-6">
                     <h3 className="font-bold text-gray-800 text-sm mb-3">Key Duties - Previous Role <span className="text-gray-400 font-normal">(past tense)</span></h3>
-                    <ul className="space-y-1.5">
+                    <ol className="space-y-1.5 list-none">
                       {result.previousRoleDuties.map((d, i) => (
-                        <li key={i} className="flex gap-2 text-sm text-gray-700">
-                          <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold">&#8226;</span>
+                        <li key={i} className="flex gap-2.5 text-sm text-gray-700">
+                          <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
                           <span>{d}</span>
                         </li>
                       ))}
-                    </ul>
+                    </ol>
                   </div>
                 )}
 
@@ -482,14 +491,14 @@ function GeneratePage() {
                 {result.currentRoleDuties?.length > 0 && (
                   <div className="mt-6 border-t border-gray-100 pt-6">
                     <h3 className="font-bold text-gray-800 text-sm mb-3">Key Duties - This Role <span className="text-gray-400 font-normal">(present tense)</span></h3>
-                    <ul className="space-y-1.5">
+                    <ol className="space-y-1.5 list-none">
                       {result.currentRoleDuties.map((d, i) => (
-                        <li key={i} className="flex gap-2 text-sm text-gray-700">
-                          <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold">&#8226;</span>
+                        <li key={i} className="flex gap-2.5 text-sm text-gray-700">
+                          <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
                           <span>{d}</span>
                         </li>
                       ))}
-                    </ul>
+                    </ol>
                   </div>
                 )}
 

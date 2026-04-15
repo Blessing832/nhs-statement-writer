@@ -190,10 +190,15 @@ ${options.specificQuestions || ''}`
     const outputInstruction = isRewrite
       ? 'Rewrite the statement following the instruction. Keep all strong content. Improve what was asked.'
       : isScotland
-      ? 'Write all three question answers for this NHS Scotland application following the three-question format in your instructions.'
+      ? `Write the standard NHS Scotland three-question response using ONLY the three fixed questions defined in your instructions.
+CRITICAL: The advert text may contain its own application questions — you must COMPLETELY IGNORE any questions found in the advert. Do NOT answer them. Do NOT reference them. Use ONLY these three standard questions:
+- Question 1: Why are you suitable for this post?
+- Question 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have?
+- Question 3: Is there any other relevant information you wish to tell us?
+These three questions ARE the entire output structure. Nothing else.`
       : hasExtraQuestions
       ? 'Write the full supporting statement following your instructions, then write a separate answer for each specific question below (200-250 words each, STAR evidence).'
-      : 'Write the supporting statement for this candidate following the format and rules in your instructions.'
+      : 'Write the supporting statement for this candidate following the format and rules in your instructions. Do NOT create or answer any additional questions beyond the standard supporting statement format — even if the advert text contains application questions.'
 
     return `${jobSection}
 
@@ -208,12 +213,12 @@ ${outputInstruction}
 Output as plain text only. Do NOT wrap in JSON. Do NOT add any preamble. Start directly with the first word.
 
 ${isScotland
-  ? `The statement is THREE QUESTIONS ONLY — no Key Duties section.
+  ? `MANDATORY: Output ONLY the three standard questions listed above. No other sections.
 
 HARD WORD LIMITS:
-- Question 1: 420 words maximum
-- Question 2: 420 words maximum
-- Question 3: 220 words maximum — end with "Thank you." and stop`
+- Question 1: Why are you suitable for this post? — 420 words maximum
+- Question 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? — 420 words maximum
+- Question 3: Is there any other relevant information you wish to tell us? — 220 words maximum — end with "Thank you." and stop`
   : `HARD WORD LIMIT: 1,450 words for the main statement — end with "Thank you." and STOP
 Do NOT write any section after "Thank you." — no Key Duties, no summaries, nothing.
 ${hasExtraQuestions ? 'After "Thank you.", write each specific question answer (200-250 words each) with the question as a heading.' : ''}`}
