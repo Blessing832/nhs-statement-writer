@@ -10,6 +10,7 @@ export interface ApplicantPreferences {
   role_keywords: string[]
   employment_type: EmploymentType
   sources: VacancySource[]
+  permanent_only: boolean
   is_active: boolean
   notes: string
   created_at: string

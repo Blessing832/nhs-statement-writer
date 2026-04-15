@@ -222,6 +222,29 @@ export function matchesBand(jobBand: string, preferredBands: string[]): boolean 
 }
 
 /**
+ * Returns true when a vacancy appears to be a temporary / non-permanent post.
+ * Used to filter out fixed-term, bank, secondment, and locum roles for applicants
+ * who need permanent (i.e. visa-sponsorable) positions.
+ */
+export function isTemporaryRole(jobType: string, jobTitle: string): boolean {
+  const combined = `${jobType} ${jobTitle}`.toLowerCase()
+  const tempSignals = [
+    'fixed term', 'fixed-term', 'fixed_term',
+    'secondment',
+    'bank',
+    'locum',
+    'temporary',
+    'temp ',
+    'interim',
+    'maternity cover',
+    'cover',
+    'casual',
+    'zero hours', 'zero-hours',
+  ]
+  return tempSignals.some((s) => combined.includes(s))
+}
+
+/**
  * Check if the employment type matches the applicant's preference.
  */
 export function matchesEmploymentType(jobType: string, preference: string): boolean {

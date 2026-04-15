@@ -33,13 +33,13 @@ export async function GET(req: NextRequest) {
     `)
     .eq('status', 'pending')
 
-  // Filter in JS: vacancy must be open and posted within 48h (or no posted date)
-  const cutoff48h = new Date(Date.now() - 48 * 60 * 60 * 1000)
+  // Filter in JS: vacancy must be open and posted within 7 days (or no posted date)
+  const cutoff7d = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
   const matches = (rawMatches || []).filter((m) => {
     const v = m.vacancy as unknown as Vacancy | null
     if (!v) return false
     if (!v.is_open) return false
-    if (v.posted_at && new Date(v.posted_at) < cutoff48h) return false
+    if (v.posted_at && new Date(v.posted_at) < cutoff7d) return false
     return true
   })
 

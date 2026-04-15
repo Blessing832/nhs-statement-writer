@@ -1,12 +1,12 @@
 import { supabaseAdmin } from '@/lib/supabase'
 import type { ApplicantPreferences, ScrapedVacancy, Vacancy, VacancySource } from './types'
-import { matchesRoleKeywords, matchesLocation, matchesBand, matchesEmploymentType } from './synonyms'
+import { matchesRoleKeywords, matchesLocation, matchesBand, matchesEmploymentType, isTemporaryRole } from './synonyms'
 import { scrapeNHSEngland, checkEnglandVacancyOpen } from './scrapers/england'
 import { scrapeNHSScotland, checkScotlandVacancyOpen } from './scrapers/scotland'
 import { scrapeCivilService, checkCivilServiceVacancyOpen } from './scrapers/civil-service'
 import { scrapeHealthJobsUK, checkHealthJobsUKVacancyOpen } from './scrapers/healthjobsuk'
 
-const FRESH_HOURS = 48 // Only consider vacancies posted within this window
+const FRESH_HOURS = 168 // Only consider vacancies posted within this window (7 days)
 
 function isFresh(postedAt: string | null): boolean {
   if (!postedAt) return true // If no posted date, include it (can't tell)
@@ -58,6 +58,11 @@ export function vacancyMatchesPreferences(
   // Employment type
   if (prefs.employment_type && prefs.employment_type !== 'any') {
     if (!matchesEmploymentType(vacancy.employment_type, prefs.employment_type)) return false
+  }
+
+  // Permanent-only (for sponsorship-eligible applicants)
+  if (prefs.permanent_only) {
+    if (isTemporaryRole(vacancy.employment_type || '', vacancy.title || '')) return false
   }
 
   return true
