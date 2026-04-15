@@ -4,13 +4,40 @@
  * jobs with titles containing ANY term from the same cluster.
  */
 export const ROLE_SYNONYM_GROUPS: string[][] = [
-  // Support / Care Workers
+  // Support / Care Workers — broad net for sponsorship-eligible Band 3 care roles
+  // Includes all common NHS + private CQC-registered employer job title variations
   [
-    'support worker', 'care assistant', 'care worker', 'healthcare assistant', 'hca',
-    'recovery worker', 'residential support worker', 'community support worker',
-    'mental health support worker', 'learning disability support worker',
-    'rehabilitation assistant', 'enablement worker', 'reablement worker',
-    'wellbeing worker', 'waking night support worker',
+    // NHS-specific titles
+    'support worker', 'healthcare support worker', 'hcsw',
+    'care assistant', 'care worker', 'healthcare assistant', 'hca',
+    'patient care assistant', 'patient care associate',
+    'ward support worker', 'ward care assistant',
+    'acute support worker', 'inpatient support worker',
+    'clinical support worker',
+    // Community / domiciliary
+    'community support worker', 'community care worker', 'community carer',
+    'domiciliary carer', 'domiciliary care worker', 'home carer', 'home care worker',
+    'home care assistant',
+    // Residential / care home
+    'residential support worker', 'residential carer', 'residential care worker',
+    'residential care assistant',
+    // Senior / night
+    'senior carer', 'senior care assistant', 'senior support worker',
+    'night carer', 'night care assistant', 'night support worker',
+    'waking night support worker', 'waking night carer',
+    // Specialist settings
+    'mental health support worker', 'mental health care worker',
+    'learning disability support worker', 'learning disability care worker', 'ld support worker',
+    'recovery worker', 'recovery support worker',
+    'rehabilitation assistant', 'rehab support worker',
+    'enablement worker', 'reablement worker',
+    'wellbeing worker', 'wellbeing support worker',
+    // Generic carer terms
+    'carer', 'care officer', 'care coordinator',
+    'personal care assistant', 'personal care worker',
+    'support assistant',
+    // Activity / engagement (common in elderly care homes)
+    'activity coordinator', 'activities coordinator',
   ],
 
   // Nursing
