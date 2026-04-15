@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useAdminToken } from '@/lib/admin-context'
 import type { DashboardData, Vacancy } from '@/lib/vacancy/types'
 
 const SOURCE_LABELS: Record<string, string> = {
@@ -221,26 +221,12 @@ function ApplicantCard({
 }
 
 export default function VacanciesDashboard() {
-  const router = useRouter()
-  const [token, setToken] = useState<string | null>(null)
+  const { token } = useAdminToken()
   const [data, setData] = useState<DashboardData | null>(null)
   const [loading, setLoading] = useState(true)
   const [scanning, setScanning] = useState(false)
   const [checking, setChecking] = useState(false)
   const [scanMsg, setScanMsg] = useState<string | null>(null)
-
-  // Auth check
-  useEffect(() => {
-    const stored = localStorage.getItem('admin_token')
-    if (!stored) {
-      router.push('/admin')
-      return
-    }
-    fetch('/api/admin/verify', { headers: { 'x-admin-token': stored } }).then((r) => {
-      if (r.ok) setToken(stored)
-      else router.push('/admin')
-    })
-  }, [router])
 
   const fetchDashboard = useCallback(async (t: string) => {
     const res = await fetch('/api/vacancies/dashboard', {
@@ -271,7 +257,6 @@ export default function VacanciesDashboard() {
   }, [token, fetchDashboard])
 
   const handleScan = async () => {
-    if (!token) return
     setScanning(true)
     setScanMsg(null)
     const res = await fetch('/api/vacancies/scan', {
@@ -324,12 +309,12 @@ export default function VacanciesDashboard() {
     return `${diffHours}h ago`
   }
 
-  if (!token || loading) {
+  if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#f0f4f5' }}>
+      <div className="flex items-center justify-center py-20">
         <div className="flex items-center gap-3 text-gray-500">
           <div className="w-5 h-5 border-2 border-gray-300 rounded-full animate-spin" style={{ borderTopColor: '#005eb8' }} />
-          <span>Loading...</span>
+          <span className="text-sm">Loading…</span>
         </div>
       </div>
     )
@@ -340,38 +325,7 @@ export default function VacanciesDashboard() {
   const totalApplicants = needsAction.length + allClear.length
 
   return (
-    <main className="min-h-screen flex flex-col" style={{ backgroundColor: '#f0f4f5' }}>
-      {/* Header */}
-      <header style={{ backgroundColor: '#003087' }} className="py-4 px-6">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded flex items-center justify-center" style={{ backgroundColor: '#005eb8' }}>
-              <span className="text-white font-bold text-sm">NHS</span>
-            </div>
-            <div>
-              <h1 className="text-white text-xl font-semibold">Vacancy Monitor</h1>
-              <p className="text-blue-200 text-xs">NHS · Scotland · Civil Service · HealthJobsUK</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <Link
-              href="/admin/vacancies/preferences"
-              className="px-3 py-2 text-sm text-white border border-white border-opacity-40 rounded-md hover:bg-white hover:bg-opacity-10"
-            >
-              Manage Preferences
-            </Link>
-            <Link
-              href="/admin"
-              className="px-3 py-2 text-sm text-white border border-white border-opacity-40 rounded-md hover:bg-white hover:bg-opacity-10"
-            >
-              Admin
-            </Link>
-          </div>
-        </div>
-      </header>
-      <div style={{ backgroundColor: '#005eb8' }} className="h-2" />
-
-      <div className="max-w-4xl mx-auto w-full px-6 py-6">
+    <div className="max-w-5xl mx-auto w-full px-6 py-6">
         {/* Status bar */}
         <div className="bg-white rounded-lg border border-gray-200 px-5 py-4 mb-6 flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-6">
@@ -489,7 +443,6 @@ export default function VacanciesDashboard() {
             </Link>
           </div>
         )}
-      </div>
-    </main>
+    </div>
   )
 }

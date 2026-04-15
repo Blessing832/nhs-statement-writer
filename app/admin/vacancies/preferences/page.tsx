@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useAdminToken } from '@/lib/admin-context'
 import type { ApplicantPreferences, EmploymentType, VacancySource } from '@/lib/vacancy/types'
 import type { Client } from '@/lib/types'
 
@@ -281,8 +281,7 @@ function PreferenceForm({
 }
 
 export default function PreferencesPage() {
-  const router = useRouter()
-  const [token, setToken] = useState<string | null>(null)
+  const { token } = useAdminToken()
   const [clients, setClients] = useState<Client[]>([])
   const [prefs, setPrefs] = useState<ApplicantPreferences[]>([])
   const [loading, setLoading] = useState(true)
@@ -290,33 +289,22 @@ export default function PreferencesPage() {
   const [editing, setEditing] = useState<ApplicantPreferences | null>(null)
   const [deleting, setDeleting] = useState<string | null>(null)
 
-  useEffect(() => {
-    const stored = localStorage.getItem('admin_token')
-    if (!stored) { router.push('/admin'); return }
-    fetch('/api/admin/verify', { headers: { 'x-admin-token': stored } }).then((r) => {
-      if (r.ok) setToken(stored)
-      else router.push('/admin')
-    })
-  }, [router])
-
-  const fetchData = useCallback(async (t: string) => {
+  const fetchData = useCallback(async () => {
     const [clientsRes, prefsRes] = await Promise.all([
-      fetch('/api/clients', { headers: { 'x-admin-token': t } }),
-      fetch('/api/vacancies/preferences', { headers: { 'x-admin-token': t } }),
+      fetch('/api/clients', { headers: { 'x-admin-token': token } }),
+      fetch('/api/vacancies/preferences', { headers: { 'x-admin-token': token } }),
     ])
     if (clientsRes.ok) setClients(await clientsRes.json())
     if (prefsRes.ok) setPrefs(await prefsRes.json())
     setLoading(false)
-  }, [])
+  }, [token])
 
-  useEffect(() => {
-    if (token) fetchData(token)
-  }, [token, fetchData])
+  useEffect(() => { fetchData() }, [fetchData])
 
   const handleSaved = () => {
     setShowForm(false)
     setEditing(null)
-    if (token) fetchData(token)
+    fetchData()
   }
 
   const handleDelete = async (pref: ApplicantPreferences) => {
@@ -325,47 +313,31 @@ export default function PreferencesPage() {
     setDeleting(pref.client_id)
     await fetch(`/api/vacancies/preferences?client_id=${pref.client_id}`, {
       method: 'DELETE',
-      headers: { 'x-admin-token': token! },
+      headers: { 'x-admin-token': token },
     })
     setPrefs((prev) => prev.filter((p) => p.client_id !== pref.client_id))
     setDeleting(null)
   }
 
-  if (!token || loading) {
+  if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#f0f4f5' }}>
+      <div className="flex items-center justify-center py-20">
         <div className="flex items-center gap-3 text-gray-500">
           <div className="w-5 h-5 border-2 border-gray-300 rounded-full animate-spin" style={{ borderTopColor: '#005eb8' }} />
-          <span>Loading...</span>
+          <span className="text-sm">Loading…</span>
         </div>
       </div>
     )
   }
 
   return (
-    <main className="min-h-screen flex flex-col" style={{ backgroundColor: '#f0f4f5' }}>
-      <header style={{ backgroundColor: '#003087' }} className="py-4 px-6">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded flex items-center justify-center" style={{ backgroundColor: '#005eb8' }}>
-              <span className="text-white font-bold text-sm">NHS</span>
-            </div>
-            <div>
-              <h1 className="text-white text-xl font-semibold">Applicant Preferences</h1>
-              <p className="text-blue-200 text-xs">Set job search criteria for each applicant</p>
-            </div>
-          </div>
-          <Link
-            href="/admin/vacancies"
-            className="px-3 py-2 text-sm text-white border border-white border-opacity-40 rounded-md hover:bg-white hover:bg-opacity-10"
-          >
-            ← Vacancy Dashboard
-          </Link>
-        </div>
-      </header>
-      <div style={{ backgroundColor: '#005eb8' }} className="h-2" />
-
-      <div className="max-w-4xl mx-auto w-full px-6 py-6">
+    <div className="max-w-5xl mx-auto w-full px-6 py-6">
+      {/* Sub-nav back link */}
+      <div className="mb-4">
+        <Link href="/admin/vacancies" className="text-sm text-blue-700 hover:underline">
+          ← Back to Vacancy Dashboard
+        </Link>
+      </div>
         {/* Add new form */}
         {(showForm || editing) ? (
           <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
@@ -476,7 +448,6 @@ export default function PreferencesPage() {
             ))}
           </div>
         )}
-      </div>
-    </main>
+    </div>
   )
 }
