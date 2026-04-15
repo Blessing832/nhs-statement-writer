@@ -182,8 +182,9 @@ export async function runScan(): Promise<{ newVacancies: number; newMatches: num
   }
 
   if (allSources.includes('healthjobsuk')) {
+    // Scotland is handled manually — only scrape England + Wales via HealthJobsUK
     scraperTasks.push(
-      scrapeHealthJobsUK(scraperParams).catch((e) => {
+      scrapeHealthJobsUK({ ...scraperParams, regions: ['england', 'wales'] }).catch((e) => {
         console.error('[scanner] HealthJobsUK scraper failed:', e.message)
         return []
       })

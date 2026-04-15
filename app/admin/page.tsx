@@ -9,15 +9,13 @@ const SECTIONS = [
     description: 'Manage applicant profiles, subscriptions, and vacancy alert settings',
     icon: '👥',
     color: '#005eb8',
-    stats: null,
   },
   {
     href: '/admin/vacancies',
     label: 'Vacancies',
-    description: 'Monitor live NHS, Scotland, Civil Service and HealthJobsUK job alerts',
+    description: 'Monitor live NHS England and HealthJobsUK job alerts for all applicants',
     icon: '🔍',
     color: '#003087',
-    stats: null,
   },
   {
     href: '/admin/statements',
@@ -25,7 +23,13 @@ const SECTIONS = [
     description: 'View all generated supporting statements and applicant activity',
     icon: '📄',
     color: '#009639',
-    stats: null,
+  },
+  {
+    href: '/admin/quick-write',
+    label: 'Quick Write',
+    description: 'One-time statement for a guest — paste their history and job link, get a statement instantly',
+    icon: '⚡',
+    color: '#7c3aed',
   },
 ]
 
@@ -39,7 +43,7 @@ export default function AdminHub() {
         <p className="text-gray-500 text-sm">Choose a section to manage</p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {SECTIONS.map((section) => (
           <Link
             key={section.href}
