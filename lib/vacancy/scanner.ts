@@ -6,6 +6,13 @@ import { scrapeNHSScotland, checkScotlandVacancyOpen } from './scrapers/scotland
 import { scrapeCivilService, checkCivilServiceVacancyOpen } from './scrapers/civil-service'
 import { scrapeHealthJobsUK, checkHealthJobsUKVacancyOpen } from './scrapers/healthjobsuk'
 
+// NHS staff groups for care/clinical roles
+const CARE_STAFF_GROUPS = [
+  'CLINICAL_SERVICES',
+  'ALLIED_HEALTH_PROF',
+  'NURSING_AND_MIDWIFERY_REGD',
+]
+
 const FRESH_HOURS = 168 // Only consider vacancies posted within this window (7 days)
 
 function isFresh(postedAt: string | null): boolean {
@@ -127,45 +134,68 @@ export async function runScan(): Promise<{ newVacancies: number; newMatches: num
 
   const prefs = allPrefs as ApplicantPreferences[]
 
-  // Collect all unique keywords, locations, bands across all applicants
-  // (to build minimal scraper queries that cover everyone)
+  // Collect unique values needed for HealthJobsUK keyword search and civil service
   const allKeywords = [...new Set(prefs.flatMap((p) => p.role_keywords))]
   const allLocations = [...new Set(prefs.flatMap((p) => p.locations))]
-  const allBands = [...new Set(prefs.flatMap((p) => p.bands))]
   const allSources = [...new Set(prefs.flatMap((p) => p.sources))] as VacancySource[]
 
-  // Determine which sources want England vs Scotland locations
-  const englandLocations = allLocations.filter(
-    (l) => !['scotland', 'anywhere', 'any'].includes(l.toLowerCase())
-  )
   const scotlandLocations = allLocations.filter(
     (l) => !['england', 'anywhere', 'any'].includes(l.toLowerCase())
   )
 
   const scrapedAll: ScrapedVacancy[] = []
-
-  // Run scrapers in parallel per source
-  const scraperParams = {
-    keywords: allKeywords,
-    locations: allLocations,
-    bands: allBands,
-    employmentType: 'any', // We do per-applicant filtering after
-  }
-
   const scraperTasks: Promise<ScrapedVacancy[]>[] = []
 
   if (allSources.includes('england')) {
+    // Query 1 (mirrors user URL 1): Band 3-4, Permanent, full-time, care staff groups
+    // Catches: HCA, Support Worker, Healthcare Assistant, Nursing Associate etc.
     scraperTasks.push(
-      scrapeNHSEngland({ ...scraperParams, locations: englandLocations }).catch((e) => {
-        console.error('[scanner] England scraper failed:', e.message)
+      scrapeNHSEngland({
+        bands: ['3', '4'],
+        contractType: 'Permanent',
+        workingPattern: 'full-time',
+        staffGroups: CARE_STAFF_GROUPS,
+      }).catch((e) => {
+        console.error('[scanner] England Q1 (care) failed:', e.message)
+        return []
+      })
+    )
+
+    // Query 2 (mirrors user URL 2): Band 3-5, Permanent, full-time — NO staffGroup filter
+    // Catches: admin, data, non-clinical roles at slightly higher bands
+    scraperTasks.push(
+      scrapeNHSEngland({
+        bands: ['3', '4', '5'],
+        contractType: 'Permanent',
+        workingPattern: 'full-time',
+      }).catch((e) => {
+        console.error('[scanner] England Q2 (all permanent) failed:', e.message)
+        return []
+      })
+    )
+
+    // Query 3: Band 2-3, Permanent — any working pattern
+    // Catches: lower band roles and any-hours permanent roles
+    scraperTasks.push(
+      scrapeNHSEngland({
+        bands: ['2', '3'],
+        contractType: 'Permanent',
+      }).catch((e) => {
+        console.error('[scanner] England Q3 (band 2-3) failed:', e.message)
         return []
       })
     )
   }
 
   if (allSources.includes('scotland')) {
+    const scotlandParams = {
+      keywords: allKeywords,
+      locations: scotlandLocations,
+      bands: [],
+      employmentType: 'any',
+    }
     scraperTasks.push(
-      scrapeNHSScotland({ ...scraperParams, locations: scotlandLocations }).catch((e) => {
+      scrapeNHSScotland({ ...scotlandParams, locations: scotlandLocations }).catch((e) => {
         console.error('[scanner] Scotland scraper failed:', e.message)
         return []
       })
@@ -174,7 +204,12 @@ export async function runScan(): Promise<{ newVacancies: number; newMatches: num
 
   if (allSources.includes('civil-service')) {
     scraperTasks.push(
-      scrapeCivilService(scraperParams).catch((e) => {
+      scrapeCivilService({
+        keywords: allKeywords,
+        locations: allLocations,
+        bands: [],
+        employmentType: 'any',
+      }).catch((e) => {
         console.error('[scanner] Civil Service scraper failed:', e.message)
         return []
       })
@@ -184,7 +219,13 @@ export async function runScan(): Promise<{ newVacancies: number; newMatches: num
   if (allSources.includes('healthjobsuk')) {
     // Scotland is handled manually — only scrape England + Wales via HealthJobsUK
     scraperTasks.push(
-      scrapeHealthJobsUK({ ...scraperParams, regions: ['england', 'wales'] }).catch((e) => {
+      scrapeHealthJobsUK({
+        keywords: allKeywords,
+        locations: allLocations,
+        bands: [],
+        employmentType: 'any',
+        regions: ['england', 'wales'],
+      }).catch((e) => {
         console.error('[scanner] HealthJobsUK scraper failed:', e.message)
         return []
       })

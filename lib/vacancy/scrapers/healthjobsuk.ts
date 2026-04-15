@@ -19,7 +19,15 @@ function buildSearchUrl(params: {
 
   if (params.keywords.length > 0) {
     searchParams.set('JobSearch_q', params.keywords.join(' '))
+  } else {
+    searchParams.set('JobSearch_q', '')
   }
+
+  // Discipline (empty = all disciplines)
+  searchParams.set('JobSearch_d', '')
+
+  // Healthcare group filter — 303 = Healthcare sector (filters to NHS/health employers)
+  searchParams.set('JobSearch_g', '303')
 
   // Required by the form
   searchParams.set('JobSearch_re', '_POST')
