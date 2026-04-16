@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useAdminToken } from '@/lib/admin-context'
 import type { DashboardData, Vacancy } from '@/lib/vacancy/types'
 
@@ -349,10 +350,25 @@ export default function VacanciesDashboard() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-20">
-        <div className="flex items-center gap-3 text-gray-500">
-          <div className="w-5 h-5 border-2 border-gray-300 rounded-full animate-spin" style={{ borderTopColor: '#005eb8' }} />
-          <span className="text-sm">Loading…</span>
+      <div className="flex flex-col items-center justify-center py-24 gap-6">
+        {/* Animated scan document */}
+        <div className="relative w-16 h-20">
+          <div className="absolute inset-0 rounded border-2 border-blue-300 bg-white shadow-sm" />
+          <div className="absolute top-2 left-2 right-3 space-y-2">
+            {[80, 100, 65, 90, 55].map((w, i) => (
+              <div key={i} className="h-1 rounded" style={{ width: `${w}%`, backgroundColor: '#d0e4f8' }} />
+            ))}
+          </div>
+          <div
+            className="absolute left-0 right-0 h-0.5 animate-scan-line"
+            style={{ backgroundColor: '#005eb8', boxShadow: '0 0 6px 2px rgba(0,94,184,0.4)' }}
+          />
+          {/* Pulse ring */}
+          <div className="absolute -inset-2 rounded border border-blue-400 animate-pulse-ring" />
+        </div>
+        <div className="text-center">
+          <p className="text-sm font-medium text-gray-700">Loading dashboard…</p>
+          <p className="text-xs text-gray-400 mt-0.5">Checking vacancy statuses</p>
         </div>
       </div>
     )
@@ -387,22 +403,37 @@ export default function VacanciesDashboard() {
             )}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {scanMsg && (
-              <span className="text-xs text-gray-600">{scanMsg}</span>
+              <AnimatePresence>
+                <motion.span
+                  initial={{ opacity: 0, x: 8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="text-xs text-gray-600 max-w-[220px]"
+                >
+                  {scanMsg}
+                </motion.span>
+              </AnimatePresence>
             )}
             <button
               onClick={handleScan}
               disabled={scanning}
-              className="px-4 py-2 text-sm font-semibold text-white rounded-md cursor-pointer disabled:opacity-60 transition-opacity"
-              style={{ backgroundColor: '#005eb8' }}
+              className="px-4 py-2 text-sm font-semibold text-white rounded-lg cursor-pointer disabled:opacity-60 transition-all shadow-sm hover:shadow-md active:scale-[0.97]"
+              style={{ backgroundColor: scanning ? '#768692' : '#005eb8' }}
             >
               {scanning ? (
                 <span className="flex items-center gap-2">
-                  <span className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
-                  Scanning...
+                  {/* Mini scan animation */}
+                  <span className="relative w-3.5 h-4 inline-block shrink-0">
+                    <span className="absolute inset-0 border border-white rounded-sm opacity-50" />
+                    <span
+                      className="absolute left-0 right-0 h-px animate-scan-line"
+                      style={{ backgroundColor: 'white' }}
+                    />
+                  </span>
+                  Scanning…
                 </span>
-              ) : 'Scan Now'}
+              ) : '⟳ Scan Now'}
             </button>
           </div>
         </div>
@@ -422,16 +453,28 @@ export default function VacanciesDashboard() {
               </h2>
               <span className="text-xs text-gray-400">— applicants with open vacancies</span>
             </div>
-            <div className="space-y-3">
+            <motion.div
+              className="space-y-3"
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.07 } } }}
+            >
               {needsAction.map((applicant) => (
-                <ApplicantCard
+                <motion.div
                   key={applicant.client_id}
-                  applicant={applicant}
-                  token={token}
-                  onMatchDone={handleMatchDone}
-                />
+                  variants={{
+                    hidden: { opacity: 0, y: 16 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: 'easeOut' } },
+                  }}
+                >
+                  <ApplicantCard
+                    applicant={applicant}
+                    token={token}
+                    onMatchDone={handleMatchDone}
+                  />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </section>
         )}
 

@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { useAdminToken } from '@/lib/admin-context'
 
 const SECTIONS = [
@@ -40,56 +41,92 @@ const SECTIONS = [
   },
 ]
 
+const container = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+}
+
+const card = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.38, ease: 'easeOut' } },
+}
+
 export default function AdminHub() {
   const { onLogout } = useAdminToken()
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-12">
-      <div className="text-center mb-10">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome back</h2>
-        <p className="text-gray-500 text-sm">Choose a section to manage</p>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="text-center mb-10"
+      >
+        <div
+          className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md"
+          style={{ backgroundColor: '#003087' }}
+        >
+          <span className="text-white font-bold text-base">NHS</span>
+        </div>
+        <h2 className="text-2xl font-bold text-gray-900 mb-1">Welcome back</h2>
+        <p className="text-gray-400 text-sm">Choose a section to manage</p>
+      </motion.div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <motion.div
+        className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+        variants={container}
+        initial="hidden"
+        animate="visible"
+      >
         {SECTIONS.map((section) => (
-          <Link
-            key={section.href}
-            href={section.href}
-            className="group bg-white rounded-xl border-2 border-gray-200 p-6 hover:border-blue-600 hover:shadow-md transition-all flex flex-col gap-3"
-            style={{ '--hover-color': section.color } as React.CSSProperties}
-          >
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"
-              style={{ backgroundColor: `${section.color}18` }}
+          <motion.div key={section.href} variants={card}>
+            <Link
+              href={section.href}
+              className="group bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition-all flex flex-col gap-3 relative overflow-hidden"
             >
-              {section.icon}
-            </div>
-            <div>
-              <h3
-                className="font-bold text-lg text-gray-900 group-hover:text-blue-700 mb-1"
-              >
-                {section.label}
-              </h3>
-              <p className="text-xs text-gray-500 leading-relaxed">{section.description}</p>
-            </div>
-            <div
-              className="mt-auto text-xs font-semibold flex items-center gap-1"
-              style={{ color: section.color }}
-            >
-              Open <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
-            </div>
-          </Link>
-        ))}
-      </div>
+              {/* Subtle color accent on hover */}
+              <div
+                className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity"
+                style={{ backgroundColor: section.color }}
+              />
 
-      <div className="mt-10 text-center">
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-sm"
+                style={{ backgroundColor: `${section.color}18` }}
+              >
+                {section.icon}
+              </div>
+              <div>
+                <h3 className="font-bold text-lg text-gray-900 group-hover:text-blue-700 mb-1 transition-colors">
+                  {section.label}
+                </h3>
+                <p className="text-xs text-gray-500 leading-relaxed">{section.description}</p>
+              </div>
+              <div
+                className="mt-auto text-xs font-semibold flex items-center gap-1 transition-transform"
+                style={{ color: section.color }}
+              >
+                Open
+                <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
+              </div>
+            </Link>
+          </motion.div>
+        ))}
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        className="mt-10 text-center"
+      >
         <button
           onClick={onLogout}
-          className="text-sm text-gray-400 hover:text-gray-600 cursor-pointer"
+          className="text-sm text-gray-400 hover:text-gray-600 cursor-pointer transition-colors"
         >
           Sign out
         </button>
-      </div>
+      </motion.div>
     </div>
   )
 }

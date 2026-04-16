@@ -101,30 +101,30 @@ function AdminShell({
     <AdminContext.Provider value={{ token, onLogout }}>
       <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#f0f4f5' }}>
         {/* Top header */}
-        <header style={{ backgroundColor: '#003087' }} className="py-3 px-6">
+        <header style={{ backgroundColor: '#003087' }} className="py-3 px-6 shadow-md">
           <div className="max-w-5xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div
-                className="w-9 h-9 rounded flex items-center justify-center"
+                className="w-9 h-9 rounded-lg flex items-center justify-center shadow-sm"
                 style={{ backgroundColor: '#005eb8' }}
               >
                 <span className="text-white font-bold text-xs">NHS</span>
               </div>
               <div>
-                <span className="text-white font-semibold text-base">EaseMe Admin</span>
-                <span className="text-blue-300 text-xs ml-2 hidden sm:inline">easeme.live</span>
+                <span className="text-white font-bold text-base">EaseMe</span>
+                <span className="text-blue-300 text-xs ml-1.5 hidden sm:inline font-medium">Admin</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <a
                 href="/"
-                className="px-3 py-1.5 text-xs text-white border border-white border-opacity-30 rounded hover:bg-white hover:bg-opacity-10"
+                className="px-3 py-1.5 text-xs text-blue-200 hover:text-white transition-colors"
               >
-                Client Portal
+                ← Client Portal
               </a>
               <button
                 onClick={onLogout}
-                className="px-3 py-1.5 text-xs text-white border border-white border-opacity-30 rounded hover:bg-white hover:bg-opacity-10 cursor-pointer"
+                className="px-3 py-1.5 text-xs text-white border border-white/25 rounded-md hover:bg-white/10 cursor-pointer transition-colors"
               >
                 Sign Out
               </button>
@@ -133,18 +133,18 @@ function AdminShell({
         </header>
 
         {/* Tab bar */}
-        <div style={{ backgroundColor: '#005eb8' }} className="px-6">
-          <div className="max-w-5xl mx-auto flex items-end gap-1">
+        <div style={{ backgroundColor: '#005eb8' }} className="px-6 shadow-sm">
+          <div className="max-w-5xl mx-auto flex items-end gap-0.5 overflow-x-auto">
             {TABS.map((tab) => {
               const active = isActive(tab.href, tab.exact)
               return (
                 <Link
                   key={tab.href}
                   href={tab.href}
-                  className={`px-5 py-2.5 text-sm font-medium rounded-t-md transition-colors ${
+                  className={`shrink-0 px-4 py-2.5 text-sm font-medium rounded-t-lg transition-all ${
                     active
-                      ? 'bg-white text-gray-900'
-                      : 'text-white hover:bg-white hover:bg-opacity-15'
+                      ? 'bg-white text-gray-900 shadow-sm'
+                      : 'text-white/80 hover:text-white hover:bg-white/15'
                   }`}
                 >
                   {tab.label}

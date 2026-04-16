@@ -404,9 +404,48 @@ function GeneratePage() {
               </form>
 
               {loading && (
-                <div className="mt-5 flex items-center gap-3 text-gray-500">
-                  <div className="w-5 h-5 border-2 border-gray-200 rounded-full animate-spin flex-shrink-0" style={{ borderTopColor: '#005eb8' }} />
-                  <span className="text-sm">{loadingStep || 'Starting...'}</span>
+                <div className="mt-6 rounded-xl border border-blue-100 bg-blue-50 p-5">
+                  <div className="flex items-center gap-5">
+                    {/* Document scan animation */}
+                    <div className="relative shrink-0 w-14 h-[70px]">
+                      <div className="absolute inset-0 rounded border-2 border-blue-300 bg-white" />
+                      <div className="absolute top-2 left-2 right-3 space-y-1.5">
+                        {[80, 100, 65, 90].map((w, i) => (
+                          <div key={i} className="h-1 rounded" style={{ width: `${w}%`, backgroundColor: '#d0e4f8' }} />
+                        ))}
+                      </div>
+                      <div
+                        className="absolute left-0 right-0 h-0.5 animate-scan-line"
+                        style={{ backgroundColor: '#005eb8', boxShadow: '0 0 6px 2px rgba(0,94,184,0.35)' }}
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-blue-900 mb-1">
+                        {loadingStep || 'Starting…'}
+                      </p>
+                      <p className="text-xs text-blue-600">This takes 30–60 seconds. Please keep this tab open.</p>
+                      {/* Step dots */}
+                      <div className="flex items-center gap-1.5 mt-2.5">
+                        {['Reading advert', 'Writing statement', 'Checking criteria'].map((step, i) => {
+                          const isReading = loadingStep.includes('Reading')
+                          const isWriting = loadingStep.includes('Writing')
+                          const active = i === 0 ? isReading || (!isReading && !isWriting) : i === 1 ? isWriting : false
+                          return (
+                            <div key={step} className="flex items-center gap-1.5">
+                              <div
+                                className="w-2 h-2 rounded-full transition-all duration-300"
+                                style={{ backgroundColor: active ? '#005eb8' : '#c0d8f0' }}
+                              />
+                              {i < 2 && <div className="w-6 h-px" style={{ backgroundColor: '#c0d8f0' }} />}
+                            </div>
+                          )
+                        })}
+                        <span className="text-xs text-blue-500 ml-1">
+                          {loadingStep.includes('Reading') ? 'Step 1 of 2' : 'Step 2 of 2'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
