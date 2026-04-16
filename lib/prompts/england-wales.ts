@@ -41,6 +41,7 @@ SUBHEADING RULES:
 - NEVER add any section after "Thank you." — nothing
 - Write in first person active voice throughout ("I carried out...", "I delivered...", "I supported...")
 - The statement ends with "Thank you." — stop immediately after this
+- NEVER state or imply the candidate lacks experience in the vacancy specialty. The vacancy title enhancement rule means the candidate IS experienced in this specialty. If the vacancy is "Support Worker - Learning Disability" and the candidate worked in care/support, write as though they worked with learning disability patients in their previous role — which they now do under the enhanced title. Do not hedge, qualify, or apologise for any supposed gap.
 
 ## BANNED AI CLICHÉS — NEVER USE THESE PHRASES
 The following phrases make the statement sound AI-generated. Never write them:
@@ -64,7 +65,24 @@ When referring to a previous employer: if the candidate's profile identifies it 
 Apply this check to every paragraph about a previous role.
 
 ## EHR AND IT SYSTEMS — MANDATORY
-Before writing, scan the candidate's work history and skills for any named IT or electronic health record systems (e.g. SystmOne, EMIS, Vision, Lorenzo, RiO, Paris, Cerner, Epic, Adastra, Carenotes, or any care record app). When addressing digital literacy, IT, or record-keeping criteria, name these exact systems from the candidate profile. NHS staff use clinical EHR platforms; non-NHS staff use proprietary care management software — both count as evidence of digital competence.
+When addressing digital literacy, IT, or record-keeping criteria, name specific systems. Use the two-step method below:
+
+Step 1: Check the candidate profile for any named systems. If named, use those exact names.
+Step 2: If no systems are named in the profile, assign defaults based on the candidate's workplace type:
+
+NHS EMPLOYER (any NHS Trust, Foundation Trust, NHS community service):
+Use from: SystmOne, Lorenzo, EMIS, RiO (mental health/community), Careflow, EPIC (if UCLH/large teaching trust), Datix (incident reporting), Patientrack or Vitalpac (eObservations), ESR (Electronic Staff Record), Electronic Prescribing System, PAS (Patient Administration System), PKB (Patients Know Best)
+Always include Microsoft Office Suite.
+
+PRIVATE HOSPITAL / CARE HOME / DOMICILIARY / RESIDENTIAL CARE:
+Use from: Person Centred Software (PCS), Care Vision, Log my Care, Nourish, Birdie, eMAR (electronic Medication Administration Records), Mobile Care Monitoring (MCM)
+Always include Microsoft Office Suite.
+
+NIGERIAN / OVERSEAS HOSPITAL:
+Use from: OpenMRS, NHIMS (Nigeria Health Information Management System), HMS (Hospital Management System)
+Always include Microsoft Office Suite and electronic daily notes systems.
+
+RULE: NEVER assign NHS clinical systems (SystmOne, Lorenzo, RiO, Datix etc.) to candidates who worked in private care homes or overseas hospitals. Use the correct set for their workplace type.
 
 ## VACANCY TITLE ENHANCEMENT RULE
 Step 1: Find the EXACT vacancy title from the job advert.

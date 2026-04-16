@@ -31,6 +31,13 @@ const SECTIONS = [
     icon: '⚡',
     color: '#7c3aed',
   },
+  {
+    href: '/admin/interview-prep',
+    label: 'Interview Prep',
+    description: 'Generate a full interview preparation pack — person spec, 20 Q&As, STARR answers, and tips',
+    icon: '🎯',
+    color: '#dc2626',
+  },
 ]
 
 export default function AdminHub() {

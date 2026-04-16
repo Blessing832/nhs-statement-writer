@@ -75,11 +75,12 @@ function LoginScreen({ onLogin }: { onLogin: (token: string) => void }) {
 
 // ── Tab navigation ────────────────────────────────────────────────────────────
 const TABS = [
-  { label: 'Home',        href: '/admin', exact: true },
-  { label: 'Candidates',  href: '/admin/candidates' },
-  { label: 'Vacancies',   href: '/admin/vacancies' },
-  { label: 'Statements',  href: '/admin/statements' },
-  { label: 'Quick Write', href: '/admin/quick-write' },
+  { label: 'Home',           href: '/admin', exact: true },
+  { label: 'Candidates',     href: '/admin/candidates' },
+  { label: 'Vacancies',      href: '/admin/vacancies' },
+  { label: 'Statements',     href: '/admin/statements' },
+  { label: 'Quick Write',    href: '/admin/quick-write' },
+  { label: 'Interview Prep', href: '/admin/interview-prep' },
 ]
 
 function AdminShell({
