@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { useAdminToken } from '@/lib/admin-context'
 import type { DashboardData, Vacancy } from '@/lib/vacancy/types'
 
@@ -464,8 +464,8 @@ export default function VacanciesDashboard() {
                   key={applicant.client_id}
                   variants={{
                     hidden: { opacity: 0, y: 16 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: 'easeOut' } },
-                  }}
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] } },
+                  } satisfies Variants}
                 >
                   <ApplicantCard
                     applicant={applicant}

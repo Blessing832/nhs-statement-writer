@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion, type Variants } from 'framer-motion'
 import { useAdminToken } from '@/lib/admin-context'
 
 const SECTIONS = [
@@ -41,12 +41,12 @@ const SECTIONS = [
   },
 ]
 
-const container = {
+const container: Variants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.08 } },
 }
 
-const card = {
+const card: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.38, ease: 'easeOut' } },
 }
