@@ -142,7 +142,7 @@ export default function Home() {
               <div className="relative w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/hero.jpg"
+                  src="/Gemini_Generated_Image_tgikcjtgikcjtgik.png"
                   alt="Two women celebrating a job offer"
                   className="w-full h-full object-cover"
                   style={{ minHeight: 360, maxHeight: 480 }}
