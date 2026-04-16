@@ -57,9 +57,9 @@ export default function Home() {
       <div style={{ backgroundColor: '#005eb8' }} className="h-1" />
 
       {/* ── Hero section ── */}
-      <div className="flex-1 flex items-center" style={{ background: 'linear-gradient(135deg, #f8faff 0%, #ffffff 50%, #f0f4f5 100%)' }}>
-        <div className="max-w-6xl mx-auto w-full px-6 py-10 md:py-16">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
+      <div className="flex-1 flex items-stretch overflow-hidden" style={{ background: 'linear-gradient(135deg, #f8faff 0%, #ffffff 50%, #f0f4f5 100%)' }}>
+        <div className="max-w-6xl mx-auto w-full px-6 py-10 md:py-16 flex items-center">
+          <div className="grid md:grid-cols-2 gap-10 items-stretch w-full">
 
             {/* LEFT: copy + form */}
             <motion.div
@@ -136,19 +136,17 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.65, ease: 'easeOut', delay: 0.15 }}
-              className="order-1 md:order-2 flex justify-center"
+              transition={{ duration: 0.65, ease: [0.25, 0.1, 0.25, 1], delay: 0.15 }}
+              className="order-1 md:order-2 hidden md:block"
+              style={{ margin: '-2.5rem -1.5rem -2.5rem 0' }}
             >
-              <div className="relative w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/Gemini_Generated_Image_tgikcjtgikcjtgik.png"
-                  alt="Two women celebrating a job offer"
-                  className="w-full h-full object-cover"
-                  style={{ minHeight: 360, maxHeight: 480 }}
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
-                />
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/hero.jpg"
+                alt=""
+                className="w-full h-full object-cover"
+                style={{ minHeight: 520 }}
+              />
             </motion.div>
           </div>
         </div>
