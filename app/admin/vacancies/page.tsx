@@ -98,11 +98,11 @@ function VacancyCard({
 
   return (
     <div className="flex items-start gap-3 py-3 border-b border-gray-100 last:border-0">
-      <div className="shrink-0 w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center mt-0.5">
+      <div className="shrink-0 w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mt-0.5">
         <span className="text-xs font-bold text-gray-500">{index}</span>
       </div>
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 flex-wrap mb-0.5">
+        <div className="flex items-center gap-2 flex-wrap mb-1">
           <span
             className="text-xs font-medium px-2 py-0.5 rounded text-white"
             style={{ backgroundColor: SOURCE_COLORS[vacancy.source] || '#333' }}
@@ -125,15 +125,17 @@ function VacancyCard({
           href={vacancy.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-medium text-gray-900 hover:text-blue-700 hover:underline text-sm leading-snug"
+          className="font-semibold text-gray-900 hover:text-blue-700 hover:underline text-sm leading-snug"
         >
           {vacancy.title}
+          {vacancy.organisation && (
+            <span className="font-normal text-gray-500"> — {vacancy.organisation}</span>
+          )}
         </a>
-        <div className="text-xs text-gray-500 mt-0.5">
-          {vacancy.organisation && <span>{vacancy.organisation}</span>}
-          {vacancy.organisation && vacancy.location && <span> · </span>}
+        <div className="text-xs text-gray-400 mt-0.5 flex items-center gap-1.5 flex-wrap">
           {vacancy.location && <span>{vacancy.location}</span>}
-          <span className="ml-2 text-gray-400">{formatPosted(vacancy.posted_at)}</span>
+          {vacancy.location && <span>·</span>}
+          <span>{formatPosted(vacancy.posted_at)}</span>
         </div>
       </div>
       <button
