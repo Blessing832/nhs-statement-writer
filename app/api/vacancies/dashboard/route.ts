@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
   // All clients with active preferences
   const { data: allPrefs } = await supabaseAdmin
     .from('applicant_preferences')
-    .select('client_id, clients(id, client_code, full_name)')
+    .select('client_id, nhs_jobs_url, healthjobs_url, clients(id, client_code, full_name)')
     .eq('is_active', true)
 
   // All pending matches — load them then filter in JS
@@ -66,6 +66,8 @@ export async function GET(req: NextRequest) {
     if (!client) continue
 
     const clientMatches = clientMatchMap.get(pref.client_id) || []
+    const nhsJobsUrl = (pref as unknown as { nhs_jobs_url: string | null }).nhs_jobs_url ?? null
+    const healthjobsUrl = (pref as unknown as { healthjobs_url: string | null }).healthjobs_url ?? null
 
     if (clientMatches.length > 0) {
       needsAction.push({
@@ -77,6 +79,8 @@ export async function GET(req: NextRequest) {
           match_id: m.id,
           vacancy: m.vacancy as unknown as Vacancy,
         })),
+        nhs_jobs_url: nhsJobsUrl,
+        healthjobs_url: healthjobsUrl,
       })
     } else {
       allClear.push({

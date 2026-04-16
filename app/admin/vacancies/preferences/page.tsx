@@ -132,6 +132,8 @@ function PreferenceForm({
     existing?.sources || ['england', 'scotland', 'civil-service', 'healthjobsuk']
   )
   const [notes, setNotes] = useState(existing?.notes || '')
+  const [nhsJobsUrl, setNhsJobsUrl] = useState(existing?.nhs_jobs_url || '')
+  const [healthjobsUrl, setHealthjobsUrl] = useState(existing?.healthjobs_url || '')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
@@ -151,7 +153,7 @@ function PreferenceForm({
     const res = await fetch('/api/vacancies/preferences', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
-      body: JSON.stringify({ client_id: clientId, locations, bands, role_keywords: roleKeywords, employment_type: employmentType, sources, notes }),
+      body: JSON.stringify({ client_id: clientId, locations, bands, role_keywords: roleKeywords, employment_type: employmentType, sources, notes, nhs_jobs_url: nhsJobsUrl || null, healthjobs_url: healthjobsUrl || null }),
     })
     setSaving(false)
     if (res.ok) onSaved()
@@ -242,6 +244,37 @@ function PreferenceForm({
               <span className="text-sm text-gray-700">{label}</span>
             </label>
           ))}
+        </div>
+      </div>
+
+      {/* Direct search URLs */}
+      <div className="space-y-3 p-4 bg-blue-50 rounded-lg border border-blue-100">
+        <div>
+          <p className="text-sm font-medium text-gray-700 mb-0.5">Direct Search URLs (optional)</p>
+          <p className="text-xs text-gray-500 mb-3">
+            Go to the job board, set your filters (location, band, role), then copy and paste the full URL here.
+            A link will appear on the dashboard so you can open the pre-filtered search instantly.
+          </p>
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-gray-600 mb-1">NHS Jobs URL</label>
+          <input
+            type="url"
+            value={nhsJobsUrl}
+            onChange={(e) => setNhsJobsUrl(e.target.value)}
+            placeholder="https://www.jobs.nhs.uk/candidate/search/results?..."
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-gray-600 mb-1">HealthJobsUK URL</label>
+          <input
+            type="url"
+            value={healthjobsUrl}
+            onChange={(e) => setHealthjobsUrl(e.target.value)}
+            placeholder="https://www.healthjobsuk.com/job_list?..."
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+          />
         </div>
       </div>
 

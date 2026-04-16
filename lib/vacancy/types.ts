@@ -13,6 +13,8 @@ export interface ApplicantPreferences {
   permanent_only: boolean
   is_active: boolean
   notes: string
+  nhs_jobs_url: string | null
+  healthjobs_url: string | null
   created_at: string
   updated_at: string
   // joined from clients table
@@ -79,6 +81,8 @@ export interface DashboardApplicant {
   full_name: string
   pending_count: number
   matches: DashboardMatch[]
+  nhs_jobs_url: string | null
+  healthjobs_url: string | null
 }
 
 export interface DashboardMatch {

@@ -38,6 +38,8 @@ export async function POST(req: NextRequest) {
     sources = ['england', 'scotland', 'civil-service', 'healthjobsuk'] as VacancySource[],
     is_active = true,
     notes = '',
+    nhs_jobs_url = null,
+    healthjobs_url = null,
   } = body
 
   if (!client_id) {
@@ -67,6 +69,8 @@ export async function POST(req: NextRequest) {
         sources,
         is_active,
         notes,
+        nhs_jobs_url: nhs_jobs_url || null,
+        healthjobs_url: healthjobs_url || null,
         updated_at: new Date().toISOString(),
       },
       { onConflict: 'client_id' }

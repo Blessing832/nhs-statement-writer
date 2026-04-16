@@ -194,6 +194,36 @@ function ApplicantCard({
           </div>
         </div>
         <div className="flex items-center gap-3">
+          {(applicant.nhs_jobs_url || applicant.healthjobs_url) && (
+            <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+              {applicant.nhs_jobs_url && (
+                <a
+                  href={applicant.nhs_jobs_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs px-2 py-1 rounded border font-medium transition-colors"
+                  style={{ borderColor: '#005eb8', color: '#005eb8' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#005eb8'; e.currentTarget.style.color = 'white' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#005eb8' }}
+                >
+                  NHS Jobs ↗
+                </a>
+              )}
+              {applicant.healthjobs_url && (
+                <a
+                  href={applicant.healthjobs_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs px-2 py-1 rounded border font-medium transition-colors"
+                  style={{ borderColor: '#009639', color: '#009639' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#009639'; e.currentTarget.style.color = 'white' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#009639' }}
+                >
+                  HealthJobsUK ↗
+                </a>
+              )}
+            </div>
+          )}
           <span
             className="text-xs font-bold px-2.5 py-1 rounded-full text-white"
             style={{ backgroundColor: activeMatches.length > 0 ? '#d5281b' : '#768692' }}
