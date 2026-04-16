@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
-import type { EmploymentType, VacancySource } from '@/lib/vacancy/types'
+import type { EmploymentType, VacancySource, SearchLink } from '@/lib/vacancy/types'
 
 function isAuthorised(req: NextRequest): boolean {
   const secret = req.headers.get('x-admin-token')
@@ -35,18 +35,16 @@ export async function POST(req: NextRequest) {
     bands = [],
     role_keywords = [],
     employment_type = 'any' as EmploymentType,
-    sources = ['england', 'scotland', 'civil-service', 'healthjobsuk'] as VacancySource[],
+    sources = ['england', 'healthjobsuk'] as VacancySource[],
     is_active = true,
     notes = '',
-    nhs_jobs_url = null,
-    healthjobs_url = null,
+    search_links = [] as SearchLink[],
   } = body
 
   if (!client_id) {
     return NextResponse.json({ error: 'client_id required' }, { status: 400 })
   }
 
-  // Verify client exists
   const { data: client, error: clientError } = await supabaseAdmin
     .from('clients')
     .select('id, full_name')
@@ -69,8 +67,7 @@ export async function POST(req: NextRequest) {
         sources,
         is_active,
         notes,
-        nhs_jobs_url: nhs_jobs_url || null,
-        healthjobs_url: healthjobs_url || null,
+        search_links,
         updated_at: new Date().toISOString(),
       },
       { onConflict: 'client_id' }

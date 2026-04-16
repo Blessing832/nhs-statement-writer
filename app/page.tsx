@@ -3,111 +3,6 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 
-// ── Black-and-white woman illustration ───────────────────────────────────────
-function WomanIllustration() {
-  return (
-    <svg
-      viewBox="0 0 460 510"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      className="w-full max-w-sm mx-auto"
-    >
-      {/* Soft background circle */}
-      <circle cx="230" cy="270" r="210" fill="#EEF4FB" />
-
-      {/* Decorative dots */}
-      <circle cx="52" cy="185" r="9" fill="#005eb8" opacity="0.18" />
-      <circle cx="408" cy="155" r="6" fill="#003087" opacity="0.15" />
-      <circle cx="40" cy="390" r="13" fill="#005eb8" opacity="0.12" />
-      <circle cx="425" cy="400" r="8" fill="#003087" opacity="0.13" />
-
-      {/* Gold star top-right */}
-      <path
-        d="M395 112 L398.4 121.6 L409 121.6 L400.8 127.8 L404.2 137.4 L395 131.2 L385.8 137.4 L389.2 127.8 L381 121.6 L391.6 121.6Z"
-        fill="#FFB800"
-        opacity="0.9"
-      />
-      {/* Small star left */}
-      <path
-        d="M58 248 L60.4 254.8 L67.6 254.8 L61.9 259 L64.3 265.8 L58 261.6 L51.7 265.8 L54.1 259 L48.4 254.8 L55.6 254.8Z"
-        fill="#FFB800"
-        opacity="0.75"
-      />
-
-      {/* Confetti rectangles */}
-      <rect x="75" y="145" width="10" height="10" rx="2" fill="#005eb8" opacity="0.22" transform="rotate(30 80 150)" />
-      <rect x="368" y="275" width="8" height="8" rx="2" fill="#003087" opacity="0.2" transform="rotate(-20 372 279)" />
-      <rect x="390" y="205" width="6" height="6" rx="1" fill="#005eb8" opacity="0.18" transform="rotate(45 393 208)" />
-
-      {/* ── LEGS ── */}
-      <rect x="192" y="368" width="30" height="102" rx="14" fill="#1a1a1a" />
-      <rect x="238" y="368" width="30" height="102" rx="14" fill="#2d2d2d" />
-
-      {/* SHOES */}
-      <ellipse cx="207" cy="467" rx="26" ry="10" fill="#111" />
-      <ellipse cx="253" cy="467" rx="26" ry="10" fill="#111" />
-
-      {/* LOWER BODY / SKIRT */}
-      <path d="M173 280 L186 375 H274 L287 280Z" fill="#2d2d2d" />
-
-      {/* BLAZER / JACKET */}
-      <path d="M160 192 L168 280 H292 L300 192 L266 185 L230 225 L194 185Z" fill="#1a1a1a" />
-
-      {/* White shirt collar */}
-      <path d="M202 185 L230 220 L258 185 L248 179 L230 202 L212 179Z" fill="white" />
-
-      {/* NECK */}
-      <rect x="220" y="168" width="20" height="28" rx="10" fill="#d0c0b8" />
-
-      {/* ── HEAD ── */}
-      <circle cx="230" cy="135" r="57" fill="#d0c0b8" />
-
-      {/* HAIR — natural/afro style */}
-      <circle cx="230" cy="103" r="50" fill="#1a1a1a" />
-      <circle cx="178" cy="128" r="26" fill="#1a1a1a" />
-      <circle cx="282" cy="128" r="26" fill="#1a1a1a" />
-      <path d="M183 106 Q188 83 230 79 Q272 83 277 106" fill="#1a1a1a" />
-
-      {/* FACE — happy squinting eyes */}
-      <path d="M207 126 Q216 118 224 126" stroke="#1a1a1a" strokeWidth="3.2" strokeLinecap="round" />
-      <path d="M236 126 Q245 118 253 126" stroke="#1a1a1a" strokeWidth="3.2" strokeLinecap="round" />
-
-      {/* Nose */}
-      <path d="M228 137 Q225 147 230 149 Q235 147 232 137" stroke="#b09088" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-
-      {/* Big smile */}
-      <path d="M210 157 Q230 176 250 157" stroke="#1a1a1a" strokeWidth="3.2" strokeLinecap="round" fill="none" />
-      {/* Teeth */}
-      <path d="M210 157 Q230 168 250 157 Q234 162 210 157Z" fill="white" />
-
-      {/* Cheeks */}
-      <circle cx="208" cy="152" r="10" fill="#d07060" opacity="0.28" />
-      <circle cx="252" cy="152" r="10" fill="#d07060" opacity="0.28" />
-
-      {/* ── LEFT ARM — raised in celebration ── */}
-      <path d="M168 218 Q128 182 105 154" stroke="#d0c0b8" strokeWidth="27" strokeLinecap="round" />
-      <circle cx="107" cy="152" r="17" fill="#d0c0b8" />
-      {/* Fingers hint */}
-      <path d="M100 142 Q107 135 114 142" stroke="#b09888" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-
-      {/* ── RIGHT ARM — holding document ── */}
-      <path d="M292 218 Q330 238 352 258" stroke="#d0c0b8" strokeWidth="27" strokeLinecap="round" />
-
-      {/* DOCUMENT */}
-      <rect x="338" y="244" width="74" height="92" rx="7" fill="white" stroke="#333" strokeWidth="2" />
-      {/* Text lines */}
-      <rect x="350" y="262" width="48" height="3" rx="1.5" fill="#e0e0e0" />
-      <rect x="350" y="273" width="42" height="3" rx="1.5" fill="#e0e0e0" />
-      <rect x="350" y="284" width="48" height="3" rx="1.5" fill="#e0e0e0" />
-      <rect x="350" y="295" width="35" height="3" rx="1.5" fill="#e0e0e0" />
-      {/* NHS-blue checkmark badge */}
-      <circle cx="375" cy="318" r="13" fill="#005eb8" />
-      <path d="M368 318 L373.5 324 L384 311" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
 // ── Feature pill ─────────────────────────────────────────────────────────────
 function FeaturePill({ icon, text }: { icon: string; text: string }) {
   return (
@@ -237,19 +132,23 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* RIGHT: illustration */}
+            {/* RIGHT: hero photo */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.65, ease: 'easeOut', delay: 0.15 }}
               className="order-1 md:order-2 flex justify-center"
             >
-              <div className="animate-float w-full">
-                <WomanIllustration />
+              <div className="relative w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/hero.jpg"
+                  alt="Two women celebrating a job offer"
+                  className="w-full h-full object-cover"
+                  style={{ minHeight: 360, maxHeight: 480 }}
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
+                />
               </div>
-
-              {/* Floating stat cards */}
-              <div className="hidden md:block" />
             </motion.div>
           </div>
         </div>
