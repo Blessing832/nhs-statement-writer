@@ -147,13 +147,12 @@ export async function runScan(): Promise<{ newVacancies: number; newMatches: num
   const scraperTasks: Promise<ScrapedVacancy[]>[] = []
 
   if (allSources.includes('england')) {
-    // Query 1 (mirrors user URL 1): Band 3-4, Permanent, full-time, care staff groups
-    // Catches: HCA, Support Worker, Healthcare Assistant, Nursing Associate etc.
+    // Query 1: Band 3-4, Permanent, care staff groups — all working patterns
+    // Catches all HCA / Support Worker / Nursing / AHP roles
     scraperTasks.push(
       scrapeNHSEngland({
         bands: ['3', '4'],
         contractType: 'Permanent',
-        workingPattern: 'full-time',
         staffGroups: CARE_STAFF_GROUPS,
       }).catch((e) => {
         console.error('[scanner] England Q1 (care) failed:', e.message)
@@ -161,21 +160,19 @@ export async function runScan(): Promise<{ newVacancies: number; newMatches: num
       })
     )
 
-    // Query 2 (mirrors user URL 2): Band 3-5, Permanent, full-time — NO staffGroup filter
-    // Catches: admin, data, non-clinical roles at slightly higher bands
+    // Query 2: Band 3-5, Permanent — NO staffGroup, ALL working patterns
+    // Catches admin, data, non-clinical, and any roles missed by Q1
     scraperTasks.push(
       scrapeNHSEngland({
         bands: ['3', '4', '5'],
         contractType: 'Permanent',
-        workingPattern: 'full-time',
       }).catch((e) => {
         console.error('[scanner] England Q2 (all permanent) failed:', e.message)
         return []
       })
     )
 
-    // Query 3: Band 2-3, Permanent — any working pattern
-    // Catches: lower band roles and any-hours permanent roles
+    // Query 3: Band 2-3, Permanent — any working pattern, lower bands
     scraperTasks.push(
       scrapeNHSEngland({
         bands: ['2', '3'],

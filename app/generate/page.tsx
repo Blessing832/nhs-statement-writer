@@ -159,6 +159,7 @@ function GeneratePage() {
   const router = useRouter()
   const clientCode = searchParams.get('code') || ''
 
+  const [clientName, setClientName] = useState<string | null>(null)
   const [vacancyUrl, setVacancyUrl] = useState('')
   const [style, setStyle] = useState<'1' | '2'>('1')
   const [applicationMode, setApplicationMode] = useState<'full' | 'questions-only' | 'statement-questions'>('full')
@@ -177,7 +178,11 @@ function GeneratePage() {
   const statementRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!clientCode) router.push('/')
+    if (!clientCode) { router.push('/'); return }
+    fetch(`/api/client-info?code=${encodeURIComponent(clientCode)}`)
+      .then((r) => r.ok ? r.json() : null)
+      .then((d) => { if (d?.full_name) setClientName(d.full_name) })
+      .catch(() => {})
   }, [clientCode, router])
 
   const callGenerate = async (
@@ -278,7 +283,12 @@ function GeneratePage() {
             <h1 className="text-white text-xl font-semibold">Statement Writer</h1>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-white text-sm opacity-75">Code: {clientCode}</span>
+            <div className="text-right">
+              {clientName && (
+                <p className="text-white text-sm font-semibold leading-tight">{clientName}</p>
+              )}
+              <p className="text-white text-xs opacity-60 font-mono">{clientCode}</p>
+            </div>
             <button
               onClick={() => router.push('/')}
               className="px-3 py-1.5 text-xs text-white border border-white border-opacity-40 rounded hover:bg-white hover:bg-opacity-10 cursor-pointer"

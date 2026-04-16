@@ -73,11 +73,13 @@ function ClosingBadge({ closesAt }: { closesAt: string | null }) {
 function VacancyCard({
   matchId,
   vacancy,
+  index,
   token,
   onDone,
 }: {
   matchId: string
   vacancy: Vacancy
+  index: number
   token: string
   onDone: (matchId: string) => void
 }) {
@@ -96,6 +98,9 @@ function VacancyCard({
 
   return (
     <div className="flex items-start gap-3 py-3 border-b border-gray-100 last:border-0">
+      <div className="shrink-0 w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center mt-0.5">
+        <span className="text-xs font-bold text-gray-500">{index}</span>
+      </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap mb-0.5">
           <span
@@ -199,11 +204,12 @@ function ApplicantCard({
 
       {open && activeMatches.length > 0 && (
         <div className="px-5 pb-2 border-t border-gray-100">
-          {activeMatches.map((m) => (
+          {activeMatches.map((m, i) => (
             <VacancyCard
               key={m.match_id}
               matchId={m.match_id}
               vacancy={m.vacancy}
+              index={i + 1}
               token={token}
               onDone={handleDone}
             />
