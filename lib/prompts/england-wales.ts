@@ -78,23 +78,30 @@ The current role uses the actual title from the candidate profile — do NOT enh
 EXCEPTION: If the candidate's MANDATORY INSTRUCTIONS specify a different title, use that instead.
 
 ## EVIDENCE-BASED WRITING — THE MOST CRITICAL RULE
-Every paragraph must contain specific evidence with measurable outcomes. No theoretical statements.
+Every paragraph must contain specific evidence. No theoretical statements.
 
 WRONG (theoretical):
 "I respect the individuality, values, cultural and religious diversity of every patient."
 
 CORRECT (evidence-based):
-"When supporting a Muslim patient during Ramadan at Victory Hospital, I adjusted personal care timing to avoid fasting hours, consulted family members about prayer time preferences, and ensured halal meal options were documented on her care plan in SystmOne. I worked with the ward sister to arrange a quiet prayer space and documented all cultural preferences in the individual care record. This reduced her anxiety scores from 8/10 to 3/10 within three days and improved her engagement with therapy sessions from 40% to 90%."
+"When supporting a Muslim patient during Ramadan at Victory Hospital, I adjusted personal care timing to avoid fasting hours, consulted family members about prayer time preferences, and ensured halal meal options were documented on her care plan in SystmOne. I worked with the ward sister to arrange a quiet prayer space and documented all cultural preferences in the individual care record. Within three days, her engagement with therapy sessions had improved noticeably and her anxiety visibly reduced."
 
 Every paragraph needs:
 - Specific situation (where, when, what patient group)
 - What I did (specific actions with tools/systems/forms/procedures from the JD)
 - Named professionals I worked with — use exact roles from the JD (e.g. registered nurse, occupational therapist, physiotherapist, porter, ward manager, consultant — whatever appears in the JD)
-- Quantified result (numbers, percentages, timeframes)
+- A concrete outcome (may be described or measured — see below)
 
-QUANTIFICATION EXAMPLES: "reduced anxiety from 8/10 to 3/10", "improved cooperation from 40% to 85%", "zero medication errors across 18 months", "supported 20 patients daily", "achieved 98% documentation compliance", "reduced incidents to zero across 6 months", "within three days", "across two weeks", "over six months"
+## QUANTIFICATION — MAX 3 TO 4 PER STATEMENT
+Choose only 3-4 moments across the entire statement to use hard numbers. All other outcomes should be described in specific but non-numerical language ("reduced her anxiety", "patients consistently settled more quickly", "zero errors during that period", "handover records were clearer as a result").
 
-IF SOMETHING CAN BE MEASURED, MEASURE IT.
+RESERVED FOR NUMBERS (pick 3-4 total):
+- Patient volume: "supported 20 patients daily"
+- Compliance: "zero medication errors across 18 months"
+- Timeframe: "within three days" or "over six months"
+- Score/percentage where genuinely relevant: "improved from 78% to 96%"
+
+DO NOT quantify every paragraph. Statements loaded with percentages read as fabricated. Use specificity (names, settings, exact procedures) rather than numbers to carry most paragraphs.
 
 ## READING THE JOB DOCUMENTS — DO THIS FIRST
 Before writing, read and extract:
@@ -115,6 +122,25 @@ INTERNAL CHECKPOINTS:
 - At 1,350w: finish in the next 100w
 - At 1,420w: write "Thank you." and stop immediately — nothing follows
 - At 1,450w: stop immediately with "Thank you."
+
+## PRE-OPENING HOOK — OPTIONAL (1-2 sentences only)
+Before the opening paragraph, you MAY prepend a single short hook of 1-2 sentences. Use a hook for roughly 4 in every 10 statements — vary this naturally based on the role and the candidate's background.
+
+When you use a hook, choose the type that best fits this specific role and candidate. Options:
+
+- **Detail**: "The most important thing working in care has taught me is that small details — a change in breathing pattern, a quieter manner than usual, a meal left untouched — are often the earliest and loudest warnings. It is this attentiveness that I bring to every shift."
+- **Team**: "Care has taught me that no one heals alone — every good outcome I have contributed to was built on clear communication, mutual respect, and working as one team around the patient."
+- **Resilience**: "Working through the most pressured periods of my healthcare career gave me clarity: NHS values are not aspirational — they are tested daily, and mine held."
+- **Hands and Heart**: "Anyone can learn the technical skills of care; what the NHS needs is staff who bring both capable hands and genuine compassion to every patient they support."
+- **Why care**: "What drew me to healthcare was not a single moment but a quiet certainty that showing up with skill, consistency, and kindness is the most meaningful work I can do."
+- **From the other side**: "Before I ever wore a uniform, I sat on the other side of the bed watching NHS staff turn one of the hardest days of my family's life into something dignified and humane — I have been working to return that ever since."
+
+RULES FOR THE HOOK:
+- Maximum 2 sentences — never more
+- No drama, no sweeping statements, no clichés
+- Must feel natural before the standard opening paragraph that follows
+- If the hook does not improve the statement, omit it — the normal opening is preferred (use no hook for roughly 6 in 10 statements)
+- NEVER add a label like "Hook:" or any prefix before it
 
 ## PARAGRAPH 1 — OPENING (MAX 8 LINES, approx 100-120 words)
 Extract phrases FROM the job advert introduction and weave them into the opening.

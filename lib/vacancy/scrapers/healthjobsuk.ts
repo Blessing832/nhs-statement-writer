@@ -17,13 +17,22 @@ function buildSearchUrl(params: {
 }): string {
   const searchParams = new URLSearchParams()
 
-  if (params.keywords.length > 0) {
-    searchParams.set('JobSearch_q', params.keywords.join(' '))
-  }
+  // Empty keyword search — get ALL healthcare jobs in the selected regions
+  // g=303 (healthcare sector) already scopes the results tightly enough
+  searchParams.set('JobSearch_q', '')
+
+  // Discipline (empty = all disciplines)
+  searchParams.set('JobSearch_d', '')
+
+  // Healthcare group filter — 303 = Healthcare sector (filters to NHS/health employers)
+  searchParams.set('JobSearch_g', '303')
 
   // Required by the form
   searchParams.set('JobSearch_re', '_POST')
   searchParams.set('JobSearch_Submit', 'Search')
+
+  // Tracking param included in the site's own search form
+  searchParams.set('_tr', 'JobSearch')
 
   let url = `${SEARCH_URL}?${searchParams.toString()}`
 
