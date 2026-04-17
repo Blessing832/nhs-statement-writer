@@ -362,15 +362,31 @@ async function generateParallel(
     .replace(/^(Story|Scenario)\s*\d*\s*:\s*/gim, '')
   if (!statement) throw new Error('Claude returned an empty statement')
 
-  // Enforce word count limit — truncate to last complete sentence before the limit
+  // Enforce word count limit while preserving paragraph structure
   const wordLimit = isScotland ? 1060 : 1450
-  const words = statement.split(/\s+/)
-  if (words.length > wordLimit) {
-    const truncated = words.slice(0, wordLimit).join(' ')
-    const lastPeriod = truncated.lastIndexOf('.')
-    statement = lastPeriod > truncated.length * 0.85
-      ? truncated.slice(0, lastPeriod + 1) + '\n\nThank you.'
-      : truncated + '\n\nThank you.'
+  if (statement.split(/\s+/).length > wordLimit) {
+    const paragraphs = statement.split(/\n\n+/)
+    let totalWords = 0
+    const kept: string[] = []
+    for (const para of paragraphs) {
+      const paraWordCount = para.trim().split(/\s+/).filter(Boolean).length
+      if (totalWords + paraWordCount <= wordLimit) {
+        kept.push(para)
+        totalWords += paraWordCount
+      } else {
+        // Fit remaining budget: trim to last sentence
+        const remaining = wordLimit - totalWords
+        if (remaining > 15) {
+          const paraWords = para.trim().split(/\s+/)
+          const partial = paraWords.slice(0, remaining).join(' ')
+          const lastPeriod = partial.lastIndexOf('.')
+          if (lastPeriod > partial.length * 0.6) kept.push(partial.slice(0, lastPeriod + 1))
+        }
+        break
+      }
+    }
+    statement = kept.join('\n\n')
+    if (!statement.trimEnd().endsWith('Thank you.')) statement += '\n\nThank you.'
   }
 
   // Analysis: small JSON, non-critical
