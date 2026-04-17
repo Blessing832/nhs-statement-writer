@@ -160,7 +160,9 @@ function GeneratePage() {
   const clientCode = searchParams.get('code') || ''
 
   const [clientName, setClientName] = useState<string | null>(null)
+  const [inputMode, setInputMode] = useState<'url' | 'text'>('url')
   const [vacancyUrl, setVacancyUrl] = useState('')
+  const [jobDescText, setJobDescText] = useState('')
   const [style, setStyle] = useState<'1' | '2'>('1')
   const [applicationMode, setApplicationMode] = useState<'full' | 'questions-only' | 'statement-questions'>('full')
   const [specificQuestions, setSpecificQuestions] = useState('')
@@ -187,17 +189,26 @@ function GeneratePage() {
 
   const callGenerate = async (
     body: Record<string, unknown>,
-    onStep: (msg: string) => void
+    onStep: (msg: string) => void,
+    preloadedJobData?: Record<string, unknown>
   ): Promise<Result> => {
-    // Step 1: Scrape the job advert (~10-40s)
-    onStep('Reading the job advert...')
-    const scrapeRes = await fetch('/api/scrape', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ client_code: body.client_code, url: body.vacancy_url }),
-    })
-    const scrapeData = await scrapeRes.json().catch(() => ({ error: 'Server error on scrape.' }))
-    if (!scrapeRes.ok) throw new Error(scrapeData.error || 'Could not read the job advert. Please try again.')
+    let scrapeData: Record<string, unknown>
+
+    if (preloadedJobData) {
+      // Text paste mode — skip scrape entirely
+      scrapeData = preloadedJobData
+    } else {
+      // Step 1: Scrape the job advert (~10-40s)
+      onStep('Reading the job advert...')
+      const scrapeRes = await fetch('/api/scrape', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ client_code: body.client_code, url: body.vacancy_url }),
+      })
+      const scraped = await scrapeRes.json().catch(() => ({ error: 'Server error on scrape.' }))
+      if (!scrapeRes.ok) throw new Error(scraped.error || 'Could not read the job advert. Please try again.')
+      scrapeData = scraped
+    }
 
     // Step 2: Generate the statement (~15-20s)
     onStep('Writing your supporting statement...')
@@ -214,22 +225,29 @@ function GeneratePage() {
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!vacancyUrl.trim()) { setError('Please paste the job vacancy link'); return }
+    if (inputMode === 'url' && !vacancyUrl.trim()) { setError('Please paste the job vacancy link'); return }
+    if (inputMode === 'text' && jobDescText.trim().length < 100) { setError('Please paste the full job description (at least a few paragraphs)'); return }
 
     setLoading(true)
     setError('')
     setResult(null)
 
+    const usedUrl = inputMode === 'url' ? vacancyUrl.trim() : 'text-paste'
+    const preloaded = inputMode === 'text'
+      ? { jobTitle: '', organisation: '', jobDescription: jobDescText.trim(), personSpec: '', rawText: jobDescText.trim(), source: 'manual' }
+      : undefined
+
     try {
       const data = await callGenerate(
         {
           client_code: clientCode,
-          vacancy_url: vacancyUrl.trim(),
+          vacancy_url: usedUrl,
           style,
           applicationMode,
           specificQuestions: specificQuestions.trim() || undefined,
         },
-        setLoadingStep
+        setLoadingStep,
+        preloaded
       )
       setResult(data)
       setShowRewrite(false)
@@ -312,19 +330,61 @@ function GeneratePage() {
               </p>
 
               <form onSubmit={handleGenerate} className="space-y-5">
+                {/* Input mode toggle */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Job Vacancy Link <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="url"
-                    value={vacancyUrl}
-                    onChange={(e) => { setVacancyUrl(e.target.value); setError('') }}
-                    placeholder="https://www.jobs.nhs.uk/candidate/jobadvert/..."
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-transparent text-sm"
-                    disabled={loading}
-                  />
+                  <label className="block text-sm font-medium text-gray-700 mb-2">How would you like to provide the job advert?</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {([
+                      { val: 'url' as const, label: 'Paste Link', desc: 'NHS Jobs, HealthJobsUK, etc.' },
+                      { val: 'text' as const, label: 'Paste Job Description', desc: 'Copy the text from the page' },
+                    ]).map(({ val, label, desc }) => (
+                      <button
+                        key={val}
+                        type="button"
+                        onClick={() => { setInputMode(val); setError('') }}
+                        className="text-left p-3 rounded-md border-2 transition-colors"
+                        style={inputMode === val ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff' } : { borderColor: '#e5e7eb', backgroundColor: 'white' }}
+                      >
+                        <p className="font-medium text-sm text-gray-800">{label}</p>
+                        <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
+                      </button>
+                    ))}
+                  </div>
                 </div>
+
+                {inputMode === 'url' ? (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Job Vacancy Link <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="url"
+                      value={vacancyUrl}
+                      onChange={(e) => { setVacancyUrl(e.target.value); setError('') }}
+                      placeholder="https://www.jobs.nhs.uk/candidate/jobadvert/..."
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-transparent text-sm"
+                      disabled={loading}
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Job Description Text <span className="text-red-500">*</span>
+                    </label>
+                    <p className="text-xs text-gray-500 mb-2">
+                      Open the job advert in your browser, select all the text (Ctrl+A then Ctrl+C), and paste it here. Include the job description, person specification, and any Trust values.
+                    </p>
+                    <textarea
+                      value={jobDescText}
+                      onChange={(e) => { setJobDescText(e.target.value); setError('') }}
+                      placeholder="Paste the full job description here — job title, duties, person specification, essential criteria, desirable criteria, Trust values..."
+                      rows={10}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none text-sm resize-none"
+                      disabled={loading}
+                    />
+                    <p className="text-xs text-gray-400 mt-1">{jobDescText.trim().split(/\s+/).filter(Boolean).length} words pasted</p>
+                  </div>
+                )}
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Application Type</label>
