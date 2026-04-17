@@ -65,5 +65,34 @@ export async function POST(req: NextRequest) {
     )
   }
 
+  // Detect cookie/privacy/login pages returned instead of the real job advert
+  const t = (data.rawText as string).toLowerCase()
+  const looksLikeCookiePage =
+    t.includes('cookies on nhs jobs') ||
+    t.includes('manage your cookies') ||
+    t.includes('cookie preferences') ||
+    (t.includes('privacy notice') && !t.includes('person specification') && !t.includes('essential criteria') && !t.includes('job description'))
+
+  const hasJobContent =
+    t.includes('person specification') ||
+    t.includes('essential criteria') ||
+    t.includes('desirable criteria') ||
+    t.includes('job description') ||
+    t.includes('main duties') ||
+    t.includes('key responsibilities') ||
+    t.includes('band ') ||
+    t.includes('nhs trust') ||
+    t.includes('foundation trust')
+
+  if (looksLikeCookiePage || (data.rawText.length < 3000 && !hasJobContent)) {
+    return NextResponse.json(
+      {
+        error:
+          'The job page returned a cookie consent or privacy page instead of the job advert. Please switch to "Paste Job Description" — open the vacancy in your browser, select all the text (Ctrl+A), copy it (Ctrl+C), and paste it into the text box.',
+      },
+      { status: 422 }
+    )
+  }
+
   return NextResponse.json(data)
 }

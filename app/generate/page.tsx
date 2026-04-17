@@ -163,6 +163,7 @@ function GeneratePage() {
   const [inputMode, setInputMode] = useState<'url' | 'text'>('url')
   const [vacancyUrl, setVacancyUrl] = useState('')
   const [jobDescText, setJobDescText] = useState('')
+  const [cachedJobData, setCachedJobData] = useState<Record<string, unknown> | null>(null)
   const [style, setStyle] = useState<'1' | '2'>('1')
   const [applicationMode, setApplicationMode] = useState<'full' | 'questions-only' | 'statement-questions'>('full')
   const [specificQuestions, setSpecificQuestions] = useState('')
@@ -191,14 +192,12 @@ function GeneratePage() {
     body: Record<string, unknown>,
     onStep: (msg: string) => void,
     preloadedJobData?: Record<string, unknown>
-  ): Promise<Result> => {
+  ): Promise<{ result: Result; jobData: Record<string, unknown> }> => {
     let scrapeData: Record<string, unknown>
 
     if (preloadedJobData) {
-      // Text paste mode — skip scrape entirely
       scrapeData = preloadedJobData
     } else {
-      // Step 1: Scrape the job advert (~10-40s)
       onStep('Reading the job advert...')
       const scrapeRes = await fetch('/api/scrape', {
         method: 'POST',
@@ -210,7 +209,6 @@ function GeneratePage() {
       scrapeData = scraped
     }
 
-    // Step 2: Generate the statement (~15-20s)
     onStep('Writing your supporting statement...')
     const genRes = await fetch('/api/generate', {
       method: 'POST',
@@ -220,17 +218,24 @@ function GeneratePage() {
     const genData = await genRes.json().catch(() => ({ error: 'Server error on generate.' }))
     if (!genRes.ok) throw new Error(genData.error || 'Failed to generate statement. Please try again.')
 
-    return genData as Result
+    return { result: genData as Result, jobData: scrapeData }
   }
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault()
     if (inputMode === 'url' && !vacancyUrl.trim()) { setError('Please paste the job vacancy link'); return }
-    if (inputMode === 'text' && jobDescText.trim().length < 100) { setError('Please paste the full job description (at least a few paragraphs)'); return }
+    if (inputMode === 'text') {
+      const words = jobDescText.trim().split(/\s+/).filter(Boolean).length
+      if (words < 80) { setError('Please paste more text — the full job description should be several paragraphs.'); return }
+      const t = jobDescText.toLowerCase()
+      const looksLikeJob = t.includes('essential') || t.includes('duties') || t.includes('responsibilities') || t.includes('criteria') || t.includes('person spec') || t.includes('band ') || t.includes('nhs')
+      if (!looksLikeJob) { setError('The pasted text does not look like a job advert. Please copy the full page including job description and person specification.'); return }
+    }
 
     setLoading(true)
     setError('')
     setResult(null)
+    setCachedJobData(null)
 
     const usedUrl = inputMode === 'url' ? vacancyUrl.trim() : 'text-paste'
     const preloaded = inputMode === 'text'
@@ -238,18 +243,13 @@ function GeneratePage() {
       : undefined
 
     try {
-      const data = await callGenerate(
-        {
-          client_code: clientCode,
-          vacancy_url: usedUrl,
-          style,
-          applicationMode,
-          specificQuestions: specificQuestions.trim() || undefined,
-        },
+      const { result: data, jobData } = await callGenerate(
+        { client_code: clientCode, vacancy_url: usedUrl, style, applicationMode, specificQuestions: specificQuestions.trim() || undefined },
         setLoadingStep,
         preloaded
       )
       setResult(data)
+      setCachedJobData(jobData)
       setShowRewrite(false)
       setRewriteInstruction('')
     } catch (err) {
@@ -265,16 +265,18 @@ function GeneratePage() {
     setRewriting(true)
     setRewriteError('')
     try {
-      const data = await callGenerate(
+      const usedUrl = inputMode === 'url' ? vacancyUrl.trim() : 'text-paste'
+      const { result: data } = await callGenerate(
         {
           client_code: clientCode,
-          vacancy_url: vacancyUrl.trim(),
+          vacancy_url: usedUrl,
           style,
           specificQuestions: specificQuestions.trim() || undefined,
           rewriteInstruction: rewriteInstruction.trim(),
           previousStatement: result.statement,
         },
-        () => {}
+        () => {},
+        cachedJobData ?? undefined
       )
       setResult(data)
       setShowRewrite(false)

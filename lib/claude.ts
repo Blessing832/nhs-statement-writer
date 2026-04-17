@@ -10,7 +10,7 @@ const anthropic = new Anthropic({
 export type PromptRegion = 'england-wales' | 'scotland' | 'civil-service' | 'generic'
 export type ApplicationMode = 'full' | 'questions-only' | 'statement-questions'
 
-export function detectRegion(url: string): PromptRegion {
+export function detectRegion(url: string, rawText?: string): PromptRegion {
   const lower = url.toLowerCase()
   if (lower.includes('apply.jobs.scot.nhs.uk') || lower.includes('jobs.scot.nhs.uk')) {
     return 'scotland'
@@ -25,6 +25,21 @@ export function detectRegion(url: string): PromptRegion {
   }
   if (lower.includes('civilservicejobs.service.gov.uk') || lower.includes('civil-service-jobs')) {
     return 'civil-service'
+  }
+  // For text-paste mode, auto-detect region from content
+  if (lower === 'text-paste' && rawText) {
+    const t = rawText.toLowerCase()
+    if (
+      t.includes('nhs scotland') ||
+      t.includes('nhs board') ||
+      t.includes('why do you want to work in nhs scotland') ||
+      t.includes('apply.jobs.scot.nhs.uk')
+    ) {
+      return 'scotland'
+    }
+    if (t.includes('nhs') || t.includes('foundation trust') || t.includes('nhs trust')) {
+      return 'england-wales'
+    }
   }
   return 'generic'
 }
@@ -81,19 +96,19 @@ IMPORTANT: The person specification may appear at the END of this document — r
 ${rawText}`
 
   const clientSection = `## CANDIDATE PROFILE
-Full Name: ${client.full_name}
+Full Name: ${client.full_name ?? ''}
 
 Work History:
-${client.work_history}
+${client.work_history ?? ''}
 
 Qualifications (include GCSE/O-level grades exactly as listed):
-${client.qualifications}
+${client.qualifications ?? ''}
 
 Skills:
-${client.skills}
+${client.skills ?? ''}
 
 Background and Additional Information:
-${client.background}
+${client.background ?? ''}
 ${client.special_instructions ? `\n## MANDATORY CLIENT-SPECIFIC INSTRUCTIONS - OVERRIDE ALL OTHER RULES WHERE THEY CONFLICT\n${client.special_instructions}` : ''}`
 
   // --- analysis-only: extract criteria + duties ---
@@ -338,7 +353,7 @@ async function generateParallel(
   // Statement: plain text, use directly
   const statementContent = statementMsg.content[0]
   if (statementContent.type !== 'text') throw new Error('Unexpected response type from Claude')
-  const statement = statementContent.text
+  let statement = statementContent.text
     .trim()
     .replace(/\u2014/g, '-')
     .replace(/--/g, '-')
@@ -346,6 +361,17 @@ async function generateParallel(
     // Strip any "Story:", "Scenario:", "Story 1:", "Scenario 2:" labels the model may add
     .replace(/^(Story|Scenario)\s*\d*\s*:\s*/gim, '')
   if (!statement) throw new Error('Claude returned an empty statement')
+
+  // Enforce word count limit — truncate to last complete sentence before the limit
+  const wordLimit = isScotland ? 1060 : 1450
+  const words = statement.split(/\s+/)
+  if (words.length > wordLimit) {
+    const truncated = words.slice(0, wordLimit).join(' ')
+    const lastPeriod = truncated.lastIndexOf('.')
+    statement = lastPeriod > truncated.length * 0.85
+      ? truncated.slice(0, lastPeriod + 1) + '\n\nThank you.'
+      : truncated + '\n\nThank you.'
+  }
 
   // Analysis: small JSON, non-critical
   let analysis: StatementAnalysis | null = null
@@ -405,7 +431,7 @@ export async function generateStatement(
   analysis: StatementAnalysis | null
   promptRegion: PromptRegion
 }> {
-  const region = options.vacancyUrl ? detectRegion(options.vacancyUrl) : 'generic'
+  const region = options.vacancyUrl ? detectRegion(options.vacancyUrl, jobData.rawText) : 'generic'
   const style = options.style || '1'
   const callOptions = {
     instructions: options.instructions,
