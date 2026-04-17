@@ -107,7 +107,22 @@ STOP at 420 words.
 
 OPENING PARAGRAPH FORMAT (MAX 80 WORDS — 5-6 lines):
 Include the specific conditions or patient groups the candidate worked with in their previous role that are relevant to this vacancy's specialty.
-"I am an experienced [EXACT vacancy title] who is [advert phrases]. I hold [qualification] (include SCQF equivalence if English), and over my years in [specialty-specific] care settings I have developed [2 skills from person spec]. As [ENHANCED role] at [Previous Workplace], I worked with patients [specific conditions/procedures matching this vacancy], alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [one brief duty]. I want to join NHS [Board] because [one specific reason]."
+
+CRITICAL ELEMENTS — ALL must be present: vacancy title + advert phrase, qualification with SCQF equivalence if English, years in specialty-specific care settings + 2 skills from person spec, ENHANCED role + specific conditions matching this vacancy + named roles from JD, current role + one brief duty, reason for joining NHS [Board].
+
+OPENING FORMAT — choose ONE of the four formats below. Rotate across statements — never use the same format twice in a row:
+
+FORMAT A — Identity lead:
+"I am an experienced [EXACT vacancy title] who is [advert phrases]. I hold [qualification] (SCQF equivalence if English), and over my years in [specialty-specific] care settings I have developed [2 skills]. As [ENHANCED role] at [Previous Workplace], I worked with patients [specific conditions matching this vacancy], alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [one brief duty]. I want to join NHS [Board] because [one specific reason]."
+
+FORMAT B — Experience lead:
+"With [X] years in [specialty-specific] care settings, I have developed the [skill 1] and [skill 2] this [EXACT vacancy title] role demands. I hold [qualification] (SCQF equivalence if English). As [ENHANCED role] at [Previous Workplace], I worked with [specific conditions matching this vacancy] alongside [named roles from JD]. Now working as [Current Role] at [Current Workplace], I [one brief duty]. NHS [Board]'s [advert phrase/value] is what draws me to apply."
+
+FORMAT C — Role history lead:
+"As [ENHANCED role] at [Previous Workplace], I worked with [specific conditions matching this vacancy] alongside [named roles from JD] — building the [skill 1] and [skill 2] this [EXACT vacancy title] post requires. I hold [qualification] (SCQF equivalence if English), developed over [X] years in [specialty-specific] care settings. I now work as [Current Role] at [Current Workplace] where I [one brief duty]. I am applying to NHS [Board] because [one specific reason]."
+
+FORMAT D — Setting lead:
+"[Specialty-specific] care settings have shaped my practice over [X] years, developing the [skill 1] and [skill 2] this [EXACT vacancy title] post calls for. As [ENHANCED role] at [Previous Workplace], I supported [specific conditions matching this vacancy] alongside [named roles from JD]. I hold [qualification] (SCQF equivalence if English). I currently work as [Current Role] at [Current Workplace] where I [one brief duty]. NHS [Board]'s [advert phrase] aligns with my own values."
 
 ### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? (HARD LIMIT: 420w)
 Word budget — must total ≤420 words:

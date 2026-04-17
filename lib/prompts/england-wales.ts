@@ -162,21 +162,33 @@ RULES FOR THE HOOK:
 
 ## PARAGRAPH 1 — OPENING (MAX 8 LINES, approx 100-120 words)
 Extract phrases FROM the job advert introduction and weave them into the opening.
-Include in the opening: the specific conditions or patient groups the candidate worked with in their previous role that are relevant to this vacancy's specialty (e.g. post-operative patients, patients with [condition from JD], endoscopy recovery, dementia care — match what is in the JD).
+Include in the opening: the specific conditions or patient groups the candidate worked with in their previous role that are relevant to this vacancy's specialty.
 
-Format:
-"I am an experienced [EXACT vacancy title] who is [phrase from advert]. I hold [qualification from person spec] which meets the [person spec requirement], and over my [X] years in [specialty-specific] care settings, I have developed [2-3 skills from person spec]. As [ENHANCED previous role] at [Previous Workplace], I worked with patients undergoing [specific conditions/procedures matching this vacancy's specialty], alongside [professional roles from JD]. I am currently working as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I want to join [Trust] because [specific reason from advert and Trust values]."
-
-CRITICAL ELEMENTS — ALL must be present:
-1. "I am an experienced [vacancy title] who is [advert phrases]"
+CRITICAL ELEMENTS — ALL must be present in every opening, regardless of format chosen:
+1. Candidate's identity + vacancy title + advert phrase(s)
 2. Qualification + how it meets person spec requirement
-3. Years in [specialty-specific] care settings
-4. 2-3 skills from person spec
-5. ENHANCED previous role + specific conditions/procedures from the vacancy specialty
-6. Named professional roles from JD
-7. Current role + brief duty
-8. Why this Trust (Trust values + advert language)
+3. Years in [specialty-specific] care settings + 2-3 skills from person spec
+4. ENHANCED previous role + specific conditions/procedures from the vacancy specialty + named professional roles from JD
+5. Current role + brief duty
+6. Why this Trust (specific reason using Trust values + advert language)
 STOP at 8 lines. Never exceed.
+
+OPENING FORMAT — choose ONE of the five formats below. Rotate across statements — never use the same format twice in a row:
+
+FORMAT A — Identity lead:
+"I am an experienced [EXACT vacancy title] who is [phrase from advert]. I hold [qualification] which meets the [person spec requirement], and over my [X] years in [specialty-specific] care settings I have developed [2-3 skills]. As [ENHANCED previous role] at [Previous Workplace], I worked with [specific patient conditions matching vacancy specialty], alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty]. I want to join [Trust] because [specific reason from advert and values]."
+
+FORMAT B — Experience lead:
+"With [X] years working in [specialty-specific] care settings, I have built the [skill 1] and [skill 2] this [EXACT vacancy title] role requires. I hold [qualification], meeting the [person spec requirement]. As [ENHANCED previous role] at [Previous Workplace], I worked with patients [specific conditions from vacancy specialty], supporting [professional roles from JD]. I now work as [Current Role] at [Current Workplace], where my responsibilities include [brief duty]. [Trust]'s commitment to [advert/values phrase] is what draws me to apply."
+
+FORMAT C — Setting lead:
+"[Specialty-specific] care settings are where I have spent [X] years developing the skills this [EXACT vacancy title] post demands. As [ENHANCED previous role] at [Previous Workplace], I worked directly with [specific patient conditions from vacancy specialty], alongside [professional roles from JD], and hold [qualification] which satisfies the [person spec requirement]. I am currently [Current Role] at [Current Workplace], where I [brief duty]. I am applying to [Trust] because [specific reason — use advert phrase and values]."
+
+FORMAT D — Role history lead:
+"As [ENHANCED previous role] at [Previous Workplace], I spent [X] years [specific duty matching vacancy specialty] — working with [patient conditions from JD] alongside [professional roles from JD]. That experience, combined with [qualification] meeting the [person spec requirement], has given me the [skill 1] and [skill 2] I bring to this [EXACT vacancy title] post. I now work as [Current Role] at [Current Workplace] where I [brief duty]. I am drawn to [Trust] because [specific reason from advert and values]."
+
+FORMAT E — Qualification and motivation lead:
+"My [qualification], which meets the [person spec requirement], underpins [X] years of practice as a [specialty-specific] care professional. In that time, as [ENHANCED previous role] at [Previous Workplace], I developed [skill 1] and [skill 2] working with [specific patient conditions from vacancy specialty] alongside [professional roles from JD]. As [Current Role] at [Current Workplace], I [brief duty]. I want this [EXACT vacancy title] post at [Trust] because [specific reason using advert phrases and values]."
 
 ## NO SEPARATE EDUCATION PARAGRAPH
 Qualifications are addressed fully in the opening paragraph. Do not add a separate education or training paragraph.
