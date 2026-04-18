@@ -348,8 +348,7 @@ async function generateParallel(
     anthropic.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: statementMaxTokens,
-      // Cache the system prompt — saves ~90% on input tokens for repeated region+style combos
-      system: [{ type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } }],
+      system: systemPrompt,
       messages: [{ role: 'user', content: statementUserPrompt }],
     }),
     anthropic.messages.create({
