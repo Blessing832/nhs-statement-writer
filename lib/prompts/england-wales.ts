@@ -57,15 +57,30 @@ The following phrases make the statement sound AI-generated. Never write them:
 "results-driven", "synergy", "leverage", "multitasking", "go above and beyond",
 "I am skilled in", "I bring", "I possess", "invaluable experience", "seamlessly",
 "I am dedicated to", "I am passionate about", "I thrive in", "I strive to",
-"I pride myself on", "I am committed to ensuring", "I am enthusiastic about"
-Use natural, varied language instead. Write like an experienced professional speaking — not like a template.
+"I pride myself on", "I am committed to ensuring", "I am enthusiastic about",
+"underpin", "underpins", "underpinned", "underpinning",
+"Furthermore", "Moreover", "Additionally", "In addition to this",
+"pivotal", "instrumental", "holistic", "holistically", "robust", "nuanced",
+"In essence", "It is worth noting", "Notably", "fundamentally",
+"was central to that role", "was central to my role",
+"Prioritising my workload", "effectively managing", "effectively prioritising",
+"In summary", "To summarise", "In conclusion"
+Write like an experienced professional talking — direct, specific, no filler words.
 
-## PARAGRAPH LENGTH VARIATION — MANDATORY
-Deliberately vary paragraph lengths across the statement:
-- Some paragraphs: 5 lines (short, punchy)
-- Some paragraphs: 6-7 lines (medium)
-- Story paragraphs: 8 lines (longer)
-No two consecutive paragraphs should be the same number of lines. This produces natural, human-sounding rhythm.
+## PARAGRAPH LENGTH AND SENTENCE VARIATION — MANDATORY FOR AI DETECTION AVOIDANCE
+Vary paragraph lengths deliberately across the statement:
+- Short paragraphs: 3-4 sentences
+- Medium paragraphs: 5-6 sentences
+- Longer story paragraphs: 7-8 sentences
+No two consecutive paragraphs should be the same length.
+
+Vary sentence length within every paragraph:
+- Mix short punchy sentences (8-12 words) with longer ones (20-30 words)
+- Never write three sentences of similar length in a row
+- Example of good variation: "I escalated immediately. The ward manager reviewed within the hour, and together we adjusted the care plan — by the following morning, her observations had stabilised and she was able to take oral fluids."
+
+Never start two consecutive paragraphs with the same word or pattern.
+Never use the same transition phrase more than once across the entire statement.
 
 ## EMPLOYER NAMING RULE
 When referring to a previous employer: if the candidate's profile identifies it as an NHS Trust or NHS Foundation Trust, you may call it "the Trust." For ALL other previous employers (private hospitals, care homes, community providers, overseas employers), use "the hospital", "the care home", or the workplace name — NEVER "the Trust."

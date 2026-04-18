@@ -32,19 +32,37 @@ ${styleBlock}
 - Q3 ends with "Thank you." — stop immediately after this
 ${style === '2' ? '- NEVER use subheadings or headings of any kind — this is Style 2, continuous prose only' : ''}
 
-## BANNED AI CLICHÉS — NEVER USE THESE PHRASES
-The following phrases make the statement sound AI-generated. Never write them:
+## BANNED AI WORDS AND PHRASES — NEVER USE ANY OF THESE
+The following make the statement sound AI-generated. Never write them under any circumstances:
 "proven track record", "dynamic team", "fast-paced environment", "strong communication skills",
 "attention to detail", "team player", "I am well-versed in", "I excel at", "think outside the box",
 "results-driven", "synergy", "leverage", "multitasking", "go above and beyond",
 "I am skilled in", "I bring", "I possess", "invaluable experience", "seamlessly",
 "I am dedicated to", "I am passionate about", "I thrive in", "I strive to",
-"I pride myself on", "I am committed to ensuring", "I am enthusiastic about"
-Use natural, varied language. Write like an experienced professional speaking — not like a template.
+"I pride myself on", "I am committed to ensuring", "I am enthusiastic about",
+"underpin", "underpins", "underpinned", "underpinning",
+"Furthermore", "Moreover", "Additionally", "In addition to this",
+"pivotal", "instrumental", "holistic", "holistically", "robust", "nuanced",
+"In essence", "It is worth noting", "Notably", "fundamentally",
+"was central to that role", "was central to my role",
+"Prioritising my workload", "effectively managing", "effectively prioritising",
+"In summary", "To summarise", "In conclusion"
+Write like an experienced professional talking — direct, specific, no filler words.
 
-## PARAGRAPH LENGTH VARIATION — MANDATORY
-Deliberately vary paragraph lengths: some 5 lines (short), some 6-7 lines (medium), stories 7-8 lines.
-No two consecutive paragraphs should be the same number of lines.
+## PARAGRAPH LENGTH AND SENTENCE VARIATION — MANDATORY FOR AI DETECTION AVOIDANCE
+Vary paragraph lengths deliberately across the statement:
+- Short paragraphs: 3-4 sentences
+- Medium paragraphs: 5-6 sentences
+- Longer story paragraphs: 7-8 sentences
+No two consecutive paragraphs should be the same length.
+
+Vary sentence length within every paragraph:
+- Mix short punchy sentences (8-12 words) with longer ones (20-30 words)
+- Never write three sentences of similar length in a row
+- Example of good variation: "I escalated immediately. The consultant reviewed within the hour, and together we adjusted the care plan — by the following morning, her observations had stabilised and she was able to take oral fluids."
+
+Never start two consecutive paragraphs with the same word or pattern.
+Never use the same transition phrase more than once across the entire statement.
 
 ## EMPLOYER NAMING RULE
 When referring to a previous employer: if the candidate's profile identifies it as an NHS organisation, use "the Board" or the full Board name. For ALL other previous employers (private hospitals, care homes, community providers, overseas employers), use "the hospital", "the care home", or the workplace name — NEVER "the Trust" or "the Board."
@@ -159,17 +177,17 @@ Q2 EDUCATION PARAGRAPH (MAX 80 WORDS):
 Qualifications from person spec only. SCQF equivalence if English quals. One sentence on practical requirements.
 Format: "My qualifications include [quals FROM PERSON SPEC with SCQF equivalence]. I have [GCSEs if listed]. I meet all requirements including enhanced DBS, shift flexibility, and willingness to undertake NHS [Board] mandatory training."
 
-### QUESTION 3: Is there any other relevant information that will assist us in shortlisting your application? (MAX 200w)
-Focus: Briefly reaffirm that your experience meets the essential criteria, then use the compact 6 C's to show professional values. ALL within 200 words.
-STOP at 200 words. End with "Thank you."
+### QUESTION 3: Is there any other relevant information that will assist us in shortlisting your application? (180-200 WORDS)
+MINIMUM 180 words. MAXIMUM 200 words. This question must be answered fully — do not write fewer than 180 words.
+End with "Thank you." Stop immediately after.
 
-Structure:
-1. Criteria reaffirmation (2-3 sentences): briefly confirm you meet the key essential criteria, naming 1-2 specific strengths with evidence that reinforce your suitability.
-2. Compact 6 C's paragraph: ONE brief phrase per C — no full STAR stories, just a short specific action or behaviour for each.
-3. Closing sentence with Board name.
+Structure — ALL three parts required:
+1. Criteria reaffirmation (40-50 words): 2-3 sentences confirming you meet the essential criteria, with a brief specific reference to your 2 strongest areas of evidence from the person spec that reinforce your suitability.
+2. Compact 6 C's paragraph (90-110 words): ONE brief specific phrase per C — no full STAR stories.
+3. Closing sentence (20-25 words): Board name + ENHANCED vacancy title + confidence statement.
 
-6 C'S FORMAT (compact — keep this under 100 words total):
-"The 6 C's of Care guide my daily practice: I provide care by [brief phrase], show compassion by [brief phrase], demonstrate competence through [brief phrase, e.g. 100% mandatory training compliance], practise communication by [brief phrase], show courage by [brief phrase, e.g. escalating concerns promptly to the senior charge nurse], and commitment by [brief phrase, e.g. arriving early to read handover notes]."
+6 C'S FORMAT (compact but specific — must reach 90-110 words for this section):
+"The 6 C's of Care guide my daily practice. I provide care by [specific brief phrase with a named action]. I show compassion by [specific brief phrase]. I demonstrate competence through [specific brief phrase, e.g. maintaining 100% mandatory training compliance]. I practise communication by [specific brief phrase with a named tool or approach]. I show courage by [specific brief phrase, e.g. escalating a safeguarding concern directly to the senior charge nurse without delay]. My commitment shows in [specific brief phrase, e.g. arriving 15 minutes before every shift to read handover notes thoroughly]."
 
 CLOSING:
 "I am confident my experience as [ENHANCED vacancy title] at [Previous Workplace], combined with my [qualification FROM PERSON SPEC] and [key strength FROM PERSON SPEC], make me well suited for this post at NHS [Board]. Thank you."
