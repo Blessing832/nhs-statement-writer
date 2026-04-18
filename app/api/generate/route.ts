@@ -60,9 +60,12 @@ export async function POST(req: NextRequest) {
     const message = err instanceof Error ? err.message : 'Unknown error'
 
     if (err instanceof Anthropic.APIError) {
-      console.error('Claude API error — status:', err.status, '| type:', err.type, '| body:', JSON.stringify(err.error))
+      console.error('CLAUDE_STATUS:', err.status)
+      console.error('CLAUDE_TYPE:', err.type)
+      console.error('CLAUDE_BODY:', JSON.stringify(err.error))
+      console.error('CLAUDE_MSG:', message.slice(0, 300))
     } else {
-      console.error('Claude error:', message)
+      console.error('CLAUDE_ERR:', message.slice(0, 300))
     }
 
     if (err instanceof Anthropic.APIError) {
