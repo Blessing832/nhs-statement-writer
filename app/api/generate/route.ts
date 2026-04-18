@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import Anthropic from '@anthropic-ai/sdk'
 import { supabaseAdmin } from '@/lib/supabase'
 import { generateStatement } from '@/lib/claude'
 import { ScrapeResult } from '@/lib/types'
@@ -57,9 +58,36 @@ export async function POST(req: NextRequest) {
     })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error'
-    console.error('Claude error:', message)
 
-    if (
+    if (err instanceof Anthropic.APIError) {
+      console.error('Claude API error — status:', err.status, '| type:', err.type, '| body:', JSON.stringify(err.error))
+    } else {
+      console.error('Claude error:', message)
+    }
+
+    if (err instanceof Anthropic.APIError) {
+      // Overloaded — transient, user should retry
+      if (err.status === 529 || err.type === 'overloaded_error') {
+        return NextResponse.json(
+          { error: 'The AI service is busy right now. Please wait a moment and try again.' },
+          { status: 503 }
+        )
+      }
+      // Billing / credits / quota exhausted
+      if (
+        err.status === 402 ||
+        err.type === 'billing_error' ||
+        message.toLowerCase().includes('credit') ||
+        message.toLowerCase().includes('billing') ||
+        message.toLowerCase().includes('balance') ||
+        message.toLowerCase().includes('quota')
+      ) {
+        return NextResponse.json(
+          { error: 'The statement writer is temporarily unavailable. Please contact your administrator.' },
+          { status: 503 }
+        )
+      }
+    } else if (
       message.toLowerCase().includes('credit') ||
       message.toLowerCase().includes('billing') ||
       message.toLowerCase().includes('balance') ||
@@ -71,6 +99,7 @@ export async function POST(req: NextRequest) {
         { status: 503 }
       )
     }
+
     return NextResponse.json({ error: message }, { status: 500 })
   }
 

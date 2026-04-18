@@ -7,6 +7,24 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!,
 })
 
+async function withRetry<T>(fn: () => Promise<T>, maxRetries = 2): Promise<T> {
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn()
+    } catch (err) {
+      const isOverloaded =
+        err instanceof Anthropic.APIError &&
+        (err.status === 529 || err.type === 'overloaded_error')
+      if (isOverloaded && attempt < maxRetries) {
+        await new Promise(r => setTimeout(r, 1500 * (attempt + 1)))
+        continue
+      }
+      throw err
+    }
+  }
+  throw new Error('unreachable')
+}
+
 export type PromptRegion = 'england-wales' | 'scotland' | 'civil-service' | 'generic'
 export type ApplicationMode = 'full' | 'questions-only' | 'statement-questions'
 
@@ -345,12 +363,14 @@ async function generateParallel(
   }
 
   const [statementResult, analysisResult] = await Promise.allSettled([
-    anthropic.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: statementMaxTokens,
-      system: systemPrompt,
-      messages: [{ role: 'user', content: statementUserPrompt }],
-    }),
+    withRetry(() =>
+      anthropic.messages.create({
+        model: 'claude-sonnet-4-6',
+        max_tokens: statementMaxTokens,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: statementUserPrompt }],
+      })
+    ),
     anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: isScotland ? 700 : 900,
