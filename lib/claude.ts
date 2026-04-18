@@ -372,8 +372,8 @@ async function generateParallel(
       })
     ),
     anthropic.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: isScotland ? 700 : 900,
+      model: 'claude-sonnet-4-6',
+      max_tokens: isScotland ? 900 : 1400,
       system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
       messages: [{ role: 'user', content: analysisUserPrompt }],
     }),
