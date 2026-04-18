@@ -344,7 +344,7 @@ async function generateParallel(
     statementMaxTokens = 2300
   }
 
-  const [statementMsg, analysisMsg] = await Promise.all([
+  const [statementResult, analysisResult] = await Promise.allSettled([
     anthropic.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: statementMaxTokens,
@@ -359,6 +359,10 @@ async function generateParallel(
       messages: [{ role: 'user', content: analysisUserPrompt }],
     }),
   ])
+
+  // Statement is critical — rethrow if it failed
+  if (statementResult.status === 'rejected') throw statementResult.reason
+  const statementMsg = statementResult.value
 
   // Statement: plain text, use directly
   const statementContent = statementMsg.content[0]
@@ -399,11 +403,12 @@ async function generateParallel(
     if (!statement.trimEnd().endsWith('Thank you.')) statement += '\n\nThank you.'
   }
 
-  // Analysis: small JSON, non-critical
+  // Analysis: small JSON, non-critical — failure just means no criteria list shown
   let analysis: StatementAnalysis | null = null
   let previousRoleDuties: string[] = []
-  const analysisContent = analysisMsg.content[0]
-  if (analysisContent.type === 'text') {
+  const analysisMsg = analysisResult.status === 'fulfilled' ? analysisResult.value : null
+  const analysisContent = analysisMsg?.content[0]
+  if (analysisContent?.type === 'text') {
     const cleanedAnalysis = analysisContent.text.replace(/\u2014/g, '-').replace(/--/g, '-')
     const jsonMatch = cleanedAnalysis.match(/\{[\s\S]*\}/)
     if (jsonMatch) {
