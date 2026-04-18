@@ -1,7 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { Client, ScrapeResult, StatementAnalysis } from './types'
 import { getEnglandWalesPrompt } from './prompts/england-wales'
-import { SCOTLAND_PROMPT } from './prompts/scotland'
+import { getScotlandPrompt } from './prompts/scotland'
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!,
@@ -45,7 +45,7 @@ export function detectRegion(url: string, rawText?: string): PromptRegion {
 }
 
 function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): string {
-  if (region === 'scotland') return SCOTLAND_PROMPT
+  if (region === 'scotland') return getScotlandPrompt(style)
   if (region === 'england-wales') return getEnglandWalesPrompt(style)
   return `You are an expert UK job application writer. Write a compelling supporting statement for this NHS or public sector role.
 - Address every essential criterion from the person specification
@@ -79,6 +79,7 @@ function buildUserPrompt(
     previousStatement?: string
     outputMode?: 'statement-only' | 'questions-only' | 'analysis-only' | 'full'
     applicationMode?: ApplicationMode
+    openingFormatHint?: string
   }
 ): string {
   const isScotland = region === 'scotland'
@@ -202,6 +203,9 @@ ${options.specificQuestions || ''}`
   // --- statement-only: full prose statement, plain text ---
   if (outputMode === 'statement-only') {
     const hasExtraQuestions = !!(options.specificQuestions && options.applicationMode === 'statement-questions')
+    const formatHintLine = options.openingFormatHint
+      ? `MANDATORY OPENING FORMAT: Use Format ${options.openingFormatHint} for the opening paragraph — do NOT default to Format A, use Format ${options.openingFormatHint} specifically.\n\n`
+      : ''
     const outputInstruction = isRewrite
       ? 'Rewrite the statement following the instruction. Keep all strong content. Improve what was asked.'
       : isScotland
@@ -223,7 +227,7 @@ ${instructionsSection}
 ${rewriteSection}
 
 ## TASK
-${outputInstruction}
+${formatHintLine}${outputInstruction}
 
 Output as plain text only. Do NOT wrap in JSON. Do NOT add any preamble. Start directly with the first word.
 
@@ -231,9 +235,9 @@ ${isScotland
   ? `MANDATORY: Output ONLY the three standard questions listed above. No other sections.
 
 HARD WORD LIMITS:
-- Question 1: Why are you suitable for this post? — 420 words maximum
-- Question 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? — 420 words maximum
-- Question 3: Is there any other relevant information you wish to tell us? — 220 words maximum — end with "Thank you." and stop`
+- Question 1: Why are you suitable for this post? — 480 words maximum
+- Question 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? — 480 words maximum
+- Question 3: Is there any other relevant information that will assist us in shortlisting your application? — 200 words maximum — end with "Thank you." and stop`
   : `HARD WORD LIMIT: 1,450 words for the main statement — end with "Thank you." and STOP
 Do NOT write any section after "Thank you." — no Key Duties, no summaries, nothing.
 ${hasExtraQuestions ? 'After "Thank you.", write each specific question answer (200-250 words each) with the question as a heading.' : ''}`}
@@ -309,6 +313,10 @@ async function generateParallel(
   const appMode = options.applicationMode ?? 'full'
   const systemPrompt = buildSystemPrompt(region, style)
 
+  // Pick opening format randomly so the intro never defaults to the same structure
+  const formatPool = isScotland ? ['A', 'B', 'C', 'D'] : ['A', 'B', 'C', 'D', 'E']
+  const openingFormatHint = formatPool[Math.floor(Math.random() * formatPool.length)]
+
   // Determine statement output mode
   const statementOutputMode =
     appMode === 'questions-only' ? 'questions-only' : 'statement-only'
@@ -316,6 +324,7 @@ async function generateParallel(
   const statementUserPrompt = buildUserPrompt(client, jobData, region, {
     ...options,
     outputMode: statementOutputMode,
+    openingFormatHint,
   })
 
   const analysisUserPrompt = buildUserPrompt(client, jobData, region, {
@@ -330,7 +339,7 @@ async function generateParallel(
   if (appMode === 'questions-only') {
     statementMaxTokens = 2000
   } else if (isScotland) {
-    statementMaxTokens = 1700
+    statementMaxTokens = 2000
   } else {
     statementMaxTokens = 2300
   }
@@ -363,7 +372,7 @@ async function generateParallel(
   if (!statement) throw new Error('Claude returned an empty statement')
 
   // Enforce word count limit while preserving paragraph structure
-  const wordLimit = isScotland ? 1060 : 1450
+  const wordLimit = isScotland ? 1160 : 1450
   if (statement.split(/\s+/).length > wordLimit) {
     const paragraphs = statement.split(/\n\n+/)
     let totalWords = 0
