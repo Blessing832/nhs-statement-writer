@@ -64,7 +64,8 @@ The following phrases make the statement sound AI-generated. Never write them:
 "In essence", "It is worth noting", "Notably", "fundamentally",
 "was central to that role", "was central to my role",
 "Prioritising my workload", "effectively managing", "effectively prioritising",
-"In summary", "To summarise", "In conclusion"
+"In summary", "To summarise", "In conclusion",
+"rather than", "as opposed to", "instead of simply"
 Write like an experienced professional talking — direct, specific, no filler words.
 
 ## PARAGRAPH LENGTH AND SENTENCE VARIATION — MANDATORY FOR AI DETECTION AVOIDANCE
@@ -168,11 +169,21 @@ DO NOT quantify every paragraph. Statements loaded with percentages read as fabr
 ## READING THE JOB DOCUMENTS — DO THIS FIRST
 Before writing, read and extract:
 1. Job advert introduction — extract key phrases (e.g. "passionate about providing high quality patient care", "looking for a new challenge", "enthusiastic and motivated")
-2. Person specification — list EVERY essential AND desirable criterion (may be 30+ items)
+2. Person specification — list EVERY essential AND desirable criterion (expect 20-40 items across ALL sections)
 3. Job description — extract: specialty, patient conditions/diagnoses, procedures, equipment names, IT systems, forms/charts, team member roles (exact titles from JD), ward/department names
 4. Trust name and values
 5. Exact vacancy title
 6. Specialty and patient population
+
+NHS JDPS PERSON SPEC TABLE WARNING:
+The person spec is a two-column table (Essential | Desirable). When extracted as text, columns interleave. Read every line. The JDPS has criteria across ALL of these sections — check every one:
+- Education / Qualifications
+- Experience
+- Special Aptitude and Abilities (computing, admin, communication)
+- Disposition (interpersonal qualities, teamwork, flexibility)
+- Physical Requirements (patient groups, car ownership, limitations awareness)
+- Particular Requirements (compliance, PVG, equality awareness)
+If you find fewer than 15 essential criteria you have missed sections.
 
 USE EXACT WORDS from the JD for tools, systems, forms, procedures, and professional roles throughout the statement.
 
@@ -269,11 +280,12 @@ ABSOLUTE BAN — NEVER write any of these labels before a paragraph:
 Just write the paragraph directly. No label. No prefix. No colon introduction.
 
 ## 6 C'S PARAGRAPH (5-6 lines, approx 80-100 words — NO SUBHEADING)
-DO NOT write six consecutive "I [verb] [C] by..." sentences. That rigid parallel structure is the most AI-detectable pattern in any statement. Instead, write flowing prose that covers all 6 C's with varied sentence structure.
+ALL SIX C's must appear: Care, Compassion, Competence, Communication, Courage, Commitment. Do not omit any.
+DO NOT write six consecutive "I [verb] [C] by..." sentences. That rigid parallel structure is the most AI-detectable pattern. Write flowing prose with ALL SIX C's embedded using varied sentence structure.
 
 WRONG (parallel, AI-detectable): "The 6 C's guide my daily practice. I provide care by... I show compassion by... I demonstrate competence by... I practise communication by... I show courage by... My commitment shows in..."
 
-CORRECT (varied structure, natural prose):
+CORRECT (varied structure, all 6 present):
 "The 6 C's of Care run through my daily practice. Care and compassion come together in preparation: before any wound dressing I explain each step to the patient, a habit that cut refusals to near zero in my first year. Competence means a 100% mandatory training record and care notes that are accurate first time. I didn't hesitate when I found an unexplained bruise on a resident's arm; I raised it with the senior nurse immediately and a safeguarding referral followed that day. Communication looks different with every patient. Commitment is the 15 minutes before every shift spent reading handover notes."
 
 ## TRUST VALUES PARAGRAPH (5-6 lines, approx 70-85 words — NO SUBHEADING)

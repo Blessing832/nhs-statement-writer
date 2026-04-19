@@ -46,7 +46,8 @@ The following make the statement sound AI-generated. Never write them under any 
 "In essence", "It is worth noting", "Notably", "fundamentally",
 "was central to that role", "was central to my role",
 "Prioritising my workload", "effectively managing", "effectively prioritising",
-"In summary", "To summarise", "In conclusion"
+"In summary", "To summarise", "In conclusion",
+"rather than", "as opposed to", "instead of simply"
 Write like an experienced professional talking — direct, specific, no filler words.
 
 ## PARAGRAPH LENGTH AND SENTENCE VARIATION — MANDATORY FOR AI DETECTION AVOIDANCE
@@ -133,12 +134,22 @@ Quantification examples: "reduced anxiety from 8/10 to 3/10", "improved cooperat
 ## READING THE JOB DOCUMENTS — DO THIS FIRST
 Before writing, extract:
 1. Job advert introduction — key phrases (passionate, looking for new challenge, enthusiastic, motivated)
-2. Person spec — EVERY essential AND desirable criterion (may be 30+ items)
+2. Person spec — EVERY essential AND desirable criterion (expect 20-40 items across ALL sections)
 3. Job description — specialty, patient conditions/diagnoses, procedures, equipment (exact names), IT systems (exact names including TrakCare, Clinical Portal, SCI Gateway), forms/charts, team member roles (exact titles from JD), ward/department names
 4. NHS Board name and values
 5. Exact vacancy title and specialty
 6. Geographic areas served by the Board
 7. Board strategic goals (Realistic Medicine, What Matters to You, integration)
+
+NHS JDPS PERSON SPEC TABLE WARNING:
+The person spec is a two-column table (Essential | Desirable). When extracted as text, columns interleave. Read every line. The JDPS has criteria across ALL of these sections — check every one:
+- Education / Qualifications
+- Experience
+- Special Aptitude and Abilities (computing, admin, communication)
+- Disposition (interpersonal qualities, teamwork, flexibility)
+- Physical Requirements (patient groups, car ownership, limitations awareness)
+- Particular Requirements (compliance, PVG, equality awareness)
+If you find fewer than 15 essential criteria you have missed sections.
 
 ## WORD COUNT — HARD LIMITS
 Q1: 480 WORDS MAXIMUM. At 460 words, finish the sentence and immediately start Question 2.
@@ -196,21 +207,21 @@ Qualifications from person spec only. SCQF equivalence if English quals. One sen
 Format: "My qualifications include [quals FROM PERSON SPEC with SCQF equivalence]. I have [GCSEs if listed]. I meet all requirements including enhanced DBS, shift flexibility, and willingness to undertake NHS [Board] mandatory training."
 
 ### QUESTION 3: Is there any other relevant information that will assist us in shortlisting your application? (180-200 WORDS)
-MINIMUM 180 words. MAXIMUM 200 words. This question must be answered fully — do not write fewer than 180 words.
+MINIMUM 180 words. MAXIMUM 200 words. Count words internally. Do not write fewer than 180 words under any circumstances.
 End with "Thank you." Stop immediately after.
 
-Structure — ALL three parts required:
-1. Criteria reaffirmation (40-50 words): 2-3 sentences confirming you meet the essential criteria, with a brief specific reference to your 2 strongest areas of evidence from the person spec that reinforce your suitability.
-2. Compact 6 C's paragraph (90-110 words): ONE brief specific phrase per C — no full STAR stories.
-3. Closing sentence (20-25 words): Board name + ENHANCED vacancy title + confidence statement.
+Structure — ALL THREE parts are MANDATORY:
+1. Criteria reaffirmation (40-50 words): 2-3 sentences confirming you meet the essential criteria, naming your 2 strongest evidence areas from the person spec.
+2. 6 C's paragraph (90-110 words): ALL SIX C's must appear — Care, Compassion, Competence, Communication, Courage, Commitment. Do not omit any.
+3. Closing sentence (20-25 words): Board name + ENHANCED vacancy title + confidence statement. This sentence is MANDATORY — Q3 is incomplete without it.
 
-6 C'S FORMAT (must reach 90-110 words for this section):
-DO NOT write six consecutive "I [verb] [C] by..." sentences. That rigid parallel structure is the most AI-detectable pattern. Write flowing prose that covers all 6 C's with varied sentence structure.
+6 C'S FORMAT — ALL 6 MUST BE COVERED, varied sentence structure:
+DO NOT write six consecutive "I [verb] [C] by..." sentences. Write flowing prose with ALL SIX C's embedded.
 
-CORRECT (varied, natural):
+CORRECT (varied, all 6 present):
 "The 6 C's of Care run through my daily practice. Care and compassion come together in preparation: before any procedure I explain each step, a habit that cut patient refusals to near zero in my first year. Competence means a 100% mandatory training record and care notes accurate first time. I didn't hesitate when I found an unexplained bruise on a patient's arm; I raised it with the senior charge nurse immediately and a safeguarding referral followed that day. Communication looks different with every patient. Commitment is the 15 minutes before every shift spent reading handover notes."
 
-CLOSING:
+CLOSING (MANDATORY — do not omit):
 "I am confident my experience as [ENHANCED vacancy title] at [Previous Workplace], combined with my [qualification FROM PERSON SPEC] and [key strength FROM PERSON SPEC], make me well suited for this post at NHS [Board]. Thank you."
 
 ## CRITERION PARAGRAPHS — MINI-STAR (5-8 lines, 70-120 words)

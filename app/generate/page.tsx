@@ -289,7 +289,7 @@ function GeneratePage() {
   }
 
   const wc = result ? wordCount(result.statement) : 0
-  const wcLimit = result?.promptRegion === 'scotland' ? 1060 : 1450 // Scotland: Q1(420)+Q2(420)+Q3(220)=1060
+  const wcLimit = result?.promptRegion === 'scotland' ? 1160 : 1450 // Scotland: Q1(480)+Q2(480)+Q3(200)=1160
   const wcColour = wc > wcLimit ? 'text-red-600 font-bold' : wc > wcLimit * 0.93 ? 'text-amber-600' : 'text-green-700'
 
   return (

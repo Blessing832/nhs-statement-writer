@@ -73,15 +73,16 @@ function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): string {
 - Never fabricate experience`
 }
 
-// Smart truncation: take first 12,000 chars (JD) + last 6,000 chars (PS is usually at the bottom).
-// Total = 18,000 chars = same token budget, but now captures person spec tables at the end of PDF documents.
+// Smart truncation: take first 8,000 chars (JD intro + duties) + last 16,000 chars
+// (person spec JDPS table is almost always at the END of NHS documents).
+// Total = 24,000 chars — extra chars go to the end to capture full JDPS tables.
 function buildRawText(rawText: string): string {
-  if (rawText.length <= 18000) return rawText
-  const start = rawText.slice(0, 12000)
-  const end = rawText.slice(-6000)
+  if (rawText.length <= 24000) return rawText
+  const start = rawText.slice(0, 8000)
+  const end = rawText.slice(-16000)
   return (
     start +
-    '\n\n[...middle of document omitted — continuing from near end of document where person specification appears...]\n\n' +
+    '\n\n[...middle section omitted to fit context; continuing from near end of document where the JDPS person specification table typically appears...]\n\n' +
     end
   )
 }
@@ -139,17 +140,28 @@ ${client.special_instructions ? `\n## MANDATORY CLIENT-SPECIFIC INSTRUCTIONS - O
 ${clientSection}
 
 ## TASK
-Extract every essential and desirable criterion from the person specification. The person spec may be in a table at the END of the document — check thoroughly. Write ${dutiesCount} past-tense key duties based on the candidate's previous role and the job description keywords.
+Extract EVERY essential and desirable criterion from the person specification.
+
+NHS JDPS PERSON SPEC FORMAT WARNING:
+The person spec is usually a TWO-COLUMN TABLE (Essential | Desirable). When extracted as plain text, the two columns INTERLEAVE — you will see essential and desirable items mixed together line by line. Read every line and classify it. The JDPS typically covers ALL of these sections — extract criteria from every section:
+1. Education / Qualifications
+2. Experience
+3. Special Aptitude and Abilities / Computing / Admin skills
+4. Disposition / Personal qualities
+5. Physical Requirements / Abilities
+6. Particular Requirements of the Post / Compliance
+
+MINIMUM EXPECTATION: NHS JDPS documents contain 20-40 essential criteria. If you find fewer than 15, you have missed sections — re-read the ENTIRE document. Do not stop after finding 5-10 criteria.
 
 Return ONLY a single valid JSON object - no text before or after:
 {
-  "essentialCriteria": ["every essential criterion from the person spec"],
+  "essentialCriteria": ["every essential criterion from the person spec — expect 20-40 items"],
   "desirableCriteria": ["desirable criteria if any"],
   "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties using job description keywords"]
 }
 
 CRITICAL:
-- essentialCriteria must list EVERY criterion from the person spec — check ALL of the document including the end
+- essentialCriteria must list EVERY criterion — treat every section of the JDPS table as a source
 - previousRoleDuties must have exactly ${dutiesCount} items
 - Never use the word Trust in duties`
     }
@@ -159,20 +171,31 @@ CRITICAL:
 ${clientSection}
 
 ## TASK
-Extract every essential and desirable criterion from the person specification. The person spec may be in a table at the END of the document — read ALL of the text carefully. Identify the Trust's named values from the job description. Write ${dutiesCount} past-tense key duties from the candidate's previous role.
+Extract EVERY essential and desirable criterion from the person specification. Identify the Trust's named values from the job description.
+
+NHS JDPS PERSON SPEC FORMAT WARNING:
+The person spec is usually a TWO-COLUMN TABLE (Essential | Desirable). When extracted as plain text, the two columns INTERLEAVE — you will see essential and desirable items mixed together line by line. Read every line and classify it. The JDPS typically covers ALL of these sections — extract criteria from every section:
+1. Education / Qualifications
+2. Experience
+3. Special Aptitude and Abilities / Computing / Admin skills
+4. Disposition / Personal qualities
+5. Physical Requirements / Abilities
+6. Particular Requirements of the Post / Compliance
+
+MINIMUM EXPECTATION: NHS JDPS documents contain 20-40 essential criteria. If you find fewer than 15, you have missed sections — re-read the ENTIRE document.
 
 Return ONLY a single valid JSON object - no text before or after:
 {
   "enhancedPreviousTitle": "Senior or Lead + exact vacancy title",
   "jobSummary": "1-2 sentence role summary",
-  "essentialCriteria": ["every essential criterion from the person spec"],
+  "essentialCriteria": ["every essential criterion from the person spec — expect 20-40 items"],
   "desirableCriteria": ["desirable criteria if any"],
   "meetsAllEssential": true,
   "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties using job description keywords"]
 }
 
 CRITICAL:
-- essentialCriteria must list EVERY criterion — check ALL of the document including the end
+- essentialCriteria must list EVERY criterion from all sections of the JDPS table
 - previousRoleDuties must have exactly ${dutiesCount} items
 - Never use the word Trust in duties`
   }
@@ -266,7 +289,8 @@ CRITICAL:
 - No em dashes anywhere
 - Do not bold or highlight any words
 - Do NOT write a Key Duties section — the statement ends at "Thank you."
-- Address EVERY essential and desirable criterion with specific STAR evidence — the candidate's enhanced title confirms they have performed this work in the same specialty
+- Address EVERY essential criterion with specific STAR evidence — expect 20-40 criteria from the JDPS, not just the bullet list in the job advert
+- The JDPS table has criteria across Education, Experience, Special Aptitudes, Disposition, Physical Requirements, and Particular Requirements — address ALL sections
 - Criteria that appear potentially weak MUST still be addressed confidently with specific evidence from the candidate's history`
   }
 
