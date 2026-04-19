@@ -114,7 +114,7 @@ function BulletList({ items, icon, colour }: { items: string[]; icon: string; co
 
 function AnalysisPanel({ analysis, region }: { analysis: StatementAnalysis | null; region: string }) {
   if (!analysis) return (
-    <p className="text-gray-400 text-sm">Person specification not extracted from page — statement was written from job advert text. If the full PS is in an attached document, the statement should still address it.</p>
+    <p className="text-gray-400 text-sm">Person specification not extracted from page. Statement was written from job advert text. If the full PS is in an attached document, the statement should still address it.</p>
   )
 
   return (
@@ -226,7 +226,7 @@ function GeneratePage() {
     if (inputMode === 'url' && !vacancyUrl.trim()) { setError('Please paste the job vacancy link'); return }
     if (inputMode === 'text') {
       const words = jobDescText.trim().split(/\s+/).filter(Boolean).length
-      if (words < 80) { setError('Please paste more text — the full job description should be several paragraphs.'); return }
+      if (words < 80) { setError('Please paste more text. The full job description should be several paragraphs.'); return }
       const t = jobDescText.toLowerCase()
       const looksLikeJob = t.includes('essential') || t.includes('duties') || t.includes('responsibilities') || t.includes('criteria') || t.includes('person spec') || t.includes('band ') || t.includes('nhs')
       if (!looksLikeJob) { setError('The pasted text does not look like a job advert. Please copy the full page including job description and person specification.'); return }
@@ -312,7 +312,7 @@ function GeneratePage() {
             <button
               onClick={() => router.push('/')}
               className="px-3 py-1.5 text-xs text-white border border-white border-opacity-40 rounded hover:bg-white hover:bg-opacity-10 cursor-pointer"
-              title="Sign out — you will need to enter your code again"
+              title="Sign out: you will need to enter your code again"
             >
               Sign Out
             </button>
@@ -379,7 +379,7 @@ function GeneratePage() {
                     <textarea
                       value={jobDescText}
                       onChange={(e) => { setJobDescText(e.target.value); setError('') }}
-                      placeholder="Paste the full job description here — job title, duties, person specification, essential criteria, desirable criteria, Trust values..."
+                      placeholder="Paste the full job description here: job title, duties, person specification, essential criteria, desirable criteria, Trust values..."
                       rows={10}
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none text-sm resize-none"
                       disabled={loading}
@@ -393,7 +393,7 @@ function GeneratePage() {
                   <div className="space-y-2">
                     {([
                       { val: 'full' as const, label: 'Full Statement', desc: 'Complete prose statement covering all person spec criteria.' },
-                      { val: 'questions-only' as const, label: 'Specific Questions Only', desc: 'Paste questions below — each answered with STAR evidence (no full statement).' },
+                      { val: 'questions-only' as const, label: 'Specific Questions Only', desc: 'Paste questions below, each answered with STAR evidence (no full statement).' },
                       { val: 'statement-questions' as const, label: 'Full Statement + Extra Questions', desc: 'Full statement then separate answers to specific questions.' },
                     ] as const).map(({ val, label, desc }) => (
                       <button

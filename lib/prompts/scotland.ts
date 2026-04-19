@@ -30,7 +30,7 @@ ${styleBlock}
 - NEVER write anything after "Thank you." — Q3 ends at "Thank you." and nothing follows
 - Write in first person active voice throughout
 - Q3 ends with "Thank you." — stop immediately after this
-${style === '2' ? '- NEVER use subheadings or headings of any kind — this is Style 2, continuous prose only' : ''}
+${style === '2' ? '- NEVER use subheadings or headings of any kind (this is Style 2, continuous prose only)' : ''}
 
 ## BANNED AI WORDS AND PHRASES — NEVER USE ANY OF THESE
 The following make the statement sound AI-generated. Never write them under any circumstances:
@@ -56,13 +56,31 @@ Vary paragraph lengths deliberately across the statement:
 - Longer story paragraphs: 7-8 sentences
 No two consecutive paragraphs should be the same length.
 
-Vary sentence length within every paragraph:
-- Mix short punchy sentences (8-12 words) with longer ones (20-30 words)
-- Never write three sentences of similar length in a row
-- Example of good variation: "I escalated immediately. The consultant reviewed within the hour, and together we adjusted the care plan — by the following morning, her observations had stabilised and she was able to take oral fluids."
+BURSTINESS IS THE SINGLE MOST IMPORTANT ANTI-DETECTION MEASURE.
+After every long sentence (20+ words), write a short sentence under 8 words. Then vary again.
+Never write three sentences of similar length in a row.
+
+CORRECT bursty example:
+"I escalated immediately. The consultant reviewed within the hour and together we adjusted the care plan, so by the following morning her observations had stabilised and she was able to take oral fluids. That decision mattered."
 
 Never start two consecutive paragraphs with the same word or pattern.
 Never use the same transition phrase more than once across the entire statement.
+
+## CONTRACTIONS — EXACTLY ONE PER STATEMENT
+Use exactly one natural contraction somewhere in the statement (I'd / I've / I didn't / it wasn't / wasn't / couldn't). Place it in a story paragraph where it sounds natural, typically when describing a direct action or decision. One contraction signals authentic human voice. More than one makes the statement informal.
+
+## TIME ANCHORS — USE THROUGHOUT
+Instead of generic "In my current role" or "As [role]", use specific time anchors where they fit naturally:
+- "During my first year at [workplace]..."
+- "That particular shift..."
+- "By the end of that placement..."
+These make experiences feel lived-in rather than generic.
+
+## REFLECTION SENTENCES — 1-2 REQUIRED
+Include 1-2 brief reflection sentences within story paragraphs. Examples:
+- "That situation changed how I approach handover."
+- "I carried that lesson into my current role."
+Keep them short (under 10 words) and place them after a story outcome.
 
 ## EMPLOYER NAMING RULE
 When referring to a previous employer: if the candidate's profile identifies it as an NHS organisation, use "the Board" or the full Board name. For ALL other previous employers (private hospitals, care homes, community providers, overseas employers), use "the hospital", "the care home", or the workplace name — NEVER "the Trust" or "the Board."
@@ -186,8 +204,11 @@ Structure — ALL three parts required:
 2. Compact 6 C's paragraph (90-110 words): ONE brief specific phrase per C — no full STAR stories.
 3. Closing sentence (20-25 words): Board name + ENHANCED vacancy title + confidence statement.
 
-6 C'S FORMAT (compact but specific — must reach 90-110 words for this section):
-"The 6 C's of Care guide my daily practice. I provide care by [specific brief phrase with a named action]. I show compassion by [specific brief phrase]. I demonstrate competence through [specific brief phrase, e.g. maintaining 100% mandatory training compliance]. I practise communication by [specific brief phrase with a named tool or approach]. I show courage by [specific brief phrase, e.g. escalating a safeguarding concern directly to the senior charge nurse without delay]. My commitment shows in [specific brief phrase, e.g. arriving 15 minutes before every shift to read handover notes thoroughly]."
+6 C'S FORMAT (must reach 90-110 words for this section):
+DO NOT write six consecutive "I [verb] [C] by..." sentences. That rigid parallel structure is the most AI-detectable pattern. Write flowing prose that covers all 6 C's with varied sentence structure.
+
+CORRECT (varied, natural):
+"The 6 C's of Care run through my daily practice. Care and compassion come together in preparation: before any procedure I explain each step, a habit that cut patient refusals to near zero in my first year. Competence means a 100% mandatory training record and care notes accurate first time. I didn't hesitate when I found an unexplained bruise on a patient's arm; I raised it with the senior charge nurse immediately and a safeguarding referral followed that day. Communication looks different with every patient. Commitment is the 15 minutes before every shift spent reading handover notes."
 
 CLOSING:
 "I am confident my experience as [ENHANCED vacancy title] at [Previous Workplace], combined with my [qualification FROM PERSON SPEC] and [key strength FROM PERSON SPEC], make me well suited for this post at NHS [Board]. Thank you."

@@ -28,14 +28,14 @@ const SECTIONS = [
   {
     href: '/admin/quick-write',
     label: 'Quick Write',
-    description: 'One-time statement for a guest — paste their history and job link, get a statement instantly',
+    description: 'One-time statement for a guest: paste their history and job link, get a statement instantly',
     icon: '⚡',
     color: '#7c3aed',
   },
   {
     href: '/admin/interview-prep',
     label: 'Interview Prep',
-    description: 'Generate a full interview preparation pack — person spec, 20 Q&As, STARR answers, and tips',
+    description: 'Generate a full interview preparation pack: person spec, 20 Q&As, STARR answers, and tips',
     icon: '🎯',
     color: '#dc2626',
   },

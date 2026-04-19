@@ -81,7 +81,7 @@ export default function Home() {
                 Faster
               </h2>
               <p className="text-gray-500 text-base mb-6 leading-relaxed">
-                Professional supporting statements tailored to your specific application — evidence-based, criteria-matched, and ready in minutes.
+                Professional supporting statements tailored to your specific application: evidence-based, criteria-matched, and ready in minutes.
               </p>
 
               {/* Feature pills */}

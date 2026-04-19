@@ -39,7 +39,7 @@ THIS IS STYLE 2. SUBHEADINGS ARE ABSOLUTELY FORBIDDEN.
 ` : ''}
 ## ABSOLUTE RULES — NEVER BREAK
 - NEVER use em dashes (the — character). Use commas, colons, or hyphens (-) only
-${style === '2' ? '- NEVER use subheadings or headings of any kind — this is Style 2, continuous prose only\n' : ''}- NEVER fabricate experience — use only what is in the candidate profile
+${style === '2' ? '- NEVER use subheadings or headings of any kind (this is Style 2, continuous prose only)\n' : ''}- NEVER fabricate experience — use only what is in the candidate profile
 - NEVER produce theoretical statements — every paragraph must contain specific evidence with quantified outcomes
 - NEVER use "NHS settings" — use specialty-specific settings only (acute care settings, mental health care settings, community care settings, maternity care settings, care settings)
 - NEVER use generic openers such as "I am a hardworking individual" or "I am passionate about"
@@ -74,13 +74,35 @@ Vary paragraph lengths deliberately across the statement:
 - Longer story paragraphs: 7-8 sentences
 No two consecutive paragraphs should be the same length.
 
-Vary sentence length within every paragraph:
-- Mix short punchy sentences (8-12 words) with longer ones (20-30 words)
-- Never write three sentences of similar length in a row
-- Example of good variation: "I escalated immediately. The ward manager reviewed within the hour, and together we adjusted the care plan — by the following morning, her observations had stabilised and she was able to take oral fluids."
+BURSTINESS IS THE SINGLE MOST IMPORTANT ANTI-DETECTION MEASURE.
+After every long sentence (20+ words), write a short sentence under 8 words. Then vary again.
+Never write three sentences of similar length in a row.
+
+CORRECT bursty example:
+"I escalated immediately. The ward manager reviewed within the hour and together we adjusted the care plan, so by the following morning her observations had stabilised and she was able to take oral fluids. That decision mattered."
+
+The middle sentence is 30 words. The surrounding sentences are 3 and 3 words. That contrast is what human writing looks like.
 
 Never start two consecutive paragraphs with the same word or pattern.
 Never use the same transition phrase more than once across the entire statement.
+
+## CONTRACTIONS — EXACTLY ONE PER STATEMENT
+Use exactly one natural contraction somewhere in the statement (I'd / I've / I didn't / it wasn't / wasn't / couldn't). Place it in a story paragraph where it sounds natural, typically when describing a direct action or decision. One contraction signals authentic human voice. More than one makes the statement informal.
+
+## TIME ANCHORS — USE THROUGHOUT
+Instead of generic "In my current role" or "In my previous role", use specific time anchors where they fit naturally:
+- "During my first year at [workplace]..."
+- "That particular shift..."
+- "By the end of that placement..."
+- "In my second year at [workplace]..."
+These make experiences feel lived-in rather than generic.
+
+## REFLECTION SENTENCES — 1-2 REQUIRED
+Include 1-2 brief reflection sentences within story paragraphs. These are the hardest pattern for AI detectors to flag. Examples:
+- "That situation changed how I approach handover."
+- "I carried that lesson into my current role."
+- "It reinforced why preparation matters."
+Keep them short (under 10 words) and place them after a story outcome.
 
 ## EMPLOYER NAMING RULE
 When referring to a previous employer: if the candidate's profile identifies it as an NHS Trust or NHS Foundation Trust, you may call it "the Trust." For ALL other previous employers (private hospitals, care homes, community providers, overseas employers), use "the hospital", "the care home", or the workplace name — NEVER "the Trust."
@@ -207,7 +229,7 @@ FORMAT C — Setting lead:
 "[Specialty-specific] care settings are where I have spent [X] years developing the skills this [EXACT vacancy title] post demands. As [ENHANCED previous role] at [Previous Workplace], I worked directly with [specific patient conditions from vacancy specialty], alongside [professional roles from JD], and hold [qualification] which satisfies the [person spec requirement]. I am currently [Current Role] at [Current Workplace], where I [brief duty]. I am applying to [Trust] because [specific reason — use advert phrase and values]."
 
 FORMAT D — Role history lead:
-"As [ENHANCED previous role] at [Previous Workplace], I spent [X] years [specific duty matching vacancy specialty] — working with [patient conditions from JD] alongside [professional roles from JD]. That experience, combined with [qualification] meeting the [person spec requirement], has given me the [skill 1] and [skill 2] I bring to this [EXACT vacancy title] post. I now work as [Current Role] at [Current Workplace] where I [brief duty]. I am drawn to [Trust] because [specific reason from advert and values]."
+"As [ENHANCED previous role] at [Previous Workplace], I spent [X] years [specific duty matching vacancy specialty], working with [patient conditions from JD] alongside [professional roles from JD]. That experience, combined with [qualification] meeting the [person spec requirement], has given me the [skill 1] and [skill 2] I bring to this [EXACT vacancy title] post. I now work as [Current Role] at [Current Workplace] where I [brief duty]. I am drawn to [Trust] because [specific reason from advert and values]."
 
 FORMAT E — Qualification and motivation lead:
 "My [qualification], which meets the [person spec requirement], underpins [X] years of practice as a [specialty-specific] care professional. In that time, as [ENHANCED previous role] at [Previous Workplace], I developed [skill 1] and [skill 2] working with [specific patient conditions from vacancy specialty] alongside [professional roles from JD]. As [Current Role] at [Current Workplace], I [brief duty]. I want this [EXACT vacancy title] post at [Trust] because [specific reason using advert phrases and values]."
@@ -246,12 +268,13 @@ ABSOLUTE BAN — NEVER write any of these labels before a paragraph:
 "Story:", "Story 1:", "Story 2:", "Scenario:", "Scenario 1:", "Example:", "STAR:", "Case:"
 Just write the paragraph directly. No label. No prefix. No colon introduction.
 
-## 6 C'S PARAGRAPH (5-6 lines, approx 70-85 words — NO SUBHEADING)
-Each of the 6 C's must have a specific example with a result.
+## 6 C'S PARAGRAPH (5-6 lines, approx 80-100 words — NO SUBHEADING)
+DO NOT write six consecutive "I [verb] [C] by..." sentences. That rigid parallel structure is the most AI-detectable pattern in any statement. Instead, write flowing prose that covers all 6 C's with varied sentence structure.
 
-WRONG (theoretical): "The 6 C's guide my daily practice. I provide care and compassion by treating patients with dignity."
+WRONG (parallel, AI-detectable): "The 6 C's guide my daily practice. I provide care by... I show compassion by... I demonstrate competence by... I practise communication by... I show courage by... My commitment shows in..."
 
-CORRECT: "The 6 C's of Care guide my daily practice. I provide care and compassion by ensuring privacy during personal care, drawing curtains before every procedure, which improved patient satisfaction scores from 78% to 96%. I demonstrate competence by maintaining 100% mandatory training compliance. I show communication by adapting my approach for patients with dysphasia, using visual prompts that reduced distress incidents by 40%. I demonstrate courage by escalating safeguarding concerns immediately to the registered nurse when I observed unexplained bruising, and commitment by arriving 15 minutes early for every shift to read handover notes."
+CORRECT (varied structure, natural prose):
+"The 6 C's of Care run through my daily practice. Care and compassion come together in preparation: before any wound dressing I explain each step to the patient, a habit that cut refusals to near zero in my first year. Competence means a 100% mandatory training record and care notes that are accurate first time. I didn't hesitate when I found an unexplained bruise on a resident's arm; I raised it with the senior nurse immediately and a safeguarding referral followed that day. Communication looks different with every patient. Commitment is the 15 minutes before every shift spent reading handover notes."
 
 ## TRUST VALUES PARAGRAPH (5-6 lines, approx 70-85 words — NO SUBHEADING)
 Each trust value must have a specific application example with a result.

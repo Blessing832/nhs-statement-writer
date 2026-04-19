@@ -320,7 +320,7 @@ export default function PreferencesPage() {
       {(showForm || editing) ? (
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6 shadow-sm">
           <h2 className="text-base font-bold text-gray-900 mb-5">
-            {editing ? `Edit — ${editing.client?.full_name}` : 'Add Applicant'}
+            {editing ? `Edit: ${editing.client?.full_name}` : 'Add Applicant'}
           </h2>
           <PreferenceForm
             clients={clients}
@@ -362,7 +362,7 @@ export default function PreferencesPage() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="font-bold text-gray-900 text-sm">{pref.client?.full_name ?? '—'}</span>
+                      <span className="font-bold text-gray-900 text-sm">{pref.client?.full_name ?? '-'}</span>
                       <span className="text-xs font-mono text-gray-400">{pref.client?.client_code}</span>
                       {!pref.is_active && <span className="text-xs px-2 py-0.5 rounded bg-gray-100 text-gray-500">Paused</span>}
                     </div>

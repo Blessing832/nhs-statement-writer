@@ -201,7 +201,7 @@ export default function VacanciesDashboard() {
       {withLinks.length > 0 && (
         <section className="mb-8">
           <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">
-            Ready — {withLinks.length} candidate{withLinks.length !== 1 ? 's' : ''}
+            Ready: {withLinks.length} candidate{withLinks.length !== 1 ? 's' : ''}
           </p>
           <motion.div
             className="space-y-3"
@@ -222,7 +222,7 @@ export default function VacanciesDashboard() {
       {noLinks.length > 0 && (
         <section className="mb-8">
           <p className="text-xs font-bold text-yellow-600 uppercase tracking-wider mb-3">
-            Needs Links — {noLinks.length} candidate{noLinks.length !== 1 ? 's' : ''}
+            Needs Links: {noLinks.length} candidate{noLinks.length !== 1 ? 's' : ''}
           </p>
           <motion.div
             className="space-y-3"
@@ -243,7 +243,7 @@ export default function VacanciesDashboard() {
       {inactive.length > 0 && (
         <section>
           <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
-            Expired / Inactive — {inactive.length}
+            Expired / Inactive: {inactive.length}
           </p>
           <div className="space-y-2 opacity-50">
             {inactive.map(client => (

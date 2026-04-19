@@ -40,7 +40,7 @@ function LoginScreen({ onLogin }: { onLogin: (token: string) => void }) {
             <span className="text-white font-bold">NHS</span>
           </div>
           <h1 className="text-xl font-bold text-gray-900">Admin Login</h1>
-          <p className="text-sm text-gray-500 mt-1">EaseMe — NHS Careers Platform</p>
+          <p className="text-sm text-gray-500 mt-1">EaseMe: NHS Careers Platform</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>

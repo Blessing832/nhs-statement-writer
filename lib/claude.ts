@@ -98,6 +98,7 @@ function buildUserPrompt(
     outputMode?: 'statement-only' | 'questions-only' | 'analysis-only' | 'full'
     applicationMode?: ApplicationMode
     openingFormatHint?: string
+    yearsHint?: string
   }
 ): string {
   const isScotland = region === 'scotland'
@@ -221,8 +222,9 @@ ${options.specificQuestions || ''}`
   // --- statement-only: full prose statement, plain text ---
   if (outputMode === 'statement-only') {
     const hasExtraQuestions = !!(options.specificQuestions && options.applicationMode === 'statement-questions')
+    const yearsStr = options.yearsHint || 'over 2'
     const formatHintLine = options.openingFormatHint
-      ? `MANDATORY OPENING FORMAT: Use Format ${options.openingFormatHint} for the opening paragraph — do NOT default to Format A, use Format ${options.openingFormatHint} specifically.\n\n`
+      ? `MANDATORY OPENING FORMAT: Use Format ${options.openingFormatHint}. Replace every [X] placeholder with "${yearsStr}". NEVER write "several years", "many years", or "a number of years" — always use "${yearsStr} years".\n\n`
       : ''
     const outputInstruction = isRewrite
       ? 'Rewrite the statement following the instruction. Keep all strong content. Improve what was asked.'
@@ -335,6 +337,10 @@ async function generateParallel(
   const formatPool = isScotland ? ['A', 'B', 'C', 'D'] : ['A', 'B', 'C', 'D', 'E']
   const openingFormatHint = formatPool[Math.floor(Math.random() * formatPool.length)]
 
+  // Random years: avoids "several years" — use a specific number
+  const yearsPool = ['over 2', 'over 3']
+  const yearsHint = yearsPool[Math.floor(Math.random() * yearsPool.length)]
+
   // Determine statement output mode
   const statementOutputMode =
     appMode === 'questions-only' ? 'questions-only' : 'statement-only'
@@ -343,6 +349,7 @@ async function generateParallel(
     ...options,
     outputMode: statementOutputMode,
     openingFormatHint,
+    yearsHint,
   })
 
   const analysisUserPrompt = buildUserPrompt(client, jobData, region, {

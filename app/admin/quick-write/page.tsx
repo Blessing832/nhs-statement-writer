@@ -53,7 +53,7 @@ export default function QuickWritePage() {
         setResult(data)
       }
     } catch {
-      setError('Network error — please try again')
+      setError('Network error, please try again')
     } finally {
       setLoading(false)
     }
@@ -76,7 +76,7 @@ export default function QuickWritePage() {
       <div className="mb-6">
         <h1 className="text-xl font-bold text-gray-900">Quick Statement Writer</h1>
         <p className="text-sm text-gray-500 mt-1">
-          One-time use — paste a candidate&apos;s background and job link to generate a supporting statement instantly. Nothing is saved.
+          One-time use: paste a candidate&apos;s background and job link to generate a supporting statement instantly. Nothing is saved.
         </p>
       </div>
 
@@ -87,7 +87,7 @@ export default function QuickWritePage() {
             <div>
               <p className="text-sm font-semibold text-green-800">Statement generated</p>
               <p className="text-xs text-green-700 mt-0.5">
-                {result.jobTitle} — {result.organisation}
+                {result.jobTitle}: {result.organisation}
               </p>
             </div>
             <div className="flex gap-2 shrink-0">
@@ -154,7 +154,7 @@ export default function QuickWritePage() {
               value={form.work_history}
               onChange={set('work_history')}
               rows={5}
-              placeholder="Paste their CV / work history here — job titles, employers, dates, key duties..."
+              placeholder="Paste their CV / work history here: job titles, employers, dates, key duties..."
               className={FIELD_CLASS}
             />
           </div>
@@ -196,7 +196,7 @@ export default function QuickWritePage() {
               value={form.background}
               onChange={set('background')}
               rows={3}
-              placeholder="Anything else relevant — immigration status, gaps, special context..."
+              placeholder="Anything else relevant: immigration status, gaps, special context..."
               className={FIELD_CLASS}
             />
           </div>
@@ -224,8 +224,8 @@ export default function QuickWritePage() {
                 onChange={set('style')}
                 className={FIELD_CLASS}
               >
-                <option value="1">Style 1 — Subheadings</option>
-                <option value="2">Style 2 — Continuous prose</option>
+                <option value="1">Style 1 - Subheadings</option>
+                <option value="2">Style 2 - Continuous prose</option>
               </select>
             </div>
           </div>
@@ -243,7 +243,7 @@ export default function QuickWritePage() {
               className="w-full py-3 text-sm font-semibold text-white rounded-md cursor-pointer disabled:opacity-60 transition-opacity"
               style={{ backgroundColor: loading ? '#64748b' : '#005eb8' }}
             >
-              {loading ? 'Generating statement — this takes up to 45 seconds…' : 'Generate Statement'}
+              {loading ? 'Generating statement, this takes up to 45 seconds...' : 'Generate Statement'}
             </button>
           </div>
         </form>
