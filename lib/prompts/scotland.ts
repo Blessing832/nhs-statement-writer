@@ -47,7 +47,10 @@ The following make the statement sound AI-generated. Never write them under any 
 "was central to that role", "was central to my role",
 "Prioritising my workload", "effectively managing", "effectively prioritising",
 "In summary", "To summarise", "In conclusion",
-"rather than", "as opposed to", "instead of simply"
+"rather than", "as opposed to", "instead of simply",
+"in practice, not theory", "not in theory", "not theoretically",
+"reinforced for me", "reinforced why", "reinforced how", "reinforced the importance",
+"[Noun] is [abstract definition]" patterns — e.g. do NOT write "Commitment is every shift completed...", "Communication is adapting to...", "Courage means raising concerns..." — these read as AI-generated definitions; instead show the action directly
 Write like an experienced professional talking — direct, specific, no filler words.
 
 ## PARAGRAPH LENGTH AND SENTENCE VARIATION — MANDATORY FOR AI DETECTION AVOIDANCE
@@ -81,7 +84,10 @@ These make experiences feel lived-in rather than generic.
 Include 1-2 brief reflection sentences within story paragraphs. Examples:
 - "That situation changed how I approach handover."
 - "I carried that lesson into my current role."
+- "That decision mattered."
+- "I haven't worked the same way since."
 Keep them short (under 10 words) and place them after a story outcome.
+NEVER use "reinforced" in a reflection sentence — that pattern is detectable.
 
 ## EMPLOYER NAMING RULE
 When referring to a previous employer: if the candidate's profile identifies it as an NHS organisation, use "the Board" or the full Board name. For ALL other previous employers (private hospitals, care homes, community providers, overseas employers), use "the hospital", "the care home", or the workplace name — NEVER "the Trust" or "the Board."
@@ -218,8 +224,10 @@ Structure — ALL THREE parts are MANDATORY:
 6 C'S FORMAT — ALL 6 MUST BE COVERED, varied sentence structure:
 DO NOT write six consecutive "I [verb] [C] by..." sentences. Write flowing prose with ALL SIX C's embedded.
 
-CORRECT (varied, all 6 present):
-"The 6 C's of Care run through my daily practice. Care and compassion come together in preparation: before any procedure I explain each step, a habit that cut patient refusals to near zero in my first year. Competence means a 100% mandatory training record and care notes accurate first time. I didn't hesitate when I found an unexplained bruise on a patient's arm; I raised it with the senior charge nurse immediately and a safeguarding referral followed that day. Communication looks different with every patient. Commitment is the 15 minutes before every shift spent reading handover notes."
+CORRECT (varied, all 6 present — NO definitional "[C] is/means..." sentences):
+"The 6 C's of Care run through every shift I work. Before any personal care interaction I read the patient's documented preferences, explain each step, and adjust my pace to theirs — care and compassion built into preparation, not bolted on afterwards. My mandatory training record stands at 100% and my care notes are accurate first time. When I spotted unexplained bruising during routine personal care, I documented it immediately and told the senior charge nurse; a safeguarding referral followed that morning. I didn't hesitate. Every patient conversation is different, and I adjust how I speak, when to slow down, and when to listen without filling the silence. Showing up fully prepared for every shift, every time, is the only standard I hold myself to."
+
+NOTICE: This example shows all 6 C's without once writing "Care is...", "Competence means...", "Courage is...", etc. Never define a C — demonstrate it.
 
 CLOSING (MANDATORY — do not omit):
 "I am confident my experience as [ENHANCED vacancy title] at [Previous Workplace], combined with my [qualification FROM PERSON SPEC] and [key strength FROM PERSON SPEC], make me well suited for this post at NHS [Board]. Thank you."

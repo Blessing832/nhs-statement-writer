@@ -65,7 +65,10 @@ The following phrases make the statement sound AI-generated. Never write them:
 "was central to that role", "was central to my role",
 "Prioritising my workload", "effectively managing", "effectively prioritising",
 "In summary", "To summarise", "In conclusion",
-"rather than", "as opposed to", "instead of simply"
+"rather than", "as opposed to", "instead of simply",
+"in practice, not theory", "not in theory", "not theoretically",
+"reinforced for me", "reinforced why", "reinforced how", "reinforced the importance",
+"[Noun] is [abstract definition]" patterns — e.g. do NOT write "Dedication is every shift completed...", "Communication is adapting to...", "Courage means raising concerns..." — these read as AI-generated definitions; instead show the action directly
 Write like an experienced professional talking — direct, specific, no filler words.
 
 ## PARAGRAPH LENGTH AND SENTENCE VARIATION — MANDATORY FOR AI DETECTION AVOIDANCE
@@ -102,8 +105,10 @@ These make experiences feel lived-in rather than generic.
 Include 1-2 brief reflection sentences within story paragraphs. These are the hardest pattern for AI detectors to flag. Examples:
 - "That situation changed how I approach handover."
 - "I carried that lesson into my current role."
-- "It reinforced why preparation matters."
+- "That decision mattered."
+- "I haven't worked the same way since."
 Keep them short (under 10 words) and place them after a story outcome.
+NEVER use "reinforced" in a reflection sentence — that pattern is detectable.
 
 ## EMPLOYER NAMING RULE
 When referring to a previous employer: if the candidate's profile identifies it as an NHS Trust or NHS Foundation Trust, you may call it "the Trust." For ALL other previous employers (private hospitals, care homes, community providers, overseas employers), use "the hospital", "the care home", or the workplace name — NEVER "the Trust."
@@ -285,13 +290,17 @@ DO NOT write six consecutive "I [verb] [C] by..." sentences. That rigid parallel
 
 WRONG (parallel, AI-detectable): "The 6 C's guide my daily practice. I provide care by... I show compassion by... I demonstrate competence by... I practise communication by... I show courage by... My commitment shows in..."
 
-CORRECT (varied structure, all 6 present):
-"The 6 C's of Care run through my daily practice. Care and compassion come together in preparation: before any wound dressing I explain each step to the patient, a habit that cut refusals to near zero in my first year. Competence means a 100% mandatory training record and care notes that are accurate first time. I didn't hesitate when I found an unexplained bruise on a resident's arm; I raised it with the senior nurse immediately and a safeguarding referral followed that day. Communication looks different with every patient. Commitment is the 15 minutes before every shift spent reading handover notes."
+CORRECT (varied structure, all 6 present — NO definitional "[C] is/means..." sentences):
+"The 6 C's of Care run through every shift I work. Before any personal care interaction I read the patient's documented preferences, explain each step, and adjust my pace to theirs — care and compassion built into preparation, not bolted on afterwards. My mandatory training record stands at 100% and my care notes are accurate first time. When I spotted unexplained bruising during routine personal care, I documented it immediately and told the nurse in charge; a safeguarding referral followed that morning. I didn't hesitate. Every patient conversation is different, and I adjust how I speak, when to slow down, and when to listen without filling the silence. Showing up fully prepared for every shift, every time, is the only standard I hold myself to."
+
+NOTICE: This example shows all 6 C's without once writing "Care is...", "Competence means...", "Courage is...", etc. Never define a C — demonstrate it.
 
 ## TRUST VALUES PARAGRAPH (5-6 lines, approx 70-85 words — NO SUBHEADING)
 Each trust value must have a specific application example with a result.
 
 Format: "I want to work at [Trust] because of [vision from advert]. I demonstrate [Value 1] by [specific example with action and result]. I show [Value 2] by [specific example with action and result]. I demonstrate [Value 3] by [specific example with action and result]."
+
+IMPORTANT: Never write "[Value] is [abstract sentence]" or "[Value] means [abstract sentence]". For example, NEVER write "Dedication is every shift completed with full attention" or "Respect means drawing curtains" — these are AI-detectable definitions. Instead write: "I demonstrate Respect by drawing curtains, explaining each step, and seeking consent every time — a routine I apply regardless of how busy the ward is."
 
 ## CLOSING PARAGRAPH (4-5 lines, approx 50-60 words)
 "I am confident my experience as [ENHANCED vacancy title] at [Previous Workplace], combined with my [qualification from person spec] and [key strength], position me well for this role. I am ready to contribute to [Trust/Department]'s [service/vision from advert] from day one. Thank you."

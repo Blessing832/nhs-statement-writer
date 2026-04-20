@@ -179,6 +179,8 @@ function GeneratePage() {
   const [rewriteError, setRewriteError] = useState('')
 
   const statementRef = useRef<HTMLDivElement>(null)
+  const statementHeadRef = useRef<HTMLDivElement>(null)
+  const dutiesRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!clientCode) { router.push('/'); return }
@@ -572,11 +574,23 @@ function GeneratePage() {
             {/* RIGHT: Statement + duties */}
             <div className="flex-1 overflow-y-auto bg-white">
               <div className="p-6 max-w-3xl">
-                <div className="flex items-center justify-between mb-4">
+                <div ref={statementHeadRef} className="flex items-center justify-between mb-4">
                   <h3 className="font-bold text-gray-800 text-base">Supporting Statement</h3>
-                  <span className={`text-sm tabular-nums ${wcColour}`}>
-                    {wc.toLocaleString()} words / {wcLimit.toLocaleString()} max
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <span className={`text-sm tabular-nums ${wcColour}`}>
+                      {wc.toLocaleString()} words / {wcLimit.toLocaleString()} max
+                    </span>
+                    {(result.previousRoleDuties?.length > 0 || result.currentRoleDuties?.length > 0) && (
+                      <button
+                        onClick={() => dutiesRef.current?.scrollIntoView({ behavior: 'smooth' })}
+                        title="Jump to duties list"
+                        className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 cursor-pointer px-2 py-1 rounded hover:bg-blue-50 border border-blue-200"
+                      >
+                        Duties
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 <div ref={statementRef}>
@@ -585,8 +599,18 @@ function GeneratePage() {
 
                 {/* Previous Role Duties */}
                 {result.previousRoleDuties?.length > 0 && (
-                  <div className="mt-8 border-t border-gray-100 pt-6">
-                    <h3 className="font-bold text-gray-800 text-sm mb-3">Key Duties - Previous Role <span className="text-gray-400 font-normal">(past tense)</span></h3>
+                  <div ref={dutiesRef} className="mt-8 border-t border-gray-100 pt-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="font-bold text-gray-800 text-sm">Key Duties - Previous Role <span className="text-gray-400 font-normal">(past tense)</span></h3>
+                      <button
+                        onClick={() => statementHeadRef.current?.scrollIntoView({ behavior: 'smooth' })}
+                        title="Back to statement"
+                        className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 cursor-pointer px-2 py-1 rounded hover:bg-blue-50 border border-blue-200"
+                      >
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+                        Top
+                      </button>
+                    </div>
                     <ol className="space-y-1.5 list-none">
                       {result.previousRoleDuties.map((d, i) => (
                         <li key={i} className="flex gap-2.5 text-sm text-gray-700">
@@ -600,8 +624,20 @@ function GeneratePage() {
 
                 {/* Current Role Duties */}
                 {result.currentRoleDuties?.length > 0 && (
-                  <div className="mt-6 border-t border-gray-100 pt-6">
-                    <h3 className="font-bold text-gray-800 text-sm mb-3">Key Duties - This Role <span className="text-gray-400 font-normal">(present tense)</span></h3>
+                  <div ref={result.previousRoleDuties?.length > 0 ? undefined : dutiesRef} className="mt-6 border-t border-gray-100 pt-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="font-bold text-gray-800 text-sm">Key Duties - This Role <span className="text-gray-400 font-normal">(present tense)</span></h3>
+                      {result.previousRoleDuties?.length === 0 && (
+                        <button
+                          onClick={() => statementHeadRef.current?.scrollIntoView({ behavior: 'smooth' })}
+                          title="Back to statement"
+                          className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 cursor-pointer px-2 py-1 rounded hover:bg-blue-50 border border-blue-200"
+                        >
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+                          Top
+                        </button>
+                      )}
+                    </div>
                     <ol className="space-y-1.5 list-none">
                       {result.currentRoleDuties.map((d, i) => (
                         <li key={i} className="flex gap-2.5 text-sm text-gray-700">
