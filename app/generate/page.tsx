@@ -172,6 +172,7 @@ function GeneratePage() {
   const [error, setError] = useState('')
   const [result, setResult] = useState<Result | null>(null)
   const [copied, setCopied] = useState(false)
+  const [copiedDuties, setCopiedDuties] = useState(false)
 
   const [showRewrite, setShowRewrite] = useState(false)
   const [rewriteInstruction, setRewriteInstruction] = useState('')
@@ -602,14 +603,32 @@ function GeneratePage() {
                   <div ref={dutiesRef} className="mt-8 border-t border-gray-100 pt-6">
                     <div className="flex items-center justify-between mb-3">
                       <h3 className="font-bold text-gray-800 text-sm">Key Duties - Previous Role <span className="text-gray-400 font-normal">(past tense)</span></h3>
-                      <button
-                        onClick={() => statementHeadRef.current?.scrollIntoView({ behavior: 'smooth' })}
-                        title="Back to statement"
-                        className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 cursor-pointer px-2 py-1 rounded hover:bg-blue-50 border border-blue-200"
-                      >
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-                        Top
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => {
+                            const prev = result.previousRoleDuties?.length > 0
+                              ? 'Key Duties - Previous Role (past tense)\n' + result.previousRoleDuties.map((d, i) => `${i + 1}. ${d}`).join('\n')
+                              : ''
+                            const curr = result.currentRoleDuties?.length > 0
+                              ? 'Key Duties - This Role (present tense)\n' + result.currentRoleDuties.map((d, i) => `${i + 1}. ${d}`).join('\n')
+                              : ''
+                            navigator.clipboard.writeText([prev, curr].filter(Boolean).join('\n\n'))
+                            setCopiedDuties(true)
+                            setTimeout(() => setCopiedDuties(false), 3000)
+                          }}
+                          className="text-xs px-2 py-1 bg-gray-800 text-white rounded font-medium hover:bg-gray-700 cursor-pointer"
+                        >
+                          {copiedDuties ? 'Copied!' : 'Copy Duties'}
+                        </button>
+                        <button
+                          onClick={() => statementHeadRef.current?.scrollIntoView({ behavior: 'smooth' })}
+                          title="Back to statement"
+                          className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 cursor-pointer px-2 py-1 rounded hover:bg-blue-50 border border-blue-200"
+                        >
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+                          Top
+                        </button>
+                      </div>
                     </div>
                     <ol className="space-y-1.5 list-none">
                       {result.previousRoleDuties.map((d, i) => (
@@ -628,14 +647,27 @@ function GeneratePage() {
                     <div className="flex items-center justify-between mb-3">
                       <h3 className="font-bold text-gray-800 text-sm">Key Duties - This Role <span className="text-gray-400 font-normal">(present tense)</span></h3>
                       {result.previousRoleDuties?.length === 0 && (
-                        <button
-                          onClick={() => statementHeadRef.current?.scrollIntoView({ behavior: 'smooth' })}
-                          title="Back to statement"
-                          className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 cursor-pointer px-2 py-1 rounded hover:bg-blue-50 border border-blue-200"
-                        >
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-                          Top
-                        </button>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => {
+                              const curr = result.currentRoleDuties.map((d, i) => `${i + 1}. ${d}`).join('\n')
+                              navigator.clipboard.writeText('Key Duties - This Role (present tense)\n' + curr)
+                              setCopiedDuties(true)
+                              setTimeout(() => setCopiedDuties(false), 3000)
+                            }}
+                            className="text-xs px-2 py-1 bg-gray-800 text-white rounded font-medium hover:bg-gray-700 cursor-pointer"
+                          >
+                            {copiedDuties ? 'Copied!' : 'Copy Duties'}
+                          </button>
+                          <button
+                            onClick={() => statementHeadRef.current?.scrollIntoView({ behavior: 'smooth' })}
+                            title="Back to statement"
+                            className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 cursor-pointer px-2 py-1 rounded hover:bg-blue-50 border border-blue-200"
+                          >
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+                            Top
+                          </button>
+                        </div>
                       )}
                     </div>
                     <ol className="space-y-1.5 list-none">
