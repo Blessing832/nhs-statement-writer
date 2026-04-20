@@ -607,10 +607,10 @@ function GeneratePage() {
                         <button
                           onClick={() => {
                             const prev = result.previousRoleDuties?.length > 0
-                              ? 'Key Duties - Previous Role (past tense)\n' + result.previousRoleDuties.map((d, i) => `${i + 1}. ${d}`).join('\n')
+                              ? result.previousRoleDuties.map((d, i) => `${i + 1}. ${d}`).join('\n')
                               : ''
                             const curr = result.currentRoleDuties?.length > 0
-                              ? 'Key Duties - This Role (present tense)\n' + result.currentRoleDuties.map((d, i) => `${i + 1}. ${d}`).join('\n')
+                              ? result.currentRoleDuties.map((d, i) => `${i + 1}. ${d}`).join('\n')
                               : ''
                             navigator.clipboard.writeText([prev, curr].filter(Boolean).join('\n\n'))
                             setCopiedDuties(true)
@@ -651,7 +651,7 @@ function GeneratePage() {
                           <button
                             onClick={() => {
                               const curr = result.currentRoleDuties.map((d, i) => `${i + 1}. ${d}`).join('\n')
-                              navigator.clipboard.writeText('Key Duties - This Role (present tense)\n' + curr)
+                              navigator.clipboard.writeText(curr)
                               setCopiedDuties(true)
                               setTimeout(() => setCopiedDuties(false), 3000)
                             }}
