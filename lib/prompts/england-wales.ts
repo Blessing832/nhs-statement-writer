@@ -301,12 +301,19 @@ Just write the paragraph directly. No label. No prefix. No colon introduction.
 ALL SIX C's must appear: Care, Compassion, Competence, Communication, Courage, Commitment. Do not omit any.
 DO NOT write six consecutive "I [verb] [C] by..." sentences. That rigid parallel structure is the most AI-detectable pattern. Write flowing prose with ALL SIX C's embedded using varied sentence structure.
 
+BANNED OPENERS — never start the 6 C's paragraph with any of these:
+"The 6 C's of Care run through...", "The 6 C's guide my...", "The 6 C's underpin...",
+"The 6 C's are central to...", "The 6 C's inform...", "The 6 C's shape..."
+These are the most common AI openers and are immediately recognisable to recruiters.
+
+INSTEAD: start the paragraph mid-action — with a specific behaviour, moment, or habit. The 6 C's do not need to be announced; they just need to be present.
+
 WRONG (parallel, AI-detectable): "The 6 C's guide my daily practice. I provide care by... I show compassion by... I demonstrate competence by... I practise communication by... I show courage by... My commitment shows in..."
 
-CORRECT (varied structure, all 6 present — NO definitional "[C] is/means..." sentences):
-"The 6 C's of Care run through every shift I work. Before any personal care interaction I read the patient's documented preferences, explain each step, and adjust my pace to theirs — care and compassion built into preparation, not bolted on afterwards. My mandatory training record stands at 100% and my care notes are accurate first time. When I spotted unexplained bruising during routine personal care, I documented it immediately and told the nurse in charge; a safeguarding referral followed that morning. I didn't hesitate. Every patient conversation is different, and I adjust how I speak, when to slow down, and when to listen without filling the silence. Showing up fully prepared for every shift, every time, is the only standard I hold myself to."
+CORRECT (action-first opener, all 6 present — NO definitional "[C] is/means..." sentences):
+"Before any personal care interaction, I read the patient's documented preferences, explain each step, and adjust my pace to theirs — care and compassion built into the process, not added at the end. My mandatory training record stands at 100% and my care notes are accurate first time. When I spotted unexplained bruising during routine personal care, I documented it immediately and told the nurse in charge; a safeguarding referral followed that morning. I didn't hesitate. Every patient conversation is different: I adjust how I speak, when to slow down, and when to listen without filling the silence. Showing up fully prepared for every shift, every time, is the only standard I hold myself to."
 
-NOTICE: This example shows all 6 C's without once writing "Care is...", "Competence means...", "Courage is...", etc. Never define a C — demonstrate it.
+NOTICE: This example never announces the 6 C's and never defines them. It demonstrates all six through actions only. Never define a C — demonstrate it.
 
 ## TRUST VALUES PARAGRAPH (5-6 lines, approx 70-85 words — NO SUBHEADING)
 Each trust value must have a specific application example with a result.
