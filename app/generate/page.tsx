@@ -551,7 +551,7 @@ function GeneratePage() {
                   Download .doc
                 </button>
                 <button
-                  onClick={() => { setResult(null); setShowRewrite(false); setRewriteInstruction('') }}
+                  onClick={() => { setResult(null); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText('') }}
                   className="text-sm px-3 py-1.5 border border-blue-400 text-blue-100 rounded font-medium hover:bg-blue-800 cursor-pointer"
                 >
                   New Statement

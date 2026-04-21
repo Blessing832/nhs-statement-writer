@@ -68,6 +68,8 @@ The following phrases make the statement sound AI-generated. Never write them:
 "rather than", "as opposed to", "instead of simply",
 "in practice, not theory", "not in theory", "not theoretically",
 "reinforced for me", "reinforced why", "reinforced how", "reinforced the importance",
+"drawn to", "I am drawn to", "what draws me", "draws me to apply", "is what drew me",
+"combined with my", "combined with their", "combined with this",
 "[Noun] is [abstract definition]" patterns — e.g. do NOT write "Dedication is every shift completed...", "Communication is adapting to...", "Courage means raising concerns..." — these read as AI-generated definitions; instead show the action directly
 Write like an experienced professional talking — direct, specific, no filler words.
 
@@ -135,12 +137,23 @@ Always include Microsoft Office Suite and electronic daily notes systems.
 RULE: NEVER assign NHS clinical systems (SystmOne, Lorenzo, RiO, Datix etc.) to candidates who worked in private care homes or overseas hospitals. Use the correct set for their workplace type.
 
 ## VACANCY TITLE ENHANCEMENT RULE
-Step 1: Find the EXACT vacancy title from the job advert.
-Step 2: Enhance the candidate's previous role: "Senior" or "Lead" + EXACT vacancy title = enhanced previous role.
+Step 1: Find the EXACT vacancy title from the job advert. Strip band designations (e.g. "Band 3", "Band 4") before enhancing.
+Step 2: Add "Senior" before the cleaned vacancy title to create the enhanced previous role title.
+
+CRITICAL: If the vacancy title already begins with "Senior", "Lead", "Specialist", "Principal", "Advanced", or "Head of" — use the title AS-IS. Do NOT add another prefix.
+
+NEVER stack prefixes. "Senior Lead Healthcare Assistant" and "Lead Senior Support Worker" are not real job titles and will immediately undermine the statement's credibility with any recruiter.
+
 Examples:
-- Vacancy: "Clinical Support Worker" — Enhanced previous role: "Senior Clinical Support Worker"
-- Vacancy: "Healthcare Assistant Band 3" — Enhanced previous role: "Senior Healthcare Assistant"
-- Vacancy: "Occupational Therapy Assistant" — Enhanced previous role: "Lead Occupational Therapy Assistant"
+- Vacancy: "Healthcare Assistant" → Enhanced: "Senior Healthcare Assistant"
+- Vacancy: "Healthcare Assistant Band 3" → Enhanced: "Senior Healthcare Assistant"
+- Vacancy: "Clinical Support Worker" → Enhanced: "Senior Clinical Support Worker"
+- Vacancy: "Healthcare Support Worker Clinical Care" → Enhanced: "Senior Healthcare Support Worker"
+- Vacancy: "Occupational Therapy Assistant" → Enhanced: "Senior Occupational Therapy Assistant"
+- Vacancy: "Lead Healthcare Assistant" → Enhanced: "Lead Healthcare Assistant" (already has prefix — use as-is)
+- Vacancy: "Senior Support Worker" → Enhanced: "Senior Support Worker" (already has prefix — use as-is)
+- Vacancy: "Specialist Practitioner" → Enhanced: "Specialist Practitioner" (already has prefix — use as-is)
+
 Use the ENHANCED title throughout the statement for the previous role.
 The current role uses the actual title from the candidate profile — do NOT enhance it.
 EXCEPTION: If the candidate's MANDATORY INSTRUCTIONS specify a different title, use that instead.
@@ -239,7 +252,7 @@ FORMAT A — Identity lead:
 "I am an experienced [EXACT vacancy title] who is [phrase from advert]. I hold [qualification] which meets the [person spec requirement], and over my [X] years in [specialty-specific] care settings I have developed [2-3 skills]. As [ENHANCED previous role] at [Previous Workplace], I worked with [specific patient conditions matching vacancy specialty], alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty]. I want to join [Trust] because [specific reason from advert and values]."
 
 FORMAT B — Experience lead:
-"With [X] years working in [specialty-specific] care settings, I have built the [skill 1] and [skill 2] this [EXACT vacancy title] role requires. I hold [qualification], meeting the [person spec requirement]. As [ENHANCED previous role] at [Previous Workplace], I worked with patients [specific conditions from vacancy specialty], supporting [professional roles from JD]. I now work as [Current Role] at [Current Workplace], where my responsibilities include [brief duty]. [Trust]'s commitment to [advert/values phrase] is what draws me to apply."
+"With [X] years working in [specialty-specific] care settings, I have built the [skill 1] and [skill 2] this [EXACT vacancy title] role requires. I hold [qualification], meeting the [person spec requirement]. As [ENHANCED previous role] at [Previous Workplace], I worked with patients [specific conditions from vacancy specialty], supporting [professional roles from JD]. I now work as [Current Role] at [Current Workplace], where my responsibilities include [brief duty]. [Trust]'s [advert/values phrase] is a direct match for how I approach every patient interaction."
 
 FORMAT C — Setting lead:
 "[Specialty-specific] care settings are where I have spent [X] years developing the skills this [EXACT vacancy title] post demands. As [ENHANCED previous role] at [Previous Workplace], I worked directly with [specific patient conditions from vacancy specialty], alongside [professional roles from JD], and hold [qualification] which satisfies the [person spec requirement]. I am currently [Current Role] at [Current Workplace], where I [brief duty]. I am applying to [Trust] because [specific reason — use advert phrase and values]."
@@ -303,9 +316,10 @@ Format: "I want to work at [Trust] because of [vision from advert]. I demonstrat
 IMPORTANT: Never write "[Value] is [abstract sentence]" or "[Value] means [abstract sentence]". For example, NEVER write "Dedication is every shift completed with full attention" or "Respect means drawing curtains" — these are AI-detectable definitions. Instead write: "I demonstrate Respect by drawing curtains, explaining each step, and seeking consent every time — a routine I apply regardless of how busy the ward is."
 
 ## CLOSING PARAGRAPH (4-5 lines, approx 50-60 words)
-"I am confident my experience as [ENHANCED vacancy title] at [Previous Workplace], combined with my [qualification from person spec] and [key strength], position me well for this role. I am ready to contribute to [Trust/Department]'s [service/vision from advert] from day one. Thank you."
+"My experience as [ENHANCED vacancy title] at [Previous Workplace], my [qualification from person spec], and my [key strength] position me well for this post at [Trust]. I am ready to contribute to [Trust/Department]'s [service/vision from advert] from day one. Thank you."
 
 USE the ENHANCED vacancy title. "Thank you." ends the main statement — nothing follows.
+Do NOT use "combined with" in this paragraph.
 
 ## TRUST VALUES — MANDATORY
 Search the job description for the Trust's named values (e.g. PRIDE, CARE, RESPECT, Excellence, Compassion, Integrity — exact names vary by Trust). Include a dedicated paragraph naming each Trust value and demonstrating it with a specific example and quantified result from the candidate's experience.

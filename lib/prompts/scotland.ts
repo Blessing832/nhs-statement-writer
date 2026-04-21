@@ -50,6 +50,8 @@ The following make the statement sound AI-generated. Never write them under any 
 "rather than", "as opposed to", "instead of simply",
 "in practice, not theory", "not in theory", "not theoretically",
 "reinforced for me", "reinforced why", "reinforced how", "reinforced the importance",
+"drawn to", "I am drawn to", "what draws me", "draws me to apply", "is what drew me",
+"combined with my", "combined with their", "combined with this",
 "[Noun] is [abstract definition]" patterns — e.g. do NOT write "Commitment is every shift completed...", "Communication is adapting to...", "Courage means raising concerns..." — these read as AI-generated definitions; instead show the action directly
 Write like an experienced professional talking — direct, specific, no filler words.
 
@@ -117,11 +119,22 @@ Settings: acute care settings, mental health care settings, community care setti
 - Mental Health (Care and Treatment) (Scotland) Act 2003
 
 ## VACANCY TITLE ENHANCEMENT RULE
-Step 1: Find the EXACT vacancy title from the job advert.
-Step 2: Enhance the candidate's previous role: "Senior" or "Lead" + EXACT vacancy title = enhanced previous role.
+Step 1: Find the EXACT vacancy title from the job advert. Strip band designations (e.g. "Band 3", "Band 4") before enhancing.
+Step 2: Add "Senior" before the cleaned vacancy title to create the enhanced previous role title.
+
+CRITICAL: If the vacancy title already begins with "Senior", "Lead", "Specialist", "Principal", "Advanced", or "Head of" — use the title AS-IS. Do NOT add another prefix.
+
+NEVER stack prefixes. "Senior Lead Healthcare Assistant" and "Lead Senior Support Worker" are not real job titles and will immediately undermine the statement's credibility.
+
 Examples:
-- Vacancy: "Healthcare Assistant" — Enhanced: "Senior Healthcare Assistant"
-- Vacancy: "Mental Health Support Worker" — Enhanced: "Lead Mental Health Support Worker"
+- Vacancy: "Healthcare Assistant" → Enhanced: "Senior Healthcare Assistant"
+- Vacancy: "Healthcare Assistant Band 3" → Enhanced: "Senior Healthcare Assistant"
+- Vacancy: "Mental Health Support Worker" → Enhanced: "Senior Mental Health Support Worker"
+- Vacancy: "Clinical Support Worker" → Enhanced: "Senior Clinical Support Worker"
+- Vacancy: "Lead Healthcare Assistant" → Enhanced: "Lead Healthcare Assistant" (already has prefix — use as-is)
+- Vacancy: "Senior Support Worker" → Enhanced: "Senior Support Worker" (already has prefix — use as-is)
+- Vacancy: "Specialist Practitioner" → Enhanced: "Specialist Practitioner" (already has prefix — use as-is)
+
 Use the ENHANCED title throughout the statement for the previous role.
 Current role uses the actual title from the candidate profile — do NOT enhance it.
 EXCEPTION: If MANDATORY INSTRUCTIONS specify a different title, use that instead.
@@ -184,7 +197,7 @@ FORMAT A — Identity lead:
 "I am an experienced [EXACT vacancy title] who is [advert phrases]. I hold [qualification] (SCQF equivalence if English), and over my years in [specialty-specific] care settings I have developed [2 skills]. As [ENHANCED role] at [Previous Workplace], I worked with patients [specific conditions matching this vacancy], alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [one brief duty]. I want to join NHS [Board] because [one specific reason]."
 
 FORMAT B — Experience lead:
-"With [X] years in [specialty-specific] care settings, I have developed the [skill 1] and [skill 2] this [EXACT vacancy title] role demands. I hold [qualification] (SCQF equivalence if English). As [ENHANCED role] at [Previous Workplace], I worked with [specific conditions matching this vacancy] alongside [named roles from JD]. Now working as [Current Role] at [Current Workplace], I [one brief duty]. NHS [Board]'s [advert phrase/value] is what draws me to apply."
+"With [X] years in [specialty-specific] care settings, I have developed the [skill 1] and [skill 2] this [EXACT vacancy title] role demands. I hold [qualification] (SCQF equivalence if English). As [ENHANCED role] at [Previous Workplace], I worked with [specific conditions matching this vacancy] alongside [named roles from JD]. Now working as [Current Role] at [Current Workplace], I [one brief duty]. NHS [Board]'s [advert phrase/value] is a direct match for how I approach every patient interaction."
 
 FORMAT C — Role history lead:
 "As [ENHANCED role] at [Previous Workplace], I worked with [specific conditions matching this vacancy] alongside [named roles from JD] — building the [skill 1] and [skill 2] this [EXACT vacancy title] post requires. I hold [qualification] (SCQF equivalence if English), developed over [X] years in [specialty-specific] care settings. I now work as [Current Role] at [Current Workplace] where I [one brief duty]. I am applying to NHS [Board] because [one specific reason]."
@@ -230,7 +243,7 @@ CORRECT (varied, all 6 present — NO definitional "[C] is/means..." sentences):
 NOTICE: This example shows all 6 C's without once writing "Care is...", "Competence means...", "Courage is...", etc. Never define a C — demonstrate it.
 
 CLOSING (MANDATORY — do not omit):
-"I am confident my experience as [ENHANCED vacancy title] at [Previous Workplace], combined with my [qualification FROM PERSON SPEC] and [key strength FROM PERSON SPEC], make me well suited for this post at NHS [Board]. Thank you."
+"My experience as [ENHANCED vacancy title] at [Previous Workplace], my [qualification FROM PERSON SPEC], and my [key strength FROM PERSON SPEC] make me well suited for this post at NHS [Board]. Thank you."
 
 ## CRITERION PARAGRAPHS — MINI-STAR (5-8 lines, 70-120 words)
 Every paragraph: SITUATION (1 sentence — specific context) → ACTION (2-3 lines — specific actions, JD tools/systems, named professionals from JD, Scottish systems where relevant) → RESULT (1-2 lines — quantified).
