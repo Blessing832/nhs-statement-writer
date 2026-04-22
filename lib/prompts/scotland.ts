@@ -170,21 +170,14 @@ The person spec is a two-column table (Essential | Desirable). When extracted as
 - Particular Requirements (compliance, PVG, equality awareness)
 If you find fewer than 15 essential criteria you have missed sections.
 
-## PRE-WRITING PLAN — MANDATORY BEFORE WRITING ONE WORD
-Step 1 — Number every essential criterion in the EXACT ORDER it appears on the person spec:
-E1, E2, E3... (Education first, then Experience, then Special Aptitudes, then Disposition, then Physical, then Particular Requirements)
+## PRE-WRITING PLAN — INTERNAL ONLY — NEVER OUTPUT THIS
+THIS PLAN IS SILENT. Never print criteria lists, numbered mappings, or planning notes. The user sees only the finished Q1, Q2, Q3 answers. Do this entirely in your head before writing the first word.
 
-Step 2 — Map each criterion to a question and paragraph:
-- E1, E2 (Education): Q1 opening paragraph + Q2 education paragraph
-- E3–E8 (first Experience criteria): Q1 criterion paragraphs 1–3 in order
-- E9–E14 (Experience continued / Special Aptitudes): Q1 story paragraph
-- E15 onwards (Disposition, IT, Safeguarding, Equality): Q2 criterion paragraphs in order
+Internally number every essential criterion in the order it appears on the person spec (E1, E2, E3...) and assign each to a question and paragraph:
+- E1, E2 (Education): Q1 opening + Q2 education paragraph
+- E3 onwards (Experience, Special Aptitudes, Disposition, IT, Safeguarding): Q1 criterion paragraphs and story in order, then Q2 criterion paragraphs in order
 
-Step 3 — Write Q1, Q2, Q3 following this map in person spec order.
-
-Step 4 — After completing, check every criterion off. Q1 criteria reaffirmation in Q3 should name your strongest coverage points from E1 onwards.
-
-Shortlisting panels work top-to-bottom through the person spec. A statement that follows the same order makes it easy to tick criteria as they read — which directly improves shortlisting scores.
+Write Q1, Q2, Q3 following that silent map. Do not print the map, do not reference it. Just write all three questions.
 
 ## WORD COUNT — HARD LIMITS
 Q1: 480 WORDS MAXIMUM. At 460 words, finish the sentence and immediately start Question 2.
@@ -244,8 +237,10 @@ Qualifications from person spec only. SCQF equivalence if English quals. One sen
 Format: "My qualifications include [quals FROM PERSON SPEC with SCQF equivalence]. I have [GCSEs if listed]. I meet all requirements including enhanced DBS, shift flexibility, and willingness to undertake NHS [Board] mandatory training."
 
 ### QUESTION 3: Is there any other relevant information that will assist us in shortlisting your application? (180-200 WORDS)
-MINIMUM 180 words. MAXIMUM 200 words. Count words internally. Do not write fewer than 180 words under any circumstances.
-End with "Thank you." Stop immediately after.
+⚠ Q3 IS MANDATORY. You must always write Q3. Never stop after Q2. An output with only Q1 and Q2 is INCOMPLETE and a failure.
+
+MINIMUM 180 words. MAXIMUM 200 words. Count words internally after every sentence.
+End with "Thank you." Stop immediately after "Thank you." — nothing follows.
 
 Structure — ALL THREE parts are MANDATORY:
 1. Criteria reaffirmation (40-50 words): 2-3 sentences confirming you meet the essential criteria, naming your 2 strongest evidence areas from the person spec.
@@ -306,5 +301,6 @@ Addressing criteria OUT OF ORDER is also a failure — shortlisting panels work 
 Ensure at least 2 full paragraphs are about the current role.
 
 ## OUTPUT
-Write only the three-question response as instructed in the user message. Follow the output format specified in the user message exactly.`
+Write all three questions: Q1, Q2, and Q3. All three are required. Never stop after Q2.
+Follow the output format specified in the user message exactly.`
 }

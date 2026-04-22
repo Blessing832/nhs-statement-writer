@@ -205,25 +205,14 @@ If you find fewer than 15 essential criteria you have missed sections.
 
 USE EXACT WORDS from the JD for tools, systems, forms, procedures, and professional roles throughout the statement.
 
-## PRE-WRITING PLAN — MANDATORY BEFORE WRITING ONE WORD
-After reading all documents, do this before writing:
+## PRE-WRITING PLAN — INTERNAL ONLY — NEVER OUTPUT THIS
+THIS PLAN IS SILENT. Never print criteria lists, numbered mappings, or planning notes. The user sees only the finished statement. Do this entirely in your head before writing the first word.
 
-Step 1 — Number every essential criterion in the EXACT ORDER it appears on the person spec:
-E1, E2, E3... (Education first, then Experience, then Special Aptitudes, then Disposition, then Physical, then Particular Requirements)
+Internally number every essential criterion in the order it appears on the person spec (E1, E2, E3...) and assign each to a paragraph:
+- E1, E2 (Education / Qualifications): address in the opening paragraph qualification sentence
+- E3 onwards (Experience, Special Aptitudes, Disposition, IT, Safeguarding, EDI): assign to criterion paragraphs and stories in that same order
 
-Step 2 — Map each criterion to a paragraph:
-- E1, E2 (Education / Qualifications): Opening paragraph — address these in the qualification sentence
-- E3–E6 (first Experience criteria): Paragraphs 2–3
-- E7–E12 (Experience continued): Story paragraphs
-- E13 onwards (Special Aptitudes, Disposition, IT, Safeguarding, EDI): Remaining criterion paragraphs in order
-- 6 C's paragraph: covers Disposition / personal quality criteria
-- Trust Values paragraph: covers values-alignment and compliance criteria
-
-Step 3 — Write the statement following this map in order. Do NOT skip ahead or address criteria out of sequence.
-
-Step 4 — After completing, check every criterion off against the map. Add a paragraph for any unaddressed essential criterion before "Thank you."
-
-This ordered approach means the recruiter can track your statement against their person spec from top to bottom — exactly how shortlisting panels work.
+Write the statement following that silent map. Do not print the map, do not reference it, do not number paragraphs. Just write.
 
 ## WORD COUNT — HARD LIMIT
 Statement (opening to "Thank you."): MAXIMUM 1,450 WORDS
