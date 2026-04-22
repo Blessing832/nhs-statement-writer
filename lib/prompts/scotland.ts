@@ -206,26 +206,35 @@ Word budget — must total ≤480 words:
 3. Exactly 1 story: MAX 120 words
 Total: ~465 words. STOP at 480 words.
 
-OPENING PARAGRAPH FORMAT (MAX 90 WORDS — 5-6 lines):
-Include the specific conditions or patient groups the candidate worked with in their previous role that are relevant to this vacancy's specialty.
+BANNED OPENING PATTERNS — never start Q1 with these:
+"Throughout my career...", "I have always been passionate about...", "Having worked in [setting] for [years]...", "I am a highly motivated / dedicated / compassionate...", any abstract sentence about values before stating credentials.
 
-THE OPENING PARAGRAPH ADDRESSES CRITERIA FIRST. It must explicitly address E1/E2 (Education / Qualifications) through the qualification sentence, and begin signalling E3/E4 (first Experience criteria) through the years and role sentence. Recruiters score from paragraph one.
+Q1 OPENS WITH TWO SHORT PARAGRAPHS — not one long paragraph.
 
-CRITICAL ELEMENTS — ALL must be present: vacancy title + advert phrase, qualification with SCQF equivalence if English (addresses E1/E2), years in specialty-specific care settings + 2 skills from person spec (begins E3/E4), ENHANCED role + specific conditions matching this vacancy + named roles from JD, current role + one brief duty, reason for joining NHS [Board].
+Q1 OPENING PARA 1 — CREDENTIALS (~55 words, 3-4 sentences)
+Covers E1. Facts only — no motivation.
+- Sentence 1: Candidate identity + exact vacancy title + one advert phrase
+- Sentence 2: Qualification with SCQF equivalence if English, "meeting the [person spec criterion]"
+- Sentence 3: [X] years in [specialty-specific] care + enhanced previous role + current role
+- Sentence 4 (optional): One specific condition from previous role matching this vacancy
 
-OPENING FORMAT — you will be told which format to use in the TASK section. The four formats are:
+Rotate between these styles:
 
-FORMAT A — Identity lead:
-"I am an experienced [EXACT vacancy title] who is [advert phrases]. I hold [qualification] (SCQF equivalence if English), and over my years in [specialty-specific] care settings I have developed [2 skills]. As [ENHANCED role] at [Previous Workplace], I worked with patients [specific conditions matching this vacancy], alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [one brief duty]. I want to join NHS [Board] because [one specific reason]."
+STYLE A: "I am an experienced [EXACT vacancy title] who [advert phrase]. I hold [qualification] (SCQF if English), meeting the [criterion]. As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years in [specialty-specific] care working with [specific conditions]."
 
-FORMAT B — Experience lead:
-"With [X] years in [specialty-specific] care settings, I have developed the [skill 1] and [skill 2] this [EXACT vacancy title] role demands. I hold [qualification] (SCQF equivalence if English). As [ENHANCED role] at [Previous Workplace], I worked with [specific conditions matching this vacancy] alongside [named roles from JD]. Now working as [Current Role] at [Current Workplace], I [one brief duty]. NHS [Board]'s [advert phrase/value] is a direct match for how I approach every patient interaction."
+STYLE B: "With [X] years in [specialty-specific] care, I bring the [skill 1] and [skill 2] this [EXACT vacancy title] post requires. I hold [qualification] (SCQF if English), meeting the [criterion]. My background spans [ENHANCED role] at [Previous Workplace] and, currently, [Current Role] at [Current Workplace]."
 
-FORMAT C — Role history lead:
-"As [ENHANCED role] at [Previous Workplace], I worked with [specific conditions matching this vacancy] alongside [named roles from JD] — building the [skill 1] and [skill 2] this [EXACT vacancy title] post requires. I hold [qualification] (SCQF equivalence if English), developed over [X] years in [specialty-specific] care settings. I now work as [Current Role] at [Current Workplace] where I [one brief duty]. I am applying to NHS [Board] because [one specific reason]."
+STYLE C: "As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years building [specialty-specific] experience for this [EXACT vacancy title] post. I hold [qualification] (SCQF if English), meeting the [criterion], and have worked with [specific conditions] throughout."
 
-FORMAT D — Setting lead:
-"[Specialty-specific] care settings have shaped my practice over [X] years, developing the [skill 1] and [skill 2] this [EXACT vacancy title] post calls for. As [ENHANCED role] at [Previous Workplace], I supported [specific conditions matching this vacancy] alongside [named roles from JD]. I hold [qualification] (SCQF equivalence if English). I currently work as [Current Role] at [Current Workplace] where I [one brief duty]. NHS [Board]'s [advert phrase] aligns with my own values."
+Q1 OPENING PARA 2 — MOTIVATION + FIRST CRITERION EVIDENCE (~55 words, 3-4 sentences)
+Covers E2/E3 with a real STAR example. First evidence paragraph.
+- Sentence 1: Why NHS [Board] — specific reason using Board name + one value or advert phrase
+- Sentences 2-4: STAR — Situation + Action (named tools/professionals from JD) + Result
+
+EXAMPLE: "I am applying to NHS [Board] because [specific reason]. At [Previous Workplace], [specific situation with patient group]. I [specific action using named procedure/tool/professional from JD]. [Concrete result]."
+
+STAR EVIDENCE — MANDATORY FOR EVERY CRITERION PARAGRAPH IN Q1 AND Q2
+Every paragraph that addresses a person spec criterion must contain a real Situation + Action + Result. A criterion stated without evidence is a claim, not proof. Wrong: "I have strong communication skills." Right: a specific moment, what you did, what happened.
 
 ### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? (HARD LIMIT: 480w)
 Word budget — must total ≤480 words:

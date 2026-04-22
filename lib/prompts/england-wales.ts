@@ -232,59 +232,49 @@ INTERNAL CHECKPOINTS:
 - At 1,420w: write "Thank you." and stop immediately — nothing follows
 - At 1,450w: stop immediately with "Thank you."
 
-## PRE-OPENING HOOK — OPTIONAL (1-2 sentences only)
-Before the opening paragraph, you MAY prepend a single short hook of 1-2 sentences. Use a hook for roughly 4 in every 10 statements — vary this naturally based on the role and the candidate's background.
+## BANNED OPENING PATTERNS — NEVER START A STATEMENT WITH THESE
+The following openers are the most recognisable AI signatures. Never write them:
+- "Throughout my career..."
+- "In my years of experience..."
+- "I have always been passionate about..." / "I have always believed..."
+- "Having worked in [setting] for [years]..." as the opening line
+- "I am a highly motivated / dedicated / compassionate..."
+- Any abstract sentence about values or feelings before stating credentials
+- Any sentence that could apply to any candidate for any NHS job
 
-When you use a hook, choose the type that best fits this specific role and candidate. Options:
+## OPENING — TWO SHORT PARAGRAPHS
+The statement starts with TWO paragraphs. No pre-opening hook. No abstract intro. Straight to credentials.
 
-- **Detail**: "The most important thing working in care has taught me is that small details — a change in breathing pattern, a quieter manner than usual, a meal left untouched — are often the earliest and loudest warnings. It is this attentiveness that I bring to every shift."
-- **Team**: "Care has taught me that no one heals alone — every good outcome I have contributed to was built on clear communication, mutual respect, and working as one team around the patient."
-- **Resilience**: "Working through the most pressured periods of my healthcare career gave me clarity: NHS values are not aspirational — they are tested daily, and mine held."
-- **Hands and Heart**: "Anyone can learn the technical skills of care; what the NHS needs is staff who bring both capable hands and genuine compassion to every patient they support."
-- **Why care**: "What drew me to healthcare was not a single moment but a quiet certainty that showing up with skill, consistency, and kindness is the most meaningful work I can do."
-- **From the other side**: "Before I ever wore a uniform, I sat on the other side of the bed watching NHS staff turn one of the hardest days of my family's life into something dignified and humane — I have been working to return that ever since."
+OPENING PARA 1 — CREDENTIALS (3-4 sentences, ~60 words)
+Covers E1 (Education). Verifiable facts only — no motivation, no feelings.
+- Sentence 1: Candidate identity + exact vacancy title + one phrase from the job advert
+- Sentence 2: Qualification named exactly as on the person spec, with "meeting the [criterion]"
+- Sentence 3: [X] years in [specialty-specific] care + enhanced previous role at [workplace] + current role at [workplace]
+- Sentence 4 (optional): One specific condition or patient group from the previous role matching this vacancy
 
-RULES FOR THE HOOK:
-- Maximum 2 sentences — never more
-- No drama, no sweeping statements, no clichés
-- Must feel natural before the standard opening paragraph that follows
-- If the hook does not improve the statement, omit it — the normal opening is preferred (use no hook for roughly 6 in 10 statements)
-- NEVER add a label like "Hook:" or any prefix before it
+Rotate between these three styles (never repeat consecutively):
 
-## PARAGRAPH 1 — OPENING (MAX 8 LINES, approx 100-120 words)
-Extract phrases FROM the job advert introduction and weave them into the opening.
-Include in the opening: the specific conditions or patient groups the candidate worked with in their previous role that are relevant to this vacancy's specialty.
+STYLE A — Identity first:
+"I am an experienced [EXACT vacancy title] who [advert phrase]. I hold [qualification], meeting the [person spec criterion]. As [ENHANCED previous role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years in [specialty-specific] care settings working with [specific conditions from JD]."
 
-THE OPENING PARAGRAPH ADDRESSES CRITERIA FIRST — it is not just an introduction. It must explicitly address the Education / Qualifications criteria (E1, E2 from your pre-writing plan) through the qualification sentence, AND begin signalling the first Experience criteria through the role and years sentence. Recruiters score from paragraph one. Every sentence must earn its place by covering a criterion.
+STYLE B — Experience first:
+"With [X] years in [specialty-specific] care settings, I bring the [skill 1] and [skill 2] this [EXACT vacancy title] post requires. I hold [qualification], meeting the [person spec criterion]. My background spans [ENHANCED previous role] at [Previous Workplace] and, currently, [Current Role] at [Current Workplace], where I [brief duty]."
 
-CRITICAL ELEMENTS — ALL must be present in every opening, regardless of format chosen:
-1. Candidate's identity + vacancy title + advert phrase(s)
-2. Qualification + EXACT wording from person spec ("meets the [person spec criterion]") — this is E1/E2
-3. Years in [specialty-specific] care settings + 2-3 skills named in the person spec — this begins E3/E4
-4. ENHANCED previous role + specific conditions/procedures from the vacancy specialty + named professional roles from JD
-5. Current role + brief duty
-6. Why this Trust (specific reason using Trust values + advert language)
-STOP at 8 lines. Never exceed.
+STYLE C — Role first:
+"As [ENHANCED previous role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years building [specialty-specific] care experience for this [EXACT vacancy title] post. I hold [qualification], meeting the [person spec criterion], and have worked with [specific conditions from JD] throughout."
 
-OPENING FORMAT — choose ONE of the five formats below. Rotate across statements — never use the same format twice in a row:
+---
 
-FORMAT A — Identity lead:
-"I am an experienced [EXACT vacancy title] who is [phrase from advert]. I hold [qualification] which meets the [person spec requirement], and over my [X] years in [specialty-specific] care settings I have developed [2-3 skills]. As [ENHANCED previous role] at [Previous Workplace], I worked with [specific patient conditions matching vacancy specialty], alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty]. I want to join [Trust] because [specific reason from advert and values]."
+OPENING PARA 2 — MOTIVATION + FIRST CRITERION EVIDENCE (3-4 sentences, ~60 words)
+Covers the first Experience criterion (E2/E3) with a real STAR example. This is the first evidence paragraph.
+- Sentence 1: Why this specific Trust — Trust name + one value or advert phrase (not generic)
+- Sentences 2-4: STAR — Situation (where, when, patient group) + Action (specific, named tools/professionals) + Result
 
-FORMAT B — Experience lead:
-"With [X] years working in [specialty-specific] care settings, I have built the [skill 1] and [skill 2] this [EXACT vacancy title] role requires. I hold [qualification], meeting the [person spec requirement]. As [ENHANCED previous role] at [Previous Workplace], I worked with patients [specific conditions from vacancy specialty], supporting [professional roles from JD]. I now work as [Current Role] at [Current Workplace], where my responsibilities include [brief duty]. [Trust]'s [advert/values phrase] is a direct match for how I approach every patient interaction."
-
-FORMAT C — Setting lead:
-"[Specialty-specific] care settings are where I have spent [X] years developing the skills this [EXACT vacancy title] post demands. As [ENHANCED previous role] at [Previous Workplace], I worked directly with [specific patient conditions from vacancy specialty], alongside [professional roles from JD], and hold [qualification] which satisfies the [person spec requirement]. I am currently [Current Role] at [Current Workplace], where I [brief duty]. I am applying to [Trust] because [specific reason — use advert phrase and values]."
-
-FORMAT D — Role history lead:
-"As [ENHANCED previous role] at [Previous Workplace], I spent [X] years [specific duty matching vacancy specialty], working with [patient conditions from JD] alongside [professional roles from JD]. That experience, alongside my [qualification] which meets the [person spec requirement], has given me the [skill 1] and [skill 2] I bring to this [EXACT vacancy title] post. I now work as [Current Role] at [Current Workplace] where I [brief duty]. I am applying to [Trust] because [specific reason from advert and values]."
-
-FORMAT E — Qualification and motivation lead:
-"My [qualification] meets the [person spec requirement] and sits behind [X] years of practice as a [specialty-specific] care professional. In that time, as [ENHANCED previous role] at [Previous Workplace], I developed [skill 1] and [skill 2] working with [specific patient conditions from vacancy specialty] alongside [professional roles from JD]. As [Current Role] at [Current Workplace], I [brief duty]. I want this [EXACT vacancy title] post at [Trust] because [specific reason using advert phrases and values]."
+EXAMPLE:
+"I am applying to [Trust] because [specific reason from advert/values]. At [Previous Workplace], [specific situation with patient group]. I [specific action using named tools/procedure from JD], working alongside [named professional role from JD]. [Concrete result]."
 
 ## NO SEPARATE EDUCATION PARAGRAPH
-Qualifications are addressed fully in the opening paragraph. Do not add a separate education or training paragraph.
+Qualifications are covered in Opening Para 1. No separate education section anywhere in the statement.
 
 ## CRITERION PARAGRAPHS — MINI-STAR
 WRITE PARAGRAPHS IN PERSON SPEC ORDER. Work through criteria E3, E4, E5... in the order they appear on the person spec. Recruiters shortlist by working down the person spec line by line.
@@ -308,12 +298,18 @@ PARAGRAPH OPENING PATTERNS — rotate, never repeat the same pattern consecutive
 9. "Supporting patients with [condition from JD] required..."
 10. "I delivered [task] under supervision of [role from JD]..."
 
-## STORY PARAGRAPHS — MINIMUM 2 REQUIRED (6-8 lines, 120-150 words)
+## STORY PARAGRAPHS — MINIMUM 2 REQUIRED (6-7 sentences, ~130 words)
 Include at least 2 story paragraphs, up to 3. Distribute them throughout the statement — not all at the end.
-Each story addresses 3-5 criteria at once.
-Style 1: Subheading lists ALL criteria the story addresses (using person spec keywords), then jump directly into the paragraph — NO label of any kind before the paragraph text.
-Style 2: Weave naturally through prose.
-Stories use MINI-STAR format with full specific evidence, named professionals, and quantified results.
+Each story addresses 3-5 criteria at once using a full STAR: Situation → Actions → Result.
+Style 1: Subheading lists ALL criteria the story addresses (using person spec keywords), then paragraph directly — NO label before the text.
+Style 2: Weave criteria naturally through prose.
+Named professionals, named tools/systems, and a concrete result are mandatory in every story.
+
+## STAR EVIDENCE — MANDATORY FOR EVERY CRITERION PARAGRAPH
+Every paragraph that addresses a person spec criterion must contain STAR evidence. No exceptions.
+A criterion addressed without a specific Situation + Action + Result is worthless — it is a claim, not evidence.
+WRONG: "I have strong communication skills and work well in a team."
+RIGHT: "During a night shift at [workplace], a patient became agitated and refused personal care. I spoke with her calmly, asked what was wrong, and learned she was anxious about a procedure the next morning. I informed the registered nurse and documented her concerns in [system]; by morning, the clinical team had spoken with her and her cooperation improved significantly."
 
 ABSOLUTE BAN — NEVER write any of these labels before a paragraph:
 "Story:", "Story 1:", "Story 2:", "Scenario:", "Scenario 1:", "Example:", "STAR:", "Case:"
