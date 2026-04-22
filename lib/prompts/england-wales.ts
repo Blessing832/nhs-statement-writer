@@ -205,6 +205,26 @@ If you find fewer than 15 essential criteria you have missed sections.
 
 USE EXACT WORDS from the JD for tools, systems, forms, procedures, and professional roles throughout the statement.
 
+## PRE-WRITING PLAN — MANDATORY BEFORE WRITING ONE WORD
+After reading all documents, do this before writing:
+
+Step 1 — Number every essential criterion in the EXACT ORDER it appears on the person spec:
+E1, E2, E3... (Education first, then Experience, then Special Aptitudes, then Disposition, then Physical, then Particular Requirements)
+
+Step 2 — Map each criterion to a paragraph:
+- E1, E2 (Education / Qualifications): Opening paragraph — address these in the qualification sentence
+- E3–E6 (first Experience criteria): Paragraphs 2–3
+- E7–E12 (Experience continued): Story paragraphs
+- E13 onwards (Special Aptitudes, Disposition, IT, Safeguarding, EDI): Remaining criterion paragraphs in order
+- 6 C's paragraph: covers Disposition / personal quality criteria
+- Trust Values paragraph: covers values-alignment and compliance criteria
+
+Step 3 — Write the statement following this map in order. Do NOT skip ahead or address criteria out of sequence.
+
+Step 4 — After completing, check every criterion off against the map. Add a paragraph for any unaddressed essential criterion before "Thank you."
+
+This ordered approach means the recruiter can track your statement against their person spec from top to bottom — exactly how shortlisting panels work.
+
 ## WORD COUNT — HARD LIMIT
 Statement (opening to "Thank you."): MAXIMUM 1,450 WORDS
 Count internally after every paragraph. Never display counts or deliberation to the user.
@@ -237,10 +257,12 @@ RULES FOR THE HOOK:
 Extract phrases FROM the job advert introduction and weave them into the opening.
 Include in the opening: the specific conditions or patient groups the candidate worked with in their previous role that are relevant to this vacancy's specialty.
 
+THE OPENING PARAGRAPH ADDRESSES CRITERIA FIRST — it is not just an introduction. It must explicitly address the Education / Qualifications criteria (E1, E2 from your pre-writing plan) through the qualification sentence, AND begin signalling the first Experience criteria through the role and years sentence. Recruiters score from paragraph one. Every sentence must earn its place by covering a criterion.
+
 CRITICAL ELEMENTS — ALL must be present in every opening, regardless of format chosen:
 1. Candidate's identity + vacancy title + advert phrase(s)
-2. Qualification + how it meets person spec requirement
-3. Years in [specialty-specific] care settings + 2-3 skills from person spec
+2. Qualification + EXACT wording from person spec ("meets the [person spec criterion]") — this is E1/E2
+3. Years in [specialty-specific] care settings + 2-3 skills named in the person spec — this begins E3/E4
 4. ENHANCED previous role + specific conditions/procedures from the vacancy specialty + named professional roles from JD
 5. Current role + brief duty
 6. Why this Trust (specific reason using Trust values + advert language)
@@ -258,15 +280,19 @@ FORMAT C — Setting lead:
 "[Specialty-specific] care settings are where I have spent [X] years developing the skills this [EXACT vacancy title] post demands. As [ENHANCED previous role] at [Previous Workplace], I worked directly with [specific patient conditions from vacancy specialty], alongside [professional roles from JD], and hold [qualification] which satisfies the [person spec requirement]. I am currently [Current Role] at [Current Workplace], where I [brief duty]. I am applying to [Trust] because [specific reason — use advert phrase and values]."
 
 FORMAT D — Role history lead:
-"As [ENHANCED previous role] at [Previous Workplace], I spent [X] years [specific duty matching vacancy specialty], working with [patient conditions from JD] alongside [professional roles from JD]. That experience, combined with [qualification] meeting the [person spec requirement], has given me the [skill 1] and [skill 2] I bring to this [EXACT vacancy title] post. I now work as [Current Role] at [Current Workplace] where I [brief duty]. I am drawn to [Trust] because [specific reason from advert and values]."
+"As [ENHANCED previous role] at [Previous Workplace], I spent [X] years [specific duty matching vacancy specialty], working with [patient conditions from JD] alongside [professional roles from JD]. That experience, alongside my [qualification] which meets the [person spec requirement], has given me the [skill 1] and [skill 2] I bring to this [EXACT vacancy title] post. I now work as [Current Role] at [Current Workplace] where I [brief duty]. I am applying to [Trust] because [specific reason from advert and values]."
 
 FORMAT E — Qualification and motivation lead:
-"My [qualification], which meets the [person spec requirement], underpins [X] years of practice as a [specialty-specific] care professional. In that time, as [ENHANCED previous role] at [Previous Workplace], I developed [skill 1] and [skill 2] working with [specific patient conditions from vacancy specialty] alongside [professional roles from JD]. As [Current Role] at [Current Workplace], I [brief duty]. I want this [EXACT vacancy title] post at [Trust] because [specific reason using advert phrases and values]."
+"My [qualification] meets the [person spec requirement] and sits behind [X] years of practice as a [specialty-specific] care professional. In that time, as [ENHANCED previous role] at [Previous Workplace], I developed [skill 1] and [skill 2] working with [specific patient conditions from vacancy specialty] alongside [professional roles from JD]. As [Current Role] at [Current Workplace], I [brief duty]. I want this [EXACT vacancy title] post at [Trust] because [specific reason using advert phrases and values]."
 
 ## NO SEPARATE EDUCATION PARAGRAPH
 Qualifications are addressed fully in the opening paragraph. Do not add a separate education or training paragraph.
 
 ## CRITERION PARAGRAPHS — MINI-STAR (5-8 lines, approx 80-120 words)
+WRITE PARAGRAPHS IN PERSON SPEC ORDER. Follow the pre-writing map exactly — work through criteria E3, E4, E5... in the order they appear on the person spec. Do not jump ahead to a later criterion before the earlier ones are addressed. Recruiters shortlist by working down the person spec line by line; a statement that addresses criteria in the same order makes their job easier and scores higher.
+
+Each paragraph may address 1-3 criteria at once where they naturally overlap (e.g. clinical observation + escalation often appear together on the person spec). Group these tightly rather than treating them as separate paragraphs.
+
 Mix paragraph lengths randomly between 5 and 8 lines. Stop at line 8.
 
 MINI-STAR format:
@@ -331,11 +357,13 @@ Do NOT use "combined with" in this paragraph.
 ## TRUST VALUES — MANDATORY
 Search the job description for the Trust's named values (e.g. PRIDE, CARE, RESPECT, Excellence, Compassion, Integrity — exact names vary by Trust). Include a dedicated paragraph naming each Trust value and demonstrating it with a specific example and quantified result from the candidate's experience.
 
-## PERSON SPECIFICATION — 100% COVERAGE — NON-NEGOTIABLE
-Step 1: List every single essential criterion (may be 30+).
-Step 2: Assign every criterion to a paragraph or story before writing.
-Step 3: After writing, check off every criterion. If any are unaddressed, add a paragraph before "Thank you."
+## PERSON SPECIFICATION — 100% COVERAGE IN ORDER — NON-NEGOTIABLE
+Step 1: Number every essential criterion E1, E2, E3... in the exact order they appear on the person spec.
+Step 2: Assign every criterion to a paragraph in that same order (see PRE-WRITING PLAN above).
+Step 3: Write the statement following that order from paragraph one.
+Step 4: After writing, check off every criterion against your numbered list. Add a paragraph for any missed essential criterion before "Thank you."
 Missing even ONE essential criterion is a complete failure. No exceptions.
+Addressing criteria OUT OF ORDER is also a failure — shortlisting panels work top-to-bottom through the person spec and expect the statement to follow the same sequence.
 Address desirable criteria where the candidate has relevant evidence.
 Ensure at least 2 full paragraphs are about the CURRENT role.
 

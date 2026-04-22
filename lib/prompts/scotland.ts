@@ -170,6 +170,22 @@ The person spec is a two-column table (Essential | Desirable). When extracted as
 - Particular Requirements (compliance, PVG, equality awareness)
 If you find fewer than 15 essential criteria you have missed sections.
 
+## PRE-WRITING PLAN — MANDATORY BEFORE WRITING ONE WORD
+Step 1 — Number every essential criterion in the EXACT ORDER it appears on the person spec:
+E1, E2, E3... (Education first, then Experience, then Special Aptitudes, then Disposition, then Physical, then Particular Requirements)
+
+Step 2 — Map each criterion to a question and paragraph:
+- E1, E2 (Education): Q1 opening paragraph + Q2 education paragraph
+- E3–E8 (first Experience criteria): Q1 criterion paragraphs 1–3 in order
+- E9–E14 (Experience continued / Special Aptitudes): Q1 story paragraph
+- E15 onwards (Disposition, IT, Safeguarding, Equality): Q2 criterion paragraphs in order
+
+Step 3 — Write Q1, Q2, Q3 following this map in person spec order.
+
+Step 4 — After completing, check every criterion off. Q1 criteria reaffirmation in Q3 should name your strongest coverage points from E1 onwards.
+
+Shortlisting panels work top-to-bottom through the person spec. A statement that follows the same order makes it easy to tick criteria as they read — which directly improves shortlisting scores.
+
 ## WORD COUNT — HARD LIMITS
 Q1: 480 WORDS MAXIMUM. At 460 words, finish the sentence and immediately start Question 2.
 Q2: 480 WORDS MAXIMUM. At 460 words, finish the sentence and immediately start Question 3.
@@ -189,7 +205,9 @@ Total: ~465 words. STOP at 480 words.
 OPENING PARAGRAPH FORMAT (MAX 90 WORDS — 5-6 lines):
 Include the specific conditions or patient groups the candidate worked with in their previous role that are relevant to this vacancy's specialty.
 
-CRITICAL ELEMENTS — ALL must be present: vacancy title + advert phrase, qualification with SCQF equivalence if English, years in specialty-specific care settings + 2 skills from person spec, ENHANCED role + specific conditions matching this vacancy + named roles from JD, current role + one brief duty, reason for joining NHS [Board].
+THE OPENING PARAGRAPH ADDRESSES CRITERIA FIRST. It must explicitly address E1/E2 (Education / Qualifications) through the qualification sentence, and begin signalling E3/E4 (first Experience criteria) through the years and role sentence. Recruiters score from paragraph one.
+
+CRITICAL ELEMENTS — ALL must be present: vacancy title + advert phrase, qualification with SCQF equivalence if English (addresses E1/E2), years in specialty-specific care settings + 2 skills from person spec (begins E3/E4), ENHANCED role + specific conditions matching this vacancy + named roles from JD, current role + one brief duty, reason for joining NHS [Board].
 
 OPENING FORMAT — you will be told which format to use in the TASK section. The four formats are:
 
@@ -215,7 +233,7 @@ Total: ~440 words minimum. STOP at 480 words.
 
 Q2 NHS SCOTLAND VALUES PARAGRAPH (MAX 90 WORDS):
 Reference the four core NHSScotland values directly: Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, and Quality and Teamwork. Link to Realistic Medicine and What Matters to You.
-Format: "I want to work in NHS Scotland because its four core values — Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, and Quality and Teamwork — align directly with how I work. I am drawn to NHS Scotland's Realistic Medicine approach and the What Matters to You framework, which ensures every patient is treated as an individual. I demonstrate [one NHSScotland value] by [specific example with result]."
+Format: "I want to work in NHS Scotland because its four core values — Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, and Quality and Teamwork — align directly with how I work. NHS Scotland's Realistic Medicine approach and the What Matters to You framework, which ensure every patient is treated as an individual, reflect the standard I already hold myself to. I demonstrate [one NHSScotland value] by [specific example with result]."
 
 Q2 SPECIFIC BOARD PARAGRAPH (MAX 90 WORDS):
 Name the Board 2-3 times. Reference its specific services, geography, or initiatives.
@@ -278,11 +296,13 @@ Stories: list all criteria addressed in the subheading.`}
 ## GCSE / O-LEVEL GRADES
 If the candidate's qualifications include GCSE or O-level grades, reference them when addressing literacy or numeracy criteria.
 
-## PERSON SPECIFICATION — 100% COVERAGE — NON-NEGOTIABLE
-Step 1: List every essential criterion (may be 30+).
-Step 2: Assign every criterion to a paragraph before writing.
-Step 3: After writing, verify every essential criterion is addressed.
-Missing even one essential criterion is a complete failure.
+## PERSON SPECIFICATION — 100% COVERAGE IN ORDER — NON-NEGOTIABLE
+Step 1: Number every essential criterion E1, E2, E3... in the exact order they appear on the person spec.
+Step 2: Assign every criterion to a question and paragraph in that same order (see PRE-WRITING PLAN above).
+Step 3: Write Q1, Q2, Q3 following that order.
+Step 4: After writing, check every criterion off. Add coverage for any missed essential criterion before "Thank you."
+Missing even one essential criterion is a complete failure. No exceptions.
+Addressing criteria OUT OF ORDER is also a failure — shortlisting panels work top-to-bottom.
 Ensure at least 2 full paragraphs are about the current role.
 
 ## OUTPUT
