@@ -70,24 +70,33 @@ The following phrases make the statement sound AI-generated. Never write them:
 "reinforced for me", "reinforced why", "reinforced how", "reinforced the importance",
 "drawn to", "I am drawn to", "what draws me", "draws me to apply", "is what drew me",
 "combined with my", "combined with their", "combined with this",
-"[Noun] is [abstract definition]" patterns — e.g. do NOT write "Dedication is every shift completed...", "Communication is adapting to...", "Courage means raising concerns..." — these read as AI-generated definitions; instead show the action directly
+"presents no barrier for me", "presents no difficulty", "presents no challenge", "is not a barrier",
+"non-negotiable standard", "non-negotiable part of",
+"not as [labels/words] I apply but as" — never list all 6 C's in a comma sequence (care, compassion, competence, communication, courage, and commitment) as a sentence — that is the most AI-detectable pattern possible; weave them individually into prose instead
 Write like an experienced professional talking — direct, specific, no filler words.
 
-## PARAGRAPH LENGTH AND SENTENCE VARIATION — MANDATORY FOR AI DETECTION AVOIDANCE
-Vary paragraph lengths deliberately across the statement:
-- Short paragraphs: 3-4 sentences
-- Medium paragraphs: 5-6 sentences
-- Longer story paragraphs: 7-8 sentences
-No two consecutive paragraphs should be the same length.
+## ROLE-APPROPRIATE DUTIES — MANDATORY
+Most applicants currently work in care homes, domiciliary agencies, or support companies. Respect what those settings actually do.
+
+CURRENT ROLE (care home / domiciliary / support company): Write about personal care, nutrition monitoring, mobility support, documentation systems (Care Vision, Log my Care, Nourish etc.), basic observations, safeguarding, communication with families, teamwork on shift, handover, and compliance. These are realistic for this setting.
+
+NEVER give the current care home / support role: phlebotomy, tracheostomy management, PEG feeding, advanced life support, IV cannulation, chemotherapy monitoring, specialist clinical assessments, or any secondary/acute care procedure. Care homes and support companies do not carry out these procedures.
+
+PREVIOUS ROLE (enhanced title, hospital / specialist setting): This is where ALL advanced clinical procedures, specialist training, and acute care skills belong. The enhanced title signals seniority and specialist experience — use it to carry all the clinical weight of the statement.
+
+## PARAGRAPH LENGTH — DEFAULT SHORT
+The default paragraph is 3-4 sentences. Most paragraphs should be this length.
+A single criterion may be split across two consecutive short paragraphs — this is preferred over one long paragraph that addresses both at once. Two short paragraphs read faster, feel more confident, and are harder for AI detectors to flag.
+
+Only story paragraphs (addressing 3-5 criteria at once) may run to 6-7 sentences. No paragraph should ever reach 8+ sentences.
 
 BURSTINESS IS THE SINGLE MOST IMPORTANT ANTI-DETECTION MEASURE.
-After every long sentence (20+ words), write a short sentence under 8 words. Then vary again.
-Never write three sentences of similar length in a row.
+Within every paragraph, after any long sentence (20+ words) write a short sentence under 8 words. Then vary again. Never write three sentences of similar length in a row.
 
 CORRECT bursty example:
 "I escalated immediately. The ward manager reviewed within the hour and together we adjusted the care plan, so by the following morning her observations had stabilised and she was able to take oral fluids. That decision mattered."
 
-The middle sentence is 30 words. The surrounding sentences are 3 and 3 words. That contrast is what human writing looks like.
+Short sentence (3w) → long sentence (30w) → short sentence (3w). That contrast is what human writing looks like.
 
 Never start two consecutive paragraphs with the same word or pattern.
 Never use the same transition phrase more than once across the entire statement.
@@ -277,17 +286,15 @@ FORMAT E — Qualification and motivation lead:
 ## NO SEPARATE EDUCATION PARAGRAPH
 Qualifications are addressed fully in the opening paragraph. Do not add a separate education or training paragraph.
 
-## CRITERION PARAGRAPHS — MINI-STAR (5-8 lines, approx 80-120 words)
-WRITE PARAGRAPHS IN PERSON SPEC ORDER. Follow the pre-writing map exactly — work through criteria E3, E4, E5... in the order they appear on the person spec. Do not jump ahead to a later criterion before the earlier ones are addressed. Recruiters shortlist by working down the person spec line by line; a statement that addresses criteria in the same order makes their job easier and scores higher.
+## CRITERION PARAGRAPHS — MINI-STAR
+WRITE PARAGRAPHS IN PERSON SPEC ORDER. Work through criteria E3, E4, E5... in the order they appear on the person spec. Recruiters shortlist by working down the person spec line by line.
 
-Each paragraph may address 1-3 criteria at once where they naturally overlap (e.g. clinical observation + escalation often appear together on the person spec). Group these tightly rather than treating them as separate paragraphs.
+DEFAULT: 3-4 sentences per paragraph. One criterion per paragraph is ideal. If two criteria overlap naturally, address both in one short paragraph. If a criterion needs more evidence, use two consecutive short paragraphs rather than one long one.
 
-Mix paragraph lengths randomly between 5 and 8 lines. Stop at line 8.
-
-MINI-STAR format:
-- SITUATION (1 sentence): specific context — where, when, what patient group
-- ACTION (2-3 lines): specific actions using I statements, name tools/systems/forms/procedures from JD, name professional roles from JD
-- RESULT (1-2 lines): quantified outcome
+MINI-STAR format (compressed into 3-4 sentences):
+- SITUATION (1 sentence): where, when, what patient group
+- ACTION (1-2 sentences): specific actions, name tools/systems/professionals from JD
+- RESULT (1 sentence): outcome — described or measured
 
 PARAGRAPH OPENING PATTERNS — rotate, never repeat the same pattern consecutively:
 1. "When supporting [patient group] on [ward/setting]..."

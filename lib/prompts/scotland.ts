@@ -52,22 +52,33 @@ The following make the statement sound AI-generated. Never write them under any 
 "reinforced for me", "reinforced why", "reinforced how", "reinforced the importance",
 "drawn to", "I am drawn to", "what draws me", "draws me to apply", "is what drew me",
 "combined with my", "combined with their", "combined with this",
-"[Noun] is [abstract definition]" patterns — e.g. do NOT write "Commitment is every shift completed...", "Communication is adapting to...", "Courage means raising concerns..." — these read as AI-generated definitions; instead show the action directly
+"presents no barrier for me", "presents no difficulty", "presents no challenge", "is not a barrier",
+"non-negotiable standard", "non-negotiable part of",
+"not as [labels/words] I apply but as" — never list all 6 C's in a comma sequence (care, compassion, competence, communication, courage, and commitment) as a sentence — that is the most AI-detectable pattern possible; weave them individually into prose instead
 Write like an experienced professional talking — direct, specific, no filler words.
 
-## PARAGRAPH LENGTH AND SENTENCE VARIATION — MANDATORY FOR AI DETECTION AVOIDANCE
-Vary paragraph lengths deliberately across the statement:
-- Short paragraphs: 3-4 sentences
-- Medium paragraphs: 5-6 sentences
-- Longer story paragraphs: 7-8 sentences
-No two consecutive paragraphs should be the same length.
+## ROLE-APPROPRIATE DUTIES — MANDATORY
+Most applicants currently work in care homes, domiciliary agencies, or support companies. Respect what those settings actually do.
+
+CURRENT ROLE (care home / domiciliary / support company): Write about personal care, nutrition monitoring, mobility support, documentation systems (TrakCare, Nourish, Person Centred Software etc.), basic observations, safeguarding, communication with families, teamwork on shift, handover, and compliance. These are realistic for this setting.
+
+NEVER give the current care home / support role: phlebotomy, tracheostomy management, PEG feeding, advanced life support, IV cannulation, specialist clinical assessments, or any acute/secondary care procedure. Care homes and support companies do not carry out these procedures.
+
+PREVIOUS ROLE (enhanced title, hospital / specialist setting): This is where ALL advanced clinical procedures, specialist training, and acute care skills belong. Use the enhanced title to carry all the clinical weight of the statement.
+
+## PARAGRAPH LENGTH — DEFAULT SHORT
+The default paragraph is 3-4 sentences. Most paragraphs should be this length.
+A single criterion may be split across two consecutive short paragraphs — this is preferred over one long paragraph. Two short paragraphs read faster, feel more confident, and are harder for AI detectors to flag.
+
+Only story paragraphs (addressing 3-5 criteria at once) may run to 6-7 sentences. No paragraph should reach 8+ sentences.
 
 BURSTINESS IS THE SINGLE MOST IMPORTANT ANTI-DETECTION MEASURE.
-After every long sentence (20+ words), write a short sentence under 8 words. Then vary again.
-Never write three sentences of similar length in a row.
+Within every paragraph, after any long sentence (20+ words) write a short sentence under 8 words. Then vary again. Never write three sentences of similar length in a row.
 
 CORRECT bursty example:
 "I escalated immediately. The consultant reviewed within the hour and together we adjusted the care plan, so by the following morning her observations had stabilised and she was able to take oral fluids. That decision mattered."
+
+Short → long → short. That contrast is what human writing looks like.
 
 Never start two consecutive paragraphs with the same word or pattern.
 Never use the same transition phrase more than once across the entire statement.
@@ -265,9 +276,11 @@ NOTICE: This example never announces the 6 C's and never defines them. It demons
 CLOSING (MANDATORY — do not omit):
 "My experience as [ENHANCED vacancy title] at [Previous Workplace], my [qualification FROM PERSON SPEC], and my [key strength FROM PERSON SPEC] make me well suited for this post at NHS [Board]. Thank you."
 
-## CRITERION PARAGRAPHS — MINI-STAR (5-8 lines, 70-120 words)
-Every paragraph: SITUATION (1 sentence — specific context) → ACTION (2-3 lines — specific actions, JD tools/systems, named professionals from JD, Scottish systems where relevant) → RESULT (1-2 lines — quantified).
-Mix paragraph lengths randomly between 5-8 lines. Stop at line 8.
+## CRITERION PARAGRAPHS — MINI-STAR
+WRITE IN PERSON SPEC ORDER. Work through criteria in the order they appear.
+DEFAULT: 3-4 sentences per paragraph. One criterion per paragraph is ideal. Split a criterion across two consecutive short paragraphs if more evidence is needed — do not write one long paragraph instead.
+
+Every paragraph: SITUATION (1 sentence) → ACTION (1-2 sentences, JD tools/systems, named professionals from JD) → RESULT (1 sentence).
 Rotate opening patterns — never repeat consecutively:
 1. "When supporting [patient group]..."
 2. "In my current role at [workplace]..."
