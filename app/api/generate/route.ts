@@ -81,9 +81,10 @@ export async function POST(req: NextRequest) {
           { status: 503 }
         )
       }
-      // Billing / credits exhausted
+      // Billing / credits exhausted (Anthropic returns 400 or 402 for this)
       if (
         err.status === 402 ||
+        err.status === 400 ||
         err.type === 'billing_error' ||
         message.toLowerCase().includes('credit') ||
         message.toLowerCase().includes('billing') ||
