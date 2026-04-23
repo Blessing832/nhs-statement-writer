@@ -61,9 +61,9 @@ export async function POST(req: NextRequest) {
 
     if (err instanceof Anthropic.APIError) {
       // Short single-line log so Vercel doesn't truncate it
-      console.error(`CLAUDE_ERR status=${err.status} type=${err.type} msg=${String(err.message).slice(0, 120)}`)
+      console.error(`CLAUDE_ERR status=${err.status} type=${err.type} msg=${String(err.message).slice(0, 200)}`)
     } else {
-      console.error(`CLAUDE_ERR_OTHER msg=${String(message).slice(0, 120)}`)
+      console.error(`CLAUDE_ERR_OTHER msg=${String(message).slice(0, 200)}`)
     }
 
     if (err instanceof Anthropic.APIError) {
@@ -81,14 +81,12 @@ export async function POST(req: NextRequest) {
           { status: 503 }
         )
       }
-      // Billing / credits exhausted (Anthropic returns 400 or 402 for this)
+      // Billing / credits exhausted — Anthropic returns 400 with billing message OR 402
       if (
         err.status === 402 ||
-        err.status === 400 ||
         err.type === 'billing_error' ||
-        message.toLowerCase().includes('credit') ||
+        message.toLowerCase().includes('credit balance') ||
         message.toLowerCase().includes('billing') ||
-        message.toLowerCase().includes('balance') ||
         message.toLowerCase().includes('quota')
       ) {
         return NextResponse.json(
@@ -97,9 +95,8 @@ export async function POST(req: NextRequest) {
         )
       }
     } else if (
-      message.toLowerCase().includes('credit') ||
+      message.toLowerCase().includes('credit balance') ||
       message.toLowerCase().includes('billing') ||
-      message.toLowerCase().includes('balance') ||
       message.toLowerCase().includes('quota') ||
       message.toLowerCase().includes('overloaded')
     ) {
