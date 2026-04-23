@@ -60,9 +60,10 @@ export async function POST(req: NextRequest) {
     const message = err instanceof Error ? err.message : 'Unknown error'
 
     if (err instanceof Anthropic.APIError) {
-      console.error(`Claude API error: status=${err.status} type=${err.type}`)
+      // Short single-line log so Vercel doesn't truncate it
+      console.error(`CLAUDE_ERR status=${err.status} type=${err.type} msg=${String(err.message).slice(0, 120)}`)
     } else {
-      console.error('Claude error:', message)
+      console.error(`CLAUDE_ERR_OTHER msg=${String(message).slice(0, 120)}`)
     }
 
     if (err instanceof Anthropic.APIError) {
@@ -73,7 +74,14 @@ export async function POST(req: NextRequest) {
           { status: 503 }
         )
       }
-      // Billing / credits / quota exhausted
+      // Invalid / missing API key
+      if (err.status === 401 || err.type === 'authentication_error') {
+        return NextResponse.json(
+          { error: 'The statement writer is temporarily unavailable (authentication). Please contact your administrator.' },
+          { status: 503 }
+        )
+      }
+      // Billing / credits exhausted
       if (
         err.status === 402 ||
         err.type === 'billing_error' ||
@@ -83,7 +91,7 @@ export async function POST(req: NextRequest) {
         message.toLowerCase().includes('quota')
       ) {
         return NextResponse.json(
-          { error: 'The statement writer is temporarily unavailable. Please contact your administrator.' },
+          { error: 'The statement writer is temporarily unavailable. If you have just added credits, please wait 1-2 minutes and try again. Otherwise contact your administrator.' },
           { status: 503 }
         )
       }
@@ -95,7 +103,7 @@ export async function POST(req: NextRequest) {
       message.toLowerCase().includes('overloaded')
     ) {
       return NextResponse.json(
-        { error: 'The statement writer is temporarily unavailable. Please contact your administrator.' },
+        { error: 'The statement writer is temporarily unavailable. Please wait a moment and try again.' },
         { status: 503 }
       )
     }
