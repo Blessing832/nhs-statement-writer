@@ -60,10 +60,10 @@ export async function POST(req: NextRequest) {
     const message = err instanceof Error ? err.message : 'Unknown error'
 
     if (err instanceof Anthropic.APIError) {
-      // Short single-line log so Vercel doesn't truncate it
-      console.error(`CLAUDE_ERR status=${err.status} type=${err.type} msg=${String(err.message).slice(0, 200)}`)
+      const body = err.error ? JSON.stringify(err.error).slice(0, 300) : 'no-body'
+      console.error(`CLAUDE_ERR status=${err.status} type=${err.type} body=${body}`)
     } else {
-      console.error(`CLAUDE_ERR_OTHER msg=${String(message).slice(0, 200)}`)
+      console.error(`CLAUDE_ERR_OTHER msg=${String(message).slice(0, 300)}`)
     }
 
     if (err instanceof Anthropic.APIError) {
