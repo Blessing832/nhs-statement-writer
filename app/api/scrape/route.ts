@@ -7,10 +7,15 @@ export const maxDuration = 60
 const SCRAPER_URL = process.env.SCRAPER_SERVICE_URL!
 const SCRAPER_SECRET = process.env.SCRAPER_SECRET!
 
+const BASE_HEADERS = {
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  'Accept-Language': 'en-GB,en;q=0.9',
+  'Cookie': 'nhsuk-cookie-consent=%7B%22preferences%22%3Atrue%2C%22statistics%22%3Atrue%2C%22marketing%22%3Atrue%2C%22version%22%3A1%7D',
+}
+
 // Strip HTML tags and collapse whitespace
 function htmlToText(html: string): string {
   const $ = cheerio.load(html)
-  // Remove scripts, styles, nav, cookie banners, footers
   $('script, style, noscript, nav, footer, header, [id*="cookie"], [class*="cookie"], [id*="banner"], [class*="banner"]').remove()
   return $('body').text().replace(/\s+/g, ' ').trim()
 }
@@ -30,27 +35,136 @@ function hasJobContent(text: string): boolean {
   )
 }
 
-// Direct server-side fetch — no JS execution, no cookie popup, works for SSR pages
+function hasPersonSpec(text: string): boolean {
+  const t = text.toLowerCase()
+  return (
+    (t.includes('person specification') || t.includes('essential criteria')) &&
+    t.includes('essential')
+  )
+}
+
+// Parse a PDF buffer and return plain text
+async function parsePdf(buffer: Buffer): Promise<string> {
+  try {
+    // Use internal path to avoid pdf-parse loading test files at import time
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const pdfParse = require('pdf-parse/lib/pdf-parse')
+    const data = await pdfParse(buffer)
+    return (data.text as string) || ''
+  } catch {
+    return ''
+  }
+}
+
+// Parse a Word document buffer and return plain text
+async function parseDocx(buffer: Buffer): Promise<string> {
+  try {
+    const mammoth = await import('mammoth')
+    const result = await mammoth.extractRawText({ buffer })
+    return result.value || ''
+  } catch {
+    return ''
+  }
+}
+
+// Fetch an attachment URL and extract text (PDF or DOCX)
+async function fetchAttachmentText(url: string): Promise<string> {
+  try {
+    const res = await fetch(url, {
+      headers: { ...BASE_HEADERS, 'Accept': 'application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,*/*' },
+      signal: AbortSignal.timeout(15000),
+    })
+    if (!res.ok) return ''
+
+    const contentType = (res.headers.get('content-type') || '').toLowerCase()
+    const urlLower = url.toLowerCase()
+
+    const isPdf = contentType.includes('pdf') || urlLower.includes('.pdf')
+    const isDocx = contentType.includes('wordprocessingml') || contentType.includes('msword') || urlLower.includes('.docx') || urlLower.includes('.doc')
+
+    if (!isPdf && !isDocx) {
+      // Could be a redirect to a PDF — check content-type of final response
+      // If neither, skip
+      return ''
+    }
+
+    const buffer = Buffer.from(await res.arrayBuffer())
+    if (isPdf) return parsePdf(buffer)
+    if (isDocx) return parseDocx(buffer)
+    return ''
+  } catch {
+    return ''
+  }
+}
+
+// Find links on the page that are likely to be JDPS attachments
+function findJdpsLinks($: cheerio.CheerioAPI, baseUrl: string): string[] {
+  const links: string[] = []
+  $('a[href]').each((_, el) => {
+    const href = $(el).attr('href') || ''
+    const text = $(el).text().toLowerCase().trim()
+    const hrefLower = href.toLowerCase()
+
+    if (!href || href.startsWith('#') || href.startsWith('mailto:')) return
+
+    const likelyJdps =
+      text.includes('person spec') ||
+      text.includes('job description') ||
+      text.includes('jdps') ||
+      text.includes('job spec') ||
+      text.includes('supporting document') ||
+      text.includes('attachment') ||
+      hrefLower.includes('.pdf') ||
+      hrefLower.includes('.docx') ||
+      hrefLower.includes('document') ||
+      hrefLower.includes('attachment')
+
+    if (!likelyJdps) return
+
+    try {
+      const absolute = href.startsWith('http') ? href : new URL(href, baseUrl).toString()
+      links.push(absolute)
+    } catch { /* invalid URL, skip */ }
+  })
+  return [...new Set(links)].slice(0, 4)
+}
+
+// Fetch all JDPS attachments in parallel and return combined text
+async function extractAttachmentText($: cheerio.CheerioAPI, pageUrl: string): Promise<string> {
+  const links = findJdpsLinks($, pageUrl)
+  if (links.length === 0) return ''
+
+  const results = await Promise.allSettled(links.map(fetchAttachmentText))
+  const texts: string[] = []
+  for (const r of results) {
+    if (r.status === 'fulfilled' && r.value.length > 200) {
+      texts.push(r.value)
+    }
+  }
+  return texts.join('\n\n')
+}
+
+// Direct server-side fetch — no JS execution, works for SSR pages
 async function directFetch(url: string): Promise<{ rawText: string; jobTitle: string; organisation: string } | null> {
   try {
-    const cleanUrl = url.split('?')[0] // strip filter params, keep job ID
+    const cleanUrl = url.split('?')[0]
     const res = await fetch(cleanUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-GB,en;q=0.9',
-        // Pre-accept NHS cookies so the cookie banner is never shown
-        'Cookie': 'nhsuk-cookie-consent=%7B%22preferences%22%3Atrue%2C%22statistics%22%3Atrue%2C%22marketing%22%3Atrue%2C%22version%22%3A1%7D',
-      },
+      headers: { ...BASE_HEADERS, 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' },
       signal: AbortSignal.timeout(15000),
     })
     if (!res.ok) return null
     const html = await res.text()
-    const rawText = htmlToText(html)
+    let rawText = htmlToText(html)
     if (rawText.length < 300 || !hasJobContent(rawText)) return null
 
-    // Extract title from <title> or <h1>
     const $ = cheerio.load(html)
+
+    // Always try to find and extract JDPS attachments to supplement the page text
+    const attachmentText = await extractAttachmentText($, cleanUrl)
+    if (attachmentText.length > 200) {
+      rawText += '\n\n=== ATTACHED PERSON SPECIFICATION / JOB DESCRIPTION ===\n' + attachmentText
+    }
+
     const titleTag = $('title').text().trim()
     const h1 = $('h1').first().text().trim()
     const jobTitle = h1 || titleTag.split('|')[0].trim() || ''
@@ -89,7 +203,6 @@ export async function POST(req: NextRequest) {
   }
 
   // ── Step 1: Try direct server-side fetch first (bypasses cookie walls) ──────
-  // This works because we fetch raw HTML without JS execution, so no cookie popup
   const direct = await directFetch(url)
   if (direct) {
     return NextResponse.json({
@@ -99,6 +212,7 @@ export async function POST(req: NextRequest) {
       jobDescription: direct.rawText,
       personSpec: '',
       source: 'direct',
+      hasAttachedPs: direct.rawText.includes('=== ATTACHED PERSON SPECIFICATION'),
     })
   }
 
@@ -135,7 +249,6 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // Detect cookie/privacy pages from the scraper response
   const t = (data.rawText as string).toLowerCase()
   const looksLikeCookiePage =
     t.includes('cookies on nhs jobs') ||
@@ -148,6 +261,24 @@ export async function POST(req: NextRequest) {
       { error: 'Could not read this job page automatically. Please copy the text from the vacancy page (Ctrl+A then Ctrl+C) and use "Paste Job Description" instead.' },
       { status: 422 }
     )
+  }
+
+  // If Puppeteer scraper didn't get person spec, try to extract from attachments
+  if (!hasPersonSpec(data.rawText)) {
+    try {
+      const res2 = await fetch(url.split('?')[0], {
+        headers: { ...BASE_HEADERS, 'Accept': 'text/html,*/*' },
+        signal: AbortSignal.timeout(10000),
+      })
+      if (res2.ok) {
+        const html2 = await res2.text()
+        const $2 = cheerio.load(html2)
+        const attachmentText = await extractAttachmentText($2, url.split('?')[0])
+        if (attachmentText.length > 200) {
+          data.rawText += '\n\n=== ATTACHED PERSON SPECIFICATION / JOB DESCRIPTION ===\n' + attachmentText
+        }
+      }
+    } catch { /* non-critical, Puppeteer result still usable */ }
   }
 
   return NextResponse.json(data)
