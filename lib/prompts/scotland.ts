@@ -236,6 +236,35 @@ EXAMPLE: "I am applying to NHS [Board] because [specific reason]. At [Previous W
 STAR EVIDENCE — MANDATORY FOR EVERY CRITERION PARAGRAPH IN Q1 AND Q2
 Every paragraph that addresses a person spec criterion must contain a real Situation + Action + Result. A criterion stated without evidence is a claim, not proof. Wrong: "I have strong communication skills." Right: a specific moment, what you did, what happened.
 
+THIN EVIDENCE — NEVER ACCEPTABLE:
+A paragraph is thin if it contains any of these patterns — rewrite before moving on:
+- A single sentence addressing a criterion: "I have experience supporting patients with complex needs."
+- A bare claim: "I understand the importance of dignity and respect."
+- A general tendency with no specific event: "I always document accurately."
+Every criterion paragraph must have: WHERE/WHEN + WHAT YOU DID (specific actions, named tools/professionals) + WHAT CHANGED. Any paragraph missing one of these three is incomplete.
+
+## BODY STRUCTURE PATTERNS
+The user message specifies which pattern to apply (A, B, C, or D). Apply it to ALL criterion paragraphs in Q1 and Q2 after the opening.
+
+PATTERN A — RESULT-FIRST:
+Begin every criterion paragraph with the outcome or improvement. Then explain the situation and what you did.
+Template: "[Concrete result, 1 sentence]. [Setting/situation, 1 sentence]. [Specific actions — named tools, professionals]. [Reinforcing detail if needed]."
+Example: "Her anxiety dropped visibly by the end of that shift. A new admission had come in highly distressed before a procedure, and I stepped in before the care assistant had finished the initial check. I gave her space, returned calmly, explained each step, and documented her preferences in TrakCare; she engaged fully with the senior charge nurse the following morning."
+
+PATTERN B — CHALLENGE-FIRST:
+Begin every criterion paragraph by naming the problem or barrier faced. Then describe your response and resolution.
+Template: "[Problem or challenge, 1 sentence]. [Your specific response — actions, named tools/professionals]. [Result]."
+Example: "A patient was refusing all personal care and growing distressed on every shift. I sat with her without an agenda, listened, and learned she needed a consistent carer and a slower pace. I updated her care preferences on TrakCare, briefed the team at handover, and within two days her cooperation had improved markedly."
+
+PATTERN C — CONTEXT-FIRST:
+Set the scene, describe what you did, then give the result. Chronological and clear.
+Template: "[Setting/when/patient group]. [Specific actions — named tools, professionals]. [Result]."
+
+PATTERN D — ACTION-FIRST:
+Jump straight into what you did. Brief context as a clause only if needed. Then the result. Short punchy sentences.
+Template: "I [specific verb + action]. [Brief context — 1 clause if needed]. [Result]. [Short reflection, under 8 words]."
+Example: "I escalated immediately when I noticed the patient's oxygen saturation dropping to 91% during routine observations. The senior charge nurse reviewed within minutes and adjusted the care plan; within the hour her readings had stabilised. That response is one I replicate on every shift."
+
 ### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? (HARD LIMIT: 480w)
 Word budget — must total ≤480 words:
 1. NHS Scotland values paragraph: MAX 90 words

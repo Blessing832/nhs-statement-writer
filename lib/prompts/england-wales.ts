@@ -311,9 +311,40 @@ A criterion addressed without a specific Situation + Action + Result is worthles
 WRONG: "I have strong communication skills and work well in a team."
 RIGHT: "During a night shift at [workplace], a patient became agitated and refused personal care. I spoke with her calmly, asked what was wrong, and learned she was anxious about a procedure the next morning. I informed the registered nurse and documented her concerns in [system]; by morning, the clinical team had spoken with her and her cooperation improved significantly."
 
+THIN EVIDENCE — NEVER ACCEPTABLE:
+A paragraph is thin if it contains any of the following patterns — rewrite it before moving on:
+- A single sentence addressing a criterion: "I have experience managing complex caseloads."
+- A bare claim with no moment: "I understand the importance of confidentiality."
+- An intention statement: "I am committed to delivering person-centred care."
+- A general tendency with no specific event: "I always document accurately and on time."
+Every criterion paragraph must have: WHERE/WHEN (situation) + WHAT YOU DID (specific action with named tools or professionals) + WHAT CHANGED (result). If any of these three is missing, the paragraph is incomplete.
+
 ABSOLUTE BAN — NEVER write any of these labels before a paragraph:
 "Story:", "Story 1:", "Story 2:", "Scenario:", "Scenario 1:", "Example:", "STAR:", "Case:"
 Just write the paragraph directly. No label. No prefix. No colon introduction.
+
+## BODY STRUCTURE PATTERNS
+The user message specifies which pattern to apply (A, B, C, or D). Apply it consistently to ALL criterion paragraphs after the opening. The pattern changes how each paragraph is framed — not what evidence is included.
+
+PATTERN A — RESULT-FIRST:
+Begin every criterion paragraph with the outcome or improvement. Then briefly explain the situation and what you did to get there.
+Template: "[Concrete result, 1 sentence]. [Setting/situation, 1 sentence]. [Specific actions — named tools, professionals from JD]. [Short reinforcing detail if needed]."
+Example: "Her anxiety dropped visibly by the end of that shift. A new admission had come in highly distressed before a scheduled procedure, and no one had spoken with her about what to expect. I gave her space, returned calmly, explained each step in advance, and documented her preferences in Care Vision; she was settled enough to engage with the physiotherapist the following morning."
+
+PATTERN B — CHALLENGE-FIRST:
+Begin every criterion paragraph by naming the problem, barrier, or difficulty faced. Then describe your response and the resolution.
+Template: "[Problem or challenge, 1 sentence]. [Your specific response — actions, named tools/professionals]. [Result]."
+Example: "A patient was refusing all personal care and growing increasingly distressed on every shift. I sat with her, listened without an agenda, and learned she needed a consistent carer and a slower pace than the ward routine allowed. I updated her care plan in Care Vision, briefed the team at handover, and within two days her cooperation had improved markedly."
+
+PATTERN C — CONTEXT-FIRST:
+Set the scene, describe what you did, then give the result. This is the straightforward chronological approach.
+Template: "[Setting/when/patient group]. [Specific actions — named tools, professionals from JD]. [Result]."
+Example: "During a night shift at [workplace], a patient became agitated and refused personal care. I spoke with her calmly, asked what was wrong, and learned she was anxious about a procedure the next morning. I informed the registered nurse and documented her concerns in [system]; by morning, the clinical team had spoken with her and her cooperation improved significantly."
+
+PATTERN D — ACTION-FIRST:
+Jump straight into what you did. Add one brief clause of context only if needed. Then the result. Short punchy sentences throughout.
+Template: "I [specific verb + action immediately]. [Brief context — 1 clause, not a full sentence]. [Result]. [Short reflection sentence, under 8 words]."
+Example: "I escalated immediately when I noticed the patient's oxygen saturation dropping to 91% during routine observations. The nurse reviewed within minutes and adjusted the care plan; within the hour her readings had stabilised. That response is one I replicate on every shift."
 
 ## 6 C'S PARAGRAPH (5-6 lines, approx 80-100 words — NO SUBHEADING)
 ALL SIX C's must appear: Care, Compassion, Competence, Communication, Courage, Commitment. Do not omit any.

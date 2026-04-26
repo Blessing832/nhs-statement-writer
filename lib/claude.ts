@@ -100,6 +100,7 @@ function buildUserPrompt(
     applicationMode?: ApplicationMode
     openingFormatHint?: string
     yearsHint?: string
+    bodyPattern?: string
   }
 ): string {
   const isScotland = region === 'scotland'
@@ -249,6 +250,9 @@ ${options.specificQuestions || ''}`
     const formatHintLine = options.openingFormatHint
       ? `MANDATORY OPENING FORMAT: Use Format ${options.openingFormatHint}. Replace every [X] placeholder with "${yearsStr}". NEVER write "several years", "many years", or "a number of years" — always use "${yearsStr} years".\n\n`
       : ''
+    const patternLine = options.bodyPattern
+      ? `MANDATORY BODY PATTERN: Use Body Pattern ${options.bodyPattern} for ALL criterion paragraphs after the opening.\n\n`
+      : ''
     const outputInstruction = isRewrite
       ? 'Rewrite the statement following the instruction. Keep all strong content. Improve what was asked.'
       : isScotland
@@ -270,7 +274,7 @@ ${instructionsSection}
 ${rewriteSection}
 
 ## TASK
-${formatHintLine}${outputInstruction}
+${formatHintLine}${patternLine}${outputInstruction}
 
 Output as plain text only. Do NOT wrap in JSON. Do NOT add any preamble. Start directly with the first word.
 
@@ -365,6 +369,10 @@ async function generateParallel(
   const yearsPool = ['over 2', 'over 3']
   const yearsHint = yearsPool[Math.floor(Math.random() * yearsPool.length)]
 
+  // Pick body structure pattern — varies how evidence paragraphs are framed
+  const bodyPatternPool = ['A', 'B', 'C', 'D']
+  const bodyPattern = bodyPatternPool[Math.floor(Math.random() * bodyPatternPool.length)]
+
   // Determine statement output mode
   const statementOutputMode =
     appMode === 'questions-only' ? 'questions-only' : 'statement-only'
@@ -374,6 +382,7 @@ async function generateParallel(
     outputMode: statementOutputMode,
     openingFormatHint,
     yearsHint,
+    bodyPattern,
   })
 
   const analysisUserPrompt = buildUserPrompt(client, jobData, region, {
