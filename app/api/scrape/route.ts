@@ -110,7 +110,13 @@ function findJdpsLinks($: cheerio.CheerioAPI, baseUrl: string): string[] {
     const likelyJdps =
       text.includes('person spec') ||
       text.includes('job description') ||
+      text.includes('job desc') ||
       text.includes('jdps') ||
+      text.includes('jd and ps') ||
+      text.includes('jd & ps') ||
+      text.includes('jd/ps') ||
+      text === 'jd' ||
+      text.startsWith('jd ') ||
       text.includes('job spec') ||
       text.includes('supporting document') ||
       text.includes('attachment') ||
