@@ -165,6 +165,7 @@ function GeneratePage() {
   const [jobDescText, setJobDescText] = useState('')
   const [cachedJobData, setCachedJobData] = useState<Record<string, unknown> | null>(null)
   const [style, setStyle] = useState<'1' | '2'>('1')
+  const [bodyPattern, setBodyPattern] = useState<'' | 'A' | 'B' | 'C' | 'D'>('')
   const [applicationMode, setApplicationMode] = useState<'full' | 'questions-only' | 'statement-questions'>('full')
   const [specificQuestions, setSpecificQuestions] = useState('')
   const [loading, setLoading] = useState(false)
@@ -247,7 +248,7 @@ function GeneratePage() {
 
     try {
       const { result: data, jobData } = await callGenerate(
-        { client_code: clientCode, vacancy_url: usedUrl, style, applicationMode, specificQuestions: specificQuestions.trim() || undefined },
+        { client_code: clientCode, vacancy_url: usedUrl, style, applicationMode, specificQuestions: specificQuestions.trim() || undefined, bodyPattern: bodyPattern || undefined },
         setLoadingStep,
         preloaded
       )
@@ -277,6 +278,7 @@ function GeneratePage() {
           specificQuestions: specificQuestions.trim() || undefined,
           rewriteInstruction: rewriteInstruction.trim(),
           previousStatement: result.statement,
+          bodyPattern: bodyPattern || undefined,
         },
         () => {},
         cachedJobData ?? undefined
@@ -370,6 +372,29 @@ function GeneratePage() {
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-transparent text-sm"
                       disabled={loading}
                     />
+                    <div className="mt-2 flex items-center gap-1.5 flex-wrap">
+                      <span className="text-xs text-gray-500 mr-0.5">Writing style:</span>
+                      {([
+                        { val: '' as const, label: 'Auto', title: 'Claude picks randomly each time' },
+                        { val: 'A' as const, label: 'A – Result first', title: 'Start each paragraph with the outcome, then explain how' },
+                        { val: 'B' as const, label: 'B – Challenge first', title: 'Name the problem, then describe your response and result' },
+                        { val: 'C' as const, label: 'C – Context first', title: 'Set the scene, describe what you did, then the result' },
+                        { val: 'D' as const, label: 'D – Action first', title: 'Jump straight into what you did — punchy and direct' },
+                      ]).map(({ val, label, title }) => (
+                        <button
+                          key={val || 'auto'}
+                          type="button"
+                          title={title}
+                          onClick={() => setBodyPattern(val)}
+                          className="text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer"
+                          style={bodyPattern === val
+                            ? { borderColor: '#005eb8', backgroundColor: '#005eb8', color: 'white' }
+                            : { borderColor: '#d1d5db', backgroundColor: 'white', color: '#374151' }}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 ) : (
                   <div>

@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
     rewriteInstruction,
     previousStatement,
     applicationMode,
+    bodyPattern,
   } = await req.json()
 
   if (!client_code || !vacancy_url || !jobData) {
@@ -55,6 +56,7 @@ export async function POST(req: NextRequest) {
       previousStatement,
       vacancyUrl: vacancy_url,
       applicationMode: applicationMode || 'full',
+      bodyPattern: bodyPattern || undefined,
     })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error'

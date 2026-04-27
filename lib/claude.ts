@@ -347,6 +347,7 @@ async function generateParallel(
     rewriteInstruction?: string
     previousStatement?: string
     applicationMode?: ApplicationMode
+    bodyPattern?: string
   },
   region: 'scotland' | 'england-wales',
   style: '1' | '2'
@@ -369,9 +370,9 @@ async function generateParallel(
   const yearsPool = ['over 2', 'over 3']
   const yearsHint = yearsPool[Math.floor(Math.random() * yearsPool.length)]
 
-  // Pick body structure pattern — varies how evidence paragraphs are framed
+  // Use user-selected body pattern, or pick randomly if not specified
   const bodyPatternPool = ['A', 'B', 'C', 'D']
-  const bodyPattern = bodyPatternPool[Math.floor(Math.random() * bodyPatternPool.length)]
+  const bodyPattern = options.bodyPattern || bodyPatternPool[Math.floor(Math.random() * bodyPatternPool.length)]
 
   // Determine statement output mode
   const statementOutputMode =
@@ -513,6 +514,7 @@ export async function generateStatement(
     previousStatement?: string
     vacancyUrl?: string
     applicationMode?: ApplicationMode
+    bodyPattern?: string
   } = {}
 ): Promise<{
   statement: string
@@ -529,6 +531,7 @@ export async function generateStatement(
     rewriteInstruction: options.rewriteInstruction,
     previousStatement: options.previousStatement,
     applicationMode: options.applicationMode ?? 'full',
+    bodyPattern: options.bodyPattern,
   }
 
   if (region === 'scotland' || region === 'england-wales') {
