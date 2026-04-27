@@ -8,16 +8,16 @@ function isAuthorised(req: NextRequest): boolean {
   return req.headers.get('x-admin-token') === process.env.ADMIN_SECRET
 }
 
-const SYSTEM_PROMPT = `You are an expert NHS interview preparation coach. Generate comprehensive, candidate-specific interview preparation materials.
+const SYSTEM_PROMPT = `You are an expert NHS interview preparation coach. Generate comprehensive, candidate-specific interview preparation materials following the exact structure below.
 
 ABSOLUTE RULES:
-- No bullet points in any answer — all answers must be written in flowing prose paragraphs
+- No bullet points in any answer — all answers written in flowing prose paragraphs
 - All answers written in the candidate's voice, first person
-- Previous role throughout = EXACT vacancy job title from the job description
+- Previous role throughout = EXACT vacancy job title from the job description (not enhanced, not modified)
 - Duties referenced in answers = drawn directly from the job description, never invented
 - STARR = Situation, Task, Action, Result, Reflection
 - Tell Me About Yourself must cover ALL person spec criteria, essential and desirable — not partial coverage
-- Tell Me About Yourself ends with one STARR scenario hitting 5-8 PS criteria simultaneously
+- Tell Me About Yourself ends with one full STARR scenario naturally weaving in 5-8 PS criteria as keywords
 - Each individual Q&A answer: 100 words maximum
 - No placeholders anywhere — every detail drawn from candidate profile and job description
 - NEVER state or imply the candidate lacks experience in the vacancy specialty`
@@ -27,11 +27,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
   }
 
-  const { client_code, job_advert, job_description, person_spec } = await req.json()
+  const { client_code, jd_and_ps } = await req.json()
 
-  if (!client_code || !job_description || !person_spec) {
+  if (!client_code || !jd_and_ps) {
     return NextResponse.json(
-      { error: 'Client code, job description, and person specification are required' },
+      { error: 'Client code and job description / person specification are required' },
       { status: 400 }
     )
   }
@@ -50,6 +50,7 @@ export async function POST(req: NextRequest) {
 
   const userPrompt = `## CANDIDATE PROFILE
 Name: ${client.full_name}
+
 Work History:
 ${client.work_history || 'Not provided'}
 
@@ -67,48 +68,56 @@ ${client.special_instructions || 'None'}
 
 ---
 
-## JOB ADVERT
-${job_advert?.trim() || 'Not provided — use job description for context'}
-
----
-
-## JOB DESCRIPTION
-${job_description}
-
----
-
-## PERSON SPECIFICATION
-${person_spec}
+## JOB DESCRIPTION AND PERSON SPECIFICATION
+${jd_and_ps}
 
 ---
 
 Generate the complete interview preparation document with exactly these four sections:
 
 SECTION 1: PERSON SPECIFICATION (FULL LIST)
-List every criterion under: Essential Qualifications and Knowledge / Essential Experience / Essential Skills and Attributes / Desirable / Other Requirements
+List every criterion under these exact headers:
+Essential Qualifications and Knowledge
+Essential Experience
+Essential Skills and Attributes
+Desirable
+Other Requirements
 
 SECTION 2: TELL ME ABOUT YOURSELF (5 minutes)
-Part 1 — Introduction: qualifications, experience summary, current role. Reference essential qualifications and experience criteria with evidence from the candidate profile.
-Part 2 — Skills and Values: work through ALL remaining essential AND desirable criteria with specific examples. Every single criterion must appear. Previous role = exact vacancy title. Duties = from job description.
-Part 3 — Closing STARR Scenario: one detailed Situation/Task/Action/Result/Reflection that naturally weaves in 5-8 person spec criteria as keywords. Specific, engaging, and memorable.
+
+Part 1 - Introduction
+Cover qualifications, experience summary, and current role. Reference essential qualifications and experience criteria from the person spec with specific evidence from the candidate profile.
+
+Part 2 - Skills and Values
+Work through ALL remaining essential AND desirable criteria with specific examples from the candidate profile. Every single criterion must appear — no partial coverage. Previous role = exact vacancy title from the job description. All duties = drawn from the job description.
+
+Part 3 - Closing STARR Scenario
+One detailed Situation/Task/Action/Result/Reflection that naturally weaves in 5-8 person spec criteria as keywords within the answer. Specific, engaging, and memorable. Should feel like a real moment from practice that brings everything together and leaves the panel with a strong final impression.
 
 SECTION 3: QUESTIONS AND ANSWERS
 
-Q1-Q10: Person Specification Questions
-For each question state: (a) which PS criteria it tests, (b) a hint from the job description duties, (c) answer in 100 words max using STARR, first person, no bullet points.
+Q1 to Q10: Person Specification Questions
+One question per PS criterion or related group of criteria. For each question:
+PS Criteria Tested: [list which criteria this tests]
+Hint: [drawn directly from job description duties and expectations]
+Answer: [100 words max, STARR method, concrete evidence from candidate profile, first person, no bullet points]
 
-Q11-Q20: Scenario-Based Questions
-Each scenario tests 5 or more PS criteria simultaneously. For each state: (a) PS criteria tested (min 5), (b) hint from job description, (c) STARR answer in 100 words max, PS keywords woven naturally, no bullet points.
+Q11 to Q20: Scenario-Based Questions
+Each scenario tests 5 or more PS criteria simultaneously. For each question:
+PS Criteria Tested: [list minimum 5 criteria this tests]
+Hint: [drawn from job description]
+Answer: [100 words max, STARR method, PS keywords woven naturally into the answer, no bullet points]
 
 SECTION 4: INTERVIEW TIPS
-- Key strengths to emphasise (specific to this candidate's profile)
-- Clinical phrases to use naturally (drawn from the job description)
-- Three smart questions to ask the panel (specific to this role and trust)`
+
+Key Strengths: [specific strengths to emphasise based on this candidate's profile and this role]
+Clinical Phrases: [key phrases to use naturally in answers, drawn from the job description]
+Smart Questions to Ask the Panel: [3 specific, intelligent questions relevant to this role and trust]`
 
   try {
     const message = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 4000,
+      max_tokens: 6000,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: userPrompt }],
     })
