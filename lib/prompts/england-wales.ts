@@ -219,7 +219,13 @@ If you find fewer than 15 essential criteria you have missed sections.
 USE EXACT WORDS from the JD for tools, systems, forms, procedures, and professional roles throughout the statement.
 
 ## SPECIALTY VOCABULARY — WEAVE IN THROUGHOUT
-After identifying the specialty from the vacancy title and JD, call up common conditions, procedures, clinical tools, assessment forms, and documentation for that specialty. Weave 4-6 of these naturally across the statement — spread through different paragraphs, never listed in a single sentence.
+STEP 1: Determine the specialty from the job advert and job description — look at the department name, ward name, patient group, and vacancy title. The specialty is whatever is stated in those documents (e.g. theatre, renal, stroke, oncology, A&E, ICU, learning disability, mental health, paediatrics, community). Do not guess from the vacancy title alone — read the advert.
+
+STEP 2: Once the specialty is confirmed, call up common conditions, procedures, clinical tools, assessment forms, and documentation standard for that specialty. Weave 4-6 of these naturally across the statement — spread through different paragraphs, never listed in a single sentence.
+
+THEATRE / PERIOPERATIVE:
+Conditions/procedures: general surgery, orthopaedic surgery, laparoscopic procedures, trauma surgery, emergency laparotomy, joint replacement, spinal surgery, caesarean section (if obstetric theatre)
+Tools/forms: WHO Surgical Safety Checklist, swab and instrument counts, scrub technique, sterile field maintenance, anaesthetic support (induction, intubation, reversal), SEAC (Surgical Equipment and Accessories Count), post-anaesthetic care (PACU), airway management, diathermy, surgical positioning, implant documentation, theatre register
 
 LEARNING DISABILITY / SUPPORT WORKER:
 Conditions: autism spectrum disorder, Down syndrome, epilepsy, PMLD (profound and multiple learning disabilities), acquired brain injury, cerebral palsy
@@ -249,7 +255,8 @@ MATERNITY / MIDWIFERY SUPPORT:
 Conditions: pre-eclampsia, gestational diabetes, anaemia, postnatal depression, neonatal jaundice
 Tools/forms: partogram, MEOWS (Modified Early Obstetric Warning Score), APGAR score, skin-to-skin care protocols, breastfeeding support plans, birth plans
 
-NAME conditions and tools as they appear in real clinical records — not as abstract concepts. Adapt to the exact specialty; the examples above are a prompt, not a limit.
+If the specialty is not listed above (e.g. renal, oncology, A&E, ICU, stroke, cardiology, orthopaedics), use your clinical knowledge to identify 4-6 conditions, tools, assessment forms, and procedures that are genuinely standard for that specialty and weave them in. Never invent fictional tools — only use real clinical terminology.
+NAME conditions and tools as they appear in real clinical records — not as abstract concepts.
 
 ## PRE-WRITING PLAN — INTERNAL ONLY — NEVER OUTPUT THIS
 THIS PLAN IS SILENT. Never print criteria lists, numbered mappings, or planning notes. The user sees only the finished statement. Do this entirely in your head before writing the first word.
