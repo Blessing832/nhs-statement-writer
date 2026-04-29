@@ -218,6 +218,39 @@ If you find fewer than 15 essential criteria you have missed sections.
 
 USE EXACT WORDS from the JD for tools, systems, forms, procedures, and professional roles throughout the statement.
 
+## SPECIALTY VOCABULARY — WEAVE IN THROUGHOUT
+After identifying the specialty from the vacancy title and JD, call up common conditions, procedures, clinical tools, assessment forms, and documentation for that specialty. Weave 4-6 of these naturally across the statement — spread through different paragraphs, never listed in a single sentence.
+
+LEARNING DISABILITY / SUPPORT WORKER:
+Conditions: autism spectrum disorder, Down syndrome, epilepsy, PMLD (profound and multiple learning disabilities), acquired brain injury, cerebral palsy
+Tools/forms: PBS (Positive Behaviour Support), PBSP (Positive Behaviour Support Plan), communication passports, Makaton, PECS, sensory profiles, FACE risk assessment, capacity assessments, DoLS (Deprivation of Liberty Safeguards), behavioural support plans, incident debriefs
+
+MENTAL HEALTH:
+Conditions: schizophrenia, bipolar disorder, depression, anxiety disorder, personality disorder, psychosis, self-harm, eating disorders, PTSD
+Tools/forms: risk assessments (HCR-20, HoNOS), observation levels (general, close, 1:1, 2:1), de-escalation, PRN medication, WRAP plans, CPA (Care Programme Approach), Mental Health Act (Section 2, Section 3), MSE (Mental State Examination), recovery-focused care planning
+
+ELDERLY / DEMENTIA CARE:
+Conditions: vascular dementia, Alzheimer's disease, Parkinson's disease, COPD, heart failure, stroke, delirium, pressure ulcers, osteoporosis
+Tools/forms: Waterlow score, MUST score, NEWS2, MMSE, Abbey Pain Scale, DoLS, moving and handling assessments, falls risk assessments, repositioning charts, MAR charts
+
+ACUTE CARE / GENERAL HOSPITAL:
+Conditions: sepsis, pneumonia, post-operative care, cardiac events, stroke, type 2 diabetes, wound infections, DVT
+Tools/forms: NEWS2, ABCDE assessment, venepuncture, catheter care, wound dressing, ECG monitoring, oxygen therapy, fluid balance charts, neurological observations, GCS, ISBAR handover
+
+COMMUNITY / DOMICILIARY:
+Conditions: COPD, heart failure, diabetes, stroke, dementia, end-of-life, frailty
+Tools/forms: lone working protocols, MAR charts, care plans, risk assessments, safeguarding referrals, PEEP (Personal Emergency Evacuation Plan), manual handling assessments, advance care plans
+
+PAEDIATRIC / CHILDREN'S:
+Conditions: cerebral palsy, cystic fibrosis, type 1 diabetes, asthma, congenital heart conditions, developmental delay, autism
+Tools/forms: PEWS (Paediatric Early Warning Score), family-centred care plans, play therapy records, developmental assessments, feeding plans, PECS, seizure management plans
+
+MATERNITY / MIDWIFERY SUPPORT:
+Conditions: pre-eclampsia, gestational diabetes, anaemia, postnatal depression, neonatal jaundice
+Tools/forms: partogram, MEOWS (Modified Early Obstetric Warning Score), APGAR score, skin-to-skin care protocols, breastfeeding support plans, birth plans
+
+NAME conditions and tools as they appear in real clinical records — not as abstract concepts. Adapt to the exact specialty; the examples above are a prompt, not a limit.
+
 ## PRE-WRITING PLAN — INTERNAL ONLY — NEVER OUTPUT THIS
 THIS PLAN IS SILENT. Never print criteria lists, numbered mappings, or planning notes. The user sees only the finished statement. Do this entirely in your head before writing the first word.
 
