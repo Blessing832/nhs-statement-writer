@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
   const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
 
-  const prompt = `You are helping an NHS job application service set up unique writing instructions for each candidate.
+  const prompt = `You are helping an NHS job application service set up unique personalisation instructions for each candidate. These instructions ensure every candidate's statements have a distinct voice, tone, and focus — they do NOT override core writing rules, they ADD personal colour on top of them.
 
 ## CANDIDATE PROFILE
 Name: ${full_name}
@@ -24,7 +24,7 @@ ${work_history || 'Not provided'}
 Qualifications:
 ${qualifications || 'Not provided'}
 
-Skills:
+Skills / Trainings:
 ${skills || 'Not provided'}
 
 Background / Notes:
@@ -32,23 +32,26 @@ ${background || 'Not provided'}
 
 ---
 
-Write a concise set of special instructions (150-200 words) that will make this candidate's NHS supporting statements sound unique and authentic to them specifically. These instructions will be injected into every statement generated for this person.
+Write personalisation instructions (180-220 words) that will make this candidate's NHS supporting statements sound uniquely like them. Cover ALL five areas below:
 
-Cover:
-1. TONE — e.g. "warm and reflective", "direct and clinical", "confident and action-led", "formal and evidence-heavy"
-2. KEY FACTS TO ALWAYS MENTION — specific workplaces, qualifications, registrations, achievements, systems they've used that are unique to them
-3. WRITING EMPHASIS — what experiences or strengths to lead with based on their background
-4. ANY RESTRICTIONS — word limits, formatting rules, things to avoid or always include
-5. WHAT MAKES THEM STAND OUT — one or two things that differentiate this candidate from a generic NHS applicant
+1. TONE — one clear phrase describing their writing voice (e.g. "warm and reflective", "direct and clinical", "confident and action-led", "formal and precise"). This should feel true to their background.
 
-Write the instructions in second-person imperative ("Always mention...", "Lead with...", "Emphasise...").
-Be specific to this person — do not write generic advice that could apply to anyone.
-Output only the instructions themselves — no preamble, no explanation.`
+2. KEY FACTS TO ALWAYS WEAVE IN — specific workplaces, named qualifications, registrations, certifications, IT systems, awards, or achievements unique to this person. Name them exactly as they appear in the profile.
+
+3. VOLUNTEER / LIFE SKILLS — look at their training history, background, and any non-clinical activities. Identify 1-3 volunteer experiences, community roles, life skills, or personal development activities that can be referenced naturally in statements to add human depth (e.g. "references First Aid volunteering at church", "mentions mentoring junior colleagues informally", "references caring for a family member as a life experience that shaped their compassion").
+
+4. WRITING EMPHASIS — which aspect of their background to lead with and what to give most paragraph space to. Be specific about which role or experience is their strongest evidence base.
+
+5. DIFFERENTIATOR — one sentence on what genuinely sets this candidate apart from other applicants with similar backgrounds.
+
+Write in second-person imperative ("Always mention...", "Lead with...", "Reference...").
+Be specific — nothing here should apply to any other candidate.
+Output only the instructions — no preamble, no headings, no explanation.`
 
   try {
     const message = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 400,
+      max_tokens: 500,
       messages: [{ role: 'user', content: prompt }],
     })
 

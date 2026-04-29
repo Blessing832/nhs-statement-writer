@@ -131,7 +131,7 @@ ${client.skills ?? ''}
 
 Background and Additional Information:
 ${client.background ?? ''}
-${client.special_instructions ? `\n## MANDATORY CLIENT-SPECIFIC INSTRUCTIONS - OVERRIDE ALL OTHER RULES WHERE THEY CONFLICT\n${client.special_instructions}` : ''}`
+${client.special_instructions ? `\n## CANDIDATE PERSONALISATION — APPLY ALONGSIDE ALL OTHER RULES\nThese instructions give this specific candidate a unique voice and focus. Follow them to personalise tone, emphasis, and content. They do NOT override the writing rules above — they add individual character on top of them.\n${client.special_instructions}` : ''}`
 
   // --- analysis-only: extract criteria + duties ---
   if (outputMode === 'analysis-only') {
