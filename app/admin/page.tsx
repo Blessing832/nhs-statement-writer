@@ -12,6 +12,13 @@ const SECTIONS = [
     color: '#005eb8',
   },
   {
+    href: '/admin/bulk-instructions',
+    label: 'Bulk Instructions',
+    description: 'Set unique writing tone and focus instructions for all candidates on one page',
+    icon: '✍️',
+    color: '#0891b2',
+  },
+  {
     href: '/admin/vacancies',
     label: 'Vacancies',
     description: 'Monitor live NHS England and HealthJobsUK job alerts for all applicants',
