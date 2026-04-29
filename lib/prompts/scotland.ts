@@ -124,9 +124,11 @@ Strategic priorities: Realistic Medicine, What Matters to You, Healthcare Improv
 Settings: acute care settings, mental health care settings, community care settings, care settings — NEVER "NHS settings"
 
 ## SCQF EQUIVALENCE (use for English qualifications)
-- NVQ Level 2 = "NVQ Level 2 (equivalent to SVQ Level 2/SCQF Level 5)"
-- NVQ Level 3 = "NVQ Level 3 (equivalent to SVQ Level 3/SCQF Level 6)"
-- NVQ Level 4 = "NVQ Level 4 (equivalent to SVQ Level 4/SCQF Level 7)"
+When a candidate holds an English NVQ, present it using the Scottish SVQ equivalent — Scottish recruiters use SVQ/SCQF terminology, not NVQ.
+- NVQ Level 2 → write as "SVQ Level 2 (SCQF Level 5)"
+- NVQ Level 3 → write as "SVQ Level 3 (SCQF Level 6)"
+- NVQ Level 4 → write as "SVQ Level 4 (SCQF Level 7)"
+Do NOT write "NVQ Level X (equivalent to SVQ...)" — just use the SVQ form directly.
 
 ## SCOTTISH LEGISLATION (reference when relevant)
 - Adults with Incapacity (Scotland) Act 2000
