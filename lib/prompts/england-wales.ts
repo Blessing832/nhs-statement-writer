@@ -323,28 +323,17 @@ ABSOLUTE BAN — NEVER write any of these labels before a paragraph:
 "Story:", "Story 1:", "Story 2:", "Scenario:", "Scenario 1:", "Example:", "STAR:", "Case:"
 Just write the paragraph directly. No label. No prefix. No colon introduction.
 
-## BODY STRUCTURE PATTERNS
-The user message specifies which pattern to apply (A, B, C, or D). Apply it consistently to ALL criterion paragraphs after the opening. The pattern changes how each paragraph is framed — not what evidence is included.
+## DEPTH STYLE — ALL PARAGRAPHS USE CONTEXT-FIRST STRUCTURE
+Context-first is the base for every criterion paragraph: set the scene → specific actions → result. The depth style (specified in the user message as 1, 2, or 3) determines paragraph length distribution and texture across the full statement.
 
-PATTERN A — RESULT-FIRST:
-Begin every criterion paragraph with the outcome or improvement. Then briefly explain the situation and what you did to get there.
-Template: "[Concrete result, 1 sentence]. [Setting/situation, 1 sentence]. [Specific actions — named tools, professionals from JD]. [Short reinforcing detail if needed]."
-Example: "Her anxiety dropped visibly by the end of that shift. A new admission had come in highly distressed before a scheduled procedure, and no one had spoken with her about what to expect. I gave her space, returned calmly, explained each step in advance, and documented her preferences in Care Vision; she was settled enough to engage with the physiotherapist the following morning."
+DEPTH STYLE 1 — STORY-LED:
+Choose 2-3 criteria to address with full immersive scenes (5-6 sentences each). These longer paragraphs contain: specific time and place, the patient group or situation, detailed actions with named tools and professionals from the JD, and a concrete result. All remaining criterion paragraphs are short and sharp (2-3 sentences): one moment, one action, one result. The contrast between long and short paragraphs creates a natural rhythm. Never cluster all long paragraphs together — spread them through the statement.
 
-PATTERN B — CHALLENGE-FIRST:
-Begin every criterion paragraph by naming the problem, barrier, or difficulty faced. Then describe your response and the resolution.
-Template: "[Problem or challenge, 1 sentence]. [Your specific response — actions, named tools/professionals]. [Result]."
-Example: "A patient was refusing all personal care and growing increasingly distressed on every shift. I sat with her, listened without an agenda, and learned she needed a consistent carer and a slower pace than the ward routine allowed. I updated her care plan in Care Vision, briefed the team at handover, and within two days her cooperation had improved markedly."
+DEPTH STYLE 2 — EVIDENCE-LED:
+All criterion paragraphs are 3-4 sentences. Consistent, even length throughout — no paragraph dominates. Each is dense with specific detail: named systems, exact procedures, role titles from the JD, specific outcomes. Clean, authoritative, and thorough. No reflection sentences — pure evidence from start to finish. Professional tone throughout.
 
-PATTERN C — CONTEXT-FIRST:
-Set the scene, describe what you did, then give the result. This is the straightforward chronological approach.
-Template: "[Setting/when/patient group]. [Specific actions — named tools, professionals from JD]. [Result]."
-Example: "During a night shift at [workplace], a patient became agitated and refused personal care. I spoke with her calmly, asked what was wrong, and learned she was anxious about a procedure the next morning. I informed the registered nurse and documented her concerns in [system]; by morning, the clinical team had spoken with her and her cooperation improved significantly."
-
-PATTERN D — ACTION-FIRST:
-Jump straight into what you did. Add one brief clause of context only if needed. Then the result. Short punchy sentences throughout.
-Template: "I [specific verb + action immediately]. [Brief context — 1 clause, not a full sentence]. [Result]. [Short reflection sentence, under 8 words]."
-Example: "I escalated immediately when I noticed the patient's oxygen saturation dropping to 91% during routine observations. The nurse reviewed within minutes and adjusted the care plan; within the hour her readings had stabilised. That response is one I replicate on every shift."
+DEPTH STYLE 3 — REFLECTIVE:
+Medium paragraphs throughout (3-5 sentences each). After 1-2 of the strongest story outcomes, add a single brief reflection sentence (under 10 words) on what that experience changed or shaped. Examples: "That shifted how I approach escalation." / "I carry that into every shift." / "It changed how I read deterioration." Reflection sentences must feel earned — placed only after a genuine concrete outcome, never as filler or a transition into the next paragraph.
 
 ## 6 C'S PARAGRAPH (5-6 lines, approx 80-100 words — NO SUBHEADING)
 ALL SIX C's must appear: Care, Compassion, Competence, Communication, Courage, Commitment. Do not omit any.

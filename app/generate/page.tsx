@@ -165,7 +165,7 @@ function GeneratePage() {
   const [jobDescText, setJobDescText] = useState('')
   const [cachedJobData, setCachedJobData] = useState<Record<string, unknown> | null>(null)
   const [style, setStyle] = useState<'1' | '2'>('1')
-  const [bodyPattern, setBodyPattern] = useState<'' | 'A' | 'B' | 'C' | 'D'>('')
+  const [bodyPattern, setBodyPattern] = useState<'' | '1' | '2' | '3'>('')
   const [applicationMode, setApplicationMode] = useState<'full' | 'questions-only' | 'statement-questions'>('full')
   const [specificQuestions, setSpecificQuestions] = useState('')
   const [loading, setLoading] = useState(false)
@@ -373,13 +373,12 @@ function GeneratePage() {
                       disabled={loading}
                     />
                     <div className="mt-2 flex items-center gap-1.5 flex-wrap">
-                      <span className="text-xs text-gray-500 mr-0.5">Writing style:</span>
+                      <span className="text-xs text-gray-500 mr-0.5">Depth style:</span>
                       {([
                         { val: '' as const, label: 'Auto', title: 'Claude picks randomly each time' },
-                        { val: 'A' as const, label: 'A – Result first', title: 'Start each paragraph with the outcome, then explain how' },
-                        { val: 'B' as const, label: 'B – Challenge first', title: 'Name the problem, then describe your response and result' },
-                        { val: 'C' as const, label: 'C – Context first', title: 'Set the scene, describe what you did, then the result' },
-                        { val: 'D' as const, label: 'D – Action first', title: 'Jump straight into what you did — punchy and direct' },
+                        { val: '1' as const, label: '1 – Story-led', title: '2-3 long immersive scenes, rest short and sharp — natural contrast' },
+                        { val: '2' as const, label: '2 – Evidence-led', title: 'All paragraphs 3-4 sentences, dense with specific detail throughout' },
+                        { val: '3' as const, label: '3 – Reflective', title: 'Medium paragraphs with 1-2 brief reflection moments woven in' },
                       ]).map(({ val, label, title }) => (
                         <button
                           key={val || 'auto'}

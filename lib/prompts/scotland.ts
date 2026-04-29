@@ -243,27 +243,17 @@ A paragraph is thin if it contains any of these patterns — rewrite before movi
 - A general tendency with no specific event: "I always document accurately."
 Every criterion paragraph must have: WHERE/WHEN + WHAT YOU DID (specific actions, named tools/professionals) + WHAT CHANGED. Any paragraph missing one of these three is incomplete.
 
-## BODY STRUCTURE PATTERNS
-The user message specifies which pattern to apply (A, B, C, or D). Apply it to ALL criterion paragraphs in Q1 and Q2 after the opening.
+## DEPTH STYLE — ALL PARAGRAPHS USE CONTEXT-FIRST STRUCTURE
+Context-first is the base for every criterion paragraph in Q1 and Q2: set the scene → specific actions → result. The depth style (specified in the user message as 1, 2, or 3) determines paragraph length distribution and texture across the full statement.
 
-PATTERN A — RESULT-FIRST:
-Begin every criterion paragraph with the outcome or improvement. Then explain the situation and what you did.
-Template: "[Concrete result, 1 sentence]. [Setting/situation, 1 sentence]. [Specific actions — named tools, professionals]. [Reinforcing detail if needed]."
-Example: "Her anxiety dropped visibly by the end of that shift. A new admission had come in highly distressed before a procedure, and I stepped in before the care assistant had finished the initial check. I gave her space, returned calmly, explained each step, and documented her preferences in TrakCare; she engaged fully with the senior charge nurse the following morning."
+DEPTH STYLE 1 — STORY-LED:
+Choose 2-3 criteria to address with full immersive scenes (5-6 sentences each). These longer paragraphs contain: specific time and place, the patient group or situation, detailed actions with named tools and professionals from the JD (using Scottish systems: TrakCare, Clinical Portal, SCI Gateway etc.), and a concrete result. All remaining criterion paragraphs are short and sharp (2-3 sentences): one moment, one action, one result. Spread long paragraphs across Q1 and Q2 — never cluster them together.
 
-PATTERN B — CHALLENGE-FIRST:
-Begin every criterion paragraph by naming the problem or barrier faced. Then describe your response and resolution.
-Template: "[Problem or challenge, 1 sentence]. [Your specific response — actions, named tools/professionals]. [Result]."
-Example: "A patient was refusing all personal care and growing distressed on every shift. I sat with her without an agenda, listened, and learned she needed a consistent carer and a slower pace. I updated her care preferences on TrakCare, briefed the team at handover, and within two days her cooperation had improved markedly."
+DEPTH STYLE 2 — EVIDENCE-LED:
+All criterion paragraphs are 3-4 sentences. Consistent, even length throughout. Each is dense with specific detail: named systems, exact procedures, role titles from the JD, specific outcomes. Clean, authoritative, and thorough. No reflection sentences — pure evidence from start to finish.
 
-PATTERN C — CONTEXT-FIRST:
-Set the scene, describe what you did, then give the result. Chronological and clear.
-Template: "[Setting/when/patient group]. [Specific actions — named tools, professionals]. [Result]."
-
-PATTERN D — ACTION-FIRST:
-Jump straight into what you did. Brief context as a clause only if needed. Then the result. Short punchy sentences.
-Template: "I [specific verb + action]. [Brief context — 1 clause if needed]. [Result]. [Short reflection, under 8 words]."
-Example: "I escalated immediately when I noticed the patient's oxygen saturation dropping to 91% during routine observations. The senior charge nurse reviewed within minutes and adjusted the care plan; within the hour her readings had stabilised. That response is one I replicate on every shift."
+DEPTH STYLE 3 — REFLECTIVE:
+Medium paragraphs throughout (3-5 sentences each). After 1-2 of the strongest story outcomes, add a single brief reflection sentence (under 10 words) on what that experience changed or shaped. Examples: "That shifted how I approach escalation." / "I carry that into every shift." / "It changed how I read deterioration." Reflection sentences must feel earned — placed only after a genuine concrete outcome, never as filler.
 
 ### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? (HARD LIMIT: 480w)
 Word budget — must total ≤480 words:

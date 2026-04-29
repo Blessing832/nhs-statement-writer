@@ -251,7 +251,7 @@ ${options.specificQuestions || ''}`
       ? `MANDATORY OPENING FORMAT: Use Format ${options.openingFormatHint}. Replace every [X] placeholder with "${yearsStr}". NEVER write "several years", "many years", or "a number of years" — always use "${yearsStr} years".\n\n`
       : ''
     const patternLine = options.bodyPattern
-      ? `MANDATORY BODY PATTERN: Use Body Pattern ${options.bodyPattern} for ALL criterion paragraphs after the opening.\n\n`
+      ? `MANDATORY DEPTH STYLE: Use Depth Style ${options.bodyPattern} for ALL criterion paragraphs.\n\n`
       : ''
     const outputInstruction = isRewrite
       ? 'Rewrite the statement following the instruction. Keep all strong content. Improve what was asked.'
@@ -370,9 +370,9 @@ async function generateParallel(
   const yearsPool = ['over 2', 'over 3']
   const yearsHint = yearsPool[Math.floor(Math.random() * yearsPool.length)]
 
-  // Use user-selected body pattern, or pick randomly if not specified
-  const bodyPatternPool = ['A', 'B', 'C', 'D']
-  const bodyPattern = options.bodyPattern || bodyPatternPool[Math.floor(Math.random() * bodyPatternPool.length)]
+  // Use user-selected depth style, or pick randomly if not specified
+  const depthStylePool = ['1', '2', '3']
+  const bodyPattern = options.bodyPattern || depthStylePool[Math.floor(Math.random() * depthStylePool.length)]
 
   // Determine statement output mode
   const statementOutputMode =
