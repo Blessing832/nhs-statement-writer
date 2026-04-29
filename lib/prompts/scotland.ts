@@ -40,11 +40,11 @@ The following make the statement sound AI-generated. Never write them under any 
 "I am skilled in", "I bring", "I possess", "invaluable experience", "seamlessly",
 "I am dedicated to", "I am passionate about", "I thrive in", "I strive to",
 "I pride myself on", "I am committed to ensuring", "I am enthusiastic about",
-"underpin", "underpins", "underpinned", "underpinning",
+"underpin", "underpins", "underpinned", "underpinning" — ABSOLUTE BAN: this word appears in almost every AI-generated statement; if you write it the statement fails,
 "Furthermore", "Moreover", "Additionally", "In addition to this",
 "pivotal", "instrumental", "holistic", "holistically", "robust", "nuanced",
 "In essence", "It is worth noting", "Notably", "fundamentally",
-"was central to that role", "was central to my role",
+"central to", "is central to", "central to how I", "central to my", "was central to that role", "was central to my role", "central to my practice", "central to my approach",
 "Prioritising my workload", "effectively managing", "effectively prioritising",
 "In summary", "To summarise", "In conclusion",
 "rather than", "as opposed to", "instead of simply",
@@ -54,6 +54,10 @@ The following make the statement sound AI-generated. Never write them under any 
 "combined with my", "combined with their", "combined with this",
 "presents no barrier for me", "presents no difficulty", "presents no challenge", "is not a barrier",
 "non-negotiable standard", "non-negotiable part of",
+"is not unfamiliar territory", "is not unfamiliar to me", "is not new to me", "no stranger to",
+"My experience in X is extensive", "My experience working X is extensive", "My [X] is extensive" — never open a paragraph with a bare claim about the depth of experience; always lead with a specific situation,
+"Every shift I work is shaped by", "Every shift is shaped by" — empty filler; start with an action instead,
+"spans" when describing a background or career — use "covers" instead,
 "not as [labels/words] I apply but as" — never list all 6 C's in a comma sequence (care, compassion, competence, communication, courage, and commitment) as a sentence — that is the most AI-detectable pattern possible; weave them individually into prose instead
 Write like an experienced professional talking — direct, specific, no filler words.
 
@@ -222,7 +226,7 @@ Rotate between these styles:
 
 STYLE A: "I am an experienced [EXACT vacancy title] who [advert phrase]. I hold [qualification] (SCQF if English), meeting the [criterion]. As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years in [specialty-specific] care working with [specific conditions]."
 
-STYLE B: "With [X] years in [specialty-specific] care, I bring the [skill 1] and [skill 2] this [EXACT vacancy title] post requires. I hold [qualification] (SCQF if English), meeting the [criterion]. My background spans [ENHANCED role] at [Previous Workplace] and, currently, [Current Role] at [Current Workplace]."
+STYLE B: "With [X] years in [specialty-specific] care, I bring the [skill 1] and [skill 2] this [EXACT vacancy title] post requires. I hold [qualification] (SCQF if English), meeting the [criterion]. My background covers [ENHANCED role] at [Previous Workplace] and, currently, [Current Role] at [Current Workplace]."
 
 STYLE C: "As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years building [specialty-specific] experience for this [EXACT vacancy title] post. I hold [qualification] (SCQF if English), meeting the [criterion], and have worked with [specific conditions] throughout."
 
