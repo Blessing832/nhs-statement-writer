@@ -303,23 +303,40 @@ Medium paragraphs throughout (3-5 sentences each). After 1-2 of the strongest st
 
 ### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? (HARD LIMIT: 480w)
 Word budget — must total ≤480 words:
-1. NHS Scotland values paragraph: MAX 90 words
+1. Values/motivation paragraph: MAX 90 words
 2. Specific Board paragraph: MAX 90 words
 3. Education paragraph: MAX 80 words
 4. MAX 2 criterion paragraphs: MAX 90 words each (use if budget allows)
 Total: ~440 words minimum. STOP at 480 words.
 
-Q2 NHS SCOTLAND VALUES PARAGRAPH (MAX 90 WORDS):
-Reference the four core NHSScotland values directly: Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, and Quality and Teamwork. Link to Realistic Medicine and What Matters to You.
-Format: "I want to work in NHS Scotland because its four core values — Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, and Quality and Teamwork — align directly with how I work. NHS Scotland's Realistic Medicine approach and the What Matters to You framework, which ensure every patient is treated as an individual, reflect the standard I already hold myself to. I demonstrate [one NHSScotland value] by [specific example with result]."
+Q2 OPENING APPROACH — ROTATE BETWEEN THESE FOUR STYLES:
+Never use the same approach twice for the same vacancy. Choose the approach that best fits this candidate's specific background. Never list all four NHSScotland values as a comma sequence in a single sentence — that is the most detectable AI pattern in Scotland statements. Values must be present but woven through the paragraphs, not announced in a list.
+
+The four NHSScotland values are: Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, Quality and Teamwork.
+Realistic Medicine and What Matters to You must be referenced in Q2.
+
+APPROACH A — GOAL-LED:
+Open with a specific professional goal or direction — what the candidate wants to develop, learn, or contribute — and why NHS Scotland's system (integration, anticipatory care, person-centred approach) is the right environment for it. Connect one or two values to what they already do in practice through a specific example. Mention Realistic Medicine as a framework they already apply. Remaining values appear naturally in the Board paragraph and education paragraph.
+Example opening: "My goal as I develop in this field is to work in a system where personalised care and shared decision-making are built into practice rather than aspirational. NHS Scotland's Realistic Medicine approach, and the What Matters to You framework that places the patient's own priorities at the centre of every interaction, reflects how I already work..."
+
+APPROACH B — EVIDENCE-FIRST:
+Start with a specific moment from the candidate's practice — a decision, an interaction, or a habit — that embodies one or two NHSScotland values without naming them first. Then connect that moment to the NHS Scotland values framework. This reverses the usual structure: demonstrate first, name the framework second. Realistic Medicine and What Matters to You appear as things the candidate already practises, not targets.
+Example opening: "When a patient I supported declined a procedure their family had pushed for, my first step was to sit with them, understand what mattered to them most, and document their preferences clearly so every member of the team knew. That approach — listening before acting, and treating the person's priorities as the care plan — is what NHS Scotland calls What Matters to You..."
+
+APPROACH C — SYSTEM-LED:
+Open by discussing NHS Scotland's strategic direction — integration of health and social care, anticipatory care, reducing health inequalities, or community-based services. Explain why that direction matters to this candidate given their specific background and the communities they have worked with. Weave in values through the discussion. Avoid front-loading a values list; instead, let the values emerge as reasons why the system's direction resonates.
+Example opening: "NHS Scotland's move toward integrated health and social care, where community-based teams share responsibility for the same patient, matches the way I have worked throughout my career. The patients I support most often need joined-up input from social work, community nursing, and primary care — and NHS Scotland's structure makes that coordination part of the system rather than an exception..."
+
+APPROACH D — BOARD-FIRST:
+Open Q2 immediately with what is specific and distinctive about this Board — its geography, a named service or unit, a specific population it serves, or a strategic priority. Connect the candidate's experience directly to that specificity. Values and Realistic Medicine appear later in the paragraph as the framework that ties the Board's direction to how the candidate works, rather than as an opener.
+Example opening: "NHS [Board]'s responsibility for [specific area or population] is what draws me to this application above others. I have spent [time] working with [similar patient group / community], and the Board's commitment to [named service or initiative] aligns with the experience I have built..."
 
 Q2 SPECIFIC BOARD PARAGRAPH (MAX 90 WORDS):
-Name the Board 2-3 times. Reference its specific services, geography, or initiatives.
-Format: "NHS [Board] appeals to me specifically because of [Board-specific service, specialty unit, or geographic reach]. I want to contribute to NHS [Board]'s work [specific initiative or population]. The Board's commitment to [integration / community care / specific priority] reflects my own approach, and I am keen to bring my experience in [specialty] to NHS [Board]'s [department/service]."
+Name the Board 2-3 times. Reference its specific services, geography, or strategic priorities. Do NOT repeat the values already covered in the opening paragraph. Connect the candidate's background to something concrete about this Board — a named unit, a population served, a known initiative, or a geographic reality.
 
 Q2 EDUCATION PARAGRAPH (MAX 80 WORDS):
-Qualifications from person spec only. SCQF equivalence if English quals. One sentence on practical requirements.
-Format: "My qualifications include [quals FROM PERSON SPEC with SCQF equivalence]. I have [GCSEs if listed]. I meet all requirements including enhanced DBS, shift flexibility, and willingness to undertake NHS [Board] mandatory training."
+Qualifications from person spec only. SVQ equivalence if English quals (write as SVQ Level X, not NVQ). One sentence on practical requirements.
+Format: "My qualifications include [quals FROM PERSON SPEC with SVQ/SCQF equivalence if English]. I have [GCSEs if listed]. I meet all requirements including enhanced DBS/PVG, shift flexibility, and willingness to undertake NHS [Board] mandatory training."
 
 ### QUESTION 3: Is there any other relevant information that will assist us in shortlisting your application? (180-200 WORDS)
 ⚠ Q3 IS MANDATORY. You must always write Q3. Never stop after Q2. An output with only Q1 and Q2 is INCOMPLETE and a failure.
