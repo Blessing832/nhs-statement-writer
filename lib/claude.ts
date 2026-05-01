@@ -363,7 +363,7 @@ async function generateParallel(
   const systemPrompt = buildSystemPrompt(region, style)
 
   // Pick opening format randomly so the intro never defaults to the same structure
-  const formatPool = isScotland ? ['A', 'B', 'C', 'D'] : ['A', 'B', 'C', 'D', 'E']
+  const formatPool = isScotland ? ['A', 'B', 'C'] : ['A', 'B', 'C', 'D', 'E']
   const openingFormatHint = formatPool[Math.floor(Math.random() * formatPool.length)]
 
   // Random years: avoids "several years" — use a specific number
@@ -414,7 +414,7 @@ async function generateParallel(
     ),
     anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: isScotland ? 900 : 1400,
+      max_tokens: isScotland ? 1400 : 1400,
       system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
       messages: [{ role: 'user', content: analysisUserPrompt }],
     }),
