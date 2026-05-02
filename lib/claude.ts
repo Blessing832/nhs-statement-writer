@@ -363,7 +363,7 @@ async function generateParallel(
   const systemPrompt = buildSystemPrompt(region, style)
 
   // Pick opening format randomly so the intro never defaults to the same structure
-  const formatPool = isScotland ? ['A', 'B', 'C'] : ['A', 'B', 'C', 'D', 'E']
+  const formatPool = ['A', 'B', 'C', 'D', 'E']
   const openingFormatHint = formatPool[Math.floor(Math.random() * formatPool.length)]
 
   // Random years: avoids "several years" — use a specific number

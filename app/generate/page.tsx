@@ -183,6 +183,7 @@ function GeneratePage() {
   const statementRef = useRef<HTMLDivElement>(null)
   const statementHeadRef = useRef<HTMLDivElement>(null)
   const dutiesRef = useRef<HTMLDivElement>(null)
+  const abortControllerRef = useRef<AbortController | null>(null)
 
   useEffect(() => {
     if (!clientCode) { router.push('/'); return }
@@ -195,7 +196,8 @@ function GeneratePage() {
   const callGenerate = async (
     body: Record<string, unknown>,
     onStep: (msg: string) => void,
-    preloadedJobData?: Record<string, unknown>
+    preloadedJobData?: Record<string, unknown>,
+    signal?: AbortSignal
   ): Promise<{ result: Result; jobData: Record<string, unknown> }> => {
     let scrapeData: Record<string, unknown>
 
@@ -207,6 +209,7 @@ function GeneratePage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ client_code: body.client_code, url: body.vacancy_url }),
+        signal,
       })
       const scraped = await scrapeRes.json().catch(() => ({ error: 'Server error on scrape.' }))
       if (!scrapeRes.ok) throw new Error(scraped.error || 'Could not read the job advert. Please try again.')
@@ -218,11 +221,19 @@ function GeneratePage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...body, jobData: scrapeData }),
+      signal,
     })
     const genData = await genRes.json().catch(() => ({ error: 'Server error on generate.' }))
     if (!genRes.ok) throw new Error(genData.error || 'Failed to generate statement. Please try again.')
 
     return { result: genData as Result, jobData: scrapeData }
+  }
+
+  const handleCancel = () => {
+    abortControllerRef.current?.abort()
+    abortControllerRef.current = null
+    setLoading(false)
+    setLoadingStep('')
   }
 
   const handleGenerate = async (e: React.FormEvent) => {
@@ -241,6 +252,9 @@ function GeneratePage() {
     setResult(null)
     setCachedJobData(null)
 
+    const controller = new AbortController()
+    abortControllerRef.current = controller
+
     const usedUrl = inputMode === 'url' ? vacancyUrl.trim() : 'text-paste'
     const preloaded = inputMode === 'text'
       ? { jobTitle: '', organisation: '', jobDescription: jobDescText.trim(), personSpec: '', rawText: jobDescText.trim(), source: 'manual' }
@@ -250,15 +264,18 @@ function GeneratePage() {
       const { result: data, jobData } = await callGenerate(
         { client_code: clientCode, vacancy_url: usedUrl, style, applicationMode, specificQuestions: specificQuestions.trim() || undefined, bodyPattern: bodyPattern || undefined },
         setLoadingStep,
-        preloaded
+        preloaded,
+        controller.signal
       )
       setResult(data)
       setCachedJobData(jobData)
       setShowRewrite(false)
       setRewriteInstruction('')
     } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') return
       setError(err instanceof Error ? err.message : 'Network error. Please check your connection and try again.')
     } finally {
+      abortControllerRef.current = null
       setLoading(false)
       setLoadingStep('')
     }
@@ -490,6 +507,16 @@ function GeneratePage() {
                 >
                   {loading ? 'Generating...' : 'Generate Statement'}
                 </button>
+
+                {loading && (
+                  <button
+                    type="button"
+                    onClick={handleCancel}
+                    className="w-full py-2.5 px-6 text-sm font-medium rounded-md border border-red-300 text-red-600 bg-white hover:bg-red-50 cursor-pointer transition-colors"
+                  >
+                    Cancel
+                  </button>
+                )}
               </form>
 
               {loading && (

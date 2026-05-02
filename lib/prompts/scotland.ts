@@ -167,6 +167,16 @@ Every paragraph needs: specific situation, specific actions (with tools/systems 
 
 Quantification examples: "reduced anxiety from 8/10 to 3/10", "improved cooperation from 40% to 85%", "zero incidents across 6 months", "supported 20 patients daily", "within three days", "across two weeks".
 
+## TONE MIRRORING — MATCH THE ADVERT'S VOICE
+Before writing, read the job advert introduction and note its tone and energy level. Then write the statement in that same register.
+
+- If the advert is warm and patient-focused ("we pride ourselves on compassionate care", "our patients are at the heart of everything we do") — write with warmth; use first-person moments, short reflection sentences, human detail
+- If the advert is clinical and precise ("the post holder will be responsible for...", "competency in clinical assessment is essential") — write with authority; lead with qualifications and specific procedures, keep reflection minimal
+- If the advert is team-focused ("you will work closely with a multidisciplinary team", "we value collaboration") — give more paragraph space to joint working moments, named colleagues, and team outcomes
+- If the advert uses specific phrases (e.g. "values-led", "person-centred", "innovative", "Realistic Medicine") — echo those exact words naturally within the statement at least once each
+
+The goal is that a recruiter reading the statement feels it was written by someone who read and understood their advert — not a generic template.
+
 ## READING THE JOB DOCUMENTS — DO THIS FIRST
 Before writing, extract:
 1. Job advert introduction — key phrases (passionate, looking for new challenge, enthusiastic, motivated)
@@ -259,18 +269,22 @@ Q1 OPENS WITH TWO SHORT PARAGRAPHS — not one long paragraph.
 
 Q1 OPENING PARA 1 — CREDENTIALS (~55 words, 3-4 sentences)
 Covers E1. Facts only — no motivation.
-- Sentence 1: Candidate identity + exact vacancy title + one advert phrase
-- Sentence 2: Qualification with SCQF equivalence if English, "meeting the [person spec criterion]"
-- Sentence 3: [X] years in [specialty-specific] care + enhanced previous role + current role
-- Sentence 4 (optional): One specific condition from previous role matching this vacancy
+The MANDATORY OPENING FORMAT in the user message specifies which style to use (A, B, C, D, or E). Follow it exactly.
 
-Rotate between these styles:
+STYLE A — Identity first:
+"I am an experienced [EXACT vacancy title] who [advert phrase]. I hold [qualification] (SVQ if English), meeting the [criterion]. As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years in [specialty-specific] care working with [specific conditions]."
 
-STYLE A: "I am an experienced [EXACT vacancy title] who [advert phrase]. I hold [qualification] (SCQF if English), meeting the [criterion]. As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years in [specialty-specific] care working with [specific conditions]."
+STYLE B — Qualification first:
+"My [qualification] (SVQ if English) and [X] years of [specialty-specific] practice position me well for this [EXACT vacancy title] post at NHS [Board]. Working as [ENHANCED role] at [Previous Workplace] and, currently, [Current Role] at [Current Workplace], I have [brief specific experience matching JD]. I meet the [person spec criterion] in full."
 
-STYLE B: "With [X] years in [specialty-specific] care, I bring the [skill 1] and [skill 2] this [EXACT vacancy title] post requires. I hold [qualification] (SCQF if English), meeting the [criterion]. My background covers [ENHANCED role] at [Previous Workplace] and, currently, [Current Role] at [Current Workplace]."
+STYLE C — Role first:
+"As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years building [specialty-specific] experience for this [EXACT vacancy title] post at NHS [Board]. I hold [qualification] (SVQ if English), meeting the [criterion], and have worked with [specific conditions] throughout."
 
-STYLE C: "As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years building [specialty-specific] experience for this [EXACT vacancy title] post. I hold [qualification] (SCQF if English), meeting the [criterion], and have worked with [specific conditions] throughout."
+STYLE D — Board-specific first:
+"NHS [Board]'s [named service, department, or patient population from the advert] is where I want to contribute next. As [ENHANCED role] at [Previous Workplace] and [Current Role] at [Current Workplace], I have built [X] years of [specialty-specific] practice directly relevant to this [EXACT vacancy title] post. I hold [qualification] (SVQ if English), meeting the [criterion]."
+
+STYLE E — Achievement first:
+"At [Previous Workplace], I [specific responsibility or achievement from the candidate profile that matches the JD]. That foundation, across [X] years in [specialty-specific] care, is what I bring to this [EXACT vacancy title] post at NHS [Board]. I hold [qualification] (SVQ if English), meeting the [criterion], and now work as [Current Role] at [Current Workplace]."
 
 Q1 OPENING PARA 2 — MOTIVATION + FIRST CRITERION EVIDENCE (~55 words, 3-4 sentences)
 Covers E2/E3 with a real STAR example. First evidence paragraph.

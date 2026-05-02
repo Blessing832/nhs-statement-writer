@@ -197,6 +197,16 @@ RESERVED FOR NUMBERS (pick 3-4 total):
 
 DO NOT quantify every paragraph. Statements loaded with percentages read as fabricated. Use specificity (names, settings, exact procedures) rather than numbers to carry most paragraphs.
 
+## TONE MIRRORING — MATCH THE ADVERT'S VOICE
+Before writing, read the job advert introduction and note its tone and energy level. Then write the statement in that same register.
+
+- If the advert is warm and patient-focused ("we pride ourselves on compassionate care", "our patients are at the heart of everything we do") — write with warmth; use first-person moments, short reflection sentences, human detail
+- If the advert is clinical and precise ("the post holder will be responsible for...", "competency in clinical assessment is essential") — write with authority; lead with qualifications and specific procedures, keep reflection minimal
+- If the advert is team-focused ("you will work closely with a multidisciplinary team", "we value collaboration") — give more paragraph space to joint working moments, named colleagues, and team outcomes
+- If the advert uses specific phrases (e.g. "values-led", "person-centred", "innovative", "fast-paced") — echo those exact words naturally within the statement at least once each
+
+The goal is that a recruiter reading the statement feels it was written by someone who read and understood their advert — not a generic template applied to any NHS job.
+
 ## READING THE JOB DOCUMENTS — DO THIS FIRST
 Before writing, read and extract:
 1. Job advert introduction — extract key phrases (e.g. "passionate about providing high quality patient care", "looking for a new challenge", "enthusiastic and motivated")
