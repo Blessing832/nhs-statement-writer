@@ -241,8 +241,8 @@ NAME conditions and tools as they appear in real clinical records — not as abs
 THIS PLAN IS SILENT. Never print criteria lists, numbered mappings, or planning notes. The user sees only the finished Q1, Q2, Q3 answers. Do this entirely in your head before writing the first word.
 
 Internally number every essential criterion in the order it appears on the person spec (E1, E2, E3...) and assign each to a question and paragraph:
-- E1, E2 (Education): Q1 opening + Q2 education paragraph
-- E3 onwards (Experience, Special Aptitudes, Disposition, IT, Safeguarding): Q1 criterion paragraphs and story in order, then Q2 criterion paragraphs in order
+- E1-E3 (Education + first 2 Experience/Aptitude criteria): address in Q1 Opening Para 1 — weave their EXACT PS wording into the credentials sentences so recruiters see PS coverage from line one
+- E4 onwards (remaining Experience, Special Aptitudes, Disposition, IT, Safeguarding): Q1 criterion paragraphs and story in order, then Q2 criterion paragraphs in order
 
 Write Q1, Q2, Q3 following that silent map. Do not print the map, do not reference it. Just write all three questions.
 
@@ -267,27 +267,27 @@ BANNED OPENING PATTERNS — never start Q1 with these:
 
 Q1 OPENS WITH TWO SHORT PARAGRAPHS — not one long paragraph.
 
-Q1 OPENING PARA 1 — CREDENTIALS (~55 words, 3-4 sentences)
-Covers E1. Facts only — no motivation.
+Q1 OPENING PARA 1 — CREDENTIALS + UP TO 3 CRITERIA (4-5 sentences, ~75 words)
+Cover E1 (Education) AND up to 2 further person spec criteria in this paragraph. Use the EXACT words from the PS to name those criteria — this gives recruiters PS coverage from line one. Do not write abstract qualities — use the PS's own wording so the recruiter can tick criteria immediately.
 The MANDATORY OPENING FORMAT in the user message specifies which style to use (A, B, C, D, or E). Follow it exactly.
 
 STYLE A — Identity first:
-"I am an experienced [EXACT vacancy title] who [advert phrase]. I hold [qualification] (SVQ if English), meeting the [criterion]. As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years in [specialty-specific] care working with [specific conditions]."
+"I am an experienced [EXACT vacancy title] who [E2 criterion phrase from PS] and [E3 criterion phrase from PS]. I hold [qualification] (SVQ if English), meeting the [E1 criterion]. As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years in [specialty-specific] care working with [specific conditions]."
 
 STYLE B — Qualification first:
-"My [qualification] (SVQ if English) and [X] years of [specialty-specific] practice position me well for this [EXACT vacancy title] post at NHS [Board]. Working as [ENHANCED role] at [Previous Workplace] and, currently, [Current Role] at [Current Workplace], I have [brief specific experience matching JD]. I meet the [person spec criterion] in full."
+"My [qualification] (SVQ if English) and [X] years of [specialty-specific] practice, building [E2 criterion phrase from PS] and [E3 criterion phrase from PS], position me well for this [EXACT vacancy title] post at NHS [Board]. Working as [ENHANCED role] at [Previous Workplace] and, currently, [Current Role] at [Current Workplace], I meet the [E1 criterion] in full."
 
 STYLE C — Role first:
-"As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years building [specialty-specific] experience for this [EXACT vacancy title] post at NHS [Board]. I hold [qualification] (SVQ if English), meeting the [criterion], and have worked with [specific conditions] throughout."
+"As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years developing [E2 criterion phrase from PS] and [E3 criterion phrase from PS] for this [EXACT vacancy title] post at NHS [Board]. I hold [qualification] (SVQ if English), meeting the [E1 criterion], and have worked with [specific conditions] throughout."
 
 STYLE D — Board-specific first:
-"NHS [Board]'s [named service, department, or patient population from the advert] is where I want to contribute next. As [ENHANCED role] at [Previous Workplace] and [Current Role] at [Current Workplace], I have built [X] years of [specialty-specific] practice directly relevant to this [EXACT vacancy title] post. I hold [qualification] (SVQ if English), meeting the [criterion]."
+"NHS [Board]'s [named service or patient population from the advert] is where I want to contribute next. As [ENHANCED role] at [Previous Workplace] and [Current Role] at [Current Workplace], I have built [X] years of [specialty-specific] practice directly demonstrating [E2 criterion phrase from PS] and [E3 criterion phrase from PS]. I hold [qualification] (SVQ if English), meeting the [E1 criterion]."
 
 STYLE E — Achievement first:
-"At [Previous Workplace], I [specific responsibility or achievement from the candidate profile that matches the JD]. That foundation, across [X] years in [specialty-specific] care, is what I bring to this [EXACT vacancy title] post at NHS [Board]. I hold [qualification] (SVQ if English), meeting the [criterion], and now work as [Current Role] at [Current Workplace]."
+"At [Previous Workplace], I [specific responsibility or achievement that maps to E2/E3 criterion — use the PS's exact words]. That [X]-year foundation in [specialty-specific] care is what I bring to this [EXACT vacancy title] post at NHS [Board]. I hold [qualification] (SVQ if English), meeting the [E1 criterion], and now work as [Current Role] at [Current Workplace]."
 
-Q1 OPENING PARA 2 — MOTIVATION + FIRST CRITERION EVIDENCE (~55 words, 3-4 sentences)
-Covers E2/E3 with a real STAR example. First evidence paragraph.
+Q1 OPENING PARA 2 — MOTIVATION + CRITERION EVIDENCE (~55 words, 3-4 sentences)
+Covers E4 with a real STAR example (E1-E3 are already addressed in Para 1).
 - Sentence 1: Why NHS [Board] — specific reason using Board name + one value or advert phrase
 - Sentences 2-4: STAR — Situation + Action (named tools/professionals from JD) + Result
 

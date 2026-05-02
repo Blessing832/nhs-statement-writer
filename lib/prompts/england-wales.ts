@@ -272,8 +272,8 @@ NAME conditions and tools as they appear in real clinical records — not as abs
 THIS PLAN IS SILENT. Never print criteria lists, numbered mappings, or planning notes. The user sees only the finished statement. Do this entirely in your head before writing the first word.
 
 Internally number every essential criterion in the order it appears on the person spec (E1, E2, E3...) and assign each to a paragraph:
-- E1, E2 (Education / Qualifications): address in the opening paragraph qualification sentence
-- E3 onwards (Experience, Special Aptitudes, Disposition, IT, Safeguarding, EDI): assign to criterion paragraphs and stories in that same order
+- E1-E3 (Education + first 2 Experience/Aptitude criteria): address in Opening Para 1 — weave their EXACT PS wording into the credentials sentences so recruiters see PS coverage from line one
+- E4 onwards (remaining Experience, Special Aptitudes, Disposition, IT, Safeguarding, EDI): assign to criterion paragraphs and stories in that same order
 
 Write the statement following that silent map. Do not print the map, do not reference it, do not number paragraphs. Just write.
 
@@ -299,28 +299,30 @@ The following openers are the most recognisable AI signatures. Never write them:
 ## OPENING — TWO SHORT PARAGRAPHS
 The statement starts with TWO paragraphs. No pre-opening hook. No abstract intro. Straight to credentials.
 
-OPENING PARA 1 — CREDENTIALS (3-4 sentences, ~60 words)
-Covers E1 (Education). Verifiable facts only — no motivation, no feelings.
-- Sentence 1: Candidate identity + exact vacancy title + one phrase from the job advert
-- Sentence 2: Qualification named exactly as on the person spec, with "meeting the [criterion]"
-- Sentence 3: [X] years in [specialty-specific] care + enhanced previous role at [workplace] + current role at [workplace]
-- Sentence 4 (optional): One specific condition or patient group from the previous role matching this vacancy
+OPENING PARA 1 — CREDENTIALS + UP TO 3 CRITERIA (4-5 sentences, ~75 words)
+Cover E1 (Education) AND up to 2 further person spec criteria in this paragraph. Use the EXACT words from the PS to name those criteria — this gives recruiters PS coverage from line one. Do not write abstract qualities ("hardworking", "compassionate") — use the PS's own wording so the recruiter can tick criteria immediately.
 
-Rotate between these three styles (never repeat consecutively):
+The MANDATORY OPENING FORMAT in the user message specifies which style to use (A, B, C, D, or E). Follow it exactly.
 
 STYLE A — Identity first:
-"I am an experienced [EXACT vacancy title] who [advert phrase]. I hold [qualification], meeting the [person spec criterion]. As [ENHANCED previous role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years in [specialty-specific] care settings working with [specific conditions from JD]."
+"I am an experienced [EXACT vacancy title] who [E2 criterion phrase from PS] and [E3 criterion phrase from PS]. I hold [qualification], meeting the [E1 criterion]. As [ENHANCED previous role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years in [specialty-specific] care settings working with [specific conditions from JD]."
 
 STYLE B — Experience first:
-"With [X] years in [specialty-specific] care settings, I bring the [skill 1] and [skill 2] this [EXACT vacancy title] post requires. I hold [qualification], meeting the [person spec criterion]. My background covers [ENHANCED previous role] at [Previous Workplace] and, currently, [Current Role] at [Current Workplace], where I [brief duty]."
+"With [X] years in [specialty-specific] care settings, I bring [E2 criterion phrase from PS], [E3 criterion phrase from PS], and the hands-on experience this [EXACT vacancy title] post requires. I hold [qualification], meeting the [E1 criterion]. My background covers [ENHANCED previous role] at [Previous Workplace] and, currently, [Current Role] at [Current Workplace]."
 
 STYLE C — Role first:
-"As [ENHANCED previous role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years building [specialty-specific] care experience for this [EXACT vacancy title] post. I hold [qualification], meeting the [person spec criterion], and have worked with [specific conditions from JD] throughout."
+"As [ENHANCED previous role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years developing [E2 criterion phrase from PS] and [E3 criterion phrase from PS] for this [EXACT vacancy title] post. I hold [qualification], meeting the [E1 criterion], and have worked with [specific conditions from JD] throughout."
+
+STYLE D — Qualification first:
+"My [qualification], meeting the [E1 criterion], together with [X] years of [specialty-specific] practice, positions me well for this [EXACT vacancy title] post. Throughout that time I have developed [E2 criterion phrase from PS] and [E3 criterion phrase from PS] across [Previous Workplace] and, currently, [Current Workplace]."
+
+STYLE E — Achievement first:
+"At [Previous Workplace], I [specific responsibility or achievement from candidate profile that matches E2/E3 criterion — use PS words]. That [X]-year foundation in [specialty-specific] care is what I bring to this [EXACT vacancy title] post. I hold [qualification], meeting the [E1 criterion], and now work as [Current Role] at [Current Workplace]."
 
 ---
 
-OPENING PARA 2 — MOTIVATION + FIRST CRITERION EVIDENCE (3-4 sentences, ~60 words)
-Covers the first Experience criterion (E2/E3) with a real STAR example. This is the first evidence paragraph.
+OPENING PARA 2 — MOTIVATION + CRITERION EVIDENCE (3-4 sentences, ~60 words)
+Covers E4 with a real STAR example (E1-E3 are already addressed in Para 1).
 - Sentence 1: Why this specific Trust — Trust name + one value or advert phrase (not generic)
 - Sentences 2-4: STAR — Situation (where, when, patient group) + Action (specific, named tools/professionals) + Result
 
