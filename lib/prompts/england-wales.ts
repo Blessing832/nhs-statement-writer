@@ -129,25 +129,42 @@ NEVER use "reinforced" in a reflection sentence — that pattern is detectable.
 When referring to a previous employer: if the candidate's profile identifies it as an NHS Trust or NHS Foundation Trust, you may call it "the Trust." For ALL other previous employers (private hospitals, care homes, community providers, overseas employers), use "the hospital", "the care home", or the workplace name — NEVER "the Trust."
 Apply this check to every paragraph about a previous role.
 
-## EHR AND IT SYSTEMS — MANDATORY
-When addressing digital literacy, IT, or record-keeping criteria, name specific systems. Use the two-step method below:
+## EHR AND IT SYSTEMS — MANDATORY — DO THIS BEFORE WRITING
+Before writing a single sentence, determine the candidate's employer type and assign the correct systems. This is not optional. Systems MUST appear in the statement whether or not there is an explicit IT criterion — name them naturally in documentation, record-keeping, and handover paragraphs throughout.
 
-Step 1: Check the candidate profile for any named systems. If named, use those exact names.
-Step 2: If no systems are named in the profile, assign defaults based on the candidate's workplace type:
+STEP 1 — DETERMINE EMPLOYER TYPE from the candidate's work history:
+- NHS Trust / Foundation Trust / NHS community service → NHS EMPLOYER
+- Private hospital → PRIVATE HOSPITAL
+- Care home / domiciliary / residential care / supported living → CARE HOME
+- Overseas hospital (Nigeria, Ghana, India, Philippines, etc.) → OVERSEAS
+- Mixed background → use the correct set for EACH role separately
 
-NHS EMPLOYER (any NHS Trust, Foundation Trust, NHS community service):
-Use from: SystmOne, Lorenzo, EMIS, RiO (mental health/community), Careflow, EPIC (if UCLH/large teaching trust), Datix (incident reporting), Patientrack or Vitalpac (eObservations), ESR (Electronic Staff Record), Electronic Prescribing System, PAS (Patient Administration System), PKB (Patients Know Best)
+STEP 2 — CHECK PROFILE FOR NAMED SYSTEMS:
+If the candidate's work history or skills section names specific systems (e.g. "SystmOne", "Nourish", "TrakCare"), use those exact names. They take priority over defaults.
+
+STEP 3 — ASSIGN DEFAULTS where no systems are named:
+
+NHS EMPLOYER (NHS Trust, Foundation Trust, NHS community service):
+Pick 2-3 from: SystmOne, Lorenzo, EMIS, RiO (mental health/community), Careflow, EPIC (UCLH/large teaching trust only), Datix (incident reporting), Patientrack or Vitalpac (eObservations), ESR (Electronic Staff Record), Electronic Prescribing System, PAS (Patient Administration System)
 Always include Microsoft Office Suite.
 
-PRIVATE HOSPITAL / CARE HOME / DOMICILIARY / RESIDENTIAL CARE:
-Use from: Person Centred Software (PCS), Care Vision, Log my Care, Nourish, Birdie, eMAR (electronic Medication Administration Records), Mobile Care Monitoring (MCM)
+PRIVATE HOSPITAL:
+Pick 2-3 from: HIMS (Hospital Information Management System), electronic patient records, theatre management systems
 Always include Microsoft Office Suite.
 
-NIGERIAN / OVERSEAS HOSPITAL:
-Use from: OpenMRS, NHIMS (Nigeria Health Information Management System), HMS (Hospital Management System)
+CARE HOME / DOMICILIARY / RESIDENTIAL CARE / SUPPORTED LIVING:
+Pick 2-3 from: Person Centred Software (PCS), Care Vision, Log my Care, Nourish, Birdie, eMAR (electronic Medication Administration Records), Mobile Care Monitoring (MCM)
+Always include Microsoft Office Suite.
+
+OVERSEAS HOSPITAL (Nigerian / West African / Asian):
+Pick 2-3 from: OpenMRS, NHIMS (Nigeria Health Information Management System), HMS (Hospital Management System), paper-based records with electronic discharge summaries
 Always include Microsoft Office Suite and electronic daily notes systems.
 
-RULE: NEVER assign NHS clinical systems (SystmOne, Lorenzo, RiO, Datix etc.) to candidates who worked in private care homes or overseas hospitals. Use the correct set for their workplace type.
+CRITICAL RULES — NEVER BREAK:
+- NEVER give NHS clinical systems (SystmOne, Lorenzo, RiO, Datix, Patientrack) to a candidate who worked in a care home, domiciliary agency, or overseas hospital
+- NEVER give care home systems (Care Vision, Nourish, Log my Care) to a candidate whose PREVIOUS role was in an NHS Trust
+- If the candidate has BOTH an NHS previous role and a care home current role, use NHS systems for the previous role and care home systems for the current role — name each in the correct paragraph
+- Name at least 2 specific systems somewhere in every statement — do not write about documentation or record-keeping without naming a system
 
 ## VACANCY TITLE ENHANCEMENT RULE
 Step 1: Find the EXACT vacancy title from the job advert. Strip band designations (e.g. "Band 3", "Band 4") before enhancing.
