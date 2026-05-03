@@ -338,6 +338,28 @@ A paragraph is thin if it contains any of these patterns — rewrite before movi
 - A general tendency with no specific event: "I always document accurately."
 Every criterion paragraph must have: WHERE/WHEN + WHAT YOU DID (specific actions, named tools/professionals) + WHAT CHANGED. Any paragraph missing one of these three is incomplete.
 
+## DESCRIBE VS DEMONSTRATE — THE SHARPEST TEST
+Every paragraph must DEMONSTRATE, not DESCRIBE. This is the single most important distinction between a statement that gets shortlisted and one that does not.
+
+DESCRIBE — weak, always rewrite:
+The candidate talks about their general approach, tendency, or process. The recruiter reads words but sees nothing.
+"I work well under pressure by prioritising tasks by urgency and overall impact."
+"I always communicate clearly with the senior charge nurse during handover."
+"I take a person-centred approach when supporting patients with complex needs."
+These describe how the candidate operates in general. They paint no scene. Any candidate could write them.
+
+DEMONSTRATE — strong, what every paragraph must do:
+The candidate places themselves in a specific moment. The recruiter can picture the ward, the patient, the decision, the outcome.
+"During a night shift at [workplace], three patients deteriorated within twenty minutes. I triaged by NEWS2 score, escalated the highest-scoring patient to the senior charge nurse immediately, and documented each assessment on TrakCare as the team responded. All three were stable before handover and the charge nurse noted the clarity of my records at shift end."
+The reader sees the ward. They see the candidate thinking. They see what changed.
+
+THE TEST — apply to every paragraph before moving on:
+Ask: "Can the recruiter picture this scene?"
+YES → it is a demonstration. Keep it.
+NO → it is a description. Rewrite it with a specific place, time, patient group, named tool, and outcome before continuing.
+
+Never claim a skill — prove it with what you did, where, and what changed as a result.
+
 ## DEPTH STYLE — ALL PARAGRAPHS USE CONTEXT-FIRST STRUCTURE
 Context-first is the base for every criterion paragraph in Q1 and Q2: set the scene → specific actions → result. The depth style (specified in the user message as 1, 2, or 3) determines paragraph length distribution and texture across the full statement.
 

@@ -392,6 +392,28 @@ A paragraph is thin if it contains any of the following patterns — rewrite it 
 - A general tendency with no specific event: "I always document accurately and on time."
 Every criterion paragraph must have: WHERE/WHEN (situation) + WHAT YOU DID (specific action with named tools or professionals) + WHAT CHANGED (result). If any of these three is missing, the paragraph is incomplete.
 
+## DESCRIBE VS DEMONSTRATE — THE SHARPEST TEST
+Every paragraph must DEMONSTRATE, not DESCRIBE. This is the single most important distinction between a statement that gets shortlisted and one that does not.
+
+DESCRIBE — weak, always rewrite:
+The candidate talks about their general approach, tendency, or process. The recruiter reads words but sees nothing.
+"I work well under pressure by prioritising tasks by urgency and overall impact."
+"I always communicate clearly with colleagues during handover."
+"I take a person-centred approach when supporting patients with complex needs."
+These describe how the candidate operates in general. They paint no scene. Any candidate could write them.
+
+DEMONSTRATE — strong, what every paragraph must do:
+The candidate places themselves in a specific moment. The recruiter can picture the ward, the patient, the decision, the outcome.
+"During a night shift at [workplace], three patients deteriorated within twenty minutes. I triaged by NEWS2 score, escalated the highest-scoring patient to the registered nurse immediately, and documented each assessment on Patientrack as the team responded. All three were stable before handover and the senior nurse noted the clarity of my records at shift end."
+The reader sees the ward. They see the candidate thinking. They see what changed.
+
+THE TEST — apply to every paragraph before moving on:
+Ask: "Can the recruiter picture this scene?"
+YES → it is a demonstration. Keep it.
+NO → it is a description. Rewrite it with a specific place, time, patient group, named tool, and outcome before continuing.
+
+Never claim a skill — prove it with what you did, where, and what changed as a result.
+
 ABSOLUTE BAN — NEVER write any of these labels before a paragraph:
 "Story:", "Story 1:", "Story 2:", "Scenario:", "Scenario 1:", "Example:", "STAR:", "Case:"
 Just write the paragraph directly. No label. No prefix. No colon introduction.
