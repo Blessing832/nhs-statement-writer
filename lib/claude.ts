@@ -500,6 +500,20 @@ async function generateParallel(
     }
   }
 
+  // Cost logging — sonnet-4-6: $3/M input, $15/M output
+  const PRICE_IN = 3 / 1_000_000
+  const PRICE_OUT = 15 / 1_000_000
+  const stIn = statementMsg.usage.input_tokens
+  const stOut = statementMsg.usage.output_tokens
+  const anIn = analysisMsg?.usage?.input_tokens ?? 0
+  const anOut = analysisMsg?.usage?.output_tokens ?? 0
+  const totalIn = stIn + anIn
+  const totalOut = stOut + anOut
+  const costUsd = (totalIn * PRICE_IN + totalOut * PRICE_OUT).toFixed(4)
+  console.log(
+    `COST region=${region} stmt_in=${stIn} stmt_out=${stOut} anal_in=${anIn} anal_out=${anOut} total_in=${totalIn} total_out=${totalOut} usd=$${costUsd}`
+  )
+
   return { statement, previousRoleDuties, currentRoleDuties: [], analysis, promptRegion: region }
 }
 
