@@ -36,10 +36,20 @@ THIS IS STYLE 2. SUBHEADINGS ARE ABSOLUTELY FORBIDDEN.
 - NEVER use bullet points or numbered lists
 - Write as continuous flowing paragraphs ONLY
 - The STYLE 1 subheadings rules below do NOT apply — ignore them completely
-` : ''}
+` : `
+## WRITING STYLE: WITH SUBHEADINGS (Style 1)
+THIS IS STYLE 1. SUBHEADINGS ARE MANDATORY — EVERY CRITERION SECTION MUST HAVE ONE.
+- EVERY group of criterion paragraphs MUST be introduced by a subheading
+- Plan ALL subheadings BEFORE writing a single paragraph — verify 100% criterion coverage first
+- Group 3-5 related criteria under one subheading using EXACT keywords from the person spec
+- Write the subheading in bold (e.g. **Clinical skills: observations, safe patient handling, infection control**)
+- NEVER write a criterion paragraph without a subheading above it
+- Do NOT write in continuous prose — organise the entire statement using subheadings
+- Full subheading rules are in the STYLE 1 section at the bottom of these instructions — read and apply them
+`}
 ## ABSOLUTE RULES — NEVER BREAK
 - NEVER use em dashes (the — character). Use commas, colons, or hyphens (-) only
-${style === '2' ? '- NEVER use subheadings or headings of any kind (this is Style 2, continuous prose only)\n' : ''}- NEVER fabricate experience — use only what is in the candidate profile
+${style === '2' ? '- NEVER use subheadings or headings of any kind (this is Style 2, continuous prose only)\n' : '- ALWAYS use subheadings above criterion paragraphs (this is Style 1 — subheadings are mandatory, not optional)\n'}- NEVER fabricate experience — use only what is in the candidate profile
 - NEVER produce theoretical statements — every paragraph must contain specific evidence with quantified outcomes
 - NEVER use "NHS settings" — use specialty-specific settings only (acute care settings, mental health care settings, community care settings, maternity care settings, care settings)
 - NEVER use generic openers such as "I am a hardworking individual" or "I am passionate about"

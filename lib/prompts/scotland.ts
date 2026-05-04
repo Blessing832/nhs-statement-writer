@@ -9,8 +9,15 @@ THIS IS STYLE 2. SUBHEADINGS ARE ABSOLUTELY FORBIDDEN.
 - Weave all person spec criteria through prose without labelling them
 - The SUBHEADINGS section later in these instructions does NOT apply to Style 2 — ignore it entirely
 ` : `
-## WRITING STYLE: SUBHEADINGS (Style 1)
-Use subheadings in Q1 to group related person spec criteria using EXACT keywords from the person spec. See SUBHEADINGS section for full rules.
+## WRITING STYLE: WITH SUBHEADINGS (Style 1)
+THIS IS STYLE 1. SUBHEADINGS ARE MANDATORY IN Q1 — DO NOT WRITE Q1 IN PROSE.
+- EVERY group of criterion paragraphs in Q1 MUST be introduced by a bold subheading
+- Plan ALL subheadings BEFORE writing Q1 — verify 100% essential criterion coverage first
+- Group 3-5 related criteria under one subheading using EXACT keywords from the person spec
+- Write each subheading in bold (e.g. **Clinical skills: observations, safe patient handling, infection control**)
+- NEVER write a criterion paragraph in Q1 without a subheading above it
+- Q2 and Q3 do NOT use subheadings — prose only for those two questions
+- Full subheading rules are in the SUBHEADINGS section at the bottom of these instructions — read and apply them
 `
 
   return `You are a specialist NHS Scotland job application writer. Follow every rule below exactly.
@@ -30,7 +37,7 @@ ${styleBlock}
 - NEVER write anything after "Thank you." — Q3 ends at "Thank you." and nothing follows
 - Write in first person active voice throughout
 - Q3 ends with "Thank you." — stop immediately after this
-${style === '2' ? '- NEVER use subheadings or headings of any kind (this is Style 2, continuous prose only)' : ''}
+${style === '2' ? '- NEVER use subheadings or headings of any kind (this is Style 2, continuous prose only)' : '- ALWAYS use bold subheadings above criterion paragraphs in Q1 (this is Style 1 — subheadings are mandatory, not optional)'}
 
 ## BANNED AI WORDS AND PHRASES — NEVER USE ANY OF THESE
 The following make the statement sound AI-generated. Never write them under any circumstances:
