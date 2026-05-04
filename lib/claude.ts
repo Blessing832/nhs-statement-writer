@@ -158,13 +158,14 @@ Return ONLY a single valid JSON object - no text before or after:
 {
   "essentialCriteria": ["every essential criterion from the person spec — expect 20-40 items"],
   "desirableCriteria": ["desirable criteria if any"],
-  "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties using job description keywords"]
+  "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties written using the EXACT procedures, tasks, and terminology from the job description of the vacancy being applied for — these mirror what the role requires, written as if carried out in the previous role"]
 }
 
 CRITICAL:
 - essentialCriteria must list EVERY criterion — treat every section of the JDPS table as a source
 - previousRoleDuties must have exactly ${dutiesCount} items
-- Never use the word Trust in duties`
+- previousRoleDuties must use the vocabulary and task language from the vacancy JD — not generic duties
+- NEVER use the word "Trust" anywhere in duties — use the ward name, department name, care setting, or just omit the organisation reference entirely`
     }
 
     return `${jobSection}
@@ -192,13 +193,14 @@ Return ONLY a single valid JSON object - no text before or after:
   "essentialCriteria": ["every essential criterion from the person spec — expect 20-40 items"],
   "desirableCriteria": ["desirable criteria if any"],
   "meetsAllEssential": true,
-  "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties using job description keywords"]
+  "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties written using the EXACT procedures, tasks, and terminology from the job description of the vacancy being applied for — these mirror what the role requires, written as if carried out in the previous role"]
 }
 
 CRITICAL:
 - essentialCriteria must list EVERY criterion from all sections of the JDPS table
 - previousRoleDuties must have exactly ${dutiesCount} items
-- Never use the word Trust in duties`
+- previousRoleDuties must use the vocabulary and task language from the vacancy JD — not generic duties
+- NEVER use the word "Trust" anywhere in duties — use the ward name, department name, care setting, or just omit the organisation reference entirely`
   }
 
   const specificQSection = options.specificQuestions
@@ -320,14 +322,15 @@ Return ONLY a single valid JSON object:
     "meetsAllEssential": true
   },
   "statement": "the complete statement text, plain text only",
-  "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties from candidate's previous role"]
+  "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties written using the EXACT procedures, tasks, and terminology from the job description of the vacancy being applied for — these mirror what the role requires, written as if carried out in the previous role"]
 }
 
 CRITICAL:
 - No em dashes anywhere
 - statement must be complete, never truncated
 - previousRoleDuties must have exactly ${dutiesCount} items
-- Never use the word Trust in duties
+- previousRoleDuties must use the vocabulary and task language from the vacancy JD — not generic duties
+- NEVER use the word "Trust" anywhere in duties — use the ward name, department name, care setting, or just omit the organisation reference entirely
 - essentialCriteria must list EVERY criterion from the person spec`
 }
 
