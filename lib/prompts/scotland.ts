@@ -306,24 +306,29 @@ THE VERY FIRST SENTENCE must state a credential, experience, or person spec crit
 
 Q1 OPENS WITH TWO SHORT PARAGRAPHS — not one long paragraph.
 
-Q1 OPENING PARA 1 — CRITERIA FIRST WITH EVIDENCE (4-5 sentences, ~80 words)
-Address E1 AND at least one further essential criterion (E2 or E3) in the very first sentence — and give brief concrete evidence for each. Use the EXACT words from the PS to name the criteria. Do not write abstract qualities — show a specific action, procedure, or patient group from the candidate's background that proves the criterion is met.
+Q1 OPENING PARA 1 — CRITERIA + SPECIALTY EVIDENCE (4-5 sentences, ~90 words)
+This paragraph must do THREE things at once:
+1. Address E1 AND at least one further essential criterion (E2 or E3) using the EXACT words from the PS
+2. Give brief concrete evidence for each criterion — a specific action from the candidate's background
+3. Name the conditions the candidate has worked with, the procedures they have carried out, and the tools/instruments they have used in THIS specialty — drawn from the candidate's profile, matching the JD
+
+Do NOT write abstract qualities. Do NOT copy conditions/procedures from the JD without confirming the candidate has personal experience of them. The recruiter must see, from the first sentence, that this candidate has hands-on practical skills in this specific specialty.
 The MANDATORY OPENING FORMAT in the user message specifies which style to use (A, B, C, D, or E). Follow it exactly.
 
-STYLE A — Role + criteria + evidence:
-"As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years demonstrating [E2 criterion phrase — exact PS words]: supporting patients with [condition 1] and [condition 2], regularly carrying out [named procedure/task from JD]. I hold [qualification] (SVQ if English), meeting [E1 criterion], and bring [E3 criterion phrase — exact PS words] built across both roles."
+STYLE A — Role + criteria + specialty experience:
+"As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years demonstrating [E2 criterion phrase — exact PS words]: caring for patients with [condition 1], [condition 2], and [condition 3], carrying out [procedure 1] and [procedure 2], and using [tool/instrument/system]. I hold [qualification] (SVQ if English), meeting [E1 criterion], and bring [E3 criterion phrase — exact PS words] built across both roles."
 
-STYLE B — Qualification + criteria + evidence:
-"My [qualification] (SVQ if English), meeting [E1 criterion], has been built on [X] years directly evidencing [E2 criterion phrase — exact PS words]: at [Previous Workplace] I [brief specific example using named procedure/tool from JD]. I also demonstrate [E3 criterion phrase — exact PS words] through [brief specific evidence], and now work as [Current Role] at [Current Workplace]."
+STYLE B — Qualification + criteria + specialty experience:
+"My [qualification] (SVQ if English), meeting [E1 criterion], is grounded in [X] years of hands-on [specialty] practice: caring for patients with [condition 1], [condition 2], and [condition 3], carrying out [procedure 1] and [procedure 2], and documenting using [TrakCare/system]. In that time I have directly evidenced [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words]."
 
-STYLE C — Experience + criteria + evidence:
-"With [X] years in [specialty-specific] settings, I meet [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words]: at [Previous Workplace] I [brief specific example — named procedure/tool/patient group from JD]. I hold [qualification] (SVQ if English), meeting [E1 criterion], and now apply those skills as [Current Role] at [Current Workplace]."
+STYLE C — Experience + criteria + specialty experience:
+"With [X] years in [specialty-specific] settings, I meet [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words] — I have worked with patients with [condition 1], [condition 2], and [condition 3], regularly carrying out [procedure 1], [procedure 2], and using [tool/instrument]. I hold [qualification] (SVQ if English), meeting [E1 criterion], and now work as [Current Role] at [Current Workplace]."
 
-STYLE D — Achievement + criteria:
-"At [Previous Workplace], I [specific achievement/action that evidences E2/E3 criterion — use the PS's exact words, name the procedure or tool used from JD]. That [X]-year record demonstrates both [E2 criterion phrase] and [E3 criterion phrase]. I hold [qualification] (SVQ if English), meeting [E1 criterion], and continue that work now as [Current Role] at [Current Workplace]."
+STYLE D — Achievement + criteria + specialty experience:
+"At [Previous Workplace], I [specific achievement/action evidencing E2/E3 criterion — use PS's exact words], working with patients with [condition 1] and [condition 2] and using [procedure/tool/instrument the candidate has personally used]. That [X]-year record demonstrates both [E2 criterion phrase] and [E3 criterion phrase]. I hold [qualification] (SVQ if English), meeting [E1 criterion], and continue that work as [Current Role] at [Current Workplace]."
 
-STYLE E — Conditions + criteria + evidence:
-"Caring for patients with [condition 1], [condition 2], and [condition 3] over [X] years, I have built [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words]: at [Previous Workplace], [brief specific example with named procedure or tool from JD]. I hold [qualification] (SVQ if English), meeting [E1 criterion], and now work as [Current Role] at [Current Workplace]."
+STYLE E — Conditions-first + criteria + specialty experience:
+"Caring for patients with [condition 1], [condition 2], and [condition 3] over [X] years — carrying out [procedure 1], [procedure 2], and using [tool/instrument] — I have built [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words]. I hold [qualification] (SVQ if English), meeting [E1 criterion], and now work as [Current Role] at [Current Workplace]."
 
 Q1 OPENING PARA 2 — WHY THIS BOARD/ROLE + CLINICAL MATCH (~60 words, 3-4 sentences)
 - Sentence 1: Why NHS [Board] — name the Board + one specific thing from the advert (a named service, patient group, commitment, or value — not generic praise). NEVER start with "I am applying" or any phrase about being drawn to or attracted.
