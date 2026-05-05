@@ -161,15 +161,25 @@ Return ONLY a single valid JSON object - no text before or after:
   "previousRoleDuties": ["exactly ${dutiesCount} duties — see rules below"]
 }
 
-DUTIES RULES — apply to every item in previousRoleDuties:
-- Past tense action verbs only (Assisted, Supported, Delivered, Performed, Monitored, Documented, Escalated, Participated, Undertook...)
-- Mirror the EXACT task language, procedures, and keywords from the vacancy job description
-- NO organisation names — do not mention any employer, company, or care home name
-- NO setting descriptions — do not mention ward names, departments, or locations
-- NO "in line with [Trust/Board/company] protocols" — just state the task
-- Previous role duties ONLY — do not describe the current role
-- Each duty is a standalone task sentence, 20-35 words, no sub-clauses referencing where it happened
-- NEVER use the word "Trust" or any organisation name`
+DUTIES RULES — read every rule before writing a single duty:
+Every duty must be a PURE TASK SENTENCE. Even though you can see employer names and organisation names in the candidate profile above, you MUST NOT include any of them in the duties list. Not at the start, not at the end, not in a sub-clause.
+
+WRONG — contains organisation or location reference (never do this):
+"Supported service users in care planning within the Sirona Care and Health CIC NHS setting."
+"Maintained records using Care Vision at ACE Healthcare Ltd."
+"Delivered patient care across the Bristol Royal Infirmary inpatient wards."
+
+CORRECT — pure task, zero organisation or location reference:
+"Supported service users and carers to participate in care planning discussions, ensuring their views informed day-to-day service delivery."
+"Maintained accurate involvement records and documentation using electronic care record systems."
+"Delivered personal care to patients, maintaining dignity and privacy at all times."
+
+RULES:
+- Start every duty with a past tense verb: Assisted, Supported, Delivered, Monitored, Documented, Escalated, Participated, Undertook, Maintained, Coordinated, Gathered, Promoted, Performed...
+- Mirror the EXACT task vocabulary and keywords from the vacancy job description
+- Each duty: one sentence, 20-35 words, no location or employer reference anywhere
+- NEVER name any employer, hospital, NHS Trust, Board, company, care home, department, ward, or geographic location
+- Previous role duties ONLY — do not describe the current role`
     }
 
     return `${jobSection}
@@ -200,15 +210,25 @@ Return ONLY a single valid JSON object - no text before or after:
   "previousRoleDuties": ["exactly ${dutiesCount} duties — see rules below"]
 }
 
-DUTIES RULES — apply to every item in previousRoleDuties:
-- Past tense action verbs only (Assisted, Supported, Delivered, Performed, Monitored, Documented, Escalated, Participated, Undertook...)
-- Mirror the EXACT task language, procedures, and keywords from the vacancy job description
-- NO organisation names — do not mention any employer, company, trust, or care home name
-- NO setting descriptions — do not mention ward names, departments, or locations
-- NO "in line with [Trust/Board/company] protocols" — just state the task
+DUTIES RULES — read every rule before writing a single duty:
+Every duty must be a PURE TASK SENTENCE. Even though you can see employer names and organisation names in the candidate profile above, you MUST NOT include any of them in the duties list. Not at the start, not at the end, not in a sub-clause.
+
+WRONG — contains organisation or location reference (never do this):
+"Supported service users in care planning within the Sirona Care and Health CIC NHS setting."
+"Maintained records using Care Vision at ACE Healthcare Ltd."
+"Delivered patient care across the Bristol Royal Infirmary inpatient wards."
+
+CORRECT — pure task, zero organisation or location reference:
+"Supported service users and carers to participate in care planning discussions, ensuring their views informed day-to-day service delivery."
+"Maintained accurate involvement records and documentation using electronic care record systems."
+"Delivered personal care to patients, maintaining dignity and privacy at all times."
+
+RULES:
+- Start every duty with a past tense verb: Assisted, Supported, Delivered, Monitored, Documented, Escalated, Participated, Undertook, Maintained, Coordinated, Gathered, Promoted, Performed...
+- Mirror the EXACT task vocabulary and keywords from the vacancy job description
+- Each duty: one sentence, 20-35 words, no location or employer reference anywhere
+- NEVER name any employer, hospital, NHS Trust, Board, company, care home, department, ward, or geographic location
 - Previous role duties ONLY — do not describe the current role
-- Each duty is a standalone task sentence, 20-35 words, no sub-clauses referencing where it happened
-- NEVER use the word "Trust" or any organisation name
 - essentialCriteria must list EVERY criterion from all sections of the JDPS table
   }
 
@@ -334,15 +354,25 @@ Return ONLY a single valid JSON object:
   "previousRoleDuties": ["exactly ${dutiesCount} duties — see rules below"]
 }
 
-DUTIES RULES — apply to every item in previousRoleDuties:
-- Past tense action verbs only (Assisted, Supported, Delivered, Performed, Monitored, Documented, Escalated, Participated, Undertook...)
-- Mirror the EXACT task language, procedures, and keywords from the vacancy job description
-- NO organisation names — do not mention any employer, company, trust, or care home name
-- NO setting descriptions — do not mention ward names, departments, or locations
-- NO "in line with [Trust/Board/company] protocols" — just state the task
+DUTIES RULES — read every rule before writing a single duty:
+Every duty must be a PURE TASK SENTENCE. Even though you can see employer names and organisation names in the candidate profile above, you MUST NOT include any of them in the duties list. Not at the start, not at the end, not in a sub-clause.
+
+WRONG — contains organisation or location reference (never do this):
+"Supported service users in care planning within the Sirona Care and Health CIC NHS setting."
+"Maintained records using Care Vision at ACE Healthcare Ltd."
+"Delivered patient care across the Bristol Royal Infirmary inpatient wards."
+
+CORRECT — pure task, zero organisation or location reference:
+"Supported service users and carers to participate in care planning discussions, ensuring their views informed day-to-day service delivery."
+"Maintained accurate involvement records and documentation using electronic care record systems."
+"Delivered personal care to patients, maintaining dignity and privacy at all times."
+
+RULES:
+- Start every duty with a past tense verb: Assisted, Supported, Delivered, Monitored, Documented, Escalated, Participated, Undertook, Maintained, Coordinated, Gathered, Promoted, Performed...
+- Mirror the EXACT task vocabulary and keywords from the vacancy job description
+- Each duty: one sentence, 20-35 words, no location or employer reference anywhere
+- NEVER name any employer, hospital, NHS Trust, Board, company, care home, department, ward, or geographic location
 - Previous role duties ONLY — do not describe the current role
-- Each duty is a standalone task sentence, 20-35 words, no sub-clauses referencing where it happened
-- NEVER use the word "Trust" or any organisation name
 
 CRITICAL:
 - No em dashes anywhere
