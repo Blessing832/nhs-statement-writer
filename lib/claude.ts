@@ -63,7 +63,7 @@ export function detectRegion(url: string, rawText?: string): PromptRegion {
 }
 
 function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): string {
-  if (region === 'scotland') return getScotlandPrompt(style)
+  if (region === 'scotland') return getScotlandPrompt() // Scotland is always continuous prose — no style choice
   if (region === 'england-wales') return getEnglandWalesPrompt(style)
   return `You are an expert UK job application writer. Write a compelling supporting statement for this NHS or public sector role.
 - Address every essential criterion from the person specification
@@ -158,14 +158,15 @@ Return ONLY a single valid JSON object - no text before or after:
 {
   "essentialCriteria": ["every essential criterion from the person spec — expect 20-40 items"],
   "desirableCriteria": ["desirable criteria if any"],
-  "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties written using the EXACT procedures, tasks, and terminology from the job description of the vacancy being applied for — these mirror what the role requires, written as if carried out in the previous role"]
+  "previousRoleDuties": ["exactly ${dutiesCount} duties for the PREVIOUS workplace only — written in past tense, using the EXACT procedures, tasks, and terminology from the vacancy job description, as if those duties were carried out at the previous employer. These are for pasting under the previous role on a CV. NEVER describe the current role."]
 }
 
 CRITICAL:
 - essentialCriteria must list EVERY criterion — treat every section of the JDPS table as a source
 - previousRoleDuties must have exactly ${dutiesCount} items
-- previousRoleDuties must use the vocabulary and task language from the vacancy JD — not generic duties
-- NEVER use the word "Trust" anywhere in duties — use the ward name, department name, care setting, or just omit the organisation reference entirely`
+- previousRoleDuties = PREVIOUS workplace only, past tense — NEVER the current role
+- Use vocabulary and task language from the vacancy JD so duties mirror what the applied role requires
+- NEVER use the word "Trust" — use the ward name, department name, care setting, or omit the organisation reference`
     }
 
     return `${jobSection}
