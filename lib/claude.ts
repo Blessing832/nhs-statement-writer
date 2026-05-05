@@ -158,15 +158,18 @@ Return ONLY a single valid JSON object - no text before or after:
 {
   "essentialCriteria": ["every essential criterion from the person spec — expect 20-40 items"],
   "desirableCriteria": ["desirable criteria if any"],
-  "previousRoleDuties": ["exactly ${dutiesCount} duties for the PREVIOUS workplace only — written in past tense, using the EXACT procedures, tasks, and terminology from the vacancy job description, as if those duties were carried out at the previous employer. These are for pasting under the previous role on a CV. NEVER describe the current role."]
+  "previousRoleDuties": ["exactly ${dutiesCount} duties — see rules below"]
 }
 
-CRITICAL:
-- essentialCriteria must list EVERY criterion — treat every section of the JDPS table as a source
-- previousRoleDuties must have exactly ${dutiesCount} items
-- previousRoleDuties = PREVIOUS workplace only, past tense — NEVER the current role
-- Use vocabulary and task language from the vacancy JD so duties mirror what the applied role requires
-- NEVER use the word "Trust" — use the ward name, department name, care setting, or omit the organisation reference`
+DUTIES RULES — apply to every item in previousRoleDuties:
+- Past tense action verbs only (Assisted, Supported, Delivered, Performed, Monitored, Documented, Escalated, Participated, Undertook...)
+- Mirror the EXACT task language, procedures, and keywords from the vacancy job description
+- NO organisation names — do not mention any employer, company, or care home name
+- NO setting descriptions — do not mention ward names, departments, or locations
+- NO "in line with [Trust/Board/company] protocols" — just state the task
+- Previous role duties ONLY — do not describe the current role
+- Each duty is a standalone task sentence, 20-35 words, no sub-clauses referencing where it happened
+- NEVER use the word "Trust" or any organisation name`
     }
 
     return `${jobSection}
@@ -194,14 +197,19 @@ Return ONLY a single valid JSON object - no text before or after:
   "essentialCriteria": ["every essential criterion from the person spec — expect 20-40 items"],
   "desirableCriteria": ["desirable criteria if any"],
   "meetsAllEssential": true,
-  "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties written using the EXACT procedures, tasks, and terminology from the job description of the vacancy being applied for — these mirror what the role requires, written as if carried out in the previous role"]
+  "previousRoleDuties": ["exactly ${dutiesCount} duties — see rules below"]
 }
 
-CRITICAL:
+DUTIES RULES — apply to every item in previousRoleDuties:
+- Past tense action verbs only (Assisted, Supported, Delivered, Performed, Monitored, Documented, Escalated, Participated, Undertook...)
+- Mirror the EXACT task language, procedures, and keywords from the vacancy job description
+- NO organisation names — do not mention any employer, company, trust, or care home name
+- NO setting descriptions — do not mention ward names, departments, or locations
+- NO "in line with [Trust/Board/company] protocols" — just state the task
+- Previous role duties ONLY — do not describe the current role
+- Each duty is a standalone task sentence, 20-35 words, no sub-clauses referencing where it happened
+- NEVER use the word "Trust" or any organisation name
 - essentialCriteria must list EVERY criterion from all sections of the JDPS table
-- previousRoleDuties must have exactly ${dutiesCount} items
-- previousRoleDuties must use the vocabulary and task language from the vacancy JD — not generic duties
-- NEVER use the word "Trust" anywhere in duties — use the ward name, department name, care setting, or just omit the organisation reference entirely`
   }
 
   const specificQSection = options.specificQuestions
@@ -323,15 +331,22 @@ Return ONLY a single valid JSON object:
     "meetsAllEssential": true
   },
   "statement": "the complete statement text, plain text only",
-  "previousRoleDuties": ["exactly ${dutiesCount} past-tense duties written using the EXACT procedures, tasks, and terminology from the job description of the vacancy being applied for — these mirror what the role requires, written as if carried out in the previous role"]
+  "previousRoleDuties": ["exactly ${dutiesCount} duties — see rules below"]
 }
+
+DUTIES RULES — apply to every item in previousRoleDuties:
+- Past tense action verbs only (Assisted, Supported, Delivered, Performed, Monitored, Documented, Escalated, Participated, Undertook...)
+- Mirror the EXACT task language, procedures, and keywords from the vacancy job description
+- NO organisation names — do not mention any employer, company, trust, or care home name
+- NO setting descriptions — do not mention ward names, departments, or locations
+- NO "in line with [Trust/Board/company] protocols" — just state the task
+- Previous role duties ONLY — do not describe the current role
+- Each duty is a standalone task sentence, 20-35 words, no sub-clauses referencing where it happened
+- NEVER use the word "Trust" or any organisation name
 
 CRITICAL:
 - No em dashes anywhere
 - statement must be complete, never truncated
-- previousRoleDuties must have exactly ${dutiesCount} items
-- previousRoleDuties must use the vocabulary and task language from the vacancy JD — not generic duties
-- NEVER use the word "Trust" anywhere in duties — use the ward name, department name, care setting, or just omit the organisation reference entirely
 - essentialCriteria must list EVERY criterion from the person spec`
 }
 
