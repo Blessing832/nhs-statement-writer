@@ -178,7 +178,8 @@ RULES:
 - Start every duty with a past tense verb: Assisted, Supported, Delivered, Monitored, Documented, Escalated, Participated, Undertook, Maintained, Coordinated, Gathered, Promoted, Performed...
 - Mirror the EXACT task vocabulary and keywords from the vacancy job description
 - Each duty: one sentence, 20-35 words, no location or employer reference anywhere
-- NEVER name any employer, hospital, NHS Trust, Board, company, care home, department, ward, or geographic location
+- NEVER write the word "NHS" in any duty — not "NHS standards", not "NHS Trust", not "NHS guidelines", nothing
+- NEVER name any employer, hospital, Board, company, care home, department, ward, or geographic location
 - Previous role duties ONLY — do not describe the current role`
     }
 
@@ -227,7 +228,8 @@ RULES:
 - Start every duty with a past tense verb: Assisted, Supported, Delivered, Monitored, Documented, Escalated, Participated, Undertook, Maintained, Coordinated, Gathered, Promoted, Performed...
 - Mirror the EXACT task vocabulary and keywords from the vacancy job description
 - Each duty: one sentence, 20-35 words, no location or employer reference anywhere
-- NEVER name any employer, hospital, NHS Trust, Board, company, care home, department, ward, or geographic location
+- NEVER write the word "NHS" in any duty — not "NHS standards", not "NHS Trust", not "NHS guidelines", nothing
+- NEVER name any employer, hospital, Board, company, care home, department, ward, or geographic location
 - Previous role duties ONLY — do not describe the current role
 - essentialCriteria must list EVERY criterion from all sections of the JDPS table
   }
@@ -371,7 +373,8 @@ RULES:
 - Start every duty with a past tense verb: Assisted, Supported, Delivered, Monitored, Documented, Escalated, Participated, Undertook, Maintained, Coordinated, Gathered, Promoted, Performed...
 - Mirror the EXACT task vocabulary and keywords from the vacancy job description
 - Each duty: one sentence, 20-35 words, no location or employer reference anywhere
-- NEVER name any employer, hospital, NHS Trust, Board, company, care home, department, ward, or geographic location
+- NEVER write the word "NHS" in any duty — not "NHS standards", not "NHS Trust", not "NHS guidelines", nothing
+- NEVER name any employer, hospital, Board, company, care home, department, ward, or geographic location
 - Previous role duties ONLY — do not describe the current role
 
 CRITICAL:

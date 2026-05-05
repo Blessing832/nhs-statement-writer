@@ -320,8 +320,13 @@ The following openers are the most recognisable AI signatures. Never write them:
 - "I have always been passionate about..." / "I have always believed..."
 - "Having worked in [setting] for [years]..." as the opening line
 - "I am a highly motivated / dedicated / compassionate..."
+- "I am applying for..." / "I am writing to apply for..." / "I wish to apply for..."
+- "I am pleased to apply for..." / "Please accept this as my application for..."
+- Any sentence that states you are applying — the recruiter already knows this
 - Any abstract sentence about values or feelings before stating credentials
 - Any sentence that could apply to any candidate for any NHS job
+
+THE VERY FIRST SENTENCE must state a credential, experience, or person spec criterion — never an application statement.
 
 ## OPENING — TWO SHORT PARAGRAPHS
 The statement starts with TWO paragraphs. No pre-opening hook. No abstract intro. Straight to credentials.
@@ -354,7 +359,7 @@ Covers E4 with a real STAR example (E1-E3 are already addressed in Para 1).
 - Sentences 2-4: STAR — Situation (where, when, patient group) + Action (specific, named tools/professionals) + Result
 
 EXAMPLE:
-"I am applying to [Trust] because [specific reason from advert/values]. At [Previous Workplace], [specific situation with patient group]. I [specific action using named tools/procedure from JD], working alongside [named professional role from JD]. [Concrete result]."
+"What draws me to [Trust] is [specific reason from advert/values]. At [Previous Workplace], [specific situation with patient group]. I [specific action using named tools/procedure from JD], working alongside [named professional role from JD]. [Concrete result]."
 
 ## NO SEPARATE EDUCATION PARAGRAPH
 Qualifications are covered in Opening Para 1. No separate education section anywhere in the statement.

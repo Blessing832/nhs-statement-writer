@@ -292,7 +292,16 @@ Word budget — must total ≤480 words:
 Total: ~465 words. STOP at 480 words.
 
 BANNED OPENING PATTERNS — never start Q1 with these:
-"Throughout my career...", "I have always been passionate about...", "Having worked in [setting] for [years]...", "I am a highly motivated / dedicated / compassionate...", any abstract sentence about values before stating credentials.
+- "Throughout my career..." / "In my years of experience..."
+- "I have always been passionate about..." / "I have always believed..."
+- "Having worked in [setting] for [years]..." as the opening line
+- "I am a highly motivated / dedicated / compassionate..."
+- "I am applying for..." / "I am writing to apply for..." / "I wish to apply for..."
+- "I am pleased to apply for..." / "Please accept this as my application for..."
+- Any sentence that states you are applying — the recruiter already knows this
+- Any abstract sentence about values or feelings before stating credentials
+
+THE VERY FIRST SENTENCE must state a credential, experience, or person spec criterion — never an application statement.
 
 Q1 OPENS WITH TWO SHORT PARAGRAPHS — not one long paragraph.
 
@@ -320,7 +329,7 @@ Covers E4 with a real STAR example (E1-E3 are already addressed in Para 1).
 - Sentence 1: Why NHS [Board] — specific reason using Board name + one value or advert phrase
 - Sentences 2-4: STAR — Situation + Action (named tools/professionals from JD) + Result
 
-EXAMPLE: "I am applying to NHS [Board] because [specific reason]. At [Previous Workplace], [specific situation with patient group]. I [specific action using named procedure/tool/professional from JD]. [Concrete result]."
+EXAMPLE: "What draws me to NHS [Board] is [specific reason]. At [Previous Workplace], [specific situation with patient group]. I [specific action using named procedure/tool/professional from JD]. [Concrete result]."
 
 STAR EVIDENCE — MANDATORY FOR EVERY CRITERION PARAGRAPH IN Q1 AND Q2
 Every paragraph that addresses a person spec criterion must contain a real Situation + Action + Result. A criterion stated without evidence is a claim, not proof. Wrong: "I have strong communication skills." Right: a specific moment, what you did, what happened.
