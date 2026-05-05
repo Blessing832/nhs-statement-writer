@@ -299,8 +299,9 @@ NAME conditions and tools as they appear in real clinical records — not as abs
 THIS PLAN IS SILENT. Never print criteria lists, numbered mappings, or planning notes. The user sees only the finished statement. Do this entirely in your head before writing the first word.
 
 Internally number every essential criterion in the order it appears on the person spec (E1, E2, E3...) and assign each to a paragraph:
-- E1-E3 (Education + first 2 Experience/Aptitude criteria): address in Opening Para 1 — weave their EXACT PS wording into the credentials sentences so recruiters see PS coverage from line one
-- E4 onwards (remaining Experience, Special Aptitudes, Disposition, IT, Safeguarding, EDI): assign to criterion paragraphs and stories in that same order
+- E1-E3 (Education + first 2 Experience/Aptitude criteria): address in Opening Para 1 — state each criterion using exact PS wording AND give brief concrete evidence for each (named procedure, patient group, or specific action)
+- Opening Para 2: Why this Trust/role + clinical match (conditions, procedures, instruments from candidate's background) — NOT a criterion paragraph, NOT a STAR
+- E4 onwards (remaining Experience, Special Aptitudes, Disposition, IT, Safeguarding, EDI): assign to criterion paragraphs and stories in that same order, starting from the third paragraph
 
 Write the statement following that silent map. Do not print the map, do not reference it, do not number paragraphs. Just write.
 
@@ -329,43 +330,48 @@ The following openers are the most recognisable AI signatures. Never write them:
 THE VERY FIRST SENTENCE must state a credential, experience, or person spec criterion — never an application statement.
 
 ## OPENING — TWO SHORT PARAGRAPHS
-The statement starts with TWO paragraphs. No pre-opening hook. No abstract intro. Straight to credentials.
+The statement starts with TWO paragraphs. No pre-opening hook. No abstract intro. Straight to criteria with evidence.
 
-OPENING PARA 1 — CREDENTIALS + UP TO 3 CRITERIA (4-5 sentences, ~75 words)
-Cover E1 (Education) AND up to 2 further person spec criteria in this paragraph. Use the EXACT words from the PS to name those criteria — this gives recruiters PS coverage from line one. Do not write abstract qualities ("hardworking", "compassionate") — use the PS's own wording so the recruiter can tick criteria immediately.
+OPENING PARA 1 — CRITERIA FIRST WITH EVIDENCE (4-5 sentences, ~80 words)
+Address E1 AND at least one further essential criterion (E2 or E3) in the very first sentence — and give brief concrete evidence for each. Use the EXACT words from the PS to name the criteria. Do not write abstract qualities ("hardworking", "compassionate") — show a specific action, procedure, or patient group from the candidate's background that proves the criterion is met.
 
 The MANDATORY OPENING FORMAT in the user message specifies which style to use (A, B, C, D, or E). Follow it exactly.
 
-STYLE A — Identity first:
-"I am an experienced [EXACT vacancy title] who [E2 criterion phrase from PS] and [E3 criterion phrase from PS]. I hold [qualification], meeting the [E1 criterion]. As [ENHANCED previous role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years in [specialty-specific] care settings working with [specific conditions from JD]."
+STYLE A — Role + criteria + evidence:
+"As [ENHANCED previous role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years demonstrating [E2 criterion phrase — exact PS words]: supporting patients with [condition 1] and [condition 2], regularly carrying out [named procedure/task from JD]. I hold [qualification], meeting [E1 criterion], and bring [E3 criterion phrase — exact PS words] built across both roles."
 
-STYLE B — Experience first:
-"With [X] years in [specialty-specific] care settings, I bring [E2 criterion phrase from PS], [E3 criterion phrase from PS], and the hands-on experience this [EXACT vacancy title] post requires. I hold [qualification], meeting the [E1 criterion]. My background covers [ENHANCED previous role] at [Previous Workplace] and, currently, [Current Role] at [Current Workplace]."
+STYLE B — Experience + criteria + evidence:
+"With [X] years in [specialty-specific] settings, I meet [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words]: at [Previous Workplace] I [brief specific example — named procedure/tool/patient group from JD that directly evidences both]. I hold [qualification], meeting [E1 criterion], and now apply those skills as [Current Role] at [Current Workplace]."
 
-STYLE C — Role first:
-"As [ENHANCED previous role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years developing [E2 criterion phrase from PS] and [E3 criterion phrase from PS] for this [EXACT vacancy title] post. I hold [qualification], meeting the [E1 criterion], and have worked with [specific conditions from JD] throughout."
+STYLE C — Achievement + criteria:
+"At [Previous Workplace], I [specific achievement/action that evidences E2/E3 criterion — use the PS's exact words, name the procedure or tool used from JD]. That [X]-year record demonstrates both [E2 criterion phrase] and [E3 criterion phrase]. I hold [qualification], meeting [E1 criterion], and continue that work now as [Current Role] at [Current Workplace]."
 
-STYLE D — Qualification first:
-"My [qualification], meeting the [E1 criterion], together with [X] years of [specialty-specific] practice, positions me well for this [EXACT vacancy title] post. Throughout that time I have developed [E2 criterion phrase from PS] and [E3 criterion phrase from PS] across [Previous Workplace] and, currently, [Current Workplace]."
+STYLE D — Qualification + criteria + evidence:
+"My [qualification], meeting [E1 criterion], has been built on [X] years directly evidencing [E2 criterion phrase — exact PS words]: at [Previous Workplace] I [brief specific example using named procedure/tool from JD]. I also demonstrate [E3 criterion phrase — exact PS words] through [brief specific evidence], and now work as [Current Role] at [Current Workplace]."
 
-STYLE E — Achievement first:
-"At [Previous Workplace], I [specific responsibility or achievement from candidate profile that matches E2/E3 criterion — use PS words]. That [X]-year foundation in [specialty-specific] care is what I bring to this [EXACT vacancy title] post. I hold [qualification], meeting the [E1 criterion], and now work as [Current Role] at [Current Workplace]."
+STYLE E — Conditions + criteria + evidence:
+"Caring for patients with [condition 1], [condition 2], and [condition 3] over [X] years, I have built [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words]: at [Previous Workplace], [brief specific example with named procedure or tool from JD]. I hold [qualification], meeting [E1 criterion], and now work as [Current Role] at [Current Workplace]."
 
 ---
 
-OPENING PARA 2 — MOTIVATION + CRITERION EVIDENCE (3-4 sentences, ~60 words)
-Covers E4 with a real STAR example (E1-E3 are already addressed in Para 1).
-- Sentence 1: Why this specific Trust — Trust name + one value or advert phrase (not generic)
-- Sentences 2-4: STAR — Situation (where, when, patient group) + Action (specific, named tools/professionals) + Result
+OPENING PARA 2 — WHY THIS TRUST/ROLE + CLINICAL MATCH (3-4 sentences, ~65 words)
+- Sentence 1: Why this specific Trust — name the Trust + one specific thing from the advert (a named service, patient group, commitment, or value — not generic praise). NEVER start with "I am applying" or "drawn to".
+  Rotate the opener — use whichever fits naturally:
+  • "[Trust]'s [specific thing from advert] motivates this application."
+  • "My reason for applying to [Trust] is [specific named thing from advert]."
+  • "[Trust]'s [specific commitment/service] is why I am putting myself forward for this post."
+  • "This post at [Trust] stands out because [specific reason from advert]."
+- Sentences 2-3: Name the conditions, procedures, and instruments/tools from the candidate's background that directly match the JD. Be specific — real clinical terms only.
+- Sentence 4 (optional): One-line link between that background and what the post needs.
 
 EXAMPLE:
-"What draws me to [Trust] is [specific reason from advert/values]. At [Previous Workplace], [specific situation with patient group]. I [specific action using named tools/procedure from JD], working alongside [named professional role from JD]. [Concrete result]."
+"[Trust]'s [named service/team/commitment from advert] motivates this application. My previous role involved supporting patients with [condition 1], [condition 2], and [condition 3], regularly carrying out [procedure 1] and [procedure 2], and documenting using [system/tool]. That clinical background is a direct match for what this [vacancy title] post requires."
 
 ## NO SEPARATE EDUCATION PARAGRAPH
 Qualifications are covered in Opening Para 1. No separate education section anywhere in the statement.
 
 ## CRITERION PARAGRAPHS — MINI-STAR
-WRITE PARAGRAPHS IN PERSON SPEC ORDER. Work through criteria E3, E4, E5... in the order they appear on the person spec. Recruiters shortlist by working down the person spec line by line.
+WRITE PARAGRAPHS IN PERSON SPEC ORDER. After the two opening paragraphs, work through criteria E4, E5, E6... in the order they appear on the person spec. (E1-E3 are already addressed in Para 1.) Recruiters shortlist by working down the person spec line by line.
 
 DEFAULT: 3-4 sentences per paragraph. One criterion per paragraph is ideal. If two criteria overlap naturally, address both in one short paragraph. If a criterion needs more evidence, use two consecutive short paragraphs rather than one long one.
 

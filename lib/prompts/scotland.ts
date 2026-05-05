@@ -270,8 +270,9 @@ NAME conditions and tools as they appear in real clinical records — not as abs
 THIS PLAN IS SILENT. Never print criteria lists, numbered mappings, or planning notes. The user sees only the finished Q1, Q2, Q3 answers. Do this entirely in your head before writing the first word.
 
 Internally number every essential criterion in the order it appears on the person spec (E1, E2, E3...) and assign each to a question and paragraph:
-- E1-E3 (Education + first 2 Experience/Aptitude criteria): address in Q1 Opening Para 1 — weave their EXACT PS wording into the credentials sentences so recruiters see PS coverage from line one
-- E4 onwards (remaining Experience, Special Aptitudes, Disposition, IT, Safeguarding): Q1 criterion paragraphs and story in order, then Q2 criterion paragraphs in order
+- E1-E3 (Education + first 2 Experience/Aptitude criteria): address in Q1 Opening Para 1 — state each criterion using exact PS wording AND give brief concrete evidence for each (named procedure, patient group, or specific action)
+- Q1 Opening Para 2: Why this Board/role + clinical match (conditions, procedures, instruments, Scottish systems) — NOT a criterion paragraph, NOT a STAR
+- E4 onwards (remaining Experience, Special Aptitudes, Disposition, IT, Safeguarding): Q1 criterion paragraphs and story in order (starting from Para 3), then Q2 criterion paragraphs in order
 
 Write Q1, Q2, Q3 following that silent map. Do not print the map, do not reference it. Just write all three questions.
 
@@ -305,31 +306,36 @@ THE VERY FIRST SENTENCE must state a credential, experience, or person spec crit
 
 Q1 OPENS WITH TWO SHORT PARAGRAPHS — not one long paragraph.
 
-Q1 OPENING PARA 1 — CREDENTIALS + UP TO 3 CRITERIA (4-5 sentences, ~75 words)
-Cover E1 (Education) AND up to 2 further person spec criteria in this paragraph. Use the EXACT words from the PS to name those criteria — this gives recruiters PS coverage from line one. Do not write abstract qualities — use the PS's own wording so the recruiter can tick criteria immediately.
+Q1 OPENING PARA 1 — CRITERIA FIRST WITH EVIDENCE (4-5 sentences, ~80 words)
+Address E1 AND at least one further essential criterion (E2 or E3) in the very first sentence — and give brief concrete evidence for each. Use the EXACT words from the PS to name the criteria. Do not write abstract qualities — show a specific action, procedure, or patient group from the candidate's background that proves the criterion is met.
 The MANDATORY OPENING FORMAT in the user message specifies which style to use (A, B, C, D, or E). Follow it exactly.
 
-STYLE A — Identity first:
-"I am an experienced [EXACT vacancy title] who [E2 criterion phrase from PS] and [E3 criterion phrase from PS]. I hold [qualification] (SVQ if English), meeting the [E1 criterion]. As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years in [specialty-specific] care working with [specific conditions]."
+STYLE A — Role + criteria + evidence:
+"As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years demonstrating [E2 criterion phrase — exact PS words]: supporting patients with [condition 1] and [condition 2], regularly carrying out [named procedure/task from JD]. I hold [qualification] (SVQ if English), meeting [E1 criterion], and bring [E3 criterion phrase — exact PS words] built across both roles."
 
-STYLE B — Qualification first:
-"My [qualification] (SVQ if English) and [X] years of [specialty-specific] practice, building [E2 criterion phrase from PS] and [E3 criterion phrase from PS], position me well for this [EXACT vacancy title] post at NHS [Board]. Working as [ENHANCED role] at [Previous Workplace] and, currently, [Current Role] at [Current Workplace], I meet the [E1 criterion] in full."
+STYLE B — Qualification + criteria + evidence:
+"My [qualification] (SVQ if English), meeting [E1 criterion], has been built on [X] years directly evidencing [E2 criterion phrase — exact PS words]: at [Previous Workplace] I [brief specific example using named procedure/tool from JD]. I also demonstrate [E3 criterion phrase — exact PS words] through [brief specific evidence], and now work as [Current Role] at [Current Workplace]."
 
-STYLE C — Role first:
-"As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years developing [E2 criterion phrase from PS] and [E3 criterion phrase from PS] for this [EXACT vacancy title] post at NHS [Board]. I hold [qualification] (SVQ if English), meeting the [E1 criterion], and have worked with [specific conditions] throughout."
+STYLE C — Experience + criteria + evidence:
+"With [X] years in [specialty-specific] settings, I meet [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words]: at [Previous Workplace] I [brief specific example — named procedure/tool/patient group from JD]. I hold [qualification] (SVQ if English), meeting [E1 criterion], and now apply those skills as [Current Role] at [Current Workplace]."
 
-STYLE D — Board-specific first:
-"NHS [Board]'s [named service or patient population from the advert] is where I want to contribute next. As [ENHANCED role] at [Previous Workplace] and [Current Role] at [Current Workplace], I have built [X] years of [specialty-specific] practice directly demonstrating [E2 criterion phrase from PS] and [E3 criterion phrase from PS]. I hold [qualification] (SVQ if English), meeting the [E1 criterion]."
+STYLE D — Achievement + criteria:
+"At [Previous Workplace], I [specific achievement/action that evidences E2/E3 criterion — use the PS's exact words, name the procedure or tool used from JD]. That [X]-year record demonstrates both [E2 criterion phrase] and [E3 criterion phrase]. I hold [qualification] (SVQ if English), meeting [E1 criterion], and continue that work now as [Current Role] at [Current Workplace]."
 
-STYLE E — Achievement first:
-"At [Previous Workplace], I [specific responsibility or achievement that maps to E2/E3 criterion — use the PS's exact words]. That [X]-year foundation in [specialty-specific] care is what I bring to this [EXACT vacancy title] post at NHS [Board]. I hold [qualification] (SVQ if English), meeting the [E1 criterion], and now work as [Current Role] at [Current Workplace]."
+STYLE E — Conditions + criteria + evidence:
+"Caring for patients with [condition 1], [condition 2], and [condition 3] over [X] years, I have built [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words]: at [Previous Workplace], [brief specific example with named procedure or tool from JD]. I hold [qualification] (SVQ if English), meeting [E1 criterion], and now work as [Current Role] at [Current Workplace]."
 
-Q1 OPENING PARA 2 — MOTIVATION + CRITERION EVIDENCE (~55 words, 3-4 sentences)
-Covers E4 with a real STAR example (E1-E3 are already addressed in Para 1).
-- Sentence 1: Why NHS [Board] — specific reason using Board name + one value or advert phrase
-- Sentences 2-4: STAR — Situation + Action (named tools/professionals from JD) + Result
+Q1 OPENING PARA 2 — WHY THIS BOARD/ROLE + CLINICAL MATCH (~60 words, 3-4 sentences)
+- Sentence 1: Why NHS [Board] — name the Board + one specific thing from the advert (a named service, patient group, commitment, or value — not generic praise). NEVER start with "I am applying" or any phrase about being drawn to or attracted.
+  Rotate the opener — use whichever fits naturally:
+  • "NHS [Board]'s [specific thing from advert] motivates this application."
+  • "My reason for applying to NHS [Board] is [specific named thing from advert]."
+  • "NHS [Board]'s [specific commitment/service] is why I am putting myself forward for this post."
+  • "This post at NHS [Board] stands out because [specific reason from advert]."
+- Sentences 2-3: Name the conditions, procedures, instruments, and tools from the candidate's background that directly match the JD — Scottish system names (TrakCare, Clinical Portal, SCI Gateway) where relevant.
+- Sentence 4 (optional): One-line link between that background and what the post needs.
 
-EXAMPLE: "What draws me to NHS [Board] is [specific reason]. At [Previous Workplace], [specific situation with patient group]. I [specific action using named procedure/tool/professional from JD]. [Concrete result]."
+EXAMPLE: "NHS [Board]'s [named service/team/commitment from advert] motivates this application. My previous role involved supporting patients with [condition 1], [condition 2], and [condition 3], regularly carrying out [procedure 1] and [procedure 2], and documenting on TrakCare. That clinical background is a direct match for what this [vacancy title] post requires."
 
 STAR EVIDENCE — MANDATORY FOR EVERY CRITERION PARAGRAPH IN Q1 AND Q2
 Every paragraph that addresses a person spec criterion must contain a real Situation + Action + Result. A criterion stated without evidence is a claim, not proof. Wrong: "I have strong communication skills." Right: a specific moment, what you did, what happened.
