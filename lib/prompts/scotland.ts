@@ -36,6 +36,7 @@ The following make the statement sound AI-generated. Never write them under any 
 "I pride myself on", "I am committed to ensuring", "I am enthusiastic about",
 "underpin", "underpins", "underpinned", "underpinning" — ABSOLUTE BAN: this word appears in almost every AI-generated statement; if you write it the statement fails,
 "grounded in" — NEVER use this phrase; replace with "built through", "developed through", "built on", or simply state the evidence directly,
+"particularly" — banned entirely; never use it,
 "Furthermore", "Moreover", "Additionally", "In addition to this",
 "pivotal", "instrumental", "holistic", "holistically", "robust", "nuanced",
 "In essence", "It is worth noting", "Notably", "fundamentally",
@@ -121,6 +122,15 @@ Short → long → short. That contrast is what human writing looks like.
 
 Never start two consecutive paragraphs with the same word or pattern.
 Never use the same transition phrase more than once across the entire statement.
+
+## SENTENCE SUBJECT VARIETY — MANDATORY
+Do not start more than 2 sentences in a row with "I". After two "I..." sentences, the next sentence must start with a different subject: the patient, the team, a named professional, a system, a result, a time reference, or a situational clause. Across any paragraph of 4 sentences, no more than 2 may begin with "I".
+
+WRONG — too many consecutive "I" openings:
+"I supported the patient during assessment. I documented the outcome on [system]. I escalated to the nurse. I recorded the result."
+
+CORRECT — varied subjects:
+"I supported the patient during assessment and documented the outcome on [system]. The nurse reviewed the record within the hour. By the end of that shift, the care plan had been updated and the patient was visibly more settled."
 
 ## CONTRACTIONS — EXACTLY ONE PER STATEMENT
 Use exactly one natural contraction somewhere in the statement (I'd / I've / I didn't / it wasn't / wasn't / couldn't). Place it in a story paragraph where it sounds natural, typically when describing a direct action or decision. One contraction signals authentic human voice. More than one makes the statement informal.
@@ -498,13 +508,15 @@ WRITE IN PERSON SPEC ORDER. Work through criteria in the order they appear.
 DEFAULT: 3-4 sentences per paragraph. One criterion per paragraph is ideal. Split a criterion across two consecutive short paragraphs if more evidence is needed — do not write one long paragraph instead.
 
 CRITERION-FIRST OPENER — MANDATORY FOR EVERY CRITERION PARAGRAPH:
-Every paragraph must open by explicitly naming the criterion it meets, followed immediately by the evidence. Rotate these forms — never use the same form twice in a row:
+Every paragraph must open by explicitly naming the criterion it meets, followed immediately by the evidence. Rotate freely — NEVER use "I meet" more than once every three paragraphs:
 1. "I meet [exact criterion wording] having [specific evidence]..."
-2. "I meet [criterion] — [specific situation + action]..."
-3. "I meet the requirement for [criterion] through [specific experience]..."
+2. "[Criterion] is met through [X years / qualification / specific experience]..."
+3. "The requirement for [criterion]: [specific situation + action + result]..."
 4. "My [criterion] is demonstrated by [specific moment/action]..."
-5. "I bring [criterion] built through [specific evidence]..."
-6. "I evidence [criterion] through [specific experience at workplace]..."
+5. "[Qualification / X years in specialty] meets the [criterion] requirement — [specific evidence]..."
+6. "On [criterion], my record shows [specific evidence]..."
+7. "For [criterion] — [specific evidence at workplace]..."
+8. "That [criterion] requirement is covered by [specific experience]: [evidence]..."
 
 Every paragraph: OPENER (criterion-first) → ACTION (1-2 sentences, JD tools/systems, named professionals) → RESULT (1 sentence).
 NEVER use a topic-announcement opener: "[X] is something I do", "[X] is important" — banned.
