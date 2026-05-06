@@ -166,6 +166,7 @@ export default function AdminGeneratePage() {
   const [inputMode, setInputMode] = useState<'url' | 'text'>('url')
   const [vacancyUrl, setVacancyUrl] = useState('')
   const [jobDescText, setJobDescText] = useState('')
+  const [pastedPersonSpec, setPastedPersonSpec] = useState('')
   const [style, setStyle] = useState<'1' | '2'>('1')
   const [bodyPattern, setBodyPattern] = useState<'' | '1' | '2' | '3'>('')
   const [applicationMode, setApplicationMode] = useState<'full' | 'questions-only' | 'statement-questions'>('full')
@@ -278,7 +279,7 @@ export default function AdminGeneratePage() {
 
     try {
       const { result: data, jobData } = await runGenerate(
-        { client_code: selectedClient.client_code, vacancy_url: usedUrl, style, applicationMode, specificQuestions: specificQuestions.trim() || undefined, bodyPattern: bodyPattern || undefined },
+        { client_code: selectedClient.client_code, vacancy_url: usedUrl, style, applicationMode, specificQuestions: specificQuestions.trim() || undefined, bodyPattern: bodyPattern || undefined, pastedPersonSpec: pastedPersonSpec.trim() || undefined },
         preloaded,
         controller.signal
       )
@@ -413,6 +414,7 @@ export default function AdminGeneratePage() {
               </div>
 
               {inputMode === 'url' ? (
+                <>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Job Vacancy Link <span className="text-red-500">*</span></label>
                   <input type="url" value={vacancyUrl} onChange={(e) => { setVacancyUrl(e.target.value); setError('') }}
@@ -437,6 +439,23 @@ export default function AdminGeneratePage() {
                     ))}
                   </div>
                 </div>
+                <div className="mt-3">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Person Specification <span className="text-xs font-normal text-gray-400">(optional)</span>
+                  </label>
+                  <p className="text-xs text-gray-400 mb-1.5">
+                    If the person spec is in a separate document or hard to find, paste it here and it will be added to the job content.
+                  </p>
+                  <textarea
+                    value={pastedPersonSpec}
+                    onChange={(e) => setPastedPersonSpec(e.target.value)}
+                    placeholder="Paste person specification criteria here..."
+                    rows={5}
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-y"
+                    disabled={loading}
+                  />
+                </div>
+                </>
               ) : (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Job Description Text <span className="text-red-500">*</span></label>
@@ -585,7 +604,7 @@ export default function AdminGeneratePage() {
                   Download .doc
                 </button>
                 <button
-                  onClick={() => { setResult(null); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText('') }}
+                  onClick={() => { setResult(null); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText(''); setPastedPersonSpec('') }}
                   className="text-sm px-3 py-1.5 border border-blue-400 text-blue-100 rounded font-medium hover:bg-blue-800 cursor-pointer">
                   New Statement
                 </button>

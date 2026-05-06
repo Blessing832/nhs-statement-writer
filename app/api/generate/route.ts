@@ -18,11 +18,20 @@ export async function POST(req: NextRequest) {
     previousStatement,
     applicationMode,
     bodyPattern,
+    pastedPersonSpec,
   } = await req.json()
 
   if (!client_code || !vacancy_url || !jobData) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
+
+  // Merge any pasted person spec into the rawText so the AI prompt sees it
+  const enrichedJobData = pastedPersonSpec?.trim()
+    ? {
+        ...(jobData as object),
+        rawText: (jobData.rawText || '') + '\n\n=== PASTED PERSON SPECIFICATION ===\n' + pastedPersonSpec.trim(),
+      }
+    : jobData
 
   // 1. Look up client
   const { data: client, error: clientError } = await supabaseAdmin
@@ -48,7 +57,7 @@ export async function POST(req: NextRequest) {
   // 2. Generate (job data already scraped by client in step 1)
   let generated: Awaited<ReturnType<typeof generateStatement>>
   try {
-    generated = await generateStatement(client, jobData as ScrapeResult, {
+    generated = await generateStatement(client, enrichedJobData as ScrapeResult, {
       instructions,
       style: style || '1',
       specificQuestions,
