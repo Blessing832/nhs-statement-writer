@@ -69,6 +69,7 @@ The following phrases make the statement sound AI-generated. Never write them:
 "I am dedicated to", "I am passionate about", "I thrive in", "I strive to",
 "I pride myself on", "I am committed to ensuring", "I am enthusiastic about",
 "underpin", "underpins", "underpinned", "underpinning" — ABSOLUTE BAN: this word appears in almost every AI-generated statement; if you write it the statement fails,
+"grounded in" — NEVER use this phrase; replace with "built through", "developed through", "built on", or simply state the evidence directly,
 "Furthermore", "Moreover", "Additionally", "In addition to this",
 "pivotal", "instrumental", "holistic", "holistically", "robust", "nuanced",
 "In essence", "It is worth noting", "Notably", "fundamentally",
@@ -392,7 +393,7 @@ STYLE C — Achievement + criteria + specialty experience:
 "At [Previous Workplace], I [specific achievement/action evidencing E2/E3 criterion — use PS's exact words], caring for patients with [condition 1] and [condition 2] and assisting with [procedure 1] and [procedure 2] in their day-to-day care. That [X]-year record demonstrates both [E2 criterion phrase] and [E3 criterion phrase]. I hold [qualification], meeting [E1 criterion], and continue that work as [Current Role] at [Current Workplace]."
 
 STYLE D — Qualification + criteria + specialty experience:
-"My [qualification], meeting [E1 criterion], is grounded in [X] years of hands-on [specialty] practice: caring for patients with [condition 1], [condition 2], and [condition 3], assisting with [procedure 1] and [procedure 2] as part of their care, and using [system/tool]. In that time I have directly evidenced [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words]."
+"My [qualification] meets [E1 criterion] and is built on [X] years of hands-on [specialty] practice: caring for patients with [condition 1], [condition 2], and [condition 3], assisting with [procedure 1] and [procedure 2] as part of their care, and using [system/tool]. In that time I have directly evidenced [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words]."
 
 STYLE E — Conditions-first + criteria + specialty experience:
 "Caring for patients with [condition 1], [condition 2], and [condition 3] over [X] years — assisting with [procedure 1] and [procedure 2] in their care and using [tool/instrument] — I have built [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words]. I hold [qualification], meeting [E1 criterion], and now work as [Current Role] at [Current Workplace]."
@@ -420,24 +421,29 @@ WRITE PARAGRAPHS IN PERSON SPEC ORDER. After the two opening paragraphs, work th
 
 DEFAULT: 3-4 sentences per paragraph. One criterion per paragraph is ideal. If two criteria overlap naturally, address both in one short paragraph. If a criterion needs more evidence, use two consecutive short paragraphs rather than one long one.
 
-MINI-STAR format (compressed into 3-4 sentences):
-- SITUATION (1 sentence): where, when, what patient group
-- ACTION (1-2 sentences): specific actions, name tools/systems/professionals from JD
-- RESULT (1 sentence): outcome — described or measured
+CRITERION-FIRST OPENER — MANDATORY FOR EVERY CRITERION PARAGRAPH:
+Every paragraph must open by explicitly naming the criterion it meets, followed immediately by the evidence. This makes shortlisting instant for recruiters — they can see exactly which box is being ticked.
 
-PARAGRAPH OPENING PATTERNS — rotate, never repeat the same pattern consecutively:
-1. "When supporting [patient group] on [ward/setting]..."
-2. "In my current role at [workplace]..."
-3. "Over my [X] years in [specialty]..."
-4. "As [ENHANCED role] at [workplace]..."
-5. "I [past tense verb] [task] for [patient group]..." (lead immediately with action)
-6. "Working alongside [professionals from JD]..."
-7. "I carried out [task] for [patient group]..."
-8. "During my time at [workplace]..."
-9. "When [specific situation — patient group + context]..."
-10. "I delivered [task] under supervision of [role from JD]..."
+REQUIRED OPENER FORMATS (rotate these — never use the same form twice in a row):
+1. "I meet [exact criterion wording] having [specific evidence]..."
+2. "I meet [criterion] — [specific situation + action]..."
+3. "I meet the requirement for [criterion] through [specific experience]..."
+4. "My [criterion] is demonstrated by [specific moment/action]..."
+5. "I bring [criterion] built through [specific evidence]..."
+6. "I evidence [criterion] through [specific experience at workplace]..."
 
-NEVER use a topic-announcement opener: "[X] is something I do", "[X] is important in my role", "[X] forms part of my work" — these are banned. Open mid-action, always.
+EXAMPLES:
+"I meet the essential requirement for experience working with individuals in mental health crisis having supported patients in acute distress at [workplace], regularly de-escalating situations and documenting on [system]."
+"I meet the requirement for knowledge of safeguarding procedures — during a shift at [workplace] I identified unexplained indicators, completed the incident form, and escalated to the nurse in charge before the end of that shift."
+"My communication skills meet the person spec requirement: when a patient at [workplace] became distressed following a medication change, I spoke calmly, explained what was happening, and stayed with them until the registered nurse arrived."
+
+MINI-STAR content within each paragraph (compressed into 3-4 sentences total):
+- OPENER: criterion-first statement (see formats above)
+- SITUATION/ACTION (1-2 sentences): specific actions, name tools/systems/professionals from JD
+- RESULT (1 sentence): concrete outcome — described or measured
+
+NEVER use a topic-announcement opener: "[X] is something I do", "[X] is important in my role", "[X] forms part of my work" — these are banned.
+NEVER open with a vague claim: "I have experience in...", "I have worked with..." — always tie to the specific criterion wording from the person spec.
 
 ## STORY PARAGRAPHS — MINIMUM 2 REQUIRED (6-7 sentences, ~130 words)
 Include at least 2 story paragraphs, up to 3. Distribute them throughout the statement — not all at the end.

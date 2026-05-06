@@ -35,6 +35,7 @@ The following make the statement sound AI-generated. Never write them under any 
 "I am dedicated to", "I am passionate about", "I thrive in", "I strive to",
 "I pride myself on", "I am committed to ensuring", "I am enthusiastic about",
 "underpin", "underpins", "underpinned", "underpinning" — ABSOLUTE BAN: this word appears in almost every AI-generated statement; if you write it the statement fails,
+"grounded in" — NEVER use this phrase; replace with "built through", "developed through", "built on", or simply state the evidence directly,
 "Furthermore", "Moreover", "Additionally", "In addition to this",
 "pivotal", "instrumental", "holistic", "holistically", "robust", "nuanced",
 "In essence", "It is worth noting", "Notably", "fundamentally",
@@ -359,7 +360,7 @@ STYLE A — Role + criteria + specialty experience:
 "As [ENHANCED role] at [Previous Workplace] and now [Current Role] at [Current Workplace], I have spent [X] years demonstrating [E2 criterion phrase — exact PS words]: caring for patients with [condition 1], [condition 2], and [condition 3], assisting with [procedure 1] and [procedure 2] in their care, and using [tool/instrument/system]. I hold [qualification] (SVQ if English), meeting [E1 criterion], and bring [E3 criterion phrase — exact PS words] built across both roles."
 
 STYLE B — Qualification + criteria + specialty experience:
-"My [qualification] (SVQ if English), meeting [E1 criterion], is grounded in [X] years of hands-on [specialty] practice: caring for patients with [condition 1], [condition 2], and [condition 3], assisting with [procedure 1] and [procedure 2] as part of their care, and documenting on [TrakCare/system]. In that time I have directly evidenced [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words]."
+"My [qualification] (SVQ if English) meets [E1 criterion] and is built on [X] years of hands-on [specialty] practice: caring for patients with [condition 1], [condition 2], and [condition 3], assisting with [procedure 1] and [procedure 2] as part of their care, and documenting on [TrakCare/system]. In that time I have directly evidenced [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words]."
 
 STYLE C — Experience + criteria + specialty experience:
 "With [X] years in [specialty-specific] settings, I meet [E2 criterion phrase — exact PS words] and [E3 criterion phrase — exact PS words] — working with patients with [condition 1], [condition 2], and [condition 3], assisting with [procedure 1] and [procedure 2] when caring for those patients, and using [tool/instrument]. I hold [qualification] (SVQ if English), meeting [E1 criterion], and now work as [Current Role] at [Current Workplace]."
@@ -496,15 +497,18 @@ CLOSING (MANDATORY — do not omit):
 WRITE IN PERSON SPEC ORDER. Work through criteria in the order they appear.
 DEFAULT: 3-4 sentences per paragraph. One criterion per paragraph is ideal. Split a criterion across two consecutive short paragraphs if more evidence is needed — do not write one long paragraph instead.
 
-Every paragraph: SITUATION (1 sentence) → ACTION (1-2 sentences, JD tools/systems, named professionals from JD) → RESULT (1 sentence).
-Rotate opening patterns — never repeat consecutively:
-1. "When supporting [patient group]..."
-2. "In my current role at [workplace]..."
-3. "As [ENHANCED role] at [workplace]..."
-4. "Working alongside [professionals from JD]..."
-5. "I carried out [task] for [patient group]..."
-6. "During my time at [workplace]..."
-7. "I delivered [task] under supervision of [role]..."
+CRITERION-FIRST OPENER — MANDATORY FOR EVERY CRITERION PARAGRAPH:
+Every paragraph must open by explicitly naming the criterion it meets, followed immediately by the evidence. Rotate these forms — never use the same form twice in a row:
+1. "I meet [exact criterion wording] having [specific evidence]..."
+2. "I meet [criterion] — [specific situation + action]..."
+3. "I meet the requirement for [criterion] through [specific experience]..."
+4. "My [criterion] is demonstrated by [specific moment/action]..."
+5. "I bring [criterion] built through [specific evidence]..."
+6. "I evidence [criterion] through [specific experience at workplace]..."
+
+Every paragraph: OPENER (criterion-first) → ACTION (1-2 sentences, JD tools/systems, named professionals) → RESULT (1 sentence).
+NEVER use a topic-announcement opener: "[X] is something I do", "[X] is important" — banned.
+NEVER open with a vague claim: "I have experience in..." — always tie to the specific criterion wording.
 
 ## STORY PARAGRAPHS — MINIMUM 1 REQUIRED (7-8 lines, 120-150 words)
 Include at least 1 story paragraph in Q1, addressing 3-5 criteria at once.
