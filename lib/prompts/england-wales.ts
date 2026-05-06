@@ -90,6 +90,43 @@ The following phrases make the statement sound AI-generated. Never write them:
 "this experience shows", "this experience proves", "this experience demonstrates" — never start a sentence with "this experience [verb]"; instead name the specific situation and what happened,
 "I understand the importance of", "I understand that", "I understand how" — vague openers that describe rather than demonstrate; lead with a specific moment instead,
 "not as [labels/words] I apply but as" — never list all 6 C's in a comma sequence (care, compassion, competence, communication, courage, and commitment) as a sentence — that is the most AI-detectable pattern possible; weave them individually into prose instead
+
+## BANNED PARAGRAPH OPENER PATTERNS — APPLY TO EVERY PARAGRAPH, NOT JUST THE OPENING
+The following patterns are the clearest sign of AI-generated text to any recruiter. They announce the topic/criterion before demonstrating it instead of opening mid-action.
+
+BANNED FORMULA: "[Topic/Subject] is something I [verb]..."
+Examples — NEVER write these:
+"Advocacy is something I practise routinely."
+"Carer support is something I take seriously."
+"Communication is something I work hard at."
+"Record-keeping is something I prioritise."
+
+BANNED FORMULA: "[Topic] is [adjective/noun] in my practice/role..."
+Examples — NEVER write these:
+"Safeguarding is non-negotiable in my practice."
+"Medication management is a responsibility I carry carefully."
+"Documentation is a core part of my role."
+"Patient safety is at the heart of everything I do."
+
+BANNED FORMULA: "[Topic/Training] has prepared me for..." or "forms a consistent part of my..."
+Examples — NEVER write these:
+"Conflict resolution training has prepared me for situations where..."
+"Physical health monitoring forms a consistent part of my current role."
+"My background has prepared me well for the demands of this post."
+
+BANNED FORMULA: "[Topic] is [superlative/strong claim]..."
+Examples — NEVER write these:
+"Effective communication is essential in my daily work."
+"Teamwork is fundamental to delivering quality care."
+
+THE RULE: Every paragraph must open mid-action — with I + past tense verb, or a situational clause (When..., During..., Working alongside...). NEVER announce the topic. NEVER state the importance of a skill. Start doing it.
+
+CORRECT — action-first openers:
+"When a service user became acutely distressed during a medication change, I..."
+"During a night shift, three patients deteriorated within twenty minutes..."
+"I escalated immediately. The ward manager reviewed within the hour and..."
+"Working alongside the registered nurse, I documented each observation in..."
+
 Write like an experienced professional talking — direct, specific, no filler words.
 
 ## ROLE-APPROPRIATE DUTIES — MANDATORY
@@ -393,12 +430,14 @@ PARAGRAPH OPENING PATTERNS — rotate, never repeat the same pattern consecutive
 2. "In my current role at [workplace]..."
 3. "Over my [X] years in [specialty]..."
 4. "As [ENHANCED role] at [workplace]..."
-5. "One of my key responsibilities involved..."
+5. "I [past tense verb] [task] for [patient group]..." (lead immediately with action)
 6. "Working alongside [professionals from JD]..."
 7. "I carried out [task] for [patient group]..."
 8. "During my time at [workplace]..."
-9. "Supporting patients with [condition from JD] required..."
+9. "When [specific situation — patient group + context]..."
 10. "I delivered [task] under supervision of [role from JD]..."
+
+NEVER use a topic-announcement opener: "[X] is something I do", "[X] is important in my role", "[X] forms part of my work" — these are banned. Open mid-action, always.
 
 ## STORY PARAGRAPHS — MINIMUM 2 REQUIRED (6-7 sentences, ~130 words)
 Include at least 2 story paragraphs, up to 3. Distribute them throughout the statement — not all at the end.
