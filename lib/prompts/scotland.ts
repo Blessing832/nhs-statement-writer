@@ -52,6 +52,9 @@ The following make the statement sound AI-generated. Never write them under any 
 "My experience in X is extensive", "My experience working X is extensive", "My [X] is extensive" — never open a paragraph with a bare claim about the depth of experience; always lead with a specific situation,
 "Every shift I work is shaped by", "Every shift is shaped by" — empty filler; start with an action instead,
 "spans" when describing a background or career — use "covers" instead,
+"this experience reinforced", "this experience has reinforced", "this experience reinforced for me",
+"this experience shows", "this experience proves", "this experience demonstrates" — never start a sentence with "this experience [verb]"; instead name the specific situation and what happened,
+"I understand the importance of", "I understand that", "I understand how" — vague openers that describe rather than demonstrate; lead with a specific moment instead,
 "not as [labels/words] I apply but as" — never list all 6 C's in a comma sequence (care, compassion, competence, communication, courage, and commitment) as a sentence — that is the most AI-detectable pattern possible; weave them individually into prose instead
 Write like an experienced professional talking — direct, specific, no filler words.
 

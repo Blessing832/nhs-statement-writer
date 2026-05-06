@@ -231,7 +231,7 @@ RULES:
 - NEVER write the word "NHS" in any duty — not "NHS standards", not "NHS Trust", not "NHS guidelines", nothing
 - NEVER name any employer, hospital, Board, company, care home, department, ward, or geographic location
 - Previous role duties ONLY — do not describe the current role
-- essentialCriteria must list EVERY criterion from all sections of the JDPS table
+- essentialCriteria must list EVERY criterion from all sections of the JDPS table`
   }
 
   const specificQSection = options.specificQuestions

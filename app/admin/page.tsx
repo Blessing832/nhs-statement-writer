@@ -33,6 +33,13 @@ const SECTIONS = [
     color: '#009639',
   },
   {
+    href: '/admin/generate',
+    label: 'Generate by Applicant',
+    description: 'Search for an applicant by name or code, then generate their statement with the full interface',
+    icon: '✍️',
+    color: '#0891b2',
+  },
+  {
     href: '/admin/quick-write',
     label: 'Quick Write',
     description: 'One-time statement for a guest: paste their history and job link, get a statement instantly',

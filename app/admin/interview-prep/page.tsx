@@ -102,6 +102,10 @@ export default function InterviewPrepPage() {
           jd_and_ps: jdAndPs.trim(),
         }),
       })
+      const contentType = res.headers.get('content-type') || ''
+      if (!contentType.includes('application/json')) {
+        throw new Error('The server took too long to respond. Please try again — interview prep can take up to 2 minutes.')
+      }
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Generation failed')
       setResult(data)
@@ -207,10 +211,10 @@ export default function InterviewPrepPage() {
           {loading ? (
             <>
               <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              Generating interview prep... (up to 60 seconds)
+              Generating interview prep... (up to 2 minutes)
             </>
           ) : (
-            'Generate Interview Prep'
+            'Generate Interview Prep Pack'
           )}
         </button>
       </form>
