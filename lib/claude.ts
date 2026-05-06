@@ -178,8 +178,11 @@ RULES:
 - Start every duty with a past tense verb: Assisted, Supported, Delivered, Monitored, Documented, Escalated, Participated, Undertook, Maintained, Coordinated, Gathered, Promoted, Performed...
 - Mirror the EXACT task vocabulary and keywords from the vacancy job description
 - Each duty: one sentence, 20-35 words, no location or employer reference anywhere
-- NEVER write the word "NHS" in any duty — not "NHS standards", not "NHS Trust", not "NHS guidelines", nothing
-- NEVER name any employer, hospital, Board, company, care home, department, ward, or geographic location
+- NEVER write the word "NHS" in any duty — not "NHS standards", not "NHS Trust", not "NHS guidelines", not "NHS Care Certificate", not "NHS Direct", nothing
+- NEVER name any employer, hospital, Board, company, care home, department, ward, or geographic location — this includes Southmead Hospital, Bristol Royal Infirmary, and every other named hospital worldwide
+- NEVER name any UK-specific healthcare software or EHR system: SystmOne, Lorenzo, Datix, EMIS, RiO, PARIS, TrakCare, CERNER, PAS, Electronic Prescribing System by brand name — write "electronic patient record system", "clinical information system", or "medication management system" instead
+- NEVER reference NHS pay bands (Band 3, Band 5, Band 7, etc.) or UK job grades
+- NEVER name specific UK training programmes or certificates (Oliver McGowan Training, NHS Care Certificate, Safeguarding Level 2, etc.) — describe the skill generically instead
 - Previous role duties ONLY — do not describe the current role`
     }
 
@@ -228,8 +231,11 @@ RULES:
 - Start every duty with a past tense verb: Assisted, Supported, Delivered, Monitored, Documented, Escalated, Participated, Undertook, Maintained, Coordinated, Gathered, Promoted, Performed...
 - Mirror the EXACT task vocabulary and keywords from the vacancy job description
 - Each duty: one sentence, 20-35 words, no location or employer reference anywhere
-- NEVER write the word "NHS" in any duty — not "NHS standards", not "NHS Trust", not "NHS guidelines", nothing
-- NEVER name any employer, hospital, Board, company, care home, department, ward, or geographic location
+- NEVER write the word "NHS" in any duty — not "NHS standards", not "NHS Trust", not "NHS guidelines", not "NHS Care Certificate", not "NHS Direct", nothing
+- NEVER name any employer, hospital, Board, company, care home, department, ward, or geographic location — this includes Southmead Hospital, Bristol Royal Infirmary, and every other named hospital worldwide
+- NEVER name any UK-specific healthcare software or EHR system: SystmOne, Lorenzo, Datix, EMIS, RiO, PARIS, TrakCare, CERNER, PAS, Electronic Prescribing System by brand name — write "electronic patient record system", "clinical information system", or "medication management system" instead
+- NEVER reference NHS pay bands (Band 3, Band 5, Band 7, etc.) or UK job grades
+- NEVER name specific UK training programmes or certificates (Oliver McGowan Training, NHS Care Certificate, Safeguarding Level 2, etc.) — describe the skill generically instead
 - Previous role duties ONLY — do not describe the current role
 - essentialCriteria must list EVERY criterion from all sections of the JDPS table`
   }
@@ -373,8 +379,11 @@ RULES:
 - Start every duty with a past tense verb: Assisted, Supported, Delivered, Monitored, Documented, Escalated, Participated, Undertook, Maintained, Coordinated, Gathered, Promoted, Performed...
 - Mirror the EXACT task vocabulary and keywords from the vacancy job description
 - Each duty: one sentence, 20-35 words, no location or employer reference anywhere
-- NEVER write the word "NHS" in any duty — not "NHS standards", not "NHS Trust", not "NHS guidelines", nothing
-- NEVER name any employer, hospital, Board, company, care home, department, ward, or geographic location
+- NEVER write the word "NHS" in any duty — not "NHS standards", not "NHS Trust", not "NHS guidelines", not "NHS Care Certificate", not "NHS Direct", nothing
+- NEVER name any employer, hospital, Board, company, care home, department, ward, or geographic location — this includes Southmead Hospital, Bristol Royal Infirmary, and every other named hospital worldwide
+- NEVER name any UK-specific healthcare software or EHR system: SystmOne, Lorenzo, Datix, EMIS, RiO, PARIS, TrakCare, CERNER, PAS, Electronic Prescribing System by brand name — write "electronic patient record system", "clinical information system", or "medication management system" instead
+- NEVER reference NHS pay bands (Band 3, Band 5, Band 7, etc.) or UK job grades
+- NEVER name specific UK training programmes or certificates (Oliver McGowan Training, NHS Care Certificate, Safeguarding Level 2, etc.) — describe the skill generically instead
 - Previous role duties ONLY — do not describe the current role
 
 CRITICAL:
