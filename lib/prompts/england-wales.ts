@@ -49,6 +49,7 @@ THIS IS STYLE 1. SUBHEADINGS ARE MANDATORY — EVERY CRITERION SECTION MUST HAVE
 `}
 ## ABSOLUTE RULES — NEVER BREAK
 - NEVER use em dashes (the — character). Use commas, colons, or hyphens (-) only
+- NEVER use semicolons (;) — use a full stop, comma, or colon instead
 ${style === '2' ? '- NEVER use subheadings or headings of any kind (this is Style 2, continuous prose only)\n' : '- ALWAYS use subheadings above criterion paragraphs (this is Style 1 — subheadings are mandatory, not optional)\n'}- NEVER fabricate experience — use only what is in the candidate profile
 - NEVER produce theoretical statements — every paragraph must contain specific evidence with quantified outcomes
 - NEVER use "NHS settings" — use specialty-specific settings only (acute care settings, mental health care settings, community care settings, maternity care settings, care settings)
@@ -111,7 +112,8 @@ The following phrases make the statement sound AI-generated. Never write them:
 "this experience reinforced", "this experience has reinforced", "this experience reinforced for me",
 "this experience shows", "this experience proves", "this experience demonstrates" — never start a sentence with "this experience [verb]"; instead name the specific situation and what happened,
 "I understand the importance of", "I understand that", "I understand how" — vague openers that describe rather than demonstrate; lead with a specific moment instead,
-"not as [labels/words] I apply but as" — never list all 6 C's in a comma sequence (care, compassion, competence, communication, courage, and commitment) as a sentence — that is the most AI-detectable pattern possible; weave them individually into prose instead
+"not as [labels/words] I apply but as" — never list all 6 C's in a comma sequence (care, compassion, competence, communication, courage, and commitment) as a sentence — that is the most AI-detectable pattern possible; weave them individually into prose instead,
+"that most [Band/role] candidates do not hold", "unlike most applicants", "setting me apart from other candidates", "few candidates will have" — never compare the candidate to other applicants; just state what the candidate has and evidence it
 
 ## BANNED PARAGRAPH OPENER PATTERNS — APPLY TO EVERY PARAGRAPH, NOT JUST THE OPENING
 The following patterns are the clearest sign of AI-generated text to any recruiter. They announce the topic/criterion before demonstrating it instead of opening mid-action.
@@ -140,6 +142,20 @@ BANNED FORMULA: "[Topic] is [superlative/strong claim]..."
 Examples — NEVER write these:
 "Effective communication is essential in my daily work."
 "Teamwork is fundamental to delivering quality care."
+
+BANNED FORMULA: "[Role/setting] is where my [quality] was built/developed/formed..."
+Examples — NEVER write these:
+"My previous role at [workplace] is where my clinical confidence was built."
+"That placement is where my communication skills developed."
+"This is where I learned to work under pressure."
+These are setup sentences that delay the action — open mid-situation instead.
+
+BANNED FORMULA: "[Criterion/value] sits at the core of / lies at the heart of..."
+Examples — NEVER write these:
+"Confidentiality sits at the core of outpatient work."
+"Patient dignity lies at the heart of everything I do."
+"Record-keeping sits at the heart of safe clinical practice."
+These announce the criterion before demonstrating it. Start with what you did.
 
 THE RULE: Every paragraph must open mid-action — with I + past tense verb, or a situational clause (When..., During..., Working alongside...). NEVER announce the topic. NEVER state the importance of a skill. Start doing it.
 
@@ -370,9 +386,8 @@ NAME conditions and tools as they appear in real clinical records — not as abs
 THIS PLAN IS SILENT. Never print criteria lists, numbered mappings, or planning notes. The user sees only the finished statement. Do this entirely in your head before writing the first word.
 
 Internally number every essential criterion in the order it appears on the person spec (E1, E2, E3...) and assign each to a paragraph:
-- E1-E3 (Education + first 2 Experience/Aptitude criteria): address in Opening Para 1 — state each criterion using exact PS wording AND give brief concrete evidence for each (named procedure, patient group, or specific action)
-- Opening Para 2: Why this Trust/role + clinical match (conditions, procedures, instruments from candidate's background) — NOT a criterion paragraph, NOT a STAR
-- E4 onwards (remaining Experience, Special Aptitudes, Disposition, IT, Safeguarding, EDI): assign to criterion paragraphs and stories in that same order, starting from the third paragraph
+- E1-E3 (Education + first 2 Experience/Aptitude criteria): address in Opening Para 1 — state each criterion using exact PS wording AND give brief concrete evidence for each (named procedure, patient group, or specific action). Optionally end Para 1 with one sentence about this specific Trust.
+- E4 onwards (remaining Experience, Special Aptitudes, Disposition, IT, Safeguarding, EDI): assign to criterion paragraphs and stories in that same order, starting from Para 2 immediately
 
 Write the statement following that silent map. Do not print the map, do not reference it, do not number paragraphs. Just write.
 
@@ -394,7 +409,9 @@ WHAT THE OPENING PARAGRAPH MUST COVER (all four — work these in naturally):
 3. At least 2 essential person spec criteria addressed with brief evidence
 4. Specific conditions the candidate has worked with AND at least 2 procedures they assist with for those patients
 
-Then in the second paragraph: why this Trust and what the candidate brings to this specific post.
+Optional: one brief sentence at the end of Para 1 naming the Trust and a specific reason for applying (a named service, value, or initiative from the advert) — one sentence only, never a paragraph. The full Trust motivation is covered in the Trust Values paragraph later in the statement.
+
+Para 2 begins addressing person spec criteria immediately — no "why this Trust" paragraph.
 
 ---
 
@@ -437,13 +454,8 @@ Example: "I have the NVQ Level 3 in Health and Social Care this post requires, c
 
 ---
 
-PARA 2 — WHY THIS TRUST + WHAT I BRING (3-4 sentences, ~70 words)
-Name the Trust. Name one specific thing from the advert (a service, a value, a patient population, a named initiative). Connect the candidate's background to it. State what they bring to this post that is specific to them.
-Never start with "I am applying" or "drawn to". Rotate these openers:
-- "[Trust]'s [specific thing from advert] is what brings me to this application."
-- "Working at [Trust] appeals to me because of [specific named reason from advert]."
-- "[Trust]'s commitment to [specific thing] matches how I already work."
-- "This post at [Trust] is the right next step because [specific reason connecting candidate to advert]."
+PARA 2 — FIRST CRITERION PARAGRAPH
+Para 2 addresses the next essential criterion (E4) from the person spec using CAR format — see CRITERION PARAGRAPHS section below. There is no "why this Trust" paragraph. Trust motivation is covered in the Trust Values paragraph and optionally as one sentence at the end of Para 1.
 
 ## NO SEPARATE EDUCATION PARAGRAPH
 Qualifications are covered in Opening Para 1. No separate education section anywhere in the statement.

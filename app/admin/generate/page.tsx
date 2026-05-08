@@ -424,10 +424,10 @@ export default function AdminGeneratePage() {
                   <div className="mt-2 flex items-center gap-1.5 flex-wrap">
                     <span className="text-xs text-gray-500 mr-0.5">Depth style:</span>
                     {([
-                      { val: '' as const, label: 'Auto', title: 'Claude picks randomly each time' },
-                      { val: '1' as const, label: '1 – Story-led', title: '2-3 long immersive scenes, rest short and sharp' },
-                      { val: '2' as const, label: '2 – Evidence-led', title: 'All paragraphs 3-4 sentences, dense with specific detail' },
-                      { val: '3' as const, label: '3 – Reflective', title: 'Medium paragraphs with 1-2 brief reflection moments' },
+                      { val: '' as const, label: 'Auto', title: 'Best fit chosen for this candidate' },
+                      { val: '1' as const, label: '1 – Story-led', title: '2-3 deep narrative scenes; all other paragraphs tight and short' },
+                      { val: '2' as const, label: '2 – Evidence-led', title: 'Every paragraph 3-4 sentences, packed with procedures, systems and outcomes' },
+                      { val: '3' as const, label: '3 – Reflective', title: 'Medium paragraphs with 1-2 brief reflection sentences after key story outcomes' },
                     ]).map(({ val, label, title }) => (
                       <button key={val || 'auto'} type="button" title={title} onClick={() => setBodyPattern(val)}
                         className="text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer"
@@ -493,8 +493,8 @@ export default function AdminGeneratePage() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">Statement Style</label>
                   <div className="grid grid-cols-2 gap-3">
                     {[
-                      { val: '1' as const, label: 'Style 1 - Headed Sections', desc: 'Each criterion gets its own heading.' },
-                      { val: '2' as const, label: 'Style 2 - Flowing Prose', desc: 'Natural paragraphs without subheadings.' },
+                      { val: '1' as const, label: 'Style 1 - Headed Sections', desc: 'Bold headings group related criteria — easy to scan.' },
+                      { val: '2' as const, label: 'Style 2 - Flowing Prose', desc: 'Continuous paragraphs, no headings — reads more naturally.' },
                     ].map(({ val, label, desc }) => (
                       <button key={val} type="button" onClick={() => setStyle(val)}
                         className="p-3 rounded-md border-2 text-sm text-left transition-colors"
