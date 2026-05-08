@@ -521,49 +521,35 @@ Format: "My qualifications include [quals FROM PERSON SPEC with SVQ/SCQF equival
 MINIMUM 180 words. MAXIMUM 200 words. Count words internally after every sentence.
 End with "Thank you." Stop immediately after "Thank you." — nothing follows.
 
-Q3 MUST FEEL DIFFERENT FROM Q1 AND Q2.
-Q1 = skills and suitability. Q2 = motivation and values. Q3 = the full human picture.
-Q3 should bring in anything not yet covered — availability, flexibility, personal commitment, a final anecdote that seals the case, a brief acknowledgement of what this role means to the candidate personally — before closing with confidence.
-NEVER simply repeat criteria already covered in Q1 and Q2 — use Q3 to add dimension, not echo.
+PURPOSE OF Q3:
+Q3 is a criteria recap and gap-fill. Its job is to confirm that every essential criterion on the person spec is covered, and to address anything that Q1 and Q2 did not have space for.
 
-ALL SIX C's MUST APPEAR in Q3 — Care, Compassion, Competence, Communication, Courage, Commitment.
-Do not omit any. They must be demonstrated through action, never defined or listed.
+STEP 1 — GAP CHECK (do this before writing Q3):
+Go through every essential criterion E1, E2, E3... in order. Identify any that received no direct evidence in Q1 or Q2, or were only briefly touched. Q3 must cover those gaps. If all criteria are covered, use Q3 to restate the 2-3 strongest ones with a different angle or a brief new piece of evidence.
 
-NEVER start the 6 C's section with any of these:
+STEP 2 — STRUCTURE Q3 AS:
+1. Criteria recap/gap-fill (110-130 words): Address any uncovered essential criteria directly, with brief specific evidence. Weave ALL SIX C's — Care, Compassion, Competence, Communication, Courage, Commitment — naturally into this section through actions and behaviours, not as a separate block and not announced by name. Every C must be demonstrated, never defined.
+2. Practical compliance (30-40 words): PVG/DBS, shift flexibility, mandatory training willingness, any other practical criteria from the person spec.
+3. Closing sentence (20-25 words): Board name + ENHANCED vacancy title + confidence. End: "Thank you."
+
+HOW TO WEAVE THE 6 C's INTO THE RECAP — NOT AS A SEPARATE BLOCK:
+Do not write a standalone 6 C's paragraph. Instead, as you write about each uncovered criterion or recap strength, make the action you describe naturally carry one or more of the C's. By the time you finish the recap section, all six must have appeared through specific actions.
+
+WRONG — standalone 6 C's block:
+"In terms of the 6 C's, I demonstrate care by... compassion by... competence by..."
+
+CORRECT — C's embedded in criterion recap:
+"My record-keeping [competence] is consistent: on TrakCare I document observations within five minutes of taking them and flag any anomaly to the senior charge nurse before leaving the bay [courage]. When a patient last month told me she felt her concerns were being dismissed by the wider team, I sat with her for twenty minutes before my break to understand what she needed, then raised it at handover [care, compassion, communication]. Every shift I attend ready, prepared, and on time — that is the level of commitment I bring to NHS [Board]."
+
+BANNED 6 C's OPENERS — never start Q3 with these:
 "The 6 C's of Care run through...", "The 6 C's guide my...", "The 6 C's underpin...",
 "The 6 C's are central to...", "The 6 C's inform...", "The 6 C's shape..."
 These are the most recognisable AI openers to any recruiter. Never write them.
 
-DO NOT write six consecutive "I [verb] [C] by..." sentences. Embed all six in flowing prose through specific actions and moments.
-NEVER define a C — demonstrate it.
+NEVER write six consecutive "I [verb] [C] by..." sentences. Never define a C — demonstrate it.
 
-CORRECT 6 C's example (action-first, all 6 present, no announcements):
-"Before any personal care interaction, I read the patient's documented preferences, explain each step, and adjust my pace to theirs — care and compassion built into the process, not added at the end. My mandatory training record stands at 100% and my care notes are accurate first time. When I spotted unexplained bruising during routine personal care, I documented it immediately and told the senior charge nurse; a safeguarding referral followed that morning. I didn't hesitate. Every patient conversation is different: I adjust how I speak, when to slow down, and when to listen without filling the silence. Showing up fully prepared for every shift, every time, is the only standard I hold myself to."
-
-Q3 STRUCTURE — CHOOSE ONE OF THESE FOUR ARRANGEMENTS. Rotate across different vacancies.
-
-ARRANGEMENT A — QUALITIES FIRST, 6 C's SECOND:
-Para 1 (40-50 words): Name 2 practical strengths or qualities not yet covered — availability, shift flexibility, something about how the candidate shows up. Tie to the Board or the role specifically.
-Para 2 (100-120 words): Demonstrate all 6 C's through a single behavioural paragraph — one specific moment or habit that carries all six.
-Closing (20-25 words): Board name + ENHANCED vacancy title + confidence. End: "Thank you."
-
-ARRANGEMENT B — PERSONAL COMMITMENT FIRST:
-Para 1 (40-50 words): A brief, direct statement of what this role means to the candidate personally — not a generic claim, a genuine specific. Why this Board, why this specialty, why now.
-Para 2 (100-120 words): Demonstrate all 6 C's through actions. Then add 1-2 sentences on practical compliance (PVG, training, availability).
-Closing (20-25 words): Board name + ENHANCED vacancy title + confidence. End: "Thank you."
-
-ARRANGEMENT C — STORY-ANCHORED:
-Para 1 (60-80 words): A very short story (2-3 sentences) that weaves in care, compassion, and at least one other C. Follow with 1 sentence on what that story shows about the candidate. This story must not have appeared in Q1 or Q2.
-Para 2 (60-80 words): Continue through the remaining C's (competence, communication, courage, commitment) in flowing prose, tied to a specific context or habit. Add practical compliance at the end.
-Closing (20-25 words): Board name + ENHANCED vacancy title + confidence. End: "Thank you."
-
-ARRANGEMENT D — INTEGRATED (6 C's WOVEN THROUGHOUT):
-Write Q3 as a single block of flowing prose that integrates all 6 C's, practical qualities, and a specific commitment — without distinct paragraphs. The 6 C's should emerge naturally through actions and moments, not in a clustered section. Final sentence is the closing. End: "Thank you."
-
-CLOSING SENTENCE — MANDATORY IN ALL ARRANGEMENTS:
-The final sentence before "Thank you." must name the Board and the ENHANCED vacancy title.
-Rotate these closing formats:
-- "My experience as [ENHANCED title] at [workplace], my [qualification], and my [strength] make me well suited for this post at NHS [Board]. Thank you."
+CLOSING SENTENCE — MANDATORY. Rotate these formats:
+- "My experience as [ENHANCED title] at [workplace], my [qualification], and my [key strength] make me well suited for this post at NHS [Board]. Thank you."
 - "I am confident that my background as [ENHANCED title], alongside [qualification] and [key strength], prepares me well for this role within NHS [Board]. Thank you."
 - "NHS [Board] will get someone who shows up prepared, who cares consistently, and who has the skills this post requires. Thank you."
 - "I would bring to NHS [Board] the experience of a [ENHANCED title] who has [key achievement] — and I am ready to do that work here. Thank you."
