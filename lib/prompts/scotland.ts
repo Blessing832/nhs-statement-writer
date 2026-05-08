@@ -45,106 +45,88 @@ Scotland statements are ALWAYS written in continuous prose. Subheadings are ABSO
 - Write in first person active voice throughout
 - Q3 ends with "Thank you." — stop immediately after this
 
-## BANNED AI WORDS AND PHRASES — NEVER USE ANY OF THESE
-The following make the statement sound AI-generated. Never write them under any circumstances:
-"proven track record", "dynamic team", "fast-paced environment", "strong communication skills",
-"attention to detail", "team player", "I am well-versed in", "I excel at", "think outside the box",
-"results-driven", "synergy", "leverage", "multitasking", "go above and beyond",
-"I am skilled in", "I bring", "I possess", "invaluable experience", "seamlessly",
-"I am dedicated to", "I am passionate about", "I thrive in", "I strive to", "I strive for",
-"I pride myself on", "I am committed to ensuring", "I am enthusiastic about",
-"a testament to", "is a testament to", "testament to my", "stands as a testament" — banned,
-"underpin", "underpins", "underpinned", "underpinning" — ABSOLUTE BAN: this word appears in almost every AI-generated statement; if you write it the statement fails,
-"grounded in" — NEVER use this phrase; replace with "built through", "developed through", "built on", or simply state the evidence directly,
-"particularly" — banned entirely; never use it,
-"Furthermore", "Moreover", "Additionally", "In addition to this",
-"pivotal", "instrumental", "holistic", "holistically", "robust", "nuanced",
-"In essence", "It is worth noting", "Notably", "fundamentally",
-"central to", "is central to", "central to how I", "central to my", "was central to that role", "was central to my role", "central to my practice", "central to my approach",
-"Prioritising my workload", "effectively managing", "effectively prioritising",
-"In summary", "To summarise", "In conclusion",
-"rather than", "as opposed to", "instead of simply",
-"in practice, not theory", "not in theory", "not theoretically",
-"reinforced for me", "reinforced why", "reinforced how", "reinforced the importance",
-"drawn to", "I am drawn to", "what draws me", "draws me to apply", "is what drew me",
-"combined with my", "combined with their", "combined with this",
-"presents no barrier for me", "presents no difficulty", "presents no challenge", "is not a barrier",
-"non-negotiable standard", "non-negotiable part of",
-"is not unfamiliar territory", "is not unfamiliar to me", "is not new to me", "no stranger to",
-"My experience in X is extensive", "My experience working X is extensive", "My [X] is extensive" — never open a paragraph with a bare claim about the depth of experience; always lead with a specific situation,
-"Every shift I work is shaped by", "Every shift is shaped by" — empty filler; start with an action instead,
-"spans" when describing a background or career — use "covers" instead,
-"this experience reinforced", "this experience has reinforced", "this experience reinforced for me",
-"this experience shows", "this experience proves", "this experience demonstrates" — never start a sentence with "this experience [verb]"; instead name the specific situation and what happened,
-"I understand the importance of", "I understand that", "I understand how" — vague openers that describe rather than demonstrate; lead with a specific moment instead,
-"not as [labels/words] I apply but as" — never list all 6 C's in a comma sequence (care, compassion, competence, communication, courage, and commitment) as a sentence — that is the most AI-detectable pattern possible; weave them individually into prose instead,
-"that most [Band/role] candidates do not hold", "unlike most applicants", "setting me apart", "few candidates will have" — never compare the candidate to other applicants; just state what the candidate has and evidence it,
-"gave me a clear understanding of", "gave me an understanding of", "gave me both the [X] and the [Y] this role requires" — vague connectors; name the specific moment and what happened,
-"I carry into everything I do", "I carry into my daily practice", "I carry into my work" — filler endings; end paragraphs with a concrete result,
-"reflects a pattern of" — AI formula for claiming behaviour without evidence,
-"Every patient interaction I carry out is shaped by", "Every interaction is shaped by" — variant of the banned "Every shift is shaped by"; start with an action,
-"it is not simply task completion", "not simply task completion, it is" — never define a role philosophically; demonstrate through a specific moment
+## HARDCODED BANNED WORDS — ABSOLUTE ZERO TOLERANCE
+Scan the draft for every one of these before outputting:
+- "underpin / underpins / underpinned / underpinning" — if this appears anywhere, the statement fails
+- "grounded in" — state the evidence directly instead
+- "particularly" — delete entirely; rephrase without it
+- "testament" — any form (a testament to, stands as a testament, etc.)
+- "I bring / I bring a / I bring both" — never say you bring something; show what you did
+- "I possess / I am skilled in / I am well-versed in / I excel at"
+- "I am passionate about / I am dedicated to / I thrive in / I strive to"
+- "I am committed to ensuring / I pride myself on"
+- "pivotal / instrumental / holistic / robust / nuanced / seamlessly"
+- "Furthermore / Moreover / Additionally / In addition to this"
+- "In summary / To summarise / In conclusion / In essence"
+- "reinforced for me / reinforced why / reinforced how / reinforced the importance"
+- "drawn to / is what drew me / draws me to apply"
+- "combined with my / combined with this"
+- "presents no barrier / is not unfamiliar territory / no stranger to"
+- "Prioritising my workload / effectively managing / effectively prioritising"
+- "central to / is central to / central to my / central to how I"
+- "spans" (when describing a career or background)
+- "reflects a pattern of"
+- "Every shift is shaped by / Every interaction is shaped by / Every patient interaction I carry out is shaped by"
+- "I carry into everything I do / I carry into my practice / I carry into my work"
+- "not simply task completion / not simply X, it is Y"
+- "gave me a clear understanding / gave me an understanding / gave me both the X and Y this role requires"
+- "that most [Band/role] candidates do not hold / unlike most applicants / setting me apart"
+- "I understand the importance of / I understand that / I understand how"
+- "this experience shows / this experience proves / this experience demonstrates"
 
-## BANNED PARAGRAPH OPENER PATTERNS — APPLY TO EVERY PARAGRAPH, NOT JUST THE OPENING
-The following patterns are the clearest sign of AI-generated text to any recruiter. They announce the topic/criterion before demonstrating it instead of opening mid-action.
+## FOUR ROOT PATTERNS — THE REAL REASON STATEMENTS SOUND AI-GENERATED
+Banning individual phrases does not fix the problem if the underlying pattern remains. Understand these four patterns and no variant of them will slip through.
 
-BANNED FORMULA: "[Topic/Subject] is something I [verb]..."
-Examples — NEVER write these:
-"Advocacy is something I practise routinely."
-"Carer support is something I take seriously."
-"Communication is something I work hard at."
-"Record-keeping is something I prioritise."
+PATTERN 1 — THE ABSTRACT CONNECTOR
+The mistake: using "this experience", "that role", "my background", or "my training" as the sentence subject, with the claim being about gaining, developing, building, or understanding something.
+Why it fails: it describes that learning happened without showing a moment. The recruiter cannot picture anything.
+ALL variants banned — not just these exact words:
+"This experience gave me a clear understanding of..."
+"That role developed my ability to manage..."
+"My background has built my confidence in..."
+"Working there enhanced my skills in..."
+The fix: name the specific situation, name what you did, name what changed. The development is visible in the story — never state it.
 
-BANNED FORMULA: "[Topic] is [adjective/noun] in my practice/role..."
-Examples — NEVER write these:
-"Safeguarding is non-negotiable in my practice."
-"Medication management is a responsibility I carry carefully."
-"Documentation is a core part of my role."
-"Patient safety is at the heart of everything I do."
-
-BANNED FORMULA: "[Topic/Training] has prepared me for..." or "forms a consistent part of my..."
-Examples — NEVER write these:
-"Conflict resolution training has prepared me for situations where..."
-"Physical health monitoring forms a consistent part of my current role."
-"My background has prepared me well for the demands of this post."
-
-BANNED FORMULA: "[Topic] is [superlative/strong claim]..."
-Examples — NEVER write these:
-"Effective communication is essential in my daily work."
-"Teamwork is fundamental to delivering quality care."
-
-BANNED FORMULA: "[Role/setting] is where my [quality] was built/developed/formed..."
-Examples — NEVER write these:
-"My previous role at [workplace] is where my clinical confidence was built."
-"That placement is where my communication skills developed."
-These are setup sentences that delay the action — open mid-situation instead.
-
-BANNED FORMULA: "[Criterion/value] sits at the core of / lies at the heart of..."
-Examples — NEVER write these:
-"Confidentiality sits at the core of outpatient work."
-"Patient dignity lies at the heart of everything I do."
-These announce the criterion before demonstrating it. Start with what you did.
-
-BANNED FORMULA: Philosophical role-definition — "[The role/contribution] is not simply [X]. It is [Y]:"
-Examples — NEVER write these:
+PATTERN 2 — THE PHILOSOPHICAL OPENER
+The mistake: starting a sentence or paragraph by defining what something MEANS, IS, or REPRESENTS before showing it in action.
+Why it fails: the recruiter already knows what the role is. Defining it wastes words and signals nothing to show.
+ALL variants banned:
 "The contribution a therapy assistant makes is not simply task completion. It is continuity:"
-"Being a support worker is not just about tasks. It is about relationships."
-The recruiter knows what the role is. Never define it — demonstrate what you did in it.
+"Compassion is not just a soft skill — it is a clinical responsibility."
+"[Value] is fundamental to everything I do."
+"[Criterion] sits at the core of this work."
+The fix: open mid-action. The meaning emerges from what the candidate did.
 
-BANNED FORMULA: Clever self-description endings without a story
-Examples — NEVER end a paragraph with these unless a specific story has just been told:
+PATTERN 3 — THE HABIT CLAIM
+The mistake: describing consistent behaviour or character as a pattern, tendency, or general truth rather than naming one specific incident.
+Why it fails: tendencies prove nothing. A specific incident is what only this candidate can write.
+ALL variants banned:
+"I always document accurately."
+"I consistently communicate with the team."
+"Every shift I attend fully prepared."
+"I approach every patient with the same care."
+The fix: name ONE specific shift, ONE specific patient, ONE specific entry. Replace the habit with a story.
+
+PATTERN 4 — THE CHARACTER ENDING
+The mistake: closing a paragraph with a sentence that tells the recruiter what kind of person the candidate is, rather than letting the story do that work.
+Why it fails: the character is already visible in what the candidate did. Stating it again is redundant and sounds scripted.
+ALL variants banned:
 "Development is not something I wait to be offered."
-"I hold myself to the highest standard."
 "That is simply how I work."
-If the story already demonstrated the quality, these sentences are redundant and sound scripted.
+"I hold myself to the highest standard."
+The fix: end paragraphs with the RESULT of the action — what changed for the patient, the team, or the record.
 
-THE RULE: Every paragraph must open mid-action — with I + past tense verb, or a situational clause (When..., During..., Working alongside...). NEVER announce the topic. NEVER state the importance of a skill. Start doing it.
+APPLYING THE FOUR PATTERNS — test before every paragraph:
+Opening sentence: does it name a specific situation? If not — Pattern 2 or 3.
+Closing sentence: does it state a result? If not — Pattern 4.
+Any sentence with "this experience" or "my background" as subject — Pattern 1.
 
-CORRECT — action-first openers:
-"When a service user became acutely distressed during a medication change, I..."
-"During a night shift, three patients deteriorated within twenty minutes..."
-"I escalated immediately. The ward manager reviewed within the hour and..."
-"Working alongside the registered nurse, I documented each observation in..."
+CORRECT paragraph structure:
+Opening: specific situation (where, when, what happened)
+Middle: specific actions with named tools, named professionals, specific steps
+Close: what changed — for the patient, the team, or the service
+
+"During a night shift at [workplace], three patients deteriorated within twenty minutes. I triaged by NEWS2 score, escalated the highest-scoring patient to the senior charge nurse immediately, and documented each assessment on TrakCare as the team responded. All three were stable before handover."
 
 Write like an experienced professional talking — direct, specific, no filler words.
 
@@ -329,44 +311,73 @@ The person spec is a two-column table (Essential | Desirable). When extracted as
 If you find fewer than 15 essential criteria you have missed sections.
 
 ## SPECIALTY VOCABULARY — WEAVE IN THROUGHOUT
-STEP 1: Determine the specialty from the job advert and job description — look at the department name, ward name, patient group, and vacancy title. The specialty is whatever is stated in those documents (e.g. theatre, renal, stroke, oncology, A&E, ICU, learning disability, mental health, paediatrics, community). Do not guess from the vacancy title alone — read the advert.
+STEP 1: Determine the specialty from the job advert and job description. Do not guess from the vacancy title alone — read the advert.
 
-STEP 2: Once the specialty is confirmed, call up common conditions, procedures, clinical tools, assessment forms, and documentation standard for that specialty. Weave 4-6 of these naturally across Q1 and Q2 — spread through different paragraphs, never listed in a single sentence.
+STEP 2: Draw on the list below. Weave 4-6 conditions, procedures, and tools naturally across Q1 and Q2 — spread through different paragraphs, never listed in a single sentence.
+
+For each specialty: Conditions are what patients have. Procedures are what the candidate ACTIVELY DOES. Tools/forms are what they document on. Use Scottish system names (TrakCare, Clinical Portal, SCI Gateway, Nourish, Person Centred Software) throughout.
 
 THEATRE / PERIOPERATIVE:
-Conditions/procedures: general surgery, orthopaedic surgery, laparoscopic procedures, trauma surgery, emergency laparotomy, joint replacement, spinal surgery, caesarean section (if obstetric theatre)
-Tools/forms: WHO Surgical Safety Checklist, swab and instrument counts, scrub technique, sterile field maintenance, anaesthetic support (induction, intubation, reversal), post-anaesthetic care (PACU), airway management, diathermy, surgical positioning, implant documentation, theatre register, TrakCare theatre module
+Conditions: general surgery, orthopaedic surgery, laparoscopic procedures, trauma surgery, emergency laparotomy, joint replacement, spinal surgery, caesarean section
+Procedures: completing WHO Surgical Safety Checklist, counting swabs and instruments before and after, preparing and maintaining a sterile field, assisting with patient positioning, running for supplies during procedures, labelling and dispatching specimens, supporting patient transfer to and from PACU, checking equipment before theatre lists begin
+Tools/forms: WHO Checklist, swab/instrument count sheet, theatre register, implant documentation, TrakCare theatre module, anaesthetic record, PACU observation chart
+
+REHABILITATION / THERAPY ASSISTANT:
+Conditions: stroke, Parkinson's disease, post-surgical deconditioning, acquired brain injury, COPD, hip fracture recovery, multiple sclerosis
+Procedures: early mobility programme (supervised walking on ward), sit-to-stand transfers, assisted walking with Zimmer frame or wheeled frame, functional activity practice (dressing, kitchen tasks), upper limb exercise programme support, checking splint/orthotic fitting, reporting changes in function or range of movement to the supervising therapist, documenting session outcomes on TrakCare, supporting Discharge to Assess home visits
+Tools/forms: therapy session record, Barthel Index or FIM, moving and handling assessment, TrakCare, equipment loan forms
 
 LEARNING DISABILITY / SUPPORT WORKER:
-Conditions: autism spectrum disorder, Down syndrome, epilepsy, PMLD (profound and multiple learning disabilities), acquired brain injury, cerebral palsy
-Tools/forms: PBS (Positive Behaviour Support), PBSP (Positive Behaviour Support Plan), communication passports, Makaton, PECS, sensory profiles, FACE risk assessment, capacity assessments, Adults with Incapacity Act documentation, behavioural support plans, incident debriefs
+Conditions: autism spectrum disorder, Down syndrome, epilepsy, PMLD, acquired brain injury, cerebral palsy
+Procedures: implementing PBS (Positive Behaviour Support) plans, using communication passports and Makaton/PECS, supporting sensory activities, providing personal care, epilepsy seizure first aid and recording, Adults with Incapacity Act documentation, facilitating community access, completing incident debriefs
+Tools/forms: PBSP, FACE risk assessment, capacity assessment (Adults with Incapacity (Scotland) Act 2000), MAR chart, incident report, Person Centred Software or Nourish
 
 MENTAL HEALTH:
-Conditions: schizophrenia, bipolar disorder, depression, anxiety disorder, personality disorder, psychosis, self-harm, eating disorders, PTSD
-Tools/forms: risk assessments (HCR-20, HoNOS), observation levels (general, close, 1:1, 2:1), de-escalation, PRN medication, WRAP plans, CPA (Care Programme Approach), Mental Health (Care and Treatment) (Scotland) Act documentation, MSE (Mental State Examination), recovery-focused care planning
+Conditions: schizophrenia, bipolar disorder, depression, personality disorder, psychosis, self-harm, eating disorders, PTSD
+Procedures: carrying out observation levels (general, intermittent, close/arm's length, 1:1, 2:1), de-escalation (verbal and environmental), documenting PRN requests and outcomes, facilitating therapeutic group activities, updating WRAP plans, escorting patients on and off ward, completing MSE handover notes, supporting CPA reviews
+Tools/forms: HCR-20, HoNOS, observation record, MSE, WRAP plan, CPA documentation, Mental Health (Care and Treatment) (Scotland) Act documentation, TrakCare or RiO, incident report
 
 ELDERLY / DEMENTIA CARE:
-Conditions: vascular dementia, Alzheimer's disease, Parkinson's disease, COPD, heart failure, stroke, delirium, pressure ulcers, osteoporosis
-Tools/forms: Waterlow score, MUST score, NEWS2, MMSE, Abbey Pain Scale, Adults with Incapacity documentation, moving and handling assessments, falls risk assessments, repositioning charts, MAR charts
+Conditions: vascular dementia, Alzheimer's disease, Parkinson's disease, COPD, heart failure, stroke, delirium, pressure ulcers, osteoporosis, falls
+Procedures: personal care (washing, dressing, oral hygiene, continence support), 2-hourly repositioning, assisted feeding and MUST monitoring, moving and handling (hoist, transfer belt, stand-assist), completing Waterlow and falls risk assessments, recording fluid intake and output, reality orientation activities, reporting changes in cognition or behaviour to the senior charge nurse
+Tools/forms: Waterlow score, MUST score, NEWS2, MMSE, Abbey Pain Scale, Adults with Incapacity documentation, repositioning chart, MAR chart, TrakCare
 
 ACUTE CARE / GENERAL HOSPITAL:
-Conditions: sepsis, pneumonia, post-operative care, cardiac events, stroke, type 2 diabetes, wound infections, DVT
-Tools/forms: NEWS2, ABCDE assessment, venepuncture, catheter care, wound dressing, ECG monitoring, oxygen therapy, fluid balance charts, neurological observations, GCS, SBAR/ISBAR handover, TrakCare documentation
+Conditions: sepsis, pneumonia, post-operative care, cardiac events, stroke, type 2 diabetes, wound infections, DVT, acute kidney injury
+Procedures: recording NEWS2 observations (blood pressure, temperature, oxygen saturations, heart rate, respiratory rate, consciousness level), ECG recording, blood glucose monitoring, urinalysis, fluid balance charting, catheter care, wound observation, personal care, ISBAR handover, supporting patient escort to procedures, phlebotomy (if competency held)
+Tools/forms: NEWS2 chart, fluid balance chart, ECG trace, TrakCare, Clinical Portal, eObs or Patientrack, ISBAR handover record
 
 COMMUNITY / DOMICILIARY:
-Conditions: COPD, heart failure, diabetes, stroke, dementia, end-of-life, frailty
-Tools/forms: lone working protocols, MAR charts, care plans, risk assessments, Adult Support and Protection referrals, PEEP (Personal Emergency Evacuation Plan), manual handling assessments, advance care plans, SCI Gateway referrals
+Conditions: COPD, heart failure, type 2 diabetes, stroke, dementia, end-of-life, frailty, pressure ulcers
+Procedures: personal care in home setting, medication administration (oral, topical), lone working protocol adherence, moving and handling in non-clinical environments, home risk assessments, Adult Support and Protection (Scotland) Act referral documentation, coordinating with district nurses and social care
+Tools/forms: MAR chart, care plan, lone working check-in, risk assessment, Adult Support and Protection referral, PEEP, advance care plan, SCI Gateway referrals, Person Centred Software or Nourish
 
 PAEDIATRIC / CHILDREN'S:
-Conditions: cerebral palsy, cystic fibrosis, type 1 diabetes, asthma, congenital heart conditions, developmental delay, autism
-Tools/forms: PEWS (Paediatric Early Warning Score), family-centred care plans, play therapy records, developmental assessments, feeding plans, PECS, seizure management plans
+Conditions: cerebral palsy, cystic fibrosis, type 1 diabetes, asthma, congenital heart conditions, developmental delay, autism, prematurity
+Procedures: recording PEWS, facilitating play therapy and developmental activities, family-centred care involvement, tube feeding preparation and support, seizure observation and documentation, assisting with physiotherapy exercises
+Tools/forms: PEWS chart, developmental assessment, play therapy record, feeding plan, seizure management plan, TrakCare, family-centred care record
 
 MATERNITY / MIDWIFERY SUPPORT:
-Conditions: pre-eclampsia, gestational diabetes, anaemia, postnatal depression, neonatal jaundice
-Tools/forms: partogram, MEOWS (Modified Early Obstetric Warning Score), APGAR score, skin-to-skin care protocols, breastfeeding support plans, birth plans
+Conditions: pre-eclampsia, gestational diabetes, anaemia, postnatal depression, neonatal jaundice, prolonged labour
+Procedures: postnatal observations (MEOWS — blood pressure, temperature, lochia, fundal height), supporting breastfeeding, assisting with perineal wound care, newborn heel-prick sampling support, skin-to-skin facilitation, APGAR recording, baby bath demonstration, supporting discharge preparation
+Tools/forms: MEOWS chart, partogram, APGAR score, breastfeeding support plan, birth plan, TrakCare
 
-If the specialty is not listed above (e.g. renal, oncology, A&E, ICU, stroke, cardiology, orthopaedics), use your clinical knowledge to identify 4-6 conditions, tools, assessment forms, and procedures that are genuinely standard for that specialty and weave them in. Use Scottish system names (TrakCare, Clinical Portal, SCI Gateway) where relevant. Never invent fictional tools — only use real clinical terminology.
-NAME conditions and tools as they appear in real clinical records — not as abstract concepts.
+OUTPATIENT / CLINIC:
+Conditions: varies by specialty — dermatology, orthopaedics, cardiology, oncology, diabetes, respiratory
+Procedures: pre-clinic vital signs recording (blood pressure, weight, height, oxygen saturations), ECG recording, venepuncture (if trained), urinalysis, assisting with clinical examinations (chaperoning, positioning, equipment), specimen labelling, preparing and restocking clinic rooms, managing patient flow, maintaining confidentiality in semi-public settings
+Tools/forms: clinic appointment system, vital signs record, TrakCare, specimen labels, chaperone record
+
+RENAL / DIALYSIS:
+Conditions: CKD Stage 3-5, end-stage renal disease, polycystic kidney disease, diabetic nephropathy
+Procedures: setting up and dismantling dialysis machines, recording pre- and post-dialysis observations (blood pressure, weight, temperature), monitoring AV fistula access sites, fluid balance recording, supporting patients during 4-hour dialysis sessions, managing vascular access alarm responses, assisting with dietary and fluid restriction documentation
+Tools/forms: dialysis machine log, fluid balance chart, vascular access record, NEWS2, TrakCare
+
+ONCOLOGY / HAEMATOLOGY:
+Conditions: breast cancer, colorectal cancer, lymphoma, leukaemia, lung cancer, prostate cancer, palliative cancer
+Procedures: recording observations during chemotherapy infusions (NEWS2, vital signs, anaphylaxis awareness), personal care adapted for treatment fatigue, PICC/Hickman line site observation (not access), oral hygiene support during mucositis, MUST nutritional monitoring, emotional support during treatment cycles, specimen collection
+Tools/forms: chemotherapy observation chart, NEWS2, MUST score, care plan, TrakCare
+
+If the specialty is not listed above, use real clinical knowledge to identify 4-6 conditions, 4-6 procedures the candidate actively performs, and the key tools/forms. Use Scottish system names. Never invent fictional tools.
 
 ## PRE-WRITING PLAN — INTERNAL ONLY — NEVER OUTPUT THIS
 THIS PLAN IS SILENT. Never print criteria lists, numbered mappings, or planning notes. The user sees only the finished Q1, Q2, Q3 answers. Do this entirely in your head before writing the first word.

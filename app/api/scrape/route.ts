@@ -273,9 +273,13 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // Always try to supplement with attachments — NHS Jobs shows a subset of criteria
-  // on the page but the full JDPS PDF typically has many more. Don't skip this check
-  // even when the page already contains some person spec content.
+  // Always try to supplement with attachments. NHS Jobs shows a subset of criteria
+  // on the page (often 11-15) but the full JDPS PDF typically has 25-40.
+  // Issue: some job pages render attachment links via JavaScript, so a bare HTTP
+  // fetch here won't find them if the Puppeteer scraper already rendered them.
+  // We try anyway — if it works we get the full PS; if not, the rawText still has
+  // the page criteria and we flag low coverage to the client.
+  let attachmentFound = false
   try {
     const res2 = await fetch(url.split('?')[0], {
       headers: { ...BASE_HEADERS, 'Accept': 'text/html,*/*' },
@@ -287,9 +291,20 @@ export async function POST(req: NextRequest) {
       const attachmentText = await extractAttachmentText($2, url.split('?')[0])
       if (attachmentText.length > 200) {
         data.rawText += '\n\n=== ATTACHED PERSON SPECIFICATION / JOB DESCRIPTION ===\n' + attachmentText
+        attachmentFound = true
       }
     }
-  } catch { /* non-critical, Puppeteer result still usable */ }
+  } catch { /* non-critical */ }
 
-  return NextResponse.json(data)
+  // Count rough number of essential criteria visible in the text.
+  // If fewer than 15 and no attachment was found, warn the user to paste the JDPS.
+  const essentialCount = ((data.rawText as string).match(/\bessential\b/gi) || []).length
+  const hasFullPs = attachmentFound || data.rawText.includes('=== ATTACHED PERSON SPECIFICATION')
+  const likelySparsePs = !hasFullPs && essentialCount < 8
+
+  return NextResponse.json({
+    ...data,
+    hasAttachedPs: hasFullPs,
+    likelySparsePs,
+  })
 }

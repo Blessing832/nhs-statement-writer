@@ -164,6 +164,7 @@ function GeneratePage() {
   const [vacancyUrl, setVacancyUrl] = useState('')
   const [jobDescText, setJobDescText] = useState('')
   const [pastedPersonSpec, setPastedPersonSpec] = useState('')
+  const [sparsePs, setSparsePs] = useState(false)
   const [cachedJobData, setCachedJobData] = useState<Record<string, unknown> | null>(null)
   const [style, setStyle] = useState<'1' | '2'>('1')
   const [bodyPattern, setBodyPattern] = useState<'' | '1' | '2' | '3'>('')
@@ -215,6 +216,7 @@ function GeneratePage() {
       const scraped = await scrapeRes.json().catch(() => ({ error: 'Server error on scrape.' }))
       if (!scrapeRes.ok) throw new Error(scraped.error || 'Could not read the job advert. Please try again.')
       scrapeData = scraped
+      if (scraped.likelySparsePs) setSparsePs(true)
     }
 
     onStep('Writing your supporting statement...')
@@ -415,11 +417,16 @@ function GeneratePage() {
                     </div>
                   </div>
                   <div className="mt-3">
+                    {sparsePs && (
+                      <div className="mb-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+                        <strong>Full person spec not found.</strong> The advert page may have fewer criteria than the attached document. Paste the full person spec below for a more complete statement.
+                      </div>
+                    )}
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Person Specification <span className="text-xs font-normal text-gray-400">(optional)</span>
                     </label>
                     <p className="text-xs text-gray-400 mb-1.5">
-                      If the person spec is in a separate document or hard to find, paste it here and it will be added to the job content.
+                      If the full person spec is in a separate PDF or Word document, open it, copy all the text, and paste it here.
                     </p>
                     <textarea
                       value={pastedPersonSpec}
@@ -621,7 +628,7 @@ function GeneratePage() {
                   Download .doc
                 </button>
                 <button
-                  onClick={() => { setResult(null); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText(''); setPastedPersonSpec('') }}
+                  onClick={() => { setResult(null); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText(''); setPastedPersonSpec(''); setSparsePs(false) }}
                   className="text-sm px-3 py-1.5 border border-blue-400 text-blue-100 rounded font-medium hover:bg-blue-800 cursor-pointer"
                 >
                   New Statement
