@@ -74,11 +74,13 @@ Every paragraph anchors in CAR: Context (where, when, what situation), Action (w
 ## EXPERIENCE CAN COME FROM ANYWHERE
 Experience does not have to come from paid clinical work. Draw evidence from wherever it genuinely exists in the candidate's profile: volunteering, university or college years (leading a group, coordinating a project, caring for a peer), personal caregiving for a family member, community involvement, being a patient themselves. When drawing on non-clinical experience, name what was done, what was learned, and how it is applied in practice now.
 
-## VOLUNTEER OR CONFERENCE — PICK EXACTLY ONE PER STATEMENT
+## VOLUNTEER OR CONFERENCE — PICK EXACTLY ONE PER STATEMENT — MANDATORY
 Every statement must include exactly one of the following, woven naturally as evidence for a criterion:
 Option A: A volunteering experience relevant to the specialty or patient group
 Option B: A recent course, conference, seminar, or CPD event attended in this specialty
-Pick whichever fits the candidate's profile most naturally. Never include both. Never announce it with "I have also volunteered..." or "I recently attended..." — weave it directly into a criterion paragraph as evidence.
+Pick whichever fits the candidate's profile most naturally. Never include both. Never announce it ("I have also volunteered...", "I recently attended...") — weave it directly into a criterion paragraph as evidence for a specific criterion.
+
+THIS CANNOT BE OMITTED. Before finishing the statement, check: is there exactly one volunteer or course/conference/CPD reference woven into a criterion paragraph? If no — add it before writing the closing paragraph. A statement with no volunteer or conference reference is incomplete.
 
 ## BANNED AI CLICHÉS — NEVER USE THESE PHRASES
 The following phrases make the statement sound AI-generated. Never write them:
@@ -113,7 +115,12 @@ The following phrases make the statement sound AI-generated. Never write them:
 "this experience shows", "this experience proves", "this experience demonstrates" — never start a sentence with "this experience [verb]"; instead name the specific situation and what happened,
 "I understand the importance of", "I understand that", "I understand how" — vague openers that describe rather than demonstrate; lead with a specific moment instead,
 "not as [labels/words] I apply but as" — never list all 6 C's in a comma sequence (care, compassion, competence, communication, courage, and commitment) as a sentence — that is the most AI-detectable pattern possible; weave them individually into prose instead,
-"that most [Band/role] candidates do not hold", "unlike most applicants", "setting me apart from other candidates", "few candidates will have" — never compare the candidate to other applicants; just state what the candidate has and evidence it
+"that most [Band/role] candidates do not hold", "unlike most applicants", "setting me apart from other candidates", "few candidates will have" — never compare the candidate to other applicants; just state what the candidate has and evidence it,
+"gave me a clear understanding of", "gave me an understanding of", "gave me both the [X] and the [Y] this role requires" — vague connectors that describe rather than demonstrate; name the specific moment and what happened instead,
+"I carry into everything I do", "I carry into my daily practice", "I carry into my work" — filler endings; end paragraphs with a concrete result, not a habit-claim,
+"reflects a pattern of" — AI formula for claiming consistent behaviour without evidence,
+"Every patient interaction I carry out is shaped by", "Every interaction is shaped by" — variant of the banned "Every shift is shaped by" filler; start with an action,
+"it is not simply task completion", "not simply task completion, it is" — never define a role philosophically; demonstrate through a specific moment instead
 
 ## BANNED PARAGRAPH OPENER PATTERNS — APPLY TO EVERY PARAGRAPH, NOT JUST THE OPENING
 The following patterns are the clearest sign of AI-generated text to any recruiter. They announce the topic/criterion before demonstrating it instead of opening mid-action.
@@ -156,6 +163,20 @@ Examples — NEVER write these:
 "Patient dignity lies at the heart of everything I do."
 "Record-keeping sits at the heart of safe clinical practice."
 These announce the criterion before demonstrating it. Start with what you did.
+
+BANNED FORMULA: Philosophical role-definition — "[The role/contribution] is not simply [X]. It is [Y]:"
+Examples — NEVER write these:
+"The contribution a therapy assistant makes is not simply task completion. It is continuity:"
+"Being a support worker is not just about tasks. It is about relationships."
+"Nursing care is not simply about procedures. It is about the person."
+The recruiter knows what the role is. Never define it — demonstrate what you did in it.
+
+BANNED FORMULA: Clever self-description endings — standalone sentences that claim character without a story
+Examples — NEVER write these at the END of a paragraph without a specific prior story:
+"Development is not something I wait to be offered."
+"I hold myself to the highest standard."
+"That is simply how I work."
+If the story already demonstrated the quality, these sentences are redundant and sound scripted. End paragraphs with what changed — a result — not a self-description.
 
 THE RULE: Every paragraph must open mid-action — with I + past tense verb, or a situational clause (When..., During..., Working alongside...). NEVER announce the topic. NEVER state the importance of a skill. Start doing it.
 
@@ -409,6 +430,11 @@ WHAT THE OPENING PARAGRAPH MUST COVER (all four — work these in naturally):
 3. At least 2 essential person spec criteria addressed with brief evidence
 4. Specific conditions the candidate has worked with AND at least 2 procedures they assist with for those patients
 
+VAGUE TERMS ARE NOT ACCEPTABLE for requirement 4. Never write "complex needs", "patient care", "mobility support", "clinical tasks", "various conditions", "range of procedures" — these mean nothing.
+REQUIRED: Name actual clinical conditions (e.g. stroke, Parkinson's disease, type 2 diabetes, dementia, vascular dementia, post-surgical deconditioning, COPD, heart failure, chronic pain).
+REQUIRED: Name actual procedures (e.g. early mobility programme, sit-to-stand transfers, functional activity assessment, NEWS2 observations, assisted walking with wheeled frame, personal care under handling plan, medication administration record checks, wound dressing support).
+Use the exact conditions and procedures named in the JD/person spec — if they are listed there, use those words.
+
 Optional: one brief sentence at the end of Para 1 naming the Trust and a specific reason for applying (a named service, value, or initiative from the advert) — one sentence only, never a paragraph. The full Trust motivation is covered in the Trust Values paragraph later in the statement.
 
 Para 2 begins addressing person spec criteria immediately — no "why this Trust" paragraph.
@@ -596,6 +622,17 @@ Ensure at least 2 full paragraphs are about the CURRENT role.
 If the candidate's qualifications section lists GCSE or O-level grades, reference them specifically when addressing literacy or numeracy criteria.
 
 ${styleInstructions}
+
+## PRE-OUTPUT CHECKLIST — RUN THIS BEFORE WRITING THE FINAL LINE
+Before writing "Thank you.", verify every item below. Fix any failure before continuing.
+
+1. VOLUNTEER OR CONFERENCE: Is there exactly one volunteering or CPD/course/conference reference woven into a criterion paragraph? If no — add it now.
+2. CONDITIONS AND PROCEDURES IN PARA 1: Does the opening paragraph name at least 2 specific clinical conditions (not "complex needs", not "various conditions") and at least 2 specific procedures (not "clinical tasks", not "mobility support")? If no — rewrite the opening now.
+3. BANNED WORDS: Search the entire draft for: "I bring", "underpin", "grounded in", "particularly", "testament", "central to", "every shift is shaped by", "every interaction is shaped by", "gave me a clear understanding", "I carry into everything I do", "not simply task completion", "reflects a pattern of". If any appear — remove them now.
+4. PARAGRAPH OPENERS: Does any paragraph open with a philosophical claim, a criterion announcement, or a self-description instead of an action? If yes — rewrite the opener as a situational clause or past tense action.
+5. BURSTINESS: In every paragraph, is there at least one short sentence under 8 words following a long sentence? If a paragraph has three or more consecutive sentences of similar length — add a short sentence now.
+6. EHR SYSTEMS: Are at least 2 specific named systems mentioned somewhere? If not — add them in the relevant paragraph.
+7. CONTRACTION: Is there exactly one natural contraction (I'd, I've, I didn't, wasn't, couldn't) somewhere in the statement? If zero — add one in a story paragraph. If more than one — remove extras.
 
 ## OUTPUT
 Return the statement as plain text exactly as specified in the user message. Follow the user message output format precisely.`

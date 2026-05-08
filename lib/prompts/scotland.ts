@@ -14,8 +14,10 @@ Every paragraph anchors in CAR: Context (where, when, what situation), Action (w
 ## EXPERIENCE CAN COME FROM ANYWHERE
 Evidence does not have to come from paid clinical work. Draw from volunteering, university or college years, personal caregiving, community involvement, or being a patient. When drawing on non-clinical experience, name what was done, what was learned, and how it is applied in practice now.
 
-## VOLUNTEER OR CONFERENCE — PICK EXACTLY ONE PER STATEMENT
-Every statement must include exactly one: a volunteering experience relevant to the specialty, or a recent course, conference, seminar, or CPD event in this specialty. Weave it in as evidence for a criterion — never announce it.
+## VOLUNTEER OR CONFERENCE — PICK EXACTLY ONE PER STATEMENT — MANDATORY
+Every statement must include exactly one: a volunteering experience relevant to the specialty, or a recent course, conference, seminar, or CPD event in this specialty. Weave it in as evidence for a criterion — never announce it ("I have also volunteered...", "I recently attended...").
+
+THIS CANNOT BE OMITTED. Before finishing Q3, check: is there exactly one volunteer or CPD/course/conference reference woven into Q1 or Q2? If no — add it now before writing the Q3 closing. A statement with no volunteer or conference reference is incomplete.
 
 ## WRITING STYLE: CONTINUOUS PROSE — NO SUBHEADINGS
 Scotland statements are ALWAYS written in continuous prose. Subheadings are ABSOLUTELY FORBIDDEN.
@@ -76,7 +78,12 @@ The following make the statement sound AI-generated. Never write them under any 
 "this experience shows", "this experience proves", "this experience demonstrates" — never start a sentence with "this experience [verb]"; instead name the specific situation and what happened,
 "I understand the importance of", "I understand that", "I understand how" — vague openers that describe rather than demonstrate; lead with a specific moment instead,
 "not as [labels/words] I apply but as" — never list all 6 C's in a comma sequence (care, compassion, competence, communication, courage, and commitment) as a sentence — that is the most AI-detectable pattern possible; weave them individually into prose instead,
-"that most [Band/role] candidates do not hold", "unlike most applicants", "setting me apart", "few candidates will have" — never compare the candidate to other applicants; just state what the candidate has and evidence it
+"that most [Band/role] candidates do not hold", "unlike most applicants", "setting me apart", "few candidates will have" — never compare the candidate to other applicants; just state what the candidate has and evidence it,
+"gave me a clear understanding of", "gave me an understanding of", "gave me both the [X] and the [Y] this role requires" — vague connectors; name the specific moment and what happened,
+"I carry into everything I do", "I carry into my daily practice", "I carry into my work" — filler endings; end paragraphs with a concrete result,
+"reflects a pattern of" — AI formula for claiming behaviour without evidence,
+"Every patient interaction I carry out is shaped by", "Every interaction is shaped by" — variant of the banned "Every shift is shaped by"; start with an action,
+"it is not simply task completion", "not simply task completion, it is" — never define a role philosophically; demonstrate through a specific moment
 
 ## BANNED PARAGRAPH OPENER PATTERNS — APPLY TO EVERY PARAGRAPH, NOT JUST THE OPENING
 The following patterns are the clearest sign of AI-generated text to any recruiter. They announce the topic/criterion before demonstrating it instead of opening mid-action.
@@ -117,6 +124,19 @@ Examples — NEVER write these:
 "Confidentiality sits at the core of outpatient work."
 "Patient dignity lies at the heart of everything I do."
 These announce the criterion before demonstrating it. Start with what you did.
+
+BANNED FORMULA: Philosophical role-definition — "[The role/contribution] is not simply [X]. It is [Y]:"
+Examples — NEVER write these:
+"The contribution a therapy assistant makes is not simply task completion. It is continuity:"
+"Being a support worker is not just about tasks. It is about relationships."
+The recruiter knows what the role is. Never define it — demonstrate what you did in it.
+
+BANNED FORMULA: Clever self-description endings without a story
+Examples — NEVER end a paragraph with these unless a specific story has just been told:
+"Development is not something I wait to be offered."
+"I hold myself to the highest standard."
+"That is simply how I work."
+If the story already demonstrated the quality, these sentences are redundant and sound scripted.
 
 THE RULE: Every paragraph must open mid-action — with I + past tense verb, or a situational clause (When..., During..., Working alongside...). NEVER announce the topic. NEVER state the importance of a skill. Start doing it.
 
@@ -395,6 +415,11 @@ WHAT Q1 OPENING MUST COVER:
 3. At least 2 essential person spec criteria evidenced briefly
 4. Conditions the candidate has worked with AND at least 2 procedures they assist with
 5. (SVQ if English qual): note any SVQ equivalence for qualifications
+
+VAGUE TERMS ARE NOT ACCEPTABLE for requirement 4. Never write "complex needs", "patient care", "various conditions", "range of procedures", "clinical tasks" — these are meaningless.
+REQUIRED: Name actual clinical conditions from the candidate's experience (e.g. stroke, Parkinson's disease, vascular dementia, type 2 diabetes, COPD, post-surgical deconditioning, autism, epilepsy).
+REQUIRED: Name actual procedures (e.g. early mobility programme, sit-to-stand transfers, NEWS2 observations, personal care under handling plan, assisted walking with wheeled frame, MAR chart documentation, de-escalation, wound dressing support).
+Use the exact conditions and procedures from the JD/person spec wherever possible.
 
 OPENING STYLE 1 — MOTIVATION-FIRST:
 "I am applying for [role] at NHS [Board] because [specific personal reason tied to specialty or patient group, not generic]. Having spent [X] years in [acute/community] care supporting patients with [condition 1] and [condition 2], assisting with [procedure 1] and [procedure 2], and documenting on [TrakCare/system], I hold [qualification (SVQ equivalent)] and [brief evidence of key criterion]."
