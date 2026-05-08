@@ -269,23 +269,23 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // If Puppeteer scraper didn't get person spec, try to extract from attachments
-  if (!hasPersonSpec(data.rawText)) {
-    try {
-      const res2 = await fetch(url.split('?')[0], {
-        headers: { ...BASE_HEADERS, 'Accept': 'text/html,*/*' },
-        signal: AbortSignal.timeout(10000),
-      })
-      if (res2.ok) {
-        const html2 = await res2.text()
-        const $2 = cheerio.load(html2)
-        const attachmentText = await extractAttachmentText($2, url.split('?')[0])
-        if (attachmentText.length > 200) {
-          data.rawText += '\n\n=== ATTACHED PERSON SPECIFICATION / JOB DESCRIPTION ===\n' + attachmentText
-        }
+  // Always try to supplement with attachments — NHS Jobs shows a subset of criteria
+  // on the page but the full JDPS PDF typically has many more. Don't skip this check
+  // even when the page already contains some person spec content.
+  try {
+    const res2 = await fetch(url.split('?')[0], {
+      headers: { ...BASE_HEADERS, 'Accept': 'text/html,*/*' },
+      signal: AbortSignal.timeout(10000),
+    })
+    if (res2.ok) {
+      const html2 = await res2.text()
+      const $2 = cheerio.load(html2)
+      const attachmentText = await extractAttachmentText($2, url.split('?')[0])
+      if (attachmentText.length > 200) {
+        data.rawText += '\n\n=== ATTACHED PERSON SPECIFICATION / JOB DESCRIPTION ===\n' + attachmentText
       }
-    } catch { /* non-critical, Puppeteer result still usable */ }
-  }
+    }
+  } catch { /* non-critical, Puppeteer result still usable */ }
 
   return NextResponse.json(data)
 }
