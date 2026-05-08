@@ -71,7 +71,7 @@ async function parseDocx(buffer: Buffer): Promise<string> {
 async function fetchAttachmentText(url: string): Promise<string> {
   try {
     const res = await fetch(url, {
-      headers: { ...BASE_HEADERS, 'Accept': 'application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,*/*' },
+      headers: { ...BASE_HEADERS, 'Accept': 'application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword,*/*' },
       signal: AbortSignal.timeout(15000),
     })
     if (!res.ok) return ''
@@ -120,10 +120,14 @@ function findJdpsLinks($: cheerio.CheerioAPI, baseUrl: string): string[] {
       text.includes('job spec') ||
       text.includes('supporting document') ||
       text.includes('attachment') ||
+      text.includes('download') ||
+      text.includes('view document') ||
       hrefLower.includes('.pdf') ||
       hrefLower.includes('.docx') ||
+      hrefLower.includes('.doc') ||
       hrefLower.includes('document') ||
-      hrefLower.includes('attachment')
+      hrefLower.includes('attachment') ||
+      hrefLower.includes('download')
 
     if (!likelyJdps) return
 

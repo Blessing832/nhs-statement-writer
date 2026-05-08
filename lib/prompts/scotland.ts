@@ -629,6 +629,18 @@ Missing even one essential criterion is a complete failure. No exceptions.
 Addressing criteria OUT OF ORDER is also a failure — shortlisting panels work top-to-bottom.
 Ensure at least 2 full paragraphs are about the current role.
 
+## PRE-OUTPUT CHECKLIST — RUN THIS BEFORE WRITING Q3'S FINAL LINE
+Before writing "Thank you.", verify every item below. Fix any failure before continuing.
+
+1. VOLUNTEER OR CONFERENCE: Is there exactly one volunteering or CPD/course/conference reference woven into Q1 or Q2? If no — add it now.
+2. CONDITIONS AND PROCEDURES IN Q1 OPENING: Does the Q1 opening name at least 2 specific clinical conditions (not "complex needs", not "various conditions") and at least 2 specific procedures (not "clinical tasks")? If no — rewrite the opening now.
+3. BANNED WORDS: Search the entire draft for: "I bring", "underpin", "grounded in", "particularly", "testament", "central to", "every shift is shaped by", "every interaction is shaped by", "gave me a clear understanding", "I carry into everything I do", "not simply task completion", "reflects a pattern of". If any appear — remove them now.
+4. PARAGRAPH OPENERS: Does any paragraph open with a philosophical claim, a criterion announcement, or a self-description instead of an action? If yes — rewrite the opener.
+5. BURSTINESS: In every paragraph, is there at least one short sentence under 8 words following a long sentence? If a paragraph has three or more sentences of similar length — add a short sentence.
+6. EHR SYSTEMS: Are at least 2 specific named systems (TrakCare, Clinical Portal, Nourish, Person Centred Software, etc.) mentioned? If not — add them in the documentation or record-keeping paragraphs.
+7. CONTRACTION: Is there exactly one natural contraction (I'd, I've, I didn't, wasn't, couldn't) somewhere across Q1-Q3? If zero — add one in a story paragraph. If more than one — remove extras.
+8. Q3 WRITTEN: Has Q3 been written? If not — write it now before stopping.
+
 ## OUTPUT
 Write all three questions: Q1, Q2, and Q3. All three are required. Never stop after Q2.
 Follow the output format specified in the user message exactly.`
