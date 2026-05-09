@@ -2,6 +2,99 @@
 import { useState } from 'react'
 import { useAdminToken } from '@/lib/admin-context'
 
+function parseBold(text: string): React.ReactNode {
+  const parts = text.split(/\*\*(.*?)\*\*/g)
+  return parts.map((part, i) =>
+    i % 2 === 1 ? <strong key={i} className="font-semibold text-gray-900">{part}</strong> : part
+  )
+}
+
+function RenderContent({ content }: { content: string }) {
+  const lines = content.split('\n')
+  const nodes: React.ReactNode[] = []
+
+  for (let i = 0; i < lines.length; i++) {
+    const raw = lines[i]
+    const t = raw.trim()
+
+    if (!t) { nodes.push(<div key={i} className="h-3" />); continue }
+    if (t === '---') { nodes.push(<hr key={i} className="border-blue-100 my-5" />); continue }
+
+    if (/^SECTION\s+\d+:/i.test(t)) {
+      const text = t.replace(/\*\*/g, '')
+      nodes.push(
+        <h2 key={i} className="text-base font-bold uppercase tracking-wide mt-10 mb-3 pb-2 border-b-2"
+          style={{ color: '#003087', borderColor: '#005eb8' }}>
+          {text}
+        </h2>
+      )
+      continue
+    }
+
+    if (/^Q\d+\s+to\s+Q\d+:/i.test(t)) {
+      nodes.push(
+        <p key={i} className="text-xs font-bold uppercase tracking-widest mt-6 mb-2" style={{ color: '#005eb8' }}>
+          {t.replace(/\*\*/g, '')}
+        </p>
+      )
+      continue
+    }
+
+    if (/^Q\d+[:\s]/i.test(t)) {
+      nodes.push(
+        <h3 key={i} className="font-semibold text-sm mt-6 mb-1.5 leading-snug" style={{ color: '#003087' }}>
+          {parseBold(t)}
+        </h3>
+      )
+      continue
+    }
+
+    if (/^Part\s+\d+/i.test(t)) {
+      nodes.push(
+        <h3 key={i} className="font-semibold mt-5 mb-1.5" style={{ color: '#003087' }}>
+          {t.replace(/\*\*/g, '')}
+        </h3>
+      )
+      continue
+    }
+
+    const labelMatch = t.match(/^\*\*(PS Criteria Tested|Hint|Answer|Key Strengths|Clinical Phrases|Smart Questions to Ask the Panel|Essential Qualifications[^:]*|Essential Experience[^:]*|Essential Skills[^:]*|Desirable[^:]*|Other Requirements[^:]*)\*\*:(.*)/)
+    const plainLabelMatch = !labelMatch && t.match(/^(PS Criteria Tested|Hint|Answer|Key Strengths|Clinical Phrases|Smart Questions to Ask the Panel|Essential Qualifications[^:]*|Essential Experience[^:]*|Essential Skills[^:]*|Desirable[^:]*|Other Requirements[^:]*):(.*)/)
+    const match = labelMatch || plainLabelMatch
+
+    if (match) {
+      const label = match[1]
+      const rest = match[2].trim()
+      const isAnswer = /^answer$/i.test(label)
+      const isHint = /^hint$/i.test(label)
+      nodes.push(
+        <div key={i} className={`mt-3 ${isAnswer ? 'bg-blue-50 rounded-lg p-4 border border-blue-100' : isHint ? 'bg-amber-50 rounded-lg p-3 border border-amber-100' : ''}`}>
+          <span className={`font-semibold text-sm ${isAnswer ? 'text-blue-800' : isHint ? 'text-amber-800' : 'text-gray-800'}`}>{label}: </span>
+          {rest && <span className="text-gray-700 text-sm">{parseBold(rest)}</span>}
+        </div>
+      )
+      continue
+    }
+
+    if (/^[-•]\s/.test(t)) {
+      nodes.push(
+        <li key={i} className="ml-5 text-sm text-gray-700 leading-relaxed list-disc">
+          {parseBold(t.slice(2))}
+        </li>
+      )
+      continue
+    }
+
+    nodes.push(
+      <p key={i} className="text-sm text-gray-700 leading-relaxed">
+        {parseBold(t)}
+      </p>
+    )
+  }
+
+  return <div className="space-y-0.5">{nodes}</div>
+}
+
 function downloadAsWord(content: string, clientName: string) {
   const lines = content.split('\n')
   let html = ''
@@ -149,8 +242,8 @@ export default function InterviewPrepPage() {
             </div>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-5 text-sm text-gray-700 leading-relaxed max-h-[600px] overflow-y-auto whitespace-pre-wrap font-mono">
-            {result.content}
+          <div className="bg-white rounded-lg p-6 max-h-[700px] overflow-y-auto border border-gray-100">
+            <RenderContent content={result.content} />
           </div>
         </div>
       </div>

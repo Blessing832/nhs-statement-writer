@@ -16,12 +16,13 @@ ABSOLUTE RULES:
 - All answers written in the candidate's voice, first person
 - Previous role throughout = EXACT vacancy job title from the job description (not enhanced, not modified)
 - Duties referenced in answers = drawn directly from the job description duties, never invented
-- STARR = Situation, Task, Action, Result, Reflection
+- STARR = Situation, Task, Action, Result, Reflection — each element must be present and clearly developed in every answer
 - Tell Me About Yourself must cover ALL person spec criteria, essential AND desirable — not partial coverage
 - Tell Me About Yourself ends with one full STARR scenario naturally weaving in 5-8 PS criteria as keywords
-- Each individual Q&A answer: 100 words maximum
+- Each individual Q&A answer: minimum 200 words, ideally 250-300 words — short answers are a failure; develop every STARR element fully with specific detail
 - No placeholders anywhere — every detail drawn from candidate profile and job description
-- NEVER state or imply the candidate lacks experience in the vacancy specialty`
+- NEVER state or imply the candidate lacks experience in the vacancy specialty
+- Use bold (**text**) for section labels only (PS Criteria Tested, Hint, Answer, Key Strengths, Clinical Phrases, Smart Questions to Ask the Panel)`
 
 export async function POST(req: NextRequest) {
   if (!isAuthorised(req)) {
@@ -108,28 +109,28 @@ SECTION 3: QUESTIONS AND ANSWERS
 
 Q1 to Q10: Person Specification Questions
 One question per PS criterion or related group of criteria. For each question write:
-PS Criteria Tested: [list which criteria this question targets]
-Hint: [drawn directly from job description duties and expectations — what to focus on]
-Answer: [100 words max, STARR method, concrete evidence from candidate profile, first person, no bullet points, flowing prose]
+**PS Criteria Tested:** [list which criteria this question targets]
+**Hint:** [drawn directly from job description duties and expectations — what the panel is really looking for, 2-3 sentences]
+**Answer:** [minimum 200 words, target 250 words — develop every STARR element fully: Situation (set the scene with specific ward/workplace/patient), Task (what was your responsibility), Action (specific steps you took, named tools/professionals), Result (concrete outcome), Reflection (what you learned or how it shaped your practice). First person, flowing prose, no bullet points. Weave in 2-3 person spec criteria as natural keywords.]
 
 Q11 to Q20: Scenario-Based Questions
 Each scenario tests 5 or more PS criteria simultaneously. For each question write:
-PS Criteria Tested: [list minimum 5 criteria this tests]
-Hint: [drawn from job description duties and context]
-Answer: [100 words max, STARR method, PS keywords woven naturally into the answer, first person, no bullet points, flowing prose]
+**PS Criteria Tested:** [list minimum 5 criteria this tests]
+**Hint:** [drawn from job description duties and context — what the panel wants to see, 2-3 sentences]
+**Answer:** [minimum 200 words, target 250-300 words — rich STARR answer with specific clinical detail. Situation must be vivid and specific. Actions must include named tools, named professionals, specific decisions made. Result must be measurable or clearly described. Reflection must feel genuine. Weave in 5+ PS criteria as natural keywords throughout. First person, flowing prose, no bullet points.]
 
 ---
 
 SECTION 4: INTERVIEW TIPS
 
-Key Strengths: [specific strengths to emphasise based on this candidate's profile and this role — 3-5 sentences]
-Clinical Phrases: [key phrases and terminology to use naturally in answers, drawn from the job description — list 6-8 phrases]
-Smart Questions to Ask the Panel: [3 specific, intelligent questions relevant to this role and trust — write each as a full question sentence]`
+**Key Strengths:** [3-5 sentences on the specific strengths this candidate should emphasise for this exact role — drawn from their profile and the person spec]
+**Clinical Phrases:** [8-10 key phrases and terminology from the job description to use naturally in answers — write each as a complete phrase, not just a word]
+**Smart Questions to Ask the Panel:** [4-5 specific, intelligent questions to ask at the end — tailored to this role, this Trust, and this candidate's background. Write each as a full question sentence.]`
 
   try {
     const message = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 8000,
+      max_tokens: 16000,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: userPrompt }],
     })
