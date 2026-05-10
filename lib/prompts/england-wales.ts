@@ -83,10 +83,12 @@ Pick whichever fits the candidate's profile most naturally. Never include both. 
 THIS CANNOT BE OMITTED. Before finishing the statement, check: is there exactly one volunteer or course/conference/CPD reference woven into a criterion paragraph? If no — add it before writing the closing paragraph. A statement with no volunteer or conference reference is incomplete.
 
 SPECIFICITY REQUIRED: The volunteer or CPD reference must be credible and specific:
-- Name the event, course, or volunteering role specifically — if no name appears in the candidate profile, describe it by what was covered, the approximate period, and the setting. "A regional development day" with no further detail is not acceptable.
+- Name the event, course, or volunteering role specifically — if no name appears in the candidate profile, describe it by what was covered, the approximate period, and the setting.
 - The result must describe a concrete change in one specific interaction, record, or decision — not "I apply those principles to my practice" (that is Pattern 1: Abstract Connector applied to CPD — banned).
 - WRONG: "I attended a regional nursing development day on NHS frameworks and I apply those principles to my documentation."
-- RIGHT: "After completing a one-day study day on [topic] at [setting/month-year], I revised the way I document [specific thing], which [specific outcome] at [workplace]."
+- RIGHT: "After completing a study day on [topic] at [setting/approximate period], I revised the way I document [specific thing], which [specific outcome] at [workplace]."
+
+CRITICAL — READING JOURNALS IS NOT A CPD EVENT: Describing a habit of professional reading does NOT satisfy this requirement and must not be written at all. "Staying current with professional issues is something I take seriously: I follow NMC updates, NHS England guidance, and peer-reviewed nursing journals" is Pattern 3 (a habit claim) applied to professional development — it is banned on two counts. General professional awareness is assumed. Replace with a specific named event, study day, conference, or volunteering role with a concrete result in practice.
 
 ## HARDCODED BANNED WORDS — ABSOLUTE ZERO TOLERANCE
 These specific words and phrases are the most detectable AI signals. Scan the draft for every one before outputting:
@@ -122,20 +124,50 @@ These specific words and phrases are the most detectable AI signals. Scan the dr
 Banning individual phrases does not fix the problem if the underlying pattern remains. Understand these four patterns and no variant of them will slip through.
 
 PATTERN 1 — THE ABSTRACT CONNECTOR
-The mistake: using "this experience", "that role", "my background", or "my training" as the sentence subject, with the claim being about gaining, developing, building, or understanding something.
-Why it fails: it describes that learning happened. It does not show a moment. The recruiter cannot picture anything.
-Examples of this pattern (ALL variants are banned, not just these exact words):
+The mistake: using "this experience", "that role", "my background", "my training", or any past period as the sentence subject, with the predicate being a claim about learning, development, understanding, or how the candidate now thinks/works/approaches something.
+Why it fails: it describes that development occurred. It does not show a moment. The recruiter cannot picture anything.
+Examples of this pattern (ALL variants are banned — the subject and verb change but the mistake is always the same):
 "This experience gave me a clear understanding of..."
 "That role developed my ability to manage..."
 "My background has built my confidence in..."
 "This placement deepened my appreciation of..."
 "Working there enhanced my skills in..."
-The fix: name the specific situation, name what you did, name what changed. The "development" is visible in the story itself — never state it.
+"That placement shaped how I think about [topic] from the very beginning of my training."
+"That experience shaped the kind of [role] I became."
+"That role shaped how I approach [skill/criterion]."
+"Those years gave me an insight into..."
+Any sentence where a past experience is the grammatical subject and the claim is that it produced a shift in thinking, understanding, approach, or professional identity — that is Pattern 1.
+The fix: name the specific situation, name what you did, name what changed. The development is visible in the story itself — never state it.
 
 PATTERN 2 — THE PHILOSOPHICAL OPENER
-The mistake: starting a sentence or paragraph by defining what something MEANS, IS, or REPRESENTS before showing it in action.
-Why it fails: the recruiter already knows what the role is. Defining it wastes words and signals that the writer has nothing to show.
-Examples of this pattern (ALL variants are banned):
+The mistake: starting a sentence or paragraph by defining what something MEANS, IS, or REPRESENTS before showing it in action. This includes four common sub-forms — all banned:
+
+SUB-FORM A — Aphoristic opener: a proverb, general wisdom, or poetic observation used to open a paragraph before the clinical story.
+"Quiet work often speaks loudest."
+"Good care doesn't always make noise."
+"The best nurses are often the quietest ones in the room."
+→ Open with the action. Start the paragraph directly with: "During a [late shift / discharge morning / busy clinic]..."
+
+SUB-FORM B — Post-story redefinition: defining what a value IS after already demonstrating it in a story.
+"Care and compassion were not additional tasks that shift, they were the whole point."
+"That is what [value] actually means in practice."
+"[Value] is not [reduced definition] — it is [elevated definition]."
+→ The story already showed it. The redefinition is redundant, sounds scripted, and is the Pattern 2 mistake applied after the action rather than before.
+
+SUB-FORM C — Work-definition closer: ending a paragraph or story by defining the nature of the work/role rather than stating what changed for the patient.
+"Discharge planning always involves holding two questions at once: is this patient ready, and am I certain?"
+"Safe care always means [general principle]."
+"[Role] requires [abstract quality] at all times."
+"That is, I believe, what makes the difference between [adjective] and [adjective] nursing."
+→ End with what changed for the patient, the team, or the record. Never close with a general truth about the work.
+
+SUB-FORM D — Thesis-reframe opener: opening a paragraph by redefining how the candidate conceptualises a task, before any evidence.
+"Accurate, objective documentation is something I treat as a clinical responsibility, not an administrative task, because a poor handover record can directly harm a patient after they leave the ward."
+"[Task] is not just [routine description] — it is [elevated reframe]."
+"[Noun] is not simply [task] — it is [philosophical purpose]."
+→ Open with the action: where, when, what happened. The reframe is visible in how carefully the candidate worked — never stated upfront.
+
+The original examples (also all banned):
 "The contribution a therapy assistant makes is not simply task completion. It is continuity:"
 "Compassion is not just a soft skill — it is a clinical responsibility."
 "Being a support worker is not just about tasks. It is about relationships."
@@ -149,7 +181,7 @@ The fix: open mid-action. The meaning emerges from what the candidate did.
 PATTERN 3 — THE HABIT CLAIM
 The mistake: describing consistent behaviour or character as a pattern, tendency, or general truth rather than naming one specific incident.
 Why it fails: tendencies prove nothing. Any candidate can claim them. A specific incident is what only this candidate can write.
-Examples of this pattern (ALL variants are banned):
+Examples of this pattern (ALL variants are banned — the words change but the structure is always the same: no specific incident, only a claimed tendency):
 "I always document accurately."
 "I consistently communicate with the team."
 "Every shift I attend fully prepared."
@@ -158,16 +190,23 @@ Examples of this pattern (ALL variants are banned):
 "I make it a habit to..."
 "Workload organisation is something I practise deliberately."
 "I manage pressure by preparing systematically."
-"[Criterion/quality] is something I approach carefully / consistently."
+"[Criterion/quality] is something I approach carefully / consistently / take seriously."
+"[Criterion/quality] is something I take seriously: I [list of regular behaviours]..."
 "I hold myself to a high standard of [quality]."
 "Before every shift I [routine action]." (when describing a general habit, not a specific incident)
-"I've applied the same [approach/method] ever since." (adding a habit claim after a story result)
+"I've applied the same [approach/method] ever since." (habit claim appended after a story result)
+"Working as part of a [team/role] means [abstract observation about what it requires], and I [habit claim]."
+"I work within the boundaries of my [registration/scope/role], [list of consistent habits]."
+"I know where my [authority/competence] ends."
+"I approach all [staff/patients/relatives] with [quality]." (bare character claim with no incident)
+"[Value] is present in / shapes / runs through everything I do."
+TRUST VALUES SPECIFIC: NEVER demonstrate a Trust value with a general habit. "I demonstrate [value] by [what I always do]" is Pattern 3. Each Trust value must be demonstrated with a specific incident — a named moment at a named workplace with a result. "I demonstrate fairness by giving every patient the same thoroughness regardless of background" is Pattern 3 and banned. Replace with: "At [workplace], when [situation], I [specific action]. [Result]."
 The fix: name ONE specific shift, ONE specific patient, ONE specific record entry. Replace the habit description with a paragraph that begins mid-action on a specific occasion.
 
 PATTERN 4 — THE CHARACTER ENDING
 The mistake: closing a paragraph with a sentence that tells the recruiter what kind of person the candidate is, rather than letting the story do that work.
 Why it fails: if the story already demonstrated the quality, the character sentence is redundant. If the story did not demonstrate it, the sentence is a claim without evidence. Either way it weakens the paragraph.
-Examples of this pattern (ALL variants are banned):
+Examples of this pattern (ALL variants are banned — any closing sentence that describes the candidate rather than the outcome):
 "Development is not something I wait to be offered."
 "That is simply how I work."
 "I hold myself to the highest standard."
@@ -178,6 +217,11 @@ Examples of this pattern (ALL variants are banned):
 "Showing up prepared and fully present every shift is a commitment I keep without exception."
 "[Doing X] is the standard I hold myself to / is simply how I work / is who I am."
 "[Quality] is something I consider part of the role, not separate from it."
+"That discipline is not a limitation; it is how safe [work] happens." (character claim dressed as a work principle)
+"That clarity about limitation is, I believe, what makes a [Band/role] [adjective] rather than [adjective]."
+"That is what [quality/value] actually means in practice."
+"That is what it means to be a [role] who [does X]."
+"That is, I believe, what makes the difference between [adjective] and [adjective] care/nursing/practice."
 The fix: end paragraphs with the RESULT of the action — what changed for the patient, the team, or the record. The character is already visible in what the candidate did. If the paragraph already ends with a good result sentence, delete any character claim that follows it — the result is enough.
 
 APPLYING THE FOUR PATTERNS:
@@ -633,16 +677,26 @@ INSTEAD: start the paragraph mid-action — with a specific behaviour, moment, o
 WRONG (parallel, AI-detectable): "The 6 C's guide my daily practice. I provide care by... I show compassion by... I demonstrate competence by... I practise communication by... I show courage by... My commitment shows in..."
 
 CORRECT (action-first opener, all 6 present — NO definitional "[C] is/means..." sentences):
-"Before any personal care interaction, I read the patient's documented preferences, explain each step, and adjust my pace to theirs — care and compassion built into the process, not added at the end. My mandatory training record stands at 100% and my care notes are accurate first time. When I spotted unexplained bruising during routine personal care, I documented it immediately and told the nurse in charge; a safeguarding referral followed that morning. I didn't hesitate. Every patient conversation is different: I adjust how I speak, when to slow down, and when to listen without filling the silence. Showing up fully prepared for every shift, every time, is the only standard I hold myself to."
+"Before any personal care interaction, I read the patient's documented preferences, explain each step, and adjust my pace to theirs — care and compassion built into the process, not added at the end. My mandatory training record stands at 100% and my care notes are accurate first time. When I spotted unexplained bruising during routine personal care, I documented it immediately and told the nurse in charge; a safeguarding referral followed that morning. I didn't hesitate. Every patient conversation is different: I adjust how I speak, when to slow down, and when to listen without filling the silence. I keep my mandatory training current, arrive to each shift prepared, and do not leave gaps in documentation for the next shift to inherit."
+
+NOTE: The final sentence demonstrates Commitment through specific actions — it does not claim "Commitment is the standard I hold myself to" (Pattern 4). Demonstrate the C through what you do; never claim it through what kind of person you are.
 
 NOTICE: This example never announces the 6 C's and never defines them. It demonstrates all six through actions only. Never define a C — demonstrate it.
 
 ## TRUST VALUES PARAGRAPH (5-6 lines, approx 70-85 words — NO SUBHEADING)
-Each trust value must have a specific application example with a result.
+Each trust value must be demonstrated with a specific incident — a named moment at a named workplace with a result. Do not list all values in sequence; weave them through 2-3 specific moments.
 
-Format: "I want to work at [Trust] because of [vision from advert]. I demonstrate [Value 1] by [specific example with action and result]. I show [Value 2] by [specific example with action and result]. I demonstrate [Value 3] by [specific example with action and result]."
+BANNED — Pattern 3 applied to values (ALL of these are banned):
+"I demonstrate [value] by giving every patient the same [quality]..." — habit claim
+"I show [value] by always [doing X]..." — habit claim
+"[Value] is present in every [handover/interaction/record] I [write/do]." — habit claim
+"[Value] shapes how I [adjust/approach/communicate]..." — habit claim
+"[Value] is visible in how I [support/coordinate/share]..." — habit claim
+None of these have a specific moment, a named place, or a result. They are all Pattern 3 and must be rewritten as specific incidents.
 
-IMPORTANT: Never write "[Value] is [abstract sentence]" or "[Value] means [abstract sentence]". For example, NEVER write "Dedication is every shift completed with full attention" or "Respect means drawing curtains" — these are AI-detectable definitions. Instead write: "I demonstrate Respect by drawing curtains, explaining each step, and seeking consent every time — a routine I apply regardless of how busy the ward is."
+CORRECT: Each value is demonstrated through a real moment. "When a patient told me she had not been consulted about her discharge destination, I stopped the process, sat with her, contacted the social worker, and revised the plan based on what she told me. The discharge was delayed by two hours but completed with her full agreement." Three values are visible in that story — name them if the person spec uses those words, but do not need to announce them.
+
+IMPORTANT: Never write "[Value] is [abstract sentence]" or "[Value] means [abstract sentence]". For example, NEVER write "Dedication is every shift completed with full attention" or "Respect means drawing curtains" — these are AI-detectable definitions.
 
 ## CLOSING PARAGRAPH (4-5 lines, approx 50-60 words)
 "My experience as [ENHANCED vacancy title] at [Previous Workplace], my [qualification from person spec], and my [key strength] position me well for this post at [Trust]. I am ready to contribute to [Trust/Department]'s [service/vision from advert] from day one. Thank you."
