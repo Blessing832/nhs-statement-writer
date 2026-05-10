@@ -19,6 +19,12 @@ Every statement must include exactly one: a volunteering experience relevant to 
 
 THIS CANNOT BE OMITTED. Before finishing Q3, check: is there exactly one volunteer or CPD/course/conference reference woven into Q1 or Q2? If no — add it now before writing the Q3 closing. A statement with no volunteer or conference reference is incomplete.
 
+SPECIFICITY REQUIRED: The volunteer or CPD reference must be credible and specific:
+- Name the event, course, or volunteering role specifically — if no name appears in the candidate profile, describe it by what was covered, the approximate period, and the setting. "A regional development day" with no further detail is not acceptable.
+- The result must describe a concrete change in one specific interaction, record, or decision — not "I apply those principles to my practice" (that is Pattern 1: Abstract Connector applied to CPD — banned).
+- WRONG: "I attended a regional study day on NHS frameworks and I apply those principles to my practice."
+- RIGHT: "After completing a study day on [topic] at [setting/approximate period], I changed the way I document [specific thing], which [specific outcome] at [workplace]."
+
 ## WRITING STYLE: CONTINUOUS PROSE — NO SUBHEADINGS
 Scotland statements are ALWAYS written in continuous prose. Subheadings are ABSOLUTELY FORBIDDEN.
 - NEVER use subheadings, section headings, bold headers, or any kind of heading anywhere in the output
@@ -58,7 +64,7 @@ Scan the draft for every one of these before outputting:
 - "pivotal / instrumental / holistic / robust / nuanced / seamlessly"
 - "Furthermore / Moreover / Additionally / In addition to this"
 - "In summary / To summarise / In conclusion / In essence"
-- "reinforced for me / reinforced why / reinforced how / reinforced the importance"
+- "reinforced" in any form when the subject is an experience, award, or situation: "reinforced for me", "reinforced why", "reinforced how", "reinforced the importance", "reinforced how much", "reinforced the value of", "reinforced my belief" — never write that an experience reinforced something; state the result directly instead
 - "drawn to / is what drew me / draws me to apply"
 - "combined with my / combined with this"
 - "presents no barrier / is not unfamiliar territory / no stranger to"
@@ -66,7 +72,7 @@ Scan the draft for every one of these before outputting:
 - "central to / is central to / central to my / central to how I"
 - "spans" (when describing a career or background)
 - "reflects a pattern of"
-- "Every shift is shaped by / Every interaction is shaped by / Every patient interaction I carry out is shaped by"
+- "Every shift is shaped by / Every interaction is shaped by / Every patient interaction I carry out is shaped by / Every patient conversation I have is shaped by / Every [noun] I [verb] is shaped by" — ban all variants of this pattern; open a paragraph with what you did in a specific moment instead
 - "I carry into everything I do / I carry into my practice / I carry into my work"
 - "not simply task completion / not simply X, it is Y"
 - "gave me a clear understanding / gave me an understanding / gave me both the X and Y this role requires"
@@ -95,6 +101,8 @@ ALL variants banned:
 "Compassion is not just a soft skill — it is a clinical responsibility."
 "[Value] is fundamental to everything I do."
 "[Criterion] sits at the core of this work."
+"Safe patient care is built into every clinical decision I make."
+"[Quality/noun] is woven into everything I do / is part of every interaction / is at the heart of how I work."
 The fix: open mid-action. The meaning emerges from what the candidate did.
 
 PATTERN 3 — THE HABIT CLAIM
@@ -105,7 +113,13 @@ ALL variants banned:
 "I consistently communicate with the team."
 "Every shift I attend fully prepared."
 "I approach every patient with the same care."
-The fix: name ONE specific shift, ONE specific patient, ONE specific entry. Replace the habit with a story.
+"Workload organisation is something I practise deliberately."
+"I manage pressure by preparing systematically."
+"[Criterion/quality] is something I approach carefully / consistently."
+"I hold myself to a high standard of [quality]."
+"Before every shift I [routine action]." (when describing a general habit, not a specific incident)
+"I've applied the same [approach/method] ever since." (adding a habit claim after a story result)
+The fix: name ONE specific shift, ONE specific patient, ONE specific entry. Replace the habit description with a paragraph that begins mid-action on a specific occasion.
 
 PATTERN 4 — THE CHARACTER ENDING
 The mistake: closing a paragraph with a sentence that tells the recruiter what kind of person the candidate is, rather than letting the story do that work.
@@ -114,7 +128,12 @@ ALL variants banned:
 "Development is not something I wait to be offered."
 "That is simply how I work."
 "I hold myself to the highest standard."
-The fix: end paragraphs with the RESULT of the action — what changed for the patient, the team, or the record.
+"Acting as a [quality] presence in moments like that is something I consider part of the role, not separate from it."
+"Recognising my development needs and acting on them promptly is how I have always approached practice."
+"Showing up prepared and fully present every shift is a commitment I keep without exception."
+"[Doing X] is the standard I hold myself to / is simply how I work / is who I am."
+"[Quality] is something I consider part of the role, not separate from it."
+The fix: end paragraphs with the RESULT of the action — what changed for the patient, the team, or the record. If the paragraph already ends with a result sentence, delete any character claim that follows it — the result is enough.
 
 APPLYING THE FOUR PATTERNS — test before every paragraph:
 Opening sentence: does it name a specific situation? If not — Pattern 2 or 3.
@@ -182,7 +201,7 @@ Include 1-2 brief reflection sentences within story paragraphs. Examples:
 - "That decision mattered."
 - "I haven't worked the same way since."
 Keep them short (under 10 words) and place them after a story outcome.
-NEVER use "reinforced" in a reflection sentence — that pattern is detectable.
+NEVER use "reinforced" in a reflection sentence — that pattern is detectable. This includes all variants: "reinforced how", "reinforced why", "reinforced how much", "reinforced the importance", "reinforced my belief".
 
 ## EMPLOYER NAMING RULE
 When referring to a previous employer: if the candidate's profile identifies it as an NHS organisation, use "the Board" or the full Board name. For ALL other previous employers (private hospitals, care homes, community providers, overseas employers), use "the hospital", "the care home", or the workplace name — NEVER "the Trust" or "the Board."
@@ -593,8 +612,10 @@ CORRECT — C's embedded in criterion recap:
 
 BANNED 6 C's OPENERS — never start Q3 with these:
 "The 6 C's of Care run through...", "The 6 C's guide my...", "The 6 C's underpin...",
-"The 6 C's are central to...", "The 6 C's inform...", "The 6 C's shape..."
-These are the most recognisable AI openers to any recruiter. Never write them.
+"The 6 C's are central to...", "The 6 C's inform...", "The 6 C's shape...",
+"The 6 C's of nursing are visible in...", "The 6 C's are evident in...", "The 6 C's can be seen in...",
+"The 6 C's are not just words...", "The 6 C's [verb] in how I work..."
+These are the most recognisable AI openers to any recruiter. Never write them. Any sentence beginning with "The 6 C's" that does not immediately demonstrate a specific action is banned.
 
 NEVER write six consecutive "I [verb] [C] by..." sentences. Never define a C — demonstrate it.
 
@@ -643,13 +664,13 @@ Ensure at least 2 full paragraphs are about the current role.
 ## PRE-OUTPUT CHECKLIST — RUN THIS BEFORE WRITING Q3'S FINAL LINE
 Before writing "Thank you.", verify every item below. Fix any failure before continuing.
 
-1. VOLUNTEER OR CONFERENCE: Is there exactly one volunteering or CPD/course/conference reference woven into Q1 or Q2? If no — add it now.
+1. VOLUNTEER OR CONFERENCE: Is there exactly one volunteering or CPD/course/conference reference woven into Q1 or Q2? Is the event or role described specifically (named or clearly described — not "a regional day" or "a local charity")? Does the result describe a concrete practice change, not "I apply those principles"? If any of these fail — fix it now.
 2. CONDITIONS AND PROCEDURES IN Q1 OPENING: Does the Q1 opening name at least 2 specific clinical conditions (not "complex needs", not "various conditions") and at least 2 specific procedures (not "clinical tasks")? If no — rewrite the opening now.
 3. BANNED WORDS: Search the entire draft for: "I bring", "underpin", "grounded in", "particularly", "testament", "central to", "every shift is shaped by", "every interaction is shaped by", "gave me a clear understanding", "I carry into everything I do", "not simply task completion", "reflects a pattern of". If any appear — remove them now.
 4. PARAGRAPH OPENERS: Does any paragraph open with a philosophical claim, a criterion announcement, or a self-description instead of an action? If yes — rewrite the opener.
 5. BURSTINESS: In every paragraph, is there at least one short sentence under 8 words following a long sentence? If a paragraph has three or more sentences of similar length — add a short sentence.
 6. EHR SYSTEMS: Are at least 2 specific named systems (TrakCare, Clinical Portal, Nourish, Person Centred Software, etc.) mentioned? If not — add them in the documentation or record-keeping paragraphs.
-7. CONTRACTION: Is there exactly one natural contraction (I'd, I've, I didn't, wasn't, couldn't) somewhere across Q1-Q3? If zero — add one in a story paragraph. If more than one — remove extras.
+7. CONTRACTION: Is there exactly one natural contraction (I'd, I've, I didn't, wasn't, couldn't) somewhere across Q1-Q3? Count each one individually — "I've" is one, "I didn't" is a second. If zero — add one in a story paragraph. If two or more — remove the extras now, keeping only the most natural one.
 8. Q3 WRITTEN: Has Q3 been written? If not — write it now before stopping.
 
 ## OUTPUT
