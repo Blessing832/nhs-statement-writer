@@ -122,8 +122,8 @@ export async function POST(req: NextRequest) {
 
   const { statement, previousRoleDuties, analysis, promptRegion } = generated
 
-  // 3. Save to DB
-  await supabaseAdmin.from('statements').insert({
+  // 3. Save to DB — try with pasted_person_spec first; fall back if column not migrated yet
+  const baseRow = {
     client_id: client.id,
     vacancy_url,
     job_title: (jobData as ScrapeResult).jobTitle,
@@ -132,8 +132,15 @@ export async function POST(req: NextRequest) {
     key_duties: previousRoleDuties.length > 0 ? previousRoleDuties : (analysis?.keyDuties || []),
     is_rewrite: !!rewriteInstruction,
     rewrite_instruction: rewriteInstruction || null,
+  }
+  const { error: insertError } = await supabaseAdmin.from('statements').insert({
+    ...baseRow,
     pasted_person_spec: pastedPersonSpec?.trim() || null,
   })
+  if (insertError) {
+    // Column doesn't exist yet — save without it so the statement is never lost
+    await supabaseAdmin.from('statements').insert(baseRow)
+  }
 
   return NextResponse.json({
     statement,
