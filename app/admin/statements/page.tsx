@@ -8,7 +8,14 @@ interface StatementRow {
   organisation: string
   vacancy_url: string
   created_at: string
+  is_rewrite: boolean
   client: { id: string; client_code: string; full_name: string } | null
+}
+
+interface StatementDetail extends StatementRow {
+  generated_statement: string
+  key_duties: string[]
+  rewrite_instruction: string | null
 }
 
 function timeAgo(iso: string): string {
@@ -24,15 +31,105 @@ function timeAgo(iso: string): string {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
+function parseBold(text: string): React.ReactNode {
+  const parts = text.split(/\*\*(.*?)\*\*/g)
+  return parts.map((part, i) =>
+    i % 2 === 1 ? <strong key={i} className="font-semibold">{part}</strong> : part
+  )
+}
+
+function StatementContent({ content }: { content: string }) {
+  const lines = content.split('\n')
+  const nodes: React.ReactNode[] = []
+
+  for (let i = 0; i < lines.length; i++) {
+    const raw = lines[i]
+    const t = raw.trim()
+
+    if (!t) {
+      nodes.push(<div key={i} className="h-3" />)
+      continue
+    }
+
+    // Whole-line bold = subheading (Style 1 subheadings)
+    if (/^\*\*[^*]+\*\*$/.test(t)) {
+      nodes.push(
+        <p key={i} className="font-semibold text-sm mt-5 mb-1" style={{ color: '#003087' }}>
+          {t.replace(/\*\*/g, '')}
+        </p>
+      )
+      continue
+    }
+
+    // Question labels for Scotland (Q1 / Question 1)
+    if (/^(Question\s+\d+|Q\d+)\s*:/i.test(t)) {
+      nodes.push(
+        <p key={i} className="font-bold text-sm mt-6 mb-2 uppercase tracking-wide" style={{ color: '#005eb8' }}>
+          {t}
+        </p>
+      )
+      continue
+    }
+
+    nodes.push(
+      <p key={i} className="text-sm text-gray-800 leading-relaxed">
+        {parseBold(t)}
+      </p>
+    )
+  }
+
+  return <div className="space-y-1">{nodes}</div>
+}
+
+function downloadAsWord(content: string, clientName: string, jobTitle: string) {
+  const lines = content.split('\n')
+  let html = ''
+  for (const line of lines) {
+    const t = line.trim()
+    if (!t) { html += '<p>&nbsp;</p>'; continue }
+    if (/^\*\*[^*]+\*\*$/.test(t)) {
+      html += `<h2 style="color:#003087;font-size:12pt;margin-top:14pt;">${t.replace(/\*\*/g, '')}</h2>`
+      continue
+    }
+    if (/^(Question\s+\d+|Q\d+)\s*:/i.test(t)) {
+      html += `<h2 style="color:#005eb8;font-size:12pt;margin-top:16pt;">${t}</h2>`
+      continue
+    }
+    const text = t.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    html += `<p style="margin-bottom:6pt;">${text}</p>`
+  }
+
+  const fullHtml = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="utf-8"><title>${jobTitle} - ${clientName}</title>
+<style>body{font-family:Arial,sans-serif;font-size:11pt;line-height:1.6;margin:2cm;color:#111;}h1{font-size:16pt;color:#003087;}h2{font-size:12pt;}p{margin:0 0 6pt 0;}</style>
+</head><body>
+<h1 style="color:#003087;border-bottom:2px solid #003087;padding-bottom:6pt;">${jobTitle}${jobTitle && ' — '}${clientName}</h1>
+${html}
+</body></html>`
+
+  const blob = new Blob(['﻿', fullHtml], { type: 'application/msword' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `${clientName.replace(/\s+/g, '-').toLowerCase()}-statement.doc`
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  setTimeout(() => URL.revokeObjectURL(url), 2000)
+}
+
 export default function StatementsPage() {
   const { token } = useAdminToken()
   const [statements, setStatements] = useState<StatementRow[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [detail, setDetail] = useState<StatementDetail | null>(null)
+  const [detailLoading, setDetailLoading] = useState(false)
 
   const fetchStatements = useCallback(async () => {
     setLoading(true)
-    const res = await fetch('/api/admin/statements?limit=100', {
+    const res = await fetch('/api/admin/statements?limit=200', {
       headers: { 'x-admin-token': token },
     })
     if (res.ok) setStatements(await res.json())
@@ -41,17 +138,32 @@ export default function StatementsPage() {
 
   useEffect(() => { fetchStatements() }, [fetchStatements])
 
+  const openDetail = useCallback(async (id: string) => {
+    setSelectedId(id)
+    setDetail(null)
+    setDetailLoading(true)
+    const res = await fetch(`/api/admin/statements/${id}`, {
+      headers: { 'x-admin-token': token },
+    })
+    if (res.ok) setDetail(await res.json())
+    setDetailLoading(false)
+  }, [token])
+
+  const closeDetail = () => {
+    setSelectedId(null)
+    setDetail(null)
+  }
+
   const filtered = statements.filter((s) => {
     const q = search.toLowerCase()
     return (
-      s.job_title.toLowerCase().includes(q) ||
-      s.organisation.toLowerCase().includes(q) ||
-      s.client?.full_name.toLowerCase().includes(q) ||
-      s.client?.client_code.toLowerCase().includes(q)
+      s.job_title?.toLowerCase().includes(q) ||
+      s.organisation?.toLowerCase().includes(q) ||
+      s.client?.full_name?.toLowerCase().includes(q) ||
+      s.client?.client_code?.toLowerCase().includes(q)
     )
   })
 
-  // Group by date
   const grouped = filtered.reduce<Record<string, StatementRow[]>>((acc, s) => {
     const date = new Date(s.created_at).toLocaleDateString('en-GB', {
       weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
@@ -61,12 +173,10 @@ export default function StatementsPage() {
     return acc
   }, {})
 
-  // Stats
   const today = new Date().toDateString()
-  const thisWeek = statements.filter((s) => {
-    const d = new Date(s.created_at)
-    return (Date.now() - d.getTime()) < 7 * 24 * 60 * 60 * 1000
-  }).length
+  const thisWeek = statements.filter(
+    (s) => Date.now() - new Date(s.created_at).getTime() < 7 * 24 * 60 * 60 * 1000
+  ).length
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-6">
@@ -116,11 +226,14 @@ export default function StatementsPage() {
               <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">{date}</h3>
               <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
                 {rows.map((s, i) => (
-                  <div
+                  <button
                     key={s.id}
-                    className={`flex items-center gap-4 px-5 py-3.5 ${i < rows.length - 1 ? 'border-b border-gray-100' : ''} hover:bg-gray-50`}
+                    onClick={() => openDetail(s.id)}
+                    className={`w-full flex items-center gap-4 px-5 py-3.5 text-left transition-colors
+                      ${i < rows.length - 1 ? 'border-b border-gray-100' : ''}
+                      ${selectedId === s.id ? 'bg-blue-50' : 'hover:bg-gray-50'}`}
                   >
-                    {/* Candidate avatar */}
+                    {/* Avatar */}
                     <div
                       className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
                       style={{ backgroundColor: '#005eb8' }}
@@ -130,12 +243,17 @@ export default function StatementsPage() {
 
                     {/* Details */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-baseline gap-2">
+                      <div className="flex items-center gap-2">
                         <span className="text-sm font-medium text-gray-900 truncate">
                           {s.job_title || 'Untitled Role'}
                         </span>
                         {s.organisation && (
                           <span className="text-xs text-gray-500 truncate">{s.organisation}</span>
+                        )}
+                        {s.is_rewrite && (
+                          <span className="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-medium shrink-0">
+                            Rewrite
+                          </span>
                         )}
                       </div>
                       <div className="flex items-center gap-2 mt-0.5">
@@ -145,27 +263,156 @@ export default function StatementsPage() {
                       </div>
                     </div>
 
-                    {/* Time + link */}
+                    {/* Time */}
                     <div className="flex items-center gap-3 shrink-0">
                       <span className="text-xs text-gray-400">{timeAgo(s.created_at)}</span>
-                      {s.vacancy_url && (
-                        <a
-                          href={s.vacancy_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs text-blue-600 hover:underline"
-                        >
-                          View job
-                        </a>
-                      )}
+                      <svg className="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
           ))}
         </div>
       )}
+
+      {/* Slide-over backdrop */}
+      {selectedId && (
+        <div
+          className="fixed inset-0 bg-black/20 z-40"
+          onClick={closeDetail}
+        />
+      )}
+
+      {/* Slide-over panel */}
+      <div
+        className={`fixed top-0 right-0 h-full w-[680px] max-w-full bg-white shadow-2xl z-50 flex flex-col
+          transition-transform duration-300 ease-in-out
+          ${selectedId ? 'translate-x-0' : 'translate-x-full'}`}
+      >
+        {/* Panel header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 shrink-0">
+          <div className="flex items-center gap-3 min-w-0">
+            <div
+              className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0"
+              style={{ backgroundColor: '#005eb8' }}
+            >
+              {detail?.client?.full_name?.charAt(0).toUpperCase() || '?'}
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-gray-900 truncate">
+                {detail?.client?.full_name || '…'}
+              </p>
+              <p className="text-xs text-gray-500 font-mono">{detail?.client?.client_code}</p>
+            </div>
+          </div>
+          <button
+            onClick={closeDetail}
+            className="p-1.5 rounded-md hover:bg-gray-100 text-gray-500 shrink-0 cursor-pointer"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Panel body */}
+        <div className="flex-1 overflow-y-auto">
+          {detailLoading ? (
+            <div className="flex items-center justify-center py-20 gap-2 text-gray-400">
+              <div className="w-5 h-5 border-2 border-gray-200 rounded-full animate-spin" style={{ borderTopColor: '#005eb8' }} />
+              <span className="text-sm">Loading statement…</span>
+            </div>
+          ) : detail ? (
+            <>
+              {/* Meta info */}
+              <div className="px-6 py-4 border-b border-gray-100 space-y-3">
+                <div>
+                  <p className="text-base font-semibold text-gray-900">
+                    {detail.job_title || 'Untitled Role'}
+                  </p>
+                  {detail.organisation && (
+                    <p className="text-sm text-gray-600">{detail.organisation}</p>
+                  )}
+                </div>
+
+                <div className="flex flex-wrap gap-x-5 gap-y-1.5 text-xs text-gray-500">
+                  <span>
+                    {new Date(detail.created_at).toLocaleDateString('en-GB', {
+                      day: 'numeric', month: 'long', year: 'numeric',
+                      hour: '2-digit', minute: '2-digit',
+                    })}
+                  </span>
+                  {detail.is_rewrite && (
+                    <span className="bg-amber-100 text-amber-700 px-2 py-0.5 rounded font-medium">
+                      Rewrite
+                    </span>
+                  )}
+                  {detail.vacancy_url && (
+                    <a
+                      href={detail.vacancy_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      View job advert
+                    </a>
+                  )}
+                </div>
+
+                {detail.rewrite_instruction && (
+                  <div className="bg-amber-50 border border-amber-100 rounded-md px-3 py-2">
+                    <p className="text-xs font-semibold text-amber-800 mb-0.5">Rewrite instruction</p>
+                    <p className="text-xs text-amber-900">{detail.rewrite_instruction}</p>
+                  </div>
+                )}
+
+                {detail.key_duties && detail.key_duties.length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold text-gray-600 mb-1.5">Key duties extracted</p>
+                    <ul className="space-y-0.5">
+                      {detail.key_duties.map((d, i) => (
+                        <li key={i} className="text-xs text-gray-600 flex gap-1.5">
+                          <span className="text-gray-400 shrink-0">·</span>
+                          <span>{d}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              {/* Generated statement */}
+              <div className="px-6 py-5">
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">
+                  Generated Statement
+                </p>
+                <StatementContent content={detail.generated_statement || ''} />
+              </div>
+            </>
+          ) : null}
+        </div>
+
+        {/* Panel footer */}
+        {detail?.generated_statement && (
+          <div className="px-6 py-3 border-t border-gray-200 shrink-0">
+            <button
+              onClick={() => downloadAsWord(
+                detail.generated_statement,
+                detail.client?.full_name || 'candidate',
+                detail.job_title || 'statement',
+              )}
+              className="w-full py-2 text-sm font-semibold text-white rounded-md cursor-pointer"
+              style={{ backgroundColor: '#005eb8' }}
+            >
+              Download Word Doc
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
