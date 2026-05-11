@@ -9,7 +9,7 @@ interface StatementRow {
   vacancy_url: string
   created_at: string
   is_rewrite: boolean
-  spec_pasted: boolean
+  spec_pasted: boolean | null
   spec_word_count: number
   client: { id: string; client_code: string; full_name: string } | null
 }
@@ -169,8 +169,8 @@ export default function StatementsPage() {
       s.client?.client_code?.toLowerCase().includes(q)
     const matchesSpec =
       specFilter === 'all' ||
-      (specFilter === 'pasted' && s.spec_pasted) ||
-      (specFilter === 'missing' && !s.spec_pasted)
+      (specFilter === 'pasted' && s.spec_pasted === true) ||
+      (specFilter === 'missing' && s.spec_pasted === false)
     return matchesSearch && matchesSpec
   })
 
@@ -210,9 +210,10 @@ export default function StatementsPage() {
 
       {/* Spec compliance summary */}
       {statements.length > 0 && (() => {
-        const pasted = statements.filter(s => s.spec_pasted).length
-        const missing = statements.length - pasted
-        const pct = Math.round((pasted / statements.length) * 100)
+        const known = statements.filter(s => s.spec_pasted !== null)
+        const pasted = statements.filter(s => s.spec_pasted === true).length
+        const missing = statements.filter(s => s.spec_pasted === false).length
+        const pct = known.length > 0 ? Math.round((pasted / known.length) * 100) : 0
         return (
           <div className="bg-white rounded-lg border border-gray-200 p-4 mb-5 flex items-center gap-6">
             <div>
@@ -222,7 +223,7 @@ export default function StatementsPage() {
                   <div className="h-full rounded-full bg-green-500 transition-all" style={{ width: `${pct}%` }} />
                 </div>
                 <span className="text-sm font-semibold" style={{ color: pct === 100 ? '#009639' : pct >= 50 ? '#005eb8' : '#d4351c' }}>
-                  {pct}%
+                  {known.length > 0 ? `${pct}%` : '—'}
                 </span>
               </div>
             </div>
@@ -306,15 +307,15 @@ export default function StatementsPage() {
                             Rewrite
                           </span>
                         )}
-                        {s.spec_pasted ? (
+                        {s.spec_pasted === true ? (
                           <span className="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-medium shrink-0">
                             ✓ Spec pasted
                           </span>
-                        ) : (
+                        ) : s.spec_pasted === false ? (
                           <span className="text-xs bg-red-50 text-red-600 px-1.5 py-0.5 rounded font-medium shrink-0">
                             ✗ No spec
                           </span>
-                        )}
+                        ) : null}
                       </div>
                       <div className="flex items-center gap-2 mt-0.5">
                         <span className="text-xs text-gray-600">{s.client?.full_name || 'Unknown'}</span>
