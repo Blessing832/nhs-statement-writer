@@ -132,6 +132,7 @@ export async function POST(req: NextRequest) {
     key_duties: previousRoleDuties.length > 0 ? previousRoleDuties : (analysis?.keyDuties || []),
     is_rewrite: !!rewriteInstruction,
     rewrite_instruction: rewriteInstruction || null,
+    pasted_person_spec: pastedPersonSpec?.trim() || null,
   })
 
   return NextResponse.json({

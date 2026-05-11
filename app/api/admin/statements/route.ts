@@ -17,11 +17,22 @@ export async function GET(req: NextRequest) {
       vacancy_url,
       is_rewrite,
       created_at,
+      pasted_person_spec,
       client:clients(id, client_code, full_name)
     `)
     .order('created_at', { ascending: false })
     .limit(limit)
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-  return NextResponse.json(data)
+
+  // Return spec_pasted boolean and word count — not the full text — to keep the list payload small
+  const mapped = (data || []).map(({ pasted_person_spec, ...rest }) => ({
+    ...rest,
+    spec_pasted: !!(pasted_person_spec?.trim()),
+    spec_word_count: pasted_person_spec?.trim()
+      ? pasted_person_spec.trim().split(/\s+/).length
+      : 0,
+  }))
+
+  return NextResponse.json(mapped)
 }

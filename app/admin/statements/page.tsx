@@ -9,6 +9,8 @@ interface StatementRow {
   vacancy_url: string
   created_at: string
   is_rewrite: boolean
+  spec_pasted: boolean
+  spec_word_count: number
   client: { id: string; client_code: string; full_name: string } | null
 }
 
@@ -16,6 +18,7 @@ interface StatementDetail extends StatementRow {
   generated_statement: string
   key_duties: string[]
   rewrite_instruction: string | null
+  pasted_person_spec: string | null
 }
 
 function timeAgo(iso: string): string {
@@ -126,6 +129,8 @@ export default function StatementsPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [detail, setDetail] = useState<StatementDetail | null>(null)
   const [detailLoading, setDetailLoading] = useState(false)
+  const [specFilter, setSpecFilter] = useState<'all' | 'pasted' | 'missing'>('all')
+  const [showFullSpec, setShowFullSpec] = useState(false)
 
   const fetchStatements = useCallback(async () => {
     setLoading(true)
@@ -142,6 +147,7 @@ export default function StatementsPage() {
     setSelectedId(id)
     setDetail(null)
     setDetailLoading(true)
+    setShowFullSpec(false)
     const res = await fetch(`/api/admin/statements/${id}`, {
       headers: { 'x-admin-token': token },
     })
@@ -156,12 +162,16 @@ export default function StatementsPage() {
 
   const filtered = statements.filter((s) => {
     const q = search.toLowerCase()
-    return (
+    const matchesSearch =
       s.job_title?.toLowerCase().includes(q) ||
       s.organisation?.toLowerCase().includes(q) ||
       s.client?.full_name?.toLowerCase().includes(q) ||
       s.client?.client_code?.toLowerCase().includes(q)
-    )
+    const matchesSpec =
+      specFilter === 'all' ||
+      (specFilter === 'pasted' && s.spec_pasted) ||
+      (specFilter === 'missing' && !s.spec_pasted)
+    return matchesSearch && matchesSpec
   })
 
   const grouped = filtered.reduce<Record<string, StatementRow[]>>((acc, s) => {
@@ -198,16 +208,57 @@ export default function StatementsPage() {
         </div>
       </div>
 
-      {/* Search */}
-      <div className="flex items-center justify-between mb-4">
+      {/* Spec compliance summary */}
+      {statements.length > 0 && (() => {
+        const pasted = statements.filter(s => s.spec_pasted).length
+        const missing = statements.length - pasted
+        const pct = Math.round((pasted / statements.length) * 100)
+        return (
+          <div className="bg-white rounded-lg border border-gray-200 p-4 mb-5 flex items-center gap-6">
+            <div>
+              <p className="text-xs text-gray-500 mb-0.5">Person spec compliance</p>
+              <div className="flex items-center gap-2">
+                <div className="h-2 rounded-full bg-gray-100 w-40 overflow-hidden">
+                  <div className="h-full rounded-full bg-green-500 transition-all" style={{ width: `${pct}%` }} />
+                </div>
+                <span className="text-sm font-semibold" style={{ color: pct === 100 ? '#009639' : pct >= 50 ? '#005eb8' : '#d4351c' }}>
+                  {pct}%
+                </span>
+              </div>
+            </div>
+            <div className="flex gap-4 text-sm">
+              <span className="text-green-700 font-medium">{pasted} with spec</span>
+              <span className="text-gray-300">|</span>
+              {missing > 0
+                ? <span className="text-red-600 font-medium">{missing} missing</span>
+                : <span className="text-gray-400">{missing} missing</span>}
+            </div>
+          </div>
+        )
+      })()}
+
+      {/* Search + filter */}
+      <div className="flex items-center justify-between mb-4 gap-3">
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by candidate, job title, or organisation…"
-          className="px-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-80"
+          className="px-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-72"
         />
-        <span className="text-xs text-gray-400">{filtered.length} of {statements.length} statements</span>
+        <div className="flex items-center gap-1 bg-gray-100 rounded-md p-0.5">
+          {(['all', 'pasted', 'missing'] as const).map((f) => (
+            <button
+              key={f}
+              onClick={() => setSpecFilter(f)}
+              className={`px-3 py-1.5 text-xs rounded font-medium transition-colors cursor-pointer
+                ${specFilter === f ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
+            >
+              {f === 'all' ? 'All' : f === 'pasted' ? '✓ Spec pasted' : '✗ No spec'}
+            </button>
+          ))}
+        </div>
+        <span className="text-xs text-gray-400 shrink-0">{filtered.length} of {statements.length}</span>
       </div>
 
       {loading ? (
@@ -253,6 +304,15 @@ export default function StatementsPage() {
                         {s.is_rewrite && (
                           <span className="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-medium shrink-0">
                             Rewrite
+                          </span>
+                        )}
+                        {s.spec_pasted ? (
+                          <span className="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-medium shrink-0">
+                            ✓ Spec pasted
+                          </span>
+                        ) : (
+                          <span className="text-xs bg-red-50 text-red-600 px-1.5 py-0.5 rounded font-medium shrink-0">
+                            ✗ No spec
                           </span>
                         )}
                       </div>
@@ -367,6 +427,38 @@ export default function StatementsPage() {
                   <div className="bg-amber-50 border border-amber-100 rounded-md px-3 py-2">
                     <p className="text-xs font-semibold text-amber-800 mb-0.5">Rewrite instruction</p>
                     <p className="text-xs text-amber-900">{detail.rewrite_instruction}</p>
+                  </div>
+                )}
+
+                {/* Person spec compliance */}
+                {detail.pasted_person_spec ? (
+                  <div className="bg-green-50 border border-green-100 rounded-md px-3 py-2.5">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <p className="text-xs font-semibold text-green-800">
+                        ✓ Person specification pasted — {detail.pasted_person_spec.trim().split(/\s+/).length.toLocaleString()} words
+                      </p>
+                      <button
+                        onClick={() => setShowFullSpec(v => !v)}
+                        className="text-xs text-green-700 underline cursor-pointer"
+                      >
+                        {showFullSpec ? 'Hide' : 'View'}
+                      </button>
+                    </div>
+                    {showFullSpec && (
+                      <p className="text-xs text-green-900 whitespace-pre-wrap leading-relaxed max-h-48 overflow-y-auto">
+                        {detail.pasted_person_spec.trim()}
+                      </p>
+                    )}
+                    {!showFullSpec && (
+                      <p className="text-xs text-green-800 opacity-70 line-clamp-2">
+                        {detail.pasted_person_spec.trim().slice(0, 200)}{detail.pasted_person_spec.length > 200 ? '…' : ''}
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <div className="bg-red-50 border border-red-100 rounded-md px-3 py-2">
+                    <p className="text-xs font-semibold text-red-700">✗ No person specification was pasted for this statement</p>
+                    <p className="text-xs text-red-600 mt-0.5">The statement was generated without a pasted person spec. This may affect quality and coverage.</p>
                   </div>
                 )}
 

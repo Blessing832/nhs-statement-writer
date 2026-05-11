@@ -17,6 +17,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
       key_duties,
       is_rewrite,
       rewrite_instruction,
+      pasted_person_spec,
       created_at,
       client:clients(id, client_code, full_name)
     `)
