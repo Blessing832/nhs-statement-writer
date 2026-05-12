@@ -30,7 +30,7 @@ app.post('/scrape', async (req, res) => {
 
   let browser = null
   try {
-    console.log(`Scraping: ${url}`)
+    console.log(`Scraping: ${url.split('?')[0]}`)
 
     browser = await chromium.launch({
       headless: true,
@@ -38,23 +38,61 @@ app.post('/scrape', async (req, res) => {
       args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
     })
 
+    // Strip query params — NHS Jobs search results append filter params to the URL
+    const cleanUrl = url.split('?')[0]
+    const urlObj = new URL(cleanUrl)
+
     const context = await browser.newContext({
       userAgent:
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       viewport: { width: 1280, height: 800 },
     })
 
+    // Pre-set NHS cookie consent so the browser doesn't land on a cookie wall
+    await context.addCookies([
+      {
+        name: 'nhsuk-cookie-consent',
+        value: '%7B%22preferences%22%3Atrue%2C%22statistics%22%3Atrue%2C%22marketing%22%3Atrue%2C%22version%22%3A1%7D',
+        domain: urlObj.hostname,
+        path: '/',
+      },
+      {
+        name: 'seen_cookie_message',
+        value: 'yes',
+        domain: urlObj.hostname,
+        path: '/',
+      },
+    ])
+
     const page = await context.newPage()
 
-    // Navigate to the job page
-    await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 })
+    // Navigate to the job page (clean URL — no search filter query params)
+    await page.goto(cleanUrl, { waitUntil: 'networkidle', timeout: 30000 })
+
+    // If cookie consent dialog still appeared (some sites ignore pre-set cookies),
+    // click the accept button before doing anything else
+    try {
+      const acceptLabels = ['Accept all cookies', 'Accept all', 'Accept cookies', 'I agree', 'Allow all']
+      for (const label of acceptLabels) {
+        const btn = page.getByRole('button', { name: label, exact: false })
+        const count = await btn.count()
+        if (count > 0) {
+          await btn.first().click()
+          await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {})
+          console.log(`Accepted cookie consent: "${label}"`)
+          break
+        }
+      }
+    } catch (err) {
+      console.log('Cookie consent handling:', err.message)
+    }
 
     // NHS job boards render person spec, job description, etc. in tabs.
     // Click every tab button so all sections are visible before extracting text.
     const isNhsSite =
-      url.includes('jobs.nhs.uk') ||
-      url.includes('healthjobsuk.com') ||
-      url.includes('jobs.scot.nhs.uk')
+      cleanUrl.includes('jobs.nhs.uk') ||
+      cleanUrl.includes('healthjobsuk.com') ||
+      cleanUrl.includes('jobs.scot.nhs.uk')
     if (isNhsSite) {
       try {
         const tabs = await page.$$('[role="tab"]')
@@ -73,7 +111,7 @@ app.post('/scrape', async (req, res) => {
           }
         }
       } catch (err) {
-        console.log(`Tab expand (${url}):`, err.message)
+        console.log(`Tab expand (${cleanUrl}):`, err.message)
       }
     }
 

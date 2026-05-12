@@ -253,6 +253,9 @@ export async function POST(req: NextRequest) {
   }
 
   // ── Step 2: Fall back to external Puppeteer scraper ──────────────────────────
+  // Strip query params — search filter params appended from NHS Jobs search results
+  // confuse the scraper and the clean job URL is all that's needed.
+  const cleanUrl = url.split('?')[0]
   let response: Response
   try {
     response = await fetch(`${SCRAPER_URL}/scrape`, {
@@ -261,7 +264,7 @@ export async function POST(req: NextRequest) {
         'Content-Type': 'application/json',
         'x-scraper-secret': SCRAPER_SECRET,
       },
-      body: JSON.stringify({ url }),
+      body: JSON.stringify({ url: cleanUrl }),
       signal: AbortSignal.timeout(50000),
     })
   } catch {
