@@ -142,62 +142,81 @@ app.post('/scrape', async (req, res) => {
       })
       .catch(() => '')
 
-    // Find all document links (PDF, DOCX, DOC)
+    // Collect all potentially relevant document links using three strategies:
+    //   1. Any link whose URL looks like a document file (PDF/DOCX/download path)
+    //   2. Any link with document-related keyword text
+    //   3. Every link inside sections that appear to be attachment/supporting-doc areas
     const docLinks = await page.evaluate(() => {
-      const links = Array.from(document.querySelectorAll('a[href]'))
-      return links
-        .filter((a) => {
-          const href = a.href.toLowerCase()
-          const text = a.textContent.toLowerCase().trim()
-          const isDocFile =
-            href.endsWith('.pdf') ||
-            href.endsWith('.docx') ||
-            href.endsWith('.doc') ||
-            href.includes('/document/') ||
-            href.includes('/download/') ||
-            href.includes('/attachment/') ||
-            href.includes('/file/') ||
-            href.includes('/files/')
-          const isDocLink =
-            text.includes('job description') ||
-            text.includes('person spec') ||
-            text.includes('person specification') ||
-            text.includes('jdps') ||
-            text.includes('jd and ps') ||
-            text.includes('jd & ps') ||
-            text.includes('jd/ps') ||
-            text.includes('job pack') ||
-            text.includes('job detail') ||
-            text.includes('supporting document') ||
-            text.includes('supporting info') ||
-            text.includes('role profile') ||
-            text.includes('application pack') ||
-            text.includes('information pack') ||
-            text.includes('candidate pack') ||
-            text.includes('additional information') ||
-            text.includes('further information') ||
-            text.includes('recruitment pack') ||
-            text.includes('download') ||
-            text.includes('attachment') ||
-            isDocFile
-          return isDocLink && href.startsWith('http')
-        })
-        .map((a) => ({
-          href: a.href,
-          text: a.textContent.trim(),
-          // Score: higher = more likely to be PS
-          score: (
-            a.textContent.toLowerCase().includes('person spec') ? 10 :
-            a.textContent.toLowerCase().includes('job description') ? 8 :
-            a.textContent.toLowerCase().includes('job pack') ? 7 :
-            a.textContent.toLowerCase().includes('role profile') ? 6 :
-            a.textContent.toLowerCase().includes('application pack') ? 5 : 1
-          ),
-        }))
-    })
+      const seen = new Set()
+      const results = []
 
-    // Sort: person spec first, then job description, then others
-    docLinks.sort((a, b) => b.score - a.score)
+      function scoreAndAdd(href, text) {
+        const norm = (href || '').split('?')[0].toLowerCase()
+        if (!href || !href.startsWith('http') || seen.has(norm)) return
+        seen.add(norm)
+        const t = (text || '').toLowerCase().trim()
+        const h = href.toLowerCase()
+        const score =
+          (t.includes('person spec') || t.includes('person specification')) ? 10 :
+          (t.includes('jdps') || t.includes('jd and ps') || t.includes('jd & ps') || t.includes('jd/ps')) ? 9 :
+          t.includes('job description') ? 8 :
+          (t.includes('job pack') || t.includes('role profile')) ? 7 :
+          (t.includes('application pack') || t.includes('candidate pack') || t.includes('recruitment pack')) ? 6 :
+          (t.includes('supporting document') || t.includes('supporting info') || t.includes('information pack')) ? 5 :
+          (h.endsWith('.pdf') || h.endsWith('.docx') || h.endsWith('.doc')) ? 4 :
+          (h.includes('/download/') || h.includes('/attachment/') || h.includes('/file/') || h.includes('/document/') || h.includes('/files/')) ? 3 :
+          t.includes('download') ? 2 :
+          t.includes('attachment') ? 2 : 1
+        results.push({ href, text: (text || '').trim(), score })
+      }
+
+      // Strategy 1 & 2: all links that are doc files OR match keywords
+      for (const a of document.querySelectorAll('a[href]')) {
+        const href = a.href
+        const text = a.textContent.trim()
+        const h = href.toLowerCase()
+        const t = text.toLowerCase()
+
+        const isDocFile =
+          h.endsWith('.pdf') || h.endsWith('.docx') || h.endsWith('.doc') ||
+          h.includes('/document/') || h.includes('/download/') ||
+          h.includes('/attachment/') || h.includes('/file/') || h.includes('/files/')
+
+        const isKeywordMatch =
+          t.includes('person spec') || t.includes('job description') || t.includes('job desc') ||
+          t.includes('jdps') || t.includes('jd and ps') || t.includes('jd & ps') || t.includes('jd/ps') ||
+          t.includes('job pack') || t.includes('job detail') || t.includes('role profile') ||
+          t.includes('supporting document') || t.includes('supporting info') ||
+          t.includes('application pack') || t.includes('information pack') ||
+          t.includes('candidate pack') || t.includes('recruitment pack') ||
+          t.includes('additional information') || t.includes('further information') ||
+          t.includes('download') || t.includes('attachment')
+
+        if (isDocFile || isKeywordMatch) scoreAndAdd(href, text)
+      }
+
+      // Strategy 3: every link inside sections that look like attachment areas,
+      // regardless of the individual link text
+      const attachSelectors = [
+        '[class*="attachment"]', '[id*="attachment"]',
+        '[class*="supporting"]', '[id*="supporting"]',
+        '[class*="document"]',   '[id*="document"]',
+        '[class*="download"]',   '[id*="download"]',
+        '[aria-label*="document"]', '[aria-label*="attachment"]',
+        '[aria-label*="supporting"]',
+        '[data-section*="document"]', '[data-section*="attachment"]',
+      ]
+      for (const sel of attachSelectors) {
+        document.querySelectorAll(sel).forEach(section => {
+          section.querySelectorAll('a[href]').forEach(a => {
+            if (a.href.startsWith('http')) scoreAndAdd(a.href, a.textContent.trim())
+          })
+        })
+      }
+
+      results.sort((a, b) => b.score - a.score)
+      return results
+    })
 
     console.log(`Found ${docLinks.length} document links:`, docLinks)
 
@@ -211,13 +230,13 @@ app.post('/scrape', async (req, res) => {
     await browser.close()
     browser = null
 
-    // Download and parse each document — limit per-doc to 30k chars, total to 5 docs
-    // PS-scored docs are sorted first so they get priority in combined text
+    // Download and parse each document — limit per-doc to 30k chars, total to 8 docs.
+    // Higher-scored docs (person spec first) are processed first.
     let combinedDocText = ''
     const downloadedDocs = []
     const PER_DOC_LIMIT = 30000
 
-    for (const link of docLinks.slice(0, 5)) {
+    for (const link of docLinks.slice(0, 8)) {
       try {
         let docText = await downloadAndParseDoc(link.href, cookieHeader)
         if (docText && docText.length > 100) {

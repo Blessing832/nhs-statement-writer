@@ -104,56 +104,85 @@ async function fetchAttachmentText(url: string): Promise<string> {
   }
 }
 
-// Find links on the page that are likely to be JDPS attachments
+// Find all document links on the page — cast a wide net so NHS Jobs files
+// named after vacancy references (e.g. "C9345-26-0173-JD-PS.pdf") are caught
+// even if the link text doesn't contain "person spec" or "job description".
 function findJdpsLinks($: cheerio.CheerioAPI, baseUrl: string): string[] {
-  const links: string[] = []
+  const seen = new Set<string>()
+  const scored: Array<{ url: string; score: number }> = []
+
+  function addLink(href: string, text: string) {
+    if (!href || href.startsWith('#') || href.startsWith('mailto:')) return
+    try {
+      const abs = href.startsWith('http') ? href : new URL(href, baseUrl).toString()
+      const norm = abs.split('?')[0].toLowerCase()
+      if (seen.has(norm)) return
+      seen.add(norm)
+
+      const t = text.toLowerCase().trim()
+      const h = norm
+      const score =
+        (t.includes('person spec') || t.includes('person specification')) ? 10 :
+        (t.includes('jdps') || t.includes('jd and ps') || t.includes('jd & ps') || t.includes('jd/ps')) ? 9 :
+        t.includes('job description') ? 8 :
+        (t.includes('job pack') || t.includes('role profile')) ? 7 :
+        (t.includes('application pack') || t.includes('candidate pack') || t.includes('recruitment pack')) ? 6 :
+        (t.includes('supporting document') || t.includes('supporting info') || t.includes('information pack')) ? 5 :
+        (h.endsWith('.pdf') || h.endsWith('.docx') || h.endsWith('.doc')) ? 4 :
+        (h.includes('/download/') || h.includes('/attachment/') || h.includes('/file/') || h.includes('/document/') || h.includes('/files/')) ? 3 :
+        t.includes('download') ? 2 :
+        t.includes('attachment') ? 2 : 1
+
+      scored.push({ url: abs, score })
+    } catch { /* invalid URL, skip */ }
+  }
+
+  // Strategy 1 & 2: doc file URLs + keyword-matched link text
   $('a[href]').each((_, el) => {
     const href = $(el).attr('href') || ''
-    const text = $(el).text().toLowerCase().trim()
-    const hrefLower = href.toLowerCase()
+    const text = $(el).text().trim()
+    const h = href.toLowerCase()
+    const t = text.toLowerCase()
 
-    if (!href || href.startsWith('#') || href.startsWith('mailto:')) return
+    const isDocFile =
+      h.endsWith('.pdf') || h.endsWith('.docx') || h.endsWith('.doc') ||
+      h.includes('/document/') || h.includes('/download/') ||
+      h.includes('/attachment/') || h.includes('/file/') || h.includes('/files/')
 
-    const likelyJdps =
-      text.includes('person spec') ||
-      text.includes('job description') ||
-      text.includes('job desc') ||
-      text.includes('jdps') ||
-      text.includes('jd and ps') ||
-      text.includes('jd & ps') ||
-      text.includes('jd/ps') ||
-      text === 'jd' ||
-      text.startsWith('jd ') ||
-      text.includes('job spec') ||
-      text.includes('job pack') ||
-      text.includes('role profile') ||
-      text.includes('supporting document') ||
-      text.includes('supporting info') ||
-      text.includes('application pack') ||
-      text.includes('candidate pack') ||
-      text.includes('recruitment pack') ||
-      text.includes('attachment') ||
-      text.includes('download') ||
-      text.includes('view document') ||
-      hrefLower.includes('.pdf') ||
-      hrefLower.includes('.docx') ||
-      hrefLower.includes('.doc') ||
-      hrefLower.includes('document') ||
-      hrefLower.includes('attachment') ||
-      hrefLower.includes('download') ||
-      // NHS Jobs uses extensionless download URLs like /candidate/jobadvert/{ref}/download/{id}
-      hrefLower.includes('/download/') ||
-      hrefLower.includes('/file/') ||
-      hrefLower.includes('/files/')
+    const isKeywordMatch =
+      t.includes('person spec') || t.includes('job description') || t.includes('job desc') ||
+      t.includes('jdps') || t.includes('jd and ps') || t.includes('jd & ps') || t.includes('jd/ps') ||
+      t === 'jd' || t.startsWith('jd ') ||
+      t.includes('job spec') || t.includes('job pack') || t.includes('role profile') ||
+      t.includes('supporting document') || t.includes('supporting info') ||
+      t.includes('application pack') || t.includes('candidate pack') || t.includes('recruitment pack') ||
+      t.includes('additional information') || t.includes('further information') ||
+      t.includes('attachment') || t.includes('download') || t.includes('view document')
 
-    if (!likelyJdps) return
-
-    try {
-      const absolute = href.startsWith('http') ? href : new URL(href, baseUrl).toString()
-      links.push(absolute)
-    } catch { /* invalid URL, skip */ }
+    if (isDocFile || isKeywordMatch) addLink(href, text)
   })
-  return [...new Set(links)].slice(0, 4)
+
+  // Strategy 3: every link inside sections that look like attachment/document areas
+  const attachSelectors = [
+    '[class*="attachment"]', '[id*="attachment"]',
+    '[class*="supporting"]', '[id*="supporting"]',
+    '[class*="document"]',   '[id*="document"]',
+    '[class*="download"]',   '[id*="download"]',
+    '[aria-label*="document"]', '[aria-label*="attachment"]',
+    '[aria-label*="supporting"]',
+  ]
+  attachSelectors.forEach(sel => {
+    try {
+      $(sel).find('a[href]').each((_, el) => {
+        addLink($(el).attr('href') || '', $(el).text().trim())
+      })
+    } catch { /* invalid selector, skip */ }
+  })
+
+  return scored
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 8)
+    .map(s => s.url)
 }
 
 // Fetch all JDPS attachments in parallel and return combined text
