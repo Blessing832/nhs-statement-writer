@@ -261,13 +261,16 @@ export async function POST(req: NextRequest) {
   // ── Step 1: Try direct server-side fetch first (bypasses cookie walls) ──────
   const direct = await directFetch(url)
   if (direct) {
-    const directHasFullPs = direct.rawText.includes('=== ATTACHED PERSON SPECIFICATION')
+    const directHasAttachment = direct.rawText.includes('=== ATTACHED PERSON SPECIFICATION')
     const directEssentials = (direct.rawText.match(/\bessential\b/gi) || []).length
-    const directSparse = !directHasFullPs && directEssentials < 8
 
-    // For NHS job boards, a sparse direct result is not good enough — Puppeteer can
-    // click hidden tabs and download the full JDPS PDF. Fall through to step 2.
-    if (!directSparse || !isNhsJobSite(url)) {
+    // For NHS job boards: the direct fetch cannot execute JavaScript, so it often
+    // misses the JDPS PDF attachment link (rendered dynamically). Only accept the
+    // direct result if we actually downloaded the PDF. If we didn't, fall through
+    // to Puppeteer which renders JS, finds the link, and downloads the file.
+    // Do NOT use criteria count as the gate — a page can show 15–20 criteria on
+    // the page while the attached PDF has 30+.
+    if (!isNhsJobSite(url) || directHasAttachment) {
       return NextResponse.json({
         rawText: direct.rawText,
         jobTitle: direct.jobTitle,
@@ -275,10 +278,11 @@ export async function POST(req: NextRequest) {
         jobDescription: direct.rawText,
         personSpec: '',
         source: 'direct',
-        hasAttachedPs: directHasFullPs,
-        likelySparsePs: directSparse,
+        hasAttachedPs: directHasAttachment,
+        likelySparsePs: !directHasAttachment && directEssentials < 8,
       })
     }
+    // NHS site but no PDF found — fall through to Puppeteer
   }
 
   // ── Step 2: Fall back to external Puppeteer scraper ──────────────────────────
