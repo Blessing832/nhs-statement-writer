@@ -288,36 +288,42 @@ async function downloadAndParseDoc(url, cookieHeader) {
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       Cookie: cookieHeader,
       Referer: url,
+      Accept: 'application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword,*/*',
     },
     maxRedirects: 5,
   })
 
   const buffer = Buffer.from(response.data)
-  const contentType = response.headers['content-type'] || ''
+  const contentType = (response.headers['content-type'] || '').toLowerCase()
   const urlLower = url.toLowerCase()
 
-  if (contentType.includes('pdf') || urlLower.includes('.pdf') || urlLower.includes('pdf')) {
-    const data = await pdfParse(buffer)
-    return data.text
-  }
-
-  if (
+  const isPdf = contentType.includes('pdf') || urlLower.includes('.pdf')
+  const isDocx =
     contentType.includes('wordprocessingml') ||
     contentType.includes('msword') ||
     urlLower.includes('.docx') ||
     urlLower.includes('.doc')
-  ) {
+
+  if (isPdf) {
+    const data = await pdfParse(buffer)
+    return data.text || ''
+  }
+  if (isDocx) {
     const result = await mammoth.extractRawText({ buffer })
-    return result.value
+    return result.value || ''
   }
 
-  // Try PDF by default
+  // Unknown content type — common with NHS Jobs extensionless /download/{id} URLs.
+  // Always try PDF first (most JDPS files are PDFs), then DOCX.
   try {
     const data = await pdfParse(buffer)
-    return data.text
-  } catch {
-    return ''
-  }
+    if (data.text && data.text.length > 100) return data.text
+  } catch { /* not a PDF */ }
+  try {
+    const result = await mammoth.extractRawText({ buffer })
+    if (result.value && result.value.length > 100) return result.value
+  } catch { /* not a DOCX */ }
+  return ''
 }
 
 function extractRelevantPageText(text) {

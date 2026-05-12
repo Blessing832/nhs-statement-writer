@@ -74,12 +74,13 @@ async function parseDocx(buffer: Buffer): Promise<string> {
   }
 }
 
-// Fetch an attachment URL and extract text (PDF or DOCX)
+// Fetch an attachment URL and extract text (PDF or DOCX).
+// For extensionless URLs (e.g. NHS Jobs /download/{id}), always attempt PDF parse.
 async function fetchAttachmentText(url: string): Promise<string> {
   try {
     const res = await fetch(url, {
       headers: { ...BASE_HEADERS, 'Accept': 'application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword,*/*' },
-      signal: AbortSignal.timeout(15000),
+      signal: AbortSignal.timeout(20000),
     })
     if (!res.ok) return ''
 
@@ -89,18 +90,57 @@ async function fetchAttachmentText(url: string): Promise<string> {
     const isPdf = contentType.includes('pdf') || urlLower.includes('.pdf')
     const isDocx = contentType.includes('wordprocessingml') || contentType.includes('msword') || urlLower.includes('.docx') || urlLower.includes('.doc')
 
-    if (!isPdf && !isDocx) {
-      // Could be a redirect to a PDF — check content-type of final response
-      // If neither, skip
-      return ''
-    }
-
     const buffer = Buffer.from(await res.arrayBuffer())
+
     if (isPdf) return parsePdf(buffer)
     if (isDocx) return parseDocx(buffer)
-    return ''
+
+    // Unknown content type (common with NHS Jobs extensionless /download/{id} URLs).
+    // Try PDF first, then DOCX.
+    const pdfText = await parsePdf(buffer)
+    if (pdfText.length > 100) return pdfText
+    return parseDocx(buffer)
   } catch {
     return ''
+  }
+}
+
+// Walk a JSON value and collect any string that looks like a document URL.
+// Used to extract attachment links from NHS Jobs' embedded __NEXT_DATA__ JSON,
+// which contains the full page props (including file URLs) in the raw HTML.
+function extractUrlsFromJson(obj: unknown, baseUrl: string, out: Set<string>): void {
+  if (typeof obj === 'string') {
+    const lower = obj.toLowerCase()
+    if (
+      obj.length > 5 &&
+      (lower.endsWith('.pdf') || lower.endsWith('.docx') || lower.endsWith('.doc') ||
+       lower.includes('/download') || lower.includes('/attachment') ||
+       lower.includes('/file') || lower.includes('/document'))
+    ) {
+      try {
+        const abs = obj.startsWith('http') ? obj : new URL(obj, baseUrl).toString()
+        out.add(abs)
+      } catch { /* skip */ }
+    }
+  } else if (Array.isArray(obj)) {
+    obj.forEach(v => extractUrlsFromJson(v, baseUrl, out))
+  } else if (obj && typeof obj === 'object') {
+    Object.values(obj as Record<string, unknown>).forEach(v => extractUrlsFromJson(v, baseUrl, out))
+  }
+}
+
+// Extract document URLs embedded by Next.js in __NEXT_DATA__ (no JS needed).
+// jobs.nhs.uk is a Next.js app — its attachment URLs are in the raw HTML.
+function extractNextDataDocUrls(html: string, baseUrl: string): string[] {
+  try {
+    const match = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/)
+    if (!match) return []
+    const nextData = JSON.parse(match[1]) as unknown
+    const urls = new Set<string>()
+    extractUrlsFromJson(nextData, baseUrl, urls)
+    return [...urls]
+  } catch {
+    return []
   }
 }
 
@@ -185,12 +225,24 @@ function findJdpsLinks($: cheerio.CheerioAPI, baseUrl: string): string[] {
     .map(s => s.url)
 }
 
-// Fetch all JDPS attachments in parallel and return combined text
-async function extractAttachmentText($: cheerio.CheerioAPI, pageUrl: string): Promise<string> {
-  const links = findJdpsLinks($, pageUrl)
-  if (links.length === 0) return ''
+// Fetch all JDPS attachments and return combined text.
+// Merges links found by cheerio (visible HTML) with URLs from __NEXT_DATA__ JSON
+// (catches attachments that NHS Jobs renders via JavaScript from embedded page props).
+async function extractAttachmentText($: cheerio.CheerioAPI, pageUrl: string, html: string): Promise<string> {
+  const cheerioLinks = findJdpsLinks($, pageUrl)
+  const nextDataUrls = extractNextDataDocUrls(html, pageUrl)
 
-  const results = await Promise.allSettled(links.map(fetchAttachmentText))
+  // Deduplicate: normalise by stripping query strings
+  const seen = new Set<string>()
+  const allLinks: string[] = []
+  for (const u of [...cheerioLinks, ...nextDataUrls]) {
+    const norm = u.split('?')[0].toLowerCase()
+    if (!seen.has(norm)) { seen.add(norm); allLinks.push(u) }
+  }
+
+  if (allLinks.length === 0) return ''
+
+  const results = await Promise.allSettled(allLinks.slice(0, 8).map(fetchAttachmentText))
   const texts: string[] = []
   for (const r of results) {
     if (r.status === 'fulfilled' && r.value.length > 200) {
@@ -215,8 +267,8 @@ async function directFetch(url: string): Promise<{ rawText: string; jobTitle: st
 
     const $ = cheerio.load(html)
 
-    // Always try to find and extract JDPS attachments to supplement the page text
-    const attachmentText = await extractAttachmentText($, cleanUrl)
+    // Extract attachments via both visible HTML links and __NEXT_DATA__ JSON
+    const attachmentText = await extractAttachmentText($, cleanUrl, html)
     if (attachmentText.length > 200) {
       rawText += '\n\n=== ATTACHED PERSON SPECIFICATION / JOB DESCRIPTION ===\n' + attachmentText
     }
@@ -350,7 +402,7 @@ export async function POST(req: NextRequest) {
     if (res2.ok) {
       const html2 = await res2.text()
       const $2 = cheerio.load(html2)
-      const attachmentText = await extractAttachmentText($2, url.split('?')[0])
+      const attachmentText = await extractAttachmentText($2, url.split('?')[0], html2)
       if (attachmentText.length > 200) {
         data.rawText += '\n\n=== ATTACHED PERSON SPECIFICATION / JOB DESCRIPTION ===\n' + attachmentText
         attachmentFound = true
