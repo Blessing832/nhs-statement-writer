@@ -13,6 +13,13 @@ const BASE_HEADERS = {
   'Cookie': 'nhsuk-cookie-consent=%7B%22preferences%22%3Atrue%2C%22statistics%22%3Atrue%2C%22marketing%22%3Atrue%2C%22version%22%3A1%7D',
 }
 
+// NHS job boards where a sparse direct-fetch result should not be accepted —
+// Puppeteer can click tabs and download the JDPS PDF with a real browser session
+const NHS_HOSTS = ['jobs.nhs.uk', 'healthjobsuk.com', 'apply.jobs.scot.nhs.uk', 'jobs.scot.nhs.uk']
+function isNhsJobSite(url: string): boolean {
+  return NHS_HOSTS.some(h => url.includes(h))
+}
+
 // Strip HTML tags and collapse whitespace
 function htmlToText(html: string): string {
   const $ = cheerio.load(html)
@@ -118,7 +125,13 @@ function findJdpsLinks($: cheerio.CheerioAPI, baseUrl: string): string[] {
       text === 'jd' ||
       text.startsWith('jd ') ||
       text.includes('job spec') ||
+      text.includes('job pack') ||
+      text.includes('role profile') ||
       text.includes('supporting document') ||
+      text.includes('supporting info') ||
+      text.includes('application pack') ||
+      text.includes('candidate pack') ||
+      text.includes('recruitment pack') ||
       text.includes('attachment') ||
       text.includes('download') ||
       text.includes('view document') ||
@@ -127,7 +140,11 @@ function findJdpsLinks($: cheerio.CheerioAPI, baseUrl: string): string[] {
       hrefLower.includes('.doc') ||
       hrefLower.includes('document') ||
       hrefLower.includes('attachment') ||
-      hrefLower.includes('download')
+      hrefLower.includes('download') ||
+      // NHS Jobs uses extensionless download URLs like /candidate/jobadvert/{ref}/download/{id}
+      hrefLower.includes('/download/') ||
+      hrefLower.includes('/file/') ||
+      hrefLower.includes('/files/')
 
     if (!likelyJdps) return
 
@@ -215,15 +232,24 @@ export async function POST(req: NextRequest) {
   // ── Step 1: Try direct server-side fetch first (bypasses cookie walls) ──────
   const direct = await directFetch(url)
   if (direct) {
-    return NextResponse.json({
-      rawText: direct.rawText,
-      jobTitle: direct.jobTitle,
-      organisation: direct.organisation,
-      jobDescription: direct.rawText,
-      personSpec: '',
-      source: 'direct',
-      hasAttachedPs: direct.rawText.includes('=== ATTACHED PERSON SPECIFICATION'),
-    })
+    const directHasFullPs = direct.rawText.includes('=== ATTACHED PERSON SPECIFICATION')
+    const directEssentials = (direct.rawText.match(/\bessential\b/gi) || []).length
+    const directSparse = !directHasFullPs && directEssentials < 8
+
+    // For NHS job boards, a sparse direct result is not good enough — Puppeteer can
+    // click hidden tabs and download the full JDPS PDF. Fall through to step 2.
+    if (!directSparse || !isNhsJobSite(url)) {
+      return NextResponse.json({
+        rawText: direct.rawText,
+        jobTitle: direct.jobTitle,
+        organisation: direct.organisation,
+        jobDescription: direct.rawText,
+        personSpec: '',
+        source: 'direct',
+        hasAttachedPs: directHasFullPs,
+        likelySparsePs: directSparse,
+      })
+    }
   }
 
   // ── Step 2: Fall back to external Puppeteer scraper ──────────────────────────

@@ -49,6 +49,34 @@ app.post('/scrape', async (req, res) => {
     // Navigate to the job page
     await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 })
 
+    // NHS job boards render person spec, job description, etc. in tabs.
+    // Click every tab button so all sections are visible before extracting text.
+    const isNhsSite =
+      url.includes('jobs.nhs.uk') ||
+      url.includes('healthjobsuk.com') ||
+      url.includes('jobs.scot.nhs.uk')
+    if (isNhsSite) {
+      try {
+        const tabs = await page.$$('[role="tab"]')
+        for (const tab of tabs) {
+          await tab.click().catch(() => {})
+          await page.waitForTimeout(250)
+        }
+        // Ensure person spec tab is the last one clicked so its content is fully visible
+        const allClickable = await page.$$('button, a')
+        for (const el of allClickable) {
+          const txt = (await el.textContent().catch(() => '')).toLowerCase().trim()
+          if (txt === 'person specification' || txt === 'person spec') {
+            await el.click().catch(() => {})
+            await page.waitForTimeout(400)
+            break
+          }
+        }
+      } catch (err) {
+        console.log(`Tab expand (${url}):`, err.message)
+      }
+    }
+
     // Extract page title / job title
     const jobTitle = await page
       .title()
@@ -90,11 +118,16 @@ app.post('/scrape', async (req, res) => {
             href.includes('/document/') ||
             href.includes('/download/') ||
             href.includes('/attachment/') ||
-            href.includes('/file/')
+            href.includes('/file/') ||
+            href.includes('/files/')
           const isDocLink =
             text.includes('job description') ||
             text.includes('person spec') ||
             text.includes('person specification') ||
+            text.includes('jdps') ||
+            text.includes('jd and ps') ||
+            text.includes('jd & ps') ||
+            text.includes('jd/ps') ||
             text.includes('job pack') ||
             text.includes('job detail') ||
             text.includes('supporting document') ||
@@ -164,11 +197,16 @@ app.post('/scrape', async (req, res) => {
       }
     }
 
-    // If we got doc text, use it; otherwise fall back to page text
-    const rawText =
-      combinedDocText.length > 200
-        ? combinedDocText
-        : extractRelevantPageText(pageText)
+    // Combine doc text and page text: docs have the full JDPS, page text has the
+    // rendered tabs (person spec table, job summary). Keeping both maximises coverage.
+    const cleanPageText = extractRelevantPageText(pageText)
+    let rawText
+    if (combinedDocText.length > 200) {
+      // Docs first (authoritative), then page text for anything the PDF missed
+      rawText = combinedDocText + '\n\n=== PAGE TEXT (SUPPLEMENTAL) ===\n' + cleanPageText
+    } else {
+      rawText = cleanPageText
+    }
 
     res.json({
       jobTitle,
