@@ -22,6 +22,19 @@ function isNhsJobSite(url: string): boolean {
   return NHS_HOSTS.some(h => url.includes(h))
 }
 
+// Only England/HealthJobsUK have JS-rendered PDF links that need browser scraping.
+// Scotland (apply.jobs.scot.nhs.uk) is SSR — direct fetch works; user pastes PS manually.
+function isEnglandNhsSite(url: string): boolean {
+  return url.includes('jobs.nhs.uk') || url.includes('healthjobsuk.com')
+}
+
+// Scotland NHS Jobs uses ?JobId= as the job identifier — never strip it.
+// NHS England/HealthJobsUK: query params are search filters — safe to strip.
+function getJobUrl(url: string): string {
+  if (url.includes('jobs.scot.nhs.uk')) return url
+  return url.split('?')[0]
+}
+
 // Strip HTML tags and collapse whitespace
 function htmlToText(html: string): string {
   const $ = cheerio.load(html)
@@ -40,7 +53,12 @@ function hasJobContent(text: string): boolean {
     t.includes('key responsibilities') ||
     t.includes('band ') ||
     t.includes('foundation trust') ||
-    t.includes('nhs trust')
+    t.includes('nhs trust') ||
+    t.includes('nhs board') ||
+    t.includes('nhs scotland') ||
+    t.includes('senior charge nurse') ||
+    t.includes('salary:') ||
+    t.includes('closing date')
   )
 }
 
@@ -146,12 +164,34 @@ function extractNextDataDocUrls(html: string, baseUrl: string): string[] {
   }
 }
 
-// Find all document links on the page — cast a wide net so NHS Jobs files
-// named after vacancy references (e.g. "C9345-26-0173-JD-PS.pdf") are caught
-// even if the link text doesn't contain "person spec" or "job description".
+const PS_LABELS  = ['person spec', 'person specification', ' ps ', 'jdps', 'jd and ps', 'jd & ps', 'jd/ps']
+const JD_LABELS  = ['job description', 'job desc', 'jd ', 'job pack', 'role profile', 'role description']
+const DOC_SECTION_HEADINGS = [
+  'supporting documents', 'supporting information', 'documents to download',
+  'documents', 'attachments', 'downloads', 'supporting files',
+]
+
+function scoreLink(text: string, href: string): number {
+  const t = text.toLowerCase().trim()
+  const h = href.toLowerCase()
+  if (t.includes('person spec') || t.includes('person specification')) return 10
+  if (t.includes('jdps') || t.includes('jd and ps') || t.includes('jd & ps')) return 9
+  if (t.includes('job description') || t.includes('job desc')) return 8
+  if (t.includes('job pack') || t.includes('role profile')) return 7
+  if (t.includes('application pack') || t.includes('candidate pack')) return 6
+  if (t.includes('supporting document') || t.includes('supporting info')) return 5
+  if (h.endsWith('.pdf') || h.endsWith('.docx') || h.endsWith('.doc')) return 5
+  if (h.includes('/download') || h.includes('/attachment') || h.includes('/file') || h.includes('/document')) return 4
+  if (t.includes('download') || t.includes('attachment')) return 3
+  return 0
+}
+
+// Find document links with smart priority:
+// 1. Links under known NHS document section headings
+// 2. PS-labelled → only return that; JD-labelled → only return that; else all
 function findJdpsLinks($: cheerio.CheerioAPI, baseUrl: string): string[] {
   const seen = new Set<string>()
-  const scored: Array<{ url: string; score: number }> = []
+  const all: Array<{ url: string; text: string; score: number }> = []
 
   function addLink(href: string, text: string) {
     if (!href || href.startsWith('#') || href.startsWith('mailto:')) return
@@ -160,51 +200,20 @@ function findJdpsLinks($: cheerio.CheerioAPI, baseUrl: string): string[] {
       const norm = abs.split('?')[0].toLowerCase()
       if (seen.has(norm)) return
       seen.add(norm)
-
-      const t = text.toLowerCase().trim()
-      const h = norm
-      const score =
-        (t.includes('person spec') || t.includes('person specification')) ? 10 :
-        (t.includes('jdps') || t.includes('jd and ps') || t.includes('jd & ps') || t.includes('jd/ps')) ? 9 :
-        t.includes('job description') ? 8 :
-        (t.includes('job pack') || t.includes('role profile')) ? 7 :
-        (t.includes('application pack') || t.includes('candidate pack') || t.includes('recruitment pack')) ? 6 :
-        (t.includes('supporting document') || t.includes('supporting info') || t.includes('information pack')) ? 5 :
-        (h.endsWith('.pdf') || h.endsWith('.docx') || h.endsWith('.doc')) ? 4 :
-        (h.includes('/download/') || h.includes('/attachment/') || h.includes('/file/') || h.includes('/document/') || h.includes('/files/')) ? 3 :
-        t.includes('download') ? 2 :
-        t.includes('attachment') ? 2 : 1
-
-      scored.push({ url: abs, score })
-    } catch { /* invalid URL, skip */ }
+      const s = scoreLink(text, norm)
+      if (s > 0) all.push({ url: abs, text, score: s })
+    } catch { /* skip */ }
   }
 
-  // Strategy 1 & 2: doc file URLs + keyword-matched link text
-  $('a[href]').each((_, el) => {
-    const href = $(el).attr('href') || ''
-    const text = $(el).text().trim()
-    const h = href.toLowerCase()
-    const t = text.toLowerCase()
-
-    const isDocFile =
-      h.endsWith('.pdf') || h.endsWith('.docx') || h.endsWith('.doc') ||
-      h.includes('/document/') || h.includes('/download/') ||
-      h.includes('/attachment/') || h.includes('/file/') || h.includes('/files/')
-
-    const isKeywordMatch =
-      t.includes('person spec') || t.includes('job description') || t.includes('job desc') ||
-      t.includes('jdps') || t.includes('jd and ps') || t.includes('jd & ps') || t.includes('jd/ps') ||
-      t === 'jd' || t.startsWith('jd ') ||
-      t.includes('job spec') || t.includes('job pack') || t.includes('role profile') ||
-      t.includes('supporting document') || t.includes('supporting info') ||
-      t.includes('application pack') || t.includes('candidate pack') || t.includes('recruitment pack') ||
-      t.includes('additional information') || t.includes('further information') ||
-      t.includes('attachment') || t.includes('download') || t.includes('view document')
-
-    if (isDocFile || isKeywordMatch) addLink(href, text)
+  // Priority: look under known section headings first
+  $('h1,h2,h3,h4,h5,h6,dt,summary,th').each((_, el) => {
+    const heading = $(el).text().trim().toLowerCase().replace(/\s+/g, ' ')
+    if (!DOC_SECTION_HEADINGS.includes(heading)) return
+    const $container = $(el).next().add($(el).closest('details')).add($(el).parent())
+    $container.find('a[href]').each((__, a) => addLink($(a).attr('href') || '', $(a).text().trim()))
   })
 
-  // Strategy 3: every link inside sections that look like attachment/document areas
+  // Also scan class/id/aria-label based sections
   const attachSelectors = [
     '[class*="attachment"]', '[id*="attachment"]',
     '[class*="supporting"]', '[id*="supporting"]',
@@ -214,17 +223,21 @@ function findJdpsLinks($: cheerio.CheerioAPI, baseUrl: string): string[] {
     '[aria-label*="supporting"]',
   ]
   attachSelectors.forEach(sel => {
-    try {
-      $(sel).find('a[href]').each((_, el) => {
-        addLink($(el).attr('href') || '', $(el).text().trim())
-      })
-    } catch { /* invalid selector, skip */ }
+    try { $(sel).find('a[href]').each((_, el) => addLink($(el).attr('href') || '', $(el).text().trim())) }
+    catch { /* skip */ }
   })
 
-  return scored
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 8)
-    .map(s => s.url)
+  // Fallback: broad link scan
+  $('a[href]').each((_, el) => addLink($(el).attr('href') || '', $(el).text().trim()))
+
+  all.sort((a, b) => b.score - a.score)
+
+  // Smart priority: PS-labelled only → JD-labelled only → everything
+  const psLinks = all.filter(l => PS_LABELS.some(p => l.text.toLowerCase().includes(p)))
+  const jdLinks = all.filter(l => JD_LABELS.some(p => l.text.toLowerCase().includes(p)))
+
+  const chosen = psLinks.length > 0 ? psLinks : jdLinks.length > 0 ? jdLinks : all
+  return chosen.slice(0, 8).map(l => l.url)
 }
 
 // Fetch all JDPS attachments and return combined text.
@@ -257,7 +270,7 @@ async function extractAttachmentText($: cheerio.CheerioAPI, pageUrl: string, htm
 // Direct server-side fetch — no JS execution, works for SSR pages
 async function directFetch(url: string): Promise<{ rawText: string; jobTitle: string; organisation: string } | null> {
   try {
-    const cleanUrl = url.split('?')[0]
+    const cleanUrl = getJobUrl(url)
     const res = await fetch(cleanUrl, {
       headers: { ...BASE_HEADERS, 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' },
       signal: AbortSignal.timeout(15000),
@@ -265,7 +278,11 @@ async function directFetch(url: string): Promise<{ rawText: string; jobTitle: st
     if (!res.ok) return null
     const html = await res.text()
     let rawText = htmlToText(html)
-    if (rawText.length < 300 || !hasJobContent(rawText)) return null
+    // Scotland: accept any substantial text — the page uses different terminology
+    // and the user will paste the person spec manually
+    const isScotland = url.includes('jobs.scot.nhs.uk')
+    if (rawText.length < 300) return null
+    if (!isScotland && !hasJobContent(rawText)) return null
 
     const $ = cheerio.load(html)
 
@@ -324,7 +341,7 @@ export async function POST(req: NextRequest) {
     // to Puppeteer which renders JS, finds the link, and downloads the file.
     // Do NOT use criteria count as the gate — a page can show 15–20 criteria on
     // the page while the attached PDF has 30+.
-    if (!isNhsJobSite(url) || directHasAttachment) {
+    if (!isEnglandNhsSite(url) || directHasAttachment) {
       return NextResponse.json({
         rawText: direct.rawText,
         jobTitle: direct.jobTitle,
@@ -339,10 +356,10 @@ export async function POST(req: NextRequest) {
     // NHS site but no PDF found — fall through to inline headless browser
   }
 
-  // ── Step 2: Inline headless Chrome (Vercel-native, no Railway needed) ────────
-  // Launches Chromium inside the serverless function, renders JavaScript,
-  // handles cookie consent, clicks tabs, and downloads all attached documents.
-  const browserResult = await browserScrapeJob(url)
+  // ── Step 2: Inline headless Chrome (England/HealthJobsUK only) ──────────────
+  // Skip for Scotland — headless Chrome times out on free Vercel plan and
+  // Scotland jobs work via Railway or manual paste instead.
+  const browserResult = url.includes('jobs.scot.nhs.uk') ? null : await browserScrapeJob(url)
 
   if (browserResult && browserResult.rawText.length > 300 && hasJobContent(browserResult.rawText.toLowerCase())) {
     const hasFullPs =
@@ -366,7 +383,7 @@ export async function POST(req: NextRequest) {
 
   // ── Step 3: External Railway scraper (fallback for non-NHS or browser failure) ─
   if (SCRAPER_URL && SCRAPER_SECRET) {
-    const cleanUrl = url.split('?')[0]
+    const cleanUrl = getJobUrl(url)
     let response: Response
     try {
       response = await fetch(`${SCRAPER_URL}/scrape`, {

@@ -234,17 +234,13 @@ app.post('/scrape', async (req, res) => {
     // Higher-scored docs (person spec first) are processed first.
     let combinedDocText = ''
     const downloadedDocs = []
-    const PER_DOC_LIMIT = 30000
+    const PER_DOC_LIMIT = 60000
 
     for (const link of docLinks.slice(0, 8)) {
       try {
         let docText = await downloadAndParseDoc(link.href, cookieHeader)
         if (docText && docText.length > 100) {
-          // Truncate very large docs but keep both start and end (PS often at end)
-          if (docText.length > PER_DOC_LIMIT) {
-            const half = PER_DOC_LIMIT / 2
-            docText = docText.slice(0, half) + '\n\n[...middle omitted...]\n\n' + docText.slice(-half)
-          }
+          docText = smartExtract(docText, PER_DOC_LIMIT)
           combinedDocText += `\n\n--- ${link.text || 'Document'} ---\n${docText}`
           downloadedDocs.push(link.text || link.href)
           console.log(`Parsed doc: ${link.text} (${docText.length} chars after trim)`)
@@ -333,9 +329,31 @@ function extractRelevantPageText(text) {
     .map((l) => l.trim())
     .filter((l) => l.length > 0)
     .join('\n')
-  // Keep 20k chars: first 14k (job description) + last 6k (person spec at bottom)
-  if (cleaned.length <= 20000) return cleaned
-  return cleaned.slice(0, 14000) + '\n\n[...middle omitted...]\n\n' + cleaned.slice(-6000)
+  return smartExtract(cleaned, 30000)
+}
+
+// Extract text intelligently: anchor the window at the Person Specification heading
+// so no criteria are ever cut. Falls back to start+end split if no heading found.
+function smartExtract(text, maxChars) {
+  if (text.length <= maxChars) return text
+
+  const lower = text.toLowerCase()
+  const patterns = [/person\s+specification/, /essential\s+criteria/, /essential\s+requirements/]
+
+  let psStart = -1
+  for (const pat of patterns) {
+    const m = lower.search(pat)
+    if (m !== -1 && (psStart === -1 || m < psStart)) psStart = m
+  }
+
+  if (psStart > 0) {
+    const context = text.slice(0, Math.min(3000, psStart))
+    const psSection = text.slice(psStart, psStart + (maxChars - context.length))
+    return context + '\n\n[...job description omitted...]\n\n' + psSection
+  }
+
+  const half = Math.floor(maxChars / 2)
+  return text.slice(0, half) + '\n\n[...middle omitted...]\n\n' + text.slice(-half)
 }
 
 app.listen(PORT, () => {
