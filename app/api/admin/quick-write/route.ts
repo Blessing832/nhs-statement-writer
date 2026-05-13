@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { generateStatement } from '@/lib/claude'
-import type { Client, ScrapeResult } from '@/lib/types'
+import { scrapeJobUrl } from '@/lib/job-scraper'
+import type { Client } from '@/lib/types'
 
-export const maxDuration = 60
+export const maxDuration = 120
 
 function isAuthorised(req: NextRequest): boolean {
   return req.headers.get('x-admin-token') === process.env.ADMIN_SECRET
@@ -28,47 +29,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Name and job URL are required' }, { status: 400 })
   }
 
-  // Step 1: Scrape the job URL using the scraper service
-  const SCRAPER_URL = process.env.SCRAPER_SERVICE_URL
-  const SCRAPER_SECRET = process.env.SCRAPER_SECRET
-
-  if (!SCRAPER_URL || !SCRAPER_SECRET) {
-    return NextResponse.json({ error: 'Scraper service not configured' }, { status: 503 })
-  }
-
-  let jobData: ScrapeResult
+  // Step 1: Scrape using the full pipeline (direct fetch → headless Chrome → Railway)
+  let jobData
   try {
-    const scrapeRes = await fetch(`${SCRAPER_URL}/scrape`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-scraper-secret': SCRAPER_SECRET,
-      },
-      body: JSON.stringify({ url: vacancy_url }),
-      signal: AbortSignal.timeout(45000),
-    })
-
-    if (!scrapeRes.ok) {
-      const err = await scrapeRes.json().catch(() => ({ error: 'Could not read job advert' }))
-      return NextResponse.json(
-        { error: err.error || 'Could not read job advert. Check the URL and try again.' },
-        { status: scrapeRes.status }
-      )
-    }
-
-    jobData = await scrapeRes.json()
-
-    if (!jobData.rawText || jobData.rawText.length < 100) {
-      return NextResponse.json(
-        { error: 'Could not extract enough text from the job advert. Check the URL.' },
-        { status: 422 }
-      )
-    }
-  } catch {
-    return NextResponse.json(
-      { error: 'Job advert page took too long to load. Check the URL and try again.' },
-      { status: 504 }
-    )
+    jobData = await scrapeJobUrl(vacancy_url)
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Could not read job advert'
+    return NextResponse.json({ error: message }, { status: 422 })
   }
 
   // Step 2: Build a temporary client object from the pasted info
