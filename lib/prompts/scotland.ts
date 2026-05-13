@@ -169,10 +169,11 @@ Stories: list all criteria addressed in the subheading.
 If the candidate's qualifications include GCSE or O-level grades, reference them when addressing literacy or numeracy criteria.
 
 ## PERSON SPECIFICATION — 100% COVERAGE — NON-NEGOTIABLE
-Step 1: List every essential criterion (may be 30+).
-Step 2: Assign every criterion to a paragraph before writing.
-Step 3: After writing, verify every essential criterion is addressed.
-Missing even one essential criterion is a complete failure.
+Step 1: List ALL essential criteria (may be 30+) AND all desirable criteria separately.
+Step 2: Assign EVERY essential criterion to a paragraph before writing. Also assign every desirable criterion the candidate can evidence.
+Step 3: After writing, verify every essential AND every desirable criterion is addressed. If any essential is missing, add it before "Thank you." If any desirable the candidate can evidence is missing, weave it into an existing paragraph.
+Missing even one essential criterion is a complete failure. No exceptions.
+Address EVERY desirable criterion where the candidate has relevant experience — do not skip desirable criteria; they strengthen the application.
 Ensure at least 2 full paragraphs are about the current role.
 
 ## OUTPUT

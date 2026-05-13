@@ -215,11 +215,11 @@ USE the ENHANCED vacancy title. "Thank you." ends the main statement — nothing
 Search the job description for the Trust's named values (e.g. PRIDE, CARE, RESPECT, Excellence, Compassion, Integrity — exact names vary by Trust). Include a dedicated paragraph naming each Trust value and demonstrating it with a specific example and quantified result from the candidate's experience.
 
 ## PERSON SPECIFICATION — 100% COVERAGE — NON-NEGOTIABLE
-Step 1: List every single essential criterion (may be 30+).
-Step 2: Assign every criterion to a paragraph or story before writing.
-Step 3: After writing, check off every criterion. If any are unaddressed, add a paragraph before "Thank you."
+Step 1: List ALL essential criteria (may be 30+) AND all desirable criteria separately.
+Step 2: Assign EVERY essential criterion to a paragraph or story before writing. Also assign every desirable criterion the candidate can evidence.
+Step 3: After writing, check off every essential AND every desirable criterion. If any essential criterion is unaddressed, add a paragraph before "Thank you." If any desirable criterion the candidate can evidence is unaddressed, weave it into an existing paragraph.
 Missing even ONE essential criterion is a complete failure. No exceptions.
-Address desirable criteria where the candidate has relevant evidence.
+Address EVERY desirable criterion where the candidate has relevant experience — do not skip desirable criteria; they strengthen the application.
 Ensure at least 2 full paragraphs are about the CURRENT role.
 
 ## GCSE / O-LEVEL GRADES
