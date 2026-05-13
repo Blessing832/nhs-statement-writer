@@ -281,10 +281,11 @@ export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
     // England without PDF: fall through to try browser/Railway, keep direct as backup
   }
 
-  // Step 2: Inline headless Chrome (England/HealthJobsUK — renders JS, finds hidden PDFs)
-  // Capped at 90s so Railway fallback can still be reached within the 120s function limit
-  const browserTimeout = new Promise<null>(resolve => setTimeout(() => resolve(null), 90000))
-  const browserResult = url.includes('jobs.scot.nhs.uk')
+  // Step 2: Inline headless Chrome — skip for England NHS sites (Chromium crashes in Lambda;
+  // Railway handles these). For other sites cap at 10s so Railway still has time.
+  const isEngland = isEnglandNhsSite(url)
+  const browserTimeout = new Promise<null>(resolve => setTimeout(() => resolve(null), isEngland ? 1 : 10000))
+  const browserResult = url.includes('jobs.scot.nhs.uk') || isEngland
     ? null
     : await Promise.race([browserScrapeJob(url).catch(() => null), browserTimeout])
   if (browserResult && browserResult.rawText.length > 300 && hasJobContent(browserResult.rawText.toLowerCase())) {
@@ -318,7 +319,7 @@ export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-scraper-secret': SCRAPER_SECRET },
         body: JSON.stringify({ url: cleanUrl }),
-        signal: AbortSignal.timeout(55000),
+        signal: AbortSignal.timeout(100000),
       })
       const railStatus = response.status
       const railBody = await response.text()
