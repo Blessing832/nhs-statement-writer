@@ -7,7 +7,7 @@ async function parsePdf(buffer: Buffer): Promise<string> {
   // Require the internal module directly — avoids pdf-parse trying to load
   // test fixture files (./test/data/...) which don't exist in production builds
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const pdfParse = require('pdf-parse/lib/pdf-parse')
+  const pdfParse = require('pdf-parse')
   const data = await pdfParse(buffer)
   return (data.text as string) || ''
 }
