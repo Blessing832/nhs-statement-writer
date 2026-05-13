@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
     skills,
     background,
     vacancy_url,
+    person_spec,
     instructions,
     style,
   } = await req.json()
@@ -30,12 +31,32 @@ export async function POST(req: NextRequest) {
   }
 
   // Step 1: Scrape using the full pipeline (direct fetch → headless Chrome → Railway)
+  // If scraping fails but person_spec is provided, fall back to a minimal job object
   let jobData
   try {
     jobData = await scrapeJobUrl(vacancy_url)
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : 'Could not read job advert'
-    return NextResponse.json({ error: message }, { status: 422 })
+    if (!person_spec?.trim()) {
+      const message = err instanceof Error ? err.message : 'Could not read job advert'
+      return NextResponse.json({ error: message }, { status: 422 })
+    }
+    // Scrape failed but person_spec was provided — continue with minimal job data
+    jobData = {
+      rawText: '',
+      jobTitle: '',
+      organisation: '',
+      jobDescription: '',
+      personSpec: '',
+      source: 'manual',
+    }
+  }
+
+  // Merge pasted/uploaded person spec into rawText so Claude sees it
+  if (person_spec?.trim()) {
+    jobData = {
+      ...jobData,
+      rawText: (jobData.rawText || '') + '\n\n=== PASTED PERSON SPECIFICATION ===\n' + person_spec.trim(),
+    }
   }
 
   // Step 2: Build a temporary client object from the pasted info

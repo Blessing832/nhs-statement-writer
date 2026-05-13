@@ -15,10 +15,12 @@ export default function QuickWritePage() {
     skills: '',
     background: '',
     vacancy_url: '',
+    person_spec: '',
     instructions: '',
     style: '1',
   })
   const [loading, setLoading] = useState(false)
+  const [docUploading, setDocUploading] = useState(false)
   const [error, setError] = useState('')
   const [result, setResult] = useState<{
     statement: string
@@ -198,6 +200,48 @@ export default function QuickWritePage() {
               rows={3}
               placeholder="Anything else relevant: immigration status, gaps, special context..."
               className={FIELD_CLASS}
+            />
+          </div>
+
+          {/* Person Spec upload/paste */}
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-xs font-semibold text-gray-700">
+                Person Specification <span className="text-gray-400 font-normal">(optional)</span>
+              </label>
+              <label className={`flex items-center gap-1 text-xs font-medium cursor-pointer px-2 py-0.5 rounded border transition-colors ${docUploading ? 'opacity-50 cursor-not-allowed' : 'border-blue-300 text-blue-700 hover:bg-blue-50'}`}>
+                {docUploading ? 'Reading…' : '⬆ Upload PDF / Word'}
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  className="hidden"
+                  disabled={loading || docUploading}
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0]
+                    if (!file) return
+                    setDocUploading(true)
+                    try {
+                      const fd = new FormData()
+                      fd.append('file', file)
+                      const res = await fetch('/api/parse-doc', { method: 'POST', body: fd })
+                      const data = await res.json()
+                      if (res.ok) setForm(f => ({ ...f, person_spec: data.text }))
+                      else alert(data.error || 'Could not read file')
+                    } finally {
+                      setDocUploading(false)
+                      e.target.value = ''
+                    }
+                  }}
+                />
+              </label>
+            </div>
+            <textarea
+              value={form.person_spec}
+              onChange={set('person_spec')}
+              rows={4}
+              placeholder="Upload the person spec PDF above, or paste the criteria here..."
+              className={FIELD_CLASS}
+              disabled={loading || docUploading}
             />
           </div>
 
