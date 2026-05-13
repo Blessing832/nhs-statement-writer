@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import * as cheerio from 'cheerio'
+import { browserScrapeJob } from '@/lib/browser-scrape'
 
-export const maxDuration = 60
+// Increase timeout: Chromium download + page render + PDF downloads can take 90s
+export const maxDuration = 120
 
-const SCRAPER_URL = process.env.SCRAPER_SERVICE_URL!
-const SCRAPER_SECRET = process.env.SCRAPER_SECRET!
+const SCRAPER_URL = process.env.SCRAPER_SERVICE_URL
+const SCRAPER_SECRET = process.env.SCRAPER_SECRET
 
 const BASE_HEADERS = {
   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -334,91 +336,67 @@ export async function POST(req: NextRequest) {
         likelySparsePs: !directHasAttachment && directEssentials < 8,
       })
     }
-    // NHS site but no PDF found — fall through to Puppeteer
+    // NHS site but no PDF found — fall through to inline headless browser
   }
 
-  // ── Step 2: Fall back to external Puppeteer scraper ──────────────────────────
-  // Strip query params — search filter params appended from NHS Jobs search results
-  // confuse the scraper and the clean job URL is all that's needed.
-  const cleanUrl = url.split('?')[0]
-  let response: Response
-  try {
-    response = await fetch(`${SCRAPER_URL}/scrape`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-scraper-secret': SCRAPER_SECRET,
-      },
-      body: JSON.stringify({ url: cleanUrl }),
-      signal: AbortSignal.timeout(50000),
+  // ── Step 2: Inline headless Chrome (Vercel-native, no Railway needed) ────────
+  // Launches Chromium inside the serverless function, renders JavaScript,
+  // handles cookie consent, clicks tabs, and downloads all attached documents.
+  const browserResult = await browserScrapeJob(url)
+
+  if (browserResult && browserResult.rawText.length > 300 && hasJobContent(browserResult.rawText.toLowerCase())) {
+    const hasFullPs =
+      browserResult.downloadedDocs.length > 0 ||
+      browserResult.rawText.includes('person specification') ||
+      browserResult.rawText.includes('essential criteria')
+    const essentialCount = (browserResult.rawText.match(/\bessential\b/gi) || []).length
+    return NextResponse.json({
+      rawText: browserResult.rawText,
+      jobTitle: browserResult.jobTitle,
+      organisation: browserResult.organisation,
+      jobDescription: browserResult.rawText,
+      personSpec: '',
+      source: 'browser',
+      hasAttachedPs: browserResult.downloadedDocs.length > 0,
+      likelySparsePs: !hasFullPs && essentialCount < 8,
+      downloadedDocs: browserResult.downloadedDocs,
     })
-  } catch {
-    return NextResponse.json(
-      { error: 'The job advert page took too long to load. Please check the URL and try again.' },
-      { status: 504 }
-    )
   }
 
-  if (!response.ok) {
-    const err = await response.json().catch(() => ({ error: 'Could not read job advert' }))
-    return NextResponse.json({ error: err.error || 'Could not read job advert' }, { status: response.status })
-  }
+  // ── Step 3: External Railway scraper (fallback for non-NHS or browser failure) ─
+  if (SCRAPER_URL && SCRAPER_SECRET) {
+    const cleanUrl = url.split('?')[0]
+    let response: Response
+    try {
+      response = await fetch(`${SCRAPER_URL}/scrape`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-scraper-secret': SCRAPER_SECRET },
+        body: JSON.stringify({ url: cleanUrl }),
+        signal: AbortSignal.timeout(50000),
+      })
+    } catch {
+      return NextResponse.json(
+        { error: 'Could not read this job page automatically. Please use "Paste Job Description" instead.' },
+        { status: 504 }
+      )
+    }
 
-  const data = await response.json()
-
-  if (!data.rawText || data.rawText.length < 100) {
-    return NextResponse.json(
-      { error: 'Could not extract enough text from the job advert. Please check the URL.' },
-      { status: 422 }
-    )
-  }
-
-  const t = (data.rawText as string).toLowerCase()
-  const looksLikeCookiePage =
-    t.includes('cookies on nhs jobs') ||
-    t.includes('manage your cookies') ||
-    t.includes('cookie preferences') ||
-    (t.includes('privacy notice') && !hasJobContent(t))
-
-  if (looksLikeCookiePage || (data.rawText.length < 3000 && !hasJobContent(t))) {
-    return NextResponse.json(
-      { error: 'Could not read this job page automatically. Please copy the text from the vacancy page (Ctrl+A then Ctrl+C) and use "Paste Job Description" instead.' },
-      { status: 422 }
-    )
-  }
-
-  // Always try to supplement with attachments. NHS Jobs shows a subset of criteria
-  // on the page (often 11-15) but the full JDPS PDF typically has 25-40.
-  // Issue: some job pages render attachment links via JavaScript, so a bare HTTP
-  // fetch here won't find them if the Puppeteer scraper already rendered them.
-  // We try anyway — if it works we get the full PS; if not, the rawText still has
-  // the page criteria and we flag low coverage to the client.
-  let attachmentFound = false
-  try {
-    const res2 = await fetch(url.split('?')[0], {
-      headers: { ...BASE_HEADERS, 'Accept': 'text/html,*/*' },
-      signal: AbortSignal.timeout(10000),
-    })
-    if (res2.ok) {
-      const html2 = await res2.text()
-      const $2 = cheerio.load(html2)
-      const attachmentText = await extractAttachmentText($2, url.split('?')[0], html2)
-      if (attachmentText.length > 200) {
-        data.rawText += '\n\n=== ATTACHED PERSON SPECIFICATION / JOB DESCRIPTION ===\n' + attachmentText
-        attachmentFound = true
+    if (response.ok) {
+      const data = await response.json()
+      if (data.rawText && data.rawText.length > 300 && hasJobContent((data.rawText as string).toLowerCase())) {
+        const essentialCount = ((data.rawText as string).match(/\bessential\b/gi) || []).length
+        const hasFullPs = data.rawText.includes('=== ATTACHED PERSON SPECIFICATION')
+        return NextResponse.json({
+          ...data,
+          hasAttachedPs: hasFullPs,
+          likelySparsePs: !hasFullPs && essentialCount < 8,
+        })
       }
     }
-  } catch { /* non-critical */ }
+  }
 
-  // Count rough number of essential criteria visible in the text.
-  // If fewer than 15 and no attachment was found, warn the user to paste the JDPS.
-  const essentialCount = ((data.rawText as string).match(/\bessential\b/gi) || []).length
-  const hasFullPs = attachmentFound || data.rawText.includes('=== ATTACHED PERSON SPECIFICATION')
-  const likelySparsePs = !hasFullPs && essentialCount < 8
-
-  return NextResponse.json({
-    ...data,
-    hasAttachedPs: hasFullPs,
-    likelySparsePs,
-  })
+  return NextResponse.json(
+    { error: 'Could not read this job page automatically. Please copy and paste the job description text instead.' },
+    { status: 422 }
+  )
 }
