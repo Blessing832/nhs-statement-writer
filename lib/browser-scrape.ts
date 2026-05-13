@@ -44,7 +44,11 @@ export async function browserScrapeJob(url: string): Promise<BrowserScrapeResult
       (await chromium.executablePath(CHROMIUM_REMOTE_URL))
 
     browser = await puppeteer.launch({
-      args: chromium.args,
+      args: [
+        ...chromium.args,
+        '--disable-dev-shm-usage', // Lambda /dev/shm is too small without this
+        '--disable-gpu',
+      ],
       executablePath,
       headless: true,
     })
