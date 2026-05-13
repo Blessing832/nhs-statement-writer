@@ -249,9 +249,12 @@ export interface ScrapeJobResult extends ScrapeResult {
 export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
   // Step 1: Direct server-side fetch (fast, works for SSR pages and __NEXT_DATA__)
   const direct = await directFetch(url)
+  let directHasAttachment = false
+  let directEssentials = 0
   if (direct) {
-    const directHasAttachment = direct.rawText.includes('=== ATTACHED PERSON SPECIFICATION')
-    const directEssentials = (direct.rawText.match(/\bessential\b/gi) || []).length
+    directHasAttachment = direct.rawText.includes('=== ATTACHED PERSON SPECIFICATION')
+    directEssentials = (direct.rawText.match(/\bessential\b/gi) || []).length
+    // Return immediately if: non-England site, or England and we got the PDF
     if (!isEnglandNhsSite(url) || directHasAttachment) {
       return {
         rawText: direct.rawText,
@@ -264,6 +267,7 @@ export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
         likelySparsePs: !directHasAttachment && directEssentials < 8,
       }
     }
+    // England without PDF: fall through to try browser/Railway, keep direct as backup
   }
 
   // Step 2: Inline headless Chrome (England/HealthJobsUK — renders JS, finds hidden PDFs)
@@ -313,7 +317,23 @@ export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
           }
         }
       }
-    } catch { /* fall through to error */ }
+    } catch { /* fall through */ }
+  }
+
+  // Step 4: Use the direct fetch result as a last resort even without a PDF.
+  // Better to generate a statement from the page text (with a sparse-PS warning)
+  // than to fail entirely — the user can paste the person spec manually.
+  if (direct) {
+    return {
+      rawText: direct.rawText,
+      jobTitle: direct.jobTitle,
+      organisation: direct.organisation,
+      jobDescription: direct.rawText,
+      personSpec: '',
+      source: 'direct',
+      hasAttachedPs: false,
+      likelySparsePs: true,
+    }
   }
 
   throw new Error('Could not read this job page automatically. Please copy and paste the job description text instead.')
