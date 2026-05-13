@@ -45,8 +45,11 @@ export async function browserScrapeJob(url: string): Promise<BrowserScrapeResult
 
     browser = await puppeteer.launch({
       args: [
-        ...chromium.args,
-        '--disable-dev-shm-usage', // Lambda /dev/shm is too small without this
+        // chromium.args v133 includes "--headless='shell'" with literal quotes which
+        // Chromium receives verbatim via execFile and rejects, crashing the process.
+        // Filter it out; puppeteer adds the correct --headless flag via headless:true.
+        ...chromium.args.filter((arg: string) => !arg.startsWith('--headless')),
+        '--disable-dev-shm-usage',
         '--disable-gpu',
       ],
       executablePath,
