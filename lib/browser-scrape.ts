@@ -13,7 +13,7 @@ import puppeteer from 'puppeteer-core'
 // Can be overridden by setting CHROMIUM_REMOTE_EXEC_URL in the Vercel environment.
 const CHROMIUM_REMOTE_URL =
   process.env.CHROMIUM_REMOTE_EXEC_URL ||
-  'https://github.com/Sparticuz/chromium/releases/download/v148.0.0/chromium-v148.0.0-pack.tar'
+  'https://github.com/Sparticuz/chromium/releases/download/v133.0.0/chromium-v133.0.0-pack.tar'
 
 // Disable GPU/graphics stack — not available in Vercel's Lambda environment
 chromium.setGraphicsMode = false

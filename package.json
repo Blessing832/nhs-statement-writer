@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.88.0",
-    "@sparticuz/chromium-min": "^148.0.0",
+    "@sparticuz/chromium-min": "133.0.0",
     "@supabase/supabase-js": "^2.103.0",
     "axios": "^1.15.0",
     "cheerio": "^1.2.0",
