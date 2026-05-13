@@ -31,7 +31,8 @@ export interface BrowserScrapeResult {
 }
 
 export async function browserScrapeJob(url: string): Promise<BrowserScrapeResult | null> {
-  const cleanUrl = url.split('?')[0]
+  // Scotland NHS Jobs: ?JobId= is the job identifier — never strip it
+  const cleanUrl = url.includes('jobs.scot.nhs.uk') ? url : url.split('?')[0]
 
   let browser: Awaited<ReturnType<typeof puppeteer.launch>> | null = null
   try {

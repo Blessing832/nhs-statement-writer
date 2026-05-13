@@ -22,6 +22,13 @@ function isNhsJobSite(url: string): boolean {
   return NHS_HOSTS.some(h => url.includes(h))
 }
 
+// Scotland NHS Jobs uses ?JobId= as the job identifier — never strip it.
+// NHS England/HealthJobsUK: query params are search filters — safe to strip.
+function getJobUrl(url: string): string {
+  if (url.includes('jobs.scot.nhs.uk')) return url
+  return url.split('?')[0]
+}
+
 // Strip HTML tags and collapse whitespace
 function htmlToText(html: string): string {
   const $ = cheerio.load(html)
@@ -252,7 +259,7 @@ async function extractAttachmentText($: cheerio.CheerioAPI, pageUrl: string, htm
 // Direct server-side fetch — no JS execution, works for SSR pages
 async function directFetch(url: string): Promise<{ rawText: string; jobTitle: string; organisation: string } | null> {
   try {
-    const cleanUrl = url.split('?')[0]
+    const cleanUrl = getJobUrl(url)
     const res = await fetch(cleanUrl, {
       headers: { ...BASE_HEADERS, 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' },
       signal: AbortSignal.timeout(15000),
@@ -361,7 +368,7 @@ export async function POST(req: NextRequest) {
 
   // ── Step 3: External Railway scraper (fallback for non-NHS or browser failure) ─
   if (SCRAPER_URL && SCRAPER_SECRET) {
-    const cleanUrl = url.split('?')[0]
+    const cleanUrl = getJobUrl(url)
     let response: Response
     try {
       response = await fetch(`${SCRAPER_URL}/scrape`, {
