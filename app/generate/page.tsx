@@ -165,6 +165,7 @@ function GeneratePage() {
   const [jobDescText, setJobDescText] = useState('')
   const [pastedPersonSpec, setPastedPersonSpec] = useState('')
   const [sparsePs, setSparsePs] = useState(false)
+  const [downloadedDocs, setDownloadedDocs] = useState<string[]>([])
   const [cachedJobData, setCachedJobData] = useState<Record<string, unknown> | null>(null)
   const [style, setStyle] = useState<'1' | '2'>('1')
   const [bodyPattern, setBodyPattern] = useState<'' | '1' | '2' | '3'>('')
@@ -217,6 +218,7 @@ function GeneratePage() {
       if (!scrapeRes.ok) throw new Error(scraped.error || 'Could not read the job advert. Please try again.')
       scrapeData = scraped
       if (scraped.likelySparsePs) setSparsePs(true)
+      if (scraped.downloadedDocs?.length) setDownloadedDocs(scraped.downloadedDocs)
     }
 
     onStep('Writing your supporting statement...')
@@ -254,6 +256,7 @@ function GeneratePage() {
     setError('')
     setResult(null)
     setCachedJobData(null)
+    setDownloadedDocs([])
 
     const controller = new AbortController()
     abortControllerRef.current = controller
@@ -417,6 +420,12 @@ function GeneratePage() {
                     </div>
                   </div>
                   <div className="mt-3">
+                    {downloadedDocs.length > 0 && (
+                      <div className="mb-2 rounded-md border border-green-200 bg-green-50 px-3 py-2 text-xs text-green-800">
+                        <strong>✓ Files downloaded and read:</strong>{' '}
+                        {downloadedDocs.join(', ')}
+                      </div>
+                    )}
                     {sparsePs && (
                       <div className="mb-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
                         <strong>Full person spec not found.</strong> The advert page may have fewer criteria than the attached document. Paste the full person spec below for a more complete statement.

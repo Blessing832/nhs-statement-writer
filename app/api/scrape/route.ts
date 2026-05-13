@@ -347,9 +347,10 @@ export async function POST(req: NextRequest) {
   if (browserResult && browserResult.rawText.length > 300 && hasJobContent(browserResult.rawText.toLowerCase())) {
     const hasFullPs =
       browserResult.downloadedDocs.length > 0 ||
-      browserResult.rawText.includes('person specification') ||
-      browserResult.rawText.includes('essential criteria')
+      browserResult.rawText.toLowerCase().includes('person specification') ||
+      browserResult.rawText.toLowerCase().includes('essential criteria')
     const essentialCount = (browserResult.rawText.match(/\bessential\b/gi) || []).length
+    console.log(`[scrape route] Browser result: ${browserResult.downloadedDocs.length} docs downloaded, ${essentialCount} essential mentions`)
     return NextResponse.json({
       rawText: browserResult.rawText,
       jobTitle: browserResult.jobTitle,

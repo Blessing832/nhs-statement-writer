@@ -115,58 +115,68 @@ export async function browserScrapeJob(url: string): Promise<BrowserScrapeResult
       return ''
     }).catch(() => '')
 
-    // Collect all document links using three strategies
-    const docLinks: Array<{ href: string; text: string; score: number }> = await page.evaluate(() => {
+    // Collect ALL links on the page that could possibly be attached files.
+    // We deliberately do NOT filter by link text or filename — the file may be
+    // named anything (e.g. "Healthcare Assistant.pdf", "Band 3 role.pdf").
+    // We download everything that looks like it could be a file and check
+    // INSIDE the content for person spec / job description headings.
+    const candidateLinks: Array<{ href: string; text: string; score: number }> = await page.evaluate(() => {
       const seen = new Set<string>()
       const results: Array<{ href: string; text: string; score: number }> = []
 
-      function addLink(href: string, text: string) {
-        const norm = (href || '').split('?')[0].toLowerCase()
-        if (!href || !href.startsWith('http') || seen.has(norm)) return
-        seen.add(norm)
-        const t = (text || '').toLowerCase().trim()
-        const h = href.toLowerCase()
-        const score =
-          t.includes('person spec') ? 10 :
-          (t.includes('jdps') || t.includes('jd and ps') || t.includes('jd & ps')) ? 9 :
-          t.includes('job description') ? 8 :
-          (t.includes('job pack') || t.includes('role profile')) ? 7 :
-          (t.includes('application pack') || t.includes('candidate pack')) ? 6 :
-          (t.includes('supporting document') || t.includes('supporting info')) ? 5 :
-          (h.endsWith('.pdf') || h.endsWith('.docx') || h.endsWith('.doc')) ? 4 :
-          (h.includes('/download/') || h.includes('/attachment/') || h.includes('/file/') || h.includes('/document/')) ? 3 :
-          t.includes('download') ? 2 :
-          t.includes('attachment') ? 2 : 1
-        results.push({ href, text: (text || '').trim(), score })
-      }
+      // Navigation words that indicate a link goes to another web page, not a file
+      const NAV_WORDS = new Set([
+        'home', 'about', 'contact', 'login', 'register', 'sign in', 'sign up',
+        'privacy', 'terms', 'cookies', 'accessibility', 'help', 'faq', 'search',
+        'back', 'next', 'previous', 'apply', 'apply now', 'apply for this job',
+        'save', 'share', 'print', 'email', 'twitter', 'facebook', 'linkedin',
+      ])
 
-      // Strategy 1 + 2: doc file URLs and keyword-matched link text
       document.querySelectorAll('a[href]').forEach((a) => {
         const anchor = a as HTMLAnchorElement
         const href = anchor.href
-        const text = anchor.textContent?.trim() || ''
-        const h = href.toLowerCase()
-        const t = text.toLowerCase()
-        const isDocFile =
-          h.endsWith('.pdf') || h.endsWith('.docx') || h.endsWith('.doc') ||
-          h.includes('/document/') || h.includes('/download/') ||
-          h.includes('/attachment/') || h.includes('/file/') || h.includes('/files/')
-        const isKeyword =
-          t.includes('person spec') || t.includes('job description') || t.includes('job desc') ||
-          t.includes('jdps') || t.includes('jd and ps') || t.includes('jd & ps') ||
-          t.includes('job pack') || t.includes('role profile') ||
-          t.includes('supporting document') || t.includes('application pack') ||
-          t.includes('candidate pack') || t.includes('recruitment pack') ||
-          t.includes('download') || t.includes('attachment')
-        if (isDocFile || isKeyword) addLink(href, text)
+        if (!href.startsWith('http')) return
+
+        const norm = href.split('?')[0].toLowerCase()
+        if (seen.has(norm)) return
+        seen.add(norm)
+
+        const rawText = (anchor.textContent?.trim() || '').replace(/\s+/g, ' ')
+        const t = rawText.toLowerCase()
+        const h = norm
+
+        // Skip clear navigation links
+        if (NAV_WORDS.has(t)) return
+        // Skip obvious page links (anchors ending in common path segments)
+        if (h.endsWith('/') || h.includes('/about') || h.includes('/contact') ||
+            h.includes('/privacy') || h.includes('/cookies') || h.includes('/accessibility')) return
+
+        // Score: higher = more likely to contain person spec
+        // Names like "Healthcare Assistant.pdf" score 5 (PDF extension) even with no keywords
+        let score = 0
+        if (t.includes('person spec')) score = 10
+        else if (t.includes('jdps') || t.includes('jd and ps') || t.includes('jd & ps')) score = 9
+        else if (t.includes('job description') || t.includes('job desc')) score = 8
+        else if (t.includes('job pack') || t.includes('role profile')) score = 7
+        else if (t.includes('application pack') || t.includes('candidate pack')) score = 6
+        else if (t.includes('supporting') || t.includes('information pack')) score = 5
+        else if (h.endsWith('.pdf') || h.endsWith('.docx') || h.endsWith('.doc')) score = 5
+        else if (h.includes('/download') || h.includes('/attachment') ||
+                 h.includes('/files') || h.includes('/document')) score = 4
+        else if (t.includes('download') || t.includes('attachment')) score = 3
+        else score = 0 // still included — we try it; score 0 = lowest priority
+
+        // Only include if it has any document indicator; otherwise skip (e.g. plain nav links)
+        if (score > 0) results.push({ href, text: rawText, score })
       })
 
-      // Strategy 3: all links inside attachment/document sections
+      // Also grab every link inside sections that look like supporting-docs areas,
+      // even if their individual links scored 0 above
       const sectionSels = [
         '[class*="attachment"]', '[id*="attachment"]',
         '[class*="supporting"]', '[id*="supporting"]',
-        '[class*="document"]', '[id*="document"]',
-        '[class*="download"]', '[id*="download"]',
+        '[class*="document"]',   '[id*="document"]',
+        '[class*="download"]',   '[id*="download"]',
         '[aria-label*="document"]', '[aria-label*="attachment"]',
         '[aria-label*="supporting"]',
       ]
@@ -174,7 +184,12 @@ export async function browserScrapeJob(url: string): Promise<BrowserScrapeResult
         document.querySelectorAll(sel).forEach(section => {
           section.querySelectorAll('a[href]').forEach((a) => {
             const anchor = a as HTMLAnchorElement
-            if (anchor.href.startsWith('http')) addLink(anchor.href, anchor.textContent?.trim() || '')
+            const href = anchor.href
+            if (!href.startsWith('http')) return
+            const norm = href.split('?')[0].toLowerCase()
+            if (seen.has(norm)) return
+            seen.add(norm)
+            results.push({ href, text: anchor.textContent?.trim() || '', score: 4 })
           })
         })
       })
@@ -192,28 +207,49 @@ export async function browserScrapeJob(url: string): Promise<BrowserScrapeResult
     await browser.close()
     browser = null
 
-    console.log(`Browser scrape found ${docLinks.length} document links for ${cleanUrl}`)
+    console.log(`[scraper] Found ${candidateLinks.length} candidate links on ${cleanUrl}`)
+    candidateLinks.forEach(l => console.log(`  [link] score=${l.score} text="${l.text}" href=${l.href}`))
 
-    // Download and parse each document (person spec first due to scoring)
-    let combinedDocText = ''
-    const downloadedDocs: string[] = []
+    // Try to download and parse each candidate.
+    // We check INSIDE the parsed text for person spec / job description content —
+    // the filename is irrelevant. A file named "Healthcare Assistant.pdf" is treated
+    // exactly the same as one named "JDPS.pdf".
     const PER_DOC_LIMIT = 30000
+    let personSpecText = ''
+    let otherDocText = ''
+    const downloadedDocs: string[] = []
 
-    for (const link of docLinks.slice(0, 8)) {
+    for (const link of candidateLinks.slice(0, 12)) {
       try {
-        let text = await downloadAndParseDoc(link.href, cookieHeader)
-        if (text && text.length > 200) {
-          if (text.length > PER_DOC_LIMIT) {
-            text = text.slice(0, PER_DOC_LIMIT / 2) + '\n\n[...middle omitted...]\n\n' + text.slice(-PER_DOC_LIMIT / 2)
-          }
-          combinedDocText += `\n\n--- ${link.text || 'Document'} ---\n${text}`
-          downloadedDocs.push(link.text || link.href)
-          console.log(`Parsed: ${link.text} (${text.length} chars)`)
+        const raw = await downloadAndParseDoc(link.href, cookieHeader)
+        if (!raw || raw.length < 200) continue
+
+        const truncated = raw.length > PER_DOC_LIMIT
+          ? raw.slice(0, PER_DOC_LIMIT / 2) + '\n\n[...middle omitted...]\n\n' + raw.slice(-PER_DOC_LIMIT / 2)
+          : raw
+
+        const lower = raw.toLowerCase()
+        const hasPs = lower.includes('person specification') || lower.includes('essential criteria')
+        const hasJd = lower.includes('job description') || lower.includes('main duties') || lower.includes('key responsibilities')
+
+        const label = link.text || link.href.split('/').pop() || 'Document'
+        downloadedDocs.push(label)
+        console.log(`[scraper] Downloaded "${label}" — ${raw.length} chars, hasPS=${hasPs}, hasJD=${hasJd}`)
+
+        if (hasPs) {
+          personSpecText += `\n\n--- ${label} (PERSON SPECIFICATION) ---\n${truncated}`
+        } else if (hasJd) {
+          otherDocText += `\n\n--- ${label} ---\n${truncated}`
+        } else {
+          otherDocText += `\n\n--- ${label} ---\n${truncated}`
         }
       } catch (err) {
-        console.error(`Failed to parse ${link.href}:`, (err as Error).message)
+        console.error(`[scraper] Failed to fetch ${link.href}:`, (err as Error).message)
       }
     }
+
+    // Person spec documents go first so Claude sees them prominently
+    const combinedDocText = personSpecText + otherDocText
 
     const cleanPage = extractRelevantPageText(pageText)
     const rawText = combinedDocText.length > 200
