@@ -113,10 +113,14 @@ function extractUrlsFromJson(obj: unknown, baseUrl: string, out: Set<string>): v
 function extractNextDataDocUrls(html: string, baseUrl: string): string[] {
   try {
     const match = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/)
-    if (!match) return []
+    if (!match) {
+      console.log('[scrape] no __NEXT_DATA__ found in HTML')
+      return []
+    }
     const nextData = JSON.parse(match[1]) as unknown
     const urls = new Set<string>()
     extractUrlsFromJson(nextData, baseUrl, urls)
+    console.log(`[scrape] __NEXT_DATA__ doc URLs found: ${urls.size} — ${[...urls].slice(0,3).join(' | ')}`)
     return [...urls]
   } catch {
     return []
@@ -194,19 +198,26 @@ async function extractAttachmentText($: cheerio.CheerioAPI, pageUrl: string, htm
   const cheerioLinks = findJdpsLinks($, pageUrl)
   const nextDataUrls = extractNextDataDocUrls(html, pageUrl)
 
+  console.log(`[scrape] cheerio links: ${cheerioLinks.length} next-data links: ${nextDataUrls.length}`)
+
   const seen = new Set<string>()
   const allLinks: string[] = []
   for (const u of [...cheerioLinks, ...nextDataUrls]) {
     const norm = u.split('?')[0].toLowerCase()
     if (!seen.has(norm)) { seen.add(norm); allLinks.push(u) }
   }
-  if (allLinks.length === 0) return ''
+  if (allLinks.length === 0) {
+    console.log('[scrape] no attachment links found at all')
+    return ''
+  }
 
+  console.log(`[scrape] attempting download of ${allLinks.length} links: ${allLinks.slice(0,3).join(' | ')}`)
   const results = await Promise.allSettled(allLinks.slice(0, 8).map(fetchAttachmentText))
   const texts: string[] = []
   for (const r of results) {
     if (r.status === 'fulfilled' && r.value.length > 200) texts.push(r.value)
   }
+  console.log(`[scrape] successful downloads: ${texts.length}/${results.length}`)
   return texts.join('\n\n')
 }
 
