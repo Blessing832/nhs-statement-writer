@@ -1,6 +1,7 @@
 'use client'
 import { useState, useRef } from 'react'
 import { useAdminToken } from '@/lib/admin-context'
+import { FileDropZone } from '@/components/FileDropZone'
 import { StatementAnalysis } from '@/lib/types'
 
 interface ClientMatch {
@@ -167,7 +168,6 @@ export default function AdminGeneratePage() {
   const [vacancyUrl, setVacancyUrl] = useState('')
   const [jobDescText, setJobDescText] = useState('')
   const [pastedPersonSpec, setPastedPersonSpec] = useState('')
-  const [docUploading, setDocUploading] = useState(false)
   const [style, setStyle] = useState<'1' | '2'>('1')
   const [bodyPattern, setBodyPattern] = useState<'' | '1' | '2' | '3'>('')
   const [applicationMode, setApplicationMode] = useState<'full' | 'questions-only' | 'statement-questions'>('full')
@@ -448,46 +448,17 @@ export default function AdminGeneratePage() {
                   </div>
                 </div>
                 <div className="mt-3">
-                  <div className="flex items-center justify-between mb-1">
-                    <label className="block text-sm font-medium text-gray-700">
-                      Person Specification <span className="text-xs font-normal text-gray-400">(optional)</span>
-                    </label>
-                    <label className={`flex items-center gap-1.5 text-xs font-medium cursor-pointer px-2.5 py-1 rounded border transition-colors ${docUploading ? 'opacity-50 cursor-not-allowed' : 'border-blue-300 text-blue-700 hover:bg-blue-50'}`}>
-                      {docUploading ? 'Reading…' : '⬆ Upload PDF / Word'}
-                      <input
-                        type="file"
-                        accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                        className="hidden"
-                        disabled={loading || docUploading}
-                        onChange={async (e) => {
-                          const file = e.target.files?.[0]
-                          if (!file) return
-                          setDocUploading(true)
-                          try {
-                            const fd = new FormData()
-                            fd.append('file', file)
-                            const res = await fetch('/api/parse-doc', { method: 'POST', body: fd })
-                            const data = await res.json()
-                            if (res.ok) setPastedPersonSpec(data.text)
-                            else alert(data.error || 'Could not read file')
-                          } finally {
-                            setDocUploading(false)
-                            e.target.value = ''
-                          }
-                        }}
-                      />
-                    </label>
-                  </div>
-                  <p className="text-xs text-gray-400 mb-1.5">
-                    Upload the person spec PDF/Word file, or paste the text below.
-                  </p>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    Person Specification <span className="text-xs font-normal text-gray-400">(optional)</span>
+                  </label>
+                  <FileDropZone onText={setPastedPersonSpec} disabled={loading} />
                   <textarea
                     value={pastedPersonSpec}
                     onChange={(e) => setPastedPersonSpec(e.target.value)}
-                    placeholder="Paste person specification criteria here..."
-                    rows={5}
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-y"
-                    disabled={loading || docUploading}
+                    placeholder="Or paste person specification criteria here..."
+                    rows={4}
+                    className="w-full mt-2 px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-y"
+                    disabled={loading}
                   />
                 </div>
                 </>
