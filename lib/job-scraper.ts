@@ -320,13 +320,17 @@ export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
         body: JSON.stringify({ url: cleanUrl }),
         signal: AbortSignal.timeout(55000),
       })
-      console.log(`[scrape] Railway response status: ${response.status}`)
+      const railStatus = response.status
+      const railBody = await response.text()
+      console.log(`[rail-${railStatus}] body-preview: ${railBody.slice(0, 120)}`)
       if (response.ok) {
-        const data = await response.json()
-        console.log(`[scrape] Railway rawText length: ${(data.rawText || '').length} docs: ${JSON.stringify(data.downloadedDocs || [])}`)
-        if (data.rawText && data.rawText.length > 300 && hasJobContent((data.rawText as string).toLowerCase())) {
+        let data: Record<string, unknown>
+        try { data = JSON.parse(railBody) } catch { data = {} }
+        console.log(`[rail-ok] rawText=${((data.rawText as string) || '').length} docs=${JSON.stringify(data.downloadedDocs || [])}`)
+        if (data.rawText && (data.rawText as string).length > 300 && hasJobContent((data.rawText as string).toLowerCase())) {
           const essentialCount = ((data.rawText as string).match(/\bessential\b/gi) || []).length
-          const hasFullPs = (data.rawText as string).includes('=== ATTACHED PERSON SPECIFICATION')
+          const hasFullPs = (data.rawText as string).includes('=== ATTACHED PERSON SPECIFICATION') ||
+            (Array.isArray(data.downloadedDocs) && (data.downloadedDocs as string[]).length > 0)
           return {
             ...data,
             jobDescription: data.rawText,
