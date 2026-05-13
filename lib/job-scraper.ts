@@ -332,12 +332,17 @@ export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
           const essentialCount = ((data.rawText as string).match(/\bessential\b/gi) || []).length
           const hasFullPs = (data.rawText as string).includes('=== ATTACHED PERSON SPECIFICATION') ||
             (Array.isArray(data.downloadedDocs) && (data.downloadedDocs as string[]).length > 0)
+          const rawText = data.rawText as string
           return {
-            ...data,
-            jobDescription: data.rawText,
+            rawText,
+            jobTitle: (data.jobTitle as string) || '',
+            organisation: (data.organisation as string) || '',
+            jobDescription: rawText,
             personSpec: '',
+            source: 'railway',
             hasAttachedPs: hasFullPs,
             likelySparsePs: !hasFullPs && essentialCount < 8,
+            downloadedDocs: (data.downloadedDocs as string[]) || [],
           }
         }
       }
