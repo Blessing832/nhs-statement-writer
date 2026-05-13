@@ -53,7 +53,12 @@ function hasJobContent(text: string): boolean {
     t.includes('key responsibilities') ||
     t.includes('band ') ||
     t.includes('foundation trust') ||
-    t.includes('nhs trust')
+    t.includes('nhs trust') ||
+    t.includes('nhs board') ||
+    t.includes('nhs scotland') ||
+    t.includes('senior charge nurse') ||
+    t.includes('salary:') ||
+    t.includes('closing date')
   )
 }
 
@@ -273,7 +278,11 @@ async function directFetch(url: string): Promise<{ rawText: string; jobTitle: st
     if (!res.ok) return null
     const html = await res.text()
     let rawText = htmlToText(html)
-    if (rawText.length < 300 || !hasJobContent(rawText)) return null
+    // Scotland: accept any substantial text — the page uses different terminology
+    // and the user will paste the person spec manually
+    const isScotland = url.includes('jobs.scot.nhs.uk')
+    if (rawText.length < 300) return null
+    if (!isScotland && !hasJobContent(rawText)) return null
 
     const $ = cheerio.load(html)
 
@@ -347,10 +356,10 @@ export async function POST(req: NextRequest) {
     // NHS site but no PDF found — fall through to inline headless browser
   }
 
-  // ── Step 2: Inline headless Chrome (Vercel-native, no Railway needed) ────────
-  // Launches Chromium inside the serverless function, renders JavaScript,
-  // handles cookie consent, clicks tabs, and downloads all attached documents.
-  const browserResult = await browserScrapeJob(url)
+  // ── Step 2: Inline headless Chrome (England/HealthJobsUK only) ──────────────
+  // Skip for Scotland — headless Chrome times out on free Vercel plan and
+  // Scotland jobs work via Railway or manual paste instead.
+  const browserResult = url.includes('jobs.scot.nhs.uk') ? null : await browserScrapeJob(url)
 
   if (browserResult && browserResult.rawText.length > 300 && hasJobContent(browserResult.rawText.toLowerCase())) {
     const hasFullPs =
