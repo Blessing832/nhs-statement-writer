@@ -4,7 +4,7 @@ import { supabaseAdmin } from '@/lib/supabase'
 import { generateStatement } from '@/lib/claude'
 import { ScrapeResult } from '@/lib/types'
 
-export const maxDuration = 60
+export const maxDuration = 120
 
 export async function POST(req: NextRequest) {
   const {
