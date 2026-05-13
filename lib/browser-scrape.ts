@@ -260,7 +260,7 @@ export async function browserScrapeJob(url: string): Promise<BrowserScrapeResult
     // Download and parse selected files.
     // For files without a clear label, check the TEXT INSIDE the file
     // for Person Specification / Essential criteria headings.
-    const PER_DOC_LIMIT = 30000
+    const PER_DOC_LIMIT = 60000
     let personSpecText = ''
     let otherDocText = ''
     const downloadedDocs: string[] = []
@@ -270,9 +270,7 @@ export async function browserScrapeJob(url: string): Promise<BrowserScrapeResult
         const raw = await downloadAndParseDoc(link.href, cookieHeader)
         if (!raw || raw.length < 200) continue
 
-        const truncated = raw.length > PER_DOC_LIMIT
-          ? raw.slice(0, PER_DOC_LIMIT / 2) + '\n\n[...middle omitted...]\n\n' + raw.slice(-PER_DOC_LIMIT / 2)
-          : raw
+        const truncated = smartExtract(raw, PER_DOC_LIMIT)
 
         const lower = raw.toLowerCase()
         const hasPs = lower.includes('person specification') || lower.includes('essential criteria')
@@ -352,8 +350,33 @@ async function parseDocx(buffer: Buffer): Promise<string> {
   } catch { return '' }
 }
 
+// Extract text intelligently: if a Person Specification section exists, anchor
+// the window at its start so no criteria are cut. Falls back to start+end split.
+function smartExtract(text: string, maxChars: number): string {
+  if (text.length <= maxChars) return text
+
+  const lower = text.toLowerCase()
+  const psPatterns = [/person\s+specification/, /essential\s+criteria/, /essential\s+requirements/]
+
+  let psStart = -1
+  for (const pat of psPatterns) {
+    const idx = lower.search(pat)
+    if (idx !== -1 && (psStart === -1 || idx < psStart)) psStart = idx
+  }
+
+  if (psStart > 0) {
+    // Keep a short context from the top (job title / org) + everything from PS onwards
+    const context = text.slice(0, Math.min(3000, psStart))
+    const psSection = text.slice(psStart, psStart + (maxChars - context.length))
+    return context + '\n\n[...job description omitted...]\n\n' + psSection
+  }
+
+  // No PS heading found — keep start + end
+  const half = Math.floor(maxChars / 2)
+  return text.slice(0, half) + '\n\n[...middle omitted...]\n\n' + text.slice(-half)
+}
+
 function extractRelevantPageText(text: string): string {
   const cleaned = text.split('\n').map(l => l.trim()).filter(l => l.length > 0).join('\n')
-  if (cleaned.length <= 20000) return cleaned
-  return cleaned.slice(0, 14000) + '\n\n[...middle omitted...]\n\n' + cleaned.slice(-6000)
+  return smartExtract(cleaned, 30000)
 }
