@@ -73,9 +73,8 @@ function hasPersonSpec(text: string): boolean {
 // Parse a PDF buffer and return plain text
 async function parsePdf(buffer: Buffer): Promise<string> {
   try {
-    // Use internal path to avoid pdf-parse loading test files at import time
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const pdfParse = require('pdf-parse/lib/pdf-parse')
+    const pdfParse = require('pdf-parse')
     const data = await pdfParse(buffer)
     return (data.text as string) || ''
   } catch {

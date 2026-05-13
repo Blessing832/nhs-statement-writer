@@ -178,3 +178,7 @@ Ensure at least 2 full paragraphs are about the current role.
 
 ## OUTPUT
 Write only the three-question response as instructed in the user message. Follow the output format specified in the user message exactly.`
+
+export function getScotlandPrompt(): string {
+  return SCOTLAND_PROMPT
+}
