@@ -309,8 +309,10 @@ export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
   // Step 3: External Railway scraper (fallback)
   const SCRAPER_URL = process.env.SCRAPER_SERVICE_URL
   const SCRAPER_SECRET = process.env.SCRAPER_SECRET
+  console.log(`[scrape] Railway configured: ${!!SCRAPER_URL} url=${SCRAPER_URL || 'not-set'}`)
   if (SCRAPER_URL && SCRAPER_SECRET) {
     const cleanUrl = getJobUrl(url)
+    console.log(`[scrape] Calling Railway scraper for ${cleanUrl}`)
     try {
       const response = await fetch(`${SCRAPER_URL}/scrape`, {
         method: 'POST',
@@ -318,8 +320,10 @@ export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
         body: JSON.stringify({ url: cleanUrl }),
         signal: AbortSignal.timeout(55000),
       })
+      console.log(`[scrape] Railway response status: ${response.status}`)
       if (response.ok) {
         const data = await response.json()
+        console.log(`[scrape] Railway rawText length: ${(data.rawText || '').length} docs: ${JSON.stringify(data.downloadedDocs || [])}`)
         if (data.rawText && data.rawText.length > 300 && hasJobContent((data.rawText as string).toLowerCase())) {
           const essentialCount = ((data.rawText as string).match(/\bessential\b/gi) || []).length
           const hasFullPs = (data.rawText as string).includes('=== ATTACHED PERSON SPECIFICATION')
