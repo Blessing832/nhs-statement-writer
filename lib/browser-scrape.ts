@@ -15,6 +15,9 @@ const CHROMIUM_REMOTE_URL =
   process.env.CHROMIUM_REMOTE_EXEC_URL ||
   'https://github.com/Sparticuz/chromium/releases/download/v148.0.0/chromium-v148.0.0-pack.tar'
 
+// Disable GPU/graphics stack — not available in Vercel's Lambda environment
+chromium.setGraphicsMode = false
+
 const NHS_CONSENT_COOKIES = [
   {
     name: 'nhsuk-cookie-consent',
@@ -41,14 +44,7 @@ export async function browserScrapeJob(url: string): Promise<BrowserScrapeResult
       (await chromium.executablePath(CHROMIUM_REMOTE_URL))
 
     browser = await puppeteer.launch({
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-gpu',
-        '--single-process',
-        '--no-zygote',
-      ],
+      args: chromium.args,
       executablePath,
       headless: true,
     })

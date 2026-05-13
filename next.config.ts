@@ -1,8 +1,8 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // pdf-parse uses Node.js built-ins — keep them server-side only
-  serverExternalPackages: ['pdf-parse', 'mammoth'],
+  // These packages contain native binaries / require Node.js built-ins and must not be bundled
+  serverExternalPackages: ['pdf-parse', 'mammoth', '@sparticuz/chromium-min', 'puppeteer-core'],
 }
 
 export default nextConfig

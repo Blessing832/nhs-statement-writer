@@ -271,7 +271,11 @@ export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
   }
 
   // Step 2: Inline headless Chrome (England/HealthJobsUK — renders JS, finds hidden PDFs)
-  const browserResult = url.includes('jobs.scot.nhs.uk') ? null : await browserScrapeJob(url)
+  // Capped at 90s so Railway fallback can still be reached within the 120s function limit
+  const browserTimeout = new Promise<null>(resolve => setTimeout(() => resolve(null), 90000))
+  const browserResult = url.includes('jobs.scot.nhs.uk')
+    ? null
+    : await Promise.race([browserScrapeJob(url).catch(() => null), browserTimeout])
   if (browserResult && browserResult.rawText.length > 300 && hasJobContent(browserResult.rawText.toLowerCase())) {
     const hasFullPs =
       browserResult.downloadedDocs.length > 0 ||
