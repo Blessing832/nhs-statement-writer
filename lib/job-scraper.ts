@@ -68,7 +68,7 @@ async function fetchAttachmentText(url: string): Promise<string> {
   try {
     const res = await fetch(url, {
       headers: { ...BASE_HEADERS, 'Accept': 'application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword,*/*' },
-      signal: AbortSignal.timeout(20000),
+      signal: AbortSignal.timeout(7000),
     })
     if (!res.ok) return ''
 
@@ -215,7 +215,7 @@ async function directFetch(url: string): Promise<{ rawText: string; jobTitle: st
     const cleanUrl = getJobUrl(url)
     const res = await fetch(cleanUrl, {
       headers: { ...BASE_HEADERS, 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' },
-      signal: AbortSignal.timeout(15000),
+      signal: AbortSignal.timeout(7000),
     })
     if (!res.ok) return null
     const html = await res.text()
@@ -297,7 +297,7 @@ export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-scraper-secret': SCRAPER_SECRET },
         body: JSON.stringify({ url: cleanUrl }),
-        signal: AbortSignal.timeout(50000),
+        signal: AbortSignal.timeout(8000),
       })
       if (response.ok) {
         const data = await response.json()
