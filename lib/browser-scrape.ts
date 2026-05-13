@@ -1,22 +1,9 @@
 /**
- * Headless-browser scraper that runs inside the Vercel function.
- * Uses @sparticuz/chromium-min to download a serverless-compatible Chromium binary
- * at runtime (cached in /tmp between warm invocations).
- *
- * Designed specifically for NHS job boards where document download links are
- * rendered by JavaScript and cannot be found with a plain HTTP fetch.
+ * Headless-browser scraper powered by Browserless.io cloud Chrome.
+ * Connects to a hosted Chromium instance instead of launching one locally,
+ * which is reliable in Vercel Lambda where local Chromium always fails.
  */
-import chromium from '@sparticuz/chromium-min'
 import puppeteer from 'puppeteer-core'
-
-// Hosted Chromium binary that matches @sparticuz/chromium-min@148.
-// Can be overridden by setting CHROMIUM_REMOTE_EXEC_URL in the Vercel environment.
-const CHROMIUM_REMOTE_URL =
-  process.env.CHROMIUM_REMOTE_EXEC_URL ||
-  'https://github.com/Sparticuz/chromium/releases/download/v133.0.0/chromium-v133.0.0-pack.tar'
-
-// Disable GPU/graphics stack — not available in Vercel's Lambda environment
-chromium.setGraphicsMode = false
 
 const NHS_CONSENT_COOKIES = [
   {
@@ -37,23 +24,13 @@ export async function browserScrapeJob(url: string): Promise<BrowserScrapeResult
   // Scotland NHS Jobs: ?JobId= is the job identifier — never strip it
   const cleanUrl = url.includes('jobs.scot.nhs.uk') ? url : url.split('?')[0]
 
-  let browser: Awaited<ReturnType<typeof puppeteer.launch>> | null = null
+  let browser: Awaited<ReturnType<typeof puppeteer.connect>> | null = null
   try {
-    const executablePath =
-      process.env.PUPPETEER_EXECUTABLE_PATH ||
-      (await chromium.executablePath(CHROMIUM_REMOTE_URL))
+    const token = process.env.BROWSERLESS_TOKEN
+    if (!token) throw new Error('BROWSERLESS_TOKEN not set')
 
-    browser = await puppeteer.launch({
-      args: [
-        // chromium.args v133 includes "--headless='shell'" with literal quotes which
-        // Chromium receives verbatim via execFile and rejects, crashing the process.
-        // Filter it out; puppeteer adds the correct --headless flag via headless:true.
-        ...chromium.args.filter((arg: string) => !arg.startsWith('--headless')),
-        '--disable-dev-shm-usage',
-        '--disable-gpu',
-      ],
-      executablePath,
-      headless: true,
+    browser = await puppeteer.connect({
+      browserWSEndpoint: `wss://chrome.browserless.io?token=${token}`,
     })
 
     const page = await browser.newPage()

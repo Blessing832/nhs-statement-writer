@@ -281,11 +281,9 @@ export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
     // England without PDF: fall through to try browser/Railway, keep direct as backup
   }
 
-  // Step 2: Inline headless Chrome — skip for England NHS sites (Chromium crashes in Lambda;
-  // Railway handles these). For other sites cap at 10s so Railway still has time.
-  const isEngland = isEnglandNhsSite(url)
-  const browserTimeout = new Promise<null>(resolve => setTimeout(() => resolve(null), isEngland ? 1 : 10000))
-  const browserResult = url.includes('jobs.scot.nhs.uk') || isEngland
+  // Step 2: Browserless.io cloud Chrome — renders JS, clicks tabs, downloads PDFs
+  const browserTimeout = new Promise<null>(resolve => setTimeout(() => resolve(null), 100000))
+  const browserResult = url.includes('jobs.scot.nhs.uk')
     ? null
     : await Promise.race([browserScrapeJob(url).catch(() => null), browserTimeout])
   if (browserResult && browserResult.rawText.length > 300 && hasJobContent(browserResult.rawText.toLowerCase())) {
