@@ -207,7 +207,7 @@ function GeneratePage() {
     if (preloadedJobData) {
       scrapeData = preloadedJobData
     } else {
-      onStep('Reading the job advert...')
+      onStep('Reading job advert & downloading attached documents...')
       const scrapeRes = await fetch('/api/scrape', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -218,7 +218,10 @@ function GeneratePage() {
       if (!scrapeRes.ok) throw new Error(scraped.error || 'Could not read the job advert. Please try again.')
       scrapeData = scraped
       if (scraped.likelySparsePs) setSparsePs(true)
-      if (scraped.downloadedDocs?.length) setDownloadedDocs(scraped.downloadedDocs)
+      if (scraped.downloadedDocs?.length) {
+        setDownloadedDocs(scraped.downloadedDocs)
+        onStep(`Downloaded ${scraped.downloadedDocs.length} attached document${scraped.downloadedDocs.length > 1 ? 's' : ''} — writing statement...`)
+      }
     }
 
     onStep('Writing your supporting statement...')
@@ -637,7 +640,7 @@ function GeneratePage() {
                   Download .doc
                 </button>
                 <button
-                  onClick={() => { setResult(null); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText(''); setPastedPersonSpec(''); setSparsePs(false) }}
+                  onClick={() => { setResult(null); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText(''); setPastedPersonSpec(''); setSparsePs(false); setDownloadedDocs([]) }}
                   className="text-sm px-3 py-1.5 border border-blue-400 text-blue-100 rounded font-medium hover:bg-blue-800 cursor-pointer"
                 >
                   New Statement
@@ -645,6 +648,20 @@ function GeneratePage() {
               </div>
             </div>
           </div>
+
+          {/* Document extraction banner */}
+          {(downloadedDocs.length > 0 || sparsePs) && (
+            <div className={`px-4 py-2 text-xs flex-shrink-0 flex items-center gap-2 ${downloadedDocs.length > 0 ? 'bg-green-50 border-b border-green-200 text-green-800' : 'bg-amber-50 border-b border-amber-200 text-amber-800'}`}>
+              {downloadedDocs.length > 0 ? (
+                <>
+                  <span className="font-bold">✓ Attached files downloaded and used:</span>
+                  <span>{downloadedDocs.join(' · ')}</span>
+                </>
+              ) : (
+                <span><strong>No attached documents found.</strong> Statement based on advert text only — paste the person spec below for better results.</span>
+              )}
+            </div>
+          )}
 
           {/* Side by side on desktop, stacked on mobile */}
           <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
