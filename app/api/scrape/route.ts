@@ -22,6 +22,12 @@ function isNhsJobSite(url: string): boolean {
   return NHS_HOSTS.some(h => url.includes(h))
 }
 
+// Only England/HealthJobsUK have JS-rendered PDF links that need browser scraping.
+// Scotland (apply.jobs.scot.nhs.uk) is SSR — direct fetch works; user pastes PS manually.
+function isEnglandNhsSite(url: string): boolean {
+  return url.includes('jobs.nhs.uk') || url.includes('healthjobsuk.com')
+}
+
 // Scotland NHS Jobs uses ?JobId= as the job identifier — never strip it.
 // NHS England/HealthJobsUK: query params are search filters — safe to strip.
 function getJobUrl(url: string): string {
@@ -326,7 +332,7 @@ export async function POST(req: NextRequest) {
     // to Puppeteer which renders JS, finds the link, and downloads the file.
     // Do NOT use criteria count as the gate — a page can show 15–20 criteria on
     // the page while the attached PDF has 30+.
-    if (!isNhsJobSite(url) || directHasAttachment) {
+    if (!isEnglandNhsSite(url) || directHasAttachment) {
       return NextResponse.json({
         rawText: direct.rawText,
         jobTitle: direct.jobTitle,
