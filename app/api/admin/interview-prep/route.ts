@@ -128,28 +128,43 @@ SECTION 4: INTERVIEW TIPS
 **Clinical Phrases:** [8-10 key phrases and terminology from the job description to use naturally in answers — write each as a complete phrase, not just a word]
 **Smart Questions to Ask the Panel:** [4-5 specific, intelligent questions to ask at the end — tailored to this role, this Trust, and this candidate's background. Write each as a full question sentence.]`
 
-  try {
-    const stream = anthropic.messages.stream({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 32000,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: userPrompt }],
-    })
+  const enc = new TextEncoder()
 
-    const message = await stream.finalMessage()
+  const stream = new ReadableStream({
+    async start(controller) {
+      try {
+        const msgStream = anthropic.messages.stream({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 32000,
+          system: SYSTEM_PROMPT,
+          messages: [{ role: 'user', content: userPrompt }],
+        })
 
-    const block = message.content[0]
-    if (block.type !== 'text') {
-      return NextResponse.json({ error: 'Unexpected response format' }, { status: 500 })
-    }
+        for await (const event of msgStream) {
+          if (
+            event.type === 'content_block_delta' &&
+            event.delta.type === 'text_delta'
+          ) {
+            controller.enqueue(enc.encode(`data: ${JSON.stringify({ t: event.delta.text })}\n\n`))
+          }
+        }
 
-    return NextResponse.json({
-      content: block.text,
-      clientName: client.full_name,
-    })
-  } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : 'Unknown error'
-    console.error('[interview-prep] error:', msg)
-    return NextResponse.json({ error: msg }, { status: 500 })
-  }
+        controller.enqueue(enc.encode(`data: ${JSON.stringify({ done: true, clientName: client.full_name })}\n\n`))
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'Unknown error'
+        console.error('[interview-prep] stream error:', msg)
+        controller.enqueue(enc.encode(`data: ${JSON.stringify({ error: msg })}\n\n`))
+      } finally {
+        controller.close()
+      }
+    },
+  })
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+    },
+  })
 }

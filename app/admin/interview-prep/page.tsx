@@ -161,6 +161,7 @@ export default function InterviewPrepPage() {
   const [psText, setPsText] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [streamingContent, setStreamingContent] = useState<string | null>(null)
   const [result, setResult] = useState<{ content: string; clientName: string } | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -171,6 +172,7 @@ export default function InterviewPrepPage() {
     setLoading(true)
     setError('')
     setResult(null)
+    setStreamingContent('')
 
     try {
       const combined = [
@@ -183,15 +185,49 @@ export default function InterviewPrepPage() {
         headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
         body: JSON.stringify({ client_code: clientCode.trim(), jd_and_ps: combined }),
       })
-      const contentType = res.headers.get('content-type') || ''
-      if (!contentType.includes('application/json')) {
-        throw new Error('The server took too long to respond. Please try again — interview prep can take up to 2 minutes.')
+
+      if (!res.ok || !res.body) {
+        const data = await res.json().catch(() => ({ error: 'Generation failed' }))
+        throw new Error(data.error || 'Generation failed')
       }
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Generation failed')
-      setResult(data)
+
+      const reader = res.body.getReader()
+      const decoder = new TextDecoder()
+      let accText = ''
+      let clientName = ''
+      let buf = ''
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        buf += decoder.decode(value, { stream: true })
+        const lines = buf.split('\n')
+        buf = lines.pop() ?? ''
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue
+          try {
+            const msg = JSON.parse(line.slice(6))
+            if (msg.t) {
+              accText += msg.t
+              setStreamingContent(accText)
+            } else if (msg.done) {
+              clientName = msg.clientName
+            } else if (msg.error) {
+              throw new Error(msg.error)
+            }
+          } catch (parseErr) {
+            if (parseErr instanceof Error && parseErr.message !== 'Unexpected end of JSON input') {
+              throw parseErr
+            }
+          }
+        }
+      }
+
+      setResult({ content: accText, clientName })
+      setStreamingContent(null)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
+      setStreamingContent(null)
     } finally {
       setLoading(false)
     }
@@ -199,6 +235,7 @@ export default function InterviewPrepPage() {
 
   const reset = () => {
     setResult(null)
+    setStreamingContent(null)
     setError('')
     setClientCode('')
     setJdText('')
@@ -229,6 +266,26 @@ export default function InterviewPrepPage() {
           </div>
           <div className="bg-white rounded-lg p-6 max-h-[700px] overflow-y-auto border border-gray-100">
             <RenderContent content={result.content} />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (streamingContent !== null) {
+    return (
+      <div className="max-w-3xl mx-auto px-6 py-10">
+        <div className="bg-white rounded-xl border border-gray-200 p-8">
+          <div className="flex items-center gap-2 mb-5">
+            <span className="w-3 h-3 border-2 border-blue-600 border-t-transparent rounded-full animate-spin flex-shrink-0" />
+            <span className="text-sm text-gray-600">Generating interview prep pack — this takes 2–3 minutes…</span>
+          </div>
+          <div className="bg-white rounded-lg p-6 max-h-[600px] overflow-y-auto border border-gray-100">
+            {streamingContent ? (
+              <RenderContent content={streamingContent} />
+            ) : (
+              <p className="text-sm text-gray-400 italic">Starting generation…</p>
+            )}
           </div>
         </div>
       </div>
@@ -310,7 +367,7 @@ export default function InterviewPrepPage() {
           {loading ? (
             <>
               <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              Generating interview prep... (up to 2 minutes)
+              Starting generation…
             </>
           ) : (
             'Generate Interview Prep Pack'
