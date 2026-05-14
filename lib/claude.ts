@@ -131,7 +131,7 @@ ${client.skills ?? ''}
 
 Background and Additional Information:
 ${client.background ?? ''}
-${client.special_instructions ? `\n## CANDIDATE PERSONALISATION — APPLY ALONGSIDE ALL OTHER RULES\nThese instructions give this specific candidate a unique voice and focus. Follow them to personalise tone, emphasis, and content. They do NOT override the writing rules above — they add individual character on top of them.\n${client.special_instructions}` : ''}`
+${client.special_instructions ? `\n## CANDIDATE PERSONALISATION — APPLY ALONGSIDE ALL OTHER RULES\nThese instructions give this specific candidate a unique voice and focus. Follow them to personalise tone, emphasis, and content. They do NOT override the writing rules above — they add individual character on top of them.\n${client.special_instructions}` : ''}${client.opening_style ? `\n\n## OPENING SENTENCE STYLE — MANDATORY\nUse this exact structure for the opening sentence/paragraph of the statement. Fill in the placeholders from the job advert and candidate profile. Do not deviate from this pattern.\n${client.opening_style}` : ''}`
 
   // --- analysis-only: extract criteria + duties ---
   if (outputMode === 'analysis-only') {

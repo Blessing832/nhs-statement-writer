@@ -4,6 +4,121 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Client } from '@/lib/types'
 
+const OPENING_STYLES = [
+  {
+    id: '1',
+    name: 'Standard',
+    desc: 'Classic NHS opening — title then advert keywords',
+    preview: '"I am an experienced [title] who is [2-3 keywords from advert]..."',
+    template: 'Open with: "I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases lifted directly from the advert]."',
+  },
+  {
+    id: '2',
+    name: 'Experience-first',
+    desc: 'Lead with years of experience, then bring skills to role',
+    preview: '"With [X] years of experience in [specialty], I bring [skills] to this role..."',
+    template: 'Open with: "With [X] years of experience in [specialty] care, I bring [2 skills from person spec] to this [vacancy title] role at [Trust]."',
+  },
+  {
+    id: '3',
+    name: 'Qualification-first',
+    desc: 'Lead with qualification, then experience combination',
+    preview: '"Holding [qualification] and [X] years in [specialty], I offer [Trust]..."',
+    template: 'Open with: "Holding [qualification] and [X] years of hands-on experience in [specialty], I offer [Trust] a combination of [skill 1] and [skill 2] that the person specification identifies as essential."',
+  },
+  {
+    id: '4',
+    name: 'Journey-led',
+    desc: 'Career journey framed as a natural next step',
+    preview: '"My career in [specialty] began [X] years ago, and the skills I have built make this role a natural next step."',
+    template: 'Open with: "My career in [specialty] care began [X] years ago, and the skills I have built — [2-3 skills from person spec] — make the [vacancy title] role at [Trust] a natural next step."',
+  },
+  {
+    id: '5',
+    name: 'Patient-focused',
+    desc: 'Opens with patient care as the anchor of the career',
+    preview: '"Caring for patients with [condition] has shaped every aspect of my professional development..."',
+    template: 'Open with: "Caring for patients with [condition/patient group from JD] has shaped every aspect of my professional development, and the [vacancy title] role at [Trust] aligns directly with the [specialty] experience I have built over [X] years."',
+  },
+  {
+    id: '6',
+    name: 'Values-led',
+    desc: 'Opens with two personal values, links to Trust priorities',
+    preview: '"Two values have guided my [X] years in care: [value 1] and [value 2]..."',
+    template: 'Open with: "Two values have guided my [X] years in [specialty] care: [value 1 from person spec or advert] and [value 2]. The [vacancy title] post at [Trust] — with its emphasis on [advert keyword] — is the role I want to move into."',
+  },
+  {
+    id: '7',
+    name: 'Motivation-first',
+    desc: 'Opens by naming exactly why this Trust and this role',
+    preview: '"The opportunity to join [Trust] as [title] brings together everything I have worked toward..."',
+    template: 'Open with: "The opportunity to join [Trust] as [vacancy title] brings together everything I have worked toward: [specialty] experience, [skill from person spec], and a commitment to [value or phrase from advert]."',
+  },
+  {
+    id: '8',
+    name: 'Impact-led',
+    desc: 'Opens with what the candidate has achieved and built',
+    preview: '"During my [X] years in [specialty], I have [achievement]..."',
+    template: 'Open with: "During my [X] years in [specialty] care, I have [specific achievement or contribution], developed [skill from person spec], and built the direct experience of [patient group or procedure] that the [vacancy title] role at [Trust] requires."',
+  },
+  {
+    id: '9',
+    name: 'Setting-specific',
+    desc: 'Highlights the range of care settings worked in',
+    preview: '"Working across [specialty] settings — from [setting A] to [setting B] — has given me [skills]..."',
+    template: 'Open with: "Working across [specialty] settings — from [setting 1] to [setting 2] — has given me [skills from person spec]. I am ready to bring this range of experience to the [vacancy title] role at [Trust]."',
+  },
+  {
+    id: '10',
+    name: 'Strength-led',
+    desc: 'Opens with the combination of strengths the candidate offers',
+    preview: '"The combination of my [qualification], [X] years in [specialty], and experience with [conditions]..."',
+    template: 'Open with: "The combination of my [qualification], [X] years in [specialty], and direct experience supporting patients with [conditions from JD] makes me a strong candidate for the [vacancy title] post at [Trust]."',
+  },
+  {
+    id: '11',
+    name: 'Challenge-led',
+    desc: 'Opens with the demands of the specialty, showing readiness',
+    preview: '"Providing care for patients with [complex condition] demands [quality 1] and [quality 2]..."',
+    template: 'Open with: "Providing care for patients with [complex condition or patient group from JD] demands [quality 1 from person spec] and [quality 2]. Over my [X] years as [current role], I have developed both — and I want to apply them as [vacancy title] at [Trust]."',
+  },
+  {
+    id: '12',
+    name: 'Current-role-first',
+    desc: 'Opens with current role duties, then positions next step',
+    preview: '"In my current role as [role] at [workplace], I [key duty]..."',
+    template: 'Open with: "In my current role as [current role] at [current workplace], I [key responsibility using JD keywords]. Over [X] years in [specialty], I have built [skills from person spec], and I am ready to take the next step as [vacancy title] at [Trust]."',
+  },
+  {
+    id: '13',
+    name: 'Direct and Concise',
+    desc: 'Short punchy opening — no padding or filler',
+    preview: '"I am a [title] with [X] years of [specialty] experience. I hold [qualification]..."',
+    template: 'Open with a short, direct statement: "I am a [vacancy title] with [X] years of [specialty] experience. I hold [qualification], and I apply because [specific reason directly from the advert that matches the candidate\'s background]."',
+  },
+  {
+    id: '14',
+    name: 'Team-led',
+    desc: 'Opens with MDT and collaborative experience',
+    preview: '"Working alongside [MDT roles] in [specialty] settings has shaped how I understand this role..."',
+    template: 'Open with: "Working alongside [MDT roles from JD — e.g. registered nurses, occupational therapists, physiotherapists] in [specialty] settings has shaped how I understand the [vacancy title] role. My [X] years in [specialty] have prepared me to contribute to the team at [Trust]."',
+  },
+  {
+    id: '15',
+    name: 'Story-hook',
+    desc: 'Opens with one specific patient moment, then pivots to the role',
+    preview: '"[One-line patient story]. That moment reflects the care I bring every day..."',
+    template: 'Begin with a single compelling sentence describing a specific patient moment or care challenge from the candidate\'s experience — no label, no introduction, just the scene. Then continue the first paragraph: "That moment reflects the approach I bring every day, and why I am applying for the [vacancy title] role at [Trust]."',
+  },
+  {
+    id: '16',
+    name: 'Reflective',
+    desc: 'Opens with a genuine insight from years of care experience',
+    preview: '"[Reflective insight about care]. This is what [X] years in [specialty] has taught me..."',
+    template: 'Begin with one reflective sentence that captures a genuine insight the candidate has gained from their years in [specialty] — something specific to their experience, not a generic cliché. Then: "This is what [X] years in [specialty] care has given me, and it is the perspective I want to bring to the [vacancy title] role at [Trust]."',
+  },
+]
+
 interface StatementLog {
   id: string
   vacancy_url: string
@@ -28,6 +143,7 @@ export default function EditClientPage() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(justCreated ? 'Client created successfully!' : '')
   const [statementLog, setStatementLog] = useState<StatementLog[]>([])
+  const [showStylePicker, setShowStylePicker] = useState(false)
   const [form, setForm] = useState({
     full_name: '',
     work_history: '',
@@ -35,6 +151,7 @@ export default function EditClientPage() {
     skills: '',
     background: '',
     special_instructions: '',
+    opening_style: '',
     subscription_end: '',
     is_active: true,
   })
@@ -57,6 +174,7 @@ export default function EditClientPage() {
           skills: data.skills,
           background: data.background,
           special_instructions: data.special_instructions || '',
+          opening_style: data.opening_style || '',
           subscription_end: data.subscription_end.split('T')[0],
           is_active: data.is_active,
         })
@@ -188,6 +306,66 @@ export default function EditClientPage() {
                 rows={4}
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 resize-none"
               />
+            </Field>
+
+            <Field label="Opening Style" hint="Choose the sentence structure the AI will use to open this candidate's statement. Click 'Choose style' to see all options.">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <button
+                    type="button"
+                    onClick={() => setShowStylePicker((v) => !v)}
+                    className="text-sm px-3 py-1.5 rounded-md border border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 cursor-pointer"
+                  >
+                    {showStylePicker ? 'Hide styles' : 'Choose style'}
+                  </button>
+                  {form.opening_style && (
+                    <span className="text-xs text-gray-500 italic truncate max-w-xs">{OPENING_STYLES.find(s => s.template === form.opening_style)?.name ?? 'Custom'} selected</span>
+                  )}
+                  {form.opening_style && (
+                    <button
+                      type="button"
+                      onClick={() => handleChange('opening_style', '')}
+                      className="text-xs text-red-500 hover:text-red-700 cursor-pointer"
+                    >
+                      Clear
+                    </button>
+                  )}
+                </div>
+
+                {showStylePicker && (
+                  <div className="rounded-lg border border-blue-200 bg-blue-50 p-3 space-y-2">
+                    <p className="text-xs text-blue-700 font-medium mb-2">Click a style to select it for this candidate:</p>
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                      {OPENING_STYLES.map((s) => {
+                        const isSelected = form.opening_style === s.template
+                        return (
+                          <button
+                            key={s.id}
+                            type="button"
+                            onClick={() => { handleChange('opening_style', isSelected ? '' : s.template); setShowStylePicker(false) }}
+                            className="text-left p-3 rounded-md border-2 transition-colors cursor-pointer"
+                            style={isSelected
+                              ? { borderColor: '#005eb8', backgroundColor: '#dbeafe' }
+                              : { borderColor: '#e5e7eb', backgroundColor: 'white' }}
+                          >
+                            <p className="font-semibold text-sm text-gray-800">{s.name}</p>
+                            <p className="text-xs text-gray-500 mt-0.5 leading-snug">{s.desc}</p>
+                            <p className="text-xs text-gray-400 mt-1 italic leading-snug line-clamp-2">{s.preview}</p>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                <textarea
+                  value={form.opening_style}
+                  onChange={(e) => handleChange('opening_style', e.target.value)}
+                  rows={2}
+                  placeholder="Selected style template will appear here — or type a custom opening instruction."
+                  className="w-full px-4 py-2.5 border border-blue-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none bg-blue-50"
+                />
+              </div>
             </Field>
 
             <Field label="Special Instructions for AI" hint="These override the AI. Use for things that must never change, e.g. exact job titles, specific experiences to highlight or exclude.">

@@ -69,6 +69,7 @@ export async function POST(req: NextRequest) {
     skills: skills || '',
     background: background || '',
     special_instructions: '',
+    opening_style: '',
     subscription_start: new Date().toISOString(),
     subscription_end: new Date(Date.now() + 86400000).toISOString(),
     is_active: true,

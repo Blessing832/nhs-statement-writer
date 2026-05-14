@@ -7,6 +7,7 @@ export interface Client {
   skills: string
   background: string
   special_instructions: string
+  opening_style: string
   subscription_start: string
   subscription_end: string
   is_active: boolean
