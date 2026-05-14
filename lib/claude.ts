@@ -156,9 +156,9 @@ MINIMUM EXPECTATION: NHS JDPS documents contain 20-40 essential criteria. If you
 
 Return ONLY a single valid JSON object - no text before or after:
 {
+  "previousRoleDuties": ["exactly ${dutiesCount} duties — see rules below"],
   "essentialCriteria": ["every essential criterion from the person spec — expect 20-40 items"],
-  "desirableCriteria": ["desirable criteria if any"],
-  "previousRoleDuties": ["exactly ${dutiesCount} duties — see rules below"]
+  "desirableCriteria": ["desirable criteria if any"]
 }
 
 DUTIES RULES — read every rule before writing a single duty:
@@ -206,12 +206,12 @@ MINIMUM EXPECTATION: NHS JDPS documents contain 20-40 essential criteria. If you
 
 Return ONLY a single valid JSON object - no text before or after:
 {
+  "previousRoleDuties": ["exactly ${dutiesCount} duties — see rules below"],
   "enhancedPreviousTitle": "Senior or Lead + exact vacancy title",
   "jobSummary": "1-2 sentence role summary",
   "essentialCriteria": ["every essential criterion from the person spec — expect 20-40 items"],
   "desirableCriteria": ["desirable criteria if any"],
-  "meetsAllEssential": true,
-  "previousRoleDuties": ["exactly ${dutiesCount} duties — see rules below"]
+  "meetsAllEssential": true
 }
 
 DUTIES RULES — read every rule before writing a single duty:
@@ -475,7 +475,7 @@ async function generateParallel(
     ),
     anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: isScotland ? 1400 : 1400,
+      max_tokens: 2000,
       system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
       messages: [{ role: 'user', content: analysisUserPrompt }],
     }),
