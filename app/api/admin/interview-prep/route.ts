@@ -8,21 +8,22 @@ function isAuthorised(req: NextRequest): boolean {
   return req.headers.get('x-admin-token') === process.env.ADMIN_SECRET
 }
 
-const SYSTEM_PROMPT = `You are an expert NHS interview preparation coach. Generate comprehensive, candidate-specific interview preparation materials following the exact structure and rules below.
+const SYSTEM_PROMPT = `You are a senior NHS interview preparation specialist with 20 years of coaching experience. You write polished, publication-quality interview preparation packs that win job offers. Your output is detailed, specific, and reads as though written by a professional editor who deeply understands NHS culture and clinical practice.
 
-ABSOLUTE RULES:
-- Output ONLY the four sections listed below — no preamble, no commentary, no meta-text
-- No bullet points in any answer — all answers written in flowing prose paragraphs
-- All answers written in the candidate's voice, first person
-- Previous role throughout = EXACT vacancy job title from the job description (not enhanced, not modified)
-- Duties referenced in answers = drawn directly from the job description duties, never invented
-- STARR = Situation, Task, Action, Result, Reflection — each element must be present and clearly developed in every answer
-- Tell Me About Yourself must cover ALL person spec criteria, essential AND desirable — not partial coverage
-- Tell Me About Yourself ends with one full STARR scenario naturally weaving in 5-8 PS criteria as keywords
-- Each individual Q&A answer: minimum 200 words, ideally 250-300 words — short answers are a failure; develop every STARR element fully with specific detail
-- No placeholders anywhere — every detail drawn from candidate profile and job description
-- NEVER state or imply the candidate lacks experience in the vacancy specialty
-- Use bold (**text**) for section labels only (PS Criteria Tested, Hint, Answer, Key Strengths, Clinical Phrases, Smart Questions to Ask the Panel)`
+ABSOLUTE RULES — NEVER BREAK THESE:
+- Output ONLY the four sections listed below — zero preamble, zero meta-commentary, zero sign-off text
+- No bullet points in ANY answer — every answer is flowing, well-crafted prose paragraphs
+- All answers written in the candidate's voice, first person, present tense where natural
+- Vacancy job title throughout = EXACT title from the job description — never paraphrase or upgrade it
+- Every duty referenced in answers = drawn directly from the job description duties — never invented
+- STARR = Situation, Task, Action, Result, Reflection — ALL five elements present and richly developed in EVERY answer
+- Tell Me About Yourself must weave through EVERY person spec criterion (essential AND desirable) — no criterion may be omitted
+- Each Q&A answer: MINIMUM 300 words, TARGET 350-400 words — this is non-negotiable; short answers are a critical failure
+- No placeholders anywhere — every sentence draws on the candidate profile and the job description
+- NEVER suggest or imply the candidate lacks experience or confidence in the vacancy specialty
+- Answers must feel authentic, personal, and specific — never generic or templated
+- Professional writing craft: vary sentence length, open each answer strongly, close each answer with impact
+- Use bold (**text**) ONLY for the fixed section labels: PS Criteria Tested, Hint, Answer, Key Strengths, Clinical Phrases, Smart Questions to Ask the Panel`
 
 export async function POST(req: NextRequest) {
   if (!isAuthorised(req)) {
@@ -110,14 +111,14 @@ SECTION 3: QUESTIONS AND ANSWERS
 Q1 to Q10: Person Specification Questions
 One question per PS criterion or related group of criteria. For each question write:
 **PS Criteria Tested:** [list which criteria this question targets]
-**Hint:** [drawn directly from job description duties and expectations — what the panel is really looking for, 2-3 sentences]
-**Answer:** [minimum 200 words, target 250 words — develop every STARR element fully: Situation (set the scene with specific ward/workplace/patient), Task (what was your responsibility), Action (specific steps you took, named tools/professionals), Result (concrete outcome), Reflection (what you learned or how it shaped your practice). First person, flowing prose, no bullet points. Weave in 2-3 person spec criteria as natural keywords.]
+**Hint:** [drawn directly from job description duties and expectations — what the panel is really looking for, 2-3 precise sentences that help the candidate understand the intent behind the question]
+**Answer:** [MINIMUM 300 words, target 350-400 words. Write a richly developed STARR answer: Situation — set the scene vividly with specific ward, department, or workplace context and the circumstances; Task — define exactly what the candidate's responsibility was; Action — describe specific steps taken in sequence, naming tools, colleagues, and clinical decisions; Result — state a concrete, meaningful outcome with measurable impact where possible; Reflection — close with genuine insight about what was learned and how it shaped ongoing practice. Open the answer with a strong, confident first sentence. Close with a sentence that reinforces the candidate's suitability. First person, flowing prose, no bullet points. Weave in 2-3 person spec criteria as natural keywords without forcing them.]
 
 Q11 to Q20: Scenario-Based Questions
 Each scenario tests 5 or more PS criteria simultaneously. For each question write:
 **PS Criteria Tested:** [list minimum 5 criteria this tests]
-**Hint:** [drawn from job description duties and context — what the panel wants to see, 2-3 sentences]
-**Answer:** [minimum 200 words, target 250-300 words — rich STARR answer with specific clinical detail. Situation must be vivid and specific. Actions must include named tools, named professionals, specific decisions made. Result must be measurable or clearly described. Reflection must feel genuine. Weave in 5+ PS criteria as natural keywords throughout. First person, flowing prose, no bullet points.]
+**Hint:** [drawn from job description duties and context — what the panel wants to see, 2-3 precise sentences]
+**Answer:** [MINIMUM 300 words, target 350-400 words. Write a deeply detailed STARR answer: Situation must paint a vivid, specific picture of the clinical or workplace context; Task must define the candidate's specific accountability; Actions must be described step-by-step with named tools, named multidisciplinary colleagues, clinical protocols referenced, and clear decision points; Result must be concrete and impactful — quantify where possible; Reflection must be personal and show genuine growth. The entire answer must feel like a real, memorable story from practice, not a generic template. Weave 5 or more PS criteria naturally throughout as keywords. First person, elegant flowing prose, zero bullet points.]
 
 ---
 
@@ -130,7 +131,7 @@ SECTION 4: INTERVIEW TIPS
   try {
     const message = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 16000,
+      max_tokens: 32000,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: userPrompt }],
     })

@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { useAdminToken } from '@/lib/admin-context'
+import { FileDropZone } from '@/components/FileDropZone'
 
 function parseBold(text: string): React.ReactNode {
   const parts = text.split(/\*\*(.*?)\*\*/g)
@@ -101,58 +102,45 @@ function downloadAsWord(content: string, clientName: string) {
 
   for (const line of lines) {
     const trimmed = line.trim()
-    if (!trimmed) {
-      html += '<p>&nbsp;</p>'
-      continue
-    }
+    if (!trimmed) { html += '<p>&nbsp;</p>'; continue }
 
     if (/^SECTION\s+\d+:/i.test(trimmed)) {
       const text = trimmed.replace(/\*\*/g, '')
       html += `<h1 style="color:#003087;font-size:14pt;margin-top:20pt;border-bottom:2px solid #005eb8;padding-bottom:4pt;">${text}</h1>`
       continue
     }
-
     if (/^Q\d+[:\s]/i.test(trimmed)) {
       const text = trimmed.replace(/\*\*/g, '')
       html += `<h2 style="color:#005eb8;font-size:12pt;margin-top:14pt;">${text}</h2>`
       continue
     }
-
     if (/^Part\s+\d+/i.test(trimmed)) {
       const text = trimmed.replace(/\*\*/g, '')
       html += `<h3 style="color:#003087;font-size:11pt;margin-top:10pt;">${text}</h3>`
       continue
     }
-
     if (/^(PS Criteria Tested|Hint|Answer|Key Strengths|Clinical Phrases|Smart Questions|Other Requirements|Essential|Desirable):/i.test(trimmed)) {
       const text = trimmed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       html += `<p><strong>${text}</strong></p>`
       continue
     }
-
     const text = trimmed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     html += `<p style="margin-bottom:6pt;">${text}</p>`
   }
 
   const fullHtml = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-<head>
-<meta charset="utf-8">
-<title>Interview Prep - ${clientName}</title>
+<head><meta charset="utf-8"><title>Interview Prep - ${clientName}</title>
 <style>
 body { font-family: Arial, sans-serif; font-size: 11pt; line-height: 1.6; margin: 2cm; color: #111; }
-h1 { font-size: 14pt; color: #003087; }
-h2 { font-size: 12pt; color: #005eb8; }
-h3 { font-size: 11pt; color: #003087; }
-p { margin: 0 0 8pt 0; }
-</style>
-</head>
+h1 { font-size: 14pt; color: #003087; } h2 { font-size: 12pt; color: #005eb8; }
+h3 { font-size: 11pt; color: #003087; } p { margin: 0 0 8pt 0; }
+</style></head>
 <body>
 <h1 style="font-size:18pt;color:#003087;border-bottom:3px solid #003087;padding-bottom:6pt;">
   NHS Interview Preparation - ${clientName}
 </h1>
 ${html}
-</body>
-</html>`
+</body></html>`
 
   const blob = new Blob(['﻿', fullHtml], { type: 'application/msword' })
   const url = URL.createObjectURL(blob)
@@ -169,7 +157,8 @@ export default function InterviewPrepPage() {
   const { token } = useAdminToken()
 
   const [clientCode, setClientCode] = useState('')
-  const [jdAndPs, setJdAndPs] = useState('')
+  const [jdText, setJdText] = useState('')
+  const [psText, setPsText] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [result, setResult] = useState<{ content: string; clientName: string } | null>(null)
@@ -177,23 +166,22 @@ export default function InterviewPrepPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!clientCode.trim()) { setError('Enter a client code'); return }
-    if (!jdAndPs.trim()) { setError('Paste the job description and person specification'); return }
+    if (!jdText.trim() && !psText.trim()) { setError('Provide at least the job description or person specification'); return }
 
     setLoading(true)
     setError('')
     setResult(null)
 
     try {
+      const combined = [
+        jdText.trim() ? `=== JOB DESCRIPTION ===\n${jdText.trim()}` : '',
+        psText.trim() ? `=== PERSON SPECIFICATION ===\n${psText.trim()}` : '',
+      ].filter(Boolean).join('\n\n')
+
       const res = await fetch('/api/admin/interview-prep', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-token': token,
-        },
-        body: JSON.stringify({
-          client_code: clientCode.trim(),
-          jd_and_ps: jdAndPs.trim(),
-        }),
+        headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+        body: JSON.stringify({ client_code: clientCode.trim(), jd_and_ps: combined }),
       })
       const contentType = res.headers.get('content-type') || ''
       if (!contentType.includes('application/json')) {
@@ -213,7 +201,8 @@ export default function InterviewPrepPage() {
     setResult(null)
     setError('')
     setClientCode('')
-    setJdAndPs('')
+    setJdText('')
+    setPsText('')
   }
 
   if (result) {
@@ -226,10 +215,7 @@ export default function InterviewPrepPage() {
               <p className="text-sm text-gray-500 mt-0.5">{result.clientName}</p>
             </div>
             <div className="flex gap-3">
-              <button
-                onClick={reset}
-                className="px-4 py-2 text-sm border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 cursor-pointer"
-              >
+              <button onClick={reset} className="px-4 py-2 text-sm border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 cursor-pointer">
                 New Prep
               </button>
               <button
@@ -241,7 +227,6 @@ export default function InterviewPrepPage() {
               </button>
             </div>
           </div>
-
           <div className="bg-white rounded-lg p-6 max-h-[700px] overflow-y-auto border border-gray-100">
             <RenderContent content={result.content} />
           </div>
@@ -255,11 +240,12 @@ export default function InterviewPrepPage() {
       <div className="mb-6">
         <h2 className="text-xl font-bold text-gray-900">Interview Prep Generator</h2>
         <p className="text-sm text-gray-500 mt-1">
-          Enter the applicant code and paste the full job description and person specification to generate a complete interview preparation pack.
+          Enter the applicant code, then upload or paste the job description and person specification.
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Client code */}
         <div className="bg-white rounded-xl border border-gray-200 p-5">
           <label className="block text-sm font-semibold text-gray-800 mb-1.5">
             Client Code <span className="text-red-500">*</span>
@@ -273,26 +259,46 @@ export default function InterviewPrepPage() {
           />
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-5">
-          <label className="block text-sm font-semibold text-gray-800 mb-1">
-            Job Description and Person Specification <span className="text-red-500">*</span>
-          </label>
-          <p className="text-xs text-gray-400 mb-2">
-            Paste the full text — job description, duties, and person specification together. Select all text on the job page (Ctrl+A then Ctrl+C) and paste here.
-          </p>
+        {/* JD upload + paste */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
+          <div>
+            <label className="block text-sm font-semibold text-gray-800 mb-0.5">
+              Job Description <span className="text-red-500">*</span>
+            </label>
+            <p className="text-xs text-gray-400 mb-2">Upload the JD file, or paste the text below.</p>
+          </div>
+          <FileDropZone onText={setJdText} disabled={loading} />
           <textarea
-            value={jdAndPs}
-            onChange={(e) => setJdAndPs(e.target.value)}
-            placeholder="Paste the full job description and person specification here..."
-            rows={16}
+            value={jdText}
+            onChange={(e) => setJdText(e.target.value)}
+            placeholder="Or paste the job description text here..."
+            rows={7}
             className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 resize-y"
+            disabled={loading}
+          />
+        </div>
+
+        {/* PS upload + paste */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-3">
+          <div>
+            <label className="block text-sm font-semibold text-gray-800 mb-0.5">
+              Person Specification <span className="text-red-500">*</span>
+            </label>
+            <p className="text-xs text-gray-400 mb-2">Upload the PS file, or paste the text below.</p>
+          </div>
+          <FileDropZone onText={setPsText} disabled={loading} />
+          <textarea
+            value={psText}
+            onChange={(e) => setPsText(e.target.value)}
+            placeholder="Or paste the person specification text here..."
+            rows={7}
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 resize-y"
+            disabled={loading}
           />
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-md px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
+          <div className="bg-red-50 border border-red-200 rounded-md px-4 py-3 text-sm text-red-700">{error}</div>
         )}
 
         <button
