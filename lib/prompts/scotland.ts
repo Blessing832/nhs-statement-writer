@@ -60,14 +60,21 @@ Settings: acute care settings, mental health care settings, community care setti
 - Mental Health (Care and Treatment) (Scotland) Act 2003
 
 ## VACANCY TITLE ENHANCEMENT RULE
+
+STEP 0 — CHECK SPECIAL INSTRUCTIONS FIRST (always do this before anything else):
+- If the special instructions say "do not change role", "do not enhance", "keep original title", "use [specific title]", or anything that fixes the previous role title → use the candidate's actual profile title exactly as written. STOP. Do not apply steps 1-2.
+- If the special instructions say nothing about the previous role title → proceed to steps 1-2.
+
 Step 1: Find the EXACT vacancy title from the job advert.
-Step 2: Enhance the candidate's previous role: "Senior" or "Lead" + EXACT vacancy title = enhanced previous role.
-Examples:
-- Vacancy: "Healthcare Assistant" — Enhanced: "Senior Healthcare Assistant"
-- Vacancy: "Mental Health Support Worker" — Enhanced: "Lead Mental Health Support Worker"
-Use the ENHANCED title throughout the statement for the previous role.
-Current role uses the actual title from the candidate profile — do NOT enhance it.
-EXCEPTION: If MANDATORY INSTRUCTIONS specify a different title, use that instead.
+Step 2: The default previous role title is the EXACT vacancy title — use it as-is.
+You may optionally prefix "Senior" or "Lead" if it genuinely fits the candidate's experience level, but this is NOT automatic. When in doubt, use the exact vacancy title without a prefix.
+Examples (default — no prefix):
+- Vacancy: "Healthcare Assistant" — Default previous role: "Healthcare Assistant"
+- Vacancy: "Mental Health Support Worker" — Default previous role: "Mental Health Support Worker"
+Optional enhancement (only if clearly appropriate):
+- Vacancy: "Healthcare Assistant" — May use: "Senior Healthcare Assistant"
+Use the chosen title consistently throughout the statement for the previous role.
+Current role ALWAYS uses the actual title from the candidate profile — never changed.
 
 ## EVIDENCE-BASED WRITING — THE MOST CRITICAL RULE
 Every paragraph must contain specific evidence with measurable outcomes.
