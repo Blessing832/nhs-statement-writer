@@ -140,13 +140,8 @@ SECTION 4: INTERVIEW TIPS
           messages: [{ role: 'user', content: userPrompt }],
         })
 
-        for await (const event of msgStream) {
-          if (
-            event.type === 'content_block_delta' &&
-            event.delta.type === 'text_delta'
-          ) {
-            controller.enqueue(enc.encode(`data: ${JSON.stringify({ t: event.delta.text })}\n\n`))
-          }
+        for await (const text of msgStream.textStream) {
+          controller.enqueue(enc.encode(`data: ${JSON.stringify({ t: text })}\n\n`))
         }
 
         controller.enqueue(enc.encode(`data: ${JSON.stringify({ done: true, clientName: client.full_name })}\n\n`))
@@ -163,8 +158,9 @@ SECTION 4: INTERVIEW TIPS
   return new Response(stream, {
     headers: {
       'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
+      'Cache-Control': 'no-cache, no-transform',
       'Connection': 'keep-alive',
+      'X-Accel-Buffering': 'no',
     },
   })
 }
