@@ -106,8 +106,9 @@ Total: 330 words — leaving 90 words of buffer. Do not add more paragraphs.
 STOP at 420 words.
 
 OPENING PARAGRAPH FORMAT (MAX 80 WORDS — 5-6 lines):
+BEFORE writing this paragraph, identify 3-5 specific keywords and phrases directly from the job advert text — these are the exact words the recruiter wrote and will be scanning for. These keywords must appear naturally in the opening paragraph, especially in the "who is…" phrase.
 Include the specific conditions or patient groups the candidate worked with in their previous role that are relevant to this vacancy's specialty.
-"I am an experienced [EXACT vacancy title] who is [advert phrases]. I hold [qualification] (include SCQF equivalence if English), and over my years in [specialty-specific] care settings I have developed [2 skills from person spec]. As [ENHANCED role] at [Previous Workplace], I worked with patients [specific conditions/procedures matching this vacancy], alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [one brief duty]. I want to join NHS [Board] because [one specific reason]."
+"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases lifted directly from the advert]. I hold [qualification] (include SCQF equivalence if English), and over my years in [specialty-specific] care settings I have developed [2 skills from person spec]. As [ENHANCED role] at [Previous Workplace], I worked with patients [specific conditions/procedures matching this vacancy], alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [one brief duty using JD keywords]. I want to join NHS [Board] because [one specific reason from the advert]."
 
 ### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? (HARD LIMIT: 420w)
 Word budget — must total ≤420 words:

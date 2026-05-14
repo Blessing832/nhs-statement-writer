@@ -143,20 +143,22 @@ RULES FOR THE HOOK:
 - NEVER add a label like "Hook:" or any prefix before it
 
 ## PARAGRAPH 1 — OPENING (MAX 8 LINES, approx 100-120 words)
+BEFORE writing this paragraph, identify 4-6 specific keywords and phrases directly from the job advert text — these are the words the recruiter wrote and will be scanning for. Examples: "patient-centred care", "evidence-based practice", "compassionate care", "multidisciplinary team", "high standards", "commitment to quality", "specialist skills", "service development" — but use the ACTUAL phrases from THIS advert, not these examples. These exact keywords must appear naturally in the opening paragraph.
+
 Extract phrases FROM the job advert introduction and weave them into the opening.
 Include in the opening: the specific conditions or patient groups the candidate worked with in their previous role that are relevant to this vacancy's specialty (e.g. post-operative patients, patients with [condition from JD], endoscopy recovery, dementia care — match what is in the JD).
 
 Format:
-"I am an experienced [EXACT vacancy title] who is [phrase from advert]. I hold [qualification from person spec] which meets the [person spec requirement], and over my [X] years in [specialty-specific] care settings, I have developed [2-3 skills from person spec]. As [ENHANCED previous role] at [Previous Workplace], I worked with patients undergoing [specific conditions/procedures matching this vacancy's specialty], alongside [professional roles from JD]. I am currently working as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I want to join [Trust] because [specific reason from advert and Trust values]."
+"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases lifted directly from the advert]. I hold [qualification from person spec] which meets the [person spec requirement], and over my [X] years in [specialty-specific] care settings, I have developed [2-3 skills from person spec]. As [ENHANCED previous role] at [Previous Workplace], I worked with patients undergoing [specific conditions/procedures matching this vacancy's specialty], alongside [professional roles from JD]. I am currently working as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I want to join [Trust] because [specific reason from advert and Trust values]."
 
 CRITICAL ELEMENTS — ALL must be present:
-1. "I am an experienced [vacancy title] who is [advert phrases]"
+1. "I am an experienced [vacancy title] who is [2-3 exact keyword phrases from the advert]" — the phrases after "who is" must be lifted verbatim or near-verbatim from the advert text
 2. Qualification + how it meets person spec requirement
 3. Years in [specialty-specific] care settings
 4. 2-3 skills from person spec
 5. ENHANCED previous role + specific conditions/procedures from the vacancy specialty
 6. Named professional roles from JD
-7. Current role + brief duty
+7. Current role + brief duty using JD keywords
 8. Why this Trust (Trust values + advert language)
 STOP at 8 lines. Never exceed.
 
