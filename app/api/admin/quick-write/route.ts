@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { generateStatement } from '@/lib/claude'
 import { scrapeJobUrl } from '@/lib/job-scraper'
-import type { Client } from '@/lib/types'
+import type { Client, ScrapeResult } from '@/lib/types'
 
-export const maxDuration = 120
+export const maxDuration = 300
 
 function isAuthorised(req: NextRequest): boolean {
   return req.headers.get('x-admin-token') === process.env.ADMIN_SECRET
@@ -24,38 +24,46 @@ export async function POST(req: NextRequest) {
     person_spec,
     instructions,
     style,
+    applicationMode,
+    bodyPattern,
+    specificQuestions,
+    rewriteInstruction,
+    previousStatement,
+    cachedJobData,
   } = await req.json()
 
   if (!vacancy_url || !name) {
     return NextResponse.json({ error: 'Name and job URL are required' }, { status: 400 })
   }
 
-  // Step 1: Scrape using the full pipeline (direct fetch → headless Chrome → Railway)
-  // If scraping fails but person_spec is provided, fall back to a minimal job object
-  let jobData
-  try {
-    jobData = await scrapeJobUrl(vacancy_url)
-  } catch (err: unknown) {
-    if (!person_spec?.trim()) {
-      const message = err instanceof Error ? err.message : 'Could not read job advert'
-      return NextResponse.json({ error: message }, { status: 422 })
+  // Step 1: Use cached job data for rewrites, otherwise scrape
+  let jobData: ScrapeResult
+  if (cachedJobData) {
+    jobData = cachedJobData as ScrapeResult
+  } else {
+    try {
+      jobData = await scrapeJobUrl(vacancy_url)
+    } catch (err: unknown) {
+      if (!person_spec?.trim()) {
+        const message = err instanceof Error ? err.message : 'Could not read job advert'
+        return NextResponse.json({ error: message }, { status: 422 })
+      }
+      jobData = {
+        rawText: '',
+        jobTitle: '',
+        organisation: '',
+        jobDescription: '',
+        personSpec: '',
+        source: 'manual',
+      }
     }
-    // Scrape failed but person_spec was provided — continue with minimal job data
-    jobData = {
-      rawText: '',
-      jobTitle: '',
-      organisation: '',
-      jobDescription: '',
-      personSpec: '',
-      source: 'manual',
-    }
-  }
 
-  // Merge pasted/uploaded person spec into rawText so Claude sees it
-  if (person_spec?.trim()) {
-    jobData = {
-      ...jobData,
-      rawText: (jobData.rawText || '') + '\n\n=== PASTED PERSON SPECIFICATION ===\n' + person_spec.trim(),
+    // Merge pasted/uploaded person spec into rawText
+    if (person_spec?.trim()) {
+      jobData = {
+        ...jobData,
+        rawText: (jobData.rawText || '') + '\n\n=== PASTED PERSON SPECIFICATION ===\n' + person_spec.trim(),
+      }
     }
   }
 
@@ -82,15 +90,22 @@ export async function POST(req: NextRequest) {
       instructions,
       style: style || '1',
       vacancyUrl: vacancy_url,
-      applicationMode: 'full',
+      applicationMode: applicationMode || 'full',
+      bodyPattern: bodyPattern || undefined,
+      specificQuestions: specificQuestions || undefined,
+      rewriteInstruction: rewriteInstruction || undefined,
+      previousStatement: previousStatement || undefined,
     })
 
     return NextResponse.json({
       statement: generated.statement,
+      previousRoleDuties: generated.previousRoleDuties,
+      currentRoleDuties: generated.currentRoleDuties,
       analysis: generated.analysis,
       jobTitle: jobData.jobTitle,
       organisation: jobData.organisation,
       promptRegion: generated.promptRegion,
+      cachedJobData: jobData,
     })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error'
