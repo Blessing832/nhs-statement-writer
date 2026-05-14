@@ -62,7 +62,12 @@ Settings: acute care settings, mental health care settings, community care setti
 ## VACANCY TITLE ENHANCEMENT RULE
 
 STEP 0 — CHECK SPECIAL INSTRUCTIONS FIRST (always do this before anything else):
-- If the special instructions say "do not change role", "do not enhance", "keep original title", "use [specific title]", or anything that fixes the previous role title → use the candidate's actual profile title exactly as written. STOP. Do not apply steps 1-2.
+- If the special instructions say "do not change role", "do not enhance", "keep original title", or anything that fixes the previous role title:
+  → Keep the candidate's actual job title exactly as written in their profile — do NOT add Senior, Lead, or any prefix.
+  → BUT: update the department or specialty to match the exact department/specialty of the vacancy being applied for.
+  → Example: candidate is "Healthcare Assistant, General Ward" applying to a Mental Health post → use "Healthcare Assistant, Mental Health".
+  → If the vacancy has no named department, keep the title alone with no department added.
+  → STOP after this. Do not apply steps 1-2.
 - If the special instructions say nothing about the previous role title → proceed to steps 1-2.
 
 Step 1: Find the EXACT vacancy title from the job advert.
