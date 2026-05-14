@@ -140,8 +140,13 @@ SECTION 4: INTERVIEW TIPS
           messages: [{ role: 'user', content: userPrompt }],
         })
 
-        for await (const text of msgStream.textStream) {
-          controller.enqueue(enc.encode(`data: ${JSON.stringify({ t: text })}\n\n`))
+        for await (const event of msgStream) {
+          if (
+            event.type === 'content_block_delta' &&
+            event.delta.type === 'text_delta'
+          ) {
+            controller.enqueue(enc.encode(`data: ${JSON.stringify({ t: event.delta.text })}\n\n`))
+          }
         }
 
         controller.enqueue(enc.encode(`data: ${JSON.stringify({ done: true, clientName: client.full_name })}\n\n`))
