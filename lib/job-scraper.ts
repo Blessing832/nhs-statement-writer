@@ -282,7 +282,7 @@ export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
   }
 
   // Step 2: Browserless.io cloud Chrome — renders JS, clicks tabs, downloads PDFs
-  const browserTimeout = new Promise<null>(resolve => setTimeout(() => resolve(null), 100000))
+  const browserTimeout = new Promise<null>(resolve => setTimeout(() => resolve(null), 45000))
   const browserResult = url.includes('jobs.scot.nhs.uk')
     ? null
     : await Promise.race([browserScrapeJob(url).catch(() => null), browserTimeout])
@@ -317,7 +317,7 @@ export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-scraper-secret': SCRAPER_SECRET },
         body: JSON.stringify({ url: cleanUrl }),
-        signal: AbortSignal.timeout(100000),
+        signal: AbortSignal.timeout(60000),
       })
       const railStatus = response.status
       const railBody = await response.text()

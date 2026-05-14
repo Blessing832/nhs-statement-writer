@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { scrapeJobUrl } from '@/lib/job-scraper'
 
-// Increase timeout: Chromium download + page render + PDF downloads can take 90s
-export const maxDuration = 120
+// Browserless (40s) + Railway (60s) + direct fetch (15s) = up to 115s worst case
+export const maxDuration = 300
 
 export async function POST(req: NextRequest) {
   const { client_code, url } = await req.json()
