@@ -163,6 +163,14 @@ export default function InterviewPrepPage() {
   const [error, setError] = useState('')
   const [streamingContent, setStreamingContent] = useState<string | null>(null)
   const [result, setResult] = useState<{ content: string; clientName: string } | null>(null)
+  const [copied, setCopied] = useState(false)
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -251,9 +259,15 @@ export default function InterviewPrepPage() {
               <h2 className="text-xl font-bold text-gray-900">Interview Prep Ready</h2>
               <p className="text-sm text-gray-500 mt-0.5">{result.clientName}</p>
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-wrap">
               <button onClick={reset} className="px-4 py-2 text-sm border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 cursor-pointer">
                 New Prep
+              </button>
+              <button
+                onClick={() => copyToClipboard(result.content)}
+                className="px-4 py-2 text-sm border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 cursor-pointer"
+              >
+                {copied ? 'Copied!' : 'Copy Text'}
               </button>
               <button
                 onClick={() => downloadAsWord(result.content, result.clientName)}
