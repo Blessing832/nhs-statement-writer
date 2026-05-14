@@ -129,12 +129,14 @@ SECTION 4: INTERVIEW TIPS
 **Smart Questions to Ask the Panel:** [4-5 specific, intelligent questions to ask at the end — tailored to this role, this Trust, and this candidate's background. Write each as a full question sentence.]`
 
   try {
-    const message = await anthropic.messages.create({
+    const stream = anthropic.messages.stream({
       model: 'claude-sonnet-4-6',
       max_tokens: 32000,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: userPrompt }],
     })
+
+    const message = await stream.finalMessage()
 
     const block = message.content[0]
     if (block.type !== 'text') {
