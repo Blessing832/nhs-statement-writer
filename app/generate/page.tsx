@@ -292,7 +292,14 @@ function GeneratePage() {
       setRewriteInstruction('')
     } catch (err) {
       if (err instanceof Error && err.name === 'AbortError') return
-      setError(err instanceof Error ? err.message : 'Network error. Please check your connection and try again.')
+      const raw = err instanceof Error ? err.message : ''
+      // iOS Safari throws "Load failed" when a fetch is killed by timeout or network drop
+      const isIosTimeout = raw === 'Load failed' || raw.toLowerCase().includes('load failed') || raw.toLowerCase().includes('network request failed')
+      setError(
+        isIosTimeout
+          ? 'The request timed out on your mobile connection. Tap "Paste Job Description" above and paste the job description text directly — this skips the link-reading step and works much faster on phones.'
+          : raw || 'Network error. Please check your connection and try again.'
+      )
     } finally {
       abortControllerRef.current = null
       setLoading(false)
