@@ -27,8 +27,10 @@ The following phrases make the statement sound AI-generated. Never write them:
 Use natural, varied language. Write like an experienced professional speaking — not like a template.
 
 ## PARAGRAPH LENGTH VARIATION — MANDATORY
-Deliberately vary paragraph lengths: some 5 lines (short), some 6-7 lines (medium), stories 7-8 lines.
-No two consecutive paragraphs should be the same number of lines.
+Keep paragraphs short. Default is 3-5 lines per paragraph. Hard stop at 5 lines for criterion paragraphs.
+If more evidence is needed, start a NEW paragraph — do NOT extend beyond 5 lines.
+Story paragraphs: up to 6-7 lines maximum.
+No two consecutive paragraphs should be the same length — vary between 3, 4, and 5-line paragraphs.
 
 ## EMPLOYER NAMING RULE
 When referring to a previous employer: if the candidate's profile identifies it as an NHS organisation, use "the Board" or the full Board name. For ALL other previous employers (private hospitals, care homes, community providers, overseas employers), use "the hospital", "the care home", or the workplace name — NEVER "the Trust" or "the Board."

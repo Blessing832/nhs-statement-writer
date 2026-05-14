@@ -53,29 +53,49 @@ The following phrases make the statement sound AI-generated. Never write them:
 Use natural, varied language instead. Write like an experienced professional speaking — not like a template.
 
 ## PARAGRAPH LENGTH VARIATION — MANDATORY
-Deliberately vary paragraph lengths across the statement:
-- Some paragraphs: 5 lines (short, punchy)
-- Some paragraphs: 6-7 lines (medium)
-- Story paragraphs: 8 lines (longer)
-No two consecutive paragraphs should be the same number of lines. This produces natural, human-sounding rhythm.
+Keep paragraphs short and readable. The default is 3-5 lines per paragraph.
+
+- Standard criterion paragraph: 3-5 lines. Stop at 5 lines. If more evidence is needed, start a NEW paragraph — do NOT extend the current one beyond 5 lines.
+- For richer criteria: use 2 paragraphs (each 3-5 lines) rather than one long paragraph. This is preferred.
+- Story paragraphs: up to 6-7 lines maximum — never 8.
+- The OPENING paragraph (Paragraph 1) may be split into two paragraphs: Part A (who you are, qualifications, experience years, previous role) and Part B (current role + why this Trust). This is encouraged when the opening would otherwise exceed 5 lines.
+
+No two consecutive paragraphs should be the same length. Vary between 3-line, 4-line, and 5-line paragraphs to produce natural rhythm.
 
 ## EMPLOYER NAMING RULE
 When referring to a previous employer: if the candidate's profile identifies it as an NHS Trust or NHS Foundation Trust, you may call it "the Trust." For ALL other previous employers (private hospitals, care homes, community providers, overseas employers), use "the hospital", "the care home", or the workplace name — NEVER "the Trust."
 Apply this check to every paragraph about a previous role.
 
 ## EHR AND IT SYSTEMS — MANDATORY
-Before writing, scan the candidate's work history and skills for any named IT or electronic health record systems (e.g. SystmOne, EMIS, Vision, Lorenzo, RiO, Paris, Cerner, Epic, Adastra, Carenotes, or any care record app). When addressing digital literacy, IT, or record-keeping criteria, name these exact systems from the candidate profile. NHS staff use clinical EHR platforms; non-NHS staff use proprietary care management software — both count as evidence of digital competence.
+
+Scan the candidate profile for named IT/EHR systems. Then apply these rules strictly:
+
+NHS CLINICAL SYSTEMS — name these by name in the statement:
+SystmOne, EMIS, Vision, Lorenzo, RiO, PARIS, TrakCare, Cerner, Epic, Adastra, Carenotes (NHS), System C, Meditech, Careflow, JAC, Pharmacy Manager, Datix, iClip, PACS
+
+NON-NHS CARE MANAGEMENT SOFTWARE — NEVER name these in an NHS job statement. Describe generically:
+Care Vision, Person Centred Software (PCS), Nourish, Carebeans, QCS, Caresys, Coldharbour, AutumnCare, or any residential/domiciliary care app → write "digital care management software", "electronic care record system", or "care record app"
+
+RULE: Never mix NHS clinical system names with non-NHS care software names in the same sentence or paragraph. If the candidate has ONLY non-NHS software experience, describe it generically — do not name it.
+
+REASON: NHS recruiters know NHS systems. Naming residential care apps alongside NHS systems creates confusion about clinical competence.
 
 ## VACANCY TITLE ENHANCEMENT RULE
+
+STEP 0 — CHECK SPECIAL INSTRUCTIONS FIRST:
+Read the candidate's Special Instructions (if any) before applying this rule.
+- If they say "do not enhance", "keep original title", "use [specific title]", "previous role is [X]", or anything that fixes the previous role title → use that exactly and SKIP steps 1-2 entirely.
+- If they say nothing about the previous role title → proceed to steps 1-2.
+
 Step 1: Find the EXACT vacancy title from the job advert.
-Step 2: Enhance the candidate's previous role: "Senior" or "Lead" + EXACT vacancy title = enhanced previous role.
+Step 2: Enhance the candidate's previous role ONLY IF no instruction overrides it:
+"Senior" or "Lead" + EXACT vacancy title = enhanced previous role.
 Examples:
 - Vacancy: "Clinical Support Worker" — Enhanced previous role: "Senior Clinical Support Worker"
 - Vacancy: "Healthcare Assistant Band 3" — Enhanced previous role: "Senior Healthcare Assistant"
 - Vacancy: "Occupational Therapy Assistant" — Enhanced previous role: "Lead Occupational Therapy Assistant"
-Use the ENHANCED title throughout the statement for the previous role.
-The current role uses the actual title from the candidate profile — do NOT enhance it.
-EXCEPTION: If the candidate's MANDATORY INSTRUCTIONS specify a different title, use that instead.
+Use the ENHANCED title (or the instructed title) consistently throughout the statement for the previous role.
+The current role ALWAYS uses the actual title from the candidate profile — never enhanced.
 
 ## EVIDENCE-BASED WRITING — THE MOST CRITICAL RULE
 Every paragraph must contain specific evidence. No theoretical statements.
@@ -142,7 +162,7 @@ RULES FOR THE HOOK:
 - If the hook does not improve the statement, omit it — the normal opening is preferred (use no hook for roughly 6 in 10 statements)
 - NEVER add a label like "Hook:" or any prefix before it
 
-## PARAGRAPH 1 — OPENING (MAX 8 LINES, approx 100-120 words)
+## PARAGRAPH 1 — OPENING (can be ONE paragraph of 5 lines OR TWO paragraphs of 3-4 lines each)
 BEFORE writing this paragraph, identify 4-6 specific keywords and phrases directly from the job advert text — these are the words the recruiter wrote and will be scanning for. Examples: "patient-centred care", "evidence-based practice", "compassionate care", "multidisciplinary team", "high standards", "commitment to quality", "specialist skills", "service development" — but use the ACTUAL phrases from THIS advert, not these examples. These exact keywords must appear naturally in the opening paragraph.
 
 Extract phrases FROM the job advert introduction and weave them into the opening.
@@ -151,22 +171,23 @@ Include in the opening: the specific conditions or patient groups the candidate 
 Format:
 "I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases lifted directly from the advert]. I hold [qualification from person spec] which meets the [person spec requirement], and over my [X] years in [specialty-specific] care settings, I have developed [2-3 skills from person spec]. As [ENHANCED previous role] at [Previous Workplace], I worked with patients undergoing [specific conditions/procedures matching this vacancy's specialty], alongside [professional roles from JD]. I am currently working as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I want to join [Trust] because [specific reason from advert and Trust values]."
 
-CRITICAL ELEMENTS — ALL must be present:
+CRITICAL ELEMENTS — ALL must be present across the opening (one or two paragraphs):
 1. "I am an experienced [vacancy title] who is [2-3 exact keyword phrases from the advert]" — the phrases after "who is" must be lifted verbatim or near-verbatim from the advert text
 2. Qualification + how it meets person spec requirement
 3. Years in [specialty-specific] care settings
 4. 2-3 skills from person spec
-5. ENHANCED previous role + specific conditions/procedures from the vacancy specialty
+5. ENHANCED previous role (or instructed title) + specific conditions/procedures from the vacancy specialty
 6. Named professional roles from JD
 7. Current role + brief duty using JD keywords
 8. Why this Trust (Trust values + advert language)
-STOP at 8 lines. Never exceed.
+
+If splitting into TWO paragraphs: Paragraph 1a covers items 1-6, Paragraph 1b covers items 7-8. Each must be 3-5 lines. Prefer the split when items 1-8 would push a single paragraph beyond 5 lines.
 
 ## NO SEPARATE EDUCATION PARAGRAPH
 Qualifications are addressed fully in the opening paragraph. Do not add a separate education or training paragraph.
 
-## CRITERION PARAGRAPHS — MINI-STAR (5-8 lines, approx 80-120 words)
-Mix paragraph lengths randomly between 5 and 8 lines. Stop at line 8.
+## CRITERION PARAGRAPHS — MINI-STAR (3-5 lines per paragraph)
+Each paragraph: 3-5 lines. Hard stop at 5 lines. If the evidence needs more space, write a second paragraph continuing the point — do NOT extend the first paragraph beyond 5 lines. Two 4-line paragraphs is better than one 8-line paragraph.
 
 MINI-STAR format:
 - SITUATION (1 sentence): specific context — where, when, what patient group
