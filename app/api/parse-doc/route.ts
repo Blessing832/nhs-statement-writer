@@ -35,11 +35,16 @@ export async function POST(req: NextRequest) {
     const isDocx = type.includes('wordprocessingml') || type.includes('msword') || name.endsWith('.docx') || name.endsWith('.doc')
 
     if (isPdf) {
-      text = await parsePdf(buffer)
+      try { text = await parsePdf(buffer) } catch { /* fall through */ }
+      if (!text || text.length < 100) {
+        try { text = await parseDocx(buffer) } catch { /* not a valid DOCX */ }
+      }
     } else if (isDocx) {
-      text = await parseDocx(buffer)
+      try { text = await parseDocx(buffer) } catch { /* old .doc or corrupt — try PDF */ }
+      if (!text || text.length < 100) {
+        try { text = await parsePdf(buffer) } catch { /* not a PDF either */ }
+      }
     } else {
-      // Unknown type — try PDF first, then DOCX
       try { text = await parsePdf(buffer) } catch { /* not a PDF */ }
       if (!text || text.length < 100) {
         try { text = await parseDocx(buffer) } catch { /* not a DOCX */ }
@@ -49,8 +54,13 @@ export async function POST(req: NextRequest) {
     console.log(`[parse-doc] extracted ${text.length} chars`)
 
     if (!text || text.trim().length < 50) {
+      const isOldDoc = name.endsWith('.doc') && !name.endsWith('.docx')
       return NextResponse.json(
-        { error: 'Could not extract text from this file. Please try a different format or paste the text manually.' },
+        {
+          error: isOldDoc
+            ? 'Old .doc files cannot always be read. Please open the file in Word and save it as .docx or PDF, then upload again.'
+            : 'Could not extract text from this file. Please try saving as PDF or .docx, or paste the text manually.',
+        },
         { status: 422 }
       )
     }
