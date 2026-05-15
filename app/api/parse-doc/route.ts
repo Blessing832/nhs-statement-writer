@@ -38,9 +38,19 @@ export async function POST(req: NextRequest) {
 
     console.log(`[parse-doc] file="${file.name}" type="${type}" size=${buffer.length}`)
 
+    // Old binary .doc (OLE format) — mammoth/JSZip cannot read these; reject immediately
+    const isOldDoc = (name.endsWith('.doc') && !name.endsWith('.docx')) ||
+                     (type.includes('msword') && !type.includes('wordprocessingml'))
+    if (isOldDoc) {
+      return NextResponse.json(
+        { error: 'Old .doc files cannot be read. Please open the file in Word and save it as .docx or PDF, then upload again.' },
+        { status: 422 }
+      )
+    }
+
     let text = ''
     const isPdf = type.includes('pdf') || name.endsWith('.pdf')
-    const isDocx = type.includes('wordprocessingml') || type.includes('msword') || name.endsWith('.docx') || name.endsWith('.doc')
+    const isDocx = type.includes('wordprocessingml') || name.endsWith('.docx')
 
     if (isPdf) {
       text = await parsePdf(buffer)
@@ -56,13 +66,8 @@ export async function POST(req: NextRequest) {
     console.log(`[parse-doc] extracted ${text.length} chars`)
 
     if (!text || text.trim().length < 50) {
-      const isOldDoc = name.endsWith('.doc') && !name.endsWith('.docx')
       return NextResponse.json(
-        {
-          error: isOldDoc
-            ? 'Old .doc files cannot always be read. Please open the file in Word and save it as .docx or PDF, then upload again.'
-            : 'Could not extract text from this file. Please try saving as PDF or .docx, or paste the text manually.',
-        },
+        { error: 'Could not extract text from this file. Please try saving as PDF or .docx, or paste the text manually.' },
         { status: 422 }
       )
     }
