@@ -4,18 +4,26 @@ export const runtime = 'nodejs'
 export const maxDuration = 30
 
 async function parsePdf(buffer: Buffer): Promise<string> {
-  // Require the internal module directly — avoids pdf-parse trying to load
-  // test fixture files (./test/data/...) which don't exist in production builds
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const pdfParse = require('pdf-parse')
-  const data = await pdfParse(buffer)
-  return (data.text as string) || ''
+  try {
+    // Require the internal module directly — avoids pdf-parse trying to load
+    // test fixture files (./test/data/...) which don't exist in production builds
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const pdfParse = require('pdf-parse')
+    const data = await pdfParse(buffer)
+    return (data.text as string) || ''
+  } catch {
+    return ''
+  }
 }
 
 async function parseDocx(buffer: Buffer): Promise<string> {
-  const mammoth = await import('mammoth')
-  const result = await mammoth.extractRawText({ buffer })
-  return result.value || ''
+  try {
+    const mammoth = await import('mammoth')
+    const result = await mammoth.extractRawText({ buffer })
+    return result.value || ''
+  } catch {
+    return ''
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -35,20 +43,14 @@ export async function POST(req: NextRequest) {
     const isDocx = type.includes('wordprocessingml') || type.includes('msword') || name.endsWith('.docx') || name.endsWith('.doc')
 
     if (isPdf) {
-      try { text = await parsePdf(buffer) } catch { /* fall through */ }
-      if (!text || text.length < 100) {
-        try { text = await parseDocx(buffer) } catch { /* not a valid DOCX */ }
-      }
+      text = await parsePdf(buffer)
+      if (!text || text.length < 100) text = await parseDocx(buffer)
     } else if (isDocx) {
-      try { text = await parseDocx(buffer) } catch { /* old .doc or corrupt — try PDF */ }
-      if (!text || text.length < 100) {
-        try { text = await parsePdf(buffer) } catch { /* not a PDF either */ }
-      }
+      text = await parseDocx(buffer)
+      if (!text || text.length < 100) text = await parsePdf(buffer)
     } else {
-      try { text = await parsePdf(buffer) } catch { /* not a PDF */ }
-      if (!text || text.length < 100) {
-        try { text = await parseDocx(buffer) } catch { /* not a DOCX */ }
-      }
+      text = await parsePdf(buffer)
+      if (!text || text.length < 100) text = await parseDocx(buffer)
     }
 
     console.log(`[parse-doc] extracted ${text.length} chars`)
