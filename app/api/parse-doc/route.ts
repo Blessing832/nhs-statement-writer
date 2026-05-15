@@ -5,8 +5,6 @@ export const maxDuration = 30
 
 async function parsePdf(buffer: Buffer): Promise<string> {
   try {
-    // Require the internal module directly — avoids pdf-parse trying to load
-    // test fixture files (./test/data/...) which don't exist in production builds
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const pdfParse = require('pdf-parse')
     const data = await pdfParse(buffer)
@@ -26,6 +24,18 @@ async function parseDocx(buffer: Buffer): Promise<string> {
   }
 }
 
+async function parseDoc(buffer: Buffer): Promise<string> {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const WordExtractor = require('word-extractor')
+    const extractor = new WordExtractor()
+    const doc = await extractor.extract(buffer)
+    return doc.getBody() || ''
+  } catch {
+    return ''
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData()
@@ -38,29 +48,26 @@ export async function POST(req: NextRequest) {
 
     console.log(`[parse-doc] file="${file.name}" type="${type}" size=${buffer.length}`)
 
-    // Old binary .doc (OLE format) — mammoth/JSZip cannot read these; reject immediately
-    const isOldDoc = (name.endsWith('.doc') && !name.endsWith('.docx')) ||
-                     (type.includes('msword') && !type.includes('wordprocessingml'))
-    if (isOldDoc) {
-      return NextResponse.json(
-        { error: 'Old .doc files cannot be read. Please open the file in Word and save it as .docx or PDF, then upload again.' },
-        { status: 422 }
-      )
-    }
-
-    let text = ''
     const isPdf = type.includes('pdf') || name.endsWith('.pdf')
     const isDocx = type.includes('wordprocessingml') || name.endsWith('.docx')
+    const isOldDoc = (name.endsWith('.doc') && !name.endsWith('.docx')) ||
+                     (type.includes('msword') && !type.includes('wordprocessingml'))
+
+    let text = ''
 
     if (isPdf) {
       text = await parsePdf(buffer)
-      if (!text || text.length < 100) text = await parseDocx(buffer)
+      if (!text || text.length < 50) text = await parseDocx(buffer)
     } else if (isDocx) {
       text = await parseDocx(buffer)
-      if (!text || text.length < 100) text = await parsePdf(buffer)
+      if (!text || text.length < 50) text = await parsePdf(buffer)
+    } else if (isOldDoc) {
+      text = await parseDoc(buffer)
+      if (!text || text.length < 50) text = await parsePdf(buffer)
     } else {
       text = await parsePdf(buffer)
-      if (!text || text.length < 100) text = await parseDocx(buffer)
+      if (!text || text.length < 50) text = await parseDocx(buffer)
+      if (!text || text.length < 50) text = await parseDoc(buffer)
     }
 
     console.log(`[parse-doc] extracted ${text.length} chars`)
