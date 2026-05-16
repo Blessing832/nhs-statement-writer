@@ -132,17 +132,37 @@ Word budget — must total ≤420 words:
 4. MAX 1 criterion paragraph: MAX 75 words (only if budget allows)
 Total: 305 words minimum — leaving up to 115 words buffer. STOP at 420 words.
 
+## Q2 WRITING STYLE — MANDATORY
+Before writing Q2, identify the tone established in Q1 (experience-led, values-led, patient-focused, qualification-led, direct/concise, story-led, etc.). Q2 must continue that same tone. Each Q2 paragraph below offers multiple pattern options — choose ONE that fits the Q1 tone. Never use the same opening word as the paragraph before it.
+
 Q2 NHS SCOTLAND VALUES PARAGRAPH (MAX 80 WORDS):
-Reference the four core NHSScotland values directly: Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, and Quality and Teamwork. Link to Realistic Medicine and What Matters to You.
-Format: "I want to work in NHS Scotland because its four core values — Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, and Quality and Teamwork — align directly with how I work. I am drawn to NHS Scotland's Realistic Medicine approach and the What Matters to You framework, which ensures every patient is treated as an individual. I demonstrate [one NHSScotland value] by [specific example with result]."
+Must name all four NHSScotland values: Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, and Quality and Teamwork. Must reference Realistic Medicine and What Matters to You. Must close with one specific example of a value in action with a result.
+Choose ONE opening pattern — pick the one that matches the Q1 tone:
+- Experience-led: "My [X] years in [specialty] care have been shaped by values that mirror NHS Scotland's own — Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, and Quality and Teamwork..."
+- Values-led: "What draws me to NHS Scotland is the alignment between its four core values — Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, and Quality and Teamwork — and the way I already work..."
+- Direct: "NHS Scotland's four core values — Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, and Quality and Teamwork — are not abstract principles to me; they describe how I work every shift..."
+- Motivation-first: "I am applying to NHS Scotland because its four core values — Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, and Quality and Teamwork — reflect the standards I hold myself to..."
+- Patient-focused: "Patients in [specialty] settings deserve care grounded in the four values NHS Scotland has built its system around: Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, and Quality and Teamwork..."
+All patterns must then reference Realistic Medicine and What Matters to You, and close with: "I demonstrate [value] by [specific example — situation, action, quantified result]."
 
 Q2 SPECIFIC BOARD PARAGRAPH (MAX 80 WORDS):
 Name the Board 2-3 times. Reference its specific services, geography, or initiatives.
-Format: "NHS [Board] appeals to me specifically because of [Board-specific service, specialty unit, or geographic reach]. I want to contribute to NHS [Board]'s work [specific initiative or population]. The Board's commitment to [integration / community care / specific priority] reflects my own approach, and I am keen to bring my experience in [specialty] to NHS [Board]'s [department/service]."
+Choose ONE opening pattern — pick the one that matches the Q1 tone:
+- Appeal-led: "NHS [Board] appeals to me specifically because of [Board-specific service, unit, or geographic reach]..."
+- Geography/community-led: "Serving the [geographic area] community as part of NHS [Board] is something I am genuinely drawn to..."
+- Service-led: "NHS [Board]'s approach to [specific service or specialty] reflects exactly the kind of care environment where I want to develop..."
+- Initiative-led: "The [specific initiative, integration priority, or strategic focus] at NHS [Board] caught my attention because it aligns with the way I already approach [aspect of practice]..."
+- Contribution-led: "I want to bring my [X] years of [specialty] experience to NHS [Board] because [specific reason — geographic, strategic, or service-based]..."
+All patterns must name the Board at least twice more in the paragraph and end with a concrete reason tied to the candidate's experience.
 
 Q2 EDUCATION PARAGRAPH (MAX 70 WORDS):
 Qualifications from person spec only. SCQF equivalence if English quals. One sentence on practical requirements.
-Format: "My qualifications include [quals FROM PERSON SPEC with SCQF equivalence]. I have [GCSEs if listed]. I meet all requirements including enhanced DBS, shift flexibility, and willingness to undertake NHS [Board] mandatory training."
+Choose ONE opening pattern — pick the one that matches the Q1 tone:
+- Standard: "My qualifications include [quals FROM PERSON SPEC with SCQF equivalence]..."
+- Qualification-led: "Academically, I hold [quals FROM PERSON SPEC with SCQF equivalence]..."
+- Learning-journey: "My formal qualifications — [quals FROM PERSON SPEC with SCQF equivalence] — are the foundation of the clinical knowledge I apply daily..."
+- Achievement-led: "I have completed [quals FROM PERSON SPEC with SCQF equivalence], which underpins my practical experience in [specialty]..."
+All patterns must end with: "I meet all requirements including [relevant checks/flexibility from person spec] and willingness to undertake NHS [Board] mandatory training."
 
 ### QUESTION 3: Is there any other relevant information you wish to tell us? (MAX 220w)
 Structure:
@@ -151,12 +171,20 @@ Structure:
 STOP at 220 words maximum.
 
 6 C'S PARAGRAPH (NO SUBHEADING):
-"The 6 C's of Care guide my practice. I provide care and compassion by [specific example with result]. I demonstrate competence by maintaining [specific example — e.g., 100% mandatory training compliance]. I show communication by [specific example with result]. I demonstrate courage by [specific example]. I show commitment by [specific example]. I demonstrate character by [specific example]."
-Each C must have a specific example with a result.
+Every C must have a specific example with a quantified result. Choose ONE opening pattern that fits the Q1/Q2 tone:
+- Standard: "The 6 C's of Care guide my practice..."
+- Evidence-led: "Six principles underpin everything I do in [specialty] care..."
+- Personal: "Care, compassion, competence, communication, courage, and character are not just professional standards to me — they describe how I approach every shift..."
+- Direct: "I demonstrate each of the 6 C's through specific daily actions..."
+Then address each C: care, compassion, competence, communication, courage, commitment, character — each with one specific example and a result. Do not use the same sentence structure for two consecutive Cs.
 
-CLOSING PARAGRAPH:
-"I am confident my experience as [ENHANCED vacancy title] at [Previous Workplace], combined with my [qualification FROM PERSON SPEC] and [key strength FROM PERSON SPEC], make me well suited for this role at NHS [Board]. Thank you."
-Use Board name (NEVER "Trust"), ENHANCED vacancy title.
+CLOSING PARAGRAPH (3-4 lines):
+Choose ONE closing pattern that matches the overall tone — do NOT use the same structure every time:
+- Confident: "I am confident my experience as [ENHANCED vacancy title] at [Previous Workplace], combined with my [qualification FROM PERSON SPEC] and [key strength FROM PERSON SPEC], make me well suited for this role at NHS [Board]. Thank you."
+- Contribution-led: "The experience I have built as [ENHANCED vacancy title] at [Previous Workplace], together with my [qualification FROM PERSON SPEC], gives me a strong foundation to contribute to NHS [Board]'s [specialty/department]. Thank you."
+- Forward-looking: "I am ready to bring my [X] years of [specialty] experience and my [qualification FROM PERSON SPEC] to the [ENHANCED vacancy title] post at NHS [Board]. Thank you."
+- Values-led: "My background as [ENHANCED vacancy title] at [Previous Workplace], grounded in the values NHS Scotland and I share, makes this post at NHS [Board] a clear next step. Thank you."
+Always end with "Thank you." — nothing after it. Use Board name (NEVER "Trust").
 
 ## CRITERION PARAGRAPHS — MINI-STAR (5-8 lines, 70-120 words)
 Every paragraph: SITUATION (1 sentence — specific context) → ACTION (2-3 lines — specific actions, JD tools/systems, named professionals from JD, Scottish systems where relevant) → RESULT (1-2 lines — quantified).
