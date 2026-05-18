@@ -133,7 +133,8 @@ Word budget — must total ≤420 words:
 Total: 305 words minimum — leaving up to 115 words buffer. STOP at 420 words.
 
 ## Q2 WRITING STYLE — MANDATORY
-Before writing Q2, identify the tone established in Q1 (experience-led, values-led, patient-focused, qualification-led, direct/concise, story-led, etc.). Q2 must continue that same tone. Each Q2 paragraph below offers multiple pattern options — choose ONE that fits the Q1 tone. Never use the same opening word as the paragraph before it.
+IMPORTANT: If a "Q2 NHS SCOTLAND PRESET" section appears in the candidate profile, follow those instructions exactly — they override the NHS Scotland values paragraph below.
+If no preset is provided: Before writing Q2, identify the tone established in Q1 (experience-led, values-led, patient-focused, qualification-led, direct/concise, story-led, etc.). Q2 must continue that same tone. Each Q2 paragraph below offers multiple pattern options — choose ONE that fits the Q1 tone. Never use the same opening word as the paragraph before it.
 
 Q2 NHS SCOTLAND VALUES PARAGRAPH (MAX 80 WORDS):
 Must name all four NHSScotland values: Care and Compassion, Dignity and Respect, Openness Honesty and Responsibility, and Quality and Teamwork. Must reference Realistic Medicine and What Matters to You. Must close with one specific example of a value in action with a result.

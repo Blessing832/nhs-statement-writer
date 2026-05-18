@@ -2,6 +2,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { Client, ScrapeResult, StatementAnalysis } from './types'
 import { getEnglandWalesPrompt } from './prompts/england-wales'
 import { getScotlandPrompt } from './prompts/scotland'
+import { getScotlandQ2Variation } from './scotland-q2-variations'
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!,
@@ -131,7 +132,7 @@ ${client.skills ?? ''}
 
 Background and Additional Information:
 ${client.background ?? ''}
-${client.special_instructions ? `\n## CANDIDATE PERSONALISATION — APPLY ALONGSIDE ALL OTHER RULES\nThese instructions give this specific candidate a unique voice and focus. Follow them to personalise tone, emphasis, and content. They do NOT override the writing rules above — they add individual character on top of them.\n${client.special_instructions}` : ''}${client.opening_style ? `\n\n## OPENING SENTENCE STYLE — MANDATORY\nUse this exact structure for the opening sentence/paragraph of the statement. Fill in the placeholders from the job advert and candidate profile. Do not deviate from this pattern.\n${client.opening_style}` : ''}`
+${client.special_instructions ? `\n## CANDIDATE PERSONALISATION — APPLY ALONGSIDE ALL OTHER RULES\nThese instructions give this specific candidate a unique voice and focus. Follow them to personalise tone, emphasis, and content. They do NOT override the writing rules above — they add individual character on top of them.\n${client.special_instructions}` : ''}${client.opening_style ? `\n\n## OPENING SENTENCE STYLE — MANDATORY\nUse this exact structure for the opening sentence/paragraph of the statement. Fill in the placeholders from the job advert and candidate profile. Do not deviate from this pattern.\n${client.opening_style}` : ''}${(() => { const v = isScotland && client.scotland_q2_variation ? getScotlandQ2Variation(client.scotland_q2_variation) : null; return v ? `\n\n## Q2 NHS SCOTLAND PRESET — MANDATORY\nThe paragraph below is pre-approved for this candidate's Q2 "why NHS Scotland" section. Follow these rules exactly:\n1. Use this text as the first paragraph of Question 2 — it replaces the NHS Scotland values paragraph entirely\n2. Lightly personalise it: replace generic phrases such as "my previous role", "current role", "previous healthcare role" with this candidate's actual job title and workplace from their profile. Replace "current role" references with their actual current role. Keep all key phrases, sentences, and the overall message intact.\n3. After this paragraph, write approximately 100 words on why this candidate specifically wants to work for NHS [Board] — name the Board, reference its specific services, geography, or strategic priorities from the job advert\n4. Then use the remaining Q2 word budget to address person specification criteria\n5. Total Q2 must not exceed 420 words\n\nPRESET TEXT (personalise as instructed above):\n${v.text}` : '' })()}`
 
   // --- analysis-only: extract criteria + duties ---
   if (outputMode === 'analysis-only') {

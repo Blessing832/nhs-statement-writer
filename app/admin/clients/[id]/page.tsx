@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Client } from '@/lib/types'
+import { SCOTLAND_Q2_VARIATIONS } from '@/lib/scotland-q2-variations'
 
 const OPENING_STYLES = [
   {
@@ -144,6 +145,7 @@ export default function EditClientPage() {
   const [success, setSuccess] = useState(justCreated ? 'Client created successfully!' : '')
   const [statementLog, setStatementLog] = useState<StatementLog[]>([])
   const [showStylePicker, setShowStylePicker] = useState(false)
+  const [showQ2Picker, setShowQ2Picker] = useState(false)
   const [form, setForm] = useState({
     full_name: '',
     work_history: '',
@@ -152,6 +154,7 @@ export default function EditClientPage() {
     background: '',
     special_instructions: '',
     opening_style: '',
+    scotland_q2_variation: '',
     subscription_end: '',
     is_active: true,
   })
@@ -175,6 +178,7 @@ export default function EditClientPage() {
           background: data.background,
           special_instructions: data.special_instructions || '',
           opening_style: data.opening_style || '',
+          scotland_q2_variation: data.scotland_q2_variation || '',
           subscription_end: data.subscription_end.split('T')[0],
           is_active: data.is_active,
         })
@@ -365,6 +369,69 @@ export default function EditClientPage() {
                   placeholder="Selected style template will appear here — or type a custom opening instruction."
                   className="w-full px-4 py-2.5 border border-blue-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none bg-blue-50"
                 />
+              </div>
+            </Field>
+
+            <Field label="Scotland Q2 — Why NHS Scotland (preset)" hint="For Scotland applications only. Choose a pre-written 'why NHS Scotland' paragraph. The AI uses it verbatim (lightly personalised), then writes the Board paragraph and fills remaining Q2 budget with criteria.">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <button
+                    type="button"
+                    onClick={() => setShowQ2Picker((v) => !v)}
+                    className="text-sm px-3 py-1.5 rounded-md border border-green-400 text-green-700 bg-green-50 hover:bg-green-100 cursor-pointer"
+                  >
+                    {showQ2Picker ? 'Hide variations' : 'Choose variation'}
+                  </button>
+                  {form.scotland_q2_variation && (
+                    <span className="text-xs text-gray-500 italic">
+                      {SCOTLAND_Q2_VARIATIONS.find(v => v.id === form.scotland_q2_variation)?.name ?? 'Custom'} selected
+                    </span>
+                  )}
+                  {form.scotland_q2_variation && (
+                    <button
+                      type="button"
+                      onClick={() => handleChange('scotland_q2_variation', '')}
+                      className="text-xs text-red-500 hover:text-red-700 cursor-pointer"
+                    >
+                      Clear
+                    </button>
+                  )}
+                </div>
+
+                {showQ2Picker && (
+                  <div className="rounded-lg border border-green-200 bg-green-50 p-3 space-y-2">
+                    <p className="text-xs text-green-700 font-medium mb-2">Click a variation to select it. The AI will use this as the opening of Q2:</p>
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                      {SCOTLAND_Q2_VARIATIONS.map((v) => {
+                        const isSelected = form.scotland_q2_variation === v.id
+                        return (
+                          <button
+                            key={v.id}
+                            type="button"
+                            onClick={() => { handleChange('scotland_q2_variation', isSelected ? '' : v.id); setShowQ2Picker(false) }}
+                            className="text-left p-3 rounded-md border-2 transition-colors cursor-pointer"
+                            style={isSelected
+                              ? { borderColor: '#16a34a', backgroundColor: '#dcfce7' }
+                              : { borderColor: '#e5e7eb', backgroundColor: 'white' }}
+                          >
+                            <p className="font-semibold text-sm text-gray-800">{v.name}</p>
+                            <p className="text-xs text-gray-500 mt-0.5 leading-snug">{v.angle}</p>
+                            <p className="text-xs text-gray-400 mt-1 leading-snug line-clamp-3 italic">{v.text.substring(0, 120)}…</p>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {form.scotland_q2_variation && (
+                  <div className="rounded-md border border-green-200 bg-white p-3">
+                    <p className="text-xs font-medium text-green-700 mb-1">Preview (first 200 chars):</p>
+                    <p className="text-xs text-gray-600 leading-relaxed italic">
+                      {SCOTLAND_Q2_VARIATIONS.find(v => v.id === form.scotland_q2_variation)?.text.substring(0, 200)}…
+                    </p>
+                  </div>
+                )}
               </div>
             </Field>
 

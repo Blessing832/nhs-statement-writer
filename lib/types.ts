@@ -8,6 +8,7 @@ export interface Client {
   background: string
   special_instructions: string
   opening_style: string
+  scotland_q2_variation: string
   subscription_start: string
   subscription_end: string
   is_active: boolean

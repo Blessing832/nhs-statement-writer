@@ -78,6 +78,7 @@ export async function POST(req: NextRequest) {
     background: background || '',
     special_instructions: '',
     opening_style: '',
+    scotland_q2_variation: '',
     subscription_start: new Date().toISOString(),
     subscription_end: new Date(Date.now() + 86400000).toISOString(),
     is_active: true,
