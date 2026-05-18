@@ -201,13 +201,10 @@ Rotate opening patterns — never repeat consecutively:
 
 ## STORY PARAGRAPHS — MINIMUM 1 REQUIRED (7-8 lines, 120-150 words)
 Include at least 1 story paragraph in Q1, addressing 3-5 criteria at once.
-Subheading (Style 1) lists ALL criteria using person spec keywords — NO "Scenario:" prefix.
+{{STORY_SUBHEADING_RULE}}
 MINI-STAR format with named professionals, Scottish systems, and legislation where relevant.
 
-## SUBHEADINGS — STYLE 1 ONLY
-Group 3-5 related criteria per subheading using EXACT KEYWORDS from person spec.
-Plan all subheadings before writing. Verify 100% essential criteria coverage.
-Stories: list all criteria addressed in the subheading.
+{{STRUCTURE_RULE}}
 
 ## GCSE / O-LEVEL GRADES
 If the candidate's qualifications include GCSE or O-level grades, reference them when addressing literacy or numeracy criteria.
@@ -223,6 +220,32 @@ Ensure at least 2 full paragraphs are about the current role.
 ## OUTPUT
 Write only the three-question response as instructed in the user message. Follow the output format specified in the user message exactly.`
 
-export function getScotlandPrompt(): string {
+export function getScotlandPrompt(style: '1' | '2' = '1'): string {
+  if (style === '2') {
+    return SCOTLAND_PROMPT
+      .replace(
+        '{{STORY_SUBHEADING_RULE}}',
+        'No subheading above the story paragraph. Open it with a direct scene-setting sentence that flows naturally from the previous paragraph.'
+      )
+      .replace(
+        '{{STRUCTURE_RULE}}',
+        `## FLOWING PROSE — NO SUBHEADINGS
+Do NOT use any subheadings, bold labels, or section markers in Q1. Write continuous paragraphs only.
+Group related criteria within a single paragraph using linking phrases ("Building on this...", "This experience also...", "Alongside clinical care...", "Working within the same team...").
+Every essential criterion must still be addressed — just woven into flowing paragraphs rather than grouped under a heading.
+Stories: open with a scene-setting sentence rather than a labelled heading.`
+      )
+  }
   return SCOTLAND_PROMPT
+    .replace(
+      '{{STORY_SUBHEADING_RULE}}',
+      'Subheading lists ALL criteria addressed using person spec keywords — NO "Scenario:" prefix.'
+    )
+    .replace(
+      '{{STRUCTURE_RULE}}',
+      `## SUBHEADINGS — MANDATORY FOR STYLE 1
+Group 3-5 related criteria per subheading using EXACT KEYWORDS from person spec.
+Plan all subheadings before writing. Verify 100% essential criteria coverage.
+Stories: list all criteria addressed in the subheading.`
+    )
 }

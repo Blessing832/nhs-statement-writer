@@ -64,7 +64,7 @@ export function detectRegion(url: string, rawText?: string): PromptRegion {
 }
 
 function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): string {
-  if (region === 'scotland') return getScotlandPrompt() // Scotland is always continuous prose — no style choice
+  if (region === 'scotland') return getScotlandPrompt(style)
   if (region === 'england-wales') return getEnglandWalesPrompt(style)
   return `You are an expert UK job application writer. Write a compelling supporting statement for this NHS or public sector role.
 - Address every essential criterion from the person specification
@@ -102,6 +102,7 @@ function buildUserPrompt(
     openingFormatHint?: string
     yearsHint?: string
     bodyPattern?: string
+    style?: '1' | '2'
   }
 ): string {
   const isScotland = region === 'scotland'
@@ -293,6 +294,11 @@ ${options.specificQuestions || ''}`
     const patternLine = options.bodyPattern
       ? `MANDATORY DEPTH STYLE: Use Depth Style ${options.bodyPattern} for ALL criterion paragraphs.\n\n`
       : ''
+    const scotlandStyleLine = isScotland
+      ? options.style === '2'
+        ? `MANDATORY STRUCTURE: Flowing prose — NO subheadings anywhere in Q1. Use linking phrases between paragraphs. Do NOT insert any bold labels or section headers.\n\n`
+        : `MANDATORY STRUCTURE: Use subheadings to group criteria. Every group of criterion paragraphs must have a subheading using exact person spec keywords.\n\n`
+      : ''
     const outputInstruction = isRewrite
       ? 'Rewrite the statement following the instruction. Keep all strong content. Improve what was asked.'
       : isScotland
@@ -314,7 +320,7 @@ ${instructionsSection}
 ${rewriteSection}
 
 ## TASK
-${formatHintLine}${patternLine}${outputInstruction}
+${formatHintLine}${patternLine}${scotlandStyleLine}${outputInstruction}
 
 Output as plain text only. Do NOT wrap in JSON. Do NOT add any preamble. Start directly with the first word.
 
@@ -446,6 +452,7 @@ async function generateParallel(
     openingFormatHint,
     yearsHint,
     bodyPattern,
+    style,
   })
 
   const analysisUserPrompt = buildUserPrompt(client, jobData, region, {
