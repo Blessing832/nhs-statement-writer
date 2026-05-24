@@ -396,14 +396,15 @@ export default function QuickWritePage() {
               </div>
             )}
 
-            {/* Instructions */}
+            {/* Writer Notes */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 mb-1">
-                Special instructions <span className="text-gray-400 font-normal">(optional)</span>
+                Writer Notes <span className="text-gray-400 font-normal">(optional)</span>
               </label>
-              <textarea value={form.instructions} onChange={set('instructions')} rows={2}
-                placeholder="e.g. Emphasise Band 3 experience. Do not mention previous employer name."
-                className={FIELD_CLASS} />
+              <p className="text-xs text-gray-500 mb-1">Extra context for the AI — e.g. agency NHS experience, specific achievements, anything not in the profile above.</p>
+              <textarea value={form.instructions} onChange={set('instructions')} rows={3}
+                placeholder="e.g. Candidate worked as an NHS HCA through an agency at Royal Infirmary for 8 months — include this when addressing experience criteria."
+                className="w-full px-3 py-2 border border-orange-300 rounded text-xs focus:outline-none resize-none bg-orange-50" />
             </div>
 
             {error && (

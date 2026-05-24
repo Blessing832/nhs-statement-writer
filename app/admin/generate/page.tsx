@@ -172,6 +172,7 @@ export default function AdminGeneratePage() {
   const [bodyPattern, setBodyPattern] = useState<'' | '1' | '2' | '3'>('')
   const [applicationMode, setApplicationMode] = useState<'full' | 'questions-only' | 'statement-questions'>('full')
   const [specificQuestions, setSpecificQuestions] = useState('')
+  const [writerNotes, setWriterNotes] = useState('')
   const [loading, setLoading] = useState(false)
   const [loadingStep, setLoadingStep] = useState('')
   const [error, setError] = useState('')
@@ -287,7 +288,7 @@ export default function AdminGeneratePage() {
 
     try {
       const { result: data, jobData } = await runGenerate(
-        { client_code: selectedClient.client_code, vacancy_url: usedUrl, style, applicationMode, specificQuestions: specificQuestions.trim() || undefined, bodyPattern: bodyPattern || undefined, pastedPersonSpec: pastedPersonSpec.trim() || undefined },
+        { client_code: selectedClient.client_code, vacancy_url: usedUrl, style, applicationMode, specificQuestions: specificQuestions.trim() || undefined, bodyPattern: bodyPattern || undefined, pastedPersonSpec: pastedPersonSpec.trim() || undefined, instructions: writerNotes.trim() || undefined },
         preloaded,
         controller.signal
       )
@@ -523,6 +524,17 @@ export default function AdminGeneratePage() {
                     disabled={loading} />
                 </div>
               )}
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Writer Notes <span className="text-gray-400 font-normal">(optional)</span>
+                </label>
+                <p className="text-xs text-gray-500 mb-1.5">Extra context for the AI — e.g. agency NHS experience, specific achievements to highlight, anything not in the profile.</p>
+                <textarea value={writerNotes} onChange={(e) => setWriterNotes(e.target.value)}
+                  placeholder="e.g. Candidate worked as an NHS HCA through an agency at Royal Infirmary for 8 months — include this when addressing experience criteria."
+                  rows={3} className="w-full px-4 py-2.5 border border-orange-300 rounded-md text-sm focus:outline-none resize-none bg-orange-50"
+                  disabled={loading} />
+              </div>
 
               {error && <div className="bg-red-50 border border-red-200 rounded-md p-3 text-red-700 text-sm">{error}</div>}
 

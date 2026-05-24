@@ -165,6 +165,7 @@ function GeneratePage() {
   const [vacancyUrl, setVacancyUrl] = useState('')
   const [jobDescText, setJobDescText] = useState('')
   const [pastedPersonSpec, setPastedPersonSpec] = useState('')
+  const [writerNotes, setWriterNotes] = useState('')
   const [sparsePs, setSparsePs] = useState(false)
   const [downloadedDocs, setDownloadedDocs] = useState<string[]>([])
   const [cachedJobData, setCachedJobData] = useState<Record<string, unknown> | null>(null)
@@ -281,7 +282,7 @@ function GeneratePage() {
 
     try {
       const { result: data, jobData } = await callGenerate(
-        { client_code: clientCode, vacancy_url: usedUrl, style, applicationMode, specificQuestions: specificQuestions.trim() || undefined, bodyPattern: bodyPattern || undefined, pastedPersonSpec: pastedPersonSpec.trim() || undefined },
+        { client_code: clientCode, vacancy_url: usedUrl, style, applicationMode, specificQuestions: specificQuestions.trim() || undefined, bodyPattern: bodyPattern || undefined, pastedPersonSpec: pastedPersonSpec.trim() || undefined, instructions: writerNotes.trim() || undefined },
         setLoadingStep,
         preloaded,
         controller.signal
@@ -545,6 +546,21 @@ function GeneratePage() {
                     />
                   </div>
                 )}
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Writer Notes <span className="text-gray-400 font-normal">(optional)</span>
+                  </label>
+                  <p className="text-xs text-gray-500 mb-1.5">Extra context for the AI — e.g. agency NHS experience, specific achievements to highlight, anything not in the profile.</p>
+                  <textarea
+                    value={writerNotes}
+                    onChange={(e) => setWriterNotes(e.target.value)}
+                    placeholder="e.g. Candidate worked as an NHS HCA through an agency at Royal Infirmary for 8 months — include this when addressing experience criteria."
+                    rows={3}
+                    className="w-full px-4 py-2.5 border border-orange-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none bg-orange-50"
+                    disabled={loading}
+                  />
+                </div>
 
                 {error && (
                   <div className="bg-red-50 border border-red-200 rounded-md p-3 text-red-700 text-sm">{error}</div>
