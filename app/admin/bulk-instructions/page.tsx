@@ -249,7 +249,7 @@ export default function BulkInstructionsPage() {
                 onChange={e => handleChange(row.client.id, e.target.value)}
                 placeholder="No instructions yet. Click Draft to auto-generate from this candidate's profile, or type manually..."
                 rows={row.instructions ? Math.max(4, row.instructions.split('\n').length + 1) : 3}
-                className="w-full px-3 py-2 border border-gray-200 rounded-md text-xs text-gray-700 leading-relaxed focus:outline-none focus:ring-1 focus:ring-blue-400 resize-none bg-gray-50"
+                className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm text-gray-700 leading-relaxed focus:outline-none focus:ring-1 focus:ring-blue-400 resize-none bg-gray-50"
               />
 
               {row.error && (

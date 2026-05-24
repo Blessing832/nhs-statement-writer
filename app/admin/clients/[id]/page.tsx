@@ -490,7 +490,7 @@ export default function EditClientPage() {
               </div>
             )}
 
-            <div className="flex gap-3 pt-2">
+            <div className="flex gap-3 pt-2 flex-wrap">
               <button
                 type="submit"
                 disabled={saving}
@@ -499,6 +499,15 @@ export default function EditClientPage() {
               >
                 {saving ? 'Saving...' : 'Save Changes'}
               </button>
+              {client && (
+                <Link
+                  href={`/admin/generate?code=${encodeURIComponent(client.client_code)}`}
+                  className="px-6 py-2.5 text-white font-medium rounded-md text-sm text-center"
+                  style={{ backgroundColor: '#0891b2' }}
+                >
+                  Generate Statement
+                </Link>
+              )}
               <Link
                 href="/admin"
                 className="px-6 py-2.5 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"

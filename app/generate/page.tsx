@@ -180,6 +180,7 @@ function GeneratePage() {
   const [result, setResult] = useState<Result | null>(null)
   const [copied, setCopied] = useState(false)
   const [copiedDuties, setCopiedDuties] = useState(false)
+  const [downloaded, setDownloaded] = useState(false)
 
   const [showRewrite, setShowRewrite] = useState(false)
   const [rewriteInstruction, setRewriteInstruction] = useState('')
@@ -193,6 +194,8 @@ function GeneratePage() {
 
   useEffect(() => {
     if (!clientCode) { router.push('/'); return }
+    const saved = localStorage.getItem(`writer_notes_${clientCode}`)
+    if (saved) setWriterNotes(saved)
     fetch(`/api/client-info?code=${encodeURIComponent(clientCode)}`)
       .then((r) => {
         if (!r.ok) { setInvalidCode(true); return null }
@@ -587,7 +590,10 @@ function GeneratePage() {
                   <p className="text-xs text-gray-500 mb-1.5">Extra context for the AI, e.g. agency NHS experience, specific achievements to highlight, anything not in the profile.</p>
                   <textarea
                     value={writerNotes}
-                    onChange={(e) => setWriterNotes(e.target.value)}
+                    onChange={(e) => {
+                      setWriterNotes(e.target.value)
+                      if (clientCode) localStorage.setItem(`writer_notes_${clientCode}`, e.target.value)
+                    }}
                     placeholder="e.g. Candidate worked as an NHS HCA through an agency at Royal Infirmary for 8 months. Include this when addressing experience criteria."
                     rows={3}
                     className="w-full px-4 py-2.5 border border-orange-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none bg-orange-50"
@@ -695,13 +701,13 @@ function GeneratePage() {
                   {copied ? 'Copied!' : 'Copy Statement'}
                 </button>
                 <button
-                  onClick={() => downloadAsDoc(result)}
-                  className="text-sm px-3 py-1.5 text-white rounded font-medium cursor-pointer"
-                  style={{ backgroundColor: '#005eb8' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#004a9f')}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#005eb8')}
+                  onClick={() => { downloadAsDoc(result); setDownloaded(true); setTimeout(() => setDownloaded(false), 3000) }}
+                  className="text-sm px-3 py-1.5 text-white rounded font-medium cursor-pointer transition-colors"
+                  style={{ backgroundColor: downloaded ? '#009639' : '#005eb8' }}
+                  onMouseEnter={(e) => { if (!downloaded) e.currentTarget.style.backgroundColor = '#004a9f' }}
+                  onMouseLeave={(e) => { if (!downloaded) e.currentTarget.style.backgroundColor = '#005eb8' }}
                 >
-                  Download .doc
+                  {downloaded ? 'Downloaded!' : 'Download .doc'}
                 </button>
                 <button
                   onClick={() => { setResult(null); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText(''); setPastedPersonSpec(''); setSparsePs(false); setDownloadedDocs([]) }}

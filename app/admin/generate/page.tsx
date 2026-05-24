@@ -1,5 +1,6 @@
 'use client'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { useAdminToken } from '@/lib/admin-context'
 import { FileDropZone } from '@/components/FileDropZone'
 import { StatementAnalysis } from '@/lib/types'
@@ -153,8 +154,10 @@ ${currDuties}
   URL.revokeObjectURL(url)
 }
 
-export default function AdminGeneratePage() {
+function AdminGenerateInner() {
   const { token } = useAdminToken()
+  const searchParams = useSearchParams()
+  const prefillCode = searchParams.get('code')
 
   // Step 1: client search
   const [query, setQuery] = useState('')
@@ -180,6 +183,7 @@ export default function AdminGeneratePage() {
   const [cachedJobData, setCachedJobData] = useState<Record<string, unknown> | null>(null)
   const [copied, setCopied] = useState(false)
   const [copiedDuties, setCopiedDuties] = useState(false)
+  const [downloaded, setDownloaded] = useState(false)
 
   const [showRewrite, setShowRewrite] = useState(false)
   const [rewriteInstruction, setRewriteInstruction] = useState('')
@@ -189,6 +193,22 @@ export default function AdminGeneratePage() {
   const statementHeadRef = useRef<HTMLDivElement>(null)
   const dutiesRef = useRef<HTMLDivElement>(null)
   const abortControllerRef = useRef<AbortController | null>(null)
+
+  useEffect(() => {
+    if (!prefillCode || !token) return
+    ;(async () => {
+      try {
+        const res = await fetch(`/api/admin/client-lookup?q=${encodeURIComponent(prefillCode)}`, {
+          headers: { 'x-admin-token': token },
+        })
+        const data = await res.json()
+        if (res.ok && data.clients?.length > 0) {
+          const exact = data.clients.find((c: ClientMatch) => c.client_code === prefillCode.toUpperCase()) ?? data.clients[0]
+          setSelectedClient(exact)
+        }
+      } catch { /* ignore */ }
+    })()
+  }, [prefillCode, token])
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -593,14 +613,14 @@ export default function AdminGeneratePage() {
         </div>
       )}
 
-      {/* ─── RESULTS ─── */}
+      {/* RESULTS */}
       {result && selectedClient && (
         <div className="flex flex-col flex-1 overflow-hidden">
           {/* Top bar */}
           <div style={{ backgroundColor: '#003087' }} className="px-4 py-3 flex-shrink-0">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="min-w-0">
-                <p className="text-blue-200 text-xs">{selectedClient.full_name} &mdash; {selectedClient.client_code}</p>
+                <p className="text-blue-200 text-xs">{selectedClient.full_name} · {selectedClient.client_code}</p>
                 <h2 className="text-white font-bold text-base sm:text-lg leading-tight truncate">{result.jobTitle}</h2>
                 {result.organisation && <p className="text-blue-200 text-sm truncate">{result.organisation}</p>}
               </div>
@@ -616,10 +636,10 @@ export default function AdminGeneratePage() {
                   {copied ? 'Copied!' : 'Copy Statement'}
                 </button>
                 <button
-                  onClick={() => downloadAsDoc(result, selectedClient.full_name)}
-                  className="text-sm px-3 py-1.5 text-white rounded font-medium cursor-pointer"
-                  style={{ backgroundColor: '#005eb8' }}>
-                  Download .doc
+                  onClick={() => { downloadAsDoc(result, selectedClient.full_name); setDownloaded(true); setTimeout(() => setDownloaded(false), 3000) }}
+                  className="text-sm px-3 py-1.5 text-white rounded font-medium cursor-pointer transition-colors"
+                  style={{ backgroundColor: downloaded ? '#009639' : '#005eb8' }}>
+                  {downloaded ? 'Downloaded!' : 'Download .doc'}
                 </button>
                 <button
                   onClick={() => { setResult(null); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText(''); setPastedPersonSpec('') }}
@@ -782,5 +802,13 @@ export default function AdminGeneratePage() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function AdminGeneratePage() {
+  return (
+    <Suspense>
+      <AdminGenerateInner />
+    </Suspense>
   )
 }
