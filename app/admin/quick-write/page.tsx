@@ -262,7 +262,7 @@ export default function QuickWritePage() {
           <div className="mb-6">
             <h1 className="text-xl font-bold text-gray-900">Quick Statement Writer</h1>
             <p className="text-sm text-gray-500 mt-1">
-              One-time use — paste a candidate&apos;s background and job link. Nothing is saved.
+              One-time use: paste a candidate&apos;s background and job link. Nothing is saved.
             </p>
           </div>
 
@@ -401,9 +401,9 @@ export default function QuickWritePage() {
               <label className="block text-xs font-semibold text-gray-700 mb-1">
                 Writer Notes <span className="text-gray-400 font-normal">(optional)</span>
               </label>
-              <p className="text-xs text-gray-500 mb-1">Extra context for the AI — e.g. agency NHS experience, specific achievements, anything not in the profile above.</p>
+              <p className="text-xs text-gray-500 mb-1">Extra context for the AI, e.g. agency NHS experience, specific achievements, anything not in the profile above.</p>
               <textarea value={form.instructions} onChange={set('instructions')} rows={3}
-                placeholder="e.g. Candidate worked as an NHS HCA through an agency at Royal Infirmary for 8 months — include this when addressing experience criteria."
+                placeholder="e.g. Candidate worked as an NHS HCA through an agency at Royal Infirmary for 8 months. Include this when addressing experience criteria."
                 className="w-full px-3 py-2 border border-orange-300 rounded text-xs focus:outline-none resize-none bg-orange-50" />
             </div>
 
@@ -457,7 +457,7 @@ export default function QuickWritePage() {
           <div style={{ backgroundColor: '#003087' }} className="px-4 py-3 flex-shrink-0">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="min-w-0">
-                <p className="text-blue-200 text-xs">{form.name} — Quick Write</p>
+                <p className="text-blue-200 text-xs">{form.name} (Quick Write)</p>
                 <h2 className="text-white font-bold text-base sm:text-lg leading-tight truncate">{result.jobTitle}</h2>
                 {result.organisation && <p className="text-blue-200 text-sm truncate">{result.organisation}</p>}
               </div>

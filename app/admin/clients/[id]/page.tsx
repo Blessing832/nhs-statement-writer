@@ -9,7 +9,7 @@ const OPENING_STYLES = [
   {
     id: '1',
     name: 'Standard',
-    desc: 'Classic NHS opening — title then advert keywords',
+    desc: 'Classic NHS opening: title then advert keywords',
     preview: '"I am an experienced [title] who is [2-3 keywords from advert]..."',
     template: 'Open with: "I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases lifted directly from the advert]."',
   },
@@ -93,7 +93,7 @@ const OPENING_STYLES = [
   {
     id: '13',
     name: 'Direct and Concise',
-    desc: 'Short punchy opening — no padding or filler',
+    desc: 'Short punchy opening, no padding or filler',
     preview: '"I am a [title] with [X] years of [specialty] experience. I hold [qualification]..."',
     template: 'Open with a short, direct statement: "I am a [vacancy title] with [X] years of [specialty] experience. I hold [qualification], and I apply because [specific reason directly from the advert that matches the candidate\'s background]."',
   },
@@ -372,7 +372,7 @@ export default function EditClientPage() {
               </div>
             </Field>
 
-            <Field label="Scotland Q2 — Why NHS Scotland (preset)" hint="For Scotland applications only. Choose a pre-written 'why NHS Scotland' paragraph. The AI uses it verbatim (lightly personalised), then writes the Board paragraph and fills remaining Q2 budget with criteria.">
+            <Field label="Scotland Q2: Why NHS Scotland (preset)" hint="For Scotland applications only. Choose a pre-written 'why NHS Scotland' paragraph. The AI uses it verbatim (lightly personalised), then writes the Board paragraph and fills remaining Q2 budget with criteria.">
               <div className="space-y-2">
                 <div className="flex items-center gap-2 flex-wrap">
                   <button

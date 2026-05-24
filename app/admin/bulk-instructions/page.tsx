@@ -75,7 +75,7 @@ export default function BulkInstructionsPage() {
       updateRow(row.client.id, { saving: false, dirty: false, saved: true })
       setTimeout(() => updateRow(row.client.id, { saved: false }), 3000)
     } catch {
-      updateRow(row.client.id, { saving: false, error: 'Save failed — try again' })
+      updateRow(row.client.id, { saving: false, error: 'Save failed, try again' })
     }
   }
 
@@ -247,7 +247,7 @@ export default function BulkInstructionsPage() {
               <textarea
                 value={row.instructions}
                 onChange={e => handleChange(row.client.id, e.target.value)}
-                placeholder="No instructions yet — click Draft to auto-generate from this candidate's profile, or type manually..."
+                placeholder="No instructions yet. Click Draft to auto-generate from this candidate's profile, or type manually..."
                 rows={row.instructions ? Math.max(4, row.instructions.split('\n').length + 1) : 3}
                 className="w-full px-3 py-2 border border-gray-200 rounded-md text-xs text-gray-700 leading-relaxed focus:outline-none focus:ring-1 focus:ring-blue-400 resize-none bg-gray-50"
               />

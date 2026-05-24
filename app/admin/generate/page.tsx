@@ -500,8 +500,8 @@ export default function AdminGeneratePage() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">Statement Style</label>
                   <div className="grid grid-cols-2 gap-3">
                     {[
-                      { val: '1' as const, label: 'Style 1 - Headed Sections', desc: 'Bold headings group related criteria — easy to scan.' },
-                      { val: '2' as const, label: 'Style 2 - Flowing Prose', desc: 'Continuous paragraphs, no headings — reads more naturally.' },
+                      { val: '1' as const, label: 'Style 1 - Headed Sections', desc: 'Bold headings group related criteria, easy to scan.' },
+                      { val: '2' as const, label: 'Style 2 - Flowing Prose', desc: 'Continuous paragraphs, no headings, reads more naturally.' },
                     ].map(({ val, label, desc }) => (
                       <button key={val} type="button" onClick={() => setStyle(val)}
                         className="p-3 rounded-md border-2 text-sm text-left transition-colors"
@@ -529,9 +529,9 @@ export default function AdminGeneratePage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Writer Notes <span className="text-gray-400 font-normal">(optional)</span>
                 </label>
-                <p className="text-xs text-gray-500 mb-1.5">Extra context for the AI — e.g. agency NHS experience, specific achievements to highlight, anything not in the profile.</p>
+                <p className="text-xs text-gray-500 mb-1.5">Extra context for the AI, e.g. agency NHS experience, specific achievements to highlight, anything not in the profile.</p>
                 <textarea value={writerNotes} onChange={(e) => setWriterNotes(e.target.value)}
-                  placeholder="e.g. Candidate worked as an NHS HCA through an agency at Royal Infirmary for 8 months — include this when addressing experience criteria."
+                  placeholder="e.g. Candidate worked as an NHS HCA through an agency at Royal Infirmary for 8 months. Include this when addressing experience criteria."
                   rows={3} className="w-full px-4 py-2.5 border border-orange-300 rounded-md text-sm focus:outline-none resize-none bg-orange-50"
                   disabled={loading} />
               </div>

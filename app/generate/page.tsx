@@ -161,6 +161,7 @@ function GeneratePage() {
   const clientCode = searchParams.get('code') || ''
 
   const [clientName, setClientName] = useState<string | null>(null)
+  const [invalidCode, setInvalidCode] = useState(false)
   const [inputMode, setInputMode] = useState<'url' | 'text'>('url')
   const [vacancyUrl, setVacancyUrl] = useState('')
   const [jobDescText, setJobDescText] = useState('')
@@ -193,7 +194,10 @@ function GeneratePage() {
   useEffect(() => {
     if (!clientCode) { router.push('/'); return }
     fetch(`/api/client-info?code=${encodeURIComponent(clientCode)}`)
-      .then((r) => r.ok ? r.json() : null)
+      .then((r) => {
+        if (!r.ok) { setInvalidCode(true); return null }
+        return r.json()
+      })
       .then((d) => { if (d?.full_name) setClientName(d.full_name) })
       .catch(() => {})
   }, [clientCode, router])
@@ -298,7 +302,7 @@ function GeneratePage() {
       const isIosTimeout = raw === 'Load failed' || raw.toLowerCase().includes('load failed') || raw.toLowerCase().includes('network request failed')
       setError(
         isIosTimeout
-          ? 'The request timed out on your mobile connection. Tap "Paste Job Description" above and paste the job description text directly — this skips the link-reading step and works much faster on phones.'
+          ? 'The request timed out on your mobile connection. Tap "Paste Job Description" above and paste the job description text directly. This skips the link-reading step and works much faster on phones.'
           : raw || 'Network error. Please check your connection and try again.'
       )
     } finally {
@@ -338,8 +342,37 @@ function GeneratePage() {
   }
 
   const wc = result ? wordCount(result.statement) : 0
-  const wcLimit = result?.promptRegion === 'scotland' ? 1160 : 1450 // Scotland: Q1(480)+Q2(480)+Q3(200)=1160
+  const wcLimit = result?.promptRegion === 'scotland' ? 1160 : 1450
   const wcColour = wc > wcLimit ? 'text-red-600 font-bold' : wc > wcLimit * 0.93 ? 'text-amber-600' : 'text-green-700'
+
+  if (invalidCode) {
+    return (
+      <main className="min-h-screen flex flex-col bg-gray-50">
+        <header style={{ backgroundColor: '#003087' }} className="py-4 px-6">
+          <div className="max-w-3xl mx-auto flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#005eb8' }}>
+              <span className="text-white font-bold text-sm">NHS</span>
+            </div>
+            <span className="text-white font-bold">EaseMe</span>
+          </div>
+        </header>
+        <div style={{ backgroundColor: '#005eb8' }} className="h-1" />
+        <div className="flex-1 flex items-center justify-center px-6 py-16">
+          <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-8 max-w-sm w-full text-center">
+            <div className="text-4xl mb-4">🔑</div>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">Code not recognised</h2>
+            <p className="text-gray-500 text-sm mb-6">
+              The code <span className="font-mono font-semibold text-gray-700">{clientCode}</span> does not match any active account. Check the code your consultant sent you and try again.
+            </p>
+            <a href="/" className="inline-block w-full py-3 text-white font-semibold rounded-xl text-sm"
+              style={{ backgroundColor: '#005eb8' }}>
+              Back to login
+            </a>
+          </div>
+        </div>
+      </main>
+    )
+  }
 
   return (
     <main className="min-h-screen flex flex-col bg-gray-50">
@@ -513,8 +546,8 @@ function GeneratePage() {
                     <label className="block text-sm font-medium text-gray-700 mb-2">Statement Style</label>
                     <div className="grid grid-cols-2 gap-3">
                       {[
-                        { val: '1' as const, label: 'Style 1 - Headed Sections', desc: 'Bold headings group related criteria — easy to scan.' },
-                        { val: '2' as const, label: 'Style 2 - Flowing Prose', desc: 'Continuous paragraphs, no headings — reads more naturally.' },
+                        { val: '1' as const, label: 'Style 1 - Headed Sections', desc: 'Bold headings group related criteria, easy to scan.' },
+                        { val: '2' as const, label: 'Style 2 - Flowing Prose', desc: 'Continuous paragraphs, no headings, reads more naturally.' },
                       ].map(({ val, label, desc }) => (
                         <button
                           key={val}
@@ -551,11 +584,11 @@ function GeneratePage() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Writer Notes <span className="text-gray-400 font-normal">(optional)</span>
                   </label>
-                  <p className="text-xs text-gray-500 mb-1.5">Extra context for the AI — e.g. agency NHS experience, specific achievements to highlight, anything not in the profile.</p>
+                  <p className="text-xs text-gray-500 mb-1.5">Extra context for the AI, e.g. agency NHS experience, specific achievements to highlight, anything not in the profile.</p>
                   <textarea
                     value={writerNotes}
                     onChange={(e) => setWriterNotes(e.target.value)}
-                    placeholder="e.g. Candidate worked as an NHS HCA through an agency at Royal Infirmary for 8 months — include this when addressing experience criteria."
+                    placeholder="e.g. Candidate worked as an NHS HCA through an agency at Royal Infirmary for 8 months. Include this when addressing experience criteria."
                     rows={3}
                     className="w-full px-4 py-2.5 border border-orange-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none bg-orange-50"
                     disabled={loading}
@@ -689,7 +722,7 @@ function GeneratePage() {
                   <span>{downloadedDocs.join(' · ')}</span>
                 </>
               ) : (
-                <span><strong>No attached documents found.</strong> Statement based on advert text only — paste the person spec below for better results.</span>
+                <span><strong>No attached documents found.</strong> Statement based on advert text only. Paste the person spec below for better results.</span>
               )}
             </div>
           )}

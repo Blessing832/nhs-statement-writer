@@ -17,13 +17,27 @@ function FeaturePill({ icon, text }: { icon: string; text: string }) {
 export default function Home() {
   const [clientCode, setClientCode] = useState('')
   const [error, setError] = useState('')
+  const [checking, setChecking] = useState(false)
   const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const code = clientCode.trim().toUpperCase()
     if (!code) { setError('Please enter your client code'); return }
-    router.push(`/generate?code=${encodeURIComponent(code)}`)
+    setChecking(true)
+    setError('')
+    try {
+      const res = await fetch(`/api/client-info?code=${encodeURIComponent(code)}`)
+      if (!res.ok) {
+        setError('Code not recognised. Please check and try again.')
+        return
+      }
+      router.push(`/generate?code=${encodeURIComponent(code)}`)
+    } catch {
+      setError('Could not connect. Please check your internet and try again.')
+    } finally {
+      setChecking(false)
+    }
   }
 
   return (
@@ -121,12 +135,13 @@ export default function Home() {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 px-6 text-white font-bold rounded-xl cursor-pointer transition-all text-base shadow-md hover:shadow-lg active:scale-[0.98]"
+                    disabled={checking}
+                    className="w-full py-3.5 px-6 text-white font-bold rounded-xl cursor-pointer transition-all text-base shadow-md hover:shadow-lg active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
                     style={{ backgroundColor: '#005eb8' }}
-                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#003087')}
-                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#005eb8')}
+                    onMouseEnter={(e) => { if (!checking) e.currentTarget.style.backgroundColor = '#003087' }}
+                    onMouseLeave={(e) => { if (!checking) e.currentTarget.style.backgroundColor = '#005eb8' }}
                   >
-                    Continue →
+                    {checking ? 'Checking...' : 'Continue'}
                   </button>
                 </form>
               </div>
