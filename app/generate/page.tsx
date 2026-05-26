@@ -182,6 +182,7 @@ function GeneratePage() {
   const [copiedDuties, setCopiedDuties] = useState(false)
   const [downloaded, setDownloaded] = useState(false)
 
+  const [scrapeAutoSwitched, setScrapeAutoSwitched] = useState(false)
   const [showRewrite, setShowRewrite] = useState(false)
   const [rewriteInstruction, setRewriteInstruction] = useState('')
   const [rewriting, setRewriting] = useState(false)
@@ -267,10 +268,7 @@ function GeneratePage() {
     if (inputMode === 'url' && !vacancyUrl.trim()) { setError('Please paste the job vacancy link'); return }
     if (inputMode === 'text') {
       const words = jobDescText.trim().split(/\s+/).filter(Boolean).length
-      if (words < 80) { setError('Please paste more text. The full job description should be several paragraphs.'); return }
-      const t = jobDescText.toLowerCase()
-      const looksLikeJob = t.includes('essential') || t.includes('duties') || t.includes('responsibilities') || t.includes('criteria') || t.includes('person spec') || t.includes('band ') || t.includes('nhs')
-      if (!looksLikeJob) { setError('The pasted text does not look like a job advert. Please copy the full page including job description and person specification.'); return }
+      if (words < 40) { setError('Please paste more of the job advert text. Copy everything on the page: the job title, duties, and person specification.'); return }
     }
 
     setLoading(true)
@@ -301,13 +299,15 @@ function GeneratePage() {
     } catch (err) {
       if (err instanceof Error && err.name === 'AbortError') return
       const raw = err instanceof Error ? err.message : ''
-      // iOS Safari throws "Load failed" when a fetch is killed by timeout or network drop
       const isIosTimeout = raw === 'Load failed' || raw.toLowerCase().includes('load failed') || raw.toLowerCase().includes('network request failed')
-      setError(
-        isIosTimeout
-          ? 'The request timed out on your mobile connection. Tap "Paste Job Description" above and paste the job description text directly. This skips the link-reading step and works much faster on phones.'
-          : raw || 'Network error. Please check your connection and try again.'
-      )
+      const isScrapeFailure = inputMode === 'url' && (isIosTimeout || raw.toLowerCase().includes('could not read') || raw.toLowerCase().includes('job advert') || raw.toLowerCase().includes('could not connect'))
+      if (isScrapeFailure) {
+        setInputMode('text')
+        setScrapeAutoSwitched(true)
+        setError('The link could not be read automatically. Open the job advert in your browser, copy all the text on the page, and paste it in the box below.')
+      } else {
+        setError(raw || 'Network error. Please check your connection and try again.')
+      }
     } finally {
       abortControllerRef.current = null
       setLoading(false)
@@ -428,7 +428,7 @@ function GeneratePage() {
                       <button
                         key={val}
                         type="button"
-                        onClick={() => { setInputMode(val); setError('') }}
+                        onClick={() => { setInputMode(val); setError(''); setScrapeAutoSwitched(false) }}
                         className="text-left p-3 rounded-md border-2 transition-colors"
                         style={inputMode === val ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff' } : { borderColor: '#e5e7eb', backgroundColor: 'white' }}
                       >
@@ -507,13 +507,22 @@ function GeneratePage() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Job Description Text <span className="text-red-500">*</span>
                     </label>
-                    <p className="text-xs text-gray-500 mb-2">
-                      Open the job advert in your browser, select all the text (Ctrl+A then Ctrl+C), and paste it here. Include the job description, person specification, and any Trust values.
-                    </p>
+                    {scrapeAutoSwitched ? (
+                      <div className="mb-2 rounded-md bg-amber-50 border border-amber-200 px-3 py-2.5 text-xs text-amber-800 space-y-1">
+                        <p className="font-semibold">How to copy on your phone:</p>
+                        <p>1. Open the job link in a new tab.</p>
+                        <p>2. Tap and hold anywhere on the page text, then choose <strong>Select All</strong>.</p>
+                        <p>3. Tap <strong>Copy</strong>, then come back here and paste.</p>
+                      </div>
+                    ) : (
+                      <p className="text-xs text-gray-500 mb-2">
+                        Open the job advert in your browser, copy all text on the page (Ctrl+A then Ctrl+C on desktop, or tap and hold &gt; Select All on mobile), and paste it here.
+                      </p>
+                    )}
                     <textarea
                       value={jobDescText}
                       onChange={(e) => { setJobDescText(e.target.value); setError('') }}
-                      placeholder="Paste the full job description here: job title, duties, person specification, essential criteria, desirable criteria, Trust values..."
+                      placeholder="Paste the full job description here: job title, duties, person specification, essential criteria, desirable criteria..."
                       rows={10}
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none text-sm resize-none"
                       disabled={loading}
