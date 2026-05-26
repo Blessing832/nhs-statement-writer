@@ -23,6 +23,65 @@ function htmlToText(html: string): string {
   return $('body').text().replace(/\s+/g, ' ').trim()
 }
 
+function stripHtml(s: string): string {
+  return s
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+/**
+ * Walks the __NEXT_DATA__ JSON tree and collects all text strings > 80 chars.
+ * This extracts job description, person spec, and other content from
+ * JavaScript-rendered NHS Jobs and HealthJobsUK pages without needing a browser.
+ */
+function extractNextDataJobText(html: string): string {
+  try {
+    const match = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/)
+    if (!match) {
+      console.log('[scrape] no __NEXT_DATA__ found for Next.js extraction')
+      return ''
+    }
+    const data = JSON.parse(match[1]) as unknown
+    const texts: string[] = []
+
+    function walk(obj: unknown, depth: number): void {
+      if (depth > 15) return
+      if (typeof obj === 'string') {
+        const clean = stripHtml(obj).replace(/\s+/g, ' ').trim()
+        if (clean.length > 80) texts.push(clean)
+      } else if (Array.isArray(obj)) {
+        for (const v of obj) walk(v, depth + 1)
+      } else if (obj !== null && typeof obj === 'object') {
+        for (const v of Object.values(obj as Record<string, unknown>)) walk(v, depth + 1)
+      }
+    }
+
+    walk(data, 0)
+
+    // Deduplicate by first 80 chars
+    const seen = new Set<string>()
+    const deduped = texts.filter(t => {
+      const key = t.slice(0, 80)
+      if (seen.has(key)) return false
+      seen.add(key)
+      return true
+    })
+
+    const joined = deduped.join('\n\n')
+    console.log(`[scrape] __NEXT_DATA__ job text extracted: ${joined.length} chars from ${deduped.length} strings`)
+    return joined
+  } catch (e) {
+    console.log(`[scrape] __NEXT_DATA__ parse error: ${(e as Error).message}`)
+    return ''
+  }
+}
+
 export function hasJobContent(text: string): boolean {
   const t = text.toLowerCase()
   return (
@@ -230,10 +289,24 @@ async function directFetch(url: string): Promise<{ rawText: string; jobTitle: st
     })
     if (!res.ok) return null
     const html = await res.text()
-    let rawText = htmlToText(html)
     const isScotland = url.includes('jobs.scot.nhs.uk')
+    const isEnglandNhs = isEnglandNhsSite(url)
+
+    let rawText = htmlToText(html)
+
+    // England NHS sites (jobs.nhs.uk, healthjobsuk.com) are Next.js apps.
+    // The page renders client-side so the visible text is nearly empty,
+    // but the full job data is embedded in __NEXT_DATA__ JSON in the initial HTML.
+    if (isEnglandNhs) {
+      const nextText = extractNextDataJobText(html)
+      if (nextText.length > 200) {
+        rawText = nextText + (rawText.length > 100 ? '\n\n' + rawText : '')
+      }
+    }
+
     if (rawText.length < 300) return null
-    if (!isScotland && !hasJobContent(rawText)) return null
+    // Skip hasJobContent check for known NHS sites — we already know it's a job page
+    if (!isScotland && !isEnglandNhs && !hasJobContent(rawText)) return null
 
     const $ = cheerio.load(html)
     const attachmentText = await extractAttachmentText($, cleanUrl, html)
@@ -259,14 +332,19 @@ export interface ScrapeJobResult extends ScrapeResult {
 
 export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
   // Step 1: Direct server-side fetch (fast, works for SSR pages and __NEXT_DATA__)
+  // For England NHS sites we now extract job content from __NEXT_DATA__ JSON,
+  // so we can return immediately without needing Browserless.
   const direct = await directFetch(url)
   let directHasAttachment = false
   let directEssentials = 0
   if (direct) {
     directHasAttachment = direct.rawText.includes('=== ATTACHED PERSON SPECIFICATION')
     directEssentials = (direct.rawText.match(/\bessential\b/gi) || []).length
-    // Return immediately if: non-England site, or England and we got the PDF
-    if (!isEnglandNhsSite(url) || directHasAttachment) {
+    const directHasContent = directEssentials >= 3 || directHasAttachment ||
+      direct.rawText.toLowerCase().includes('person spec') ||
+      direct.rawText.toLowerCase().includes('job description')
+    // Return immediately if we have good content — no browser needed
+    if (!isEnglandNhsSite(url) || directHasContent || directHasAttachment) {
       return {
         rawText: direct.rawText,
         jobTitle: direct.jobTitle,
@@ -278,7 +356,8 @@ export async function scrapeJobUrl(url: string): Promise<ScrapeJobResult> {
         likelySparsePs: !directHasAttachment && directEssentials < 8,
       }
     }
-    // England without PDF: fall through to try browser/Railway, keep direct as backup
+    // England without enough content: fall through to try browser/Railway
+    console.log(`[scrape] direct fetch had thin content (${directEssentials} essentials), trying browser`)
   }
 
   // Step 2: Browserless.io cloud Chrome — renders JS, clicks tabs, downloads PDFs
