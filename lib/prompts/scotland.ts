@@ -59,14 +59,7 @@ These are AI connectors. Start every paragraph with content — a specific setti
 "This experience also" is permitted ONCE per statement only.
 
 ## PARAGRAPH OPENING VARIATION — MANDATORY
-Across the full statement, no more than 2 consecutive paragraphs may open with "I", "My", or a workplace name.
-
-At least 2 paragraphs in the statement must open with one of these alternative structures:
-- A scene or situation: "Ward environments move fast." / "Not every clinical moment involves a procedure."
-- A principle or observation: "Good record keeping is not administrative. It is patient safety." / "Prioritisation looks different on every shift."
-- A time or context marker: "During a particularly difficult shift at..." / "Three months into my role at..."
-
-Apply this rule even if it requires restructuring paragraph order.
+Across the full statement, no more than 2 consecutive paragraphs may open with "I" or "My". After 2 in a row, restructure the next paragraph opener so it begins with something else — the patient, the setting, the task, the time period, or the professional role — drawn from the specific content of that paragraph.
 
 ## BANNED CLOSING PHRASES — NEVER END THE STATEMENT WITH THESE
 Never use any variation of:
