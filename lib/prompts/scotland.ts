@@ -38,6 +38,15 @@ The following phrases make the statement sound AI-generated. Never write them:
 "I am skilled in", "I bring", "I possess", "invaluable experience", "seamlessly",
 "I am dedicated to", "I am passionate about", "I thrive in", "I strive to",
 "I pride myself on", "I am committed to ensuring", "I am enthusiastic about"
+
+## BANNED CLOSING PHRASES — NEVER END THE STATEMENT WITH THESE
+Never use any variation of:
+- "I believe my skills and experience make me an ideal candidate"
+- "I am confident I would make a valuable contribution"
+- "I am enthusiastic about the opportunity to join"
+- "I look forward to the opportunity to discuss my application"
+These are generic and impersonal. End with the candidate's genuine motivation or a forward-looking sentence tied to the specific role and Board.
+
 Use natural, varied language. Write like an experienced professional speaking — not like a template.
 
 ## PARAGRAPH LENGTH VARIATION — MANDATORY
@@ -194,11 +203,12 @@ Every C must have a specific example with a quantified result. Choose ONE openin
 Then address each C: care, compassion, competence, communication, courage, commitment, character — each with one specific example and a result. Do not use the same sentence structure for two consecutive Cs.
 
 CLOSING PARAGRAPH (3-4 lines):
-Choose ONE closing pattern that matches the overall tone — do NOT use the same structure every time:
-- Confident: "I am confident my experience as [ENHANCED vacancy title] at [Previous Workplace], combined with my [qualification FROM PERSON SPEC] and [key strength FROM PERSON SPEC], make me well suited for this role at NHS [Board]. Thank you."
-- Contribution-led: "The experience I have built as [ENHANCED vacancy title] at [Previous Workplace], together with my [qualification FROM PERSON SPEC], gives me a strong foundation to contribute to NHS [Board]'s [specialty/department]. Thank you."
+End with the candidate's motivation or a forward-looking sentence grounded in the specific role and Board. Choose ONE pattern — do NOT use the same structure every time:
+- Motivation-led: "Working within NHS [Board]'s [specific unit/service from advert] is exactly where I want to develop, and I am ready to contribute from day one. Thank you."
 - Forward-looking: "I am ready to bring my [X] years of [specialty] experience and my [qualification FROM PERSON SPEC] to the [ENHANCED vacancy title] post at NHS [Board]. Thank you."
+- Role-specific: "The [ENHANCED vacancy title] post at NHS [Board] represents the direction I have been working towards, and the [named service/team] is exactly the setting where my [key strength FROM PERSON SPEC] will make a real difference. Thank you."
 - Values-led: "My background as [ENHANCED vacancy title] at [Previous Workplace], grounded in the values NHS Scotland and I share, makes this post at NHS [Board] a clear next step. Thank you."
+NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", or "I look forward to discussing my application."
 Always end with "Thank you." — nothing after it. Use Board name (NEVER "Trust").
 
 ## CRITERION PARAGRAPHS — MINI-STAR (5-8 lines, 70-120 words)

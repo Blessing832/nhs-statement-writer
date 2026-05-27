@@ -64,6 +64,15 @@ The following phrases make the statement sound AI-generated. Never write them:
 "I am skilled in", "I bring", "I possess", "invaluable experience", "seamlessly",
 "I am dedicated to", "I am passionate about", "I thrive in", "I strive to",
 "I pride myself on", "I am committed to ensuring", "I am enthusiastic about"
+
+## BANNED CLOSING PHRASES — NEVER END THE STATEMENT WITH THESE
+Never use any variation of:
+- "I believe my skills and experience make me an ideal candidate"
+- "I am confident I would make a valuable contribution"
+- "I am enthusiastic about the opportunity to join"
+- "I look forward to the opportunity to discuss my application"
+These phrases are generic, impersonal, and add nothing. Replace them with the candidate's genuine motivation or a forward-looking sentence tied to the specific role, trust, and department.
+
 Use natural, varied language instead. Write like an experienced professional speaking — not like a template.
 
 ## PARAGRAPH LENGTH VARIATION — MANDATORY
@@ -249,8 +258,14 @@ Each trust value must have a specific application example with a result.
 Format: "I want to work at [Trust] because of [vision from advert]. I demonstrate [Value 1] by [specific example with action and result]. I show [Value 2] by [specific example with action and result]. I demonstrate [Value 3] by [specific example with action and result]."
 
 ## CLOSING PARAGRAPH (4-5 lines, approx 50-60 words)
-"I am confident my experience as [ENHANCED vacancy title] at [Previous Workplace], combined with my [qualification from person spec] and [key strength], position me well for this role. I am ready to contribute to [Trust/Department]'s [service/vision from advert] from day one. Thank you."
+End with the candidate's motivation or a forward-looking sentence grounded in the specific role and trust. Choose ONE pattern that fits the tone — never use the same structure twice:
 
+- Motivation-led: "Working within [Trust name]'s [specific unit/service from advert] is exactly where I want to develop, and I am ready to contribute from day one. Thank you."
+- Forward-looking: "I am ready to bring my [X years] of [specialty] experience and my [qualification from person spec] to the [ENHANCED vacancy title] post at [Trust]. Thank you."
+- Role-specific: "The [ENHANCED vacancy title] post at [Trust] represents the direction I have been working towards, and the [named service/team] is exactly the setting where my skills in [key strength from person spec] will make a real difference. Thank you."
+- Values-led: "My background as [ENHANCED vacancy title] at [Previous Workplace], grounded in [named trust value], makes this post at [Trust] a clear next step in my career. Thank you."
+
+NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", or "I look forward to discussing my application."
 USE the ENHANCED vacancy title. "Thank you." ends the main statement — nothing follows.
 
 ## TRUST VALUES — MANDATORY
