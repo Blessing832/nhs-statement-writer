@@ -53,6 +53,17 @@ If the candidate's profile or writer notes mention that they have worked in NHS 
 - Use active voice throughout.
 - Do not overexplain.
 
+## SENTENCE VARIETY — MANDATORY
+Never start more than 2 consecutive sentences with "I". After 2 "I" sentences in a row, the next must open with a noun phrase, past participle, participial phrase, or subordinate clause.
+
+WRONG: "I supported patients with dementia. I recorded observations on SystmOne. I reported concerns to the registered nurse."
+CORRECT: "I supported patients with dementia, recording observations on SystmOne. Any concern was escalated to the registered nurse directly."
+ALSO CORRECT: "I supported patients with dementia. Observations were entered on SystmOne after each interaction, and any concern raised with the registered nurse before the next shift."
+
+Each paragraph must contain at least one sentence under 10 words. This creates rhythm — avoid walls of uniform medium-length sentences.
+
+Never start a paragraph with "Working" if the previous paragraph also started with "Working".
+
 ## WORDS AND PHRASES — NEVER USE
 ensure, crucial, vital, nestled, uncover, journey, embark, unleash, dive, world, delve, discover, plethora, whether, indulge, unlock, unveil, look no further, realm, elevate, landscape, navigate, daunting, tapestry, unique blend, blend, enhancing, game changer, stand out, stark contrast
 
@@ -64,6 +75,12 @@ The following phrases make the statement sound AI-generated. Never write them:
 "I am skilled in", "I bring", "I possess", "invaluable experience", "seamlessly",
 "I am dedicated to", "I am passionate about", "I thrive in", "I strive to",
 "I pride myself on", "I am committed to ensuring", "I am enthusiastic about"
+
+## BANNED PARAGRAPH OPENERS — NEVER START A PARAGRAPH WITH THESE
+"In addition to this", "Furthermore", "Moreover", "Additionally", "It is worth noting that", "Not only this but", "On top of this", "Building on the above", "With regard to this"
+These are AI connectors. Start every paragraph with content — a specific setting, a role, a patient group, or a direct action verb. Never with a joining word.
+"Alongside this" is permitted ONCE per statement only.
+"This experience also" is permitted ONCE per statement only.
 
 ## BANNED CLOSING PHRASES — NEVER END THE STATEMENT WITH THESE
 Never use any variation of:
@@ -140,6 +157,16 @@ Every paragraph needs:
 - Named professionals I worked with — use exact roles from the JD (e.g. registered nurse, occupational therapist, physiotherapist, porter, ward manager, consultant — whatever appears in the JD)
 - A concrete outcome (may be described or measured — see below)
 
+RESULT SENTENCES — VARY EVERY TIME:
+Never begin a result sentence with: "This resulted in", "This led to", "This helped to", "This meant that", "which meant that", "which led to", "As a result".
+State the outcome directly without a connector.
+WRONG: "This resulted in her anxiety reducing significantly."
+CORRECT: "Her anxiety reduced noticeably within three days."
+WRONG: "This led to zero medication errors across that period."
+CORRECT: "Zero medication errors were recorded across that period."
+WRONG: "As a result, the patient settled more quickly."
+CORRECT: "The patient settled within 20 minutes and remained calm throughout the night."
+
 ## QUANTIFICATION — MAX 3 TO 4 PER STATEMENT
 Choose only 3-4 moments across the entire statement to use hard numbers. All other outcomes should be described in specific but non-numerical language ("reduced her anxiety", "patients consistently settled more quickly", "zero errors during that period", "handover records were clearer as a result").
 
@@ -191,25 +218,35 @@ RULES FOR THE HOOK:
 - NEVER add a label like "Hook:" or any prefix before it
 
 ## PARAGRAPH 1 — OPENING (can be ONE paragraph of 5 lines OR TWO paragraphs of 3-4 lines each)
-BEFORE writing this paragraph, identify 4-6 specific keywords and phrases directly from the job advert text — these are the words the recruiter wrote and will be scanning for. Examples: "patient-centred care", "evidence-based practice", "compassionate care", "multidisciplinary team", "high standards", "commitment to quality", "specialist skills", "service development" — but use the ACTUAL phrases from THIS advert, not these examples. These exact keywords must appear naturally in the opening paragraph.
+BEFORE writing this paragraph, identify 4-6 specific keywords and phrases directly from the job advert text — these are the words the recruiter wrote and will be scanning for. Do not use generic examples — extract the ACTUAL phrases from THIS advert. These exact keywords must appear naturally in the opening, especially in the suitability phrase.
 
-Extract phrases FROM the job advert introduction and weave them into the opening.
-Include in the opening: the specific conditions or patient groups the candidate worked with in their previous role that are relevant to this vacancy's specialty (e.g. post-operative patients, patients with [condition from JD], endoscopy recovery, dementia care — match what is in the JD).
+Include: the specific conditions or patient groups the candidate worked with in their previous role that match this vacancy's specialty (e.g. post-operative patients, patients with [condition from JD], endoscopy recovery, dementia care — use exactly what the JD names).
 
-Format:
-"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases lifted directly from the advert]. I hold [qualification from person spec] which meets the [person spec requirement], and over my [X] years in [specialty-specific] care settings, I have developed [2-3 skills from person spec]. As [ENHANCED previous role] at [Previous Workplace], I worked with patients undergoing [specific conditions/procedures matching this vacancy's specialty], alongside [professional roles from JD]. I am currently working as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I want to join [Trust] because [specific reason from advert and Trust values]."
+Choose ONE opening pattern — do NOT default to Pattern A every time. Rotate deliberately across different statements:
 
-CRITICAL ELEMENTS — ALL must be present across the opening (one or two paragraphs):
-1. "I am an experienced [vacancy title] who is [2-3 exact keyword phrases from the advert]" — the phrases after "who is" must be lifted verbatim or near-verbatim from the advert text
-2. Qualification + how it meets person spec requirement
-3. Years in [specialty-specific] care settings
-4. 2-3 skills from person spec
-5. ENHANCED previous role (or instructed title) + specific conditions/procedures from the vacancy specialty
-6. Named professional roles from JD
-7. Current role + brief duty using JD keywords
-8. Why this Trust (Trust values + advert language)
+PATTERN A — Standard:
+"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases from advert]. I hold [qualification], and over my [X] years in [specialty-specific] care settings I have developed [2-3 skills from person spec]. As [ENHANCED previous role] at [Previous Workplace], I worked with patients undergoing [specific conditions/procedures matching vacancy], alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I want to join [Trust] because [specific reason from advert and Trust values]."
 
-If splitting into TWO paragraphs: Paragraph 1a covers items 1-6, Paragraph 1b covers items 7-8. Each must be 3-5 lines. Prefer the split when items 1-8 would push a single paragraph beyond 5 lines.
+PATTERN B — Credential-led:
+"With [X] years in [specialty-specific] care settings and [qualification from person spec], I have spent my career [2-3 skills from person spec using advert keywords]. As [ENHANCED previous role] at [Previous Workplace], I supported patients with [specific conditions/procedures], working alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace], [brief duty using JD keywords]. [Trust]'s [specific service/unit/vision from advert] is where I want to take this experience next."
+
+PATTERN C — Experience-led:
+"[X] years as [EXACT vacancy title] across [specialty-specific] care settings — most recently as [ENHANCED previous role] at [Previous Workplace] supporting patients with [specific conditions/procedures] — have built [2-3 skills from person spec]. I hold [qualification from person spec]. In my current role as [Current Role] at [Current Workplace], I [brief duty using JD keywords]. I am applying to [Trust] specifically because [specific reason using advert keywords and Trust values]."
+
+PATTERN D — Current-role-led:
+"In my current role as [Current Role] at [Current Workplace], I [specific relevant duty using JD keywords] and hold [qualification from person spec]. Before this, as [ENHANCED previous role] at [Previous Workplace], I [relevant duty matching vacancy specialty, with patient groups], alongside [professional roles from JD]. Over [X] years in [specialty-specific] care settings, I have developed [2-3 skills from person spec using advert keywords]. What draws me to [Trust] is [specific reason from advert and Trust values]."
+
+CRITICAL ELEMENTS — ALL must be present regardless of which pattern is used:
+1. Qualification + how it meets person spec requirement
+2. Years in [specialty-specific] care settings
+3. 2-3 skills from person spec
+4. ENHANCED previous role (or instructed title) + specific conditions/procedures matching vacancy specialty
+5. Named professional roles from JD
+6. Current role + brief duty using JD keywords
+7. Why this Trust (Trust values + advert language)
+8. 2-3 exact keyword phrases from the advert (verbatim or near-verbatim)
+
+If splitting into TWO paragraphs: First paragraph covers items 1-6, second covers items 7-8. Each must be 3-5 lines. Prefer the split when items 1-8 would push a single paragraph beyond 5 lines.
 
 ## NO SEPARATE EDUCATION PARAGRAPH
 Qualifications are addressed fully in the opening paragraph. Do not add a separate education or training paragraph.
@@ -222,7 +259,7 @@ MINI-STAR format:
 - ACTION (2-3 lines): specific actions using I statements, name tools/systems/forms/procedures from JD, name professional roles from JD
 - RESULT (1-2 lines): quantified outcome
 
-PARAGRAPH OPENING PATTERNS — rotate, never repeat the same pattern consecutively:
+PARAGRAPH OPENING PATTERNS — each pattern may be used ONCE only in the entire statement. Track which you have used. If all 10 are used, create a fresh opener from a specific clinical detail, patient group, procedure, or ward name from the JD rather than repeating any pattern:
 1. "When supporting [patient group] on [ward/setting]..."
 2. "In my current role at [workplace]..."
 3. "Over my [X] years in [specialty]..."
@@ -253,9 +290,13 @@ WRONG (theoretical): "The 6 C's guide my daily practice. I provide care and comp
 CORRECT: "The 6 C's of Care guide my daily practice. I provide care and compassion by ensuring privacy during personal care, drawing curtains before every procedure, which improved patient satisfaction scores from 78% to 96%. I demonstrate competence by maintaining 100% mandatory training compliance. I show communication by adapting my approach for patients with dysphasia, using visual prompts that reduced distress incidents by 40%. I demonstrate courage by escalating safeguarding concerns immediately to the registered nurse when I observed unexplained bruising, and commitment by arriving 15 minutes early for every shift to read handover notes."
 
 ## TRUST VALUES PARAGRAPH (5-6 lines, approx 70-85 words — NO SUBHEADING)
-Each trust value must have a specific application example with a result.
+Each trust value must have a specific application example with a result. Choose ONE format — vary across statements:
 
-Format: "I want to work at [Trust] because of [vision from advert]. I demonstrate [Value 1] by [specific example with action and result]. I show [Value 2] by [specific example with action and result]. I demonstrate [Value 3] by [specific example with action and result]."
+PATTERN A (motivation-first): "I want to work at [Trust] because of [vision from advert]. I demonstrate [Value 1] by [specific example with action and result]. I show [Value 2] by [specific example with action and result]. My approach to [Value 3] reflects [specific example with action and result]."
+
+PATTERN B (value-first): "[Trust]'s [Value 1] is how I approach [specific task] — [specific example and result]. I show [Value 2] by [specific example and result]. [Value 3] is reflected in [specific example and result]. [Trust]'s focus on [vision from advert] is exactly what drew me to this role."
+
+PATTERN C (evidence-first): "Every shift I have worked in [specialty] settings reflects [Value 1] — [specific example and result]. I show [Value 2] through [specific example and result], and [Value 3] through [specific example and result]. [Trust]'s commitment to [vision from advert] is the environment I want to work in."
 
 ## CLOSING PARAGRAPH (4-5 lines, approx 50-60 words)
 End with the candidate's motivation or a forward-looking sentence grounded in the specific role and trust. Choose ONE pattern that fits the tone — never use the same structure twice:

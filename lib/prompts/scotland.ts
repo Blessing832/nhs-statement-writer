@@ -27,6 +27,17 @@ If the candidate's profile or writer notes mention that they have worked in NHS 
 - Use active voice throughout.
 - Do not overexplain.
 
+## SENTENCE VARIETY — MANDATORY
+Never start more than 2 consecutive sentences with "I". After 2 "I" sentences in a row, the next must open with a noun phrase, past participle, participial phrase, or subordinate clause.
+
+WRONG: "I supported patients with dementia. I recorded observations on TrakCare. I escalated concerns to the senior charge nurse."
+CORRECT: "I supported patients with dementia, recording observations on TrakCare. Any concern was escalated to the senior charge nurse directly."
+ALSO CORRECT: "I supported patients with dementia. Observations were entered on TrakCare after each interaction, and any concern raised with the senior charge nurse before the next shift."
+
+Each paragraph must contain at least one sentence under 10 words. This creates rhythm — avoid walls of uniform medium-length sentences.
+
+Never start a paragraph with "Working" if the previous paragraph also started with "Working".
+
 ## WORDS AND PHRASES — NEVER USE
 ensure, crucial, vital, nestled, uncover, journey, embark, unleash, dive, world, delve, discover, plethora, whether, indulge, unlock, unveil, look no further, realm, elevate, landscape, navigate, daunting, tapestry, unique blend, blend, enhancing, game changer, stand out, stark contrast
 
@@ -38,6 +49,12 @@ The following phrases make the statement sound AI-generated. Never write them:
 "I am skilled in", "I bring", "I possess", "invaluable experience", "seamlessly",
 "I am dedicated to", "I am passionate about", "I thrive in", "I strive to",
 "I pride myself on", "I am committed to ensuring", "I am enthusiastic about"
+
+## BANNED PARAGRAPH OPENERS — NEVER START A PARAGRAPH WITH THESE
+"In addition to this", "Furthermore", "Moreover", "Additionally", "It is worth noting that", "Not only this but", "On top of this", "Building on the above", "With regard to this"
+These are AI connectors. Start every paragraph with content — a specific setting, a role, a patient group, or a direct action verb. Never with a joining word.
+"Alongside this" is permitted ONCE per statement only.
+"This experience also" is permitted ONCE per statement only.
 
 ## BANNED CLOSING PHRASES — NEVER END THE STATEMENT WITH THESE
 Never use any variation of:
@@ -115,6 +132,14 @@ Every paragraph needs: specific situation, specific actions (with tools/systems 
 
 Quantification examples: "reduced anxiety from 8/10 to 3/10", "improved cooperation from 40% to 85%", "zero incidents across 6 months", "supported 20 patients daily", "within three days", "across two weeks".
 
+RESULT SENTENCES — VARY EVERY TIME:
+Never begin a result sentence with: "This resulted in", "This led to", "This helped to", "This meant that", "which meant that", "which led to", "As a result".
+State the outcome directly without a connector.
+WRONG: "This resulted in her anxiety reducing from 8/10 to 3/10."
+CORRECT: "Her anxiety reduced from 8/10 to 3/10 within three days."
+WRONG: "This led to zero incidents across that period."
+CORRECT: "Zero incidents were recorded across that period."
+
 ## READING THE JOB DOCUMENTS — DO THIS FIRST
 Before writing, extract:
 1. Job advert introduction — key phrases (passionate, looking for new challenge, enthusiastic, motivated)
@@ -143,9 +168,19 @@ Total: 330 words — leaving 90 words of buffer. Do not add more paragraphs.
 STOP at 420 words.
 
 OPENING PARAGRAPH FORMAT (MAX 80 WORDS — 5-6 lines):
-BEFORE writing this paragraph, identify 3-5 specific keywords and phrases directly from the job advert text — these are the exact words the recruiter wrote and will be scanning for. These keywords must appear naturally in the opening paragraph, especially in the "who is…" phrase.
-Include the specific conditions or patient groups the candidate worked with in their previous role that are relevant to this vacancy's specialty.
-"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases lifted directly from the advert]. I hold [qualification] (include SCQF equivalence if English), and over my years in [specialty-specific] care settings I have developed [2 skills from person spec]. As [ENHANCED role] at [Previous Workplace], I worked with patients [specific conditions/procedures matching this vacancy], alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [one brief duty using JD keywords]. I want to join NHS [Board] because [one specific reason from the advert]."
+BEFORE writing this paragraph, identify 3-5 specific keywords and phrases directly from the job advert text. Do not use generic examples — extract the ACTUAL phrases from THIS advert. They must appear naturally in the opening, especially in the suitability phrase.
+Include the specific conditions or patient groups the candidate worked with that match this vacancy's specialty.
+
+Choose ONE opening pattern — do NOT default to Pattern A every time. Rotate across statements:
+
+PATTERN A — Standard:
+"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases from advert]. I hold [qualification] (SCQF equivalence if English), and over my years in [specialty-specific] care settings I have developed [2 skills from person spec]. As [ENHANCED role] at [Previous Workplace], I worked with patients [specific conditions/procedures matching vacancy], alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [one brief duty using JD keywords]. I want to join NHS [Board] because [one specific reason from advert]."
+
+PATTERN B — Credential-led:
+"With [qualification (SCQF equivalence if English)] and [X] years in [specialty-specific] care settings, I [one key strength from person spec using advert keywords]. As [ENHANCED role] at [Previous Workplace], I supported patients with [specific conditions/procedures], working alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. NHS [Board] is where I want to bring this experience because [specific reason from advert]."
+
+PATTERN C — Experience-led:
+"[X] years in [specialty-specific] care settings — most recently as [ENHANCED role] at [Previous Workplace] supporting patients with [specific conditions/procedures] — have built [2 skills from person spec]. I hold [qualification (SCQF equivalence if English)]. In my current role as [Current Role] at [Current Workplace], I [brief duty using JD keywords]. I am applying to NHS [Board] because [specific reason from advert]."
 
 ### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? (HARD LIMIT: 420w)
 Word budget — must total ≤420 words:
@@ -178,6 +213,7 @@ Choose ONE opening pattern — pick the one that matches the Q1 tone:
 - Initiative-led: "The [specific initiative, integration priority, or strategic focus] at NHS [Board] caught my attention because it aligns with the way I already approach [aspect of practice]..."
 - Contribution-led: "I want to bring my [X] years of [specialty] experience to NHS [Board] because [specific reason — geographic, strategic, or service-based]..."
 All patterns must name the Board at least twice more in the paragraph and end with a concrete reason tied to the candidate's experience.
+MANDATORY: Name at least ONE of — a specific hospital or unit within the Board's services (e.g. Edinburgh Royal Infirmary, Ninewells Hospital, Aberdeen Royal Infirmary, Crosshouse Hospital), a geographic community or catchment area the Board serves, or a named strategic initiative the Board is known for. Generic phrases such as "NHS [Board] is known for excellent care" are banned. The reason for choosing this Board must be concrete and tied to the candidate's experience or career direction.
 
 Q2 EDUCATION PARAGRAPH (MAX 70 WORDS):
 Qualifications from person spec only. SCQF equivalence if English quals. One sentence on practical requirements.
@@ -200,7 +236,7 @@ Every C must have a specific example with a quantified result. Choose ONE openin
 - Evidence-led: "Six principles underpin everything I do in [specialty] care..."
 - Personal: "Care, compassion, competence, communication, courage, and character are not just professional standards to me — they describe how I approach every shift..."
 - Direct: "I demonstrate each of the 6 C's through specific daily actions..."
-Then address each C: care, compassion, competence, communication, courage, commitment, character — each with one specific example and a result. Do not use the same sentence structure for two consecutive Cs.
+Then address each of the 6 C's — care, compassion, competence, communication, courage, commitment — each with one specific example and a result. Do not use the same sentence structure for two consecutive Cs.
 
 CLOSING PARAGRAPH (3-4 lines):
 End with the candidate's motivation or a forward-looking sentence grounded in the specific role and Board. Choose ONE pattern — do NOT use the same structure every time:
@@ -214,7 +250,7 @@ Always end with "Thank you." — nothing after it. Use Board name (NEVER "Trust"
 ## CRITERION PARAGRAPHS — MINI-STAR (5-8 lines, 70-120 words)
 Every paragraph: SITUATION (1 sentence — specific context) → ACTION (2-3 lines — specific actions, JD tools/systems, named professionals from JD, Scottish systems where relevant) → RESULT (1-2 lines — quantified).
 Mix paragraph lengths randomly between 5-8 lines. Stop at line 8.
-Rotate opening patterns — never repeat consecutively:
+Paragraph opening patterns — each may be used ONCE only across the entire statement. Track which you have used. If all are used, create a fresh opener from a specific clinical detail, patient group, procedure, or ward name from the JD:
 1. "When supporting [patient group]..."
 2. "In my current role at [workplace]..."
 3. "As [ENHANCED role] at [workplace]..."
