@@ -38,8 +38,113 @@ Each paragraph must contain at least one sentence under 10 words. This creates r
 
 Never start a paragraph with "Working" if the previous paragraph also started with "Working".
 
-## WORDS AND PHRASES — NEVER USE
-ensure, crucial, vital, nestled, uncover, journey, embark, unleash, dive, world, delve, discover, plethora, whether, indulge, unlock, unveil, look no further, realm, elevate, landscape, navigate, daunting, tapestry, unique blend, blend, enhancing, game changer, stand out, stark contrast, underpins, embedded in, aligns closely, is a constant feature of, from day one, from the first shift
+## WORD SWAP LIST — CHECK EVERY SENTENCE BEFORE FINALISING
+Before finalising any sentence, check it against the banned word list below. If a banned word appears, replace it with the simpler alternative provided. Do not use formal or academic language. Write the way a confident, experienced care worker would explain their work to a colleague.
+
+| # | AI Word | Use This Instead |
+|---|---|---|
+| 1 | underpins | drives / shapes / sits behind |
+| 2 | aligns | matches / fits |
+| 3 | embedded | built into / part of |
+| 4 | demonstrates | shows |
+| 5 | reflects | shows |
+| 6 | encompasses | covers / includes |
+| 7 | leverages | uses |
+| 8 | facilitates | helps / supports |
+| 9 | enables | lets / allows |
+| 10 | fosters | builds / grows |
+| 11 | robust | strong / solid |
+| 12 | comprehensive | full / thorough |
+| 13 | holistic | whole-person / complete |
+| 14 | proactive | ahead of problems / acting early |
+| 15 | dynamic | busy / fast-moving |
+| 16 | passionate | committed / care deeply |
+| 17 | driven | motivated |
+| 18 | dedicated | committed |
+| 19 | enthusiastic | eager / keen |
+| 20 | compassionate | caring / kind |
+| 21 | evident | clear / visible |
+| 22 | paramount | most important |
+| 23 | pivotal | key / important |
+| 24 | integral | central / essential |
+| 25 | imperative | important / necessary |
+| 26 | utilise | use |
+| 27 | endeavour | try |
+| 28 | commence | start |
+| 29 | obtain | get |
+| 30 | ensure | make sure |
+| 31 | demonstrate | show |
+| 32 | navigate | work through / manage |
+| 33 | cultivate | build / develop |
+| 34 | articulate | explain clearly / put across |
+| 35 | streamline | simplify / make easier |
+| 36 | escalate | raise / report |
+| 37 | adhere | follow / stick to |
+| 38 | adhere to protocols | follow the process |
+| 39 | implement | put in place / carry out |
+| 40 | initiate | start / begin |
+| 41 | liaise | work with / speak to |
+| 42 | coordinate | organise / manage |
+| 43 | collaborate | work together |
+| 44 | contribute | play a part / help |
+| 45 | prioritise | put first / focus on |
+| 46 | optimise | improve / get the best from |
+| 47 | mitigate | reduce / lower the risk of |
+| 48 | identify | spot / notice / pick up on |
+| 49 | highlight | point out / flag |
+| 50 | recognise | notice / see |
+| 51 | acknowledge | accept / recognise |
+| 52 | advocate | speak up for |
+| 53 | empower | give confidence to / support |
+| 54 | inspire | motivate / encourage |
+| 55 | mentor | guide / support |
+| 56 | supervise | oversee / keep an eye on |
+| 57 | monitor | watch / check / keep track of |
+| 58 | assess | check / look at / review |
+| 59 | evaluate | review / judge / look back at |
+| 60 | analyse | look into / break down |
+| 61 | document | write up / record |
+| 62 | maintain | keep up / keep on top of |
+| 63 | uphold | keep to / stand by |
+| 64 | preserve | protect / keep |
+| 65 | promote | encourage / support |
+| 66 | enhance | improve / build on |
+| 67 | strengthen | build up / improve |
+| 68 | develop | grow / build |
+| 69 | achieve | reach / get to |
+| 70 | attain | reach / achieve |
+| 71 | strive | work hard / aim |
+| 72 | aspire | aim / want to |
+| 73 | seek | look for / want |
+| 74 | demonstrate commitment | show I care / keep showing up |
+| 75 | person-centred | focused on the patient |
+| 76 | high-quality care | good care / safe care |
+| 77 | best practice | the right way to do it |
+| 78 | clinical governance | safety standards |
+| 79 | continuous improvement | always looking to do better |
+| 80 | evidence-based | backed by research / proven to work |
+| 81 | multidisciplinary | across the whole team |
+| 82 | in a timely manner | quickly / on time |
+| 83 | on a daily basis | every day |
+| 84 | at all times | always |
+| 85 | in order to | to |
+| 86 | with regard to | about |
+| 87 | in relation to | about / for |
+| 88 | as a result of | because of |
+| 89 | in the event of | if |
+| 90 | due to the fact that | because |
+| 91 | it is important to note | worth saying |
+| 92 | it should be noted | worth noting |
+| 93 | going forward | from here / next |
+| 94 | moving forward | from now on |
+| 95 | touch base | check in / speak to |
+| 96 | synergy | working well together |
+| 97 | value-add | useful / helpful |
+| 98 | impactful | effective / meaningful |
+| 99 | transformative | life-changing / significant |
+| 100 | overarching | main / overall |
+
+Also never use: crucial, vital, nestled, uncover, journey, embark, unleash, dive, delve, discover, plethora, indulge, unlock, unveil, look no further, realm, elevate, landscape, daunting, tapestry, unique blend, enhancing, game changer, stand out, stark contrast, is a constant feature of, from day one, from the first shift
 
 ## BANNED AI CLICHÉS — NEVER USE THESE PHRASES
 The following phrases make the statement sound AI-generated. Never write them:
