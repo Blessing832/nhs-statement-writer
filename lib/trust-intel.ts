@@ -58,9 +58,9 @@ function isRecentEnough(dateStr: string): boolean {
   if (!dateStr) return true // keep if unknown
   try {
     const d = new Date(dateStr)
-    const twoYearsAgo = new Date()
-    twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2)
-    return d >= twoYearsAgo
+    const oneYearAgo = new Date()
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1)
+    return d >= oneYearAgo
   } catch {
     return true
   }
@@ -75,9 +75,10 @@ export async function fetchTrustIntel(rawOrganisation: string): Promise<TrustInt
   // Two complementary searches:
   // 1. Achievements / awards / CQC ratings
   // 2. Strategic news and investments
+  const currentYear = new Date().getFullYear()
   const queries = [
-    `"${trustName}" award OR achievement OR CQC OR rated OR outstanding`,
-    `"${trustName}" new OR investment OR service OR expansion OR £`,
+    `"${trustName}" award OR achievement OR CQC OR rated OR outstanding ${currentYear} OR ${currentYear - 1}`,
+    `"${trustName}" new OR investment OR service OR expansion OR £ ${currentYear} OR ${currentYear - 1}`,
   ]
 
   const allItems: { title: string; date: string; snippet: string }[] = []
@@ -92,7 +93,7 @@ export async function fetchTrustIntel(rawOrganisation: string): Promise<TrustInt
             'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
             'Accept': 'application/rss+xml, application/xml, text/xml',
           },
-          signal: AbortSignal.timeout(6000),
+          signal: AbortSignal.timeout(10000),
         })
         if (!res.ok) return
         const xml = await res.text()
