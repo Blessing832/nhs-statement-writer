@@ -281,8 +281,14 @@ Total: 330 words — leaving 90 words of buffer. Do not add more paragraphs.
 STOP at 420 words.
 
 OPENING PARAGRAPH FORMAT (MAX 80 WORDS — 5-6 lines):
+The opening must answer the question a recruiter is silently asking: "Why should we hire this person?" It must be engaging — not a list of credentials but a confident, specific explanation of who the candidate is, why they are applying, and what they bring. Show motivation and genuine interest in the role. Use keywords and phrases pulled directly from the job advert.
+
 BEFORE writing this paragraph, identify 3-5 specific keywords and phrases directly from the job advert text. Do not use generic examples — extract the ACTUAL phrases from THIS advert. They must appear naturally in the opening, especially in the suitability phrase.
 Include the specific conditions or patient groups the candidate worked with that match this vacancy's specialty.
+
+Use descriptive language — adjectives that show character (caring, methodical, accountable, consistent, motivated, empathetic) and adverbs that show how the candidate works (effectively, professionally, accurately, calmly). These must come from what the candidate's profile and history actually support.
+
+Use the CAR structure (Context, Action, Result) when introducing specific experience — briefly state where, what was done, and what it produced.
 
 Choose ONE opening pattern — do NOT default to Pattern A every time. Rotate across statements:
 
@@ -386,42 +392,26 @@ Always end with "Thank you." — nothing after it. Use Board name (NEVER "Trust"
 ## CRITERION PARAGRAPHS — MINI-STAR (5-8 lines, 70-120 words)
 Every paragraph: SITUATION (1 sentence — specific context) → ACTION (2-3 lines — specific actions, JD tools/systems, named professionals from JD, Scottish systems where relevant) → RESULT (1-2 lines — quantified).
 Mix paragraph lengths randomly between 5-8 lines. Stop at line 8.
-Paragraph opening patterns — MANDATORY RULE. Every criterion paragraph must open with a line from the approved list below. Before writing each paragraph, select the most fitting opener, insert [CRITERIA] and [WORKPLACE], then build the paragraph from that line. Each opener may be used ONCE per statement. [CRITERIA] = the specific criterion or task being addressed. [WORKPLACE] = actual workplace from candidate profile.
+Paragraph opening patterns — MANDATORY RULE. Every criterion paragraph must open with a line from the approved list below. Replace [WORKPLACE] with the candidate's employer. Replace [CRITERIA] with the person spec criterion being covered. Replace [PATIENT GROUP] where relevant. Rotate through the list. Do not use the same opener twice in the same statement. Do not write any paragraph opener that is not from this list.
 
 If no opener from the list fits the paragraph content, use this fallback only:
 "[Specific thing candidate did] is something I have handled at [WORKPLACE] and continue to handle now."
 
 Do not write a paragraph opening that is not from the list or the fallback. This rule has no exceptions.
-1. "Every care setting I have worked in has tested my [CRITERIA] differently."
-2. "I have supported colleagues with [CRITERIA] as well as doing it myself."
-3. "The first time I handled [CRITERIA] properly, it changed how I approached the role."
-4. "[CRITERIA] has come up in every role I have held."
-5. "I took on [CRITERIA] early at [WORKPLACE] and have not stopped since."
-6. "[CRITERIA] is something I have done under supervision and on my own."
-7. "My understanding of [CRITERIA] has grown across two different care settings."
-8. "I have handled [CRITERIA] on a ward and in the community."
-9. "The way I handle [CRITERIA] now is different from how I started."
-10. "I have been the person learning [CRITERIA] and later the person others came to."
-11. "At [WORKPLACE], [CRITERIA] was part of my regular responsibilities."
-12. "I have used [CRITERIA] with patients who were easy to support and with patients who were not."
-13. "[CRITERIA] is something I have had to adjust depending on the patient."
-14. "I built my skills in [CRITERIA] at [WORKPLACE] and have kept them up since."
-15. "Across both my roles, [CRITERIA] has been a regular part of what I do."
-16. "I have managed [CRITERIA] on my own and as part of a team."
-17. "My approach to [CRITERIA] came more from practice than from training."
-18. "[CRITERIA] is something I have done under pressure and with difficult patients."
-19. "I have carried out [CRITERIA] under direct supervision and without it."
-20. "At [WORKPLACE] I was given responsibility for [CRITERIA] within my scope."
-21. "I have used [CRITERIA] with patients who were calm and with patients who were distressed."
-22. "My confidence in [CRITERIA] came from doing it repeatedly and asking questions early."
-23. "I have helped junior colleagues with [CRITERIA] as well as doing it myself."
-24. "Both roles I have held required [CRITERIA], but in different ways."
-25. "I have applied [CRITERIA] across more than one patient group."
-26. "The standard I hold myself to with [CRITERIA] came from working with people who took it seriously."
-27. "I have seen [CRITERIA] done well and done badly. That shaped how I do it."
-28. "[CRITERIA] shows up differently depending on the care setting."
-29. "Getting [CRITERIA] right took time, practice, and a few corrections along the way."
-30. "I have done [CRITERIA] enough times now that it is just part of how I work."
+
+1. "During my time at [WORKPLACE], I was given direct responsibility for [CRITERIA]."
+2. "Three months into my role at [WORKPLACE], I was handling [CRITERIA] without supervision."
+3. "When I started at [WORKPLACE], [CRITERIA] was the area I had to get right quickly."
+4. "At [WORKPLACE], the registered nurse handed me [CRITERIA] as part of my regular duties."
+5. "At [WORKPLACE], I was often the person the team came to when [CRITERIA] needed handling."
+6. "The patients I supported at [WORKPLACE] needed [CRITERIA] handled carefully and consistently."
+7. "The [CRITERIA] standard at [WORKPLACE] was high, and that raised mine."
+8. "When a patient at [WORKPLACE] needed [CRITERIA] handled quickly, it fell to me."
+9. "At [WORKPLACE], my supervisor noticed how I handled [CRITERIA] and gave me more of it."
+10. "During handover at [WORKPLACE], [CRITERIA] was always the first thing the nurse checked with me."
+11. "The most challenging [CRITERIA] situation I faced was at [WORKPLACE], and this is what happened."
+12. "During my practical posting at [WORKPLACE], [CRITERIA] was tested in a clinical environment for the first time."
+13. "The [PATIENT GROUP] I worked with at [WORKPLACE] needed [CRITERIA] handled with patience every single time."
 
 ## STORY UNIQUENESS — MANDATORY
 Each statement must contain exactly one primary evidence story. It must be specific to this candidate's experience and care setting.
