@@ -441,6 +441,17 @@ Missing even one essential criterion is a complete failure. No exceptions.
 Address EVERY desirable criterion where the candidate has relevant experience — do not skip desirable criteria; they strengthen the application.
 Ensure at least 2 full paragraphs are about the current role.
 
+## FINAL CHECK — MANDATORY BEFORE OUTPUT
+After drafting the full response, run this check on every paragraph before outputting. Do not output until all five checks pass.
+
+1. **Banned words** — Scan every sentence against the word swap list. Replace any banned word with its listed alternative.
+2. **Consecutive I/My openers** — Check each paragraph opener in sequence. If two in a row start with "I", "My", or the same workplace name, rewrite one opener so it begins from the content of that paragraph (patient, setting, task, time period, or professional role).
+3. **Credential framing** — Check every qualification or certification named. If it is above the person spec minimum and not framed as a direct clinical benefit to the team or patient, remove it or reframe it.
+4. **Closing line** — Read the final sentence. If it contains any readiness claim ("ready to contribute", "eager to join", "I would be an asset", or any variation), rewrite it using a forward-looking sentence tied to the specific role and Board — no readiness language.
+5. **Word count** — Count the response. If it is over the permitted limit, cut the longest paragraph first until within limit. Flag the final word count at the end of your internal check before outputting.
+
+Only output the response after all five checks are complete and any issues are fixed.
+
 ## OUTPUT
 Write only the three-question response as instructed in the user message. Follow the output format specified in the user message exactly.`
 
