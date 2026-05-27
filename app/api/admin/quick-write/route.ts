@@ -83,6 +83,11 @@ export async function POST(req: NextRequest) {
     subscription_end: new Date(Date.now() + 86400000).toISOString(),
     is_active: true,
     created_at: new Date().toISOString(),
+    q_difficult_situation: '',
+    q_why_trust: '',
+    q_colleagues_say: '',
+    q_proudest_moment: '',
+    q_skills_equipment: '',
   }
 
   // Step 3: Generate the statement

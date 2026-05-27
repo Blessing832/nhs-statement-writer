@@ -28,6 +28,11 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       scotland_q2_variation: body.scotland_q2_variation ?? '',
       subscription_end: body.subscription_end,
       is_active: body.is_active,
+      q_difficult_situation: body.q_difficult_situation ?? '',
+      q_why_trust: body.q_why_trust ?? '',
+      q_colleagues_say: body.q_colleagues_say ?? '',
+      q_proudest_moment: body.q_proudest_moment ?? '',
+      q_skills_equipment: body.q_skills_equipment ?? '',
     })
     .eq('id', id)
     .select()

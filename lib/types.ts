@@ -13,6 +13,11 @@ export interface Client {
   subscription_end: string
   is_active: boolean
   created_at: string
+  q_difficult_situation: string
+  q_why_trust: string
+  q_colleagues_say: string
+  q_proudest_moment: string
+  q_skills_equipment: string
 }
 
 export interface Statement {

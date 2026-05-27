@@ -157,6 +157,11 @@ export default function EditClientPage() {
     scotland_q2_variation: '',
     subscription_end: '',
     is_active: true,
+    q_difficult_situation: '',
+    q_why_trust: '',
+    q_colleagues_say: '',
+    q_proudest_moment: '',
+    q_skills_equipment: '',
   })
 
   const token = typeof window !== 'undefined' ? localStorage.getItem('admin_token') || '' : ''
@@ -181,6 +186,11 @@ export default function EditClientPage() {
           scotland_q2_variation: data.scotland_q2_variation || '',
           subscription_end: data.subscription_end.split('T')[0],
           is_active: data.is_active,
+          q_difficult_situation: data.q_difficult_situation || '',
+          q_why_trust: data.q_why_trust || '',
+          q_colleagues_say: data.q_colleagues_say || '',
+          q_proudest_moment: data.q_proudest_moment || '',
+          q_skills_equipment: data.q_skills_equipment || '',
         })
       }
       if (statementsRes.ok) {
@@ -434,6 +444,64 @@ export default function EditClientPage() {
                 )}
               </div>
             </Field>
+
+            {/* Candidate Intake Answers */}
+            <div className="border border-purple-200 rounded-lg p-5 bg-purple-50 space-y-4">
+              <div>
+                <h3 className="text-sm font-semibold text-purple-900">Candidate Intake Answers</h3>
+                <p className="text-xs text-purple-700 mt-0.5">Pre-answered personal questions. The AI uses these to add specific, authentic detail to the statement.</p>
+              </div>
+
+              <Field label="Describe a difficult situation you have faced at work and how you handled it">
+                <textarea
+                  value={form.q_difficult_situation}
+                  onChange={(e) => handleChange('q_difficult_situation', e.target.value)}
+                  rows={4}
+                  placeholder="Candidate's answer..."
+                  className="w-full px-4 py-2.5 border border-purple-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none bg-white"
+                />
+              </Field>
+
+              <Field label="Why do you want to work for this trust/organisation specifically?">
+                <textarea
+                  value={form.q_why_trust}
+                  onChange={(e) => handleChange('q_why_trust', e.target.value)}
+                  rows={4}
+                  placeholder="Candidate's answer..."
+                  className="w-full px-4 py-2.5 border border-purple-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none bg-white"
+                />
+              </Field>
+
+              <Field label="What would your colleagues say about you?">
+                <textarea
+                  value={form.q_colleagues_say}
+                  onChange={(e) => handleChange('q_colleagues_say', e.target.value)}
+                  rows={3}
+                  placeholder="Candidate's answer..."
+                  className="w-full px-4 py-2.5 border border-purple-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none bg-white"
+                />
+              </Field>
+
+              <Field label="What is your proudest professional moment?">
+                <textarea
+                  value={form.q_proudest_moment}
+                  onChange={(e) => handleChange('q_proudest_moment', e.target.value)}
+                  rows={3}
+                  placeholder="Candidate's answer..."
+                  className="w-full px-4 py-2.5 border border-purple-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none bg-white"
+                />
+              </Field>
+
+              <Field label="What specialist skills or equipment are you trained to use?">
+                <textarea
+                  value={form.q_skills_equipment}
+                  onChange={(e) => handleChange('q_skills_equipment', e.target.value)}
+                  rows={3}
+                  placeholder="Candidate's answer..."
+                  className="w-full px-4 py-2.5 border border-purple-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none bg-white"
+                />
+              </Field>
+            </div>
 
             <Field label="Special Instructions for AI" hint="These override the AI. Use for things that must never change, e.g. exact job titles, specific experiences to highlight or exclude.">
               <textarea
