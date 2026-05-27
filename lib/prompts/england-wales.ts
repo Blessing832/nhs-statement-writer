@@ -309,6 +309,12 @@ End with the candidate's motivation or a forward-looking sentence grounded in th
 NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", or "I look forward to discussing my application."
 USE the ENHANCED vacancy title. "Thank you." ends the main statement — nothing follows.
 
+## TRUST INTELLIGENCE — MANDATORY USE
+If a "TRUST INTELLIGENCE" section appears in the job details, you MUST reference at least one specific item from it in the "why this Trust" section. Name the actual achievement, award, initiative, or investment — do not paraphrase it into a generic statement. This is what separates a tailored application from a template.
+
+WRONG: "I am drawn to [Trust]'s commitment to excellent patient care."
+CORRECT: "I am applying to [Trust] specifically because of its recent [CQC Outstanding rating / HSJ Award for Patient Safety / new £40m cardiac centre — use the actual item from the TRUST INTELLIGENCE section]."
+
 ## TRUST VALUES — MANDATORY
 Search the job description for the Trust's named values (e.g. PRIDE, CARE, RESPECT, Excellence, Compassion, Integrity — exact names vary by Trust). Include a dedicated paragraph naming each Trust value and demonstrating it with a specific example and quantified result from the candidate's experience.
 

@@ -269,6 +269,12 @@ MINI-STAR format with named professionals, Scottish systems, and legislation whe
 ## GCSE / O-LEVEL GRADES
 If the candidate's qualifications include GCSE or O-level grades, reference them when addressing literacy or numeracy criteria.
 
+## TRUST INTELLIGENCE — MANDATORY USE
+If a "TRUST INTELLIGENCE" section appears in the job details, you MUST reference at least one specific item from it in Q2 (the "why this Board" paragraph). Name the actual achievement, award, initiative, or investment — do not paraphrase it into generic praise.
+
+WRONG: "I am drawn to NHS [Board]'s commitment to excellent patient care."
+CORRECT: "I am applying to NHS [Board] because of its [specific item from TRUST INTELLIGENCE — e.g. Healthcare Improvement Scotland rating, new investment, award, named service development]."
+
 ## PERSON SPECIFICATION — 100% COVERAGE — NON-NEGOTIABLE
 Step 1: List ALL essential criteria (may be 30+) AND all desirable criteria separately.
 Step 2: Assign EVERY essential criterion to a paragraph before writing. Also assign every desirable criterion the candidate can evidence.

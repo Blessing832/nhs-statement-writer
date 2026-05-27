@@ -3,6 +3,7 @@ import { Client, ScrapeResult, StatementAnalysis } from './types'
 import { getEnglandWalesPrompt } from './prompts/england-wales'
 import { getScotlandPrompt } from './prompts/scotland'
 import { getScotlandQ2Variation } from './scotland-q2-variations'
+import { fetchTrustIntel, formatTrustIntel } from './trust-intel'
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!,
@@ -103,6 +104,7 @@ function buildUserPrompt(
     yearsHint?: string
     bodyPattern?: string
     style?: '1' | '2'
+    trustIntelText?: string
   }
 ): string {
   const isScotland = region === 'scotland'
@@ -117,7 +119,7 @@ Organisation: ${jobData.organisation}
 
 ## FULL JOB DESCRIPTION AND PERSON SPECIFICATION
 IMPORTANT: The person specification may appear at the END of this document — read the entire text carefully.
-${rawText}`
+${rawText}${options.trustIntelText ? '\n\n' + options.trustIntelText : ''}`
 
   const clientSection = `## CANDIDATE PROFILE
 Full Name: ${client.full_name ?? ''}
@@ -442,6 +444,15 @@ async function generateParallel(
   const depthStylePool = ['1', '2', '3']
   const bodyPattern = options.bodyPattern || depthStylePool[Math.floor(Math.random() * depthStylePool.length)]
 
+  // Fetch real recent news about the Trust/Board so the "why here" answer
+  // references specific achievements rather than generic praise.
+  // Runs with a hard timeout — statement generation continues even if it fails.
+  let trustIntelText: string | undefined
+  if (jobData.organisation) {
+    const intel = await fetchTrustIntel(jobData.organisation).catch(() => null)
+    if (intel) trustIntelText = formatTrustIntel(intel)
+  }
+
   // Determine statement output mode
   const statementOutputMode =
     appMode === 'questions-only' ? 'questions-only' : 'statement-only'
@@ -453,6 +464,7 @@ async function generateParallel(
     yearsHint,
     bodyPattern,
     style,
+    trustIntelText,
   })
 
   const analysisUserPrompt = buildUserPrompt(client, jobData, region, {
@@ -623,7 +635,9 @@ export async function generateStatement(
 
   // Generic / civil-service: single call
   const systemPrompt = buildSystemPrompt(region, style)
-  const userPrompt = buildUserPrompt(client, jobData, region, { ...callOptions, outputMode: 'full' })
+  const genericIntel = await fetchTrustIntel(jobData.organisation ?? '').catch(() => null)
+  const genericIntelText = genericIntel ? formatTrustIntel(genericIntel) : undefined
+  const userPrompt = buildUserPrompt(client, jobData, region, { ...callOptions, outputMode: 'full', trustIntelText: genericIntelText })
 
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
