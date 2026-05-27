@@ -278,17 +278,37 @@ MINI-STAR format:
 - ACTION (2-3 lines): specific actions using I statements, name tools/systems/forms/procedures from JD, name professional roles from JD
 - RESULT (1-2 lines): quantified outcome
 
-PARAGRAPH OPENING PATTERNS — each pattern may be used ONCE only in the entire statement. Track which you have used. If all 10 are used, create a fresh opener from a specific clinical detail, patient group, procedure, or ward name from the JD rather than repeating any pattern:
-1. "When supporting [patient group] on [ward/setting]..."
-2. "In my current role at [workplace]..."
-3. "Over my [X] years in [specialty]..."
-4. "As [ENHANCED role] at [workplace]..."
-5. "One of my key responsibilities involved..."
-6. "Working alongside [professionals from JD]..."
-7. "I carried out [task] for [patient group]..."
-8. "During my time at [workplace]..."
-9. "Supporting patients with [condition from JD] required..."
-10. "I delivered [task] under supervision of [role from JD]..."
+PARAGRAPH OPENING PATTERNS — pick from these 30 only. Each may be used ONCE per statement. [CRITERIA] = the specific criterion or task being addressed. [WORKPLACE] = actual workplace from candidate profile. Never invent a different opener.
+1. "Every care setting I have worked in has tested my [CRITERIA] differently."
+2. "I have supported colleagues with [CRITERIA] as well as doing it myself."
+3. "The first time I handled [CRITERIA] properly, it changed how I approached the role."
+4. "[CRITERIA] has come up in every role I have held."
+5. "I took on [CRITERIA] early at [WORKPLACE] and have not stopped since."
+6. "[CRITERIA] is something I have done under supervision and on my own."
+7. "My understanding of [CRITERIA] has grown across two different care settings."
+8. "I have handled [CRITERIA] on a ward and in the community."
+9. "The way I handle [CRITERIA] now is different from how I started."
+10. "I have been the person learning [CRITERIA] and later the person others came to."
+11. "At [WORKPLACE], [CRITERIA] was part of my regular responsibilities."
+12. "I have used [CRITERIA] with patients who were easy to support and with patients who were not."
+13. "[CRITERIA] is something I have had to adjust depending on the patient."
+14. "I built my skills in [CRITERIA] at [WORKPLACE] and have kept them up since."
+15. "Across both my roles, [CRITERIA] has been a regular part of what I do."
+16. "I have managed [CRITERIA] on my own and as part of a team."
+17. "My approach to [CRITERIA] came more from practice than from training."
+18. "[CRITERIA] is something I have done under pressure and with difficult patients."
+19. "I have carried out [CRITERIA] under direct supervision and without it."
+20. "At [WORKPLACE] I was given responsibility for [CRITERIA] within my scope."
+21. "I have used [CRITERIA] with patients who were calm and with patients who were distressed."
+22. "My confidence in [CRITERIA] came from doing it repeatedly and asking questions early."
+23. "I have helped junior colleagues with [CRITERIA] as well as doing it myself."
+24. "Both roles I have held required [CRITERIA], but in different ways."
+25. "I have applied [CRITERIA] across more than one patient group."
+26. "The standard I hold myself to with [CRITERIA] came from working with people who took it seriously."
+27. "I have seen [CRITERIA] done well and done badly. That shaped how I do it."
+28. "[CRITERIA] shows up differently depending on the care setting."
+29. "Getting [CRITERIA] right took time, practice, and a few corrections along the way."
+30. "I have done [CRITERIA] enough times now that it is just part of how I work."
 
 ## STORY UNIQUENESS — MANDATORY
 Each statement must contain exactly one primary evidence story. It must be specific to this candidate's experience and care setting.
