@@ -143,6 +143,7 @@ Before finalising any sentence, check it against the banned word list below. If 
 | 98 | impactful | effective / meaningful |
 | 99 | transformative | life-changing / significant |
 | 100 | overarching | main / overall |
+| 101 | equips | gives |
 
 Also never use: crucial, vital, nestled, uncover, journey, embark, unleash, dive, delve, discover, plethora, indulge, unlock, unveil, look no further, realm, elevate, landscape, daunting, tapestry, unique blend, enhancing, game changer, stand out, stark contrast, is a constant feature of, from day one, from the first shift
 
