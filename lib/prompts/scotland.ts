@@ -337,9 +337,28 @@ Choose ONE opening pattern — pick the one that matches the Q1 tone:
 - Achievement-led: "I have completed [quals FROM PERSON SPEC with SCQF equivalence], which forms the basis of my practical experience in [specialty]..."
 All patterns must end with: "I meet all requirements including [relevant checks/flexibility from person spec] and willingness to undertake NHS [Board] mandatory training."
 
-QUALIFICATION FRAMING — OVERQUALIFIED CANDIDATES:
-If the candidate holds a degree or postgraduate qualification but is applying to a Band 2 or Band 3 role, lead with the qualification that directly meets the person spec minimum (e.g. NVQ Level 3, SVQ Level 3, Care Certificate). Reference the higher qualification once only, framed as a specific practical benefit — not as the lead credential.
-Never list more than 4 qualifications or certificates by name. Group others: "My mandatory training is fully current, including Basic Life Support, safeguarding, and infection control."
+QUALIFICATION FRAMING — MANDATORY RULES:
+Before listing any qualification, check it against the minimum requirements stated in the person specification. Only include qualifications that meet or are one level above the minimum. Do not list qualifications that are significantly above the role level.
+
+Rule 1 — Lead with the person spec minimum. Open with the qualification that directly meets the requirement. If the person spec requires SVQ Level 3 or NVQ Level 3, lead with that. Do not open with a degree or MSc.
+
+Rule 2 — Higher qualifications. Only include if it adds a direct clinical or practical benefit to this specific role. One sentence maximum. Frame it as a skill, not a credential.
+WRONG: "I hold an MSc in Public Health and Health Promotion from Bangor University."
+RIGHT: "My postgraduate training in public health has strengthened how I understand patient behaviour and health inequalities in community settings."
+
+Rule 3 — Medical degrees. If the candidate holds an MBBS, MBChB, or equivalent, do not mention it by name in a care assistant or support worker application. Reference the clinical knowledge only.
+WRONG: "I hold an MBBS from the University of Abuja."
+RIGHT: "My clinical training background gives me a strong understanding of anatomy, patient physiology, and how conditions progress, which sharpens my observation skills in care settings."
+
+Rule 4 — Irrelevant qualifications. Do not mention any qualification that has no connection to the role. If it is not on the person specification and does not directly support a criterion, leave it out.
+
+Rule 5 — Certificate lists. Never list more than three training certificates by name. Group the rest.
+WRONG: "I hold certificates in Basic Life Support, Moving and Handling, Medication Administration, Mental Capacity, End of Life Care, Safeguarding Children Level 1 and 2, Safeguarding Adults Level 2, Infection Prevention and Control, and Dignity in Care."
+RIGHT: "My mandatory training is fully current, including Basic Life Support, safeguarding, and infection control."
+
+Rule 6 — Relevance check. Only mention qualifications relevant to this specific application. A phlebotomy certificate for a care assistant role — leave it out. A teaching qualification for an NHS role — leave it out.
+
+The goal is for the candidate to look well matched to the role, not overqualified for it.
 
 ### QUESTION 3: Is there any other relevant information you wish to tell us? (MAX 220w)
 Structure:
@@ -367,7 +386,12 @@ Always end with "Thank you." — nothing after it. Use Board name (NEVER "Trust"
 ## CRITERION PARAGRAPHS — MINI-STAR (5-8 lines, 70-120 words)
 Every paragraph: SITUATION (1 sentence — specific context) → ACTION (2-3 lines — specific actions, JD tools/systems, named professionals from JD, Scottish systems where relevant) → RESULT (1-2 lines — quantified).
 Mix paragraph lengths randomly between 5-8 lines. Stop at line 8.
-Paragraph opening patterns — pick from these 30 only. Each may be used ONCE per statement. [CRITERIA] = the specific criterion or task being addressed. [WORKPLACE] = actual workplace from candidate profile. Never invent a different opener.
+Paragraph opening patterns — MANDATORY RULE. Every criterion paragraph must open with a line from the approved list below. Before writing each paragraph, select the most fitting opener, insert [CRITERIA] and [WORKPLACE], then build the paragraph from that line. Each opener may be used ONCE per statement. [CRITERIA] = the specific criterion or task being addressed. [WORKPLACE] = actual workplace from candidate profile.
+
+If no opener from the list fits the paragraph content, use this fallback only:
+"[Specific thing candidate did] is something I have handled at [WORKPLACE] and continue to handle now."
+
+Do not write a paragraph opening that is not from the list or the fallback. This rule has no exceptions.
 1. "Every care setting I have worked in has tested my [CRITERIA] differently."
 2. "I have supported colleagues with [CRITERIA] as well as doing it myself."
 3. "The first time I handled [CRITERIA] properly, it changed how I approached the role."
@@ -427,11 +451,18 @@ MINI-STAR format with named professionals, Scottish systems, and legislation whe
 ## GCSE / O-LEVEL GRADES
 If the candidate's qualifications include GCSE or O-level grades, reference them when addressing literacy or numeracy criteria.
 
-## TRUST INTELLIGENCE — MANDATORY USE
-If a "TRUST INTELLIGENCE" section appears in the job details, you MUST reference at least one specific item from it in Q2 (the "why this Board" paragraph). Name the actual achievement, award, initiative, or investment — do not paraphrase it into generic praise.
+## TRUST INTELLIGENCE — MANDATORY SPECIFICITY
+The "why this Board" sentence must always be specific. Generic phrases ("commitment to excellent care", "values that match my own", "reputation for outstanding service") are never acceptable.
+
+**When a TRUST INTELLIGENCE block is present in the job details:** Reference at least one named item from it — the actual award name, Healthcare Improvement Scotland rating, investment figure, or initiative title. Do not paraphrase it into a vague compliment.
+
+**When no TRUST INTELLIGENCE block is present:** Mine the job advert itself for specific details — the named department or team, a specific patient group or service mentioned, the Board's geography and community, named strategic priorities, any specific technology or approach referenced, or the Board's own stated values by name. Use those specifics. If the advert names a service or unit, reference it by name.
+
+If the advert gives nothing usable, reference one concrete fact about the Board's location, catchment area, or patient population — not a compliment about their care quality.
 
 WRONG: "I am drawn to NHS [Board]'s commitment to excellent patient care."
-CORRECT: "I am applying to NHS [Board] because of its [specific item from TRUST INTELLIGENCE — e.g. Healthcare Improvement Scotland rating, new investment, award, named service development]."
+WRONG: "I share the values of NHS [Board] and believe I would be a good fit."
+CORRECT: "I am applying to NHS [Board] because of the [named service / team / patient group / specific initiative from the advert] — this is where my experience in [relevant area] is most directly applicable."
 
 ## PERSON SPECIFICATION — 100% COVERAGE — NON-NEGOTIABLE
 Step 1: List ALL essential criteria (may be 30+) AND all desirable criteria separately.

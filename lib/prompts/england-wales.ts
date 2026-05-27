@@ -364,17 +364,34 @@ If splitting into TWO paragraphs: First paragraph covers items 1-6, second cover
 ## NO SEPARATE EDUCATION PARAGRAPH
 Qualifications are addressed fully in the opening paragraph. Do not add a separate education or training paragraph.
 
-## QUALIFICATION FRAMING — OVERQUALIFIED CANDIDATES
-If the candidate holds a degree or postgraduate qualification but is applying to a Band 2 or Band 3 role, do NOT list it prominently in the opening or as the lead qualification.
+## QUALIFICATION FRAMING — MANDATORY RULES
+Before listing any qualification, check it against the minimum requirements stated in the person specification. Only include qualifications that meet or are one level above the minimum requirement. Do not list qualifications that are significantly above the role level.
 
-Instead:
-- Lead with the qualification that directly meets the person spec minimum requirement (e.g. NVQ Level 3, Care Certificate)
-- Reference the higher qualification once only, later in the statement, framed as adding a specific practical benefit
+**Rule 1 — Lead with the person spec minimum.**
+Open with the qualification that directly meets the person spec requirement. Nothing higher. If the person spec requires NVQ Level 3, lead with NVQ Level 3. Do not open with a degree or MSc.
 
-WRONG: "I hold an MSc in Public Health and Health Promotion, a BSc in Public and Community Health, an NVQ Level 3..."
-RIGHT: "I hold an NVQ Level 3 Diploma in Health and Social Care and have completed all 15 Care Certificate Standards. My background in public health research has strengthened my understanding of health inequalities and how they shape patient behaviour, which I apply directly in community care settings."
+**Rule 2 — Higher qualifications.**
+Only include if it adds a direct clinical or practical benefit to this specific role. One sentence maximum. Frame it as a skill, not a credential.
+WRONG: "I hold an MSc in Public Health and Health Promotion from Bangor University."
+RIGHT: "My postgraduate training in public health has strengthened how I understand patient behaviour and health inequalities in community settings."
 
-Never list more than 4 qualifications or certificates by name in a single paragraph. If the candidate holds more, group them: "My mandatory training is fully current, including Basic Life Support, safeguarding, and infection control." Do not list each certificate individually.
+**Rule 3 — Medical degrees.**
+If the candidate holds an MBBS, MBChB, or equivalent medical qualification, do not mention it by name in a care assistant or support worker application. Reference the clinical knowledge it provides only.
+WRONG: "I hold an MBBS from the University of Abuja."
+RIGHT: "My clinical training background gives me a strong understanding of anatomy, patient physiology, and how conditions progress, which sharpens my observation skills in care settings."
+
+**Rule 4 — Irrelevant qualifications.**
+Do not mention any qualification that has no connection to the role being applied for. If a qualification is not on the person specification and does not directly support a person spec criterion, leave it out.
+
+**Rule 5 — Certificate lists.**
+Never list more than three training certificates by name. Group the rest.
+WRONG: "I hold certificates in Basic Life Support, Moving and Handling, Medication Administration, Mental Capacity, End of Life Care, Safeguarding Children Level 1 and 2, Safeguarding Adults Level 2, Infection Prevention and Control, and Dignity in Care."
+RIGHT: "My mandatory training is fully current, including Basic Life Support, safeguarding, and infection control."
+
+**Rule 6 — Relevance check.**
+Only mention qualifications relevant to this specific application. A phlebotomy certificate for a care assistant role — leave it out. A teaching qualification for an NHS role — leave it out.
+
+The goal is for the candidate to look well matched to the role, not overqualified for it. A recruiter reading an overloaded qualifications paragraph asks one question: why is this person applying here? Do not give them a reason to ask that question.
 
 ## CRITERION PARAGRAPHS — MINI-STAR (3-5 lines per paragraph)
 Each paragraph: 3-5 lines. Hard stop at 5 lines. If the evidence needs more space, write a second paragraph continuing the point — do NOT extend the first paragraph beyond 5 lines. Two 4-line paragraphs is better than one 8-line paragraph.
@@ -384,7 +401,12 @@ MINI-STAR format:
 - ACTION (2-3 lines): specific actions using I statements, name tools/systems/forms/procedures from JD, name professional roles from JD
 - RESULT (1-2 lines): quantified outcome
 
-PARAGRAPH OPENING PATTERNS — pick from these 30 only. Each may be used ONCE per statement. [CRITERIA] = the specific criterion or task being addressed. [WORKPLACE] = actual workplace from candidate profile. Never invent a different opener.
+PARAGRAPH OPENING PATTERNS — MANDATORY RULE. Every criterion paragraph must open with a line from the approved list below. Before writing each paragraph, select the most fitting opener, insert [CRITERIA] and [WORKPLACE], then build the paragraph from that line. Each opener may be used ONCE per statement. [CRITERIA] = the specific criterion or task being addressed. [WORKPLACE] = actual workplace from candidate profile.
+
+If no opener from the list fits the paragraph content, use this fallback only:
+"[Specific thing candidate did] is something I have handled at [WORKPLACE] and continue to handle now."
+
+Do not write a paragraph opening that is not from the list or the fallback. This rule has no exceptions.
 1. "Every care setting I have worked in has tested my [CRITERIA] differently."
 2. "I have supported colleagues with [CRITERIA] as well as doing it myself."
 3. "The first time I handled [CRITERIA] properly, it changed how I approached the role."
@@ -474,11 +496,18 @@ Choose ONE pattern that fits the tone — vary across statements:
 NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", "I look forward to discussing my application", "I am ready to contribute from day one", or any variation of "from the first shift."
 USE the ENHANCED vacancy title. "Thank you." ends the main statement — nothing follows.
 
-## TRUST INTELLIGENCE — MANDATORY USE
-If a "TRUST INTELLIGENCE" section appears in the job details, you MUST reference at least one specific item from it in the "why this Trust" section. Name the actual achievement, award, initiative, or investment — do not paraphrase it into a generic statement. This is what separates a tailored application from a template.
+## TRUST INTELLIGENCE — MANDATORY SPECIFICITY
+The "why this Trust" sentence must always be specific. Generic phrases ("commitment to excellent care", "values that match my own", "reputation for outstanding service") are never acceptable.
+
+**When a TRUST INTELLIGENCE block is present in the job details:** Reference at least one named item from it — the actual award name, CQC rating, investment figure, or initiative title. Do not paraphrase it into a vague compliment.
+
+**When no TRUST INTELLIGENCE block is present:** Mine the job advert itself for specific details — the named department or ward, a specific patient group or service mentioned, the Trust's geography and community, named strategic priorities, any specific technology or approach referenced, or the Trust's own stated values by name. Use those specifics. If the advert names a service (e.g. "our new community rehabilitation unit" or "our CAMHS team"), reference it by name.
+
+If the advert gives nothing usable, reference one concrete fact about the Trust's location or patient population — not a compliment about their care quality.
 
 WRONG: "I am drawn to [Trust]'s commitment to excellent patient care."
-CORRECT: "I am applying to [Trust] specifically because of its recent [CQC Outstanding rating / HSJ Award for Patient Safety / new £40m cardiac centre — use the actual item from the TRUST INTELLIGENCE section]."
+WRONG: "I share the values of [Trust] and believe I would be a good fit."
+CORRECT: "I am applying to [Trust] because of the [named service / ward / patient group / specific initiative from the advert] — this is where my experience in [relevant area] is most directly applicable."
 
 ## TRUST VALUES — MANDATORY
 Search the job description for the Trust's named values (e.g. PRIDE, CARE, RESPECT, Excellence, Compassion, Integrity — exact names vary by Trust). Include a dedicated paragraph naming each Trust value and demonstrating it with a specific example and quantified result from the candidate's experience.
