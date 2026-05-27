@@ -65,7 +65,7 @@ Each paragraph must contain at least one sentence under 10 words. This creates r
 Never start a paragraph with "Working" if the previous paragraph also started with "Working".
 
 ## WORDS AND PHRASES — NEVER USE
-ensure, crucial, vital, nestled, uncover, journey, embark, unleash, dive, world, delve, discover, plethora, whether, indulge, unlock, unveil, look no further, realm, elevate, landscape, navigate, daunting, tapestry, unique blend, blend, enhancing, game changer, stand out, stark contrast
+ensure, crucial, vital, nestled, uncover, journey, embark, unleash, dive, world, delve, discover, plethora, whether, indulge, unlock, unveil, look no further, realm, elevate, landscape, navigate, daunting, tapestry, unique blend, blend, enhancing, game changer, stand out, stark contrast, underpins, embedded in, aligns closely, is a constant feature of, from day one, from the first shift
 
 ## BANNED AI CLICHÉS — NEVER USE THESE PHRASES
 The following phrases make the statement sound AI-generated. Never write them:
@@ -74,7 +74,9 @@ The following phrases make the statement sound AI-generated. Never write them:
 "results-driven", "synergy", "leverage", "multitasking", "go above and beyond",
 "I am skilled in", "I bring", "I possess", "invaluable experience", "seamlessly",
 "I am dedicated to", "I am passionate about", "I thrive in", "I strive to",
-"I pride myself on", "I am committed to ensuring", "I am enthusiastic about"
+"I pride myself on", "I am committed to ensuring", "I am enthusiastic about",
+"I am confident that", "I believe I would", "reflects" (when used to connect a value to an example — use "shows" or give a direct example instead),
+"high quality care" without a specific example — remove the phrase or describe what that care actually looked like
 
 ## BANNED PARAGRAPH OPENERS — NEVER START A PARAGRAPH WITH THESE
 "In addition to this", "Furthermore", "Moreover", "Additionally", "It is worth noting that", "Not only this but", "On top of this", "Building on the above", "With regard to this"
@@ -82,13 +84,25 @@ These are AI connectors. Start every paragraph with content — a specific setti
 "Alongside this" is permitted ONCE per statement only.
 "This experience also" is permitted ONCE per statement only.
 
+## PARAGRAPH OPENING VARIATION — MANDATORY
+Across the full statement, no more than 2 consecutive paragraphs may open with "I", "My", or a workplace name.
+
+At least 2 paragraphs in the statement must open with one of these alternative structures:
+- A scene or situation: "Ward environments move fast." / "Not every clinical moment involves a procedure."
+- A principle or observation: "Good record keeping is not administrative. It is patient safety." / "Prioritisation looks different on every shift."
+- A time or context marker: "During a particularly difficult shift at..." / "Three months into my role at..."
+
+Apply this rule even if it requires restructuring paragraph order.
+
 ## BANNED CLOSING PHRASES — NEVER END THE STATEMENT WITH THESE
 Never use any variation of:
 - "I believe my skills and experience make me an ideal candidate"
 - "I am confident I would make a valuable contribution"
 - "I am enthusiastic about the opportunity to join"
 - "I look forward to the opportunity to discuss my application"
-These phrases are generic, impersonal, and add nothing. Replace them with the candidate's genuine motivation or a forward-looking sentence tied to the specific role, trust, and department.
+- "I am ready to contribute from day one"
+- "from the first shift"
+These phrases are generic, impersonal, and add nothing. End with the candidate's genuine motivation or a forward-looking sentence tied to the specific role, trust, and department.
 
 Use natural, varied language instead. Write like an experienced professional speaking — not like a template.
 
@@ -251,6 +265,18 @@ If splitting into TWO paragraphs: First paragraph covers items 1-6, second cover
 ## NO SEPARATE EDUCATION PARAGRAPH
 Qualifications are addressed fully in the opening paragraph. Do not add a separate education or training paragraph.
 
+## QUALIFICATION FRAMING — OVERQUALIFIED CANDIDATES
+If the candidate holds a degree or postgraduate qualification but is applying to a Band 2 or Band 3 role, do NOT list it prominently in the opening or as the lead qualification.
+
+Instead:
+- Lead with the qualification that directly meets the person spec minimum requirement (e.g. NVQ Level 3, Care Certificate)
+- Reference the higher qualification once only, later in the statement, framed as adding a specific practical benefit
+
+WRONG: "I hold an MSc in Public Health and Health Promotion, a BSc in Public and Community Health, an NVQ Level 3..."
+RIGHT: "I hold an NVQ Level 3 Diploma in Health and Social Care and have completed all 15 Care Certificate Standards. My background in public health research has strengthened my understanding of health inequalities and how they shape patient behaviour, which I apply directly in community care settings."
+
+Never list more than 4 qualifications or certificates by name in a single paragraph. If the candidate holds more, group them: "My mandatory training is fully current, including Basic Life Support, safeguarding, and infection control." Do not list each certificate individually.
+
 ## CRITERION PARAGRAPHS — MINI-STAR (3-5 lines per paragraph)
 Each paragraph: 3-5 lines. Hard stop at 5 lines. If the evidence needs more space, write a second paragraph continuing the point — do NOT extend the first paragraph beyond 5 lines. Two 4-line paragraphs is better than one 8-line paragraph.
 
@@ -270,6 +296,24 @@ PARAGRAPH OPENING PATTERNS — each pattern may be used ONCE only in the entire 
 8. "During my time at [workplace]..."
 9. "Supporting patients with [condition from JD] required..."
 10. "I delivered [task] under supervision of [role from JD]..."
+
+## STORY UNIQUENESS — MANDATORY
+Each statement must contain exactly one primary evidence story. It must be specific to this candidate's experience and care setting.
+
+Avoid defaulting to these overused story types unless the candidate's own intake answers explicitly describe one of them:
+- Sitting with a grieving patient after a death on the ward
+- Reporting a documentation error in the first week
+- A patient from a different cultural background with undocumented care preferences
+- Supporting a patient with a language barrier who could not communicate pain
+
+If the candidate's intake answers (CANDIDATE PERSONAL STORIES section) contain a specific situation, use that as the story. If no intake answers are provided, select from:
+- Deterioration recognition and early escalation
+- Safeguarding concern identified and reported
+- Supporting a patient through a procedure they feared
+- A distressed family member and how it was handled
+- Raising a concern about a colleague's practice
+
+The story must match the candidate's actual care setting — community, ward, maternity, mental health, care home, or whatever their profile describes. Do not place a ward-based story for a community care candidate.
 
 ## STORY PARAGRAPHS — MINIMUM 2 REQUIRED (6-8 lines, 120-150 words)
 Include at least 2 story paragraphs, up to 3. Distribute them throughout the statement — not all at the end.
@@ -299,14 +343,16 @@ PATTERN B (value-first): "[Trust]'s [Value 1] is how I approach [specific task] 
 PATTERN C (evidence-first): "Every shift I have worked in [specialty] settings reflects [Value 1] — [specific example and result]. I show [Value 2] through [specific example and result], and [Value 3] through [specific example and result]. [Trust]'s commitment to [vision from advert] is the environment I want to work in."
 
 ## CLOSING PARAGRAPH (4-5 lines, approx 50-60 words)
-End with the candidate's motivation or a forward-looking sentence grounded in the specific role and trust. Choose ONE pattern that fits the tone — never use the same structure twice:
+Never end with a readiness claim. End with the candidate's genuine motivation, a callback to their strongest evidence, or a specific development goal tied to what this Trust offers.
 
-- Motivation-led: "Working within [Trust name]'s [specific unit/service from advert] is exactly where I want to develop, and I am ready to contribute from day one. Thank you."
-- Forward-looking: "I am ready to bring my [X years] of [specialty] experience and my [qualification from person spec] to the [ENHANCED vacancy title] post at [Trust]. Thank you."
-- Role-specific: "The [ENHANCED vacancy title] post at [Trust] represents the direction I have been working towards, and the [named service/team] is exactly the setting where my skills in [key strength from person spec] will make a real difference. Thank you."
-- Values-led: "My background as [ENHANCED vacancy title] at [Previous Workplace], grounded in [named trust value], makes this post at [Trust] a clear next step in my career. Thank you."
+Choose ONE pattern that fits the tone — vary across statements:
 
-NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", or "I look forward to discussing my application."
+- Forward-looking (tied to the specific team or service): "The [named team/service from advert] at [Trust] is exactly the setting where a [specialty] background and [key strength from person spec] combine into something useful. Thank you."
+- Callback (references the candidate's own story): "The same instinct that made me [specific action from the candidate's story in this statement] is what I will bring to every shift at [Trust]. Thank you."
+- Development-led (tied to what the Trust offers): "Working within [Trust name]'s [specific unit/service from advert] is the structured development step I have been building towards — and the direction my [X] years in [specialty] point. Thank you."
+- Role-specific: "The [ENHANCED vacancy title] post at [Trust] represents the direction I have been working towards, and the [named service/team] is exactly where my [key strength from person spec] will make a direct difference. Thank you."
+
+NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", "I look forward to discussing my application", "I am ready to contribute from day one", or any variation of "from the first shift."
 USE the ENHANCED vacancy title. "Thank you." ends the main statement — nothing follows.
 
 ## TRUST INTELLIGENCE — MANDATORY USE

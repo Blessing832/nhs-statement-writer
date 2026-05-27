@@ -39,7 +39,7 @@ Each paragraph must contain at least one sentence under 10 words. This creates r
 Never start a paragraph with "Working" if the previous paragraph also started with "Working".
 
 ## WORDS AND PHRASES — NEVER USE
-ensure, crucial, vital, nestled, uncover, journey, embark, unleash, dive, world, delve, discover, plethora, whether, indulge, unlock, unveil, look no further, realm, elevate, landscape, navigate, daunting, tapestry, unique blend, blend, enhancing, game changer, stand out, stark contrast
+ensure, crucial, vital, nestled, uncover, journey, embark, unleash, dive, world, delve, discover, plethora, whether, indulge, unlock, unveil, look no further, realm, elevate, landscape, navigate, daunting, tapestry, unique blend, blend, enhancing, game changer, stand out, stark contrast, underpins, embedded in, aligns closely, is a constant feature of, from day one, from the first shift
 
 ## BANNED AI CLICHÉS — NEVER USE THESE PHRASES
 The following phrases make the statement sound AI-generated. Never write them:
@@ -48,7 +48,9 @@ The following phrases make the statement sound AI-generated. Never write them:
 "results-driven", "synergy", "leverage", "multitasking", "go above and beyond",
 "I am skilled in", "I bring", "I possess", "invaluable experience", "seamlessly",
 "I am dedicated to", "I am passionate about", "I thrive in", "I strive to",
-"I pride myself on", "I am committed to ensuring", "I am enthusiastic about"
+"I pride myself on", "I am committed to ensuring", "I am enthusiastic about",
+"I am confident that", "I believe I would", "reflects" (when used to connect a value to an example — use "shows" or give a direct example instead),
+"high quality care" without a specific example — remove the phrase or describe what that care actually looked like
 
 ## BANNED PARAGRAPH OPENERS — NEVER START A PARAGRAPH WITH THESE
 "In addition to this", "Furthermore", "Moreover", "Additionally", "It is worth noting that", "Not only this but", "On top of this", "Building on the above", "With regard to this"
@@ -56,12 +58,24 @@ These are AI connectors. Start every paragraph with content — a specific setti
 "Alongside this" is permitted ONCE per statement only.
 "This experience also" is permitted ONCE per statement only.
 
+## PARAGRAPH OPENING VARIATION — MANDATORY
+Across the full statement, no more than 2 consecutive paragraphs may open with "I", "My", or a workplace name.
+
+At least 2 paragraphs in the statement must open with one of these alternative structures:
+- A scene or situation: "Ward environments move fast." / "Not every clinical moment involves a procedure."
+- A principle or observation: "Good record keeping is not administrative. It is patient safety." / "Prioritisation looks different on every shift."
+- A time or context marker: "During a particularly difficult shift at..." / "Three months into my role at..."
+
+Apply this rule even if it requires restructuring paragraph order.
+
 ## BANNED CLOSING PHRASES — NEVER END THE STATEMENT WITH THESE
 Never use any variation of:
 - "I believe my skills and experience make me an ideal candidate"
 - "I am confident I would make a valuable contribution"
 - "I am enthusiastic about the opportunity to join"
 - "I look forward to the opportunity to discuss my application"
+- "I am ready to contribute from day one"
+- "from the first shift"
 These are generic and impersonal. End with the candidate's genuine motivation or a forward-looking sentence tied to the specific role and Board.
 
 Use natural, varied language. Write like an experienced professional speaking — not like a template.
@@ -221,8 +235,12 @@ Choose ONE opening pattern — pick the one that matches the Q1 tone:
 - Standard: "My qualifications include [quals FROM PERSON SPEC with SCQF equivalence]..."
 - Qualification-led: "Academically, I hold [quals FROM PERSON SPEC with SCQF equivalence]..."
 - Learning-journey: "My formal qualifications — [quals FROM PERSON SPEC with SCQF equivalence] — are the foundation of the clinical knowledge I apply daily..."
-- Achievement-led: "I have completed [quals FROM PERSON SPEC with SCQF equivalence], which underpins my practical experience in [specialty]..."
+- Achievement-led: "I have completed [quals FROM PERSON SPEC with SCQF equivalence], which forms the basis of my practical experience in [specialty]..."
 All patterns must end with: "I meet all requirements including [relevant checks/flexibility from person spec] and willingness to undertake NHS [Board] mandatory training."
+
+QUALIFICATION FRAMING — OVERQUALIFIED CANDIDATES:
+If the candidate holds a degree or postgraduate qualification but is applying to a Band 2 or Band 3 role, lead with the qualification that directly meets the person spec minimum (e.g. NVQ Level 3, SVQ Level 3, Care Certificate). Reference the higher qualification once only, framed as a specific practical benefit — not as the lead credential.
+Never list more than 4 qualifications or certificates by name. Group others: "My mandatory training is fully current, including Basic Life Support, safeguarding, and infection control."
 
 ### QUESTION 3: Is there any other relevant information you wish to tell us? (MAX 220w)
 Structure:
@@ -234,17 +252,17 @@ STOP at 220 words maximum.
 Every C must have a specific example with a quantified result. Choose ONE opening pattern that fits the Q1/Q2 tone:
 - Standard: "The 6 C's of Care guide my practice..."
 - Evidence-led: "Six principles underpin everything I do in [specialty] care..."
-- Personal: "Care, compassion, competence, communication, courage, and character are not just professional standards to me — they describe how I approach every shift..."
+- Personal: "Care, compassion, competence, communication, courage, and commitment are not just professional standards to me — they describe how I approach every shift..."
 - Direct: "I demonstrate each of the 6 C's through specific daily actions..."
 Then address each of the 6 C's — care, compassion, competence, communication, courage, commitment — each with one specific example and a result. Do not use the same sentence structure for two consecutive Cs.
 
 CLOSING PARAGRAPH (3-4 lines):
-End with the candidate's motivation or a forward-looking sentence grounded in the specific role and Board. Choose ONE pattern — do NOT use the same structure every time:
-- Motivation-led: "Working within NHS [Board]'s [specific unit/service from advert] is exactly where I want to develop, and I am ready to contribute from day one. Thank you."
-- Forward-looking: "I am ready to bring my [X] years of [specialty] experience and my [qualification FROM PERSON SPEC] to the [ENHANCED vacancy title] post at NHS [Board]. Thank you."
-- Role-specific: "The [ENHANCED vacancy title] post at NHS [Board] represents the direction I have been working towards, and the [named service/team] is exactly the setting where my [key strength FROM PERSON SPEC] will make a real difference. Thank you."
-- Values-led: "My background as [ENHANCED vacancy title] at [Previous Workplace], grounded in the values NHS Scotland and I share, makes this post at NHS [Board] a clear next step. Thank you."
-NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", or "I look forward to discussing my application."
+Never end with a readiness claim. End with the candidate's genuine motivation, a callback to their strongest evidence, or a specific development goal tied to what this Board offers. Choose ONE pattern — vary across statements:
+- Forward-looking: "The [named team/service from advert] at NHS [Board] is exactly the setting where a [specialty] background and [key strength FROM PERSON SPEC] combine into something useful. Thank you."
+- Callback: "The same instinct that made me [specific action from the candidate's story in this statement] is what I will bring to every shift at NHS [Board]. Thank you."
+- Development-led: "Working within NHS [Board]'s [specific unit/service from advert] is the structured development step I have been building towards — and the direction my [X] years in [specialty] point. Thank you."
+- Role-specific: "The [ENHANCED vacancy title] post at NHS [Board] represents the direction I have been working towards, and the [named service/team] is exactly where my [key strength FROM PERSON SPEC] will make a direct difference. Thank you."
+NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", "I look forward to discussing my application", "I am ready to contribute from day one", or any variation of "from the first shift."
 Always end with "Thank you." — nothing after it. Use Board name (NEVER "Trust").
 
 ## CRITERION PARAGRAPHS — MINI-STAR (5-8 lines, 70-120 words)
@@ -258,6 +276,24 @@ Paragraph opening patterns — each may be used ONCE only across the entire stat
 5. "I carried out [task] for [patient group]..."
 6. "During my time at [workplace]..."
 7. "I delivered [task] under supervision of [role]..."
+
+## STORY UNIQUENESS — MANDATORY
+Each statement must contain exactly one primary evidence story. It must be specific to this candidate's experience and care setting.
+
+Avoid defaulting to these overused story types unless the candidate's own intake answers explicitly describe one of them:
+- Sitting with a grieving patient after a death on the ward
+- Reporting a documentation error in the first week
+- A patient from a different cultural background with undocumented care preferences
+- Supporting a patient with a language barrier who could not communicate pain
+
+If the candidate's intake answers (CANDIDATE PERSONAL STORIES section) contain a specific situation, use that as the story. If no intake answers are provided, select from:
+- Deterioration recognition and early escalation
+- Safeguarding concern identified and reported
+- Supporting a patient through a procedure they feared
+- A distressed family member and how it was handled
+- Raising a concern about a colleague's practice
+
+The story must match the candidate's actual care setting — community, ward, maternity, mental health, or care home.
 
 ## STORY PARAGRAPHS — MINIMUM 1 REQUIRED (7-8 lines, 120-150 words)
 Include at least 1 story paragraph in Q1, addressing 3-5 criteria at once.
