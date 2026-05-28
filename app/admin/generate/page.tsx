@@ -281,7 +281,10 @@ function AdminGenerateInner() {
       signal,
     })
     const genData = await genRes.json().catch(() => ({ error: 'Server error on generate.' }))
-    if (!genRes.ok) throw new Error(genData.error || 'Failed to generate statement.')
+    if (!genRes.ok) {
+      const genErr = typeof genData.error === 'string' ? genData.error : (genData.error?.message || genData.message || '')
+      throw new Error(genErr || 'Failed to generate statement.')
+    }
     return { result: genData as Result, jobData: scrapeData }
   }
 

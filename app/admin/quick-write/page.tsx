@@ -194,8 +194,11 @@ export default function QuickWritePage() {
       body: JSON.stringify({ ...form, ...extra }),
       signal,
     })
-    const data = await res.json()
-    if (!res.ok) throw new Error(data.error || 'Something went wrong')
+    const data = await res.json().catch(() => ({ error: 'Server error.' }))
+    if (!res.ok) {
+      const errMsg = typeof data.error === 'string' ? data.error : (data.error?.message || data.message || '')
+      throw new Error(errMsg || 'Something went wrong')
+    }
     return data as Result
   }
 

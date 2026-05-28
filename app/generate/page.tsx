@@ -231,7 +231,8 @@ function GeneratePage() {
           scrapeData = { rawText: '', jobTitle: '', organisation: '', jobDescription: '', personSpec: '', source: 'manual' }
           setSparsePs(false)
         } else {
-          throw new Error(scraped.error || 'Could not read the job advert. Please try again.')
+          const scrapeErr = typeof scraped.error === 'string' ? scraped.error : (scraped.error?.message || scraped.message || '')
+          throw new Error(scrapeErr || 'Could not read the job advert. Please try again.')
         }
       } else {
         scrapeData = scraped
@@ -251,7 +252,10 @@ function GeneratePage() {
       signal,
     })
     const genData = await genRes.json().catch(() => ({ error: 'Server error on generate.' }))
-    if (!genRes.ok) throw new Error(genData.error || 'Failed to generate statement. Please try again.')
+    if (!genRes.ok) {
+      const genErr = typeof genData.error === 'string' ? genData.error : (genData.error?.message || genData.message || '')
+      throw new Error(genErr || 'Failed to generate statement. Please try again.')
+    }
 
     return { result: genData as Result, jobData: scrapeData }
   }
