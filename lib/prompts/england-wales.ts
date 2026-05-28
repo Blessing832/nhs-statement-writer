@@ -408,12 +408,8 @@ MINI-STAR format:
 - ACTION (2-3 lines): specific actions using I statements, name tools/systems/forms/procedures from JD, name professional roles from JD
 - RESULT (1-2 lines): quantified outcome
 
-PARAGRAPH OPENING PATTERNS — MANDATORY RULE. Every criterion paragraph must open with a line from the approved list below. Replace [WORKPLACE] with the candidate's employer. Replace [CRITERIA] with the person spec criterion being covered. Replace [PATIENT GROUP] where relevant. Rotate through the list. Do not use the same opener twice in the same statement. Do not write any paragraph opener that is not from this list.
-
-If no opener from the list fits the paragraph content, use this fallback only:
-"[Specific thing candidate did] is something I have handled at [WORKPLACE] and continue to handle now."
-
-The first sentence of every criterion paragraph must be specific. It must place the reader immediately inside the candidate's actual experience — at a named workplace, with a named patient group, in a real situation, or in a direct statement of what was done and where. No template is required. Write what actually happened or what was actually responsible for.
+## PARAGRAPH OPENERS — MANDATORY RULE
+The first sentence of every criterion paragraph must be specific. It must place the reader immediately inside the candidate's actual experience — at a named workplace, with a named patient group, in a real situation, or in a direct statement of what was done and where. No template is required. Write what actually happened or what the candidate was actually responsible for.
 
 WHAT MAKES A GOOD PARAGRAPH OPENER:
 - Names a real workplace: "On the medical admissions ward at [WORKPLACE]..."
@@ -512,16 +508,22 @@ Missing even ONE essential criterion is a complete failure. No exceptions.
 Address EVERY desirable criterion where the candidate has relevant experience — do not skip desirable criteria; they strengthen the application.
 Ensure at least 2 full paragraphs are about the CURRENT role.
 
-## EXACT PERSON SPEC LANGUAGE — MANDATORY
-When addressing any criterion, use the EXACT wording from the person specification — do not paraphrase or summarise it.
+## EXACT PERSON SPEC LANGUAGE — MANDATORY FOR EVERY CRITERION
+Every criterion — qualification, experience, skill, personal quality, compliance requirement — must be addressed using the EXACT wording from the person specification. Do not paraphrase, summarise, or substitute synonyms for any criterion.
 
-Qualifications specifically: if the person spec states "1st Level Registered Nurse (degree/diploma)" — write "I hold a 1st Level Registered Nurse diploma, as detailed in the education section of my application form" (or degree, whichever the candidate profile states). Mirror the exact phrase from the spec, confirm what the candidate holds, and reference the application form.
+How this works for every criterion type:
 
-If the spec says "NVQ Level 3 in Health and Social Care" — write "I hold an NVQ Level 3 in Health and Social Care, as shown in my application form." Use the exact title. Never substitute "a care qualification" or "a relevant qualification."
+Experience criteria: If the spec says "experience of working with patients with complex needs" — the paragraph MUST contain "complex needs". Not "challenging patients", not "high-dependency care", not "difficult cases".
 
-For every other criterion: use the key phrase from the spec within the paragraph. If the spec says "experience of working with patients with complex needs" — the paragraph must contain the phrase "complex needs" (not just "challenging patients" or "difficult cases").
+Communication criteria: If the spec says "ability to communicate effectively with patients, families and the multidisciplinary team" — the paragraph MUST contain "patients, families" and "multidisciplinary team". Not just "good communication skills".
 
-This applies to EVERY essential criterion and every desirable criterion the candidate can evidence. A recruiter reading the statement must be able to tick off each criterion against the exact words they wrote.
+Knowledge criteria: If the spec says "knowledge of safeguarding procedures" — the paragraph MUST contain "safeguarding procedures". Not just "safeguarding awareness".
+
+Qualification criteria: If the spec says "1st Level Registered Nurse (degree/diploma)" — write "I hold a 1st Level Registered Nurse diploma, as detailed in the education section of my application form." Mirror the exact phrase, confirm which the candidate holds, and reference the application form.
+
+If the spec says "NVQ Level 3 in Health and Social Care" — write "I hold an NVQ Level 3 in Health and Social Care, as shown in my application form." Never write "a care qualification" or "a relevant qualification."
+
+The rule: take each criterion from the person spec and use its key noun phrase or verb phrase inside the paragraph that addresses it. A recruiter must be able to read the statement and tick off every item on their checklist using the exact words they wrote. If they cannot find their words in the statement, the criterion is not addressed.
 
 ## GCSE / O-LEVEL GRADES
 If the candidate's qualifications section lists GCSE or O-level grades, reference them specifically when addressing literacy or numeracy criteria.
