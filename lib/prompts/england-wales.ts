@@ -413,21 +413,22 @@ PARAGRAPH OPENING PATTERNS — MANDATORY RULE. Every criterion paragraph must op
 If no opener from the list fits the paragraph content, use this fallback only:
 "[Specific thing candidate did] is something I have handled at [WORKPLACE] and continue to handle now."
 
-Do not write a paragraph opening that is not from the list or the fallback. This rule has no exceptions.
+The first sentence of every criterion paragraph must be specific. It must place the reader immediately inside the candidate's actual experience — at a named workplace, with a named patient group, in a real situation, or in a direct statement of what was done and where. No template is required. Write what actually happened or what was actually responsible for.
 
-1. "During my time at [WORKPLACE], I was given direct responsibility for [CRITERIA]."
-2. "Three months into my role at [WORKPLACE], I was handling [CRITERIA] without supervision."
-3. "When I started at [WORKPLACE], [CRITERIA] was the area I had to get right quickly."
-4. "At [WORKPLACE], the registered nurse handed me [CRITERIA] as part of my regular duties."
-5. "At [WORKPLACE], I was often the person the team came to when [CRITERIA] needed handling."
-6. "The patients I supported at [WORKPLACE] needed [CRITERIA] handled carefully and consistently."
-7. "The [CRITERIA] standard at [WORKPLACE] was high, and that raised mine."
-8. "When a patient at [WORKPLACE] needed [CRITERIA] handled quickly, it fell to me."
-9. "At [WORKPLACE], my supervisor noticed how I handled [CRITERIA] and gave me more of it."
-10. "During handover at [WORKPLACE], [CRITERIA] was always the first thing the nurse checked with me."
-11. "The most challenging [CRITERIA] situation I faced was at [WORKPLACE], and this is what happened."
-12. "During my practical posting at [WORKPLACE], [CRITERIA] was tested in a clinical environment for the first time."
-13. "The [PATIENT GROUP] I worked with at [WORKPLACE] needed [CRITERIA] handled with patience every single time."
+WHAT MAKES A GOOD PARAGRAPH OPENER:
+- Names a real workplace: "On the medical admissions ward at [WORKPLACE]..."
+- Names a patient group or condition: "The patients with complex wound management needs I cared for at [WORKPLACE]..."
+- States a direct responsibility: "Medication administration was part of my regular duties at [WORKPLACE] from my second month in post."
+- Describes a real situation: "When the ward was short-staffed on nights at [WORKPLACE], the nurse in charge relied on me to..."
+- References a specific time or context: "During my rotation through the high dependency unit at [WORKPLACE]..."
+
+WHAT IS NEVER ALLOWED AS AN OPENER:
+- AI connectors: "Furthermore", "Moreover", "Additionally", "In addition to this", "Building on this"
+- Generic self-descriptions: "I am a highly motivated professional who...", "I have always been passionate about..."
+- Vague claims: "I have extensive experience in...", "I have developed strong skills in..."
+- Reformulations of the criterion: "Communication is a key aspect of my practice..."
+
+The opener does not need to follow a template. It needs to be real, specific, and immediate.
 
 ## STORY UNIQUENESS — MANDATORY
 Each statement must contain exactly one primary evidence story. It must be specific to this candidate's experience and care setting.
@@ -510,6 +511,17 @@ Step 3: After writing, check off every essential AND every desirable criterion. 
 Missing even ONE essential criterion is a complete failure. No exceptions.
 Address EVERY desirable criterion where the candidate has relevant experience — do not skip desirable criteria; they strengthen the application.
 Ensure at least 2 full paragraphs are about the CURRENT role.
+
+## EXACT PERSON SPEC LANGUAGE — MANDATORY
+When addressing any criterion, use the EXACT wording from the person specification — do not paraphrase or summarise it.
+
+Qualifications specifically: if the person spec states "1st Level Registered Nurse (degree/diploma)" — write "I hold a 1st Level Registered Nurse diploma, as detailed in the education section of my application form" (or degree, whichever the candidate profile states). Mirror the exact phrase from the spec, confirm what the candidate holds, and reference the application form.
+
+If the spec says "NVQ Level 3 in Health and Social Care" — write "I hold an NVQ Level 3 in Health and Social Care, as shown in my application form." Use the exact title. Never substitute "a care qualification" or "a relevant qualification."
+
+For every other criterion: use the key phrase from the spec within the paragraph. If the spec says "experience of working with patients with complex needs" — the paragraph must contain the phrase "complex needs" (not just "challenging patients" or "difficult cases").
+
+This applies to EVERY essential criterion and every desirable criterion the candidate can evidence. A recruiter reading the statement must be able to tick off each criterion against the exact words they wrote.
 
 ## GCSE / O-LEVEL GRADES
 If the candidate's qualifications section lists GCSE or O-level grades, reference them specifically when addressing literacy or numeracy criteria.
