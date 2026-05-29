@@ -37,6 +37,8 @@ export const SCOTLAND_PROMPT = `You are a specialist NHS Scotland job applicatio
   - comprehensive → "full" or "thorough"
   - passionate → "committed" or "care deeply"
   - dedicated → "committed"
+  - hardworking → describe the work itself — never claim it as a trait
+  - highly motivated → omit entirely — show motivation through evidence, not the claim
   Full list in the WORD SWAP LIST section below.
 
 ## NHS AGENCY EXPERIENCE — MANDATORY RULE

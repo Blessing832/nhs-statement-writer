@@ -78,6 +78,8 @@ RULES:
   - comprehensive → write "full" or "thorough"
   - passionate → write "committed" or "care deeply"
   - dedicated → write "committed"
+  - hardworking → describe the work itself instead: "I completed every task assigned..." not "I am hardworking"
+  - highly motivated → write nothing — show it through the evidence, not the claim
   Full list in the WORD SWAP LIST section below. The FINAL CHECK will catch any that remain — but catching them during writing is faster.
 
 ## NHS AGENCY EXPERIENCE — MANDATORY RULE
@@ -425,6 +427,16 @@ PATTERN C — Experience-led:
 
 PATTERN D — Current-role-led:
 "In my current role as [Current Role] at [Current Workplace], I [specific relevant duty using JD keywords] and hold [qualification from person spec]. Before this, as [ENHANCED previous role] at [Previous Workplace], I [relevant duty matching vacancy specialty, with patient groups], alongside [professional roles from JD]. Over [X] years in [specialty-specific] care settings, I have developed [2-3 skills from person spec using advert keywords]. What draws me to [Trust] is [specific reason from advert and Trust values]."
+
+CRITICAL RULE — PATTERN SELECTION:
+Pattern D MUST NOT be used when the current role is LESS clinically relevant to the vacancy than a previous role. Opening with a weaker role before a stronger one creates a confusing, backwards introduction.
+
+Examples of when NOT to use Pattern D:
+- Candidate currently works as a care assistant / HCA / residential carer but previously was a registered nurse or specialist clinician → do NOT open with the care home
+- Candidate is currently in an unrelated role (admin, overseas non-clinical) but has relevant NHS or clinical history → do NOT open with the unrelated current role
+- Candidate's previous role directly matches the vacancy specialty but current role does not → open with the previous role (use Pattern A, B, or C)
+
+Pattern D is only appropriate when the current role is the most clinically relevant role the candidate holds.
 
 CRITICAL ELEMENTS — ALL must be present regardless of which pattern is used:
 1. Qualification + how it meets person spec requirement
