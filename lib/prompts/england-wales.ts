@@ -18,7 +18,8 @@ SUBHEADING RULES:
 - Priority: Cover 100% of criteria
 - Stories can address up to 5 criteria — list ALL criteria in the subheading
 - NO "Scenario:" label — just write the subheading then the paragraph
-- Plan ALL subheadings before writing, verify 100% coverage` : `
+- Plan ALL subheadings before writing, verify 100% coverage
+- EXCEPTION — NO SUBHEADING for the 6 Cs of Care paragraph: write it as a plain paragraph with no heading above it, even in Style 1` : `
 ## STYLE 2: NO SUBHEADINGS — CONTINUOUS PROSE
 
 - No subheadings, no bullet points
