@@ -304,7 +304,7 @@ FOR CANDIDATES WITHOUT NHS EXPERIENCE (private, residential, domiciliary, overse
 "I updated care plans on the digital care management system and escalated concerns through the electronic incident reporting process."
 Generic terms: "electronic patient record system", "digital care record system", "care management software", "electronic incident reporting", "clinical information system"
 
-REASON: NHS Scotland recruiters know NHS systems. Non-NHS software names (Care Vision, Nourish, Person Centred Software, etc.) are not recognisable to panels and should never appear.
+REASON: NHS Scotland recruiters know NHS systems. Non-NHS software names (Care Vision, Nourish, Person Centred Software, Birdie, eMAR, NHIMS, Pakat, Carebeans, or any residential/domiciliary app) are not recognisable to panels and must never appear.
 
 ## READING THE JOB DOCUMENTS — DO THIS FIRST
 Before writing, extract:
@@ -449,7 +449,17 @@ NEVER use: "I am confident I would make a valuable contribution", "I believe my 
 Always end with "Thank you." — nothing after it. Use Board name (NEVER "Trust").
 
 ## CRITERION PARAGRAPHS — MINI-STARR (5-8 lines, 70-120 words)
-Every paragraph: SITUATION (1 sentence — specific context) → ACTION (2-3 lines — specific actions, JD tools/systems, named professionals from JD, Scottish systems where relevant) → RESULT (1-2 lines — quantified) → REFLECTION (optional, 1 sentence — use in roughly 1 in 2 paragraphs: what was learned, what changed, or what was proposed. Do not add if it takes the paragraph beyond 8 lines).
+Every paragraph: SITUATION → ACTION → RESULT → REFLECTION (optional).
+
+SITUATION (1 sentence): a specific scene — a named workplace, a patient group, a time or shift context, or a direct statement of what was done and where. NEVER use the SITUATION sentence to describe the criterion or explain why it matters.
+WRONG: "Infection control was a daily responsibility at [workplace]." — states a fact about the role, not a scene.
+WRONG: "Communication was central to my work at [workplace]." — restates the criterion.
+RIGHT: "On the medical ward at [workplace], I applied aseptic non-touch technique for every wound dressing, catheterisation, and IV cannulation."
+RIGHT: "For anxious patients at [workplace], I used open-ended questions and plain-language explanations before every procedure."
+
+ACTION (2-3 lines): specific actions, JD tools/systems, named professionals from JD, Scottish systems where relevant.
+RESULT (1-2 lines): quantified outcome.
+REFLECTION (optional, 1 sentence): what was learned, what changed, or what was proposed. Omit if it takes the paragraph beyond 8 lines.
 Mix paragraph lengths randomly between 5-8 lines. Stop at line 8.
 ## RECRUITER SCANNING RULE — EVIDENCE FIRST, ALWAYS
 A recruiter spends roughly 5 minutes on each statement. They scan — they do not read line by line. Evidence must appear in the FIRST sentence of every paragraph. If the first sentence is a claim or a setup, the recruiter has moved on before reaching the proof.
@@ -622,6 +632,11 @@ RULES:
       `## SUBHEADINGS — MANDATORY FOR STYLE 1
 Group 3-5 related criteria per subheading using EXACT KEYWORDS from person spec.
 Plan all subheadings before writing. Verify 100% essential criteria coverage.
-Stories: list all criteria addressed in the subheading.`
+Stories: list all criteria addressed in the subheading.
+
+CRITICAL — AFTER A SUBHEADING, START WITH THE EVIDENCE IMMEDIATELY:
+The subheading already names the topic. The first sentence of the paragraph must NOT restate, echo, or paraphrase the subheading. Start directly with what the candidate did.
+WRONG: Subheading "Communication skills: patients, families, MDT" → "Communicating with patients and families was central to my daily work at [workplace]."
+RIGHT: Subheading "Communication skills: patients, families, MDT" → "For patients who were anxious before procedures at [workplace], I used open-ended questions and confirmed understanding by asking them to repeat back the key points."`
     )
 }

@@ -19,7 +19,20 @@ SUBHEADING RULES:
 - Stories can address up to 5 criteria — list ALL criteria in the subheading
 - NO "Scenario:" label — just write the subheading then the paragraph
 - Plan ALL subheadings before writing, verify 100% coverage
-- EXCEPTION — NO SUBHEADING for the 6 Cs of Care paragraph: write it as a plain paragraph with no heading above it, even in Style 1` : `
+- EXCEPTION — NO SUBHEADING for the 6 Cs of Care paragraph: write it as a plain paragraph with no heading above it, even in Style 1
+
+CRITICAL — AFTER A SUBHEADING, START WITH THE EVIDENCE IMMEDIATELY:
+The subheading already names the topic. The first sentence of the paragraph must NOT restate, echo, or paraphrase the subheading. Start directly with what the candidate did — a specific scene, action, or place.
+
+WRONG (echoing the subheading):
+Subheading: "Communication skills: patients, families, multidisciplinary team"
+First sentence: "Communicating with a wide range of individuals to meet patient needs was central to my daily work at [workplace]."
+
+RIGHT (evidence first):
+Subheading: "Communication skills: patients, families, multidisciplinary team"
+First sentence: "For patients who were anxious before procedures at [workplace], I used open-ended questions and plain-language explanations, then confirmed understanding by asking them to repeat back the key points."
+
+The subheading is the topic. The paragraph is the proof. Never repeat the topic inside the paragraph.` : `
 ## STYLE 2: NO SUBHEADINGS — CONTINUOUS PROSE WITH CRITERION CLUSTERING
 
 Before writing, read ALL essential criteria from this specific person spec and group them into logical clusters. The clusters must emerge from THESE criteria — not from a preset list. The number of clusters depends entirely on the job: a simple Band 2 role might cluster into 3 groups; a complex Band 7 role might need 7 or 8 distinct clusters. Never force criteria into a fixed structure.
@@ -275,7 +288,7 @@ NHS CLINICAL SYSTEMS — name these by name in the statement:
 SystmOne, EMIS, Vision, Lorenzo, RiO, PARIS, TrakCare, Cerner, Epic, Adastra, Carenotes (NHS), System C, Meditech, Careflow, JAC, Pharmacy Manager, Datix, iClip, PACS
 
 NON-NHS CARE MANAGEMENT SOFTWARE — NEVER name these in an NHS job statement. Describe generically:
-Care Vision, Person Centred Software (PCS), Nourish, Carebeans, QCS, Caresys, Coldharbour, AutumnCare, or any residential/domiciliary care app → write "digital care management software", "electronic care record system", or "care record app"
+Care Vision, Person Centred Software (PCS), Nourish, Carebeans, QCS, Caresys, Coldharbour, AutumnCare, Birdie, eMAR, NHIMS, Pakat, or any residential/domiciliary care app → write "digital care management software", "electronic care record system", or "care record app"
 
 RULE: Never mix NHS clinical system names with non-NHS care software names in the same sentence or paragraph. If the candidate has ONLY non-NHS software experience, describe it generically — do not name it.
 
@@ -359,7 +372,7 @@ FOR CANDIDATES WITHOUT NHS EXPERIENCE (private, residential care, overseas, domi
 "I used the clinical information system to document patient assessments, care plan reviews, and outcome measurements."
 Generic terms to use: "electronic patient record system", "digital care record system", "care management software", "electronic incident reporting", "clinical information system"
 
-REASON: NHS recruiters know NHS systems by name — using them signals direct NHS experience. Non-NHS systems (Care Vision, Nourish, Person Centred Software, Carebeans, etc.) are not recognisable to NHS panels and should never be named.
+REASON: NHS recruiters know NHS systems by name — using them signals direct NHS experience. Non-NHS systems (Care Vision, Nourish, Person Centred Software, Carebeans, Birdie, eMAR, NHIMS, Pakat, or any residential/domiciliary app) are not recognisable to NHS panels and must never be named.
 
 ## READING THE JOB DOCUMENTS — DO THIS FIRST
 Before writing, read and extract:
@@ -489,7 +502,11 @@ The goal is for the candidate to look well matched to the role, not overqualifie
 Each paragraph: 3-5 lines. Hard stop at 5 lines. If the evidence needs more space, write a second paragraph continuing the point — do NOT extend the first paragraph beyond 5 lines. Two 4-line paragraphs is better than one 8-line paragraph.
 
 MINI-STARR format:
-- SITUATION (1 sentence): specific context — where, when, what patient group
+- SITUATION (1 sentence): a specific scene — a named workplace, a patient group, a time or shift context, or a direct statement of what was done and where. NEVER use the SITUATION sentence to describe the criterion or explain why it matters. The SITUATION must contain a real place, person group, or moment.
+  WRONG: "Managing own groups of patients required strong prioritisation every shift." — this describes the criterion, not a scene.
+  WRONG: "Infection control was a daily responsibility at [workplace]." — this states a fact about the role, not a scene.
+  RIGHT: "At [workplace], I managed a caseload of up to 20 patients daily, prioritising observations, medications, and escalations based on each patient's NEWS2 score."
+  RIGHT: "On a busy night shift at [workplace], I was responsible for six post-operative patients recovering from gynaecological procedures."
 - ACTION (2-3 lines): specific actions using I statements, name tools/systems/forms/procedures from JD, name professional roles from JD
 - RESULT (1-2 lines): quantified outcome
 - REFLECTION (optional, 1 sentence — use in roughly 1 in 2 paragraphs): what was learned, changed, or proposed as a result. Shows self-awareness and professional growth. Examples:
