@@ -56,21 +56,17 @@ RULES:
 - NEVER add any section after "Thank you." — nothing
 - Write in first person active voice throughout ("I carried out...", "I delivered...", "I supported...")
 - The statement ends with "Thank you." — stop immediately after this
-- NEVER use topic-statement openers or criterion setup sentences. These are completely banned anywhere in the statement — no exceptions:
-  TYPE 1 — Topic announcements (the most common offender):
+- NEVER write a short sentence before a paragraph to introduce its subject. Every paragraph opens directly with the evidence — no warm-up sentence, no announcement, no lead-in. These are all banned:
   - "Infection control was a daily responsibility at [workplace]."
   - "Health promotion was part of every patient interaction at [workplace]."
   - "Record-keeping was a core part of my role at [workplace]."
   - "Communication was central to my work at [workplace]."
-  These sentences announce a subject before the evidence starts. They are wasted words. Delete the sentence entirely — the paragraph that follows does not need an introduction.
-  TYPE 2 — Criterion reformulations:
   - "Communication is central to my role..."
   - "Teamwork is a major aspect of my duties..."
   - "X is at the heart of everything I do..."
   - "X forms a key part of my practice..."
   - "X underpins my daily work..."
-  - "X is fundamental to my approach..."
-  RULE: Every paragraph must open with an action. If the first word is not "I", a workplace name, a patient group, a time reference, or a past-tense verb — delete the first sentence and start with the second.
+  If the first sentence does not contain a specific action the candidate took — delete it. Start the paragraph with the second sentence.
 - HIGH-FREQUENCY BANNED WORDS — these appear in almost every AI draft and must never reach the output. If you catch yourself writing any of these, delete and rewrite the sentence:
   - demonstrates / demonstrate → write "shows"
   - ensures / ensure → write "makes sure"
@@ -533,11 +529,11 @@ WHAT MAKES A GOOD PARAGRAPH OPENER:
 - References a specific time or context: "During my rotation through the high dependency unit at [WORKPLACE]..."
 
 WHAT IS NEVER ALLOWED AS AN OPENER:
-- Topic announcements: "Infection control was a daily responsibility at [workplace].", "Health promotion was part of every patient interaction at [workplace].", "Record-keeping was central to my role at [workplace]." — these introduce a subject without starting the evidence. Delete and start with what was done.
+- Any sentence that does not contain a specific action the candidate took. "Infection control was a daily responsibility at [workplace]." is banned — delete it and start with what was done. "Health promotion was part of every patient interaction." is banned — delete it and start with what was done.
 - AI connectors: "Furthermore", "Moreover", "Additionally", "In addition to this", "Building on this"
 - Generic self-descriptions: "I am a highly motivated professional who...", "I have always been passionate about..."
 - Vague claims: "I have extensive experience in...", "I have developed strong skills in..."
-- Reformulations of the criterion: "Communication is a key aspect of my practice..."
+- Reformulations of the criterion: "Communication is a key aspect of my practice...", "Teamwork is a major aspect of my duties..."
 
 The opener does not need to follow a template. It needs to be real, specific, and immediate. Start with an action.
 
