@@ -616,7 +616,9 @@ HOW TO CLUSTER:
 RULES:
 - One paragraph covers 3-5 criteria from the same cluster — never criterion by criterion
 - Vary transitions — never the same connector twice: "Alongside this...", "This experience also developed...", "Working within the same team...", "My approach to [topic]..."
-- Weave exact person spec keywords through each paragraph
+- Person spec keywords must be woven INTO the evidence sentences — not introduced with a setup sentence. The keyword lands inside the action, never in a preamble.
+  WRONG: "Communication was central to my role. At [workplace], I used open-ended questions..."
+  RIGHT: "At [workplace], I used open-ended questions and plain-language explanations for every patient, confirming their understanding before proceeding."
 - Stories span clusters — they count against all criteria they address
 - Do NOT write cluster names as headings anywhere — pure flowing prose only
 - Stories: open with a scene-setting sentence rather than a labelled heading.`

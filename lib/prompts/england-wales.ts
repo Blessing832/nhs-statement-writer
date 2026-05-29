@@ -51,7 +51,9 @@ EXAMPLES of how clusters might form (these are illustrations only — yours will
 RULES:
 - One paragraph covers 3-5 criteria from the same cluster — never criterion by criterion
 - Vary transitions — never the same connector twice: "Alongside this...", "This experience also developed...", "Working within the same team...", "My approach to [topic]...", "A further aspect of my practice..."
-- Weave exact person spec keywords naturally through each paragraph
+- Person spec keywords must be woven INTO the evidence sentences — not introduced with a setup sentence before the evidence. The keyword lands inside the action, never in a preamble.
+  WRONG: "Communication was a major part of my role. At [workplace], I used open-ended questions..."
+  RIGHT: "At [workplace], I used open-ended questions and plain-language explanations for every patient before a procedure, confirming their understanding before proceeding."
 - Stories can span two clusters — they count against all criteria they address
 - Do NOT write cluster names as headings or labels anywhere — pure flowing prose only
 - Close with motivation, NHS/Trust values, and commitment paragraph`
