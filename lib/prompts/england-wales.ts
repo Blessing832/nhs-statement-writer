@@ -50,10 +50,13 @@ EXAMPLES of how clusters might form (these are illustrations only — yours will
 
 RULES:
 - One paragraph covers 3-5 criteria from the same cluster — never criterion by criterion
-- Vary transitions — never the same connector twice: "Alongside this...", "This experience also developed...", "Working within the same team...", "My approach to [topic]...", "A further aspect of my practice..."
-- Person spec keywords must be woven INTO the evidence sentences — not introduced with a setup sentence before the evidence. The keyword lands inside the action, never in a preamble.
-  WRONG: "Communication was a major part of my role. At [workplace], I used open-ended questions..."
-  RIGHT: "At [workplace], I used open-ended questions and plain-language explanations for every patient before a procedure, confirming their understanding before proceeding."
+- Topic changes between paragraphs are signalled ONLY by a transition phrase at the start of the new paragraph. Never use a sentence to announce a new topic before the evidence starts. The transition phrase + the first action together signal the subject change — no announcement sentence is needed.
+  WRONG: "Health promotion was part of every patient interaction at [workplace]. Before discharge, I gave..."
+  RIGHT: "Before every discharge at [workplace], I gave patients structured verbal and written information about wound care, activity restrictions, and warning signs to watch for."
+  WRONG: "Managing workload required strong prioritisation every shift. At [workplace], I used NEWS2 scoring..."
+  RIGHT: "At [workplace], I used NEWS2 scoring to set observation frequency for each patient, completing higher-priority checks first before working through the rest of the round."
+- Vary transitions — never the same connector twice: "Alongside this...", "This experience also developed...", "Working within the same team...", "My approach to [topic]...", "A further area of my practice..."
+- Person spec keywords land inside the evidence sentences, never in a sentence before the evidence
 - Stories can span two clusters — they count against all criteria they address
 - Do NOT write cluster names as headings or labels anywhere — pure flowing prose only
 - Close with motivation, NHS/Trust values, and commitment paragraph`

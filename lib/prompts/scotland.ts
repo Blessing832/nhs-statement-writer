@@ -615,10 +615,13 @@ HOW TO CLUSTER:
 
 RULES:
 - One paragraph covers 3-5 criteria from the same cluster — never criterion by criterion
+- Topic changes between paragraphs are signalled ONLY by a transition phrase at the start of the new paragraph. Never write a sentence to announce a new subject before the evidence starts.
+  WRONG: "Infection control was a daily responsibility at [workplace]. I applied aseptic technique..."
+  RIGHT: "At [workplace], I applied aseptic non-touch technique for every wound dressing, catheterisation, and invasive procedure, and led infection control refreshers when new guidance was issued."
+  WRONG: "Record-keeping was central to my role. I used TrakCare to document..."
+  RIGHT: "After every patient interaction at [workplace], I updated the electronic record on TrakCare, documenting observations, care plan changes, and any escalations made during the shift."
 - Vary transitions — never the same connector twice: "Alongside this...", "This experience also developed...", "Working within the same team...", "My approach to [topic]..."
-- Person spec keywords must be woven INTO the evidence sentences — not introduced with a setup sentence. The keyword lands inside the action, never in a preamble.
-  WRONG: "Communication was central to my role. At [workplace], I used open-ended questions..."
-  RIGHT: "At [workplace], I used open-ended questions and plain-language explanations for every patient, confirming their understanding before proceeding."
+- Person spec keywords land inside the evidence sentences — never in a sentence before the evidence
 - Stories span clusters — they count against all criteria they address
 - Do NOT write cluster names as headings anywhere — pure flowing prose only
 - Stories: open with a scene-setting sentence rather than a labelled heading.`
