@@ -178,7 +178,7 @@ function GeneratePage() {
   const [style, setStyle] = useState<'1' | '2'>('1')
   const [bodyPattern, setBodyPattern] = useState<'' | '1' | '2' | '3'>('')
   const [applicationMode, setApplicationMode] = useState<'full' | 'questions-only' | 'statement-questions'>('full')
-  const [specificQuestions, setSpecificQuestions] = useState('')
+  const [specificQuestions, setSpecificQuestions] = useState<string[]>([''])
   const [loading, setLoading] = useState(false)
   const [loadingStep, setLoadingStep] = useState('')
   const [error, setError] = useState('')
@@ -273,6 +273,24 @@ function GeneratePage() {
     setLoadingStep('')
   }
 
+  const questionsText = () =>
+    specificQuestions.filter(q => q.trim()).map((q, i) => `${i + 1}. ${q.trim()}`).join('\n')
+
+  const addQuestion = () => setSpecificQuestions(prev => [...prev, ''])
+  const updateQuestion = (i: number, val: string) =>
+    setSpecificQuestions(prev => prev.map((q, idx) => idx === i ? val : q))
+  const removeQuestion = (i: number) =>
+    setSpecificQuestions(prev => prev.filter((_, idx) => idx !== i))
+
+  const handleStep2Next = () => {
+    setError('')
+    if (applicationMode !== 'full' && !specificQuestions.some(q => q.trim())) {
+      setError('Please add at least one question.')
+      return
+    }
+    setStep(3)
+  }
+
   const handleStep1Next = () => {
     setError('')
     if (inputMode === 'url' && !vacancyUrl.trim()) {
@@ -313,7 +331,7 @@ function GeneratePage() {
 
     try {
       const { result: data, jobData } = await callGenerate(
-        { client_code: clientCode, vacancy_url: usedUrl, style, applicationMode, specificQuestions: specificQuestions.trim() || undefined, bodyPattern: bodyPattern || undefined, pastedPersonSpec: pastedPersonSpec.trim() || undefined, instructions: writerNotes.trim() || undefined },
+        { client_code: clientCode, vacancy_url: usedUrl, style, applicationMode, specificQuestions: questionsText() || undefined, bodyPattern: bodyPattern || undefined, pastedPersonSpec: pastedPersonSpec.trim() || undefined, instructions: writerNotes.trim() || undefined },
         setLoadingStep,
         preloaded,
         controller.signal
@@ -353,7 +371,7 @@ function GeneratePage() {
           client_code: clientCode,
           vacancy_url: usedUrl,
           style,
-          specificQuestions: specificQuestions.trim() || undefined,
+          specificQuestions: questionsText() || undefined,
           rewriteInstruction: rewriteInstruction.trim(),
           previousStatement: result.statement,
           bodyPattern: bodyPattern || undefined,
@@ -581,16 +599,34 @@ function GeneratePage() {
                     ))}
                   </div>
 
-                  {/* Questions textarea */}
+                  {/* Numbered question boxes */}
                   {applicationMode !== 'full' && (
-                    <div className="mb-5">
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Paste your questions <span className="text-red-500">*</span>
+                    <div className="mb-5 space-y-3">
+                      <label className="block text-sm font-semibold text-gray-700">
+                        Your questions <span className="text-red-500">*</span>
                       </label>
-                      <textarea value={specificQuestions} onChange={(e) => setSpecificQuestions(e.target.value)}
-                        placeholder={"1. Tell us about your relevant experience\n2. Why do you want to work for us?"}
-                        rows={5} disabled={loading}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none resize-none" />
+                      {specificQuestions.map((q, i) => (
+                        <div key={i} className="flex items-start gap-2">
+                          <span className="flex-shrink-0 w-7 h-11 flex items-center justify-center text-sm font-bold text-gray-400 pt-0.5">
+                            {i + 1}.
+                          </span>
+                          <textarea value={q} onChange={(e) => updateQuestion(i, e.target.value)}
+                            placeholder={`Type question ${i + 1} here…`}
+                            rows={2} disabled={loading}
+                            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none resize-none" />
+                          {specificQuestions.length > 1 && (
+                            <button type="button" onClick={() => removeQuestion(i)}
+                              className="flex-shrink-0 w-8 h-11 flex items-center justify-center text-gray-300 hover:text-red-400 cursor-pointer text-xl leading-none">
+                              ×
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                      <button type="button" onClick={addQuestion}
+                        className="flex items-center gap-1.5 text-sm font-semibold cursor-pointer pt-1"
+                        style={{ color: '#005eb8' }}>
+                        <span className="text-lg leading-none">+</span> Add question
+                      </button>
                     </div>
                   )}
 
@@ -616,7 +652,7 @@ function GeneratePage() {
                     </div>
                   )}
 
-                  <button type="button" onClick={() => setStep(3)}
+                  <button type="button" onClick={handleStep2Next}
                     className="mt-auto w-full py-4 text-white font-semibold rounded-2xl text-base cursor-pointer"
                     style={{ backgroundColor: '#005eb8' }}>
                     Next →
@@ -735,7 +771,7 @@ function GeneratePage() {
                   {downloaded ? 'Downloaded!' : 'Download .doc'}
                 </button>
                 <button
-                  onClick={() => { setResult(null); setStep(1); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText(''); setPastedPersonSpec(''); setSparsePs(false); setDownloadedDocs([]) }}
+                  onClick={() => { setResult(null); setStep(1); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText(''); setPastedPersonSpec(''); setSparsePs(false); setDownloadedDocs([]); setSpecificQuestions(['']) }}
                   className="text-sm px-3 py-1.5 border border-blue-400 text-blue-100 rounded font-medium hover:bg-blue-800 cursor-pointer"
                 >
                   New Statement
