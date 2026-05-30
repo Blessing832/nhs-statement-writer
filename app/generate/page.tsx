@@ -605,18 +605,19 @@ function GeneratePage() {
                       <label className="block text-sm font-semibold text-gray-700">
                         Your questions <span className="text-red-500">*</span>
                       </label>
+                      <p className="text-xs text-gray-500 -mt-1">One question per box. If a question has multiple parts (e.g. bullet points), paste them all in one box.</p>
                       {specificQuestions.map((q, i) => (
                         <div key={i} className="flex items-start gap-2">
-                          <span className="flex-shrink-0 w-7 h-11 flex items-center justify-center text-sm font-bold text-gray-400 pt-0.5">
+                          <span className="flex-shrink-0 w-7 pt-3 text-sm font-bold text-gray-400 text-center">
                             {i + 1}.
                           </span>
                           <textarea value={q} onChange={(e) => updateQuestion(i, e.target.value)}
-                            placeholder={`Type question ${i + 1} here…`}
-                            rows={2} disabled={loading}
-                            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none resize-none" />
+                            placeholder={`Type or paste question ${i + 1} here — including any sub-points…`}
+                            rows={3} disabled={loading}
+                            className="flex-1 px-3 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none resize-y" />
                           {specificQuestions.length > 1 && (
                             <button type="button" onClick={() => removeQuestion(i)}
-                              className="flex-shrink-0 w-8 h-11 flex items-center justify-center text-gray-300 hover:text-red-400 cursor-pointer text-xl leading-none">
+                              className="flex-shrink-0 w-8 pt-2.5 flex items-start justify-center text-gray-300 hover:text-red-400 cursor-pointer text-xl leading-none">
                               ×
                             </button>
                           )}

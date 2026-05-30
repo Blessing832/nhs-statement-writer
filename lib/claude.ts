@@ -270,25 +270,24 @@ ${clientSection}
 ${instructionsSection}
 
 ## TASK
-Answer each of the following specific application questions. Do NOT write a full prose statement. Answer each question directly with specific STAR evidence.
+Answer each application question below with full MINI-STARR evidence. Do NOT write a general prose statement.
 
-For each question:
-- Write 200-250 words per answer
-- Use MINI-STAR: specific situation, specific actions (naming tools/systems/roles from the JD), quantified result
-- Use ONLY evidence from the candidate profile above
-- Reference the Trust's values and terminology from the job description where relevant
+WORD BUDGET: approximately 300 words per question.
+Questions with multiple sub-points: address every sub-point within that same ~300-word answer.
+
+WRITING RULES — apply exactly as in a full statement:
+- MINI-STARR format: Situation (specific scene at a named workplace) → Action (specific steps, tools/systems/forms from the JD, named professional roles from the JD) → Result (concrete outcome — name what improved, increased, reduced, or was enabled) → Reflection (optional, 1 sentence)
+- SITUATION: must be a real scene — never restate the question or describe the criterion. WRONG: "Communication is central to my role." RIGHT: "On the medical ward at [workplace], I supported a patient with dysphasia by..."
+- RESULT is MANDATORY: every answer must end with a concrete outcome. WRONG: "I communicated effectively with the team." RIGHT: "...enabling the patient to give informed consent within one session and reducing her pre-procedure anxiety visibly."
+- All banned words apply: no "passionate", "hardworking", "highly motivated", "demonstrates", "utilises" — see ABSOLUTE RULES
+- Evidence first: the first sentence must place the reader in a specific situation, never a claim or announcement
+- No topic-announcement openers: WRONG: "Communication was central to my work." RIGHT: "At [workplace], I adapted my approach for..."
 - No em dashes anywhere
 
-Format — write the question heading exactly as given, then the answer directly below:
-
-[Question heading exactly as written]
-[200-250 word STAR answer]
-
-[Next question heading]
-[200-250 word answer]
-
+FORMAT:
+Write each question heading exactly as given, then the answer directly below.
+No introduction, no preamble, no summary outside the answers.
 End the final answer with "Thank you."
-Do NOT add any introduction, summary, or text outside the answers.
 
 QUESTIONS TO ANSWER:
 ${options.specificQuestions || ''}`
@@ -343,7 +342,7 @@ HARD WORD LIMITS:
 - Question 3: Is there any other relevant information that will assist us in shortlisting your application? — 200 words maximum — end with "Thank you." and stop`
   : `HARD WORD LIMIT: 1,450 words for the main statement — end with "Thank you." and STOP
 Do NOT write any section after "Thank you." — no Key Duties, no summaries, nothing.
-${hasExtraQuestions ? 'After "Thank you.", write each specific question answer (200-250 words each) with the question as a heading.' : ''}`}
+${hasExtraQuestions ? 'After "Thank you.", write each specific question answer (approximately 300 words each — full MINI-STARR evidence, same rules as statement paragraphs, concrete outcome mandatory) with the question as a heading. Questions with multiple sub-points: address every sub-point within that same ~300-word answer.' : ''}`}
 
 CRITICAL:
 - No em dashes anywhere
@@ -556,12 +555,21 @@ async function generateParallel(
   })
 
   // max_tokens for statement call:
-  //   Scotland: 1060w target → cap 1700 (26s)
+  //   Scotland: 1060w target → cap 2000 (26s)
   //   England full: 1450w target → cap 2300 (35s)
-  //   Questions-only: ~6 questions × 225w ≈ 1350w → cap 2000 (31s)
+  //   Questions-only: ~300w per question → scale with count, min 2500, max 5000
+  //   Statement+questions: statement base + question budget
+  const questionCount = options.specificQuestions
+    ? (options.specificQuestions.match(/^\d+\./gm) || []).length
+    : 0
+  const tokensPerQuestion = 430 // ~300 words × 1.43 tokens/word, rounded up
+
   let statementMaxTokens: number
   if (appMode === 'questions-only') {
-    statementMaxTokens = 2000
+    statementMaxTokens = Math.min(5000, Math.max(2500, questionCount * tokensPerQuestion + 300))
+  } else if (appMode === 'statement-questions') {
+    const statementBase = isScotland ? 2000 : 2300
+    statementMaxTokens = Math.min(5000, statementBase + Math.max(0, questionCount * tokensPerQuestion))
   } else if (isScotland) {
     statementMaxTokens = 2000
   } else {
