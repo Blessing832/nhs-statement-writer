@@ -43,6 +43,14 @@ export interface GenerateRequest {
   previousStatement?: string
 }
 
+export interface CriterionScore {
+  criterion: string
+  type: 'essential' | 'desirable'
+  easeme: number  // 0–4: 0=absent 1=mentioned 2=evidenced 3=evidenced+outcome 4=exceptional
+  pct: number     // 0, 25, 60, 100, or 115+
+  note: string
+}
+
 export interface StatementAnalysis {
   jobSummary: string
   enhancedPreviousTitle?: string
@@ -56,6 +64,8 @@ export interface StatementAnalysis {
   candidateStrengths: string[]
   potentialGaps: string[]
   meetsAllEssential?: boolean
+  criteriaScores?: CriterionScore[]
+  overallPct?: number
 }
 
 export interface GenerateResult {

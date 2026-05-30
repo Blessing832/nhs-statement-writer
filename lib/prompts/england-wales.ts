@@ -513,7 +513,7 @@ MINI-STARR format:
   RIGHT: "At [workplace], I managed a caseload of up to 20 patients daily, prioritising observations, medications, and escalations based on each patient's NEWS2 score."
   RIGHT: "On a busy night shift at [workplace], I was responsible for six post-operative patients recovering from gynaecological procedures."
 - ACTION (2-3 lines): specific actions using I statements, name tools/systems/forms/procedures from JD, name professional roles from JD
-- RESULT (1-2 lines): quantified outcome
+- RESULT (1-2 lines): quantified outcome — MANDATORY. Every paragraph of evidence MUST end with a concrete outcome that names what changed, improved, increased, reduced, or was enabled as a direct consequence of the actions above. Do NOT leave a paragraph without this. If no measured figure is available, describe the outcome specifically: "increasing patient comfort during personal care", "reducing call bell activations", "enabling the patient to mobilise independently within two days", "promoting faster discharge", "preventing escalation to a critical incident", "improving the family's confidence in the care plan", "maintaining zero pressure sore incidents across six months". Outcome verbs: increasing, reducing, enabling, promoting, preventing, improving, maintaining, achieving, accelerating, supporting. Evidence with no outcome scores Easeme 2 (fail) in the Final Check.
 - REFLECTION (optional, 1 sentence — use in roughly 1 in 2 paragraphs): what was learned, changed, or proposed as a result. Shows self-awareness and professional growth. Examples:
   - "This taught me that proactive communication prevents escalation before it becomes critical."
   - "I later proposed a structured triage approach to the ward manager, which was adopted."

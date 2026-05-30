@@ -458,7 +458,7 @@ RIGHT: "On the medical ward at [workplace], I applied aseptic non-touch techniqu
 RIGHT: "For anxious patients at [workplace], I used open-ended questions and plain-language explanations before every procedure."
 
 ACTION (2-3 lines): specific actions, JD tools/systems, named professionals from JD, Scottish systems where relevant.
-RESULT (1-2 lines): quantified outcome.
+RESULT (1-2 lines): quantified outcome — MANDATORY. Every paragraph of evidence MUST end with a concrete outcome that names what changed, improved, increased, reduced, or was enabled as a direct consequence of the actions above. Do NOT leave a paragraph without this. If no measured figure is available, describe the outcome specifically: "increasing patient comfort during personal care", "reducing call bell activations", "enabling the patient to mobilise independently within two days", "promoting faster discharge", "preventing escalation to a critical incident", "improving the family's confidence in the care plan". Outcome verbs: increasing, reducing, enabling, promoting, preventing, improving, maintaining, achieving, accelerating, supporting. Evidence with no outcome scores Easeme 2 (fail) in the Final Check.
 REFLECTION (optional, 1 sentence): what was learned, what changed, or what was proposed. Omit if it takes the paragraph beyond 8 lines.
 Mix paragraph lengths randomly between 5-8 lines. Stop at line 8.
 ## RECRUITER SCANNING RULE — EVIDENCE FIRST, ALWAYS

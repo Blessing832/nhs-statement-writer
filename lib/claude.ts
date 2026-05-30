@@ -1,5 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
-import { Client, ScrapeResult, StatementAnalysis } from './types'
+import { Client, CriterionScore, ScrapeResult, StatementAnalysis } from './types'
 import { getEnglandWalesPrompt } from './prompts/england-wales'
 import { getScotlandPrompt } from './prompts/scotland'
 import { getScotlandQ2Variation } from './scotland-q2-variations'
@@ -409,12 +409,88 @@ CRITICAL:
 - essentialCriteria must list EVERY criterion from the person spec`
 }
 
+// Score the statement against extracted criteria using the Easeme scale.
+// Runs AFTER statement + analysis complete since it needs both.
+// Uses Haiku for speed and cost efficiency — scoring is non-critical.
+async function runScoringCall(
+  statement: string,
+  essential: string[],
+  desirable: string[]
+): Promise<{ scores: CriterionScore[]; overallPct: number } | null> {
+  const allCriteria = [
+    ...essential.map((c) => ({ c, type: 'essential' as const })),
+    ...desirable.map((c) => ({ c, type: 'desirable' as const })),
+  ]
+  if (allCriteria.length === 0) return null
+
+  const criteriaList = allCriteria.map((item, i) => `${i + 1}. [${item.type}] ${item.c}`).join('\n')
+
+  const prompt = `Score each criterion against this NHS supporting statement using the Easeme scale.
+
+Easeme scale:
+0 = not mentioned anywhere
+1 = mentioned but no concrete evidence
+2 = evidence given but NO outcome stated
+3 = evidence AND concrete outcome (what improved/increased/reduced/was enabled) — PASS
+4 = exceptional: specific metric, number, or named initiative alongside outcome
+
+Percentage: 0→0%, 1→25%, 2→60%, 3→100%, 4→115%
+
+CRITERIA (score every one):
+${criteriaList}
+
+STATEMENT:
+${statement.slice(0, 3500)}
+
+Return ONLY valid JSON, no explanation:
+{
+  "scores": [
+    {"idx": 1, "easeme": 3, "pct": 100, "note": "Brief explanation of what evidence and outcome was found"},
+    {"idx": 2, "easeme": 2, "pct": 60, "note": "Evidence present but no outcome stated"}
+  ],
+  "overallPct": 85
+}`
+
+  try {
+    const result = await anthropic.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1500,
+      system: 'You are an NHS statement scorer. Score each criterion precisely and objectively. Return only valid JSON.',
+      messages: [{ role: 'user', content: prompt }],
+    })
+    const text = result.content[0]?.type === 'text' ? result.content[0].text : ''
+    const jsonMatch = text.match(/\{[\s\S]*\}/)
+    if (!jsonMatch) return null
+    const parsed: { scores: { idx: number; easeme: number; pct: number; note: string }[]; overallPct: number } = JSON.parse(jsonMatch[0])
+    if (!Array.isArray(parsed.scores)) return null
+
+    const scores: CriterionScore[] = parsed.scores
+      .map((s) => ({
+        criterion: allCriteria[s.idx - 1]?.c ?? '',
+        type: allCriteria[s.idx - 1]?.type ?? 'essential',
+        easeme: s.easeme,
+        pct: s.pct,
+        note: s.note,
+      }))
+      .filter((s) => s.criterion.length > 0)
+
+    const scIn = result.usage.input_tokens
+    const scOut = result.usage.output_tokens
+    console.log(`SCORING haiku sc_in=${scIn} sc_out=${scOut}`)
+
+    return { scores, overallPct: typeof parsed.overallPct === 'number' ? parsed.overallPct : 0 }
+  } catch {
+    return null // scoring is non-critical
+  }
+}
+
 // Parallel two-call approach for Scotland and England:
 // Call A — statement (plain text): no JSON escaping issues, reliable output
 // Call B — analysis + duties (small flat JSON): fast, non-critical
+// Call C — scoring (sequential, after A+B, uses Haiku): ~5-8s extra
 // Promise.all wall time:
-//   Scotland: max(1700/65≈26s, 700/65≈11s) + ~12s overhead ≈ 38s ✓
-//   England:  max(2300/65≈35s, 900/65≈14s) + ~12s overhead ≈ 47s ✓
+//   Scotland: max(1700/65≈26s, 700/65≈11s) + scoring ~5s + ~12s overhead ≈ 43s ✓
+//   England:  max(2300/65≈35s, 900/65≈14s) + scoring ~5s + ~12s overhead ≈ 52s ✓
 //   Questions-only: max(2000/65≈31s, 700-900/65≈11-14s) + ~12s ≈ 43s ✓
 async function generateParallel(
   client: Client,
@@ -586,6 +662,14 @@ async function generateParallel(
           }
         }
       } catch { /* non-critical */ }
+    }
+  }
+
+  // Scoring call — sequential, after statement + analysis, uses Haiku
+  if (analysis && (analysis.essentialCriteria.length > 0 || analysis.desirableCriteria.length > 0)) {
+    const scoring = await runScoringCall(statement, analysis.essentialCriteria, analysis.desirableCriteria)
+    if (scoring) {
+      analysis = { ...analysis, criteriaScores: scoring.scores, overallPct: scoring.overallPct }
     }
   }
 

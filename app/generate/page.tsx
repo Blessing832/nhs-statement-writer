@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { StatementAnalysis } from '@/lib/types'
 import { FileDropZone } from '@/components/FileDropZone'
+import { ScoringMatrix } from '@/components/ScoringMatrix'
 
 interface Result {
   statement: string
@@ -120,6 +121,10 @@ function AnalysisPanel({ analysis, region }: { analysis: StatementAnalysis | nul
 
   return (
     <div className="space-y-5 text-sm">
+      {analysis.criteriaScores && analysis.criteriaScores.length > 0 && typeof analysis.overallPct === 'number' && (
+        <ScoringMatrix scores={analysis.criteriaScores} overallPct={analysis.overallPct} />
+      )}
+
       {analysis.meetsAllEssential && (
         <div className="rounded-md bg-green-50 border border-green-200 px-3 py-2 text-green-800 text-xs font-medium">
           All essential criteria met
