@@ -170,8 +170,16 @@ export default function QuickWritePage() {
     style: '1' as '1' | '2',
     applicationMode: 'full' as 'full' | 'questions-only' | 'statement-questions',
     bodyPattern: '' as '' | '1' | '2' | '3',
-    specificQuestions: '',
   })
+
+  const [specificQuestions, setSpecificQuestions] = useState<string[]>([''])
+  const questionsText = () =>
+    specificQuestions.filter(q => q.trim()).map((q, i) => `${i + 1}. ${q.trim()}`).join('\n')
+  const addQuestion = () => setSpecificQuestions(prev => [...prev, ''])
+  const updateQuestion = (i: number, val: string) =>
+    setSpecificQuestions(prev => prev.map((q, idx) => idx === i ? val : q))
+  const removeQuestion = (i: number) =>
+    setSpecificQuestions(prev => prev.filter((_, idx) => idx !== i))
 
   const [loading, setLoading] = useState(false)
   const [loadingStep, setLoadingStep] = useState('')
@@ -198,7 +206,7 @@ export default function QuickWritePage() {
     const res = await fetch('/api/admin/quick-write', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
-      body: JSON.stringify({ ...form, jobDescText: inputMode === 'text' ? jobDescText : undefined, ...extra }),
+      body: JSON.stringify({ ...form, jobDescText: inputMode === 'text' ? jobDescText : undefined, specificQuestions: questionsText() || undefined, ...extra }),
       signal,
     })
     const data = await res.json().catch(() => ({ error: 'Server error.' }))
@@ -437,9 +445,31 @@ export default function QuickWritePage() {
                 <label className="block text-xs font-semibold text-gray-700 mb-1">
                   Application Questions <span className="text-red-500">*</span>
                 </label>
-                <textarea value={form.specificQuestions} onChange={set('specificQuestions')} rows={5}
-                  placeholder={`Paste the application questions:\n1. Tell us about your relevant experience\n2. Why do you want to work for us?`}
-                  className={FIELD_CLASS} disabled={loading} />
+                <p className="text-xs text-gray-500 -mt-0.5 mb-2">One question per box. If a question has multiple parts, paste them all in one box.</p>
+                <div className="space-y-3">
+                  {specificQuestions.map((q, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <span className="flex-shrink-0 w-7 pt-3 text-sm font-bold text-gray-400 text-center">
+                        {i + 1}.
+                      </span>
+                      <textarea value={q} onChange={(e) => updateQuestion(i, e.target.value)}
+                        placeholder={`Type or paste question ${i + 1} here — including any sub-points…`}
+                        rows={3} disabled={loading}
+                        className="flex-1 px-3 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none resize-y" />
+                      {specificQuestions.length > 1 && (
+                        <button type="button" onClick={() => removeQuestion(i)}
+                          className="flex-shrink-0 w-8 pt-2.5 flex items-start justify-center text-gray-300 hover:text-red-400 cursor-pointer text-xl leading-none">
+                          ×
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <button type="button" onClick={addQuestion}
+                  className="flex items-center gap-1.5 text-xs font-semibold cursor-pointer pt-3"
+                  style={{ color: '#005eb8' }}>
+                  <span className="text-lg leading-none">+</span> Add question
+                </button>
               </div>
             )}
 
