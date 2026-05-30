@@ -520,15 +520,16 @@ function GeneratePage() {
                       </div>
                     ) : (
                       <p className="text-xs text-gray-500 mb-2">
-                        Open the job advert in your browser, copy all text on the page (Ctrl+A then Ctrl+C on desktop, or tap and hold &gt; Select All on mobile), and paste it here.
+                        Open the job advert in your browser, copy all text on the page (Ctrl+A then Ctrl+C on desktop, or tap and hold &gt; Select All on mobile), and paste it here. Or drop a PDF/Word file below.
                       </p>
                     )}
+                    <FileDropZone onText={(t) => { setJobDescText(t); setError('') }} disabled={loading} />
                     <textarea
                       value={jobDescText}
                       onChange={(e) => { setJobDescText(e.target.value); setError('') }}
                       placeholder="Paste the full job description here: job title, duties, person specification, essential criteria, desirable criteria..."
                       rows={10}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none text-sm resize-none"
+                      className="w-full mt-2 px-4 py-3 border border-gray-300 rounded-md focus:outline-none text-sm resize-none"
                       disabled={loading}
                     />
                     <p className="text-xs text-gray-400 mt-1">{jobDescText.trim().split(/\s+/).filter(Boolean).length} words pasted</p>

@@ -151,6 +151,9 @@ ${currDuties}
 export default function QuickWritePage() {
   const { token } = useAdminToken()
 
+  const [inputMode, setInputMode] = useState<'url' | 'text'>('url')
+  const [jobDescText, setJobDescText] = useState('')
+
   const [form, setForm] = useState({
     name: '',
     work_history: '',
@@ -191,7 +194,7 @@ export default function QuickWritePage() {
     const res = await fetch('/api/admin/quick-write', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
-      body: JSON.stringify({ ...form, ...extra }),
+      body: JSON.stringify({ ...form, jobDescText: inputMode === 'text' ? jobDescText : undefined, ...extra }),
       signal,
     })
     const data = await res.json().catch(() => ({ error: 'Server error.' }))
@@ -205,6 +208,10 @@ export default function QuickWritePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    if (inputMode === 'text' && jobDescText.trim().split(/\s+/).filter(Boolean).length < 80) {
+      setError('Please paste at least 80 words of job description text.')
+      return
+    }
     setResult(null)
     setLoading(true)
 
@@ -270,22 +277,55 @@ export default function QuickWritePage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5 bg-white rounded-xl border border-gray-200 p-6">
-            {/* Name + URL */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">
-                  Candidate name <span className="text-red-500">*</span>
-                </label>
-                <input type="text" value={form.name} onChange={set('name')} required
-                  placeholder="e.g. Jane Smith" className={FIELD_CLASS} />
+            {/* Name */}
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 mb-1">
+                Candidate name <span className="text-red-500">*</span>
+              </label>
+              <input type="text" value={form.name} onChange={set('name')} required
+                placeholder="e.g. Jane Smith" className={FIELD_CLASS} />
+            </div>
+
+            {/* Job input mode toggle */}
+            <div>
+              <div className="flex gap-1.5 mb-3">
+                {([
+                  { val: 'url' as const, label: 'Paste Link' },
+                  { val: 'text' as const, label: 'Paste Job Description' },
+                ] as const).map(({ val, label }) => (
+                  <button key={val} type="button" onClick={() => setInputMode(val)}
+                    className="px-3 py-1.5 rounded-full text-xs font-medium border transition-colors cursor-pointer"
+                    style={inputMode === val
+                      ? { borderColor: '#005eb8', backgroundColor: '#005eb8', color: 'white' }
+                      : { borderColor: '#d1d5db', backgroundColor: 'white', color: '#374151' }}>
+                    {label}
+                  </button>
+                ))}
               </div>
-              <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">
-                  Job advert URL <span className="text-red-500">*</span>
-                </label>
-                <input type="url" value={form.vacancy_url} onChange={set('vacancy_url')} required
-                  placeholder="https://www.jobs.nhs.uk/..." className={FIELD_CLASS} />
-              </div>
+
+              {inputMode === 'url' ? (
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">
+                    Job advert URL <span className="text-red-500">*</span>
+                  </label>
+                  <input type="url" value={form.vacancy_url} onChange={set('vacancy_url')}
+                    required={inputMode === 'url'}
+                    placeholder="https://www.jobs.nhs.uk/..." className={FIELD_CLASS} />
+                </div>
+              ) : (
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">
+                    Job Description Text <span className="text-red-500">*</span>
+                  </label>
+                  <p className="text-xs text-gray-500 mb-2">Drop a PDF/Word file or paste the full job advert text below.</p>
+                  <FileDropZone onText={(t) => { setJobDescText(t); setError('') }} disabled={loading} />
+                  <textarea value={jobDescText} onChange={(e) => { setJobDescText(e.target.value); setError('') }}
+                    placeholder="Paste the full job description here: job title, duties, person specification, essential criteria, desirable criteria..."
+                    rows={8} disabled={loading}
+                    className={`${FIELD_CLASS} mt-2`} />
+                  <p className="text-xs text-gray-400 mt-1">{jobDescText.trim().split(/\s+/).filter(Boolean).length} words pasted</p>
+                </div>
+              )}
             </div>
 
             {/* Depth style */}

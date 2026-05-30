@@ -489,11 +489,12 @@ function AdminGenerateInner() {
               ) : (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Job Description Text <span className="text-red-500">*</span></label>
-                  <p className="text-xs text-gray-500 mb-2">Select all text on the job page (Ctrl+A then Ctrl+C) and paste here.</p>
+                  <p className="text-xs text-gray-500 mb-2">Select all text on the job page (Ctrl+A then Ctrl+C) and paste here. Or drop a PDF/Word file below.</p>
+                  <FileDropZone onText={(t) => { setJobDescText(t); setError('') }} disabled={loading} />
                   <textarea value={jobDescText} onChange={(e) => { setJobDescText(e.target.value); setError('') }}
                     placeholder="Paste the full job description and person specification here..."
                     rows={10} disabled={loading}
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-none" />
+                    className="w-full mt-2 px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-none" />
                   <p className="text-xs text-gray-400 mt-1">{jobDescText.trim().split(/\s+/).filter(Boolean).length} words</p>
                 </div>
               )}

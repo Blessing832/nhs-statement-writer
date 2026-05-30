@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
     skills,
     background,
     vacancy_url,
+    jobDescText,
     person_spec,
     instructions,
     style,
@@ -32,14 +33,36 @@ export async function POST(req: NextRequest) {
     cachedJobData,
   } = await req.json()
 
-  if (!vacancy_url || !name) {
-    return NextResponse.json({ error: 'Name and job URL are required' }, { status: 400 })
+  const hasUrl = !!vacancy_url?.trim()
+  const hasText = !!jobDescText?.trim()
+
+  if (!name) {
+    return NextResponse.json({ error: 'Candidate name is required' }, { status: 400 })
+  }
+  if (!hasUrl && !hasText && !cachedJobData) {
+    return NextResponse.json({ error: 'A job advert URL or job description text is required' }, { status: 400 })
   }
 
-  // Step 1: Use cached job data for rewrites, otherwise scrape
+  // Step 1: Use cached job data for rewrites, otherwise scrape or build from text
   let jobData: ScrapeResult
   if (cachedJobData) {
     jobData = cachedJobData as ScrapeResult
+  } else if (hasText) {
+    // Text-paste mode: build jobData directly from pasted text
+    jobData = {
+      rawText: jobDescText.trim(),
+      jobTitle: '',
+      organisation: '',
+      jobDescription: jobDescText.trim(),
+      personSpec: '',
+      source: 'manual',
+    }
+    if (person_spec?.trim()) {
+      jobData = {
+        ...jobData,
+        rawText: jobData.rawText + '\n\n=== PASTED PERSON SPECIFICATION ===\n' + person_spec.trim(),
+      }
+    }
   } else {
     try {
       jobData = await scrapeJobUrl(vacancy_url)
@@ -95,7 +118,7 @@ export async function POST(req: NextRequest) {
     const generated = await generateStatement(tempClient, jobData, {
       instructions,
       style: style || '1',
-      vacancyUrl: vacancy_url,
+      vacancyUrl: vacancy_url || 'text-paste',
       applicationMode: applicationMode || 'full',
       bodyPattern: bodyPattern || undefined,
       specificQuestions: specificQuestions || undefined,
