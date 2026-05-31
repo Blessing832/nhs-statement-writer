@@ -187,7 +187,6 @@ function GeneratePage() {
   const [copiedDuties, setCopiedDuties] = useState(false)
   const [downloaded, setDownloaded] = useState(false)
 
-  const [step, setStep] = useState(1)
   const [scrapeAutoSwitched, setScrapeAutoSwitched] = useState(false)
   const [showRewrite, setShowRewrite] = useState(false)
   const [rewriteInstruction, setRewriteInstruction] = useState('')
@@ -282,31 +281,6 @@ function GeneratePage() {
   const removeQuestion = (i: number) =>
     setSpecificQuestions(prev => prev.filter((_, idx) => idx !== i))
 
-  const handleStep2Next = () => {
-    setError('')
-    if (applicationMode !== 'full' && !specificQuestions.some(q => q.trim())) {
-      setError('Please add at least one question.')
-      return
-    }
-    setStep(3)
-  }
-
-  const handleStep1Next = () => {
-    setError('')
-    if (inputMode === 'url' && !vacancyUrl.trim()) {
-      setError('Please paste the job vacancy link.')
-      return
-    }
-    if (inputMode === 'text') {
-      const words = jobDescText.trim().split(/\s+/).filter(Boolean).length
-      if (words < 40) {
-        setError('Please paste more of the job advert text — the more detail, the better the statement.')
-        return
-      }
-    }
-    setStep(2)
-  }
-
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault()
     if (inputMode === 'url' && !vacancyUrl.trim()) { setError('Please paste the job vacancy link'); return }
@@ -348,7 +322,6 @@ function GeneratePage() {
       if (isScrapeFailure) {
         setInputMode('text')
         setScrapeAutoSwitched(true)
-        setStep(1)
         setError('The link could not be read automatically. Open the job advert, copy all the text on the page, and paste it in the box below.')
       } else {
         setError(raw || 'Network error. Please check your connection and try again.')
@@ -451,161 +424,116 @@ function GeneratePage() {
       </header>
       <div style={{ backgroundColor: '#005eb8' }} className="h-1 flex-shrink-0" />
 
-      {/* Step-based form */}
+      {/* Single-page form */}
       {!result && (
-        <div className="flex-1 flex flex-col">
-          <div className="max-w-lg mx-auto w-full px-4 py-6 sm:py-10 flex-1 flex flex-col">
+        <div className="flex-1 overflow-y-auto">
+          <div className="max-w-2xl mx-auto w-full px-6 py-8">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <form onSubmit={handleGenerate} className="space-y-5">
 
-            {/* Progress bar */}
-            <div className="mb-6 flex-shrink-0">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-500">Step {step} of 3</span>
-                {step > 1 && (
-                  <button type="button" onClick={() => { setStep(s => s - 1); setError('') }}
-                    className="text-sm font-medium cursor-pointer" style={{ color: '#005eb8' }}>
-                    ← Back
-                  </button>
-                )}
-              </div>
-              <div className="flex gap-1.5">
-                {[1, 2, 3].map(i => (
-                  <div key={i} className="h-1.5 flex-1 rounded-full transition-all duration-300"
-                    style={{ backgroundColor: i <= step ? '#005eb8' : '#e5e7eb' }} />
-                ))}
-              </div>
-            </div>
-
-            <form onSubmit={handleGenerate} className="flex-1 flex flex-col">
-
-              {/* ── Step 1: Add the job ── */}
-              {step === 1 && (
-                <div className="flex flex-col flex-1">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-1">Add the job advert</h2>
-                  <p className="text-gray-500 text-sm mb-5">Paste the link, or copy the text from the job page.</p>
-
-                  {/* Mode toggle */}
-                  <div className="grid grid-cols-2 gap-3 mb-5">
+                {/* Job advert source */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Job advert</label>
+                  <div className="grid grid-cols-2 gap-2 mb-3">
                     {([
-                      { val: 'url' as const, icon: '🔗', label: 'Paste Link', desc: 'NHS Jobs, HealthJobsUK…' },
-                      { val: 'text' as const, icon: '📋', label: 'Paste Text', desc: 'Copy from the job page' },
-                    ]).map(({ val, icon, label, desc }) => (
+                      { val: 'url' as const, label: 'Paste Link', desc: 'NHS Jobs, HealthJobsUK…' },
+                      { val: 'text' as const, label: 'Paste Text', desc: 'Copy from the job page' },
+                    ]).map(({ val, label, desc }) => (
                       <button key={val} type="button"
                         onClick={() => { setInputMode(val); setError(''); setScrapeAutoSwitched(false) }}
-                        className="p-4 rounded-2xl border-2 text-left transition-all active:scale-95"
+                        className="p-3 rounded-md border-2 text-sm text-left transition-colors"
                         style={inputMode === val
-                          ? { borderColor: '#005eb8', backgroundColor: '#eff6ff' }
-                          : { borderColor: '#e5e7eb', backgroundColor: 'white' }}>
-                        <span className="text-2xl block mb-2">{icon}</span>
-                        <p className="font-semibold text-sm text-gray-900">{label}</p>
-                        <p className="text-xs text-gray-500 mt-0.5 leading-snug">{desc}</p>
+                          ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff', color: '#003087' }
+                          : { borderColor: '#e5e7eb', color: '#374151' }}>
+                        <p className="font-medium">{label}</p>
+                        <p className="text-xs opacity-70 mt-0.5">{desc}</p>
                       </button>
                     ))}
                   </div>
 
-                  {/* URL input */}
                   {inputMode === 'url' && (
-                    <div className="space-y-3 flex-1 flex flex-col">
+                    <div className="space-y-3">
                       <input type="url" value={vacancyUrl}
                         onChange={(e) => { setVacancyUrl(e.target.value); setError('') }}
                         placeholder="https://www.jobs.nhs.uk/candidate/jobadvert/..." disabled={loading}
-                        className="w-full px-4 py-4 border border-gray-300 rounded-2xl text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                         style={{ fontSize: '16px' }} />
-
                       {downloadedDocs.length > 0 && (
-                        <div className="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-xs text-green-800">
+                        <div className="rounded-md border border-green-200 bg-green-50 px-3 py-2 text-xs text-green-800">
                           <strong>✓ Documents downloaded:</strong> {downloadedDocs.join(', ')}
                         </div>
                       )}
                       {sparsePs && (
-                        <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-800">
+                        <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
                           <strong>Person spec not fully found.</strong> Paste it below to improve your statement.
                         </div>
                       )}
-
-                      {/* Person spec — collapsible */}
-                      <details className="group mt-1">
+                      <details className="group">
                         <summary className="text-sm font-medium cursor-pointer list-none flex items-center gap-1 py-1 select-none" style={{ color: '#005eb8' }}>
                           <span className="group-open:hidden">+ Add person specification (optional)</span>
                           <span className="hidden group-open:inline">− Hide person specification</span>
                         </summary>
-                        <div className="mt-3 space-y-2">
+                        <div className="mt-2 space-y-2">
                           <FileDropZone onText={setPastedPersonSpec} disabled={loading} />
                           <textarea value={pastedPersonSpec} onChange={(e) => setPastedPersonSpec(e.target.value)}
                             placeholder="Or paste person specification criteria here…" rows={4} disabled={loading}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none resize-y" />
+                            className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-y" />
                         </div>
                       </details>
                     </div>
                   )}
 
-                  {/* Text / file input */}
                   {inputMode === 'text' && (
-                    <div className="flex flex-col flex-1 gap-2">
+                    <div className="space-y-2">
                       {scrapeAutoSwitched ? (
-                        <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800 space-y-1.5">
+                        <div className="rounded-md bg-amber-50 border border-amber-200 px-3 py-2 text-sm text-amber-800 space-y-1">
                           <p className="font-semibold">How to copy on your phone:</p>
                           <p>1. Open the job link in a new tab.</p>
                           <p>2. Tap and hold any text, then choose <strong>Select All</strong>.</p>
                           <p>3. Tap <strong>Copy</strong>, come back and paste below.</p>
                         </div>
                       ) : (
-                        <p className="text-sm text-gray-500">Open the job page, copy all the text (Ctrl+A → Copy on desktop; tap &amp; hold → Select All on mobile), then paste below. Or drop a PDF/Word file.</p>
+                        <p className="text-xs text-gray-500">Copy all text from the job page (Ctrl+A → Copy), then paste below. Or drop a PDF/Word file.</p>
                       )}
                       <FileDropZone onText={(t) => { setJobDescText(t); setError('') }} disabled={loading} />
                       <textarea value={jobDescText}
                         onChange={(e) => { setJobDescText(e.target.value); setError('') }}
-                        placeholder="Paste the full job description here…" rows={9} disabled={loading}
-                        className="w-full mt-2 px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none resize-none" />
+                        placeholder="Paste the full job description here…" rows={8} disabled={loading}
+                        className="w-full mt-2 px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-none" />
                       <p className="text-xs text-gray-400">{jobDescText.trim().split(/\s+/).filter(Boolean).length} words pasted</p>
                     </div>
                   )}
-
-                  {error && (
-                    <div className="mt-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-red-700 text-sm">{error}</div>
-                  )}
-
-                  <button type="button" onClick={handleStep1Next}
-                    className="mt-6 w-full py-4 text-white font-semibold rounded-2xl text-base cursor-pointer transition-colors"
-                    style={{ backgroundColor: '#005eb8' }}>
-                    Next →
-                  </button>
                 </div>
-              )}
 
-              {/* ── Step 2: What do you need? ── */}
-              {step === 2 && (
-                <div className="flex flex-col flex-1">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-1">What are you applying for?</h2>
-                  <p className="text-gray-500 text-sm mb-5">Choose what the application needs.</p>
-
-                  {/* Application type */}
-                  <div className="space-y-3 mb-5">
+                {/* Application type */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Application type</label>
+                  <div className="space-y-2">
                     {([
-                      { val: 'full' as const, icon: '📄', label: 'Full Statement', desc: 'Complete statement covering every person spec criterion.' },
-                      { val: 'questions-only' as const, icon: '❓', label: 'Answer Specific Questions', desc: 'Each question answered with STAR evidence — no full statement.' },
-                      { val: 'statement-questions' as const, icon: '📋', label: 'Statement + Questions', desc: 'Full statement, then separate answers to each question.' },
-                    ] as const).map(({ val, icon, label, desc }) => (
+                      { val: 'full' as const, label: 'Full Statement', desc: 'Complete statement covering every person spec criterion.' },
+                      { val: 'questions-only' as const, label: 'Specific Questions Only', desc: 'Each question answered with STAR evidence — no full statement.' },
+                      { val: 'statement-questions' as const, label: 'Full Statement + Questions', desc: 'Full statement, then separate answers to each question.' },
+                    ] as const).map(({ val, label, desc }) => (
                       <button key={val} type="button" onClick={() => setApplicationMode(val)}
-                        className="w-full text-left p-4 rounded-2xl border-2 transition-all flex items-start gap-3 active:scale-95"
+                        className="w-full text-left p-3 rounded-md border-2 transition-colors"
                         style={applicationMode === val
-                          ? { borderColor: '#005eb8', backgroundColor: '#eff6ff' }
-                          : { borderColor: '#e5e7eb', backgroundColor: 'white' }}>
-                        <span className="text-2xl flex-shrink-0 leading-none mt-0.5">{icon}</span>
-                        <div>
-                          <p className="font-semibold text-sm text-gray-900">{label}</p>
-                          <p className="text-xs text-gray-500 mt-0.5 leading-snug">{desc}</p>
-                        </div>
+                          ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff' }
+                          : { borderColor: '#e5e7eb' }}>
+                        <p className="font-medium text-sm text-gray-800">{label}</p>
+                        <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
                       </button>
                     ))}
                   </div>
+                </div>
 
-                  {/* Numbered question boxes */}
-                  {applicationMode !== 'full' && (
-                    <div className="mb-5 space-y-3">
-                      <label className="block text-sm font-semibold text-gray-700">
-                        Your questions <span className="text-red-500">*</span>
-                      </label>
-                      <p className="text-xs text-gray-500 -mt-1">One question per box. If a question has multiple parts (e.g. bullet points), paste them all in one box.</p>
+                {/* Numbered question boxes */}
+                {applicationMode !== 'full' && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Your questions <span className="text-red-500">*</span>
+                    </label>
+                    <p className="text-xs text-gray-500 mb-2">One question per box. If a question has multiple parts, paste them all in one box.</p>
+                    <div className="space-y-3">
                       {specificQuestions.map((q, i) => (
                         <div key={i} className="flex items-start gap-2">
                           <span className="flex-shrink-0 w-7 pt-3 text-sm font-bold text-gray-400 text-center">
@@ -623,118 +551,109 @@ function GeneratePage() {
                           )}
                         </div>
                       ))}
-                      <button type="button" onClick={addQuestion}
-                        className="flex items-center gap-1.5 text-sm font-semibold cursor-pointer pt-1"
-                        style={{ color: '#005eb8' }}>
-                        <span className="text-lg leading-none">+</span> Add question
-                      </button>
                     </div>
-                  )}
+                    <button type="button" onClick={addQuestion}
+                      className="flex items-center gap-1.5 text-sm font-semibold cursor-pointer pt-3"
+                      style={{ color: '#005eb8' }}>
+                      <span className="text-lg leading-none">+</span> Add question
+                    </button>
+                  </div>
+                )}
 
-                  {/* Style — only if not questions-only */}
-                  {applicationMode !== 'questions-only' && (
-                    <div className="mb-5">
-                      <p className="text-sm font-semibold text-gray-700 mb-3">Statement style</p>
-                      <div className="grid grid-cols-2 gap-3">
-                        {[
-                          { val: '1' as const, label: 'Headed', desc: 'Bold headings — easy to scan.' },
-                          { val: '2' as const, label: 'Flowing', desc: 'Paragraphs only — natural read.' },
-                        ].map(({ val, label, desc }) => (
-                          <button key={val} type="button" onClick={() => setStyle(val)}
-                            className="p-4 rounded-2xl border-2 text-left transition-all active:scale-95"
-                            style={style === val
-                              ? { borderColor: '#005eb8', backgroundColor: '#eff6ff' }
-                              : { borderColor: '#e5e7eb', backgroundColor: 'white' }}>
-                            <p className="font-semibold text-sm text-gray-900">{label}</p>
-                            <p className="text-xs text-gray-500 mt-0.5 leading-snug">{desc}</p>
-                          </button>
-                        ))}
-                      </div>
+                {/* Statement style */}
+                {applicationMode !== 'questions-only' && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Statement style</label>
+                    <div className="grid grid-cols-2 gap-3">
+                      {[
+                        { val: '1' as const, label: 'Style 1 – Headed', desc: 'Bold headings — easy to scan.' },
+                        { val: '2' as const, label: 'Style 2 – Flowing', desc: 'Paragraphs only — natural read.' },
+                      ].map(({ val, label, desc }) => (
+                        <button key={val} type="button" onClick={() => setStyle(val)}
+                          className="p-3 rounded-md border-2 text-sm text-left transition-colors"
+                          style={style === val
+                            ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff' }
+                            : { borderColor: '#e5e7eb' }}>
+                          <p className="font-medium text-gray-800">{label}</p>
+                          <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
+                        </button>
+                      ))}
                     </div>
-                  )}
+                  </div>
+                )}
 
-                  <button type="button" onClick={handleStep2Next}
-                    className="mt-auto w-full py-4 text-white font-semibold rounded-2xl text-base cursor-pointer"
-                    style={{ backgroundColor: '#005eb8' }}>
-                    Next →
-                  </button>
-                </div>
-              )}
-
-              {/* ── Step 3: Notes + Generate ── */}
-              {step === 3 && (
-                <div className="flex flex-col flex-1">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-1">Anything to add?</h2>
-                  <p className="text-gray-500 text-sm mb-5">Optional extra context — most people skip this. Tap Generate if you have nothing to add.</p>
-
+                {/* Writer notes */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Extra notes <span className="text-gray-400 font-normal">(optional)</span>
+                  </label>
+                  <p className="text-xs text-gray-500 mb-1.5">Anything not in your profile — e.g. agency NHS experience, specific achievements to highlight.</p>
                   <textarea value={writerNotes}
                     onChange={(e) => {
                       setWriterNotes(e.target.value)
                       if (clientCode) localStorage.setItem(`writer_notes_${clientCode}`, e.target.value)
                     }}
                     placeholder="e.g. I worked as an NHS HCA through an agency for 8 months — please include this in the experience section."
-                    rows={5} disabled={loading}
-                    className="w-full px-4 py-3 border border-orange-300 rounded-2xl text-sm focus:outline-none resize-none bg-orange-50 mb-2" />
-                  <p className="text-xs text-gray-400 mb-6">Saves automatically. Helps the AI — it won&apos;t appear word-for-word in your statement.</p>
+                    rows={3} disabled={loading}
+                    className="w-full px-4 py-2.5 border border-orange-300 rounded-md text-sm focus:outline-none resize-none bg-orange-50" />
+                </div>
 
-                  {error && (
-                    <div className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-red-700 text-sm">{error}</div>
-                  )}
+                {error && (
+                  <div className="rounded-md bg-red-50 border border-red-200 px-4 py-3 text-red-700 text-sm">{error}</div>
+                )}
 
-                  <button type="submit" disabled={loading}
-                    className="w-full py-4 text-white font-bold rounded-2xl text-base cursor-pointer disabled:opacity-60 transition-colors"
-                    style={{ backgroundColor: loading ? '#64748b' : '#005eb8' }}>
-                    {loading ? 'Generating…' : 'Generate Statement'}
+                <button type="submit" disabled={loading}
+                  className="w-full py-3 text-white font-semibold rounded-md cursor-pointer disabled:opacity-60 transition-colors"
+                  style={{ backgroundColor: loading ? '#64748b' : '#005eb8' }}>
+                  {loading ? (loadingStep || 'Generating…') : 'Generate Statement'}
+                </button>
+
+                {loading && (
+                  <button type="button" onClick={handleCancel}
+                    className="w-full py-2.5 text-sm font-medium rounded-md border border-red-300 text-red-600 bg-white hover:bg-red-50 cursor-pointer">
+                    Cancel
                   </button>
+                )}
+              </form>
 
-                  {loading && (
-                    <button type="button" onClick={handleCancel}
-                      className="mt-3 w-full py-3 text-sm font-medium rounded-2xl border border-red-300 text-red-600 bg-white cursor-pointer">
-                      Cancel
-                    </button>
-                  )}
-
-                  {loading && (
-                    <div className="mt-5 rounded-2xl border border-blue-100 bg-blue-50 p-5">
-                      <div className="flex items-center gap-5">
-                        <div className="relative shrink-0 w-14 h-[70px]">
-                          <div className="absolute inset-0 rounded border-2 border-blue-300 bg-white" />
-                          <div className="absolute top-2 left-2 right-3 space-y-1.5">
-                            {[80, 100, 65, 90].map((w, i) => (
-                              <div key={i} className="h-1 rounded" style={{ width: `${w}%`, backgroundColor: '#d0e4f8' }} />
-                            ))}
-                          </div>
-                          <div className="absolute left-0 right-0 h-0.5 animate-scan-line"
-                            style={{ backgroundColor: '#005eb8', boxShadow: '0 0 6px 2px rgba(0,94,184,0.35)' }} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-blue-900 mb-1">{loadingStep || 'Starting…'}</p>
-                          <p className="text-xs text-blue-600">This takes 30–60 seconds. Please keep this tab open.</p>
-                          <div className="flex items-center gap-1.5 mt-2.5">
-                            {['Reading advert', 'Writing statement', 'Checking criteria'].map((s, i) => {
-                              const isReading = loadingStep.includes('Reading')
-                              const isWriting = loadingStep.includes('Writing')
-                              const active = i === 0 ? isReading || (!isReading && !isWriting) : i === 1 ? isWriting : false
-                              return (
-                                <div key={s} className="flex items-center gap-1.5">
-                                  <div className="w-2 h-2 rounded-full transition-all duration-300"
-                                    style={{ backgroundColor: active ? '#005eb8' : '#c0d8f0' }} />
-                                  {i < 2 && <div className="w-6 h-px" style={{ backgroundColor: '#c0d8f0' }} />}
-                                </div>
-                              )
-                            })}
-                            <span className="text-xs text-blue-500 ml-1">
-                              {loadingStep.includes('Reading') ? 'Step 1 of 2' : 'Step 2 of 2'}
-                            </span>
-                          </div>
-                        </div>
+              {loading && (
+                <div className="mt-5 rounded-xl border border-blue-100 bg-blue-50 p-5">
+                  <div className="flex items-center gap-5">
+                    <div className="relative shrink-0 w-14 h-[70px]">
+                      <div className="absolute inset-0 rounded border-2 border-blue-300 bg-white" />
+                      <div className="absolute top-2 left-2 right-3 space-y-1.5">
+                        {[80, 100, 65, 90].map((w, i) => (
+                          <div key={i} className="h-1 rounded" style={{ width: `${w}%`, backgroundColor: '#d0e4f8' }} />
+                        ))}
+                      </div>
+                      <div className="absolute left-0 right-0 h-0.5 animate-scan-line"
+                        style={{ backgroundColor: '#005eb8', boxShadow: '0 0 6px 2px rgba(0,94,184,0.35)' }} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-blue-900 mb-1">{loadingStep || 'Starting…'}</p>
+                      <p className="text-xs text-blue-600">This takes 30–60 seconds. Please keep this tab open.</p>
+                      <div className="flex items-center gap-1.5 mt-2.5">
+                        {['Reading advert', 'Writing statement', 'Checking criteria'].map((s, i) => {
+                          const isReading = loadingStep.includes('Reading')
+                          const isWriting = loadingStep.includes('Writing')
+                          const active = i === 0 ? isReading || (!isReading && !isWriting) : i === 1 ? isWriting : false
+                          return (
+                            <div key={s} className="flex items-center gap-1.5">
+                              <div className="w-2 h-2 rounded-full transition-all duration-300"
+                                style={{ backgroundColor: active ? '#005eb8' : '#c0d8f0' }} />
+                              {i < 2 && <div className="w-6 h-px" style={{ backgroundColor: '#c0d8f0' }} />}
+                            </div>
+                          )
+                        })}
+                        <span className="text-xs text-blue-500 ml-1">
+                          {loadingStep.includes('Reading') ? 'Step 1 of 2' : 'Step 2 of 2'}
+                        </span>
                       </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               )}
-
-            </form>
+            </div>
           </div>
         </div>
       )}
@@ -772,7 +691,7 @@ function GeneratePage() {
                   {downloaded ? 'Downloaded!' : 'Download .doc'}
                 </button>
                 <button
-                  onClick={() => { setResult(null); setStep(1); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText(''); setPastedPersonSpec(''); setSparsePs(false); setDownloadedDocs([]); setSpecificQuestions(['']) }}
+                  onClick={() => { setResult(null); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText(''); setPastedPersonSpec(''); setSparsePs(false); setDownloadedDocs([]); setSpecificQuestions(['']) }}
                   className="text-sm px-3 py-1.5 border border-blue-400 text-blue-100 rounded font-medium hover:bg-blue-800 cursor-pointer"
                 >
                   New Statement
