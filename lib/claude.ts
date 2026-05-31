@@ -439,7 +439,7 @@ CRITERIA (score every one):
 ${criteriaList}
 
 STATEMENT:
-${statement.slice(0, 3500)}
+${statement.slice(0, 10000)}
 
 Return ONLY valid JSON, no explanation:
 {
@@ -453,13 +453,16 @@ Return ONLY valid JSON, no explanation:
   try {
     const result = await anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1500,
+      max_tokens: 4000,
       system: 'You are an NHS statement scorer. Score each criterion precisely and objectively. Return only valid JSON.',
       messages: [{ role: 'user', content: prompt }],
     })
     const text = result.content[0]?.type === 'text' ? result.content[0].text : ''
     const jsonMatch = text.match(/\{[\s\S]*\}/)
-    if (!jsonMatch) return null
+    if (!jsonMatch) {
+      console.log('SCORING haiku: no JSON match in response')
+      return null
+    }
     const parsed: { scores: { idx: number; easeme: number; pct: number; note: string }[]; overallPct: number } = JSON.parse(jsonMatch[0])
     if (!Array.isArray(parsed.scores)) return null
 
@@ -475,11 +478,12 @@ Return ONLY valid JSON, no explanation:
 
     const scIn = result.usage.input_tokens
     const scOut = result.usage.output_tokens
-    console.log(`SCORING haiku sc_in=${scIn} sc_out=${scOut}`)
+    console.log(`SCORING haiku sc_in=${scIn} sc_out=${scOut} criteria=${scores.length}`)
 
     return { scores, overallPct: typeof parsed.overallPct === 'number' ? parsed.overallPct : 0 }
-  } catch {
-    return null // scoring is non-critical
+  } catch (err) {
+    console.log(`SCORING haiku error: ${err instanceof Error ? err.message : String(err)}`)
+    return null
   }
 }
 
