@@ -256,24 +256,23 @@ STEP 0 — CHECK SPECIAL INSTRUCTIONS FIRST (always do this before anything else
 - If the special instructions say nothing about the previous role title → proceed to steps 1-2.
 
 Step 1: Find the EXACT vacancy title from the job advert.
-Step 2: The default previous role title is the EXACT vacancy title — use it as-is.
-You may optionally prefix "Senior" or "Lead" if it genuinely fits the candidate's experience level, but this is NOT automatic. When in doubt, use the exact vacancy title without a prefix.
-Examples (default — no prefix):
-- Vacancy: "Healthcare Assistant" — Default previous role: "Healthcare Assistant"
-- Vacancy: "Mental Health Support Worker" — Default previous role: "Mental Health Support Worker"
-Optional enhancement (only if clearly appropriate):
-- Vacancy: "Healthcare Assistant" — May use: "Senior Healthcare Assistant"
-Use the chosen title consistently throughout the statement for the previous role.
+Step 2: Use the EXACT vacancy title as the previous role title — unchanged, no prefix, no modification of any kind.
+NEVER add "Senior", "Lead", or any other prefix. NEVER remove or paraphrase any word. The previous role title must be identical to the vacancy title.
+Examples:
+- Vacancy: "Oncology Support Worker" — Previous role: "Oncology Support Worker"
+- Vacancy: "Healthcare Assistant" — Previous role: "Healthcare Assistant"
+- Vacancy: "Mental Health Support Worker" — Previous role: "Mental Health Support Worker"
+Use this exact title consistently throughout the entire statement for the previous role.
 Current role ALWAYS uses the actual title from the candidate profile — never changed.
 
-SPECIALTY ALIGNMENT — MANDATORY (applies on top of the VACANCY TITLE ENHANCEMENT RULE above):
-After setting the previous role title to the vacancy title (per the rule above), also write all experience paragraphs in the context of the vacancy specialty. Never acknowledge that the candidate's actual work history was in a different specialty:
+SPECIALTY ALIGNMENT — MANDATORY (applies alongside the VACANCY TITLE ENHANCEMENT RULE above):
+The previous role title is set to the EXACT vacancy title, which includes its specialty. Write ALL experience paragraphs in the context of that exact specialty. Never acknowledge that the candidate's background was in a different specialty:
 NEVER: "while I may not have direct oncology experience..."
 NEVER: "my background has been in general ward care, but..."
 NEVER: "transitioning from [different specialty] to [vacancy specialty]..."
-NEVER: "my skills are transferable to oncology from..."
+NEVER: "my skills are transferable to [vacancy specialty] from..."
 NEVER: "although I have not worked specifically in [vacancy specialty]..."
-Write all experience in the vacancy specialty context. If the vacancy is Oncology Support Worker, reference "oncology care settings", "the oncology patients I supported" — consistent with the enhanced previous role title.
+Write all experience as if it took place in the vacancy specialty. If the vacancy is "Oncology Support Worker", every reference to the previous role uses that exact title and the care setting is described as oncology.
 
 ## EVIDENCE-BASED WRITING — THE MOST CRITICAL RULE
 Every paragraph must contain specific evidence with measurable outcomes.
@@ -361,13 +360,13 @@ Use the CAR structure (Context, Action, Result) when introducing specific experi
 Choose ONE opening pattern — do NOT default to Pattern A every time. Rotate across statements:
 
 PATTERN A — Standard:
-"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases from advert]. I hold [qualification] (SCQF equivalence if English), and over my years in [specialty-specific] care settings I have developed [2 skills from person spec]. As [ENHANCED role] at [Previous Workplace], I worked with patients [specific conditions/procedures matching vacancy], alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [one brief duty using JD keywords]. I want to join NHS [Board] because [one specific reason from advert]."
+"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases from advert]. I hold [qualification] (SCQF equivalence if English), and over my years in [specialty-specific] care settings I have developed [2 skills from person spec]. As [EXACT vacancy title] at [Previous Workplace], I worked with patients [specific conditions/procedures matching vacancy], alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [one brief duty using JD keywords]. I want to join NHS [Board] because [one specific reason from advert]."
 
 PATTERN B — Credential-led:
-"With [qualification (SCQF equivalence if English)] and [X] years in [specialty-specific] care settings, I [one key strength from person spec using advert keywords]. As [ENHANCED role] at [Previous Workplace], I supported patients with [specific conditions/procedures], working alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. NHS [Board] is where I want to bring this experience because [specific reason from advert]."
+"With [qualification (SCQF equivalence if English)] and [X] years in [specialty-specific] care settings, I [one key strength from person spec using advert keywords]. As [EXACT vacancy title] at [Previous Workplace], I supported patients with [specific conditions/procedures], working alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. NHS [Board] is where I want to bring this experience because [specific reason from advert]."
 
 PATTERN C — Experience-led:
-"[X] years in [specialty-specific] care settings — most recently as [ENHANCED role] at [Previous Workplace] supporting patients with [specific conditions/procedures] — have built [2 skills from person spec]. I hold [qualification (SCQF equivalence if English)]. In my current role as [Current Role] at [Current Workplace], I [brief duty using JD keywords]. I am applying to NHS [Board] because [specific reason from advert]."
+"[X] years in [specialty-specific] care settings — most recently as [EXACT vacancy title] at [Previous Workplace] supporting patients with [specific conditions/procedures] — have built [2 skills from person spec]. I hold [qualification (SCQF equivalence if English)]. In my current role as [Current Role] at [Current Workplace], I [brief duty using JD keywords]. I am applying to NHS [Board] because [specific reason from advert]."
 
 ### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? (HARD LIMIT: 420w)
 Word budget — must total ≤420 words:
@@ -453,7 +452,7 @@ Never end with a readiness claim. End with the candidate's genuine motivation, a
 - Forward-looking: "The [named team/service from advert] at NHS [Board] is exactly the setting where a [specialty] background and [key strength FROM PERSON SPEC] combine into something useful. Thank you."
 - Callback: "The same instinct that made me [specific action from the candidate's story in this statement] is what I will bring to every shift at NHS [Board]. Thank you."
 - Development-led: "Working within NHS [Board]'s [specific unit/service from advert] is the structured development step I have been building towards — and the direction my [X] years in [specialty] point. Thank you."
-- Role-specific: "The [ENHANCED vacancy title] post at NHS [Board] represents the direction I have been working towards, and the [named service/team] is exactly where my [key strength FROM PERSON SPEC] will make a direct difference. Thank you."
+- Role-specific: "The [EXACT vacancy title] post at NHS [Board] represents the direction I have been working towards, and the [named service/team] is exactly where my [key strength FROM PERSON SPEC] will make a direct difference. Thank you."
 NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", "I look forward to discussing my application", "I am ready to contribute from day one", or any variation of "from the first shift."
 Always end with "Thank you." — nothing after it. Use Board name (NEVER "Trust").
 

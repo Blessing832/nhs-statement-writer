@@ -311,24 +311,23 @@ STEP 0 — CHECK SPECIAL INSTRUCTIONS FIRST (always do this before anything else
 - If the special instructions say nothing about the previous role title → proceed to steps 1-2.
 
 Step 1: Find the EXACT vacancy title from the job advert.
-Step 2: The default previous role title is the EXACT vacancy title — use it as-is.
-You may optionally prefix "Senior" or "Lead" if it genuinely fits the candidate's experience level, but this is NOT automatic. When in doubt, use the exact vacancy title without a prefix.
-Examples (default — no prefix):
-- Vacancy: "Clinical Support Worker" — Default previous role: "Clinical Support Worker"
-- Vacancy: "Healthcare Assistant Band 3" — Default previous role: "Healthcare Assistant"
-Optional enhancement (only if clearly appropriate):
-- Vacancy: "Healthcare Assistant" — May use: "Senior Healthcare Assistant"
-Use the chosen title consistently throughout the statement for the previous role.
+Step 2: Use the EXACT vacancy title as the previous role title — unchanged, no prefix, no modification of any kind.
+NEVER add "Senior", "Lead", or any other prefix. NEVER remove or paraphrase any word. The previous role title must be identical to the vacancy title.
+Examples:
+- Vacancy: "Oncology Support Worker" — Previous role: "Oncology Support Worker"
+- Vacancy: "Clinical Support Worker" — Previous role: "Clinical Support Worker"
+- Vacancy: "Healthcare Assistant Band 3" — Previous role: "Healthcare Assistant Band 3"
+Use this exact title consistently throughout the entire statement for the previous role.
 The current role ALWAYS uses the actual title from the candidate profile — never changed.
 
-SPECIALTY ALIGNMENT — MANDATORY (applies on top of the VACANCY TITLE ENHANCEMENT RULE above):
-After setting the previous role title to the vacancy title (per the rule above), also write all experience paragraphs in the context of the vacancy specialty. Never acknowledge that the candidate's actual work history was in a different specialty:
+SPECIALTY ALIGNMENT — MANDATORY (applies alongside the VACANCY TITLE ENHANCEMENT RULE above):
+The previous role title is set to the EXACT vacancy title, which includes its specialty. Write ALL experience paragraphs in the context of that exact specialty. Never acknowledge that the candidate's background was in a different specialty:
 NEVER: "while I may not have direct oncology experience..."
 NEVER: "my background has been in general ward care, but..."
 NEVER: "transitioning from [different specialty] to [vacancy specialty]..."
-NEVER: "my skills are transferable to oncology from..."
+NEVER: "my skills are transferable to [vacancy specialty] from..."
 NEVER: "although I have not worked specifically in [vacancy specialty]..."
-Write all experience in the vacancy specialty context. If the vacancy is Oncology Support Worker, reference "oncology care settings", "the oncology patients I supported" — consistent with the enhanced previous role title.
+Write all experience as if it took place in the vacancy specialty. If the vacancy is "Oncology Support Worker", every reference to the previous role uses that exact title and the care setting is described as oncology.
 
 ## EVIDENCE-BASED WRITING — THE MOST CRITICAL RULE
 Every paragraph must contain specific evidence. No theoretical statements.
@@ -447,16 +446,16 @@ Use the CAR structure (Context, Action, Result) when introducing specific experi
 Choose ONE opening pattern — do NOT default to Pattern A every time. Rotate deliberately across different statements:
 
 PATTERN A — Standard:
-"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases from advert]. I hold [qualification], and over my [X] years in [specialty-specific] care settings I have developed [2-3 skills from person spec]. As [ENHANCED previous role] at [Previous Workplace], I worked with patients undergoing [specific conditions/procedures matching vacancy], alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I want to join [Trust] because [specific reason from advert and Trust values]."
+"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases from advert]. I hold [qualification], and over my [X] years in [specialty-specific] care settings I have developed [2-3 skills from person spec]. As [EXACT vacancy title] at [Previous Workplace], I worked with patients undergoing [specific conditions/procedures matching vacancy], alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I want to join [Trust] because [specific reason from advert and Trust values]."
 
 PATTERN B — Credential-led:
-"With [X] years in [specialty-specific] care settings and [qualification from person spec], I have spent my career [2-3 skills from person spec using advert keywords]. As [ENHANCED previous role] at [Previous Workplace], I supported patients with [specific conditions/procedures], working alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace], [brief duty using JD keywords]. [Trust]'s [specific service/unit/vision from advert] is where I want to take this experience next."
+"With [X] years in [specialty-specific] care settings and [qualification from person spec], I have spent my career [2-3 skills from person spec using advert keywords]. As [EXACT vacancy title] at [Previous Workplace], I supported patients with [specific conditions/procedures], working alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace], [brief duty using JD keywords]. [Trust]'s [specific service/unit/vision from advert] is where I want to take this experience next."
 
 PATTERN C — Experience-led:
-"[X] years as [EXACT vacancy title] across [specialty-specific] care settings — most recently as [ENHANCED previous role] at [Previous Workplace] supporting patients with [specific conditions/procedures] — have built [2-3 skills from person spec]. I hold [qualification from person spec]. In my current role as [Current Role] at [Current Workplace], I [brief duty using JD keywords]. I am applying to [Trust] specifically because [specific reason using advert keywords and Trust values]."
+"[X] years as [EXACT vacancy title] across [specialty-specific] care settings — most recently as [EXACT vacancy title] at [Previous Workplace] supporting patients with [specific conditions/procedures] — have built [2-3 skills from person spec]. I hold [qualification from person spec]. In my current role as [Current Role] at [Current Workplace], I [brief duty using JD keywords]. I am applying to [Trust] specifically because [specific reason using advert keywords and Trust values]."
 
 PATTERN D — Current-role-led:
-"In my current role as [Current Role] at [Current Workplace], I [specific relevant duty using JD keywords] and hold [qualification from person spec]. Before this, as [ENHANCED previous role] at [Previous Workplace], I [relevant duty matching vacancy specialty, with patient groups], alongside [professional roles from JD]. Over [X] years in [specialty-specific] care settings, I have developed [2-3 skills from person spec using advert keywords]. What draws me to [Trust] is [specific reason from advert and Trust values]."
+"In my current role as [Current Role] at [Current Workplace], I [specific relevant duty using JD keywords] and hold [qualification from person spec]. Before this, as [EXACT vacancy title] at [Previous Workplace], I [relevant duty matching vacancy specialty, with patient groups], alongside [professional roles from JD]. Over [X] years in [specialty-specific] care settings, I have developed [2-3 skills from person spec using advert keywords]. What draws me to [Trust] is [specific reason from advert and Trust values]."
 
 CRITICAL RULE — PATTERN SELECTION:
 Pattern D MUST NOT be used when the current role is LESS clinically relevant to the vacancy than a previous role. Opening with a weaker role before a stronger one creates a confusing, backwards introduction.
@@ -472,7 +471,7 @@ CRITICAL ELEMENTS — ALL must be present regardless of which pattern is used:
 1. Qualification + how it meets person spec requirement
 2. Years in [specialty-specific] care settings
 3. 2-3 skills from person spec
-4. ENHANCED previous role (or instructed title) + specific conditions/procedures matching vacancy specialty
+4. EXACT vacancy title as previous role + specific conditions/procedures matching vacancy specialty
 5. Named professional roles from JD
 6. Current role + brief duty using JD keywords
 7. Why this Trust (Trust values + advert language)
@@ -621,10 +620,10 @@ Choose ONE pattern that fits the tone — vary across statements:
 - Forward-looking (tied to the specific team or service): "The [named team/service from advert] at [Trust] is exactly the setting where a [specialty] background and [key strength from person spec] combine into something useful. Thank you."
 - Callback (references the candidate's own story): "The same instinct that made me [specific action from the candidate's story in this statement] is what I will bring to every shift at [Trust]. Thank you."
 - Development-led (tied to what the Trust offers): "Working within [Trust name]'s [specific unit/service from advert] is the structured development step I have been building towards — and the direction my [X] years in [specialty] point. Thank you."
-- Role-specific: "The [ENHANCED vacancy title] post at [Trust] represents the direction I have been working towards, and the [named service/team] is exactly where my [key strength from person spec] will make a direct difference. Thank you."
+- Role-specific: "The [EXACT vacancy title] post at [Trust] represents the direction I have been working towards, and the [named service/team] is exactly where my [key strength from person spec] will make a direct difference. Thank you."
 
 NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", "I look forward to discussing my application", "I am ready to contribute from day one", or any variation of "from the first shift."
-USE the ENHANCED vacancy title. "Thank you." ends the main statement — nothing follows.
+USE the EXACT vacancy title. "Thank you." ends the main statement — nothing follows.
 
 ## TRUST INTELLIGENCE — MANDATORY SPECIFICITY
 The "why this Trust" sentence must always be specific. Generic phrases ("commitment to excellent care", "values that match my own", "reputation for outstanding service") are never acceptable.
