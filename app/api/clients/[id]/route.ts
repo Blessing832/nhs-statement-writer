@@ -15,29 +15,40 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const { id } = await params
   const body = await req.json()
 
-  const { data, error } = await supabaseAdmin
+  const baseUpdate = {
+    full_name: body.full_name,
+    work_history: body.work_history,
+    qualifications: body.qualifications,
+    skills: body.skills,
+    background: body.background,
+    special_instructions: body.special_instructions ?? '',
+    opening_style: body.opening_style ?? '',
+    scotland_q2_variation: body.scotland_q2_variation ?? '',
+    subscription_end: body.subscription_end,
+    is_active: body.is_active,
+    q_difficult_situation: body.q_difficult_situation ?? '',
+    q_why_trust: body.q_why_trust ?? '',
+    q_colleagues_say: body.q_colleagues_say ?? '',
+    q_proudest_moment: body.q_proudest_moment ?? '',
+    q_skills_equipment: body.q_skills_equipment ?? '',
+  }
+
+  // Try with statement_limit; fall back silently if the column doesn't exist yet
+  let { data, error } = await supabaseAdmin
     .from('clients')
-    .update({
-      full_name: body.full_name,
-      work_history: body.work_history,
-      qualifications: body.qualifications,
-      skills: body.skills,
-      background: body.background,
-      special_instructions: body.special_instructions ?? '',
-      opening_style: body.opening_style ?? '',
-      scotland_q2_variation: body.scotland_q2_variation ?? '',
-      subscription_end: body.subscription_end,
-      is_active: body.is_active,
-      statement_limit: body.statement_limit ?? null,
-      q_difficult_situation: body.q_difficult_situation ?? '',
-      q_why_trust: body.q_why_trust ?? '',
-      q_colleagues_say: body.q_colleagues_say ?? '',
-      q_proudest_moment: body.q_proudest_moment ?? '',
-      q_skills_equipment: body.q_skills_equipment ?? '',
-    })
+    .update({ ...baseUpdate, statement_limit: body.statement_limit ?? null })
     .eq('id', id)
     .select()
     .single()
+
+  if (error?.message?.includes('statement_limit')) {
+    ;({ data, error } = await supabaseAdmin
+      .from('clients')
+      .update(baseUpdate)
+      .eq('id', id)
+      .select()
+      .single())
+  }
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json(data)
