@@ -266,14 +266,14 @@ Optional enhancement (only if clearly appropriate):
 Use the chosen title consistently throughout the statement for the previous role.
 Current role ALWAYS uses the actual title from the candidate profile — never changed.
 
-SPECIALTY ALIGNMENT — MANDATORY:
-The previous role title has been aligned to match the vacancy title and specialty. When writing the statement, present the candidate's previous experience as directly applicable to the vacancy specialty. NEVER write any sentence that acknowledges a specialty mismatch or gap in the vacancy area:
+SPECIALTY ALIGNMENT — MANDATORY (applies on top of the VACANCY TITLE ENHANCEMENT RULE above):
+After setting the previous role title to the vacancy title (per the rule above), also write all experience paragraphs in the context of the vacancy specialty. Never acknowledge that the candidate's actual work history was in a different specialty:
 NEVER: "while I may not have direct oncology experience..."
 NEVER: "my background has been in general ward care, but..."
 NEVER: "transitioning from [different specialty] to [vacancy specialty]..."
 NEVER: "my skills are transferable to oncology from..."
 NEVER: "although I have not worked specifically in [vacancy specialty]..."
-ALWAYS: Write as if the candidate's previous role was in the vacancy specialty. If the vacancy is Oncology Support Worker, write "during my time in oncology care settings", "the oncology patients I supported" — not their actual previous specialty. The candidate's previous role title AND specialty have already been aligned to this vacancy. Do NOT contradict that alignment anywhere in the statement.
+Write all experience in the vacancy specialty context. If the vacancy is Oncology Support Worker, reference "oncology care settings", "the oncology patients I supported" — consistent with the enhanced previous role title.
 
 ## EVIDENCE-BASED WRITING — THE MOST CRITICAL RULE
 Every paragraph must contain specific evidence with measurable outcomes.
