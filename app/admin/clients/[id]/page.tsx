@@ -157,6 +157,7 @@ export default function EditClientPage() {
     scotland_q2_variation: '',
     subscription_end: '',
     is_active: true,
+    statement_limit: '' as string,
     q_difficult_situation: '',
     q_why_trust: '',
     q_colleagues_say: '',
@@ -186,6 +187,7 @@ export default function EditClientPage() {
           scotland_q2_variation: data.scotland_q2_variation || '',
           subscription_end: data.subscription_end.split('T')[0],
           is_active: data.is_active,
+          statement_limit: data.statement_limit != null ? String(data.statement_limit) : '',
           q_difficult_situation: data.q_difficult_situation || '',
           q_why_trust: data.q_why_trust || '',
           q_colleagues_say: data.q_colleagues_say || '',
@@ -216,7 +218,10 @@ export default function EditClientPage() {
         'Content-Type': 'application/json',
         'x-admin-token': token,
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify({
+        ...form,
+        statement_limit: form.statement_limit !== '' ? parseInt(form.statement_limit, 10) : null,
+      }),
     })
     const data = await res.json()
     setSaving(false)
@@ -532,6 +537,31 @@ export default function EditClientPage() {
                     +{m}mo
                   </button>
                 ))}
+              </div>
+            </Field>
+
+            <Field label="Statement Limit" hint="Maximum total statements this client can generate. Leave empty for unlimited. Client is automatically deactivated when the limit is reached.">
+              <div className="flex items-center gap-3 flex-wrap">
+                <input
+                  type="number"
+                  min="1"
+                  value={form.statement_limit}
+                  onChange={(e) => handleChange('statement_limit', e.target.value)}
+                  placeholder="No limit"
+                  className="w-28 px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+                />
+                {(() => {
+                  const used = statementLog.length
+                  const limit = form.statement_limit !== '' ? parseInt(form.statement_limit, 10) : null
+                  const atLimit = limit != null && used >= limit
+                  return (
+                    <span className={`text-sm ${atLimit ? 'text-red-600 font-semibold' : 'text-gray-500'}`}>
+                      {used} statement{used !== 1 ? 's' : ''} used
+                      {limit != null ? ` / ${limit} limit` : ''}
+                      {atLimit ? ' — limit reached' : ''}
+                    </span>
+                  )
+                })()}
               </div>
             </Field>
 

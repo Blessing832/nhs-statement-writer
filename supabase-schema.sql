@@ -12,6 +12,7 @@ create table clients (
   subscription_start timestamptz not null default now(),
   subscription_end timestamptz not null,
   is_active boolean not null default true,
+  statement_limit integer null,
   created_at timestamptz not null default now()
 );
 

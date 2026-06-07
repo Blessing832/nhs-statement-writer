@@ -54,6 +54,21 @@ export async function POST(req: NextRequest) {
     )
   }
 
+  // 1b. Check statement limit
+  if (client.statement_limit != null) {
+    const { count } = await supabaseAdmin
+      .from('statements')
+      .select('*', { count: 'exact', head: true })
+      .eq('client_id', client.id)
+    if ((count ?? 0) >= client.statement_limit) {
+      await supabaseAdmin.from('clients').update({ is_active: false }).eq('id', client.id)
+      return NextResponse.json(
+        { error: 'You have reached your statement limit. Please contact your administrator.' },
+        { status: 403 }
+      )
+    }
+  }
+
   // 2. Generate (job data already scraped by client in step 1)
   let generated: Awaited<ReturnType<typeof generateStatement>>
   try {

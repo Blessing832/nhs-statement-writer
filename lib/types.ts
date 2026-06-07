@@ -12,6 +12,7 @@ export interface Client {
   subscription_start: string
   subscription_end: string
   is_active: boolean
+  statement_limit: number | null
   created_at: string
   q_difficult_situation: string
   q_why_trust: string

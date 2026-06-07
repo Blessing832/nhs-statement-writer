@@ -28,6 +28,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       scotland_q2_variation: body.scotland_q2_variation ?? '',
       subscription_end: body.subscription_end,
       is_active: body.is_active,
+      statement_limit: body.statement_limit ?? null,
       q_difficult_situation: body.q_difficult_situation ?? '',
       q_why_trust: body.q_why_trust ?? '',
       q_colleagues_say: body.q_colleagues_say ?? '',
