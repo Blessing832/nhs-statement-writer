@@ -489,14 +489,16 @@ async function generateParallel(
   const questionCount = options.specificQuestions
     ? (options.specificQuestions.match(/^\d+\./gm) || []).length
     : 0
-  const tokensPerQuestion = 430 // ~300 words × 1.43 tokens/word, rounded up
+  // 550 tokens per question: ~430 for the 300-word MINI-STARR answer + ~120 for the bold
+  // heading which includes the full question text (NHS questions are often 20-40 words)
+  const tokensPerQuestion = 550
 
   let statementMaxTokens: number
   if (appMode === 'questions-only') {
-    statementMaxTokens = Math.min(5000, Math.max(2500, questionCount * tokensPerQuestion + 300))
+    statementMaxTokens = Math.min(8000, Math.max(3000, questionCount * tokensPerQuestion + 500))
   } else if (appMode === 'statement-questions') {
     const statementBase = isScotland ? 2000 : 2300
-    statementMaxTokens = Math.min(5000, statementBase + Math.max(0, questionCount * tokensPerQuestion))
+    statementMaxTokens = Math.min(8000, statementBase + Math.max(0, questionCount * tokensPerQuestion))
   } else if (isScotland) {
     statementMaxTokens = 2000
   } else {
