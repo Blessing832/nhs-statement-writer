@@ -46,8 +46,8 @@ export function detectRegion(url: string, rawText?: string): PromptRegion {
   if (lower.includes('civilservicejobs.service.gov.uk') || lower.includes('civil-service-jobs')) {
     return 'civil-service'
   }
-  // For text-paste mode, auto-detect region from content
-  if (lower === 'text-paste' && rawText) {
+  // Content-based fallback for unrecognized URLs and text-paste mode
+  if (rawText) {
     const t = rawText.toLowerCase()
     if (
       t.includes('nhs scotland') ||
