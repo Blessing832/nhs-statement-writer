@@ -398,6 +398,15 @@ Before writing, read and extract:
 
 USE EXACT WORDS from the JD for tools, systems, forms, procedures, and professional roles throughout the statement.
 
+## EXACT JD KEYWORDS — MANDATORY THROUGHOUT
+After reading the job documents, identify 8-12 KEY PHRASES specific to this advert. These are the exact words the hiring manager used — duty phrases, named patient groups, criteria wording, service priorities, named procedures, and equipment.
+
+At least 6 of these exact phrases MUST appear verbatim (or near-verbatim) in the statement — woven naturally into evidence sentences. This is in addition to the EXACT PERSON SPEC LANGUAGE requirement below.
+
+EXAMPLE: If the JD says "supporting patients with complex needs in an acute care setting" — the statement must contain phrases like "complex needs", "acute care setting" — not paraphrases like "challenging patients" or "hospital environment".
+
+FINAL CHECK 7 verifies this. If fewer than 6 exact JD phrases appear after drafting, weave the missing ones into existing paragraphs before outputting — do NOT add a new paragraph solely for keywords.
+
 ## WORD COUNT — HARD LIMIT
 Statement (opening to "Thank you."): MAXIMUM 1,450 WORDS
 Count internally after every paragraph. Never display counts or deliberation to the user.
@@ -568,7 +577,7 @@ WHAT IS NEVER ALLOWED AS AN OPENER:
 The opener does not need to follow a template. It needs to be real, specific, and immediate. Start with an action.
 
 ## STORY UNIQUENESS — MANDATORY
-Each statement must contain exactly one primary evidence story. It must be specific to this candidate's experience and care setting.
+Each statement must contain at least two evidence scenarios. Each must be specific to this candidate's experience and care setting. Distribute them throughout the statement — not all at the end.
 
 Avoid defaulting to these overused story types unless the candidate's own intake answers explicitly describe one of them:
 - Sitting with a grieving patient after a death on the ward
@@ -694,8 +703,10 @@ After drafting the full statement, run this check on every paragraph before outp
    - 2 = evidenced but no outcome stated → add a result or reflection
    - 3 = evidenced with a measurable or meaningful outcome → pass
    Every essential criterion must reach at least 2. Target 3 for every essential criterion. Upgrade any paragraph scoring 1 before outputting.
+7. **JD keyword check** — From the 8-12 key phrases extracted from this specific job advert, count how many appear verbatim in the completed statement. If fewer than 6 appear, weave the missing keywords naturally into existing paragraphs — do NOT add a new paragraph solely for keywords.
+8. **Scenario count** — Count the evidence scenario paragraphs (full MINI-STARR format: situation, action, result). If fewer than 2 exist, add a second scenario paragraph before outputting. Each scenario must address at least 2 person spec criteria and end with a concrete outcome.
 
-Only output the statement after all six checks are complete and any issues are fixed.
+Only output the statement after all eight checks are complete and any issues are fixed.
 
 ## OUTPUT
 Return the statement as plain text exactly as specified in the user message. Follow the user message output format precisely.`

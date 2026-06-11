@@ -324,6 +324,15 @@ Before writing, extract:
 6. Geographic areas served by the Board
 7. Board strategic goals (Realistic Medicine, What Matters to You, integration)
 
+## EXACT JD KEYWORDS — MANDATORY THROUGHOUT
+After reading the job documents, identify 8-12 KEY PHRASES specific to this advert. These are the exact words the hiring manager used — duty phrases, named patient groups, criteria wording, service priorities, named procedures, and equipment.
+
+At least 6 of these exact phrases MUST appear verbatim (or near-verbatim) across Q1, Q2, and Q3 — woven naturally into evidence sentences. This is in addition to the EXACT PERSON SPEC LANGUAGE requirement below.
+
+EXAMPLE: If the JD says "supporting patients with complex needs in an acute care setting" — the statement must contain phrases like "complex needs", "acute care setting" — not paraphrases like "challenging patients" or "hospital environment".
+
+FINAL CHECK 7 verifies this. If fewer than 6 exact JD phrases appear after drafting, weave the missing ones into existing paragraphs before outputting — do NOT add a new paragraph solely for keywords.
+
 ## WORD COUNT — HARD LIMITS
 Q1: 420 WORDS MAXIMUM. At 400 words, finish the sentence and immediately start Question 2.
 Q2: 420 WORDS MAXIMUM. At 400 words, finish the sentence and immediately start Question 3.
@@ -509,7 +518,7 @@ WHAT IS NEVER ALLOWED AS AN OPENER:
 The opener does not need to follow a template. It needs to be real, specific, and immediate. Start with an action.
 
 ## STORY UNIQUENESS — MANDATORY
-Each statement must contain exactly one primary evidence story. It must be specific to this candidate's experience and care setting.
+Each statement must contain at least two evidence scenarios. Each must be specific to this candidate's experience and care setting. Distribute them across questions — not all in the same question.
 
 Avoid defaulting to these overused story types unless the candidate's own intake answers explicitly describe one of them:
 - Sitting with a grieving patient after a death on the ward
@@ -526,8 +535,8 @@ If the candidate's intake answers (CANDIDATE PERSONAL STORIES section) contain a
 
 The story must match the candidate's actual care setting — community, ward, maternity, mental health, or care home.
 
-## STORY PARAGRAPHS — MINIMUM 1 REQUIRED (7-8 lines, 120-150 words)
-Include at least 1 story paragraph in Q1, addressing 3-5 criteria at once.
+## STORY PARAGRAPHS — MINIMUM 2 REQUIRED (7-8 lines, 120-150 words)
+Include at least 2 story paragraphs across the full statement: at least 1 in Q1 (addressing 3-5 criteria at once), and at least 1 more in Q2 — use the optional criterion paragraph slot in Q2 as a scenario if the word budget allows.
 {{STORY_SUBHEADING_RULE}}
 Full STARR format: Situation, Action, Result, and Reflection. The Reflection sentence is mandatory in every story paragraph — what was learned, what changed, or what was proposed afterwards. Use named professionals, Scottish systems, and legislation where relevant.
 
@@ -597,8 +606,10 @@ After drafting the full response, run this check on every paragraph before outpu
    - 2 = evidenced but no outcome stated → add a result or reflection
    - 3 = evidenced with a measurable or meaningful outcome → pass
    Every essential criterion must reach at least 2. Target 3 for every essential criterion. Upgrade any paragraph scoring 1 before outputting.
+7. **JD keyword check** — From the 8-12 key phrases extracted from this specific job advert, count how many appear verbatim across Q1, Q2, and Q3. If fewer than 6 appear, weave the missing keywords naturally into existing paragraphs — do NOT add a new paragraph solely for keywords.
+8. **Scenario count** — Count the evidence scenario paragraphs (full MINI-STARR format: situation, action, result) across all three questions. If fewer than 2 exist, add a second scenario paragraph before outputting. Each scenario must address at least 2 person spec criteria and end with a concrete outcome.
 
-Only output the response after all six checks are complete and any issues are fixed.
+Only output the response after all eight checks are complete and any issues are fixed.
 
 ## OUTPUT
 Write only the three-question response as instructed in the user message. Follow the output format specified in the user message exactly.`
