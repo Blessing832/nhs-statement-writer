@@ -299,6 +299,34 @@ Statements score higher when they use the real words of the workplace. Use the a
 PHYSICAL WORKPLACE TERMS — use throughout:
 bay, ward, clinic room, side room, treatment room, handover, SBAR, NEWS2 chart, observation chart, fluid balance chart, care plan, risk assessment, medication round, drug trolley, Dinamap, pulse oximeter, thermometer, blood pressure cuff, catheter, pressure ulcer care, wound dressing, bed bath, hoist, transfer belt, blood glucose meter, urine dipstick, ward whiteboard, bleep, call bell.
 
+## SPECIFIC EQUIPMENT NAMING — MANDATORY
+Never use a generic category name when you can name the actual item. The scenario must always specify the exact tool, aid, or piece of equipment used.
+
+WRONG: "I used adaptive utensils to support the patient with eating."
+RIGHT: "I used built-up handled cutlery, an angled spoon, and a plate guard so the patient could manage meals independently."
+
+WRONG: "I used mobility aids to help the patient transfer."
+RIGHT: "I used a banana board and a transfer belt for short transfers, and a mobile hoist with a full-body sling for patients who could not weight-bear."
+
+WRONG: "I applied appropriate wound dressings."
+RIGHT: "I applied a hydrocolloid dressing to the sacral pressure ulcer and a foam dressing over the surgical wound, documenting both on TrakCare."
+
+WRONG: "I used communication aids for the patient."
+RIGHT: "I used a Makaton symbol board and a picture communication chart to establish the patient's pain level and care preferences."
+
+WRONG: "I used pressure-relieving equipment."
+RIGHT: "I repositioned the patient every two hours using a foam wedge, checked heel foam boots were correctly fitted, and confirmed the alternating pressure mattress was set to the correct patient weight."
+
+SPECIFIC ITEM NAMES TO USE (name the exact item every time):
+- Eating/drinking: built-up handled cutlery, angled spoon, plate guard, Dycem non-slip mat, weighted cup, two-handled cup, sippy cup, bendable straw, foam swab, thickened fluids (specify level: nectar-thick, honey-thick, pudding-thick)
+- Mobility/transfers: Zimmer frame, wheeled walking frame (rollator), quad stick, gutter frame, transfer belt, banana board (transfer board), rotunda/turntable, mobile hoist (specify brand if known: Arjo, Invacare), ceiling track hoist, full-body sling, seated sling, stand-aid sling, slide sheet (specify: single-use slide sheet, reusable roller slide sheet)
+- Pressure care: alternating pressure mattress, static foam mattress, heel foam boots (Heelift boots), foam wedge, repositioning wedge, pressure-relieving cushion (ROHO cushion), body map form
+- Wound care: hydrocolloid dressing, alginate dressing, foam dressing, silicone dressing, antimicrobial dressing (silver dressing), negative pressure wound therapy (NPWT/VAC dressing), wound irrigation (saline irrigation), wound swab
+- Continence: urinary catheter, suprapubic catheter, catheter bag, leg bag, conveen (penile sheath), incontinence pad, bedpan, commode, urinal bottle, bowel chart
+- Communication: Makaton, picture communication board, AAC device, eye gaze board, communication passport, flash cards, yes/no system
+- Observation equipment: Dinamap, pulse oximeter, tympanic thermometer, axillary thermometer, blood glucose meter (glucometer), peak flow meter, NEWS2 chart, early warning score
+- Oral hygiene: foam swab (pink sponge stick), chlorhexidine mouthwash, denture pot, suction toothbrush
+
 ELECTRONIC RECORD SYSTEMS — two rules depending on the candidate's background:
 
 FOR CANDIDATES WITH NHS (Scotland) EXPERIENCE — name the actual system:
