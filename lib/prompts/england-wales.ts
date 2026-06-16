@@ -436,13 +436,14 @@ EXAMPLE: If the JD says "supporting patients with complex needs in an acute care
 FINAL CHECK 7 verifies this. If fewer than 6 exact JD phrases appear after drafting, weave the missing ones into existing paragraphs before outputting — do NOT add a new paragraph solely for keywords.
 
 ## WORD COUNT — HARD LIMIT
-Statement (opening to "Thank you."): MAXIMUM 1,450 WORDS
+Statement (opening to "Thank you."): MAXIMUM 1,570 WORDS
+The extra 120 words are reserved for the mandatory CRITERIA SUMMARY PARAGRAPH (see below).
 Count internally after every paragraph. Never display counts or deliberation to the user.
 INTERNAL CHECKPOINTS:
-- At 1,100w: shorten remaining paragraphs
-- At 1,350w: finish in the next 100w
-- At 1,420w: write "Thank you." and stop immediately — nothing follows
-- At 1,450w: stop immediately with "Thank you."
+- At 1,200w: shorten remaining paragraphs
+- At 1,460w: finish in the next 100w
+- At 1,540w: write the summary paragraph then "Thank you." and stop immediately
+- At 1,570w: stop immediately with "Thank you."
 
 ## WORD ALLOCATION — ESSENTIAL vs DESIRABLE
 Essential criteria deserve 80% of the word count. Desirable criteria deserve 20%.
@@ -648,6 +649,25 @@ PATTERN A (motivation-first): "I want to work at [Trust] because of [vision from
 PATTERN B (value-first): "[Trust]'s [Value 1] is how I approach [specific task] — [specific example and result]. I show [Value 2] by [specific example and result]. [Value 3] is reflected in [specific example and result]. [Trust]'s focus on [vision from advert] is exactly what drew me to this role."
 
 PATTERN C (evidence-first): "Every shift I have worked in [specialty] settings reflects [Value 1] — [specific example and result]. I show [Value 2] through [specific example and result], and [Value 3] through [specific example and result]. [Trust]'s commitment to [vision from advert] is the environment I want to work in."
+
+## CRITERIA SUMMARY PARAGRAPH — MANDATORY (110-120 words, second to last)
+Place this paragraph immediately before the closing paragraph. It is required in every statement.
+
+Purpose: Recap how the candidate meets the major essential criteria using EXACT person spec keyword phrases, then affirm commitment to the role and Trust.
+
+STRUCTURE:
+1. Open with a confident sentence linking the candidate's experience to this specific role — do NOT open with "In summary", "To summarise", or "In conclusion"
+2. Name 4-6 major essential criteria using their EXACT wording from the person spec, each paired with a brief phrase showing how the candidate meets it
+3. Close with one commitment sentence referencing the specific Trust and named service/team
+
+WRONG opener: "In summary, I believe I am a strong candidate for this post."
+RIGHT opener: "Across [X] years in [specialty] care settings, I have built the [exact PS criterion] and [exact PS criterion] this role requires."
+
+EXAMPLE (adapt to this role's person spec — do not copy verbatim):
+"Across my years in [specialty] care settings, I have built the [exact PS criterion 1] and [exact PS criterion 2] this post requires. I hold [exact qualification from PS], meeting the education requirement. My record in [area] addresses the requirement for [exact PS criterion 3], and my approach to [area] satisfies [exact PS criterion 4]. [Exact PS criterion 5] is evidenced throughout my career, most recently at [workplace]. I am committed to bringing this breadth of experience to [Trust], contributing to [named service or patient group from advert], and continuing to grow within [Trust name]."
+
+Word count: 110-120 words exactly. Do not exceed 120.
+CRITICAL: Use the EXACT noun phrases from the person specification — not paraphrases. A recruiter must be able to tick every major essential criterion directly from this paragraph.
 
 ## CLOSING PARAGRAPH (4-5 lines, approx 50-60 words)
 Never end with a readiness claim. End with the candidate's genuine motivation, a callback to their strongest evidence, or a specific development goal tied to what this Trust offers.

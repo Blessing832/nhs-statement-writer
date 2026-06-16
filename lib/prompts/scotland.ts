@@ -364,7 +364,7 @@ FINAL CHECK 7 verifies this. If fewer than 6 exact JD phrases appear after draft
 ## WORD COUNT — HARD LIMITS
 Q1: 420 WORDS MAXIMUM. At 400 words, finish the sentence and immediately start Question 2.
 Q2: 420 WORDS MAXIMUM. At 400 words, finish the sentence and immediately start Question 3.
-Q3: 220 WORDS MAXIMUM. At 210 words, write "Thank you." and stop entirely.
+Q3: 340 WORDS MAXIMUM. The extra 120 words are reserved for the mandatory CRITERIA SUMMARY PARAGRAPH. At 330 words, write "Thank you." and stop entirely.
 
 Each question has a fixed word budget below. Write fewer, shorter paragraphs to stay within it.
 
@@ -470,11 +470,12 @@ Rule 6 — Relevance check. Only mention qualifications relevant to this specifi
 
 The goal is for the candidate to look well matched to the role, not overqualified for it.
 
-### QUESTION 3: Is there any other relevant information you wish to tell us? (MAX 220w)
+### QUESTION 3: Is there any other relevant information you wish to tell us? (MAX 340w)
 Structure:
 1. 6 C's paragraph (each C with one brief specific example and result)
-2. Closing paragraph (3-4 lines)
-STOP at 220 words maximum.
+2. Criteria summary paragraph (110-120 words — see CRITERIA SUMMARY PARAGRAPH rule below)
+3. Closing paragraph (3-4 lines)
+STOP at 340 words maximum.
 
 6 C'S PARAGRAPH (NO SUBHEADING):
 Every C must have a specific example with a quantified result. Choose ONE opening pattern that fits the Q1/Q2 tone:
@@ -483,6 +484,23 @@ Every C must have a specific example with a quantified result. Choose ONE openin
 - Personal: "Care, compassion, competence, communication, courage, and commitment are not just professional standards to me — they describe how I approach every shift..."
 - Direct: "I demonstrate each of the 6 C's through specific daily actions..."
 Then address each of the 6 C's — care, compassion, competence, communication, courage, commitment — each with one specific example and a result. Do not use the same sentence structure for two consecutive Cs.
+
+CRITERIA SUMMARY PARAGRAPH — MANDATORY IN Q3 (110-120 words, placed between 6 C's and closing):
+Purpose: Recap how the candidate meets the major essential criteria using EXACT person spec keyword phrases, then affirm commitment to the role and Board.
+
+STRUCTURE:
+1. Open with a confident sentence linking experience to this specific role — do NOT open with "In summary", "To summarise", or "In conclusion"
+2. Name 4-6 major essential criteria using their EXACT wording from the person spec, each paired with a brief phrase showing how the candidate meets it
+3. Close with one commitment sentence referencing NHS [Board] and the named service/team
+
+WRONG opener: "In summary, I believe I am a strong candidate for this post."
+RIGHT opener: "Across [X] years in [specialty] care settings, I have built the [exact PS criterion] and [exact PS criterion] this role requires."
+
+EXAMPLE (adapt to this role's person spec — do not copy verbatim):
+"Across my years in [specialty] care settings, I have built the [exact PS criterion 1] and [exact PS criterion 2] this post requires. I hold [exact qualification from PS], meeting the education requirement. My record in [area] addresses the requirement for [exact PS criterion 3], and my approach to [area] satisfies [exact PS criterion 4]. [Exact PS criterion 5] is evidenced throughout my career, most recently at [workplace]. I am committed to bringing this experience to NHS [Board], contributing to [named service or patient group from advert], and continuing to grow within the Board."
+
+Word count: 110-120 words exactly. Do not exceed 120.
+CRITICAL: Use the EXACT noun phrases from the person specification — not paraphrases. A recruiter must be able to tick every major essential criterion directly from this paragraph.
 
 CLOSING PARAGRAPH (3-4 lines):
 Never end with a readiness claim. End with the candidate's genuine motivation, a callback to their strongest evidence, or a specific development goal tied to what this Board offers. Choose ONE pattern — vary across statements:
