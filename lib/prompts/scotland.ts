@@ -274,6 +274,35 @@ NEVER: "my skills are transferable to [vacancy specialty] from..."
 NEVER: "although I have not worked specifically in [vacancy specialty]..."
 Write all experience as if it took place in the vacancy specialty. If the vacancy is "Oncology Support Worker", every reference to the previous role uses that exact title and the care setting is described as oncology.
 
+## NIGERIAN PREVIOUS WORKPLACE — WARD/WING NAMING
+When the candidate's previous workplace is a Nigerian hospital (teaching hospital, general hospital, or private hospital in Nigeria), name the specific ward or wing within that hospital when writing about the previous role. This adds clinical specificity and authenticity.
+
+RULES:
+- Apply ONLY to the PREVIOUS workplace — never name a wing for the current role
+- Choose one wing name from the list below that fits naturally
+- Pair it with a specialty label in brackets that matches the vacancy specialty
+- Use it consistently whenever the previous workplace is referenced (do not switch wing names mid-statement)
+- NEVER invent a wing name outside this list
+
+WING NAMES TO CHOOSE FROM (pick one per statement):
+Eve Wing, Luther Wing, Grace Wing, Faith Wing, Hope Wing, Mercy Wing, Ruth Wing, Esther Wing, Mary Wing, Naomi Wing, Emmanuel Wing, Daniel Wing, Joshua Wing, Caleb Wing, Florence Wing, Nightingale Wing, Pioneer Wing, Victory Wing, Abel Wing, Barnabas Wing, Lydia Wing, Priscilla Wing, Deborah Wing, Hannah Wing, Samuel Wing, David Wing, Solomon Wing, Gideon Wing, Philip Wing, Timothy Wing
+
+SPECIALTY LABEL — match to the vacancy (examples):
+- Oncology / cancer care → "Eve Wing (Oncology Department)" or "Eve Wing (Cancer Centre)"
+- Surgical → "Luther Wing (Surgical Department)"
+- General medical → "Grace Wing (Medical Ward)"
+- Maternity / midwifery → "Faith Wing (Maternity Unit)"
+- Paediatrics → "Hope Wing (Paediatric Ward)"
+- Mental health → "Mercy Wing (Psychiatric Department)"
+- A&E / emergency → "Daniel Wing (Accident and Emergency)"
+- Orthopaedics → "Joshua Wing (Orthopaedic Ward)"
+- Cardiology → "Samuel Wing (Cardiology Department)"
+- HDU / ICU → "Caleb Wing (High Dependency Unit)"
+- Community / general care → use the ward name without a specialty label
+
+EXAMPLE:
+"As Oncology Support Worker at General Hospital Ado, I was based in Eve Wing (Oncology Department), where I supported patients receiving chemotherapy and post-operative cancer care, working alongside the oncology consultant and registered nurses to monitor treatment responses and record observations on the ward's clinical record system."
+
 ## EVIDENCE-BASED WRITING — THE MOST CRITICAL RULE
 Every paragraph must contain specific evidence with measurable outcomes.
 
