@@ -342,18 +342,34 @@ RULES:
 WING NAMES TO CHOOSE FROM (pick one per statement):
 Eve Wing, Luther Wing, Grace Wing, Faith Wing, Hope Wing, Mercy Wing, Ruth Wing, Esther Wing, Mary Wing, Naomi Wing, Emmanuel Wing, Daniel Wing, Joshua Wing, Caleb Wing, Florence Wing, Nightingale Wing, Pioneer Wing, Victory Wing, Abel Wing, Barnabas Wing, Lydia Wing, Priscilla Wing, Deborah Wing, Hannah Wing, Samuel Wing, David Wing, Solomon Wing, Gideon Wing, Philip Wing, Timothy Wing
 
-SPECIALTY LABEL — match to the vacancy (examples):
+DETERMINING THE SPECIALTY — READ THE JOB DESCRIPTION:
+The specialty for the wing label must be inferred from the job advert and description even when not explicitly named. Scan the full JD for these clues:
+
+- Patient groups named: "patients with cancer", "oncology patients", "post-operative patients", "patients in labour", "neonates", "children", "elderly patients", "patients with dementia", "patients with mental illness", "trauma patients"
+- Procedures mentioned: "chemotherapy administration", "wound care post-surgery", "catheterisation", "stoma care", "fetal monitoring", "CTG", "NEWS2 escalation", "medication rounds", "manual handling", "electroconvulsive therapy", "venepuncture"
+- Equipment referenced: "infusion pump", "CTG machine", "incubator", "crash trolley", "theatre equipment", "dialysis machine", "cardiac monitor"
+- Department or ward name in the JD title or description: "Oncology Ward", "Surgical Unit", "Maternity Suite", "CAMHS", "A&E", "ITU", "HDU", "Cardiology Department"
+- Band and role type: Band 2-3 HCA/Support Worker roles — look at what duties are listed to determine the clinical area
+
+SPECIALTY LABEL — match to what the JD reveals (examples):
 - Oncology / cancer care → "Eve Wing (Oncology Department)" or "Eve Wing (Cancer Centre)"
-- Surgical → "Luther Wing (Surgical Department)"
-- General medical → "Grace Wing (Medical Ward)"
-- Maternity / midwifery → "Faith Wing (Maternity Unit)"
-- Paediatrics → "Hope Wing (Paediatric Ward)"
-- Mental health → "Mercy Wing (Psychiatric Department)"
+- Surgical / post-operative → "Luther Wing (Surgical Department)"
+- General medical / internal medicine → "Grace Wing (Medical Ward)"
+- Maternity / midwifery / labour → "Faith Wing (Maternity Unit)"
+- Neonatal → "Faith Wing (Neonatal Unit)"
+- Paediatrics / children → "Hope Wing (Paediatric Ward)"
+- Mental health / psychiatry → "Mercy Wing (Psychiatric Department)"
 - A&E / emergency → "Daniel Wing (Accident and Emergency)"
-- Orthopaedics → "Joshua Wing (Orthopaedic Ward)"
-- Cardiology → "Samuel Wing (Cardiology Department)"
-- HDU / ICU → "Caleb Wing (High Dependency Unit)"
-- Community / general care → use the ward name without a specialty label
+- Orthopaedics / trauma → "Joshua Wing (Orthopaedic Ward)"
+- Cardiology / cardiac → "Samuel Wing (Cardiology Department)"
+- HDU / ICU / critical care → "Caleb Wing (High Dependency Unit)"
+- Renal / dialysis → "Emmanuel Wing (Renal Unit)"
+- Stroke / neurology → "David Wing (Neurology Ward)"
+- Respiratory → "Philip Wing (Respiratory Ward)"
+- Gynaecology → "Esther Wing (Gynaecology Ward)"
+- Elderly care / frailty → "Naomi Wing (Elderly Care Ward)"
+- Community / general care → use the ward name without a specialty label in brackets
+- If the specialty truly cannot be determined from the JD → omit the specialty label entirely, use just the wing name
 
 EXAMPLE:
 "As Oncology Support Worker at General Hospital Ado, I was based in Eve Wing (Oncology Department), where I supported patients receiving chemotherapy and post-operative cancer care, working alongside the oncology consultant and registered nurses to monitor treatment responses and record observations on the ward's clinical record system."
