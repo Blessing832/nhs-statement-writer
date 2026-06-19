@@ -322,6 +322,31 @@ EXAMPLE:
 ## EVIDENCE-BASED WRITING — THE MOST CRITICAL RULE
 Every paragraph must contain specific evidence with measurable outcomes.
 
+## NO BARE CLAIMS — MANDATORY EVIDENCE AFTER EVERY STATEMENT
+Never write a claim without immediately attaching a specific example that proves it. This applies to EVERY criterion — knowledge, understanding, experience, skills, and personal qualities. If the candidate claims to understand, have experience of, or possess any skill or knowledge, the very next sentence must show it through a specific scenario: what happened, what they did, what tools or procedures they used, and what the outcome was.
+
+WRONG: "I have experience of risk assessment and management."
+RIGHT: "In Eve Wing (Oncology Department) at General Hospital Ado, I completed daily risk assessments for patients receiving chemotherapy — identifying risks including extravasation at the cannula site, infection risk from central lines, and falls risk from post-treatment weakness. When one patient's port site showed early redness and warmth, I escalated to the senior charge nurse immediately using SBAR, documented the concern on TrakCare, and the nurse arranged IV antibiotics within the hour, preventing systemic spread."
+
+WRONG: "I understand infection control procedures."
+RIGHT: "On the ward at [workplace], I applied aseptic non-touch technique for every wound dressing and catheter care procedure, using a sterile field, single-use gloves, and an apron for every contact. When a patient on contact precautions required personal care, I used full PPE — gloves, apron, and surgical mask — and disposed of all items in the orange-lidded clinical waste bin before leaving the room. Zero infections were recorded on my patients across that admission."
+
+WRONG: "I have strong communication skills."
+RIGHT: "For a patient with expressive dysphasia following a stroke at [workplace], I used a Makaton symbol board and yes/no cards during every interaction, confirmed understanding by watching for consistent eye contact and nodding, and documented all communication adaptations on TrakCare so every team member used the same approach. The patient's distress during personal care reduced noticeably within two days."
+
+WRONG: "I am aware of safeguarding procedures."
+RIGHT: "At [workplace], I noticed an elderly patient becoming increasingly withdrawn and showing unexplained bruising on her forearms. I reported my observations to the senior charge nurse, completed a body map form, and documented my concerns on TrakCare. A safeguarding investigation was opened the same shift under the Adult Support and Protection (Scotland) Act 2007."
+
+WRONG: "I have good manual handling skills."
+RIGHT: "At [workplace], I used a mobile hoist with a full-body sling to transfer non-weight-bearing patients from bed to chair, completing a manual handling risk assessment before every transfer and checking the sling for wear. For patients with partial weight-bearing, I used a banana board and transfer belt, repositioning every two hours using a foam wedge to prevent pressure area deterioration."
+
+THE RULE: For every criterion addressed, the paragraph must answer YES to all four questions:
+1. Does it name a specific setting, patient group, or situation?
+2. Does it describe exactly what the candidate did — with named tools, procedures, forms, or Scottish systems?
+3. Does it name the professionals worked with (using their exact role titles from the JD)?
+4. Does it state what changed or improved as a direct result?
+If any answer is no — rewrite the paragraph before outputting.
+
 WRONG: "I respect diversity and treat all patients with dignity."
 
 CORRECT: "When supporting a Muslim patient during Ramadan, I adjusted personal care timing to avoid fasting hours, documented halal meal preferences on TrakCare, and arranged a quiet prayer space with the senior charge nurse. This reduced her anxiety from 8/10 to 3/10 within three days."
