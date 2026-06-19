@@ -343,7 +343,7 @@ export default function QuickWritePage() {
                 { val: '' as const, label: 'Auto', title: 'Best fit chosen automatically' },
                 { val: '1' as const, label: '1 – Story-led', title: '2-3 deep narrative scenes; other paragraphs tight and short' },
                 { val: '2' as const, label: '2 – Evidence-led', title: 'Every paragraph packed with procedures, systems and outcomes' },
-                { val: '3' as const, label: '3 – Reflective', title: 'Medium paragraphs with brief reflection after key story outcomes' },
+                { val: '3' as const, label: '3 – Trust Lead', title: 'Opens with why this role and why this trust (with researched specifics), then two criteria per paragraph — no 6 Cs' },
               ]).map(({ val, label, title }) => (
                 <button key={val || 'auto'} type="button" title={title}
                   onClick={() => setForm(f => ({ ...f, bodyPattern: val }))}

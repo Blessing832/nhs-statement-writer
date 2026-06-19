@@ -467,7 +467,7 @@ function AdminGenerateInner() {
                       { val: '' as const, label: 'Auto', title: 'Best fit chosen for this candidate' },
                       { val: '1' as const, label: '1 – Story-led', title: '2-3 deep narrative scenes; all other paragraphs tight and short' },
                       { val: '2' as const, label: '2 – Evidence-led', title: 'Every paragraph 3-4 sentences, packed with procedures, systems and outcomes' },
-                      { val: '3' as const, label: '3 – Reflective', title: 'Medium paragraphs with 1-2 brief reflection sentences after key story outcomes' },
+                      { val: '3' as const, label: '3 – Trust Lead', title: 'Opens with why this role and why this trust (with researched specifics), then two criteria per paragraph — no 6 Cs' },
                     ]).map(({ val, label, title }) => (
                       <button key={val || 'auto'} type="button" title={title} onClick={() => setBodyPattern(val)}
                         className="text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer"

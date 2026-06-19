@@ -303,9 +303,30 @@ ${options.specificQuestions || ''}`
     const formatHintLine = options.openingFormatHint
       ? `MANDATORY OPENING FORMAT: Use Format ${options.openingFormatHint}. Replace every [X] placeholder with "${yearsStr}". NEVER write "several years", "many years", or "a number of years" — always use "${yearsStr} years".\n\n`
       : ''
-    const patternLine = options.bodyPattern
-      ? `MANDATORY DEPTH STYLE: Use Depth Style ${options.bodyPattern} for ALL criterion paragraphs.\n\n`
-      : ''
+    const patternLine = !options.bodyPattern
+      ? ''
+      : options.bodyPattern === '3'
+      ? `MANDATORY TRUST LEAD STRUCTURE — override all default opening and criterion patterns:
+
+PARAGRAPH 1 — WHY THIS ROLE (120-150 words):
+Open with why you are applying for THIS specific role: the candidate's career goal, what draws them to this type of work, and a brief direct statement of how their background meets the key requirements. Use exact phrases from the job advert overview/introduction. Do NOT use the standard Pattern A/B/C/D formats for this opening.
+
+PARAGRAPH 2 — WHY THIS TRUST (120-150 words — must be specific, never generic):
+Write specifically about THIS trust. This paragraph must include ALL THREE of the following:
+1. One specific recent achievement, award, investment, or initiative from the TRUST INTELLIGENCE block above (if present) or from the job advert itself — name it exactly as written, with any date or figure given. If no intel is available, reference a specific named service, ward, or patient group from the advert.
+2. The trust's own named values (find them in the JD or trust section; if absent, use the six national NHS values by exact name).
+3. The trust's electronic health record or patient data system — scan the entire job description and person spec for any of these system names: RiO, PKB (Patient Known Best), SystmOne, EMIS, Epic, TrakCare, Lorenzo, Cerner, Carenotes, Adastra, Careflow, JAC, Meditech, PARIS, Clinical Portal, SCI Gateway. If one is named, write: "I am [experienced with / eager to develop proficiency in] [exact system name], which I understand [Trust] uses across its services." If no system is named in the JD, write: "I am committed to quickly learning [Trust]'s electronic patient record system to contribute from the earliest opportunity."
+NEVER use generic phrases such as "commitment to excellent care", "values that match my own", or "reputation for outstanding service."
+
+CRITERION PARAGRAPHS — TWO ESSENTIAL CRITERIA PER PARAGRAPH:
+Work through ALL essential criteria first, addressing exactly two per paragraph using MINI-STARR format (situation, action, result, optional reflection). After all essential criteria are covered, address desirable criteria in the same way, two per paragraph. Never combine more than two criteria in one paragraph.
+
+OMIT the 6 Cs paragraph entirely — do not write it.
+OMIT a separate Trust Values paragraph — trust values are addressed in Paragraph 2 above.
+End with the mandatory criteria summary paragraph, then the closing paragraph ("Thank you.").
+
+`
+      : `MANDATORY DEPTH STYLE: Use Depth Style ${options.bodyPattern} for ALL criterion paragraphs.\n\n`
     const scotlandStyleLine = isScotland
       ? options.style === '2'
         ? `MANDATORY STRUCTURE: Flowing prose — NO subheadings anywhere in Q1. Use linking phrases between paragraphs. Do NOT insert any bold labels or section headers.\n\n`
