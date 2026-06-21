@@ -289,8 +289,9 @@ Apply this check to every paragraph about a previous role.
 
 Scan the candidate profile for named IT/EHR systems. Then apply these rules strictly:
 
-NHS CLINICAL SYSTEMS — name these by name in the statement:
-SystmOne, EMIS, Vision, Lorenzo, RiO, PARIS, TrakCare, Cerner, Epic, Adastra, Carenotes (NHS), System C, Meditech, Careflow, JAC, Pharmacy Manager, Datix, iClip, PACS
+NHS CLINICAL SYSTEMS (England and Wales) — name these by name in the statement when they appear in the candidate's work history or skills:
+SystmOne, EMIS, Vision, Lorenzo, RiO, PARIS, Cerner, Epic, Adastra, Carenotes (NHS), System C, Meditech, Careflow, JAC, Pharmacy Manager, Datix, iClip, PACS
+IMPORTANT: TrakCare is used exclusively in NHS Scotland — NEVER name it for any England or Wales role. If the candidate mentions TrakCare in their profile, substitute "electronic patient record system" in the statement.
 
 NON-NHS CARE MANAGEMENT SOFTWARE — NEVER name these in an NHS job statement. Describe generically:
 Care Vision, Person Centred Software (PCS), Nourish, Carebeans, QCS, Caresys, Coldharbour, AutumnCare, Birdie, eMAR, NHIMS, Pakat, or any residential/domiciliary care app → write "digital care management software", "electronic care record system", or "care record app"
@@ -298,6 +299,14 @@ Care Vision, Person Centred Software (PCS), Nourish, Carebeans, QCS, Caresys, Co
 RULE: Never mix NHS clinical system names with non-NHS care software names in the same sentence or paragraph. If the candidate has ONLY non-NHS software experience, describe it generically — do not name it.
 
 REASON: NHS recruiters know NHS systems. Naming residential care apps alongside NHS systems creates confusion about clinical competence.
+
+## EHR ACCURACY RULE — WHEN NAMING THE TRUST'S OWN SYSTEM
+This rule applies whenever you write about the trust's EHR in the "why this trust" or opening paragraph:
+- ONLY name a system if that EXACT system name appears verbatim in the job description or person specification text
+- NEVER guess, assume, or infer which system a trust uses from its name, location, trust type, or size
+- TrakCare is used exclusively in NHS Scotland — NEVER name it for England or Wales roles
+- Valid England/Wales systems to scan for (verbatim in JD only): RiO, PKB (Patient Known Best), SystmOne, EMIS, Epic, Lorenzo, Cerner, Carenotes, Adastra, Careflow, JAC, Meditech, PARIS, Clinical Portal, iClip
+- If NO system name is found verbatim in the JD: write "electronic patient record system" or "their electronic health record system" — never a named system
 
 ## VACANCY TITLE ENHANCEMENT RULE
 
@@ -477,7 +486,7 @@ FOR CANDIDATES WITH NHS EXPERIENCE — name the actual NHS system:
 "I recorded patient observations on SystmOne after every interaction, flagging any NEWS2 score above 5 to the registered nurse immediately."
 "I updated the patient's care plan on TrakCare following each shift assessment, including fluid balance and pressure area status."
 "I used RiO to document support sessions, risk assessments, and any changes to the care plan."
-NHS systems: SystmOne, EMIS, Lorenzo, RiO, PARIS, TrakCare, Cerner, Epic, Adastra, Datix, Careflow, Carenotes, iClip, PACS
+NHS systems (England and Wales — never use TrakCare, which is Scotland-only): SystmOne, EMIS, Lorenzo, RiO, PARIS, Cerner, Epic, Adastra, Datix, Careflow, Carenotes, iClip, PACS
 
 FOR CANDIDATES WITHOUT NHS EXPERIENCE (private, residential care, overseas, domiciliary) — NEVER name non-NHS software. Describe the function:
 "I recorded care notes on the electronic care record system after every visit, flagging any changes in condition to the registered nurse."
@@ -713,14 +722,25 @@ WRONG (theoretical): "The 6 C's guide my daily practice. I provide care and comp
 
 CORRECT: "The 6 C's of Care guide my daily practice. I provide care and compassion by ensuring privacy during personal care, drawing curtains before every procedure, which improved patient satisfaction scores from 78% to 96%. I demonstrate competence by maintaining 100% mandatory training compliance. I show communication by adapting my approach for patients with dysphasia, using visual prompts that reduced distress incidents by 40%. I demonstrate courage by escalating safeguarding concerns immediately to the registered nurse when I observed unexplained bruising, and commitment by arriving 15 minutes early for every shift to read handover notes."
 
-## TRUST VALUES PARAGRAPH (5-6 lines, approx 70-85 words — NO SUBHEADING)
-Each trust value must have a specific application example with a result. Choose ONE format — vary across statements:
+## WHY THIS TRUST — MANDATORY PARAGRAPH (ALL WRITING STYLES, approx 100 words — NO SUBHEADING)
+Every statement must include a dedicated trust paragraph of approximately 100 words. This is what separates this application from hundreds of others using only the job description — it combines the TRUST INTELLIGENCE research data with JD content to say something specific that other applicants cannot.
 
-PATTERN A (motivation-first): "I want to work at [Trust] because of [vision from advert]. I demonstrate [Value 1] by [specific example with action and result]. I show [Value 2] by [specific example with action and result]. My approach to [Value 3] reflects [specific example with action and result]."
+MANDATORY CONTENT — include ALL THREE:
+1. TRUST ACHIEVEMENT OR NAMED SERVICE: If a TRUST INTELLIGENCE block is present in the job details above, name one specific item from it — the exact award title, CQC rating, investment figure, or initiative name with any year or figure given. This real-world intelligence is the differentiator. If no TRUST INTELLIGENCE block is present, reference a specific named service, ward, team, or patient group from the job advert itself.
+2. TRUST VALUES: Name the trust's own stated values (find them in the JD or trust description). If the JD does not list trust-specific values, use the six national NHS values by exact name: Working together for patients, Respect and dignity, Commitment to quality of care, Compassion, Improving lives, Everyone counts.
+3. EHR COMMITMENT — APPLY EHR ACCURACY RULE: Scan the JD for a verbatim system name (RiO, SystmOne, EMIS, Epic, Lorenzo, Cerner, Carenotes, etc. — never TrakCare for England/Wales). If found verbatim: "I am committed to developing proficiency in [exact system name], which I understand [Trust] uses." If not found: "I am committed to quickly learning [Trust]'s electronic patient record system."
 
-PATTERN B (value-first): "[Trust]'s [Value 1] is how I approach [specific task] — [specific example and result]. I show [Value 2] by [specific example and result]. [Value 3] is reflected in [specific example and result]. [Trust]'s focus on [vision from advert] is exactly what drew me to this role."
+Choose ONE pattern — vary across statements:
 
-PATTERN C (evidence-first): "Every shift I have worked in [specialty] settings reflects [Value 1] — [specific example and result]. I show [Value 2] through [specific example and result], and [Value 3] through [specific example and result]. [Trust]'s commitment to [vision from advert] is the environment I want to work in."
+PATTERN A (achievement-led): "Following [Trust]'s [specific award or initiative from TRUST INTELLIGENCE or JD], I am drawn to an organisation that has clearly invested in [specific area]. [Trust]'s commitment to [Value 1], [Value 2], and [Value 3] reflects how I approach patient care — at [workplace], I showed [Value X] by [brief specific example]. I am eager to contribute to [named service/team from advert] and to [quickly learn [Trust]'s electronic patient record system / develop proficiency in [named EHR verbatim from JD]] from the outset."
+
+PATTERN B (values-led): "What draws me to [Trust] specifically is [named award/initiative from TRUST INTELLIGENCE or JD] — an organisation aligned with the values I already work by: [Value 1], [Value 2], and [Value 3]. At [workplace], I showed [Value X] through [brief example with result]. I want to bring [specialty] experience to [named service/team from advert] and to get to grips with [Trust]'s [electronic patient record system / named EHR verbatim from JD] quickly."
+
+PATTERN C (mission-led): "[Trust]'s [specific achievement from TRUST INTELLIGENCE or specific service from JD] sets it apart as a place to develop. Its commitment to [Value 1], [Value 2], and [Value 3] — values I already practise, as shown by [brief example] — makes [named service/team] exactly the right environment for the next stage of my career. I look forward to using [Trust]'s [electronic patient record system / named EHR verbatim from JD] to support safe, accurate record-keeping from the outset."
+
+NEVER use: "commitment to excellent care", "values that match my own", "reputation for outstanding service", "I am passionate about joining [Trust]", "I share [Trust]'s values and believe I would be a good fit."
+
+Word count: approximately 100 words. NO subheading. For Style 2 (flowing prose): use a brief transition phrase.
 
 ## CRITERIA SUMMARY PARAGRAPH — MANDATORY (110-120 words, second to last)
 Place this paragraph immediately before the closing paragraph. It is required in every statement.
@@ -754,18 +774,20 @@ Choose ONE pattern that fits the tone — vary across statements:
 NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", "I look forward to discussing my application", "I am ready to contribute from day one", or any variation of "from the first shift."
 USE the EXACT vacancy title. "Thank you." ends the main statement — nothing follows.
 
-## TRUST INTELLIGENCE — MANDATORY SPECIFICITY
-The "why this Trust" sentence must always be specific. Generic phrases ("commitment to excellent care", "values that match my own", "reputation for outstanding service") are never acceptable.
+## TRUST INTELLIGENCE — COMBINING RESEARCH DATA WITH JD CONTENT
+The "why this Trust" paragraph must be specific and unique — most other applicants use only the job description. The TRUST INTELLIGENCE block (when present) contains real-world data that other applicants cannot access. Use it.
 
-**When a TRUST INTELLIGENCE block is present in the job details:** Reference at least one named item from it — the actual award name, CQC rating, investment figure, or initiative title. Do not paraphrase it into a vague compliment.
+**When a TRUST INTELLIGENCE block is present in the job details:**
+ALWAYS reference at least one named item from it — the actual award name, CQC rating, investment figure, partnership, or initiative title — in the WHY THIS TRUST paragraph. Name it exactly as written, including any year or monetary figure given. Then supplement it with JD content. This combination — research data plus JD specifics — is what makes the statement stand out.
+Do NOT paraphrase the trust intel into a vague compliment. "A commitment to quality" is not a named item. "CQC Outstanding for Responsive care in 2024" is.
 
-**When no TRUST INTELLIGENCE block is present:** Mine the job advert itself for specific details — the named department or ward, a specific patient group or service mentioned, the Trust's geography and community, named strategic priorities, any specific technology or approach referenced, or the Trust's own stated values by name. Use those specifics. If the advert names a service (e.g. "our new community rehabilitation unit" or "our CAMHS team"), reference it by name.
-
-If the advert gives nothing usable, reference one concrete fact about the Trust's location or patient population — not a compliment about their care quality.
+**When no TRUST INTELLIGENCE block is present:**
+Mine the job advert for specific details — the named department, a specific patient group or service mentioned, the Trust's geography, named strategic priorities, specific technology referenced, or the Trust's own stated values by name. If the advert names a service or unit (e.g. "our new community rehabilitation unit" or "our CAMHS team"), reference it by name.
+If the advert gives nothing specific, use one concrete fact about the Trust's location or patient population — not a compliment.
 
 WRONG: "I am drawn to [Trust]'s commitment to excellent patient care."
 WRONG: "I share the values of [Trust] and believe I would be a good fit."
-CORRECT: "I am applying to [Trust] because of the [named service / ward / patient group / specific initiative from the advert] — this is where my experience in [relevant area] is most directly applicable."
+CORRECT: "Following [Trust]'s [CQC Outstanding rating / named award / specific investment from TRUST INTELLIGENCE], I am drawn to an organisation that has [specific achievement]. [Trust]'s commitment to [named values from JD] reflects how I already work."
 
 ## NHS VALUES — EXACT NAMES — MANDATORY
 The six national NHS values are: **Working together for patients**, **Respect and dignity**, **Commitment to quality of care**, **Compassion**, **Improving lives**, and **Everyone counts**.

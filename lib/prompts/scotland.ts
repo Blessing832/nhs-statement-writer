@@ -223,6 +223,9 @@ When referring to a previous employer: if the candidate's profile identifies it 
 ## EHR AND IT SYSTEMS — MANDATORY
 Before writing, scan the candidate's work history and skills for any named IT or electronic health record systems (e.g. TrakCare, Clinical Portal, SCI Gateway, Nourish, Person Centred Software, SystmOne, EMIS, RiO, Cerner, Epic, or any care record app). When addressing digital literacy, IT, or record-keeping criteria, name these exact systems from the candidate profile. NHS staff use clinical EHR platforms; non-NHS staff use proprietary care management software — both count as evidence of digital competence.
 
+EHR ACCURACY RULE — WHEN NAMING THE BOARD'S OWN SYSTEM:
+When referencing the Board's EHR in the "why this Board" paragraph: ONLY name a system if that exact system name appears verbatim in the job description or person specification text, or is named in the candidate's profile as a system they have used at that NHS Scotland employer. TrakCare is valid for NHS Scotland roles but must still be verbatim in the JD or candidate profile — never assume all Scottish Boards use it. If no system name is found verbatim: write "I am committed to quickly learning the Board's electronic patient record system."
+
 ## NHS SCOTLAND BOARDS
 NHS Lothian, NHS Tayside, NHS Greater Glasgow and Clyde, NHS Grampian, NHS Highland, NHS Lanarkshire, NHS Fife, NHS Forth Valley, NHS Borders, NHS Ayrshire and Arran, NHS Dumfries and Galloway, NHS Orkney, NHS Shetland, NHS Western Isles, NHS 24, Scottish Ambulance Service, NHS Education for Scotland, Public Health Scotland.
 ALWAYS: "NHS Lothian" — NEVER: "NHS Lothian Trust" or "Lothian NHS Trust"
@@ -670,18 +673,20 @@ When addressing values criteria: use the exact NHSScotland value names above —
 ## HIS RATING — MANDATORY IF PRESENT
 If the TRUST INTELLIGENCE block includes a Healthcare Improvement Scotland rating, state the actual rating: "Effective", "Efficient", "Person-centred", "Safe", "Equitable", "Timely" (the HIS quality dimensions). If an inspection outcome is named, use the exact wording. Never soften it to "highly rated" or "well-regarded."
 
-## TRUST INTELLIGENCE — MANDATORY SPECIFICITY
-The "why this Board" sentence must always be specific. Generic phrases ("commitment to excellent care", "values that match my own", "reputation for outstanding service") are never acceptable.
+## TRUST INTELLIGENCE — COMBINING RESEARCH DATA WITH JD CONTENT
+The "why this Board" paragraph must be specific and unique — most other applicants use only the job description. The TRUST INTELLIGENCE block (when present) contains real-world data about the Board that other applicants cannot access. Use it.
 
-**When a TRUST INTELLIGENCE block is present in the job details:** Reference at least one named item from it — the actual award name, Healthcare Improvement Scotland rating, investment figure, or initiative title. Do not paraphrase it into a vague compliment.
+**When a TRUST INTELLIGENCE block is present in the job details:**
+ALWAYS reference at least one named item from it — the actual award name, Healthcare Improvement Scotland rating, investment figure, partnership, or initiative title — in the Q2 Board paragraph. Name it exactly as written, including any year or monetary figure. Then supplement it with JD content. This combination of research data plus JD specifics is what makes the statement stand out.
+Do NOT paraphrase into a vague compliment. "A commitment to quality" is not a named item. "A Healthcare Improvement Scotland 'Effective' assessment for [specific service] in 2024" is.
 
-**When no TRUST INTELLIGENCE block is present:** Mine the job advert itself for specific details — the named department or team, a specific patient group or service mentioned, the Board's geography and community, named strategic priorities, any specific technology or approach referenced, or the Board's own stated values by name. Use those specifics. If the advert names a service or unit, reference it by name.
-
-If the advert gives nothing usable, reference one concrete fact about the Board's location, catchment area, or patient population — not a compliment about their care quality.
+**When no TRUST INTELLIGENCE block is present:**
+Mine the job advert for specific details — the named department or team, a specific patient group or service mentioned, the Board's geography, named strategic priorities, specific technology referenced, or the Board's own stated values by name. If the advert names a service or unit, reference it by name.
+If the advert gives nothing specific, use one concrete fact about the Board's location, catchment area, or patient population — not a compliment.
 
 WRONG: "I am drawn to NHS [Board]'s commitment to excellent patient care."
 WRONG: "I share the values of NHS [Board] and believe I would be a good fit."
-CORRECT: "I am applying to NHS [Board] because of the [named service / team / patient group / specific initiative from the advert] — this is where my experience in [relevant area] is most directly applicable."
+CORRECT: "Following NHS [Board]'s [named award/initiative from TRUST INTELLIGENCE], I am drawn to an organisation that has [specific achievement]. Its commitment to [named values] reflects the way I already work in [specialty] care."
 
 ## PERSON SPECIFICATION — 100% COVERAGE — NON-NEGOTIABLE
 Step 1: List ALL essential criteria (may be 30+) AND all desirable criteria separately.
