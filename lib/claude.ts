@@ -75,7 +75,16 @@ function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): string {
 - Use NHS language and terminology
 - Write 800-1,200 words
 - Never use em dashes. Use hyphens or commas instead
-- Never fabricate experience${styleNote}`
+- Never fabricate experience${styleNote}
+
+FIVE-SENTENCE PATTERN — use for every criterion paragraph:
+1. "I meet this criterion through my role as [position], where I [scope of responsibility]."
+2. "Specifically, in [clinical situation with enough detail the panel can picture it], I was responsible for [task]."
+3. "I [specific action and decision], applying [relevant framework, guideline, or evidence base]."
+4. "As a result, [quantified or qualitative outcome attributable to your action]." — MANDATORY
+5. "On reflection, [what you learned or how you changed practice], which I will bring to this role by [specific application]."
+
+NEVER: generic claims ("I am a strong team player"), vague outcomes ("which improved patient care"), or missing sentence 4 or 5.`
 }
 
 // Smart truncation: take first 8,000 chars (JD intro + duties) + last 16,000 chars
@@ -273,19 +282,30 @@ ${clientSection}
 ${instructionsSection}
 
 ## TASK
-Answer each application question below with full MINI-STARR evidence. Do NOT write a general prose statement.
+Answer each application question below using the FIVE-SENTENCE PATTERN for every answer. Do NOT write a general prose statement.
 
 WORD BUDGET: approximately 300 words per question.
 Questions with multiple sub-points: address every sub-point within that same ~300-word answer.
 
-WRITING RULES — apply exactly as in a full statement:
-- MINI-STARR format: Situation (specific scene at a named workplace) → Action (specific steps, tools/systems/forms from the JD, named professional roles from the JD) → Result (concrete outcome — name what improved, increased, reduced, or was enabled) → Reflection (optional, 1 sentence)
-- SITUATION: must be a real scene — never restate the question or describe the criterion. WRONG: "Communication is central to my role." RIGHT: "On the medical ward at [workplace], I supported a patient with dysphasia by..."
-- RESULT is MANDATORY: every answer must end with a concrete outcome. WRONG: "I communicated effectively with the team." RIGHT: "...enabling the patient to give informed consent within one session and reducing her pre-procedure anxiety visibly."
-- All banned words apply: no "passionate", "hardworking", "highly motivated", "demonstrates", "utilises" — see ABSOLUTE RULES
+FIVE-SENTENCE PATTERN — mandatory structure for every answer:
+Sentence 1: "I meet this criterion through my role as [position], where I [scope of responsibility]." — maps immediately to the question
+Sentence 2: "Specifically, in [clinical situation with enough detail the panel can picture it], I was responsible for [task]." — puts the panel inside the evidence
+Sentence 3: "I [specific action and decision], applying [relevant framework, guideline, or evidence base from the JD]." — shows clinical reasoning
+Sentence 4: "As a result, [quantified or qualitative outcome attributable to your action]." — MANDATORY, never omit
+Sentence 5: "On reflection, [what you learned or how you changed practice], which I will bring to this role by [specific application]." — links to the role
+
+SCORING RULE: Panel scores 0-3 per criterion. Generic claims score 0 regardless of truth. Only scored paragraphs pass shortlisting:
+- 0 = "I am a strong communicator with excellent teamwork skills" — cannot be scored
+- 1 = vague example, no outcome stated
+- 2 = specific example, outcome named but not quantified
+- 3 = specific situation + specific action with framework + quantified outcome + reflection → always use this pattern
+
+ADDITIONAL RULES:
 - Evidence first: the first sentence must place the reader in a specific situation, never a claim or announcement
+- RESULT is MANDATORY: every answer must end with a concrete, attributable outcome
 - No topic-announcement openers: WRONG: "Communication was central to my work." RIGHT: "At [workplace], I adapted my approach for..."
 - No em dashes anywhere
+- No banned words: "passionate", "hardworking", "highly motivated", "demonstrates", "utilises"
 
 FORMAT:
 Write each answer with a bold numbered heading: **Question 1: [question text]**, then the answer paragraph below it. Repeat for every question.
