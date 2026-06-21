@@ -282,37 +282,36 @@ ${clientSection}
 ${instructionsSection}
 
 ## TASK
-Answer each application question below using the FIVE-SENTENCE PATTERN for every answer. Do NOT write a general prose statement.
+Answer EVERY question listed below. Do NOT stop before the final question. Do NOT skip any question.
 
-WORD BUDGET: approximately 300 words per question.
-Questions with multiple sub-points: address every sub-point within that same ~300-word answer.
+WORD BUDGET: approximately 250 words per question (never fewer than 200, never more than 280).
+Questions with multiple sub-points: address every sub-point within that same ~250-word answer.
 
-FIVE-SENTENCE PATTERN — mandatory structure for every answer:
-Sentence 1: "I meet this criterion through my role as [position], where I [scope of responsibility]." — maps immediately to the question
-Sentence 2: "Specifically, in [clinical situation with enough detail the panel can picture it], I was responsible for [task]." — puts the panel inside the evidence
-Sentence 3: "I [specific action and decision], applying [relevant framework, guideline, or evidence base from the JD]." — shows clinical reasoning
-Sentence 4: "As a result, [quantified or qualitative outcome attributable to your action]." — MANDATORY, never omit
-Sentence 5: "On reflection, [what you learned or how you changed practice], which I will bring to this role by [specific application]." — links to the role
+FIVE-SENTENCE PATTERN — mandatory structure for EVERY answer — no exceptions:
+Sentence 1: "I meet this criterion through my role as [position], where I [scope of responsibility]." — maps immediately to the question, never a vague opener
+Sentence 2: "Specifically, in [clinical situation with enough detail the panel can picture it], I was responsible for [task]." — puts the panel inside real evidence
+Sentence 3: "I [specific action and decision], applying [relevant framework, guideline, or evidence base from the JD or person spec]." — shows clinical reasoning, not just action
+Sentence 4: "As a result, [quantified or qualitative outcome directly attributable to your action]." — MANDATORY, never omit, never vague
+Sentence 5: "On reflection, [what you learned or how you changed practice], which I will bring to this role by [specific application in this post]." — links learning to THIS role
 
-SCORING RULE: Panel scores 0-3 per criterion. Generic claims score 0 regardless of truth. Only scored paragraphs pass shortlisting:
-- 0 = "I am a strong communicator with excellent teamwork skills" — cannot be scored
+SCORING RULE (panel scores 0-3 per question):
+- 0 = generic claim ("I have strong communication skills and work well in a team") — cannot be scored at all
 - 1 = vague example, no outcome stated
 - 2 = specific example, outcome named but not quantified
-- 3 = specific situation + specific action with framework + quantified outcome + reflection → always use this pattern
+- 3 = all five sentences present + quantified outcome + reflection mapped to this role → THE ONLY ACCEPTABLE STANDARD
 
 ADDITIONAL RULES:
-- Evidence first: the first sentence must place the reader in a specific situation, never a claim or announcement
-- RESULT is MANDATORY: every answer must end with a concrete, attributable outcome
-- No topic-announcement openers: WRONG: "Communication was central to my work." RIGHT: "At [workplace], I adapted my approach for..."
+- Evidence first: first sentence must place the reader in a specific situation, never a claim or announcement
+- RESULT is MANDATORY: every answer must end with a concrete, attributable outcome — never "which improved patient care" without specifics
 - No em dashes anywhere
 - No banned words: "passionate", "hardworking", "highly motivated", "demonstrates", "utilises"
 
 FORMAT:
-Write each answer with a bold numbered heading: **Question 1: [question text]**, then the answer paragraph below it. Repeat for every question.
-No introduction, no preamble, no summary outside the answers.
-End the final answer with "Thank you."
+Write each answer with a bold numbered heading: **Question 1: [question text]**, then the answer paragraph directly below it.
+No introduction, no preamble, no closing summary outside the individual answers.
+Answer EVERY question before writing "Thank you." — "Thank you." goes only after the very last answer.
 
-QUESTIONS TO ANSWER:
+QUESTIONS TO ANSWER (answer ALL of them — do not stop early):
 ${options.specificQuestions || ''}`
   }
 
@@ -390,9 +389,17 @@ HARD WORD LIMITS:
 - Question 1: Why are you suitable for this post? — 480 words maximum
 - Question 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? — 480 words maximum
 - Question 3: Is there any other relevant information that will assist us in shortlisting your application? — 200 words maximum — end with "Thank you." and stop`
-  : `HARD WORD LIMIT: 1,450 words for the main statement — end with "Thank you." and STOP
-Do NOT write any section after "Thank you." — no Key Duties, no summaries, nothing.
-${hasExtraQuestions ? 'After "Thank you.", write each specific question answer (approximately 300 words each — full MINI-STARR evidence, same rules as statement paragraphs, concrete outcome mandatory) with the question as a heading. Questions with multiple sub-points: address every sub-point within that same ~300-word answer.' : ''}`}
+  : hasExtraQuestions
+  ? `HARD WORD LIMIT FOR MAIN STATEMENT: 1,570 words. Write "Thank you." to close the statement when done.
+
+CRITICAL — MANDATORY CONTINUATION: After "Thank you.", you MUST answer EVERY additional question listed in the SPECIFIC APPLICATION QUESTIONS section above. Do NOT stop at "Thank you." if there are additional questions.
+
+For each additional question:
+- Use a bold numbered heading: **Question 1: [exact question text]**
+- Answer at approximately 250 words using the FIVE-SENTENCE PATTERN
+- Sentence 1: scope of responsibility → Sentence 2: specific clinical situation → Sentence 3: specific action + framework → Sentence 4: quantified outcome (MANDATORY) → Sentence 5: reflection linked to this role
+- No em dashes. No generic claims. Every answer must end with a concrete attributable outcome.`
+  : `HARD WORD LIMIT: 1,570 words — write "Thank you." and STOP. Do NOT write any section after "Thank you." — no Key Duties, no summaries, nothing.`}
 
 CRITICAL:
 - No em dashes anywhere
@@ -532,27 +539,37 @@ async function generateParallel(
   })
 
   // max_tokens for statement call:
-  //   Scotland: 1060w target → cap 2000 (26s)
-  //   England full: 1450w target → cap 2300 (35s)
-  //   Questions-only: ~300w per question → scale with count, min 2500, max 5000
-  //   Statement+questions: statement base + question budget
+  //   Scotland: 1060w target → cap 2200
+  //   England full: 1570w target → cap 2600
+  //   Questions-only: 250w per question, min 7 questions → min 6000, scale up
+  //   Statement+questions: statement base + 2 question budget minimum
+  //
+  // Question count: detect multiple question formats
   const questionCount = options.specificQuestions
-    ? (options.specificQuestions.match(/^\d+\./gm) || []).length
+    ? Math.max(
+        (options.specificQuestions.match(/^\d+\./gm) || []).length,          // "1. Question"
+        (options.specificQuestions.match(/^\d+\)/gm) || []).length,          // "1) Question"
+        (options.specificQuestions.match(/^Question\s+\d+/gim) || []).length, // "Question 1:"
+        (options.specificQuestions.match(/^Q\d+[:.]/gim) || []).length,      // "Q1. Question"
+      )
     : 0
-  // 550 tokens per question: ~430 for the 300-word MINI-STARR answer + ~120 for the bold
-  // heading which includes the full question text (NHS questions are often 20-40 words)
-  const tokensPerQuestion = 550
+  // ~500 tokens per question: 250 words * ~1.3 tokens/word + ~120 for bold heading
+  const tokensPerQuestion = 500
 
   let statementMaxTokens: number
   if (appMode === 'questions-only') {
-    statementMaxTokens = Math.min(8000, Math.max(3000, questionCount * tokensPerQuestion + 500))
+    // Always budget for at least 7 questions; scale higher if more detected
+    const effectiveCount = Math.max(questionCount, 7)
+    statementMaxTokens = Math.min(8000, Math.max(6000, effectiveCount * tokensPerQuestion + 1000))
   } else if (appMode === 'statement-questions') {
-    const statementBase = isScotland ? 2000 : 2300
-    statementMaxTokens = Math.min(8000, statementBase + Math.max(0, questionCount * tokensPerQuestion))
+    const statementBase = isScotland ? 2200 : 2800
+    // Budget for at least 2 extra questions
+    const effectiveCount = Math.max(questionCount, 2)
+    statementMaxTokens = Math.min(8000, statementBase + effectiveCount * tokensPerQuestion)
   } else if (isScotland) {
-    statementMaxTokens = 2000
+    statementMaxTokens = 2200
   } else {
-    statementMaxTokens = 2300
+    statementMaxTokens = 2600
   }
 
   const [statementResult, analysisResult] = await Promise.allSettled([
@@ -588,10 +605,23 @@ async function generateParallel(
     .replace(/^(Story|Scenario)\s*\d*\s*:\s*/gim, '')
   if (!statement) throw new Error('Claude returned an empty statement')
 
-  // Enforce word count limit while preserving paragraph structure
-  const wordLimit = isScotland ? 1160 : 1450
-  if (statement.split(/\s+/).length > wordLimit) {
-    const paragraphs = statement.split(/\n\n+/)
+  // Enforce word count limit on the MAIN STATEMENT only.
+  // Questions-only mode: no limit enforced — the prompt controls per-question word counts.
+  // Statement+questions mode: only trim the statement portion before "Thank you.";
+  //   preserve the extra question answers that follow it.
+  const wordLimit = isScotland ? 1160 : 1570
+  if (appMode !== 'questions-only' && statement.split(/\s+/).length > wordLimit) {
+    // For statement-questions, split at "Thank you." to preserve question answers
+    const CLOSING = 'Thank you.'
+    const closingIdx = statement.indexOf(CLOSING)
+    const statementPart = closingIdx >= 0
+      ? statement.slice(0, closingIdx + CLOSING.length)
+      : statement
+    const questionsTail = closingIdx >= 0
+      ? statement.slice(closingIdx + CLOSING.length)
+      : ''
+
+    const paragraphs = statementPart.split(/\n\n+/)
     let totalWords = 0
     const kept: string[] = []
     for (const para of paragraphs) {
@@ -611,8 +641,9 @@ async function generateParallel(
         break
       }
     }
-    statement = kept.join('\n\n')
-    if (!statement.trimEnd().endsWith('Thank you.')) statement += '\n\nThank you.'
+    let truncated = kept.join('\n\n')
+    if (!truncated.trimEnd().endsWith(CLOSING)) truncated += '\n\n' + CLOSING
+    statement = truncated + questionsTail
   }
 
   // Analysis: small JSON, non-critical — failure just means no criteria list shown
