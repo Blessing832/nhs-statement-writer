@@ -562,19 +562,21 @@ Use descriptive language — adjectives that show character (caring, methodical,
 
 Use the CAR structure (Context, Action, Result) when introducing specific experience — briefly state where, what was done, and what it produced.
 
+MANDATORY TRUST SENTENCE — every opening pattern must close with exactly ONE sentence on why this Trust specifically. This sentence must use a specific item from the TRUST INTELLIGENCE block if present, or a specific named service, ward, initiative, or geographic community from the JD. Generic trust motivation is never acceptable here: "I share [Trust]'s values", "I am drawn to [Trust]'s reputation for excellent care", "I am passionate about joining [Trust]" — all banned. Use one concrete specific. After this sentence, proceed directly to evidence — do not expand the trust motivation further in the opening.
+
 Choose ONE opening pattern — do NOT default to Pattern A every time. Rotate deliberately across different statements:
 
 PATTERN A — Standard:
-"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases from advert]. I hold [qualification], and over my [X] years in [specialty-specific] care settings I have developed [2-3 skills from person spec]. As [EXACT vacancy title] at [Previous Workplace], I worked with patients undergoing [specific conditions/procedures matching vacancy], alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I want to join [Trust] because [specific reason from advert and Trust values]."
+"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases from advert]. I hold [qualification], and over my [X] years in [specialty-specific] care settings I have developed [2-3 skills from person spec]. As [EXACT vacancy title] at [Previous Workplace], I worked with patients undergoing [specific conditions/procedures matching vacancy], alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I am applying to [Trust] specifically because [one concrete specific from TRUST INTELLIGENCE or JD — named award, service, initiative, or community]."
 
 PATTERN B — Credential-led:
-"With [X] years in [specialty-specific] care settings and [qualification from person spec], I have spent my career [2-3 skills from person spec using advert keywords]. As [EXACT vacancy title] at [Previous Workplace], I supported patients with [specific conditions/procedures], working alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace], [brief duty using JD keywords]. [Trust]'s [specific service/unit/vision from advert] is where I want to take this experience next."
+"With [X] years in [specialty-specific] care settings and [qualification from person spec], I have spent my career [2-3 skills from person spec using advert keywords]. As [EXACT vacancy title] at [Previous Workplace], I supported patients with [specific conditions/procedures], working alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace], [brief duty using JD keywords]. [Trust]'s [one concrete specific from TRUST INTELLIGENCE or JD] is what draws me to apply here."
 
 PATTERN C — Experience-led:
-"[X] years as [EXACT vacancy title] across [specialty-specific] care settings — most recently as [EXACT vacancy title] at [Previous Workplace] supporting patients with [specific conditions/procedures] — have built [2-3 skills from person spec]. I hold [qualification from person spec]. In my current role as [Current Role] at [Current Workplace], I [brief duty using JD keywords]. I am applying to [Trust] specifically because [specific reason using advert keywords and Trust values]."
+"[X] years as [EXACT vacancy title] across [specialty-specific] care settings — most recently as [EXACT vacancy title] at [Previous Workplace] supporting patients with [specific conditions/procedures] — have built [2-3 skills from person spec]. I hold [qualification from person spec]. In my current role as [Current Role] at [Current Workplace], I [brief duty using JD keywords]. I am applying to [Trust] because [one concrete specific from TRUST INTELLIGENCE or JD]."
 
 PATTERN D — Current-role-led:
-"In my current role as [Current Role] at [Current Workplace], I [specific relevant duty using JD keywords] and hold [qualification from person spec]. Before this, as [EXACT vacancy title] at [Previous Workplace], I [relevant duty matching vacancy specialty, with patient groups], alongside [professional roles from JD]. Over [X] years in [specialty-specific] care settings, I have developed [2-3 skills from person spec using advert keywords]. What draws me to [Trust] is [specific reason from advert and Trust values]."
+"In my current role as [Current Role] at [Current Workplace], I [specific relevant duty using JD keywords] and hold [qualification from person spec]. Before this, as [EXACT vacancy title] at [Previous Workplace], I [relevant duty matching vacancy specialty, with patient groups], alongside [professional roles from JD]. Over [X] years in [specialty-specific] care settings, I have developed [2-3 skills from person spec using advert keywords]. What draws me to [Trust] specifically is [one concrete specific from TRUST INTELLIGENCE or JD]."
 
 CRITICAL RULE — PATTERN SELECTION:
 Pattern D MUST NOT be used when the current role is LESS clinically relevant to the vacancy than a previous role. Opening with a weaker role before a stronger one creates a confusing, backwards introduction.
@@ -632,6 +634,42 @@ The goal is for the candidate to look well matched to the role, not overqualifie
 
 ## CRITERION PARAGRAPHS — MINI-STARR (3-5 lines per paragraph)
 Each paragraph: 3-5 lines. Hard stop at 5 lines. If the evidence needs more space, write a second paragraph continuing the point — do NOT extend the first paragraph beyond 5 lines. Two 4-line paragraphs is better than one 8-line paragraph.
+
+## EXCELLENT EVIDENCE STANDARD — WHAT THE PANEL ACTUALLY SCORES
+Every criterion paragraph is scored 0-3 by the shortlisting panel:
+- 0 = generic claim, not mapped to the criterion wording ("I am a strong team player with excellent communication skills") — the panel cannot award marks for a claim they cannot verify, no matter how true it is
+- 1 = criterion mentioned with vague evidence, no outcome
+- 2 = specific example with a named outcome but not quantified or not mapped to the criterion's exact wording
+- 3 = specific clinical situation + specific actions with named tools/systems/procedures + quantified or professionally significant outcome + reflection linking learning to the Trust's values or the role's wider context
+
+EVERY criterion paragraph must target a score of 3. Before finalising any paragraph, ask: is the outcome quantified or professionally significant? Does it use the exact wording of the criterion? Is there a reflection? If any answer is no, upgrade the paragraph.
+
+MISTAKE 1 — clinical experience without a quantified outcome:
+WRONG: "I participated in audit work in my previous role." (1/5 — no setting, no method, no outcome)
+RIGHT (5/5): "I led a closed-loop audit on VTE risk assessment compliance on the surgical assessment unit (n=124 patients over 4 weeks). Initial compliance with NICE NG89 was 67%. I presented findings at the directorate clinical governance meeting, designed a sticker prompt for the admission proforma, and re-audited at 3 months: compliance rose to 94%. The intervention was adopted across two further wards."
+
+MISTAKE 2 — generic professional language not mapped to the criterion:
+WRONG: "I am a strong team player with excellent communication skills." (scores 0 — the panel cannot score this)
+RIGHT: Identify the exact wording of the criterion in the person spec. Build the paragraph around a specific clinical situation, specific actions using the JD's named tools and roles, and a specific outcome. Every word must map to the criterion's language.
+
+MISTAKE 3 — overseas / international experience described without mapping to UK scope or frameworks:
+WRONG: "I have 7 years of experience working as a Medical Officer in a tertiary teaching hospital, where I worked closely with a multidisciplinary team and was responsible for clinical care of medical patients." (2/5 — panel cannot tell if overseas scope maps to UK expectations; governance not addressed)
+RIGHT (5/5): "Over 7 years as a Medical Officer at [Hospital], a 1,200-bed tertiary teaching hospital comparable in scale to a large UK Trust, I worked daily with multidisciplinary teams including consultant physicians, specialist nurses, pharmacists, physiotherapists, and dietitians. I attended weekly MDT meetings for inpatients with complex needs, presented patients, and contributed to discharge planning. Clinical governance followed structured monthly mortality and morbidity review meetings, mandatory incident reporting through our equivalent of Datix, and quarterly audit cycles. I led a mortality review case in 2023 on a missed pulmonary embolism diagnosis, which informed a change to our admission risk stratification protocol. I have completed the GMC's Welcome to UK Practice course and am familiar with NHS clinical governance frameworks including NICE guidance, CQUIN targets, and the National Patient Safety Strategy."
+
+SAME PATTERN — for Allied Health Professional international experience:
+WRONG: "I have 3 years of experience working as a physiotherapist in a private hospital, where I assessed and treated patients with a variety of conditions including musculoskeletal, neurological, and respiratory." (2/5 — caseload not described, UK frameworks not addressed)
+RIGHT (5/5): "Over 3 years as a Physiotherapist at [Hospital], a 500-bed multi-specialty hospital, I assessed approximately 25 patients per week across musculoskeletal outpatients (50%), inpatient orthopaedics post-arthroplasty (30%), and respiratory care (20%) — a caseload comparable in complexity to a UK Band 5 rotational post. I applied APTA and Cochrane evidence in treatment planning, including IASTM, Mulligan mobilisations, and graded exercise therapy. Clinical governance in my hospital followed systems comparable to UK NHS practice: mandatory incident reporting, monthly clinical audit, and annual competency reviews. I am HCPC-registered and familiar with NICE guidance, CSP standards, and HCPC Standards of Proficiency."
+
+THE RULE FOR OVERSEAS CANDIDATES: Always (1) state the scale of your institution compared to a UK equivalent, (2) describe your caseload in numbers, (3) name the specific tools, techniques, and clinical frameworks used, (4) explicitly address UK governance equivalence, and (5) name any UK registration or framework familiarity acquired.
+
+THE FIVE-SENTENCE PATTERN — use this structure for every criterion paragraph (adapts to 3-5 lines):
+Sentence 1: "I meet this criterion through my role as [position], where I [scope of responsibility]." — establishes experience, maps to the criterion immediately
+Sentence 2: "Specifically, in [clinical situation with enough detail the panel can picture it], I was responsible for [task]." — puts the reader inside the evidence
+Sentence 3: "I [specific action and decision], applying [relevant framework, guideline, or evidence base from the JD or person spec]." — shows clinical reasoning, not just action
+Sentence 4: "As a result, [quantified or qualitative outcome that is attributable to your action]." — mandatory outcome
+Sentence 5: "On reflection, [what you learned or how you changed practice], which I will bring to this role by [specific application in the new post]." — links learning to THIS role and Trust's context
+
+This five-sentence structure scores 4-5 every time it is followed correctly. Deviation from it — especially omitting sentence 4 or sentence 5 — drops the score to 2-3.
 
 MINI-STARR format:
 - SITUATION (1 sentence): a specific scene — a named workplace, a patient group, a time or shift context, or a direct statement of what was done and where. NEVER use the SITUATION sentence to describe the criterion or explain why it matters. The SITUATION must contain a real place, person group, or moment.
@@ -722,25 +760,11 @@ WRONG (theoretical): "The 6 C's guide my daily practice. I provide care and comp
 
 CORRECT: "The 6 C's of Care guide my daily practice. I provide care and compassion by ensuring privacy during personal care, drawing curtains before every procedure, which improved patient satisfaction scores from 78% to 96%. I demonstrate competence by maintaining 100% mandatory training compliance. I show communication by adapting my approach for patients with dysphasia, using visual prompts that reduced distress incidents by 40%. I demonstrate courage by escalating safeguarding concerns immediately to the registered nurse when I observed unexplained bruising, and commitment by arriving 15 minutes early for every shift to read handover notes."
 
-## WHY THIS TRUST — MANDATORY PARAGRAPH (ALL WRITING STYLES, approx 100 words — NO SUBHEADING)
-Every statement must include a dedicated trust paragraph of approximately 100 words. This is what separates this application from hundreds of others using only the job description — it combines the TRUST INTELLIGENCE research data with JD content to say something specific that other applicants cannot.
-
-MANDATORY CONTENT — include ALL THREE:
-1. TRUST ACHIEVEMENT OR NAMED SERVICE: If a TRUST INTELLIGENCE block is present in the job details above, name one specific item from it — the exact award title, CQC rating, investment figure, or initiative name with any year or figure given. This real-world intelligence is the differentiator. If no TRUST INTELLIGENCE block is present, reference a specific named service, ward, team, or patient group from the job advert itself.
-2. TRUST VALUES: Name the trust's own stated values (find them in the JD or trust description). If the JD does not list trust-specific values, use the six national NHS values by exact name: Working together for patients, Respect and dignity, Commitment to quality of care, Compassion, Improving lives, Everyone counts.
-3. EHR COMMITMENT — APPLY EHR ACCURACY RULE: Scan the JD for a verbatim system name (RiO, SystmOne, EMIS, Epic, Lorenzo, Cerner, Carenotes, etc. — never TrakCare for England/Wales). If found verbatim: "I am committed to developing proficiency in [exact system name], which I understand [Trust] uses." If not found: "I am committed to quickly learning [Trust]'s electronic patient record system."
-
-Choose ONE pattern — vary across statements:
-
-PATTERN A (achievement-led): "Following [Trust]'s [specific award or initiative from TRUST INTELLIGENCE or JD], I am drawn to an organisation that has clearly invested in [specific area]. [Trust]'s commitment to [Value 1], [Value 2], and [Value 3] reflects how I approach patient care — at [workplace], I showed [Value X] by [brief specific example]. I am eager to contribute to [named service/team from advert] and to [quickly learn [Trust]'s electronic patient record system / develop proficiency in [named EHR verbatim from JD]] from the outset."
-
-PATTERN B (values-led): "What draws me to [Trust] specifically is [named award/initiative from TRUST INTELLIGENCE or JD] — an organisation aligned with the values I already work by: [Value 1], [Value 2], and [Value 3]. At [workplace], I showed [Value X] through [brief example with result]. I want to bring [specialty] experience to [named service/team from advert] and to get to grips with [Trust]'s [electronic patient record system / named EHR verbatim from JD] quickly."
-
-PATTERN C (mission-led): "[Trust]'s [specific achievement from TRUST INTELLIGENCE or specific service from JD] sets it apart as a place to develop. Its commitment to [Value 1], [Value 2], and [Value 3] — values I already practise, as shown by [brief example] — makes [named service/team] exactly the right environment for the next stage of my career. I look forward to using [Trust]'s [electronic patient record system / named EHR verbatim from JD] to support safe, accurate record-keeping from the outset."
-
-NEVER use: "commitment to excellent care", "values that match my own", "reputation for outstanding service", "I am passionate about joining [Trust]", "I share [Trust]'s values and believe I would be a good fit."
-
-Word count: approximately 100 words. NO subheading. For Style 2 (flowing prose): use a brief transition phrase.
+## WHY THIS TRUST — PLACEMENT RULES
+Trust motivation appears in exactly TWO places — nowhere else:
+1. OPENING PARAGRAPH: One final sentence on why this Trust specifically (using TRUST INTELLIGENCE data or JD specifics — see MANDATORY TRUST SENTENCE above)
+2. CLOSING (50-70 words): The full trust rationale — why this role, why this Trust, what you bring, what you'll do (see CLOSING below)
+Do NOT add a separate standalone trust paragraph anywhere else in the statement body.
 
 ## CRITERIA SUMMARY PARAGRAPH — MANDATORY (110-120 words, second to last)
 Place this paragraph immediately before the closing paragraph. It is required in every statement.
@@ -761,18 +785,25 @@ EXAMPLE (adapt to this role's person spec — do not copy verbatim):
 Word count: 110-120 words exactly. Do not exceed 120.
 CRITICAL: Use the EXACT noun phrases from the person specification — not paraphrases. A recruiter must be able to tick every major essential criterion directly from this paragraph.
 
-## CLOSING PARAGRAPH (4-5 lines, approx 50-60 words)
-Never end with a readiness claim. End with the candidate's genuine motivation, a callback to their strongest evidence, or a specific development goal tied to what this Trust offers.
+## CLOSING (50-70 words)
+The closing must do four things in order:
+1. WHY THIS ROLE — what this specific role offers the candidate (challenge, development, specialty match, or service alignment)
+2. WHY THIS TRUST — the full trust rationale, built from the TRUST INTELLIGENCE block (named award, CQC rating, initiative, investment) and JD specifics; trust values named by name; EHR commitment if applicable (verbatim from JD or generic fallback)
+3. WHAT YOU BRING — one specific strength or piece of evidence from earlier in the statement
+4. WHAT YOU WILL DO — a concrete forward-looking commitment tied to the named team or service from the advert
 
-Choose ONE pattern that fits the tone — vary across statements:
+End with "Thank you." Nothing follows.
 
-- Forward-looking (tied to the specific team or service): "The [named team/service from advert] at [Trust] is exactly the setting where a [specialty] background and [key strength from person spec] combine into something useful. Thank you."
-- Callback (references the candidate's own story): "The same instinct that made me [specific action from the candidate's story in this statement] is what I will bring to every shift at [Trust]. Thank you."
-- Development-led (tied to what the Trust offers): "Working within [Trust name]'s [specific unit/service from advert] is the structured development step I have been building towards — and the direction my [X] years in [specialty] point. Thank you."
-- Role-specific: "The [EXACT vacancy title] post at [Trust] represents the direction I have been working towards, and the [named service/team] is exactly where my [key strength from person spec] will make a direct difference. Thank you."
+Choose ONE pattern — vary across statements:
 
-NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", "I look forward to discussing my application", "I am ready to contribute from day one", or any variation of "from the first shift."
-USE the EXACT vacancy title. "Thank you." ends the main statement — nothing follows.
+PATTERN A: "The [EXACT vacancy title] post at [Trust] is the next step in a direction I have been building towards. [Trust]'s [named achievement from TRUST INTELLIGENCE / specific service from JD] — alongside its commitment to [Trust's named values] — is the environment where [specific strength] is most useful. I will bring [specific skill or evidence from statement] to [named team/service from advert] and [commit to / develop proficiency in] [Trust]'s [electronic patient record system / named EHR from JD]. Thank you."
+
+PATTERN B: "What draws me to [Trust] specifically is [named achievement from TRUST INTELLIGENCE or named service from JD] — an organisation that invests in [specific area]. Its values of [Value 1] and [Value 2] are ones I already practise. I will bring [specific strength from statement] to the [named team/service from advert] and quickly develop proficiency in [Trust]'s [electronic patient record system / named EHR from JD]. Thank you."
+
+PATTERN C: "The [EXACT vacancy title] role at [Trust] offers [specific challenge or development from JD]. Following [Trust]'s [named achievement from TRUST INTELLIGENCE or specific JD initiative], I am committed to contributing to [named team/service], bringing the [specific skill or strength from the body of the statement], and learning [Trust]'s [electronic patient record system / named EHR from JD] quickly. Thank you."
+
+NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", "I look forward to discussing my application", "I am ready to contribute from day one", "from the first shift."
+Always use the EXACT vacancy title. "Thank you." ends the statement — nothing follows.
 
 ## TRUST INTELLIGENCE — COMBINING RESEARCH DATA WITH JD CONTENT
 The "why this Trust" paragraph must be specific and unique — most other applicants use only the job description. The TRUST INTELLIGENCE block (when present) contains real-world data that other applicants cannot access. Use it.

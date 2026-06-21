@@ -467,16 +467,18 @@ Use descriptive language — adjectives that show character (caring, methodical,
 
 Use the CAR structure (Context, Action, Result) when introducing specific experience — briefly state where, what was done, and what it produced.
 
+MANDATORY BOARD SENTENCE — every Q1 opening pattern must close with exactly ONE sentence on why this Board specifically. Use a specific item from the TRUST INTELLIGENCE block if present, or a specific named service, hospital, team, or geographic community from the JD. Generic motivation is banned: "I share NHS [Board]'s values", "I am drawn to NHS [Board]'s reputation for excellent care" — not acceptable. One concrete specific only. The full Board rationale is developed in Q2 and the Q3 closing.
+
 Choose ONE opening pattern — do NOT default to Pattern A every time. Rotate across statements:
 
 PATTERN A — Standard:
-"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases from advert]. I hold [qualification] (SCQF equivalence if English), and over my years in [specialty-specific] care settings I have developed [2 skills from person spec]. As [EXACT vacancy title] at [Previous Workplace], I worked with patients [specific conditions/procedures matching vacancy], alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [one brief duty using JD keywords]. I want to join NHS [Board] because [one specific reason from advert]."
+"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases from advert]. I hold [qualification] (SCQF equivalence if English), and over my years in [specialty-specific] care settings I have developed [2 skills from person spec]. As [EXACT vacancy title] at [Previous Workplace], I worked with patients [specific conditions/procedures matching vacancy], alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [one brief duty using JD keywords]. I am applying to NHS [Board] specifically because [one concrete specific from TRUST INTELLIGENCE or JD — named award, service, unit, or community]."
 
 PATTERN B — Credential-led:
-"With [qualification (SCQF equivalence if English)] and [X] years in [specialty-specific] care settings, I [one key strength from person spec using advert keywords]. As [EXACT vacancy title] at [Previous Workplace], I supported patients with [specific conditions/procedures], working alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. NHS [Board] is where I want to bring this experience because [specific reason from advert]."
+"With [qualification (SCQF equivalence if English)] and [X] years in [specialty-specific] care settings, I [one key strength from person spec using advert keywords]. As [EXACT vacancy title] at [Previous Workplace], I supported patients with [specific conditions/procedures], working alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. NHS [Board]'s [one concrete specific from TRUST INTELLIGENCE or JD] is what draws me to apply here."
 
 PATTERN C — Experience-led:
-"[X] years in [specialty-specific] care settings — most recently as [EXACT vacancy title] at [Previous Workplace] supporting patients with [specific conditions/procedures] — have built [2 skills from person spec]. I hold [qualification (SCQF equivalence if English)]. In my current role as [Current Role] at [Current Workplace], I [brief duty using JD keywords]. I am applying to NHS [Board] because [specific reason from advert]."
+"[X] years in [specialty-specific] care settings — most recently as [EXACT vacancy title] at [Previous Workplace] supporting patients with [specific conditions/procedures] — have built [2 skills from person spec]. I hold [qualification (SCQF equivalence if English)]. In my current role as [Current Role] at [Current Workplace], I [brief duty using JD keywords]. I am applying to NHS [Board] because [one concrete specific from TRUST INTELLIGENCE or JD]."
 
 ### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? (HARD LIMIT: 420w)
 Word budget — must total ≤420 words:
@@ -575,16 +577,50 @@ EXAMPLE (adapt to this role's person spec — do not copy verbatim):
 Word count: 110-120 words exactly. Do not exceed 120.
 CRITICAL: Use the EXACT noun phrases from the person specification — not paraphrases. A recruiter must be able to tick every major essential criterion directly from this paragraph.
 
-CLOSING PARAGRAPH (3-4 lines):
-Never end with a readiness claim. End with the candidate's genuine motivation, a callback to their strongest evidence, or a specific development goal tied to what this Board offers. Choose ONE pattern — vary across statements:
-- Forward-looking: "The [named team/service from advert] at NHS [Board] is exactly the setting where a [specialty] background and [key strength FROM PERSON SPEC] combine into something useful. Thank you."
-- Callback: "The same instinct that made me [specific action from the candidate's story in this statement] is what I will bring to every shift at NHS [Board]. Thank you."
-- Development-led: "Working within NHS [Board]'s [specific unit/service from advert] is the structured development step I have been building towards — and the direction my [X] years in [specialty] point. Thank you."
-- Role-specific: "The [EXACT vacancy title] post at NHS [Board] represents the direction I have been working towards, and the [named service/team] is exactly where my [key strength FROM PERSON SPEC] will make a direct difference. Thank you."
-NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", "I look forward to discussing my application", "I am ready to contribute from day one", or any variation of "from the first shift."
-Always end with "Thank you." — nothing after it. Use Board name (NEVER "Trust").
+CLOSING (50-70 words):
+The Q3 closing must do four things in order:
+1. WHY THIS ROLE — what this specific role offers the candidate (challenge, development, specialty match)
+2. WHY THIS BOARD — use the TRUST INTELLIGENCE block (named award, Healthcare Improvement Scotland finding, initiative) plus JD specifics; name the Board's values; include EHR commitment if applicable (verbatim from JD or generic fallback — TrakCare only if confirmed in JD for a Scottish Board)
+3. WHAT YOU BRING — one specific strength from earlier in the statement, mapped to the person spec
+4. WHAT YOU WILL DO — a concrete forward-looking commitment tied to the named team or service
+
+Choose ONE pattern — vary across statements:
+
+PATTERN A: "The [EXACT vacancy title] post at NHS [Board] is the structured next step in a direction I have been building towards. [Board]'s [named achievement from TRUST INTELLIGENCE or specific service from JD] — alongside its commitment to [Board's named values or NHS Scotland's four values] — is the environment where [specific strength from statement] will count. I will bring [specific skill] to [named team/service from advert]. Thank you."
+
+PATTERN B: "What draws me to NHS [Board] is [named achievement from TRUST INTELLIGENCE or specific service from JD] — an organisation that invests in [specific area]. I will bring [specific strength from statement] and commitment to [Value 1] and [Value 2] to the [named team/service], and I will quickly learn [Board]'s [electronic patient record system / named EHR from JD]. Thank you."
+
+NEVER use: "I am confident I would make a valuable contribution", "I believe my skills make me an ideal candidate", "I am enthusiastic about the opportunity to join", "I look forward to discussing my application", "I am ready to contribute from day one", "from the first shift."
+Always end with "Thank you." — nothing after it. Always use Board name (NEVER "Trust").
+
+## EXCELLENT EVIDENCE STANDARD — WHAT THE PANEL ACTUALLY SCORES
+Every criterion paragraph is scored 0-3 by the shortlisting panel:
+- 0 = generic claim not mapped to the criterion wording ("I have strong communication skills and work well in a team") — the panel cannot score this, regardless of how true it is
+- 1 = criterion mentioned with vague evidence, no outcome
+- 2 = specific example with a named outcome but not quantified or not mapped to the criterion's exact wording
+- 3 = specific clinical situation + specific actions with named tools/systems/procedures + quantified or professionally significant outcome + reflection linking learning to the Board's values or the role's wider context
+
+EVERY criterion paragraph must target a score of 3. Before finalising any paragraph: is the outcome quantified or professionally significant? Does it use the exact wording of the criterion? Is there a reflection? If any answer is no, upgrade it.
+
+MISTAKE — generic claim, not mapped to criterion:
+WRONG: "I am a strong team player with excellent communication skills." (scores 0 — the panel cannot award marks for this)
+RIGHT: Identify the exact wording of the criterion in the person spec. Build the paragraph around a specific clinical situation, specific actions using the JD's named tools and roles, and a specific outcome. Every word maps to the criterion's language.
+
+MISTAKE — clinical experience without quantified outcome:
+WRONG: "I participated in audit work at my previous workplace." (1/5)
+RIGHT: "I led a closed-loop audit on VTE risk assessment compliance (n=124 patients over 4 weeks). Initial compliance with SIGN guidance was 67%. I presented findings at the clinical governance meeting, introduced a sticker prompt on the admission proforma, and re-audited at 3 months: compliance rose to 94%. The change was adopted across two further wards."
 
 ## CRITERION PARAGRAPHS — MINI-STARR (5-8 lines, 70-120 words)
+
+THE FIVE-SENTENCE PATTERN — use this structure for every criterion paragraph:
+Sentence 1: "I meet this criterion through my role as [position], where I [scope of responsibility]." — maps to the criterion immediately
+Sentence 2: "Specifically, in [clinical situation with enough detail the panel can picture it], I was responsible for [task]." — puts the panel inside the evidence
+Sentence 3: "I [specific action and decision], applying [relevant framework, guideline, or evidence base]." — shows clinical reasoning
+Sentence 4: "As a result, [quantified or qualitative outcome attributable to your action]." — mandatory outcome
+Sentence 5: "On reflection, [what you learned or how you changed practice], which I will bring to this role at NHS [Board] by [specific application]." — links learning to THIS Board's context
+
+This five-sentence structure scores 3 (maximum) every time it is followed correctly. Omitting sentence 4 or sentence 5 drops the score to 1-2.
+
 Every paragraph: SITUATION → ACTION → RESULT → REFLECTION (optional).
 
 SITUATION (1 sentence): a specific scene — a named workplace, a patient group, a time or shift context, or a direct statement of what was done and where. NEVER use the SITUATION sentence to describe the criterion or explain why it matters.
