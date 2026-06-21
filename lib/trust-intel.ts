@@ -9,6 +9,41 @@
 export interface TrustIntel {
   trustName: string
   items: { title: string; date: string; snippet: string }[]
+  ehrSystem?: string // detected from news/web search — treat as a research hint, not guaranteed fact
+}
+
+// Known EHR system names with patterns to detect in text
+const EHR_KEYWORDS: { name: string; patterns: string[] }[] = [
+  { name: 'RiO', patterns: ['rio epr', ' rio ', '"rio"', 'nhs rio', 'using rio', 'use rio'] },
+  { name: 'SystmOne', patterns: ['systmone', 'system one', 's1 clinical'] },
+  { name: 'EMIS', patterns: ['emis web', 'emis health', ' emis '] },
+  { name: 'Epic', patterns: ['epic systems', 'epic ehr', 'epic electronic', 'go live epic', 'epic go-live'] },
+  { name: 'Lorenzo', patterns: ['lorenzo'] },
+  { name: 'Cerner', patterns: ['cerner', 'oracle health', 'oracle cerner'] },
+  { name: 'Carenotes', patterns: ['carenotes'] },
+  { name: 'TrakCare', patterns: ['trakcare', 'trak care', 'traccare'] },
+  { name: 'PKB', patterns: ['patients know best', 'patient known best', ' pkb '] },
+  { name: 'Clinical Portal', patterns: ['clinical portal'] },
+  { name: 'Adastra', patterns: ['adastra'] },
+  { name: 'Careflow', patterns: ['careflow'] },
+  { name: 'Meditech', patterns: ['meditech'] },
+  { name: 'PARIS', patterns: ['paris system', 'paris patient'] },
+  { name: 'iClip', patterns: ['iclip'] },
+  { name: 'JAC', patterns: ['jac pharmacy', 'jac dispensing'] },
+]
+
+function detectEhrSystem(texts: string[]): string | null {
+  const counts: Record<string, number> = {}
+  for (const text of texts) {
+    const lower = ' ' + text.toLowerCase() + ' '
+    for (const sys of EHR_KEYWORDS) {
+      if (sys.patterns.some(p => lower.includes(p))) {
+        counts[sys.name] = (counts[sys.name] || 0) + 1
+      }
+    }
+  }
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1])
+  return sorted[0]?.[0] ?? null
 }
 
 function cleanOrganisationName(raw: string): string {
@@ -72,20 +107,23 @@ export async function fetchTrustIntel(rawOrganisation: string): Promise<TrustInt
   const trustName = cleanOrganisationName(rawOrganisation)
   if (trustName.length < 5) return null
 
-  // Two complementary searches:
+  // Three complementary searches:
   // 1. Achievements / awards / CQC ratings
   // 2. Strategic news and investments
+  // 3. EHR/digital system news — to detect which patient record system the trust uses
   const currentYear = new Date().getFullYear()
   const queries = [
     `"${trustName}" award OR achievement OR CQC OR rated OR outstanding ${currentYear} OR ${currentYear - 1}`,
     `"${trustName}" new OR investment OR service OR expansion OR £ ${currentYear} OR ${currentYear - 1}`,
+    `"${trustName}" (RiO OR SystmOne OR EMIS OR Epic OR Lorenzo OR Cerner OR Carenotes OR TrakCare OR "Clinical Portal" OR Adastra OR Careflow OR Meditech OR PARIS OR iClip) electronic patient record`,
   ]
 
   const allItems: { title: string; date: string; snippet: string }[] = []
   const seen = new Set<string>()
+  const ehrTexts: string[] = []
 
   await Promise.allSettled(
-    queries.map(async (q) => {
+    queries.map(async (q, idx) => {
       try {
         const url = `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-GB&gl=GB&ceid=GB:en`
         const res = await fetch(url, {
@@ -99,6 +137,11 @@ export async function fetchTrustIntel(rawOrganisation: string): Promise<TrustInt
         const xml = await res.text()
         const items = parseRssItems(xml)
         for (const item of items) {
+          // EHR query (index 2): collect all text for system detection, skip dedup/news list
+          if (idx === 2) {
+            ehrTexts.push(item.title + ' ' + item.snippet)
+            continue
+          }
           if (seen.has(item.title)) continue
           seen.add(item.title)
           // Only keep items that mention the trust name
@@ -110,13 +153,16 @@ export async function fetchTrustIntel(rawOrganisation: string): Promise<TrustInt
     })
   )
 
-  // Keep the 5 most relevant, filtering out anything older than 2 years
+  // Keep the 5 most relevant news items, filtering out anything older than 2 years
   const recent = allItems.filter(i => isRecentEnough(i.date)).slice(0, 5)
 
-  if (recent.length === 0) return null
+  // Detect EHR system from the dedicated EHR search results
+  const ehrSystem = detectEhrSystem(ehrTexts) ?? undefined
 
-  console.log(`[trust-intel] Found ${recent.length} items for "${trustName}"`)
-  return { trustName, items: recent }
+  if (recent.length === 0 && !ehrSystem) return null
+
+  console.log(`[trust-intel] Found ${recent.length} items, EHR detected: "${ehrSystem ?? 'none'}" for "${trustName}"`)
+  return { trustName, items: recent, ehrSystem }
 }
 
 export function formatTrustIntel(intel: TrustIntel): string {
@@ -125,8 +171,21 @@ export function formatTrustIntel(intel: TrustIntel): string {
     return `- ${dateTag}${i.title}${i.snippet ? ': ' + i.snippet : ''}`
   })
 
-  return `## TRUST INTELLIGENCE — REAL RECENT ACHIEVEMENTS (use these in the "why this trust/board" section)
-The following are real, recent news items about ${intel.trustName}. You MUST reference at least one of these specific achievements or initiatives when explaining why the candidate wants to work here. Do NOT use generic praise — use the actual names, dates, and specifics from these items.
+  const newsBlock = intel.items.length > 0
+    ? `### RECENT ACHIEVEMENTS AND NEWS
+The following are real, recent news items about ${intel.trustName}. You MUST reference at least one of these specific achievements or initiatives in the WHY THIS TRUST paragraph. Do NOT use generic praise — use the actual names, dates, and specifics from these items.
 
 ${lines.join('\n')}`
+    : ''
+
+  const ehrBlock = intel.ehrSystem
+    ? `### EHR SYSTEM — RESEARCH FINDING
+News search suggests ${intel.trustName} uses or is implementing: **${intel.ehrSystem}**
+IMPORTANT: This is a research hint — it may refer to a specific department or pilot, not the whole trust. Apply the EHR ACCURACY RULE: if "${intel.ehrSystem}" also appears verbatim in the job description, use it with confidence ("I am committed to developing proficiency in ${intel.ehrSystem}"). If it does NOT appear in the JD, write: "I am eager to learn ${intel.trustName}'s electronic patient record system — I understand from my research that ${intel.ehrSystem} is used across the trust's services." NEVER state this as certain fact. NEVER use TrakCare for England or Wales roles regardless of this finding.`
+    : ''
+
+  const sections = [newsBlock, ehrBlock].filter(Boolean).join('\n\n')
+
+  return `## TRUST INTELLIGENCE — USE THIS IN THE "WHY THIS TRUST" PARAGRAPH
+${sections}`
 }
