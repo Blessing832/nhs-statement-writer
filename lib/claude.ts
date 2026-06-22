@@ -386,11 +386,11 @@ ${isScotland
   ? `MANDATORY: Output ONLY the three standard questions listed above. No other sections.
 
 HARD WORD LIMITS:
-- Question 1: Why are you suitable for this post? — 480 words maximum
-- Question 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? — 480 words maximum
-- Question 3: Is there any other relevant information that will assist us in shortlisting your application? — 200 words maximum — end with "Thank you." and stop`
+- Question 1: Why are you suitable for this post? — 420 words maximum
+- Question 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? — 420 words maximum
+- Question 3: Is there any other relevant information that will assist us in shortlisting your application? — 340 words maximum — end with "Thank you." and stop`
   : hasExtraQuestions
-  ? `HARD WORD LIMIT FOR MAIN STATEMENT: 1,570 words. Write "Thank you." to close the statement when done.
+  ? `HARD WORD LIMIT FOR MAIN STATEMENT: 1,400 words. Write "Thank you." to close the statement when done.
 
 CRITICAL — MANDATORY CONTINUATION: After "Thank you.", you MUST answer EVERY additional question listed in the SPECIFIC APPLICATION QUESTIONS section above. Do NOT stop at "Thank you." if there are additional questions.
 
@@ -399,7 +399,7 @@ For each additional question:
 - Answer at approximately 250 words using the FIVE-SENTENCE PATTERN
 - Sentence 1: scope of responsibility → Sentence 2: specific clinical situation → Sentence 3: specific action + framework → Sentence 4: quantified outcome (MANDATORY) → Sentence 5: reflection linked to this role
 - No em dashes. No generic claims. Every answer must end with a concrete attributable outcome.`
-  : `HARD WORD LIMIT: 1,570 words — write "Thank you." and STOP. Do NOT write any section after "Thank you." — no Key Duties, no summaries, nothing.`}
+  : `HARD WORD LIMIT: 1,400 words — write "Thank you." and STOP. Do NOT write any section after "Thank you." — no Key Duties, no summaries, nothing.`}
 
 CRITICAL:
 - No em dashes anywhere
@@ -609,7 +609,7 @@ async function generateParallel(
   // Questions-only mode: no limit enforced — the prompt controls per-question word counts.
   // Statement+questions mode: only trim the statement portion before "Thank you.";
   //   preserve the extra question answers that follow it.
-  const wordLimit = isScotland ? 1160 : 1570
+  const wordLimit = isScotland ? 1160 : 1400
   if (appMode !== 'questions-only' && statement.split(/\s+/).length > wordLimit) {
     // For statement-questions, split at "Thank you." to preserve question answers
     const CLOSING = 'Thank you.'

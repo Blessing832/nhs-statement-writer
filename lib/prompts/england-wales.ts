@@ -534,14 +534,14 @@ EXAMPLE: If the JD says "supporting patients with complex needs in an acute care
 FINAL CHECK 7 verifies this. If fewer than 6 exact JD phrases appear after drafting, weave the missing ones into existing paragraphs before outputting — do NOT add a new paragraph solely for keywords.
 
 ## WORD COUNT — HARD LIMIT
-Statement (opening to "Thank you."): MAXIMUM 1,570 WORDS
+Statement (opening to "Thank you."): MAXIMUM 1,400 WORDS
 The extra 120 words are reserved for the mandatory CRITERIA SUMMARY PARAGRAPH (see below).
 Count internally after every paragraph. Never display counts or deliberation to the user.
 INTERNAL CHECKPOINTS:
-- At 1,200w: shorten remaining paragraphs
-- At 1,460w: finish in the next 100w
-- At 1,540w: write the summary paragraph then "Thank you." and stop immediately
-- At 1,570w: stop immediately with "Thank you."
+- At 1,100w: shorten remaining paragraphs
+- At 1,280w: finish in the next 100w
+- At 1,360w: write the summary paragraph then "Thank you." and stop immediately
+- At 1,400w: stop immediately with "Thank you."
 
 ## WORD ALLOCATION — ESSENTIAL vs DESIRABLE
 Essential criteria deserve 80% of the word count. Desirable criteria deserve 20%.
