@@ -294,7 +294,7 @@ Keep paragraphs short and readable. The default is 3-5 lines per paragraph.
 - Standard criterion paragraph: 3-5 lines. Stop at 5 lines. If more evidence is needed, start a NEW paragraph — do NOT extend the current one beyond 5 lines.
 - For richer criteria: use 2 paragraphs (each 3-5 lines) rather than one long paragraph. This is preferred.
 - Story paragraphs: up to 6-7 lines maximum — never 8.
-- The OPENING paragraph (Paragraph 1) may be split into two paragraphs: Part A (who you are, qualifications, experience years, previous role) and Part B (current role + why this Trust). This is encouraged when the opening would otherwise exceed 5 lines.
+- The OPENING paragraph (Paragraph 1) is always ONE paragraph only. Never split it into two. Keep it to 3-4 sentences maximum.
 
 No two consecutive paragraphs should be the same length. Vary between 3-line, 4-line, and 5-line paragraphs to produce natural rhythm.
 
@@ -568,54 +568,30 @@ RULES FOR THE HOOK:
 - If the hook does not improve the statement, omit it — the normal opening is preferred (use no hook for roughly 6 in 10 statements)
 - NEVER add a label like "Hook:" or any prefix before it
 
-## PARAGRAPH 1 — OPENING (can be ONE paragraph of 5 lines OR TWO paragraphs of 3-4 lines each)
-The opening must answer the question a recruiter is silently asking: "Why should we hire this person?" It must be engaging — not a list of credentials but a confident, specific explanation of who the candidate is, why they are applying, and what they bring. Show motivation and genuine interest in the role. Use keywords and phrases pulled directly from the job advert.
+## PARAGRAPH 1 — OPENING (ONE paragraph only, maximum 80 words / 3-4 sentences)
+A single tight paragraph. Never split into two. Paragraph 2 must open the first essential criterion immediately.
 
-BEFORE writing this paragraph, identify 4-6 specific keywords and phrases from the job advert OVERVIEW/INTRODUCTION — the opening paragraphs of the job posting that appear BEFORE the duties list or person spec. These are the words the recruiter used to describe the ideal candidate and the role's purpose. Do not use generic placeholders — extract the ACTUAL phrases from THIS specific advert. These exact keywords must appear naturally in the opening paragraph, especially in the suitability phrase.
+Cover ALL FOUR of these in order within this one paragraph:
+1. ROLE + EXPERIENCE: Exact vacancy title, years in the relevant specialty, and 2-3 specific conditions/patient groups/procedures/interventions from the JD that the candidate has direct experience with (use the exact names the JD uses)
+2. QUALIFICATIONS: One brief sentence listing the essential qualification(s) from the person spec only — no overloading, no irrelevant certificates
+3. CURRENT ROLE: One short phrase placing the candidate now ("currently working as [Current Role] at [Current Workplace]")
+4. WHY THIS TRUST: The final sentence — one concrete specific from TRUST INTELLIGENCE or the JD (named award, service, team, initiative, or community). Generic motivation is banned: "I share [Trust]'s values", "I am drawn to [Trust]'s reputation" — not acceptable.
 
-Include: the specific conditions or patient groups the candidate worked with in their previous role that match this vacancy's specialty (e.g. post-operative patients, patients with [condition from JD], endoscopy recovery, dementia care — use exactly what the JD names).
+Choose ONE pattern. Rotate — do NOT default to Pattern A:
 
-Use descriptive language — adjectives that show character (caring, methodical, accountable, consistent, motivated, empathetic) and adverbs that show how the candidate works (effectively, professionally, accurately, calmly). These must come from what the candidate's profile and history actually support, not be added as decoration.
-
-Use the CAR structure (Context, Action, Result) when introducing specific experience — briefly state where, what was done, and what it produced.
-
-MANDATORY TRUST SENTENCE — every opening pattern must close with exactly ONE sentence on why this Trust specifically. This sentence must use a specific item from the TRUST INTELLIGENCE block if present, or a specific named service, ward, initiative, or geographic community from the JD. Generic trust motivation is never acceptable here: "I share [Trust]'s values", "I am drawn to [Trust]'s reputation for excellent care", "I am passionate about joining [Trust]" — all banned. Use one concrete specific. After this sentence, proceed directly to evidence — do not expand the trust motivation further in the opening.
-
-Choose ONE opening pattern — do NOT default to Pattern A every time. Rotate deliberately across different statements:
-
-PATTERN A — Standard:
-"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases from advert]. I hold [qualification], and over my [X] years in [specialty-specific] care settings I have developed [2-3 skills from person spec]. As [EXACT vacancy title] at [Previous Workplace], I worked with patients undergoing [specific conditions/procedures matching vacancy], alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. I am applying to [Trust] specifically because [one concrete specific from TRUST INTELLIGENCE or JD — named award, service, initiative, or community]."
+PATTERN A — Role-led:
+"I am applying for the [EXACT vacancy title] post with [X] years' experience in [specialty] care, supporting patients with [condition 1], [condition 2], and [procedure/intervention from JD]. I hold [essential qualification from person spec] and currently work as [Current Role] at [Current Workplace]. I am applying to [Trust] because [one concrete specific from TRUST INTELLIGENCE or JD]."
 
 PATTERN B — Credential-led:
-"With [X] years in [specialty-specific] care settings and [qualification from person spec], I have spent my career [2-3 skills from person spec using advert keywords]. As [EXACT vacancy title] at [Previous Workplace], I supported patients with [specific conditions/procedures], working alongside [professional roles from JD]. I currently work as [Current Role] at [Current Workplace], [brief duty using JD keywords]. [Trust]'s [one concrete specific from TRUST INTELLIGENCE or JD] is what draws me to apply here."
+"With [essential qualification from person spec] and [X] years supporting patients with [condition 1], [condition 2], and [procedure/intervention from JD] in [specialty] settings, I have developed [2 key skills from person spec]. I currently work as [Current Role] at [Current Workplace], previously as [EXACT vacancy title] at [Previous Workplace]. [Trust]'s [one concrete specific from TRUST INTELLIGENCE or JD] is what draws me to apply here."
 
 PATTERN C — Experience-led:
-"[X] years as [EXACT vacancy title] across [specialty-specific] care settings — most recently as [EXACT vacancy title] at [Previous Workplace] supporting patients with [specific conditions/procedures] — have built [2-3 skills from person spec]. I hold [qualification from person spec]. In my current role as [Current Role] at [Current Workplace], I [brief duty using JD keywords]. I am applying to [Trust] because [one concrete specific from TRUST INTELLIGENCE or JD]."
+"[X] years as [EXACT vacancy title] in [specialty] settings, supporting patients with [condition 1], [condition 2], and [procedure/intervention from JD], have built [2 key skills from person spec]. I hold [essential qualification from person spec] and currently work as [Current Role] at [Current Workplace]. I am applying to [Trust] specifically because [one concrete specific from TRUST INTELLIGENCE or JD]."
 
-PATTERN D — Current-role-led:
-"In my current role as [Current Role] at [Current Workplace], I [specific relevant duty using JD keywords] and hold [qualification from person spec]. Before this, as [EXACT vacancy title] at [Previous Workplace], I [relevant duty matching vacancy specialty, with patient groups], alongside [professional roles from JD]. Over [X] years in [specialty-specific] care settings, I have developed [2-3 skills from person spec using advert keywords]. What draws me to [Trust] specifically is [one concrete specific from TRUST INTELLIGENCE or JD]."
+PATTERN D — Conditions-led:
+"Supporting patients with [condition 1], [condition 2], and [procedure/intervention from JD] across [X] years in [specialty] care has built my clinical foundation. I hold [essential qualification from person spec], currently working as [Current Role] at [Current Workplace] and previously as [EXACT vacancy title] at [Previous Workplace]. What draws me to [Trust] specifically is [one concrete specific from TRUST INTELLIGENCE or JD]."
 
-CRITICAL RULE — PATTERN SELECTION:
-Pattern D MUST NOT be used when the current role is LESS clinically relevant to the vacancy than a previous role. Opening with a weaker role before a stronger one creates a confusing, backwards introduction.
-
-Examples of when NOT to use Pattern D:
-- Candidate currently works as a care assistant / HCA / residential carer but previously was a registered nurse or specialist clinician → do NOT open with the care home
-- Candidate is currently in an unrelated role (admin, overseas non-clinical) but has relevant NHS or clinical history → do NOT open with the unrelated current role
-- Candidate's previous role directly matches the vacancy specialty but current role does not → open with the previous role (use Pattern A, B, or C)
-
-Pattern D is only appropriate when the current role is the most clinically relevant role the candidate holds.
-
-CRITICAL ELEMENTS — ALL must be present regardless of which pattern is used:
-1. Qualification + how it meets person spec requirement
-2. Years in [specialty-specific] care settings
-3. 2-3 skills from person spec
-4. EXACT vacancy title as previous role + specific conditions/procedures matching vacancy specialty
-5. Named professional roles from JD
-6. Current role + brief duty using JD keywords
-7. Why this Trust (Trust values + advert language)
-8. 2-3 exact keyword phrases from the advert (verbatim or near-verbatim)
-
-If splitting into TWO paragraphs: First paragraph covers items 1-6, second covers items 7-8. Each must be 3-5 lines. Prefer the split when items 1-8 would push a single paragraph beyond 5 lines.
+PATTERN SELECTION RULE: Never use Pattern D when the current role is less clinically relevant than a previous role — open with the strongest experience first (use Pattern A, B, or C).
 
 ## NO SEPARATE EDUCATION PARAGRAPH
 Qualifications are addressed fully in the opening paragraph. Do not add a separate education or training paragraph.

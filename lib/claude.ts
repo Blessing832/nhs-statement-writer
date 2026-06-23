@@ -77,6 +77,13 @@ function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): string {
 - NEVER use em dashes (—). Use a comma instead
 - Never fabricate experience${styleNote}
 
+OPENING PARAGRAPH (ONE paragraph only, maximum 80 words):
+Cover all four in one tight paragraph, then begin criteria immediately in paragraph 2:
+1. ROLE + EXPERIENCE: exact vacancy title, years in specialty, 2-3 specific conditions/procedures from the JD
+2. QUALIFICATIONS: one brief sentence — essential qualification from person spec only
+3. CURRENT ROLE: one short phrase placing the candidate now
+4. WHY THIS ORGANISATION: final sentence — one concrete specific from the job advert (not generic)
+
 FIVE-SENTENCE PATTERN — use for every criterion paragraph:
 1. "I meet this criterion through my role as [position], where I [scope of responsibility]."
 2. "Specifically, in [clinical situation with enough detail the panel can picture it], I was responsible for [task]."

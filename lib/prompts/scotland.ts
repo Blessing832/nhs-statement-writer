@@ -474,28 +474,25 @@ Word budget — must total ≤420 words:
 Total: 330 words — leaving 90 words of buffer. Do not add more paragraphs.
 STOP at 420 words.
 
-OPENING PARAGRAPH FORMAT (MAX 80 WORDS — 5-6 lines):
-The opening must answer the question a recruiter is silently asking: "Why should we hire this person?" It must be engaging — not a list of credentials but a confident, specific explanation of who the candidate is, why they are applying, and what they bring. Show motivation and genuine interest in the role. Use keywords and phrases pulled directly from the job advert.
+OPENING PARAGRAPH FORMAT (ONE paragraph only, maximum 80 words / 3-4 sentences):
+A single tight paragraph. Never split into two. Criteria begin immediately in the next paragraph.
 
-BEFORE writing this paragraph, identify 3-5 specific keywords and phrases from the job advert OVERVIEW/INTRODUCTION — the opening paragraphs of the posting that appear BEFORE the duties list or person spec. These are the words the recruiter used to describe the ideal candidate and the role's purpose. Do not use generic placeholders — extract the ACTUAL phrases from THIS specific advert. They must appear naturally in the opening, especially in the suitability phrase.
-Include the specific conditions or patient groups the candidate worked with that match this vacancy's specialty.
+Cover ALL FOUR of these in order:
+1. ROLE + EXPERIENCE: Exact vacancy title, years in the relevant specialty, and 2-3 specific conditions/patient groups/procedures/interventions from the JD that the candidate has direct experience with
+2. QUALIFICATIONS: One brief sentence — essential qualification from the person spec (with SCQF equivalence if English qual)
+3. CURRENT ROLE: One short phrase placing the candidate now ("currently working as [Current Role] at [Current Workplace]")
+4. WHY THIS BOARD: Final sentence — one concrete specific from TRUST INTELLIGENCE or JD (named award, hospital, service, team, or community). Generic motivation banned: "I share NHS [Board]'s values", "I am drawn to NHS [Board]'s reputation" — not acceptable.
 
-Use descriptive language — adjectives that show character (caring, methodical, accountable, consistent, motivated, empathetic) and adverbs that show how the candidate works (effectively, professionally, accurately, calmly). These must come from what the candidate's profile and history actually support.
+Choose ONE pattern. Rotate — do NOT default to Pattern A:
 
-Use the CAR structure (Context, Action, Result) when introducing specific experience — briefly state where, what was done, and what it produced.
-
-MANDATORY BOARD SENTENCE — every Q1 opening pattern must close with exactly ONE sentence on why this Board specifically. Use a specific item from the TRUST INTELLIGENCE block if present, or a specific named service, hospital, team, or geographic community from the JD. Generic motivation is banned: "I share NHS [Board]'s values", "I am drawn to NHS [Board]'s reputation for excellent care" — not acceptable. One concrete specific only. The full Board rationale is developed in Q2 and the Q3 closing.
-
-Choose ONE opening pattern — do NOT default to Pattern A every time. Rotate across statements:
-
-PATTERN A — Standard:
-"I am an experienced [EXACT vacancy title] who is [2-3 exact keyword phrases from advert]. I hold [qualification] (SCQF equivalence if English), and over my years in [specialty-specific] care settings I have developed [2 skills from person spec]. As [EXACT vacancy title] at [Previous Workplace], I worked with patients [specific conditions/procedures matching vacancy], alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [one brief duty using JD keywords]. I am applying to NHS [Board] specifically because [one concrete specific from TRUST INTELLIGENCE or JD — named award, service, unit, or community]."
+PATTERN A — Role-led:
+"I am applying for the [EXACT vacancy title] post with [X] years' experience in [specialty] care, supporting patients with [condition 1], [condition 2], and [procedure/intervention from JD]. I hold [qualification (SCQF equivalence if English)] and currently work as [Current Role] at [Current Workplace]. I am applying to NHS [Board] specifically because [one concrete specific from TRUST INTELLIGENCE or JD]."
 
 PATTERN B — Credential-led:
-"With [qualification (SCQF equivalence if English)] and [X] years in [specialty-specific] care settings, I [one key strength from person spec using advert keywords]. As [EXACT vacancy title] at [Previous Workplace], I supported patients with [specific conditions/procedures], working alongside [named roles from JD]. I currently work as [Current Role] at [Current Workplace] where I [brief duty using JD keywords]. NHS [Board]'s [one concrete specific from TRUST INTELLIGENCE or JD] is what draws me to apply here."
+"With [qualification (SCQF equivalence if English)] and [X] years supporting patients with [condition 1], [condition 2], and [procedure/intervention from JD] in [specialty] settings, I have built [2 skills from person spec]. I currently work as [Current Role] at [Current Workplace], previously as [EXACT vacancy title] at [Previous Workplace]. NHS [Board]'s [one concrete specific from TRUST INTELLIGENCE or JD] is what draws me to apply here."
 
 PATTERN C — Experience-led:
-"[X] years in [specialty-specific] care settings — most recently as [EXACT vacancy title] at [Previous Workplace] supporting patients with [specific conditions/procedures] — have built [2 skills from person spec]. I hold [qualification (SCQF equivalence if English)]. In my current role as [Current Role] at [Current Workplace], I [brief duty using JD keywords]. I am applying to NHS [Board] because [one concrete specific from TRUST INTELLIGENCE or JD]."
+"[X] years as [EXACT vacancy title] in [specialty] settings, supporting patients with [condition 1], [condition 2], and [procedure/intervention from JD], have built [2 skills from person spec]. I hold [qualification (SCQF equivalence if English)] and currently work as [Current Role] at [Current Workplace]. I am applying to NHS [Board] because [one concrete specific from TRUST INTELLIGENCE or JD]."
 
 ### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? (HARD LIMIT: 420w)
 Word budget — must total ≤420 words:
