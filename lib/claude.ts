@@ -78,10 +78,11 @@ function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): string {
 - Never fabricate experience${styleNote}
 
 OPENING PARAGRAPH (ONE paragraph only, maximum 80 words):
+Lead sentence 1 with the previous role title — the candidate's previous role matches the vacancy, so the recruiter must immediately see "this person has done this job before". Open with "As an experienced [EXACT vacancy title]" or "[X] years as [EXACT vacancy title]". NEVER open with "I am applying for...".
 Cover all four in one tight paragraph, then begin criteria immediately in paragraph 2:
-1. ROLE + EXPERIENCE: exact vacancy title, years in specialty, 2-3 specific conditions/procedures from the JD
-2. QUALIFICATIONS: one brief sentence — essential qualification from person spec only
-3. CURRENT ROLE: one short phrase placing the candidate now
+1. PREVIOUS ROLE + EXPERIENCE (sentence 1): role title + years + 2-3 specific conditions/procedures from the JD
+2. QUALIFICATIONS (sentence 2): one brief sentence — essential qualification from person spec + current role placement
+3. WARD/DEPARTMENT over hospital name: reference the ward or department, not the hospital name
 4. WHY THIS ORGANISATION: final sentence — one concrete specific from the job advert (not generic)
 
 FIVE-SENTENCE PATTERN — use for every criterion paragraph:

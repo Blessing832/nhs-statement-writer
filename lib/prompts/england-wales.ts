@@ -300,6 +300,9 @@ No two consecutive paragraphs should be the same length. Vary between 3-line, 4-
 
 ## EMPLOYER NAMING RULE
 When referring to a previous employer: if the candidate's profile identifies it as an NHS Trust or NHS Foundation Trust, you may call it "the Trust." For ALL other previous employers (private hospitals, care homes, community providers, overseas employers), use "the hospital", "the care home", or the workplace name — NEVER "the Trust."
+
+WARD/DEPARTMENT OVER HOSPITAL NAME: Throughout the statement, prefer ward or department references over hospital names. "On the acute respiratory ward", "in the surgical day unit", "across the community mental health team", "on HDU" tells a recruiter far more than a hospital name alone. Hospital names may be included once in the opening if the candidate's profile lists them, but do not repeat them. Within criterion paragraphs, always use the ward or department instead.
+
 Apply this check to every paragraph about a previous role.
 
 ## EHR AND IT SYSTEMS — MANDATORY
@@ -571,27 +574,27 @@ RULES FOR THE HOOK:
 ## PARAGRAPH 1 — OPENING (ONE paragraph only, maximum 80 words / 3-4 sentences)
 A single tight paragraph. Never split into two. Paragraph 2 must open the first essential criterion immediately.
 
-Cover ALL FOUR of these in order within this one paragraph:
-1. ROLE + EXPERIENCE: Exact vacancy title, years in the relevant specialty, and 2-3 specific conditions/patient groups/procedures/interventions from the JD that the candidate has direct experience with (use the exact names the JD uses)
-2. QUALIFICATIONS: One brief sentence listing the essential qualification(s) from the person spec only — no overloading, no irrelevant certificates
-3. CURRENT ROLE: One short phrase placing the candidate now ("currently working as [Current Role] at [Current Workplace]")
-4. WHY THIS TRUST: The final sentence — one concrete specific from TRUST INTELLIGENCE or the JD (named award, service, team, initiative, or community). Generic motivation is banned: "I share [Trust]'s values", "I am drawn to [Trust]'s reputation" — not acceptable.
+CRITICAL — PREVIOUS ROLE ALWAYS MATCHES THE VACANCY: The candidate's previous role title is set to match the exact vacancy title. Sentence 1 MUST lead with this — the recruiter must read "this person has done this job before" within the first five words. Do NOT open with "I am applying for…" or any variation that buries the experience.
+
+Cover ALL FOUR in order:
+1. PREVIOUS ROLE + EXPERIENCE (sentence 1): Lead with "As an experienced [EXACT vacancy title]" or "[X] years as [EXACT vacancy title]" — then name 2-3 specific conditions/patient groups/procedures/interventions from the JD that the candidate has direct hands-on experience with. Use the exact clinical terms the JD uses.
+2. QUALIFICATIONS (sentence 2): One brief sentence — essential qualification(s) from the person spec only, plus current role placement ("I hold [qual] and currently work as [Current Role]").
+3. WARD/DEPARTMENT — NOT HOSPITAL NAME: When referring to where the candidate worked, use the ward or department name, not the hospital name (e.g. "on the acute respiratory ward", "in the cardiac catheterisation unit", "across the community mental health team", "on HDU"). Hospital names are optional and usually omitted.
+4. WHY THIS TRUST (final sentence): One concrete specific from TRUST INTELLIGENCE or the JD — named award, service, team, initiative, or community. Generic motivation is banned: "I share [Trust]'s values", "I am drawn to [Trust]'s reputation" — not acceptable.
 
 Choose ONE pattern. Rotate — do NOT default to Pattern A:
 
-PATTERN A — Role-led:
-"I am applying for the [EXACT vacancy title] post with [X] years' experience in [specialty] care, supporting patients with [condition 1], [condition 2], and [procedure/intervention from JD]. I hold [essential qualification from person spec] and currently work as [Current Role] at [Current Workplace]. I am applying to [Trust] because [one concrete specific from TRUST INTELLIGENCE or JD]."
+PATTERN A — As-experienced:
+"As an experienced [EXACT vacancy title], I bring [X] years supporting patients with [condition 1], [condition 2], and [procedure/intervention from JD] on [ward/unit/department]. I hold [essential qualification from person spec] and currently work as [Current Role] at [Current Workplace]. I am applying to [Trust] because [one concrete specific from TRUST INTELLIGENCE or JD]."
 
-PATTERN B — Credential-led:
-"With [essential qualification from person spec] and [X] years supporting patients with [condition 1], [condition 2], and [procedure/intervention from JD] in [specialty] settings, I have developed [2 key skills from person spec]. I currently work as [Current Role] at [Current Workplace], previously as [EXACT vacancy title] at [Previous Workplace]. [Trust]'s [one concrete specific from TRUST INTELLIGENCE or JD] is what draws me to apply here."
+PATTERN B — Years-as:
+"[X] years as [EXACT vacancy title], supporting patients with [condition 1], [condition 2], and [procedure/intervention from JD] on [ward/unit], have built the foundation this post requires. I hold [essential qualification from person spec] and currently work as [Current Role] at [Current Workplace]. I am applying to [Trust] because [one concrete specific from TRUST INTELLIGENCE or JD]."
 
-PATTERN C — Experience-led:
-"[X] years as [EXACT vacancy title] in [specialty] settings, supporting patients with [condition 1], [condition 2], and [procedure/intervention from JD], have built [2 key skills from person spec]. I hold [essential qualification from person spec] and currently work as [Current Role] at [Current Workplace]. I am applying to [Trust] specifically because [one concrete specific from TRUST INTELLIGENCE or JD]."
+PATTERN C — My X years:
+"My [X] years as [EXACT vacancy title] — supporting patients with [condition 1], [condition 2], and [procedure/intervention from JD] across [ward/department and specialty unit] — directly match the requirements of this post. I hold [essential qualification from person spec] and currently work as [Current Role] at [Current Workplace]. What draws me to [Trust] is [one concrete specific from TRUST INTELLIGENCE or JD]."
 
-PATTERN D — Conditions-led:
-"Supporting patients with [condition 1], [condition 2], and [procedure/intervention from JD] across [X] years in [specialty] care has built my clinical foundation. I hold [essential qualification from person spec], currently working as [Current Role] at [Current Workplace] and previously as [EXACT vacancy title] at [Previous Workplace]. What draws me to [Trust] specifically is [one concrete specific from TRUST INTELLIGENCE or JD]."
-
-PATTERN SELECTION RULE: Never use Pattern D when the current role is less clinically relevant than a previous role — open with the strongest experience first (use Pattern A, B, or C).
+PATTERN D — Credential + role:
+"With [essential qualification from person spec] and [X] years as [EXACT vacancy title], I have supported patients with [condition 1], [condition 2], and [procedure/intervention from JD] on [ward/unit] and across [specialty] settings. I currently work as [Current Role] at [Current Workplace]. [Trust]'s [one concrete specific from TRUST INTELLIGENCE or JD] is what draws me to apply here."
 
 ## NO SEPARATE EDUCATION PARAGRAPH
 Qualifications are addressed fully in the opening paragraph. Do not add a separate education or training paragraph.
