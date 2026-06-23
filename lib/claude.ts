@@ -74,7 +74,7 @@ function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): string {
 - Address every essential criterion from the person specification
 - Use NHS language and terminology
 - Write 800-1,200 words
-- Never use em dashes. Use hyphens or commas instead
+- NEVER use em dashes (—). Use a comma instead
 - Never fabricate experience${styleNote}
 
 FIVE-SENTENCE PATTERN — use for every criterion paragraph:
@@ -303,7 +303,7 @@ SCORING RULE (panel scores 0-3 per question):
 ADDITIONAL RULES:
 - Evidence first: first sentence must place the reader in a specific situation, never a claim or announcement
 - RESULT is MANDATORY: every answer must end with a concrete, attributable outcome — never "which improved patient care" without specifics
-- No em dashes anywhere
+- NEVER use em dashes (—) — use a comma instead
 - No banned words: "passionate", "hardworking", "highly motivated", "demonstrates", "utilises"
 
 FORMAT:
@@ -398,11 +398,11 @@ For each additional question:
 - Use a bold numbered heading: **Question 1: [exact question text]**
 - Answer at approximately 250 words using the FIVE-SENTENCE PATTERN
 - Sentence 1: scope of responsibility → Sentence 2: specific clinical situation → Sentence 3: specific action + framework → Sentence 4: quantified outcome (MANDATORY) → Sentence 5: reflection linked to this role
-- No em dashes. No generic claims. Every answer must end with a concrete attributable outcome.`
+- NEVER use em dashes (—), use a comma instead. No generic claims. Every answer must end with a concrete attributable outcome.`
   : `HARD WORD LIMIT: 1,400 words — write "Thank you." and STOP. Do NOT write any section after "Thank you." — no Key Duties, no summaries, nothing.`}
 
 CRITICAL:
-- No em dashes anywhere
+- NEVER use em dashes (—) — use a comma instead
 - Do not bold or highlight any words
 - Do NOT write a Key Duties section — the statement ends at "Thank you."
 - Address EVERY essential criterion with specific STAR evidence — expect 20-40 criteria from the JDPS, not just the bullet list in the job advert
@@ -460,7 +460,7 @@ RULES:
 - Previous role duties ONLY — do not describe the current role
 
 CRITICAL:
-- No em dashes anywhere
+- NEVER use em dashes (—) — use a comma instead
 - statement must be complete, never truncated
 - essentialCriteria must list EVERY criterion from the person spec`
 }
@@ -598,8 +598,10 @@ async function generateParallel(
   if (statementContent.type !== 'text') throw new Error('Unexpected response type from Claude')
   let statement = statementContent.text
     .trim()
-    .replace(/\u2014/g, '-')
-    .replace(/--/g, '-')
+    .replace(/ \u2014 /g, ', ')
+    .replace(/\u2014/g, ', ')
+    .replace(/ -- /g, ', ')
+    .replace(/--/g, ', ')
     .replace(/\*\*/g, '')
     // Strip any "Story:", "Scenario:", "Story 1:", "Scenario 2:" labels the model may add
     .replace(/^(Story|Scenario)\s*\d*\s*:\s*/gim, '')
@@ -652,7 +654,7 @@ async function generateParallel(
   const analysisMsg = analysisResult.status === 'fulfilled' ? analysisResult.value : null
   const analysisContent = analysisMsg?.content[0]
   if (analysisContent?.type === 'text') {
-    const cleanedAnalysis = analysisContent.text.replace(/\u2014/g, '-').replace(/--/g, '-')
+    const cleanedAnalysis = analysisContent.text.replace(/ \u2014 /g, ', ').replace(/\u2014/g, ', ').replace(/ -- /g, ', ').replace(/--/g, ', ')
     const jsonMatch = cleanedAnalysis.match(/\{[\s\S]*\}/)
     if (jsonMatch) {
       try {
@@ -751,7 +753,7 @@ export async function generateStatement(
   const content = message.content[0]
   if (content.type !== 'text') throw new Error('Unexpected response type from Claude')
 
-  const cleanedText = content.text.replace(/\u2014/g, '-').replace(/--/g, '-')
+  const cleanedText = content.text.replace(/ \u2014 /g, ', ').replace(/\u2014/g, ', ').replace(/ -- /g, ', ').replace(/--/g, ', ')
   const jsonMatch = cleanedText.match(/\{[\s\S]*\}/)
   if (!jsonMatch) throw new Error('Could not parse Claude response as JSON')
 
@@ -769,7 +771,7 @@ export async function generateStatement(
   if (!parsed.statement) throw new Error('Claude response missing statement field')
 
   return {
-    statement: parsed.statement.replace(/\u2014/g, '-').replace(/--/g, '-').replace(/\*\*/g, ''),
+    statement: parsed.statement.replace(/ \u2014 /g, ', ').replace(/\u2014/g, ', ').replace(/ -- /g, ', ').replace(/--/g, ', ').replace(/\*\*/g, ''),
     previousRoleDuties: Array.isArray(parsed.previousRoleDuties) ? parsed.previousRoleDuties : [],
     currentRoleDuties: [],
     analysis: parsed.analysis || null,

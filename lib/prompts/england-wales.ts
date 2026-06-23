@@ -81,7 +81,7 @@ SCORING THE PANEL USES:
 Every paragraph must score 3. Before outputting, check every paragraph against sentence 4 and sentence 5. If either is missing, rewrite before outputting.
 
 ## ABSOLUTE RULES — NEVER BREAK
-- NEVER use em dashes (the — character). Use commas, colons, or hyphens (-) only
+- NEVER use em dashes (—). Use a comma instead — never a hyphen as an em dash substitute
 - NEVER fabricate experience — use only what is in the candidate profile
 - NEVER produce theoretical statements — every paragraph must contain specific evidence with quantified outcomes
 - NEVER use "NHS settings" — use specialty-specific settings only (acute care settings, mental health care settings, community care settings, maternity care settings, care settings)
