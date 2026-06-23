@@ -461,23 +461,6 @@ function AdminGenerateInner() {
                     placeholder="https://www.jobs.nhs.uk/..."
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                     disabled={loading} />
-                  <div className="mt-2 flex items-center gap-1.5 flex-wrap">
-                    <span className="text-xs text-gray-500 mr-0.5">Depth style:</span>
-                    {([
-                      { val: '' as const, label: 'Auto', title: 'Best fit chosen for this candidate' },
-                      { val: '1' as const, label: '1 – Story-led', title: '2-3 deep narrative scenes; all other paragraphs tight and short' },
-                      { val: '2' as const, label: '2 – Evidence-led', title: 'Every paragraph 3-4 sentences, packed with procedures, systems and outcomes' },
-                      { val: '3' as const, label: '3 – Trust Lead', title: 'Opens with why this role and why this trust (with researched specifics), then two criteria per paragraph — no 6 Cs' },
-                    ]).map(({ val, label, title }) => (
-                      <button key={val || 'auto'} type="button" title={title} onClick={() => setBodyPattern(val)}
-                        className="text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer"
-                        style={bodyPattern === val
-                          ? { borderColor: '#005eb8', backgroundColor: '#005eb8', color: 'white' }
-                          : { borderColor: '#d1d5db', backgroundColor: 'white', color: '#374151' }}>
-                        {label}
-                      </button>
-                    ))}
-                  </div>
                 </div>
                 <div className="mt-3">
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">
@@ -506,6 +489,25 @@ function AdminGenerateInner() {
                   <p className="text-xs text-gray-400 mt-1">{jobDescText.trim().split(/\s+/).filter(Boolean).length} words</p>
                 </div>
               )}
+
+              {/* Depth style — always visible regardless of input mode */}
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <span className="text-xs text-gray-500 mr-0.5">Writing style:</span>
+                {([
+                  { val: '' as const, label: 'Auto', title: 'Best fit chosen for this candidate' },
+                  { val: '1' as const, label: '1 – Story-led', title: '2-3 deep narrative scenes; all other paragraphs tight and short' },
+                  { val: '2' as const, label: '2 – Evidence-led', title: 'Every paragraph 3-4 sentences, packed with procedures, systems and outcomes' },
+                  { val: '3' as const, label: '3 – Trust Lead', title: 'Opens with why this role and why this trust (with researched specifics), then two criteria per paragraph — no 6 Cs' },
+                ]).map(({ val, label, title }) => (
+                  <button key={val || 'auto'} type="button" title={title} onClick={() => setBodyPattern(val)}
+                    className="text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer"
+                    style={bodyPattern === val
+                      ? { borderColor: '#005eb8', backgroundColor: '#005eb8', color: 'white' }
+                      : { borderColor: '#d1d5db', backgroundColor: 'white', color: '#374151' }}>
+                    {label}
+                  </button>
+                ))}
+              </div>
 
               {/* Application type */}
               <div>

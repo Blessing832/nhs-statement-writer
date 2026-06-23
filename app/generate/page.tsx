@@ -577,6 +577,30 @@ function GeneratePage() {
                   </div>
                 )}
 
+                {/* Writing style (body pattern) */}
+                {applicationMode !== 'questions-only' && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Writing style</label>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      {([
+                        { val: '' as const, label: 'Auto', title: 'Best fit chosen automatically' },
+                        { val: '1' as const, label: '1 – Story-led', title: '2–3 deep narrative scenes; other paragraphs tight and short' },
+                        { val: '2' as const, label: '2 – Evidence-led', title: 'Every paragraph packed with procedures, systems and outcomes' },
+                        { val: '3' as const, label: '3 – Trust Lead', title: 'Opens with why this role and why this trust, then two criteria per paragraph — no 6 Cs' },
+                      ]).map(({ val, label, title }) => (
+                        <button key={val || 'auto'} type="button" title={title}
+                          onClick={() => setBodyPattern(val)}
+                          className="text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer"
+                          style={bodyPattern === val
+                            ? { borderColor: '#005eb8', backgroundColor: '#005eb8', color: 'white' }
+                            : { borderColor: '#d1d5db', backgroundColor: 'white', color: '#374151' }}>
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {/* Writer notes */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">

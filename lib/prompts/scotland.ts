@@ -649,6 +649,51 @@ ACTION (2-3 lines): specific actions, JD tools/systems, named professionals from
 RESULT (1-2 lines): quantified outcome — MANDATORY. Every paragraph of evidence MUST end with a concrete outcome that names what changed, improved, increased, reduced, or was enabled as a direct consequence of the actions above. Do NOT leave a paragraph without this. If no measured figure is available, describe the outcome specifically: "increasing patient comfort during personal care", "reducing call bell activations", "enabling the patient to mobilise independently within two days", "promoting faster discharge", "preventing escalation to a critical incident", "improving the family's confidence in the care plan". Outcome verbs: increasing, reducing, enabling, promoting, preventing, improving, maintaining, achieving, accelerating, supporting. Evidence with no outcome scores Easeme 2 (fail) in the Final Check.
 REFLECTION (optional, 1 sentence): what was learned, what changed, or what was proposed. Omit if it takes the paragraph beyond 8 lines.
 Mix paragraph lengths randomly between 5-8 lines. Stop at line 8.
+
+## EVIDENCE DENSITY RULES — NO CLAIM WITHOUT PROOF
+
+RULE 1 — NO CLAIM WITHOUT A NUMBER, A NAME, OR A MEASURABLE DETAIL:
+Every sentence must contain at least one of:
+- A specific figure (a reading, a count, a percentage, a duration, a time)
+- A named tool, system, or document (the equipment used, the chart completed, the software)
+- A named protocol or framework (SBAR, a numbered Care Certificate standard, the Trust/Board policy)
+- A specific time marker (the time something happened, how long an action took)
+
+BANNED PHRASES — rewrite every time one of these appears:
+"I have strong communication skills" → name the situation, the tool, the person, the outcome
+"I am experienced in patient care" → name the patient group, the ward, the procedure
+"I always document accurately" → name the system, the frequency, the entry type
+"I am good with IT systems" → name the specific system and exactly how it was used
+"I have a customer-focused approach" → describe a specific patient interaction with a named outcome
+
+RULE 2 — SAME DENSITY FOR EVERY CRITERION:
+If the numeracy paragraph has a fluid balance figure and a vital sign range, then "team working", "tact and sensitivity", and "IT systems" must have the same density: a named scenario, named figures or systems, and a named outcome. Every criterion is scored by the panel.
+
+RULE 3 — PULL REAL SPECIFICS FROM THE CANDIDATE PROFILE FIRST:
+Before writing any paragraph, extract from the profile: exact qualification names and awarding bodies; exact employer names, ward types, patient numbers; exact systems used (named EPR, named equipment brands: Dinamap, OneTouch Verio, NIBP); exact training course names and completion years. Use these throughout.
+
+WORKED EXAMPLES — what excellent density looks like:
+
+TEAM WORKING:
+WEAK: "I work well as part of a team and support my colleagues."
+STRONG: "On the ward each shift was staffed by one registered nurse and two Healthcare Support Workers covering 18 beds. At the start of each shift I attended a 15-minute handover, noted each patient's care plan changes, then divided observation rounds with my co-worker so each patient was checked every 2 hours for falls-risk patients. When a colleague was managing a one-to-one with an acutely distressed patient, I covered her remaining six patients' observation round, completing all checks within the scheduled hour. This kept the ward's observation schedule on time and meant no patient went unchecked."
+
+IT SYSTEMS AND RECORD-KEEPING:
+WEAK: "I am confident using IT systems and databases."
+STRONG: "I use the electronic patient record system every shift to log structured care notes, fluid balance entries, and observation sets — approximately 25 to 30 separate entries across six patients per shift, covering observations, repositioning charts, and food and fluid charts. Before starting a new task I review the last two entries in a patient's record to check for any change since the previous round, a practice that has caught discrepancies such as a missed 14:00 entry before they affected handover."
+
+TACT AND SENSITIVITY:
+WEAK: "I am tactful and sensitive when dealing with difficult situations."
+STRONG: "When a patient's relative became distressed after being told her father's condition had deteriorated, I brought her to a quiet side room within two minutes, sat at the same eye level, and let her speak without interrupting before responding. I then asked the registered nurse to give a clinical update while I stayed to support the relative. Afterwards I recorded in the notes that the family had been informed and supported so the next shift knew not to repeat the news unexpectedly."
+
+WRITTEN AND VERBAL COMMUNICATION:
+WEAK: "I have good written and verbal communication skills."
+STRONG: "After every set of patient observations I document pulse rate, blood pressure, oxygen saturation, temperature, and respiration rate using exact figures — for example pulse 78bpm, BP 118/76, SpO2 97%, temperature 36.8°C, respirations 16. When a reading falls outside range, such as SpO2 of 91% against a 94% target, I flag it and hand over verbally to the registered nurse using SBAR format within minutes. I adapt my verbal approach to the patient: short sentences and visual gestures with a patient with a learning disability, slowing my pace with a distressed relative."
+
+NUMERICAL AND ANALYTIC SKILLS:
+WEAK: "I have good numerical skills which I use for patient observations."
+STRONG: "I monitor fluid balance using calibrated jugs marked in 50ml increments. On a typical shift I record intake such as 1,500ml from oral fluids and IV input against an output of 1,200ml from a catheter bag, calculating the balance as +300ml and entering it on the fluid balance chart. I cross-check vital sign readings against expected ranges, flagging a blood pressure of 90/55 as below the 90-120mmHg systolic threshold and escalating within 5 minutes."
+
 ## RECRUITER SCANNING RULE — EVIDENCE FIRST, ALWAYS
 A recruiter spends roughly 5 minutes on each statement. They scan — they do not read line by line. Evidence must appear in the FIRST sentence of every paragraph. If the first sentence is a claim or a setup, the recruiter has moved on before reaching the proof.
 

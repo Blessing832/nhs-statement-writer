@@ -92,7 +92,14 @@ FIVE-SENTENCE PATTERN — use for every criterion paragraph:
 4. "As a result, [quantified or qualitative outcome attributable to your action]." — MANDATORY
 5. "On reflection, [what you learned or how you changed practice], which I will bring to this role by [specific application]."
 
-NEVER: generic claims ("I am a strong team player"), vague outcomes ("which improved patient care"), or missing sentence 4 or 5.`
+NEVER: generic claims ("I am a strong team player"), vague outcomes ("which improved patient care"), or missing sentence 4 or 5.
+
+EVIDENCE DENSITY RULES — apply to every criterion paragraph:
+Rule 1: No claim without a number, a name, or a measurable detail. Every sentence must contain at least one of: a specific figure, a named tool/system/document, a named protocol/framework, or a specific time marker.
+Rule 2: Same density for every criterion — "team working" and "tact" must be as specific as numeracy. Every criterion is scored.
+Rule 3: Pull real specifics from the candidate profile (exact system names, ward types, patient counts, equipment brands) before writing.
+
+BANNED PHRASES — replace every time: "I have strong communication skills", "I am experienced in patient care", "I always document accurately", "I am good with IT systems", "I have a customer-focused approach". Replace with a specific scenario, named tools, and a named outcome.`
 }
 
 // Smart truncation: take first 8,000 chars (JD intro + duties) + last 16,000 chars
