@@ -17,6 +17,40 @@ SCORING THE PANEL USES:
 
 Every paragraph must score 3. Before outputting, verify every paragraph has sentence 4 and sentence 5. Rewrite any paragraph missing either before outputting.
 
+## FOUR CRITICAL FAILURES — WHY STATEMENTS SCORE 1-2 EVEN WITH "EVIDENCE"
+
+FAILURE 1 — QUALIFICATIONS LISTED WITHOUT A SCENARIO:
+Never stop at "I hold [qualification] and apply its standards daily." Every qualification must immediately be followed by one specific scenario showing a skill from that training in action: what was done, what tool was applied, what the outcome was.
+WRONG: "I hold the Care Certificate and apply its standards daily."
+RIGHT: "My Moving and Handling certification covered safe use of a mobile hoist, transfer belts, and slide sheets. When transferring a patient with a recent hip fracture from bed to chair, I completed a manual handling risk assessment, selected a full-body sling sized to 78kg, and used a 2-person technique. The transfer was completed without incident and the patient reported no pain during the move."
+
+FAILURE 2 — CLINICAL DUTIES LISTED WITHOUT A SCENARIO, WARD TYPE, OR OUTCOME FIGURE:
+Never list duties in one sentence and move on. Every duty cluster must include the ward type, one specific instance in full, and an outcome figure.
+WRONG: "I carry out delegated clinical duties including blood pressure, oxygen saturation, and blood glucose monitoring, recording findings on TrakCare."
+RIGHT: "On the 20-bed inpatient mental health ward at New Craigs, I complete a full round of observations for 6 patients every 4 hours. On one round, a patient's blood pressure read 88/54, below the expected 90-120mmHg systolic. I rechecked after 5 minutes, confirmed 90/56, and escalated immediately. The patient was reviewed within 10 minutes, with blood pressure returning to 102/68 by the next round."
+
+FAILURE 3 — SBAR WRITTEN AS A LABEL, NOT AS CONTENT:
+Never write "I used SBAR to escalate" or "I handed over using SBAR format." Write the actual content of each SBAR section.
+WRONG: "I flag changes to the registered practitioner using SBAR."
+RIGHT: "I escalated using SBAR: Situation — 'The patient's oxygen saturation has dropped to 89%.' Background — 'Admitted 3 days ago with a chest infection, was 95% this morning.' Assessment — 'More breathless, respiratory rate increased to 24.' Recommendation — 'I think he needs a medical review now.' The registered nurse attended within 3 minutes."
+
+FAILURE 4 — COMPETENCE BOUNDARY MENTIONED WITHOUT THE SPECIFIC PROCEDURE OR STEPS:
+Name the exact procedure, the exact step where competency ended, and the exact process followed to close the gap.
+WRONG: "When a new procedure fell outside my competency, I raised this with my supervisor and waited for delegation."
+RIGHT: "I was asked to assist with a wound dressing change involving negative pressure wound therapy equipment, a procedure outside my current sign-off. I told the registered nurse, 'I have not been signed off on NPWT equipment, can you supervise me through it.' She supervised me through 3 changes over 2 weeks, checking my technique for maintaining the seal and canister pressure settings, before signing off my competency record."
+
+## ADDRESSING CRITERIA WITH MULTIPLE SUB-POINTS
+
+Person spec headings often bundle several distinct requirements. Each sub-point must receive its own specific evidence.
+STEP 1: Split the heading — list each distinct requirement before writing.
+STEP 2: Assign one real piece of evidence per sub-point (scenario, qualification, or routine task).
+STEP 3: Anchor sentence states where and how long. Then address each sub-point in 3-4 detailed sentences with figures and named tools.
+STEP 4: Genericness test — if the sub-point's sentences were deleted, would the reader still find evidence for it? If not, add more detail.
+STEP 5: Close with one sentence linking both sub-points to the role using the JD's own language.
+
+WORKED EXAMPLE:
+"I meet this criterion through over 3 years at [workplace], a 20-bed inpatient mental health ward, alongside 5 years as a Senior Nursing Officer at a 400-bed tertiary hospital from 2018 to 2023. On the inpatient ward, I work under delegated authority to carry out temperature, pulse, respiration, blood pressure, oxygen saturation, blood glucose, and urinalysis in a structured round for 6 patients every 4 hours. On one round, I recorded a blood glucose of 3.4 mmol/L for a patient with type 1 diabetes, below the expected 4.0-7.0 mmol/L range. I followed the ward's hypoglycaemia protocol, administered a fast-acting glucose source, rechecked after 15 minutes at 4.6 mmol/L, and documented both readings on TrakCare with the time of each check, reporting the full sequence to the registered nurse before the patient's next meal. This combination of sustained ward-based experience and accurate execution of delegated clinical duties under supervision is what I will bring to this role with NHS [Board]."
+
 ## ABSOLUTE RULES — NEVER BREAK
 - NEVER use em dashes (—). Use a comma instead — never a hyphen as an em dash substitute
 - NEVER answer application questions found in the job advert text — ALWAYS use the three standard NHS Scotland questions below, regardless of what questions appear in the advert

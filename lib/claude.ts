@@ -94,12 +94,17 @@ FIVE-SENTENCE PATTERN — use for every criterion paragraph:
 
 NEVER: generic claims ("I am a strong team player"), vague outcomes ("which improved patient care"), or missing sentence 4 or 5.
 
-EVIDENCE DENSITY RULES — apply to every criterion paragraph:
-Rule 1: No claim without a number, a name, or a measurable detail. Every sentence must contain at least one of: a specific figure, a named tool/system/document, a named protocol/framework, or a specific time marker.
+EVIDENCE DENSITY RULES — every criterion paragraph:
+Rule 1: No claim without a number, a name, or a measurable detail (specific figure, named tool/system, named protocol, or time marker).
 Rule 2: Same density for every criterion — "team working" and "tact" must be as specific as numeracy. Every criterion is scored.
 Rule 3: Pull real specifics from the candidate profile (exact system names, ward types, patient counts, equipment brands) before writing.
+BANNED: "I have strong communication skills", "I am experienced in patient care", "I always document accurately", "I am good with IT systems".
 
-BANNED PHRASES — replace every time: "I have strong communication skills", "I am experienced in patient care", "I always document accurately", "I am good with IT systems", "I have a customer-focused approach". Replace with a specific scenario, named tools, and a named outcome.`
+FOUR CRITICAL FAILURES — check every paragraph before outputting:
+1. QUALIFICATION WITHOUT SCENARIO: Never "I hold [qual] and apply its standards." Name one skill from that training, write the specific scenario where it was used, name the tool and the outcome. WRONG: "I hold the Care Certificate and apply its standards daily." RIGHT: "My Moving and Handling cert covered hoist operation, transfer belts, and slide sheets. When transferring a patient with a hip fracture (78kg) from bed to chair, I completed a manual handling risk assessment, selected a full-body sling, and used a 2-person technique — completed without incident, patient reported no pain."
+2. DUTIES LISTED WITHOUT SCENARIO/WARD/FIGURE: Name the ward type, describe one specific instance, give an outcome figure. WRONG: "I carry out blood pressure, SpO2, and blood glucose monitoring." RIGHT: "On the 20-bed inpatient ward I complete observations for 6 patients every 4 hours. When a blood pressure of 88/54 fell below the 90-120 systolic threshold, I rechecked at 90/56 and escalated; the patient was reviewed within 10 minutes and recovered to 102/68 by the next round."
+3. SBAR AS LABEL NOT CONTENT: Never "I used SBAR." Write the actual content. WRONG: "I escalated using SBAR format." RIGHT: "I escalated: Situation — 'SpO2 has dropped to 89% over 15 minutes.' Background — 'Admitted with chest infection 3 days ago, was 95% this morning.' Assessment — 'More breathless, RR increased to 24.' Recommendation — 'I think he needs review now.' The nurse attended within 3 minutes."
+4. COMPETENCE BOUNDARY WITHOUT EXACT PROCEDURE: Name the exact procedure, where competency ended, and the supervision steps. WRONG: "When something fell outside my competency I escalated." RIGHT: "I was asked to assist with a NPWT wound dressing, outside my sign-off. I told the nurse, 'I have not been signed off on NPWT equipment.' She supervised me through 3 changes over 2 weeks, checking seal technique and canister pressure, before signing off my competency record."`
 }
 
 // Smart truncation: take first 8,000 chars (JD intro + duties) + last 16,000 chars

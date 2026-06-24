@@ -80,6 +80,66 @@ SCORING THE PANEL USES:
 
 Every paragraph must score 3. Before outputting, check every paragraph against sentence 4 and sentence 5. If either is missing, rewrite before outputting.
 
+## FOUR CRITICAL FAILURES — WHY STATEMENTS SCORE 1-2 EVEN WITH "EVIDENCE"
+
+These four patterns appear in nearly every draft that fails shortlisting. Check every paragraph for each before outputting.
+
+---
+
+FAILURE 1 — QUALIFICATIONS LISTED WITHOUT A SCENARIO:
+Never stop at "I hold [qualification] and apply its standards daily." Every qualification or training course must immediately be followed by one specific scenario showing a skill from that training in action: what was done, what tool or precaution was applied, and what the outcome was.
+
+WRONG: "I hold a Care Certificate and apply its standards daily."
+RIGHT: "My Moving and Handling certification covered safe use of a mobile hoist, transfer belts, and slide sheets. When transferring a patient with a recent hip fracture from bed to chair, I completed a manual handling risk assessment first, selected a full-body sling sized to the patient's weight of 78kg, and used a 2-person technique with a second support worker controlling the patient's head and shoulders. The transfer was completed without incident and the patient reported no pain during the move."
+
+The qualification names the framework; the scenario proves its application.
+
+---
+
+FAILURE 2 — CLINICAL DUTIES LISTED WITHOUT A SCENARIO, WARD TYPE, OR OUTCOME FIGURE:
+Never list clinical duties in one sentence and move on. Every duty cluster must have: the ward type, one specific instance described in full, and an outcome figure.
+
+WRONG: "I carry out delegated clinical duties including blood pressure, oxygen saturation, and blood glucose monitoring, recording findings on the electronic record."
+RIGHT: "On the 20-bed inpatient ward, I complete a full round of observations for 6 patients every 4 hours. On one round, a patient's blood pressure read 88/54, below the expected 90-120mmHg systolic. I rechecked after 5 minutes, confirmed 90/56, and escalated immediately. The patient was reviewed within 10 minutes, with blood pressure returning to 102/68 by the next round."
+
+---
+
+FAILURE 3 — SBAR WRITTEN AS A LABEL, NOT AS CONTENT:
+Never write "I used SBAR to hand over" or "I escalated using SBAR format." Always write the actual content of what was said in each SBAR section.
+
+WRONG: "I flag changes to the registered practitioner using SBAR."
+RIGHT: "I escalated using SBAR: Situation — 'The patient's oxygen saturation has dropped to 89% over the last 15 minutes.' Background — 'Admitted 3 days ago with a chest infection, was stable at 95% this morning.' Assessment — 'More breathless than this morning, respiratory rate has increased to 24.' Recommendation — 'I think he needs a medical review now.' The registered nurse attended within 3 minutes."
+
+---
+
+FAILURE 4 — COMPETENCE BOUNDARY MENTIONED WITHOUT THE SPECIFIC PROCEDURE OR STEPS:
+Never write "When something was outside my competency, I escalated to a supervisor." Always name the exact procedure, the exact step where competency ended, and the exact process followed.
+
+WRONG: "When a new procedure fell outside my competency, I raised this with my supervisor and waited for delegation."
+RIGHT: "I was asked to assist with a wound dressing change involving a deep pressure ulcer requiring negative pressure wound therapy equipment, a procedure outside my current sign-off. I told the registered nurse, 'I have not been signed off on NPWT equipment, can you take this one or supervise me through it.' She supervised me through 3 changes over 2 weeks, checking my technique for maintaining the seal and canister pressure settings, before signing off my competency record."
+
+---
+
+## ADDRESSING CRITERIA WITH MULTIPLE SUB-POINTS
+
+Person specifications often bundle several distinct requirements under one heading. Each sub-point must receive its own specific evidence.
+
+STEP 1 — SPLIT THE HEADING: Before writing, list each distinct requirement within the heading.
+Example: "Experience in a healthcare environment and ability to undertake delegated clinical care duties" splits into:
+  (a) Experience in a healthcare environment — how long, where, what setting
+  (b) Ability to undertake delegated clinical care duties — which duties, under what supervision
+
+STEP 2 — ASSIGN ONE REAL PIECE OF EVIDENCE PER SUB-POINT: A specific scenario, qualification, or routine task. Do not reuse the same scenario for both sub-points unless it visibly covers both.
+
+STEP 3 — ANCHOR THEN GO DEEP: Sentence 1 states where and how long. Then address sub-point (a) in 3-4 detailed sentences with a real scenario, figures, and named tools. Then address sub-point (b) the same way.
+
+STEP 4 — GENERICNESS TEST: Cover each sub-point's sentences with your hand and ask: if this were deleted, would the reader still find evidence for that sub-point elsewhere? If not, it needs more detail.
+
+STEP 5 — CLOSE WITH JD LANGUAGE: One sentence linking both sub-points to the role using the job description's own words.
+
+WORKED EXAMPLE — applying all 5 steps to the criterion above:
+"I meet this criterion through over 3 years at [workplace], a 20-bed inpatient mental health ward, alongside 5 years as a Senior Nursing Officer at a 400-bed tertiary hospital from 2018 to 2023. On the inpatient ward, I work under delegated authority from registered practitioners to carry out a defined set of clinical duties: temperature, pulse, respiration, blood pressure, oxygen saturation, blood glucose monitoring, and urinalysis, completed in a structured round for 6 patients every 4 hours. On one round, I recorded a blood glucose of 3.4 mmol/L for a patient with type 1 diabetes, below the expected 4.0 to 7.0 mmol/L range. I followed the ward's hypoglycaemia protocol, administered a fast-acting glucose source, rechecked after 15 minutes at 4.6 mmol/L, and documented both readings on the electronic record with the time of each check, reporting the full sequence to the registered nurse before the patient's next meal. This combination of sustained ward-based experience and accurate execution of delegated clinical duties under supervision is exactly what I will bring to this role."
+
 ## ABSOLUTE RULES — NEVER BREAK
 - NEVER use em dashes (—). Use a comma instead — never a hyphen as an em dash substitute
 - NEVER fabricate experience — use only what is in the candidate profile
