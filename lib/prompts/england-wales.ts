@@ -2,35 +2,45 @@ export function getEnglandWalesPrompt(style: '1' | '2'): string {
   const styleInstructions = style === '1' ? `
 ## STYLE 1: WITH SUBHEADINGS
 
-After reading the person spec, create a subheading list BEFORE writing. Group 3-5 related criteria under broader theme subheadings using EXACT KEYWORDS from the person spec.
+RULE: Every criterion from the person specification is its own subheading. One criterion = one subheading = one paragraph. No grouping. No merging. No skipping.
+
+Before writing, list every criterion from the person spec in the order it appears. Each item in that list becomes a subheading. If there are 21 criteria, there are 21 subheadings. If there are 30 criteria, there are 30 subheadings.
+
+SUBHEADING FORMAT — copy the criterion wording verbatim from the person spec. Do not paraphrase, shorten, or rename. A recruiter must be able to read the subheading and immediately find their checklist item.
 
 EXAMPLE:
-Person spec has: "Demonstrates Trust values", "Acts as role model", "People-focused", "Respect", "Integrity", "Dedication", "Excellence"
-SUBHEADING: "NNUH PRIDE values: People-focused, Respect, Integrity, Dedication, Excellence, and role model"
-ONE paragraph addresses all 7 criteria using their keywords.
+Person spec criterion: "Evidence of effective verbal communication skills"
+SUBHEADING: Evidence of effective verbal communication skills
+ONE paragraph with specific evidence addressing that criterion only.
 
-Person spec has: "Clinical observation skills", "Safe patient handling", "Infection control knowledge", "Health and safety awareness"
-SUBHEADING: "Clinical skills: observations, safe handling, infection control, and health and safety"
+Person spec criterion: "Ability to recognise limitations of knowledge and competence and practise within these boundaries"
+SUBHEADING: Ability to recognise limitations of knowledge and competence and practise within these boundaries
+ONE paragraph with a specific scenario showing exactly where the boundary was, what was said, and what happened.
+
+PARAGRAPH LENGTH — match depth to the criterion's complexity:
+- Core clinical criteria (observations, assessment, emergency procedures, manual handling, communication, IT) → full 5-sentence MINI-STARR paragraph (60-100 words)
+- Attitudinal/compliance criteria (positive approach, flexible working, bodily fluids contact, further training) → 2-3 tight sentences with one specific example (25-40 words)
+- Qualification criteria (Level 2 Maths, Level 2 English, Care Certificate) → name qualification + awarding body + year + one sentence showing it in practice
 
 SUBHEADING RULES:
-- Use keywords FROM person spec in subheading (recruiter must recognise them)
-- Group 3-5 related criteria per subheading
-- Priority: Cover 100% of criteria
-- Stories can address up to 5 criteria — list ALL criteria in the subheading
+- Copy the criterion wording verbatim from the person spec — never rephrase or rename
+- Every criterion gets its own subheading — no exceptions
+- NO criterion may be merged into another's paragraph
+- NO criterion may be skipped — even "Participation in flexible work patterns", "Flexibility to work across the Health Economy", and "Regular contact with bodily fluids" must each have their own subheading and evidence
+- Plan ALL subheadings before writing any paragraphs, verify 100% coverage before starting
 - NO "Scenario:" label — just write the subheading then the paragraph
-- Plan ALL subheadings before writing, verify 100% coverage
 - EXCEPTION — NO SUBHEADING for the 6 Cs of Care paragraph: write it as a plain paragraph with no heading above it, even in Style 1
 
 CRITICAL — AFTER A SUBHEADING, START WITH THE EVIDENCE IMMEDIATELY:
 The subheading already names the topic. The first sentence of the paragraph must NOT restate, echo, or paraphrase the subheading. Start directly with what the candidate did — a specific scene, action, or place.
 
 WRONG (echoing the subheading):
-Subheading: "Communication skills: patients, families, multidisciplinary team"
-First sentence: "Communicating with a wide range of individuals to meet patient needs was central to my daily work at [workplace]."
+Subheading: "Evidence of effective verbal communication skills"
+First sentence: "Communicating effectively with patients and staff has always been a key part of my role."
 
 RIGHT (evidence first):
-Subheading: "Communication skills: patients, families, multidisciplinary team"
-First sentence: "For patients who were anxious before procedures at [workplace], I used open-ended questions and plain-language explanations, then confirmed understanding by asking them to repeat back the key points."
+Subheading: "Evidence of effective verbal communication skills"
+First sentence: "For a patient at New Craigs who presented with significant anxiety about ward procedures, I used open-ended questions and plain-language explanations, confirming understanding by asking the patient to repeat key points back before any care was given."
 
 The subheading is the topic. The paragraph is the proof. Never repeat the topic inside the paragraph.` : `
 ## STYLE 2: NO SUBHEADINGS — CONTINUOUS PROSE WITH CRITERION CLUSTERING
