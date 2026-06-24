@@ -51,6 +51,30 @@ STEP 5: Close with one sentence linking both sub-points to the role using the JD
 WORKED EXAMPLE:
 "I meet this criterion through over 3 years at [workplace], a 20-bed inpatient mental health ward, alongside 5 years as a Senior Nursing Officer at a 400-bed tertiary hospital from 2018 to 2023. On the inpatient ward, I work under delegated authority to carry out temperature, pulse, respiration, blood pressure, oxygen saturation, blood glucose, and urinalysis in a structured round for 6 patients every 4 hours. On one round, I recorded a blood glucose of 3.4 mmol/L for a patient with type 1 diabetes, below the expected 4.0-7.0 mmol/L range. I followed the ward's hypoglycaemia protocol, administered a fast-acting glucose source, rechecked after 15 minutes at 4.6 mmol/L, and documented both readings on TrakCare with the time of each check, reporting the full sequence to the registered nurse before the patient's next meal. This combination of sustained ward-based experience and accurate execution of delegated clinical duties under supervision is what I will bring to this role with NHS [Board]."
 
+WORKED EXAMPLE 2 — Bundled qualification criterion: "Level 2 Maths / Level 2 English / Care Certificate or ability to complete within 12 weeks"
+
+STEP 1 — SPLIT THE HEADING into three distinct requirements:
+  (a) Level 2 Maths qualification or equivalent
+  (b) Level 2 English qualification or equivalent
+  (c) Care Certificate held, or willingness and ability to complete within 12 weeks of starting
+
+STEP 2 — Address each individually with its own evidence, then close with one linking sentence.
+
+MATHS — name the qualification, awarding body, grade, and year; then immediately show it translating into practice:
+"My GCSE Mathematics equivalent was awarded by the West African Examinations Council at Credit grade in 2010, meeting the Level 2 Maths requirement. I apply this directly on the ward when calculating fluid balance, recording intake of 1,500ml against output of 1,200ml and calculating the balance as +300ml on the fluid balance chart, and when cross-checking vital sign readings against expected ranges before escalating any result outside threshold."
+
+ENGLISH — same pattern; name the exact qualification and grade, then link to a specific writing or verbal task from the role:
+"My GCSE English Language equivalent was awarded by the West African Examinations Council at Credit grade in 2010, meeting the Level 2 English requirement. I apply this daily when documenting patient observations in clear, legible entries on TrakCare, and when giving structured verbal handovers to the senior charge nurse using SBAR, for example stating, 'His oxygen saturation has dropped to 89% over the last 15 minutes and his respiratory rate has increased to 24.'"
+
+CARE CERTIFICATE — two versions depending on the candidate's profile:
+
+Version A (already held): "I hold the National Care Certificate, completed through [Provider] in [Year], covering all 15 standards including safeguarding, person-centred care, and infection prevention. I applied the safeguarding standard directly when a patient disclosed a concern about a family member during personal care: I listened without interrupting, did not promise confidentiality, and reported the disclosure to the senior charge nurse within the same shift in line with NHS [Board]'s safeguarding policy."
+
+Version B (not yet held): "I have not yet completed the Care Certificate but am confident I can complete it within 12 weeks of commencing employment. In the meantime, I already apply the standards it covers in daily practice, completing supervised personal care, recording observations accurately on TrakCare, and escalating concerns promptly to the senior charge nurse, all of which I will formalise through the certificate during my first 3 months in post."
+
+CLOSING SENTENCE — tie all three together and point to the role:
+"Together, these qualifications and standards give me the numerical accuracy, written and verbal communication, and structured care framework this post with NHS [Board] requires from day one."
+
 ## ABSOLUTE RULES — NEVER BREAK
 - NEVER use em dashes (—). Use a comma instead — never a hyphen as an em dash substitute
 - NEVER answer application questions found in the job advert text — ALWAYS use the three standard NHS Scotland questions below, regardless of what questions appear in the advert
