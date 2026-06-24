@@ -69,7 +69,7 @@ function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): string {
   if (region === 'england-wales') return getEnglandWalesPrompt(style)
   const styleNote = style === '2'
     ? '\n- Write in continuous flowing prose with NO subheadings or bold section headers anywhere'
-    : '\n- Use bold subheadings. Every criterion from the person specification is its own subheading — one criterion, one subheading, one paragraph. Copy the criterion wording verbatim. No grouping, no merging, no skipping. Plan all subheadings before writing.'
+    : '\n- Use bold subheadings. Group 3-4 related criteria per subheading. The subheading must name every criterion it covers using person spec wording. Every criterion in the subheading must be explicitly evidenced in the paragraph. Every criterion from the person spec must be assigned to exactly one section — no criterion may be skipped. Plan all subheadings and confirm 100% coverage before writing.'
   return `You are an expert UK job application writer. Write a compelling supporting statement for this NHS or public sector role.
 - Address every essential criterion from the person specification
 - Use NHS language and terminology
@@ -369,14 +369,14 @@ End with the mandatory criteria summary paragraph, then the closing paragraph ("
     const scotlandStyleLine = isScotland
       ? options.style === '2'
         ? `MANDATORY STRUCTURE: Flowing prose — NO subheadings anywhere in Q1. Use linking phrases between paragraphs. Do NOT insert any bold labels or section headers.\n\n`
-        : `MANDATORY STRUCTURE: Every criterion from the person spec is its own subheading. One criterion = one subheading = one paragraph. Copy criterion wording verbatim. No grouping, no merging, no skipping. Plan ALL subheadings before writing.\n\n`
+        : `MANDATORY STRUCTURE: Group 3-4 related criteria per bold subheading. The subheading names every criterion it covers using person spec wording. Every criterion named in a subheading must be explicitly evidenced in that paragraph. Every criterion from the person spec must appear in exactly one section — no criterion may be skipped. Confirm 100% coverage before writing.\n\n`
       : region === 'england-wales'
       ? options.style === '2'
         ? `MANDATORY STRUCTURE: Flowing prose — NO subheadings anywhere in the statement. Use only transition phrases between paragraphs. Do NOT insert any bold labels or section headers.\n\n`
-        : `MANDATORY STRUCTURE: Every criterion from the person spec is its own bold subheading. One criterion = one subheading = one paragraph. Copy the criterion wording verbatim — no paraphrasing. No grouping, no merging, no skipping any criterion. Plan ALL subheadings before writing a single word.\n\n`
+        : `MANDATORY STRUCTURE: Group 3-4 related criteria per bold subheading. The subheading names every criterion it covers using exact person spec wording. Every criterion named in the subheading must be explicitly and individually evidenced within that paragraph. Every criterion from the person spec must appear in exactly one section — no criterion may be skipped. Plan all subheadings and confirm 100% coverage before writing a single word.\n\n`
       : options.style === '2'
         ? `MANDATORY STRUCTURE: Flowing prose — NO subheadings or bold section labels anywhere.\n\n`
-        : `MANDATORY STRUCTURE: Every criterion from the person spec is its own bold subheading. One criterion = one subheading = one paragraph. Copy criterion wording verbatim. No grouping, no merging, no skipping.\n\n`
+        : `MANDATORY STRUCTURE: Group 3-4 related criteria per bold subheading. The subheading names every criterion it covers using person spec wording. Every criterion named must be explicitly evidenced in that paragraph. No criterion may be skipped.\n\n`
     const outputInstruction = isRewrite
       ? 'Rewrite the statement following the instruction. Keep all strong content. Improve what was asked.'
       : isScotland
