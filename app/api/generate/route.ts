@@ -69,6 +69,38 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // 1c. URL duplicate checks — only for real job URLs, not rewrites, not text-paste
+  const isRealUrl = vacancy_url && vacancy_url.startsWith('http')
+  if (isRealUrl && !rewriteInstruction) {
+    // Rule 1: Same applicant cannot generate from the same URL more than once
+    const { count: priorCount } = await supabaseAdmin
+      .from('statements')
+      .select('*', { count: 'exact', head: true })
+      .eq('client_id', client.id)
+      .eq('vacancy_url', vacancy_url)
+
+    if ((priorCount ?? 0) >= 1) {
+      return NextResponse.json(
+        { error: 'A statement for this job link has already been generated for your account. Each job link can only be used once per applicant. If you need changes, use the edit/rewrite option on your existing statement.' },
+        { status: 429 }
+      )
+    }
+
+    // Rule 2: A single URL can be used by at most 5 different applicants
+    const { data: urlRows } = await supabaseAdmin
+      .from('statements')
+      .select('client_id')
+      .eq('vacancy_url', vacancy_url)
+
+    const distinctClients = new Set((urlRows ?? []).map((r: { client_id: string }) => r.client_id))
+    if (distinctClients.size >= 5) {
+      return NextResponse.json(
+        { error: 'This job link has reached the maximum number of applicants (5). Please contact your administrator.' },
+        { status: 429 }
+      )
+    }
+  }
+
   // 2. Generate (job data already scraped by client in step 1)
   let generated: Awaited<ReturnType<typeof generateStatement>>
   try {
