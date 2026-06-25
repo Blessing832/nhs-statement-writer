@@ -80,6 +80,28 @@ export async function POST(req: NextRequest) {
       .eq('vacancy_url', vacancy_url)
 
     if ((priorCount ?? 0) >= 1) {
+      // Return the existing statement so the user gets their result without a new API call
+      const { data: existing } = await supabaseAdmin
+        .from('statements')
+        .select('generated_statement, job_title, organisation')
+        .eq('client_id', client.id)
+        .eq('vacancy_url', vacancy_url)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single()
+      if (existing) {
+        return NextResponse.json({
+          statement: existing.generated_statement,
+          previousRoleDuties: [],
+          currentRoleDuties: [],
+          analysis: null,
+          promptRegion: null,
+          jobTitle: existing.job_title,
+          organisation: existing.organisation,
+          source: 'cached',
+          cached: true,
+        })
+      }
       return NextResponse.json(
         { error: 'A statement for this job link has already been generated for your account. Each job link can only be used once per applicant. If you need changes, use the edit/rewrite option on your existing statement.' },
         { status: 429 }
@@ -169,7 +191,7 @@ export async function POST(req: NextRequest) {
 
   const { statement, previousRoleDuties, analysis, promptRegion } = generated
 
-  // 3. Save to DB — try with pasted_person_spec first; fall back if column not migrated yet
+  // 3. Save to DB — try with pasted_person_spec first; fall back ONLY on schema errors
   const baseRow = {
     client_id: client.id,
     vacancy_url,
@@ -184,8 +206,14 @@ export async function POST(req: NextRequest) {
     ...baseRow,
     pasted_person_spec: pastedPersonSpec?.trim() || null,
   })
-  if (insertError) {
-    // Column doesn't exist yet — save without it so the statement is never lost
+  // Only fall back if the error is a missing column (code 42703) — never fall back on
+  // transient/network errors, which could cause a duplicate row if the first insert succeeded
+  const isSchemaMismatch = insertError && (
+    insertError.code === '42703' ||
+    insertError.message?.toLowerCase().includes('column') ||
+    insertError.message?.toLowerCase().includes('does not exist')
+  )
+  if (isSchemaMismatch) {
     await supabaseAdmin.from('statements').insert(baseRow)
   }
 
