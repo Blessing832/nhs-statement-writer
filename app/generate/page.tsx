@@ -24,8 +24,8 @@ function renderBold(text: string): string {
   return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
 }
 
-// Convert statement text to paragraphs for display
-function StatementDisplay({ text }: { text: string }) {
+// Convert statement text to paragraphs for display, optionally highlighting PS phrases
+function StatementDisplay({ text, criteria }: { text: string; criteria?: string[] }) {
   const paragraphs = text.split(/\n\n+/)
   return (
     <div className="space-y-3 text-gray-800 leading-relaxed text-sm">
@@ -33,12 +33,15 @@ function StatementDisplay({ text }: { text: string }) {
         const lines = para.split('\n')
         return (
           <p key={i}>
-            {lines.map((line, j) => (
-              <span key={j}>
-                {j > 0 && <br />}
-                <span dangerouslySetInnerHTML={{ __html: renderBold(line) }} />
-              </span>
-            ))}
+            {lines.map((line, j) => {
+              const highlighted = criteria && criteria.length > 0 ? applyHighlights(line, criteria) : line
+              return (
+                <span key={j}>
+                  {j > 0 && <br />}
+                  <span dangerouslySetInnerHTML={{ __html: renderBold(highlighted) }} />
+                </span>
+              )
+            })}
           </p>
         )
       })}
@@ -138,6 +141,44 @@ function isCriterionAddressed(criterion: string, statement: string): boolean {
   const matches = words.filter(w => stmtLower.includes(w))
   const threshold = Math.max(1, Math.ceil(words.length * 0.4))
   return matches.length >= threshold
+}
+
+// Find the longest phrase from a criterion that actually appears verbatim in the statement
+function findLongestMatchPhrase(criterion: string, statementLower: string): string | null {
+  const words = criterion
+    .toLowerCase()
+    .replace(/[^\w\s]/g, ' ')
+    .trim()
+    .split(/\s+/)
+    .filter(w => w.length > 1)
+  if (words.length === 0) return null
+  for (let len = Math.min(words.length, 5); len >= 2; len--) {
+    for (let start = 0; start <= words.length - len; start++) {
+      const phrase = words.slice(start, start + len).join(' ')
+      if (extractKeyWords(phrase).length === 0) continue  // skip all-stopword phrases
+      if (statementLower.includes(phrase)) return phrase
+    }
+  }
+  return null
+}
+
+// Wrap matched PS phrases in a green highlight mark — applied to raw text BEFORE renderBold
+function applyHighlights(rawLine: string, criteria: string[]): string {
+  if (!criteria.length) return rawLine
+  const lower = rawLine.toLowerCase()
+  const phrases = new Set<string>()
+  for (const c of criteria) {
+    const m = findLongestMatchPhrase(c, lower)
+    if (m) phrases.add(m)
+  }
+  if (phrases.size === 0) return rawLine
+  const sorted = [...phrases].sort((a, b) => b.length - a.length)
+  const escaped = sorted.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  const regex = new RegExp(`(${escaped.join('|')})`, 'gi')
+  return rawLine.replace(
+    regex,
+    (m) => `<mark style="background:#bbf7d0;color:#14532d;border-radius:2px;padding:0 2px">${m}</mark>`,
+  )
 }
 
 function AnalysisPanel({ analysis, region, statement }: { analysis: StatementAnalysis | null; region: string; statement: string }) {
@@ -838,7 +879,13 @@ function GeneratePage() {
                 </div>
 
                 <div ref={statementRef}>
-                  <StatementDisplay text={result.statement} />
+                  <StatementDisplay
+                    text={result.statement}
+                    criteria={result.analysis ? [
+                      ...(result.analysis.essentialCriteria ?? []),
+                      ...(result.analysis.desirableCriteria ?? []),
+                    ] : []}
+                  />
                 </div>
 
                 {/* Previous Role Duties */}
