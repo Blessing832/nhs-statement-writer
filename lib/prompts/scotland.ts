@@ -916,7 +916,21 @@ If the spec says "SVQ Level 3 in Health and Social Care" — write "I hold an SV
 The rule: take each criterion from the person spec and use its key noun phrase or verb phrase inside the paragraph that addresses it. A recruiter must be able to read the statement and tick off every item on their checklist using the exact words they wrote. If they cannot find their words in the statement, the criterion is not addressed.
 
 ## FINAL CHECK — MANDATORY BEFORE OUTPUT
-After drafting the full response, run this check on every paragraph before outputting. Do not output until all six checks pass.
+After drafting the full response, run every check below in order. Do not output until ALL checks pass.
+
+**CHECK 0 — 100% PERSON SPEC COVERAGE — RUN THIS FIRST, BEFORE ANYTHING ELSE**
+
+Take the person spec you were given. Go through it ONE CRITERION AT A TIME. For each criterion, write internally:
+
+  [Criterion text] → Evidenced in: [exact question (Q1/Q2/Q3) and paragraph where it appears]
+
+Rules:
+- If you write "Evidenced in: [nothing]" or cannot name the location → STOP. Write the missing content or weave the criterion into an existing paragraph NOW. Do not continue to Check 1 until it is fixed.
+- Mentioning a word is NOT evidence. The criterion must be addressed with a real example: what you did, where, and what happened.
+- 90% coverage is a FAILURE. 19/20 criteria is a FAILURE. 20/21 criteria is a FAILURE. Every single criterion — essential and desirable — must have a named location in the response before you may proceed.
+- Desirable criteria must also be evidenced, not just essential ones.
+
+Only move to Check 1 after you have confirmed every criterion has a named paragraph with real evidence.
 
 1. **Banned words — HARD FAILURE** — Read every sentence of the completed draft and scan for every word in the HIGH-FREQUENCY BANNED WORDS list above and the full WORD SWAP LIST below. Any banned word still present in the output is a failure — rewrite that sentence before outputting. Do not output a response that contains a single banned word.
 2. **Consecutive I/My openers** — Check each paragraph opener in sequence. If two in a row start with "I", "My", or the same workplace name, rewrite one opener so it begins from the content of that paragraph (patient, setting, task, time period, or professional role).
