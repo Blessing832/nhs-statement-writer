@@ -113,16 +113,62 @@ function BulletList({ items, icon, colour }: { items: string[]; icon: string; co
   )
 }
 
-function AnalysisPanel({ analysis, region }: { analysis: StatementAnalysis | null; region: string }) {
+// Extract significant words from a criterion for matching
+function extractKeyWords(text: string): string[] {
+  const stopwords = new Set([
+    'with', 'that', 'this', 'have', 'from', 'they', 'will', 'been', 'were',
+    'your', 'their', 'must', 'when', 'what', 'such', 'into', 'some', 'more',
+    'than', 'also', 'over', 'those', 'would', 'could', 'should', 'other',
+    'where', 'there', 'which', 'these', 'above', 'below', 'within', 'through',
+    'about', 'after', 'before', 'between', 'working', 'skills', 'skill',
+    'good', 'high', 'both', 'used', 'very', 'just', 'each', 'need', 'relevant',
+    'including', 'related', 'appropriate', 'knowledge', 'understand',
+    'understanding', 'ability', 'able', 'level', 'basic', 'general',
+  ])
+  return text.toLowerCase()
+    .replace(/[^a-z\s]/g, ' ')
+    .split(/\s+/)
+    .filter(w => w.length >= 4 && !stopwords.has(w))
+}
+
+function isCriterionAddressed(criterion: string, statement: string): boolean {
+  const stmtLower = statement.toLowerCase()
+  const words = extractKeyWords(criterion)
+  if (words.length === 0) return stmtLower.includes(criterion.toLowerCase().trim())
+  const matches = words.filter(w => stmtLower.includes(w))
+  const threshold = Math.max(1, Math.ceil(words.length * 0.4))
+  return matches.length >= threshold
+}
+
+function AnalysisPanel({ analysis, region, statement }: { analysis: StatementAnalysis | null; region: string; statement: string }) {
   if (!analysis) return (
     <p className="text-gray-400 text-sm">Person specification not extracted from page. Statement was written from job advert text. If the full PS is in an attached document, the statement should still address it.</p>
   )
 
+  const essential = analysis.essentialCriteria ?? []
+  const desirable = analysis.desirableCriteria ?? []
+  const totalCriteria = essential.length + desirable.length
+  const addressedEssential = essential.filter(c => isCriterionAddressed(c, statement))
+  const addressedDesirable = desirable.filter(c => isCriterionAddressed(c, statement))
+  const totalAddressed = addressedEssential.length + addressedDesirable.length
+  const allEssentialMet = addressedEssential.length === essential.length && essential.length > 0
+  const coveragePct = totalCriteria > 0 ? Math.round((totalAddressed / totalCriteria) * 100) : 0
+
   return (
     <div className="space-y-5 text-sm">
-      {analysis.meetsAllEssential && (
-        <div className="rounded-md bg-green-50 border border-green-200 px-3 py-2 text-green-800 text-xs font-medium">
-          All essential criteria met
+
+      {/* Person spec coverage summary */}
+      {totalCriteria > 0 && (
+        <div className={`rounded-md border px-3 py-3 ${allEssentialMet ? 'bg-green-50 border-green-200' : coveragePct >= 70 ? 'bg-amber-50 border-amber-200' : 'bg-red-50 border-red-200'}`}>
+          <p className={`text-xs font-semibold uppercase tracking-wide mb-1 ${allEssentialMet ? 'text-green-700' : coveragePct >= 70 ? 'text-amber-700' : 'text-red-700'}`}>
+            Person Spec Coverage
+          </p>
+          <p className={`text-lg font-bold ${allEssentialMet ? 'text-green-800' : coveragePct >= 70 ? 'text-amber-800' : 'text-red-800'}`}>
+            {totalAddressed} / {totalCriteria} criteria addressed
+          </p>
+          <p className="text-xs text-gray-500 mt-0.5">
+            {addressedEssential.length}/{essential.length} essential · {addressedDesirable.length}/{desirable.length} desirable
+          </p>
         </div>
       )}
 
@@ -139,15 +185,39 @@ function AnalysisPanel({ analysis, region }: { analysis: StatementAnalysis | nul
         </Section>
       )}
 
-      {analysis.essentialCriteria?.length > 0 && (
-        <Section title={`Essential Criteria (${analysis.essentialCriteria.length})`}>
-          <BulletList items={analysis.essentialCriteria} icon="&#10003;" colour="text-green-600 font-bold" />
+      {essential.length > 0 && (
+        <Section title={`Essential Criteria (${addressedEssential.length}/${essential.length})`}>
+          <ul className="space-y-1">
+            {essential.map((item, i) => {
+              const addressed = isCriterionAddressed(item, statement)
+              return (
+                <li key={i} className="flex gap-2 text-xs">
+                  <span className={`flex-shrink-0 mt-0.5 font-bold ${addressed ? 'text-green-600' : 'text-red-500'}`}>
+                    {addressed ? '✓' : '✗'}
+                  </span>
+                  <span className={addressed ? 'text-gray-700' : 'text-red-700 font-medium'}>{item}</span>
+                </li>
+              )
+            })}
+          </ul>
         </Section>
       )}
 
-      {analysis.desirableCriteria?.length > 0 && (
-        <Section title="Desirable Criteria">
-          <BulletList items={analysis.desirableCriteria} icon="&#9702;" colour="text-blue-400" />
+      {desirable.length > 0 && (
+        <Section title={`Desirable Criteria (${addressedDesirable.length}/${desirable.length})`}>
+          <ul className="space-y-1">
+            {desirable.map((item, i) => {
+              const addressed = isCriterionAddressed(item, statement)
+              return (
+                <li key={i} className="flex gap-2 text-xs">
+                  <span className={`flex-shrink-0 mt-0.5 font-bold ${addressed ? 'text-blue-500' : 'text-gray-400'}`}>
+                    {addressed ? '◉' : '◦'}
+                  </span>
+                  <span className={addressed ? 'text-gray-700' : 'text-gray-400'}>{item}</span>
+                </li>
+              )
+            })}
+          </ul>
         </Section>
       )}
 
@@ -741,7 +811,7 @@ function GeneratePage() {
                 <h3 className="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide pb-2 border-b border-gray-100">
                   {result.promptRegion === 'scotland' ? 'Person Specification' : 'Pre-Writing Analysis'}
                 </h3>
-                <AnalysisPanel analysis={result.analysis} region={result.promptRegion} />
+                <AnalysisPanel analysis={result.analysis} region={result.promptRegion} statement={result.statement} />
               </div>
             </div>
 

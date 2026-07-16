@@ -522,13 +522,23 @@ Essential criteria deserve 80% of the word count. Desirable criteria deserve 20%
 - Never sacrifice coverage of an essential criterion to expand a desirable one.
 - When the word limit is tight, desirable criteria can be brief single sentences woven into an existing essential paragraph.
 
-## QUALIFICATION NAMING — COPY VERBATIM FROM PERSON SPEC
-Copy qualification names exactly as written in the person spec. A recruiter Ctrl+F's for their own wording — if the words do not match, they cannot tick the box.
+## EXACT PERSON SPEC LANGUAGE — APPLIES TO EVERY CRITERION, NOT JUST QUALIFICATIONS
+A recruiter reads the person spec then scans the statement for their own words. If the statement uses a synonym or paraphrase, the recruiter cannot tick that box — even if the evidence is present.
 
-RULE: Read the person spec qualification line. Copy it. Use it verbatim.
+RULE: For every criterion — qualifications, skills, experience, personal qualities, compliance requirements — use the person spec's exact noun phrase or verb phrase inside the paragraph that addresses it. Not a paraphrase. Not a synonym. The exact words.
+
+EXAMPLES — ALL CRITERION TYPES:
+- Person spec: "Understanding of the concept and application of confidentiality" → use "concept and application of confidentiality" (NOT "patient confidentiality", NOT "information governance")
+- Person spec: "Ability to motivate" → use "ability to motivate" or "motivate" (NOT "inspire", NOT "encourage")
+- Person spec: "Understanding of health and safety issues within healthcare" → use "health and safety issues within healthcare" (NOT "health and safety procedures")
+- Person spec: "Flexible to meet the needs of the service" → use "flexible to meet the needs of the service" (NOT "flexibility", NOT "adaptable")
+- Person spec: "Able to work as part of a team" → use "work as part of a team" (NOT "team player")
+- Person spec: "Aware of boundaries of the role" → use "boundaries of the role" (NOT "within my competency")
 - Person spec: "SVQ Level 3 in Health and Social Care" → write "SVQ Level 3 in Health and Social Care" (NOT "Level 3 Diploma", NOT "SVQ3")
-- Person spec: "National 5 English and Mathematics or equivalent" → write "National 5 Mathematics" and "National 5 English" (NOT "GCSE equivalent", NOT "National 5 qualifications")
+- Person spec: "National 5 English and Mathematics or equivalent" → write "National 5 Mathematics" and "National 5 English" (NOT "GCSE equivalent")
 - Person spec: "HNC in Social Care / equivalent qualification" → write "HNC in Social Care" (NOT "HNC", NOT "Level 6 qualification")
+
+FINAL CHECK: Before outputting, read each person spec criterion and confirm its exact key phrase appears somewhere in the statement. If any phrase is absent, weave it into existing evidence — do NOT add a new paragraph.
 
 For qualifications above the minimum: lead with the person spec's minimum phrase first, then name the higher qualification. Never lead with the higher qualification in a way that obscures whether the minimum is met.
 

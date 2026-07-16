@@ -649,18 +649,27 @@ Essential criteria deserve 80% of the word count. Desirable criteria deserve 20%
 - Never sacrifice coverage of an essential criterion to expand a desirable one.
 - When the word limit is tight, desirable criteria can be brief single sentences woven into an existing essential paragraph — they do not need their own paragraph.
 
-## QUALIFICATION NAMING — COPY VERBATIM FROM PERSON SPEC
-When the person spec names a qualification, copy that exact string into the statement. A recruiter Ctrl+F's for their own wording. If the words don't match, they cannot tick the box.
+## EXACT PERSON SPEC LANGUAGE — APPLIES TO EVERY CRITERION, NOT JUST QUALIFICATIONS
+A recruiter reads the person spec then scans the statement for their own words. If the statement uses a synonym or paraphrase instead of the person spec's exact phrase, the recruiter cannot tick that box — even if the evidence is there.
 
-RULE: Read the person spec qualification line. Copy it. Use it. Do not paraphrase, abbreviate, or substitute.
+RULE: For every criterion in the person spec — qualifications, skills, experience, personal qualities, compliance requirements — use the person spec's exact noun phrase or verb phrase inside the paragraph that addresses it. Not a paraphrase. Not a synonym. The exact words.
 
-EXAMPLES:
-- Person spec: "NVQ Level 2 in Health and Social Care" → write "NVQ Level 2 in Health and Social Care" (NOT "Level 2 Diploma", NOT "NVQ2", NOT "Level 2 qualification")
-- Person spec: "GCSE Maths and English Grade C or above (Grade 4–9)" → write "GCSE Mathematics Grade C" and "GCSE English Language Grade C" (NOT "GCSE equivalent", NOT "maths and English at Grade C", NOT "GCSE Maths")
-- Person spec: "Level 3 QCF Diploma (Qualification Credit Framework) in healthcare / NVQ Level 3" → write "Level 3 QCF Diploma in Healthcare" (NOT "Level 3 Diploma", NOT "QCF Level 3", NOT "NVQ Level 3 equivalent")
-- Person spec: "Functional/Key Skills Level 2 numeracy and literacy" → write "Functional Skills Level 2 numeracy and literacy" (NOT "Functional Skills qualification")
+EXAMPLES — ALL CRITERION TYPES:
+- Person spec: "Understanding of the concept and application of confidentiality" → the paragraph must contain the phrase "concept and application of confidentiality" (NOT "importance of privacy", NOT "patient confidentiality", NOT "information governance")
+- Person spec: "Ability to motivate" → use "ability to motivate" or "motivate" in the paragraph (NOT "inspire", NOT "encourage", NOT "support colleagues")
+- Person spec: "Understanding of health and safety issues within healthcare" → use "health and safety issues within healthcare" (NOT "health and safety procedures", NOT "safe working practices")
+- Person spec: "Understanding of the role of a senior HCA" → use "role of a senior HCA" or "Senior Healthcare Assistant" (NOT "senior support role", NOT "my role")
+- Person spec: "Flexible to meet the needs of the service" → use "flexible to meet the needs of the service" (NOT "flexibility", NOT "adaptable")
+- Person spec: "Able to work as part of a team" → use "work as part of a team" (NOT "team player", NOT "collaborative")
+- Person spec: "Aware of boundaries of the role" → use "boundaries of the role" (NOT "within my competency", NOT "scope of practice")
+- Person spec: "Committed to working in a caring role" → use "committed to working in a caring role" (NOT "passionate about care", NOT "dedicated to patients")
+- Person spec: "NVQ Level 2 in Health and Social Care" → write "NVQ Level 2 in Health and Social Care" (NOT "Level 2 Diploma", NOT "NVQ2")
+- Person spec: "GCSE Maths and English Grade C or above (Grade 4–9)" → write "GCSE Mathematics Grade C" and "GCSE English Language Grade C" (NOT "GCSE equivalent", NOT "maths and English at Grade C")
+- Person spec: "Level 3 QCF Diploma (Qualification Credit Framework) in healthcare / NVQ Level 3" → write "Level 3 QCF Diploma in Healthcare" (NOT "Level 3 Diploma", NOT "QCF Level 3")
 
-For qualifications the candidate holds that EXCEED the minimum: still lead with the person spec's minimum requirement phrase before naming the higher qualification. Example: if the person spec says "NVQ Level 2" and the candidate holds an NVQ Level 3, write "I meet the NVQ Level 2 in Health and Social Care requirement and hold an NVQ Level 3 in..." — never lead with the higher qualification in a way that obscures whether the minimum is met.
+FINAL CHECK: Before outputting, read each person spec criterion and confirm its exact key phrase appears somewhere in the statement. If any criterion's phrase is absent, add it before outputting — do NOT add a new paragraph, weave the phrase into existing evidence.
+
+For qualifications above the minimum: lead with the person spec's minimum phrase first. If the person spec says "NVQ Level 2" and the candidate holds an NVQ Level 3, write "I meet the NVQ Level 2 in Health and Social Care requirement and also hold an NVQ Level 3..." — never lead with the higher qualification in a way that obscures whether the minimum is met.
 
 ## LITERACY AND NUMERACY — ALWAYS SHOW IN CLINICAL USE
 Whenever GCSE Maths/English (or Functional Skills equivalent) is in the person spec, the paragraph addressing it must do THREE things:
@@ -878,8 +887,10 @@ WEAK: "I work well as part of a team and support my colleagues."
 STRONG: "On the ward each shift was staffed by one registered nurse and two Healthcare Support Workers covering 18 beds. At the start of each shift I attended a 15-minute handover, noting each patient's care plan changes, then divided observation rounds with my co-worker so each patient was checked at the correct interval — every 2 hours for falls-risk patients. When a colleague was managing a one-to-one with an acutely distressed patient, I covered her remaining six patients' observation round without being asked, completing all checks within the scheduled hour and updating her on any changes when she returned. This kept the ward's observation schedule on time and meant no patient went unchecked."
 
 IT SYSTEMS AND RECORD-KEEPING:
-WEAK: "I am confident using IT systems and databases."
-STRONG: "I use the Trust's electronic patient record system every shift to log structured care notes, fluid balance entries, and observation sets. Each entry is timestamped automatically and attributed to my staff login, so I check the displayed time against the ward clock before saving to ensure accuracy. On a typical shift I make approximately 25 to 30 separate entries across six patients, covering observations, repositioning charts, and food and fluid charts. Before starting a new task I review the last two entries in a patient's record to check for any change since the previous round — a practice that has caught discrepancies, such as a missed 14:00 entry, before they affected handover."
+WEAK: "I use IT systems daily to log structured care notes, flag concerns, and update individual care plans."
+STRONG: "I use [named system from candidate profile or JD — e.g. SystmOne, Lorenzo, Meditech, Cerner, TrakCare, Rio, Paris, Liquid Logic] every shift to log structured care notes, fluid balance entries, and observation sets. Each entry is timestamped and attributed to my staff login; I check the displayed time against the ward clock before saving to ensure accuracy. I also use [second named system if present — e.g. MORSE falls risk tool, Datix, NoS Care Portal, RiO, PARIS] for [specific task — falls risk scoring / incident reporting / care pathway documentation]. On a typical shift I make approximately 25 to 30 separate entries across six patients, covering observations, repositioning charts, and food and fluid charts. Before starting a new task I review the last two entries in a patient's record to check for any change since the previous round."
+
+CRITICAL — NEVER write "IT systems" as a generic label. Always name the specific system. If the JD or candidate profile names a system, use it. If no system is named, use the phrase from the JD (e.g. "electronic patient record system") and describe exactly how it is used — entry types, frequency, and one specific occasion where the record caught or prevented a problem.
 
 TACT AND SENSITIVITY:
 WEAK: "I am tactful and sensitive when dealing with difficult situations."
