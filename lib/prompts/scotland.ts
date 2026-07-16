@@ -567,7 +567,13 @@ TEAM WORKING: Name the team composition, your specific role in the team, and one
 
 FLEXIBILITY: Give a specific example — a short-notice shift, a different ward covered, a caseload change mid-shift. Match the exact phrase from the person spec ("flexible to meet the needs of the service" / "willingness to work flexible hours").
 
-BOUNDARIES OF THE ROLE: Name the procedure that fell outside your competency, what you said, who you told, and what followed. Never write a general statement — see FOUR CRITICAL FAILURES — FAILURE 4 above.
+BOUNDARIES OF THE ROLE: The specific procedure MUST be named. NEVER write "a care task", "a procedure outside my role", "something I had not been assessed on" — those are 0 points.
+
+WRONG: "When a care task fell outside my current sign-off, I told the senior charge nurse directly, explained what I had not been assessed on, and requested supervision before proceeding." — no task named. 0 points.
+
+RIGHT: "When I was asked to perform a PEG tube feed flush for a patient on the ward, I recognised this was outside my current sign-off. I told the senior charge nurse directly: 'I have not been assessed on PEG tube management — can you take this or supervise me through it?' She supervised me through two feeds, checking my technique for confirming tube position and managing the flush volume, before signing off my competency record. I now perform the procedure independently."
+
+The task can be anything from the candidate's actual background — nasogastric tube management, medication administration via syringe driver, catheter removal, wound closure, venepuncture, administration of controlled drugs, use of a hoist without sign-off. It must be specific and real to their work history.
 
 ## THREE-QUESTION FORMAT
 

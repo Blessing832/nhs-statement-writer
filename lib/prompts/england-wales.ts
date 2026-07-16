@@ -721,9 +721,13 @@ ENTHUSIASTIC AND POSITIVE / COMMITTED TO CARING ROLE: Show through concrete acti
 WRONG: "I am enthusiastic and committed to my role."
 RIGHT: "My commitment to working in a caring role is shown by the training I have sought outside mandatory requirements — Phlebotomy, PMVA, and Safeguarding Level 3 — all completed in addition to mandatory updates. On shifts where staffing was short, I have consistently prioritised patient safety over the pace of completing tasks, staying beyond my scheduled end time when a patient required support that could not safely be deferred."
 
-AWARENESS OF BOUNDARIES / BOUNDARIES OF THE ROLE: Name a specific procedure or request that fell outside competency, and the exact steps taken — what was said to whom, what was delegated, and what training followed.
-WRONG: "I always work within my boundaries and escalate when needed."
-RIGHT: (see FOUR CRITICAL FAILURES — FAILURE 4 above)
+AWARENESS OF BOUNDARIES / BOUNDARIES OF THE ROLE: The specific task or procedure MUST be named. NEVER write "a care task", "a procedure outside my role", "something I had not been assessed on", or any other vague label. If you write those words, the answer scores 0.
+
+WRONG: "When a care task fell outside my current sign-off, I told the Registered Nurse directly, explained what I had not been assessed on, and requested supervision before proceeding." — no task named, no detail of what was said, no outcome. 0 points.
+
+RIGHT: "When I was asked to perform a PEG tube feed flush for a patient on the ward, I recognised this was outside my current sign-off. I told the Registered Nurse directly: 'I have not been assessed on PEG tube management — can you take this or supervise me through it?' She supervised me through two feeds over the following week, checking my technique for confirming tube position and managing the flush volume, before signing off my competency record. I now perform the procedure independently."
+
+The task can be anything from the candidate's real background — nasogastric tube management, medication administration via syringe driver, removal of a urinary catheter, wound closure with steri-strips, venepuncture, administration of controlled drugs, use of a hoist without sign-off — it must be specific and real to the candidate's work history.
 
 FLEXIBLE TO MEET NEEDS OF SERVICE: Give a specific example of flexibility — a short-notice shift change, covering a different ward, adapting to a changed patient caseload mid-shift.
 WRONG: "I am flexible and willing to work different shifts."

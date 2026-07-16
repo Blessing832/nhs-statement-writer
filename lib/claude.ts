@@ -722,6 +722,51 @@ async function generateParallel(
   return { statement, previousRoleDuties, currentRoleDuties: [], analysis, promptRegion: region }
 }
 
+// Lightweight analysis-only call — used when serving a cached statement so the PS panel still works
+export async function analyzeJobPosting(
+  client: Client,
+  jobData: ScrapeResult,
+  vacancyUrl: string,
+): Promise<StatementAnalysis | null> {
+  const region = detectRegion(vacancyUrl, jobData.rawText)
+  const prompt = buildUserPrompt(client, jobData, region, { outputMode: 'analysis-only' })
+  try {
+    const msg = await anthropic.messages.create({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 2000,
+      system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
+      messages: [{ role: 'user', content: prompt }],
+    })
+    const content = msg.content[0]
+    if (content?.type !== 'text') return null
+    const cleaned = content.text
+      .replace(/ — /g, ', ')
+      .replace(/—/g, ', ')
+      .replace(/ -- /g, ', ')
+      .replace(/--/g, ', ')
+    const jsonMatch = cleaned.match(/\{[\s\S]*\}/)
+    if (!jsonMatch) return null
+    const p: {
+      enhancedPreviousTitle?: string
+      jobSummary?: string
+      essentialCriteria?: string[]
+      desirableCriteria?: string[]
+    } = JSON.parse(jsonMatch[0])
+    if (!Array.isArray(p.essentialCriteria) || p.essentialCriteria.length === 0) return null
+    return {
+      jobSummary: p.jobSummary || '',
+      enhancedPreviousTitle: p.enhancedPreviousTitle,
+      essentialCriteria: p.essentialCriteria,
+      desirableCriteria: p.desirableCriteria || [],
+      candidateStrengths: [],
+      potentialGaps: [],
+      keyDuties: [],
+    }
+  } catch {
+    return null
+  }
+}
+
 export async function generateStatement(
   client: Client,
   jobData: ScrapeResult,

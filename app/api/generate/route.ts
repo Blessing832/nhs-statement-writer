@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import { supabaseAdmin } from '@/lib/supabase'
-import { generateStatement } from '@/lib/claude'
+import { generateStatement, analyzeJobPosting, detectRegion } from '@/lib/claude'
 import { ScrapeResult } from '@/lib/types'
 
 export const maxDuration = 300
@@ -90,12 +90,14 @@ export async function POST(req: NextRequest) {
         .limit(1)
         .single()
       if (existing) {
+        // Run a quick analysis so the PS coverage panel and highlights still work
+        const cachedAnalysis = await analyzeJobPosting(client, enrichedJobData as ScrapeResult, vacancy_url).catch(() => null)
         return NextResponse.json({
           statement: existing.generated_statement,
           previousRoleDuties: [],
           currentRoleDuties: [],
-          analysis: null,
-          promptRegion: null,
+          analysis: cachedAnalysis,
+          promptRegion: detectRegion(vacancy_url, (enrichedJobData as ScrapeResult).rawText),
           jobTitle: existing.job_title,
           organisation: existing.organisation,
           source: 'cached',
