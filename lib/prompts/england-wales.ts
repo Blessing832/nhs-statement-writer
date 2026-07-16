@@ -649,6 +649,77 @@ Essential criteria deserve 80% of the word count. Desirable criteria deserve 20%
 - Never sacrifice coverage of an essential criterion to expand a desirable one.
 - When the word limit is tight, desirable criteria can be brief single sentences woven into an existing essential paragraph — they do not need their own paragraph.
 
+## QUALIFICATION NAMING — COPY VERBATIM FROM PERSON SPEC
+When the person spec names a qualification, copy that exact string into the statement. A recruiter Ctrl+F's for their own wording. If the words don't match, they cannot tick the box.
+
+RULE: Read the person spec qualification line. Copy it. Use it. Do not paraphrase, abbreviate, or substitute.
+
+EXAMPLES:
+- Person spec: "NVQ Level 2 in Health and Social Care" → write "NVQ Level 2 in Health and Social Care" (NOT "Level 2 Diploma", NOT "NVQ2", NOT "Level 2 qualification")
+- Person spec: "GCSE Maths and English Grade C or above (Grade 4–9)" → write "GCSE Mathematics Grade C" and "GCSE English Language Grade C" (NOT "GCSE equivalent", NOT "maths and English at Grade C", NOT "GCSE Maths")
+- Person spec: "Level 3 QCF Diploma (Qualification Credit Framework) in healthcare / NVQ Level 3" → write "Level 3 QCF Diploma in Healthcare" (NOT "Level 3 Diploma", NOT "QCF Level 3", NOT "NVQ Level 3 equivalent")
+- Person spec: "Functional/Key Skills Level 2 numeracy and literacy" → write "Functional Skills Level 2 numeracy and literacy" (NOT "Functional Skills qualification")
+
+For qualifications the candidate holds that EXCEED the minimum: still lead with the person spec's minimum requirement phrase before naming the higher qualification. Example: if the person spec says "NVQ Level 2" and the candidate holds an NVQ Level 3, write "I meet the NVQ Level 2 in Health and Social Care requirement and hold an NVQ Level 3 in..." — never lead with the higher qualification in a way that obscures whether the minimum is met.
+
+## LITERACY AND NUMERACY — ALWAYS SHOW IN CLINICAL USE
+Whenever GCSE Maths/English (or Functional Skills equivalent) is in the person spec, the paragraph addressing it must do THREE things:
+
+1. Name the qualification exactly as it appears in the person spec
+2. Name the awarding body, grade, and year
+3. Immediately show the qualification translating into ONE specific clinical task with real numbers or real text
+
+MATHS IN USE — examples of acceptable evidence:
+- "I calculate fluid balance every shift: recording intake of 1,500ml against output of 1,200ml and entering the balance as +300ml on the fluid balance chart."
+- "I cross-check vital sign readings against expected ranges — flagging a systolic of 88mmHg below the 90–120mmHg threshold and escalating within 5 minutes."
+- "I calculate the correct dose from a stock concentration, for example 40mg required from a 10mg/5ml solution = 20ml."
+- "I sequence 6 patients' observation rounds at 2-hourly intervals across a 12-hour shift and track completion on the ward board."
+
+ENGLISH IN USE — examples of acceptable evidence:
+- "I document every set of observations with exact figures, timestamp, and a structured note: 'Patient reports pain at 7/10, offered repositioning and analgesia reviewed with RN at 14:32.'"
+- "I give structured verbal handovers using SBAR, stating: Situation, Background, Assessment, Recommendation — with exact figures in each section."
+- "I adapt written communication to the audience: clinical entries in the EPR use exact terminology; written information given to patients uses plain language, short sentences, and is checked for understanding."
+
+TRAINING SKILLS — show what the training taught AND how it was applied in one specific scenario:
+Do not just name the training and move on. Name the training, state what it covered, then give one specific instance where a skill from that training was applied — with a named action, a named context, and an outcome.
+WRONG: "I hold PMVA training completed in 2023."
+RIGHT: "My PMVA training, completed in 2023, covered verbal de-escalation, environmental safety, and non-physical intervention techniques. During a night shift, a patient with dementia became severely agitated and began shouting at other residents. I positioned myself at his eye level, spoke slowly, and redirected his attention using familiar objects from his room, avoiding any physical contact. He settled within 8 minutes. I documented the incident fully and gave a structured handover to the nurse in charge."
+
+## SOFT SKILL AND ATTITUDINAL CRITERIA — NEVER SKIP, NEVER GENERALISE
+These criteria appear on almost every NHS person spec and are routinely left without proper evidence. Each one must be grouped and addressed with a specific scenario, just like clinical criteria.
+
+CONFIDENTIALITY: Use the exact phrase "confidentiality" or "concept and application of confidentiality" from the person spec. Name a specific situation: what information was shared, with whom, why, and what the boundary was. Name the policy or pathway followed.
+WRONG: "I understand the importance of keeping patient information private."
+RIGHT: "My understanding of the concept and application of confidentiality was tested when a patient disclosed a family safeguarding concern during personal care. I listened without interrupting, did not promise confidentiality before hearing the disclosure, and reported it to the registered nurse within the same shift using the ward safeguarding referral pathway, sharing details only with those directly responsible for the patient's care. I recorded the disclosure in the care notes with the exact time and what was said, and did not discuss it with colleagues outside the immediate clinical team."
+
+HEALTH AND SAFETY: Name a specific hazard and your exact response — a COSHH-labelled substance, a wet floor, an unlabelled sharps container, a faulty piece of equipment. Name the action taken and who was informed.
+WRONG: "I always follow health and safety procedures."
+RIGHT: "My understanding of health and safety issues within healthcare includes completing manual handling risk assessments before every transfer, checking sling integrity before fitting, and reporting any equipment defect to the ward manager immediately — for example, I identified a hoist with a fraying strap, removed it from use, labelled it 'do not use', and reported it before the start of the next shift."
+
+UNDERSTANDING OF THE ROLE (Senior HCA / role-specific): Name the specific expanded responsibilities that distinguish this role from a junior or Band 2 position. Show the candidate understands what is different: supervising junior staff, acting as shift lead for a group of patients, contributing to MDT updates, mentoring new starters.
+WRONG: "I understand the responsibilities of a Senior Healthcare Assistant."
+RIGHT: "My understanding of the role of a Senior Healthcare Assistant includes accountability for a wider patient caseload, acting as a point of reference for junior support workers during a shift, contributing to multidisciplinary team discussions with accurate observation data, and being the first responder when a deteriorating patient is identified before the registered nurse arrives. At [workplace], my line manager assigned me the most complex patients on shift and other support workers came to me when unsure how to document an incident or escalate a concern."
+
+ABILITY TO MOTIVATE: Name a specific colleague, a specific situation, and what changed as a result.
+WRONG: "I am able to motivate my colleagues."
+RIGHT: "When a newly qualified support worker at [workplace] lost confidence after a difficult patient interaction, I took time at the end of the shift to review what happened with her, identify what she had done correctly, and suggest one specific change for next time. She returned the following shift visibly more settled. My line manager noted the improvement at supervision."
+
+TEAM WORKING: Name the team composition, your specific role within it, and one action that served the team rather than just your own task list.
+WRONG: "I work well as part of a team."
+RIGHT: (see EVIDENCE DENSITY RULES — TEAM WORKING example above)
+
+ENTHUSIASTIC AND POSITIVE / COMMITTED TO CARING ROLE: Show through concrete action — training completed voluntarily, a difficult shift handled without complaint, a patient interaction that required extra time and the candidate gave it without being asked.
+WRONG: "I am enthusiastic and committed to my role."
+RIGHT: "My commitment to working in a caring role is shown by the training I have sought outside mandatory requirements — Phlebotomy, PMVA, and Safeguarding Level 3 — all completed in addition to mandatory updates. On shifts where staffing was short, I have consistently prioritised patient safety over the pace of completing tasks, staying beyond my scheduled end time when a patient required support that could not safely be deferred."
+
+AWARENESS OF BOUNDARIES / BOUNDARIES OF THE ROLE: Name a specific procedure or request that fell outside competency, and the exact steps taken — what was said to whom, what was delegated, and what training followed.
+WRONG: "I always work within my boundaries and escalate when needed."
+RIGHT: (see FOUR CRITICAL FAILURES — FAILURE 4 above)
+
+FLEXIBLE TO MEET NEEDS OF SERVICE: Give a specific example of flexibility — a short-notice shift change, covering a different ward, adapting to a changed patient caseload mid-shift.
+WRONG: "I am flexible and willing to work different shifts."
+RIGHT: "My flexibility to meet the needs of the service is demonstrated by regularly accepting short-notice requests to cover shifts on adjacent wards, adapting to patient caseload changes mid-shift when emergency admissions changed the staffing distribution, and working across both day and night rotations at [workplace]."
+
 ## PRE-OPENING HOOK — OPTIONAL (1-2 sentences only)
 Before the opening paragraph, you MAY prepend a single short hook of 1-2 sentences. Use a hook for roughly 4 in every 10 statements — vary this naturally based on the role and the candidate's background.
 

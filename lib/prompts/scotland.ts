@@ -522,6 +522,43 @@ Essential criteria deserve 80% of the word count. Desirable criteria deserve 20%
 - Never sacrifice coverage of an essential criterion to expand a desirable one.
 - When the word limit is tight, desirable criteria can be brief single sentences woven into an existing essential paragraph.
 
+## QUALIFICATION NAMING — COPY VERBATIM FROM PERSON SPEC
+Copy qualification names exactly as written in the person spec. A recruiter Ctrl+F's for their own wording — if the words do not match, they cannot tick the box.
+
+RULE: Read the person spec qualification line. Copy it. Use it verbatim.
+- Person spec: "SVQ Level 3 in Health and Social Care" → write "SVQ Level 3 in Health and Social Care" (NOT "Level 3 Diploma", NOT "SVQ3")
+- Person spec: "National 5 English and Mathematics or equivalent" → write "National 5 Mathematics" and "National 5 English" (NOT "GCSE equivalent", NOT "National 5 qualifications")
+- Person spec: "HNC in Social Care / equivalent qualification" → write "HNC in Social Care" (NOT "HNC", NOT "Level 6 qualification")
+
+For qualifications above the minimum: lead with the person spec's minimum phrase first, then name the higher qualification. Never lead with the higher qualification in a way that obscures whether the minimum is met.
+
+## LITERACY AND NUMERACY — ALWAYS SHOW IN CLINICAL USE
+When literacy or numeracy qualifications appear in the person spec, the paragraph must: (1) name the qualification using person spec wording; (2) name the awarding body, grade, and year; (3) show it in one specific clinical task with real numbers or real text.
+
+MATHS IN USE: fluid balance calculation (1,500ml intake vs 1,200ml output = +300ml), vital sign thresholds (systolic below 90mmHg), blood glucose ranges (3.4 mmol/L below the 4.0–7.0 range), medication dose calculation.
+ENGLISH IN USE: TrakCare entries with exact figures and timestamps, SBAR handover with the actual words spoken, written care plan updates, patient-facing communication in plain language.
+
+TRAINING SKILLS: Name the training, state what it covered, then give one specific scenario where a skill from that training was applied — named action, named context, named outcome. Never name a training course without showing it in use.
+
+## SOFT SKILL AND ATTITUDINAL CRITERIA — NEVER SKIP, NEVER GENERALISE
+These criteria appear on almost every NHS Scotland person spec and are routinely skipped or addressed with a generic claim. Each must be given a specific scenario.
+
+CONFIDENTIALITY: Use the exact phrase from the person spec. Name what information was involved, who it was shared with, why, and what the limit was. Name the Board policy or referral pathway followed.
+WRONG: "I understand the importance of patient confidentiality."
+RIGHT: "My understanding of the concept and application of confidentiality was tested when a patient disclosed a family safeguarding concern during personal care. I listened without interrupting, made no promise of confidentiality before hearing the disclosure, and reported it to the senior charge nurse within the same shift using the Board's safeguarding referral pathway, sharing information only with those directly responsible for the patient's care. I recorded the disclosure in TrakCare with the exact time and content, and did not discuss it outside the immediate clinical team."
+
+HEALTH AND SAFETY: Name a specific hazard and exact response — a faulty hoist, a COSHH-labelled substance, an unlabelled sharps container, a wet floor. Name the action and who was informed.
+
+UNDERSTANDING OF THE ROLE: Name the expanded responsibilities specific to this post compared to a junior support worker — patient caseload size, junior staff oversight, contribution to MDT communication, accountability at shift level.
+
+ABILITY TO MOTIVATE: Name a specific colleague, situation, and what changed. One concrete example only — not a general statement about being a team player.
+
+TEAM WORKING: Name the team composition, your specific role in the team, and one action that served the team rather than just your own task. Numbers help: "covered the remaining 6 patients' observations for my colleague while she managed a one-to-one."
+
+FLEXIBILITY: Give a specific example — a short-notice shift, a different ward covered, a caseload change mid-shift. Match the exact phrase from the person spec ("flexible to meet the needs of the service" / "willingness to work flexible hours").
+
+BOUNDARIES OF THE ROLE: Name the procedure that fell outside your competency, what you said, who you told, and what followed. Never write a general statement — see FOUR CRITICAL FAILURES — FAILURE 4 above.
+
 ## THREE-QUESTION FORMAT
 
 ### QUESTION 1: Why are you suitable for this post? (HARD LIMIT: 420w)
