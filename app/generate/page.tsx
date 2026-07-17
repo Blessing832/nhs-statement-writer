@@ -143,41 +143,47 @@ function isCriterionAddressed(criterion: string, statement: string): boolean {
   return matches.length >= threshold
 }
 
-// Find the longest phrase from a criterion that actually appears verbatim in the statement
-function findLongestMatchPhrase(criterion: string, statementLower: string): string | null {
-  const words = criterion
-    .toLowerCase()
-    .replace(/[^\w\s]/g, ' ')
-    .trim()
-    .split(/\s+/)
-    .filter(w => w.length > 1)
-  if (words.length === 0) return null
-  for (let len = Math.min(words.length, 5); len >= 2; len--) {
-    for (let start = 0; start <= words.length - len; start++) {
-      const phrase = words.slice(start, start + len).join(' ')
-      if (extractKeyWords(phrase).length === 0) continue  // skip all-stopword phrases
-      if (statementLower.includes(phrase)) return phrase
-    }
+// Words too generic to highlight even when they appear in criteria
+const HIGHLIGHT_STOPS = new Set([
+  'with','that','this','have','from','they','will','been','were','your',
+  'their','must','when','what','such','into','some','more','than','also',
+  'over','those','would','could','should','other','where','there','which',
+  'these','above','below','within','through','about','after','before',
+  'between','very','just','each','both','used','most','only','using',
+  // too generic in NHS context
+  'ability','knowledge','understanding','appropriate','relevant','general',
+  'basic','level','clinical','healthcare','health','patient','patients',
+  'staff','service','services','working','related','including','practice',
+  'provide','support','ensure','achieve','maintain','demonstrate','within',
+])
+
+// Collect meaningful keywords from all PS criteria to highlight in the statement
+function getHighlightKeywords(criteria: string[]): string[] {
+  const words = new Set<string>()
+  for (const c of criteria) {
+    c.toLowerCase()
+      .replace(/[^a-z\s]/g, ' ')
+      .split(/\s+/)
+      .filter(w => w.length >= 5 && !HIGHLIGHT_STOPS.has(w))
+      .forEach(w => words.add(w))
   }
-  return null
+  // Sort longest first so longer matches take priority in the regex
+  return [...words].sort((a, b) => b.length - a.length)
 }
 
-// Wrap matched PS phrases in a green highlight mark — applied to raw text BEFORE renderBold
+// Wrap PS keyword matches in a green highlight — applied to raw text BEFORE renderBold
 function applyHighlights(rawLine: string, criteria: string[]): string {
   if (!criteria.length) return rawLine
+  const keywords = getHighlightKeywords(criteria)
+  if (keywords.length === 0) return rawLine
   const lower = rawLine.toLowerCase()
-  const phrases = new Set<string>()
-  for (const c of criteria) {
-    const m = findLongestMatchPhrase(c, lower)
-    if (m) phrases.add(m)
-  }
-  if (phrases.size === 0) return rawLine
-  const sorted = [...phrases].sort((a, b) => b.length - a.length)
-  const escaped = sorted.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-  const regex = new RegExp(`(${escaped.join('|')})`, 'gi')
+  const present = keywords.filter(w => lower.includes(w))
+  if (present.length === 0) return rawLine
+  const escaped = present.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  const regex = new RegExp(`\\b(${escaped.join('|')})\\b`, 'gi')
   return rawLine.replace(
     regex,
-    (m) => `<mark style="background:#bbf7d0;color:#14532d;border-radius:2px;padding:0 2px">${m}</mark>`,
+    (m) => `<mark style="background-color:#bbf7d0;color:#14532d;border-radius:2px;padding:0 2px">${m}</mark>`,
   )
 }
 
