@@ -139,51 +139,37 @@ function isCriterionAddressed(criterion: string, statement: string): boolean {
   const words = extractKeyWords(criterion)
   if (words.length === 0) return stmtLower.includes(criterion.toLowerCase().trim())
   const matches = words.filter(w => stmtLower.includes(w))
-  const threshold = Math.max(1, Math.ceil(words.length * 0.4))
+  const threshold = Math.max(1, Math.floor(words.length * 0.25))
   return matches.length >= threshold
-}
-
-// Words too generic to highlight even when they appear in criteria
-const HIGHLIGHT_STOPS = new Set([
-  'with','that','this','have','from','they','will','been','were','your',
-  'their','must','when','what','such','into','some','more','than','also',
-  'over','those','would','could','should','other','where','there','which',
-  'these','above','below','within','through','about','after','before',
-  'between','very','just','each','both','used','most','only','using',
-  // too generic in NHS context
-  'ability','knowledge','understanding','appropriate','relevant','general',
-  'basic','level','clinical','healthcare','health','patient','patients',
-  'staff','service','services','working','related','including','practice',
-  'provide','support','ensure','achieve','maintain','demonstrate','within',
-])
-
-// Collect meaningful keywords from all PS criteria to highlight in the statement
-function getHighlightKeywords(criteria: string[]): string[] {
-  const words = new Set<string>()
-  for (const c of criteria) {
-    c.toLowerCase()
-      .replace(/[^a-z\s]/g, ' ')
-      .split(/\s+/)
-      .filter(w => w.length >= 5 && !HIGHLIGHT_STOPS.has(w))
-      .forEach(w => words.add(w))
-  }
-  // Sort longest first so longer matches take priority in the regex
-  return [...words].sort((a, b) => b.length - a.length)
 }
 
 // Wrap PS keyword matches in a green highlight — applied to raw text BEFORE renderBold
 function applyHighlights(rawLine: string, criteria: string[]): string {
   if (!criteria.length) return rawLine
-  const keywords = getHighlightKeywords(criteria)
-  if (keywords.length === 0) return rawLine
+  const stops = new Set([
+    'with','that','this','have','from','they','will','been','were','your',
+    'their','must','when','what','such','into','some','more','than','also',
+    'over','those','would','could','should','other','where','there','which',
+    'these','above','below','about','after','before','between','very','just',
+    'each','both','used','most','only','using','then','also','here','been',
+  ])
+  const words = new Set<string>()
+  for (const c of criteria) {
+    c.toLowerCase()
+      .replace(/[^a-z\s]/g, ' ')
+      .split(/\s+/)
+      .filter(w => w.length >= 4 && !stops.has(w))
+      .forEach(w => words.add(w))
+  }
+  if (!words.size) return rawLine
   const lower = rawLine.toLowerCase()
-  const present = keywords.filter(w => lower.includes(w))
-  if (present.length === 0) return rawLine
+  const present = [...words].filter(w => lower.includes(w)).sort((a, b) => b.length - a.length)
+  if (!present.length) return rawLine
   const escaped = present.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-  const regex = new RegExp(`\\b(${escaped.join('|')})\\b`, 'gi')
+  const regex = new RegExp(escaped.join('|'), 'gi')
   return rawLine.replace(
     regex,
-    (m) => `<mark style="background-color:#bbf7d0;color:#14532d;border-radius:2px;padding:0 2px">${m}</mark>`,
+    (m) => `<mark style="background-color:#86efac;color:#14532d;border-radius:2px;padding:0 2px">${m}</mark>`,
   )
 }
 
