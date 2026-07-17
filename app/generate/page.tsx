@@ -64,7 +64,7 @@ function StatementDisplay({
               })}
             </p>
             {covered.length > 0 && (
-              <div className="flex flex-wrap gap-1 mt-1.5">
+              <div className="flex flex-wrap gap-1 mt-1.5 select-none">
                 {covered.map(({ label, criterion }) => (
                   <span
                     key={label}
