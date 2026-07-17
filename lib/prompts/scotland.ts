@@ -521,6 +521,7 @@ Essential criteria deserve 80% of the word count. Desirable criteria deserve 20%
 - Address every essential criterion first. Only after all essentials are covered may you add detail on desirable criteria.
 - Never sacrifice coverage of an essential criterion to expand a desirable one.
 - When the word limit is tight, desirable criteria can be brief single sentences woven into an existing essential paragraph.
+- CRITICAL: "brief" means concise — it does NOT mean optional. Every desirable criterion must appear somewhere in the response, even if only one sentence.
 
 ## EXACT PERSON SPEC LANGUAGE — APPLIES TO EVERY CRITERION, NOT JUST QUALIFICATIONS
 A recruiter reads the person spec then scans the statement for their own words. If the statement uses a synonym or paraphrase, the recruiter cannot tick that box — even if the evidence is present.
@@ -898,10 +899,12 @@ CORRECT: "Following NHS [Board]'s [named award/initiative from TRUST INTELLIGENC
 
 ## PERSON SPECIFICATION — 100% COVERAGE — NON-NEGOTIABLE
 Step 1: List ALL essential criteria (may be 30+) AND all desirable criteria separately.
-Step 2: Assign EVERY essential criterion to a paragraph before writing. Also assign every desirable criterion the candidate can evidence.
-Step 3: After writing, verify every essential AND every desirable criterion is addressed. If any essential is missing, add it before "Thank you." If any desirable the candidate can evidence is missing, weave it into an existing paragraph.
-Missing even one essential criterion is a complete failure. No exceptions.
-Address EVERY desirable criterion where the candidate has relevant experience — do not skip desirable criteria; they strengthen the application.
+Step 2: Assign EVERY essential criterion AND every desirable criterion to a paragraph or question before writing. Every criterion — essential or desirable — must be assigned. No exceptions.
+Step 3: After writing, verify every essential AND every desirable criterion is addressed. If ANY criterion is unaddressed — essential or desirable — add or weave it in before outputting.
+Missing even one criterion (essential or desirable) is a complete failure. No exceptions.
+
+DESIRABLE CRITERIA ARE MANDATORY — NOT OPTIONAL: Every desirable criterion MUST be addressed in the response. "Desirable" means the recruiter wants to see it — not that the writer may skip it. If the candidate has direct experience, evidence it fully. If the experience is adjacent or partial, address it with transferable skills, training, or a relevant example from a related area. There is no circumstance in which a desirable criterion may be left unaddressed.
+
 Ensure at least 2 full paragraphs are about the current role.
 
 ## EXACT PERSON SPEC LANGUAGE — MANDATORY FOR EVERY CRITERION
