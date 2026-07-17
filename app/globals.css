@@ -44,3 +44,11 @@ body {
 .animate-pulse-ring {
   animation: pulse-ring 1.4s ease-out infinite;
 }
+
+/* PS keyword highlights — class-based so Tailwind preflight cannot reset it */
+mark.ps-mark {
+  background-color: #86efac !important;
+  color: #14532d !important;
+  border-radius: 2px;
+  padding: 0 2px;
+}

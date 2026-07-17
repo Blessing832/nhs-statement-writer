@@ -24,25 +24,59 @@ function renderBold(text: string): string {
   return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
 }
 
-// Convert statement text to paragraphs for display, optionally highlighting PS phrases
-function StatementDisplay({ text, criteria }: { text: string; criteria?: string[] }) {
+// Convert statement text to paragraphs for display, with PS keyword highlights and paragraph-level criterion chips
+function StatementDisplay({
+  text,
+  essential = [],
+  desirable = [],
+}: {
+  text: string
+  essential?: string[]
+  desirable?: string[]
+}) {
+  const allCriteria = [...essential, ...desirable]
   const paragraphs = text.split(/\n\n+/)
   return (
-    <div className="space-y-3 text-gray-800 leading-relaxed text-sm">
+    <div className="space-y-4 text-gray-800 leading-relaxed text-sm">
       {paragraphs.map((para, i) => {
         const lines = para.split('\n')
+
+        // Criterion chips: which PS points does this paragraph cover?
+        const coveredEssential = essential
+          .map((c, idx) => ({ label: `E${idx + 1}`, criterion: c }))
+          .filter(({ criterion }) => isCriterionAddressed(criterion, para))
+        const coveredDesirable = desirable
+          .map((c, idx) => ({ label: `D${idx + 1}`, criterion: c }))
+          .filter(({ criterion }) => isCriterionAddressed(criterion, para))
+        const covered = [...coveredEssential, ...coveredDesirable]
+
         return (
-          <p key={i}>
-            {lines.map((line, j) => {
-              const highlighted = criteria && criteria.length > 0 ? applyHighlights(line, criteria) : line
-              return (
-                <span key={j}>
-                  {j > 0 && <br />}
-                  <span dangerouslySetInnerHTML={{ __html: renderBold(highlighted) }} />
-                </span>
-              )
-            })}
-          </p>
+          <div key={i}>
+            <p>
+              {lines.map((line, j) => {
+                const highlighted = allCriteria.length > 0 ? applyHighlights(line, allCriteria) : line
+                return (
+                  <span key={j}>
+                    {j > 0 && <br />}
+                    <span dangerouslySetInnerHTML={{ __html: renderBold(highlighted) }} />
+                  </span>
+                )
+              })}
+            </p>
+            {covered.length > 0 && (
+              <div className="flex flex-wrap gap-1 mt-1.5">
+                {covered.map(({ label, criterion }) => (
+                  <span
+                    key={label}
+                    title={criterion}
+                    className="inline-flex items-center gap-0.5 text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 border border-green-300 font-medium cursor-default select-none"
+                  >
+                    ✓ {label}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
         )
       })}
     </div>
@@ -143,7 +177,7 @@ function isCriterionAddressed(criterion: string, statement: string): boolean {
   return matches.length >= threshold
 }
 
-// Wrap PS keyword matches in a green highlight — applied to raw text BEFORE renderBold
+// Wrap PS keyword matches in a green highlight — uses CSS class ps-mark (defined in globals.css)
 function applyHighlights(rawLine: string, criteria: string[]): string {
   if (!criteria.length) return rawLine
   const stops = new Set([
@@ -167,10 +201,7 @@ function applyHighlights(rawLine: string, criteria: string[]): string {
   if (!present.length) return rawLine
   const escaped = present.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
   const regex = new RegExp(escaped.join('|'), 'gi')
-  return rawLine.replace(
-    regex,
-    (m) => `<mark style="background-color:#86efac;color:#14532d;border-radius:2px;padding:0 2px">${m}</mark>`,
-  )
+  return rawLine.replace(regex, (m) => `<mark class="ps-mark">${m}</mark>`)
 }
 
 function AnalysisPanel({ analysis, region, statement }: { analysis: StatementAnalysis | null; region: string; statement: string }) {
@@ -873,10 +904,8 @@ function GeneratePage() {
                 <div ref={statementRef}>
                   <StatementDisplay
                     text={result.statement}
-                    criteria={result.analysis ? [
-                      ...(result.analysis.essentialCriteria ?? []),
-                      ...(result.analysis.desirableCriteria ?? []),
-                    ] : []}
+                    essential={result.analysis?.essentialCriteria ?? []}
+                    desirable={result.analysis?.desirableCriteria ?? []}
                   />
                 </div>
 
