@@ -31,8 +31,17 @@ RIGHT: "On the 20-bed inpatient mental health ward at New Craigs, I complete a f
 
 FAILURE 3 — SBAR WRITTEN AS A LABEL, NOT AS CONTENT:
 Never write "I used SBAR to escalate" or "I handed over using SBAR format." Write the actual content of each SBAR section.
+
+WHAT GOES IN EACH SBAR SECTION — BE THIS SPECIFIC:
+- SITUATION: the presenting change with a specific observation ("Mr Ahmed's oxygen saturation has dropped to 89% over the last 15 minutes and he is reporting increased breathlessness")
+- BACKGROUND: the relevant clinical context ("Admitted 3 days ago with community-acquired pneumonia; baseline SpO2 was 95% on 2L O2 this morning, no previous respiratory problems")
+- ASSESSMENT: your interpretation ("He is more distressed than at the last observations, respiratory rate is now 24, NEWS2 score has risen from 2 to 5 in the last hour")
+- RECOMMENDATION: what you are asking for ("I believe he needs urgent medical review now — can you attend or should I escalate to the on-call team?")
+- OUTCOME: what happened next ("The senior charge nurse attended within 3 minutes, oxygen was increased to 6L, and a doctor reviewed within 10 minutes")
+
 WRONG: "I flag changes to the registered practitioner using SBAR."
-RIGHT: "I escalated using SBAR: Situation — 'The patient's oxygen saturation has dropped to 89%.' Background — 'Admitted 3 days ago with a chest infection, was 95% this morning.' Assessment — 'More breathless, respiratory rate increased to 24.' Recommendation — 'I think he needs a medical review now.' The registered nurse attended within 3 minutes."
+WRONG: "I use SBAR to communicate concerns about deteriorating patients."
+RIGHT: "I escalated using SBAR: Situation — 'His oxygen saturation has dropped to 89% over the last 15 minutes.' Background — 'Admitted 3 days ago with a chest infection, was stable at 95% this morning.' Assessment — 'More breathless than this morning, respiratory rate has increased to 24, NEWS2 score up from 2 to 5.' Recommendation — 'I think he needs a medical review now.' The senior charge nurse attended within 3 minutes and oxygen therapy was increased."
 
 FAILURE 4 — COMPETENCE BOUNDARY MENTIONED WITHOUT THE SPECIFIC PROCEDURE OR STEPS:
 Name the exact procedure, the exact step where competency ended, and the exact process followed to close the gap.
@@ -413,7 +422,12 @@ WRONG: "I have strong communication skills."
 RIGHT: "For a patient with expressive dysphasia following a stroke at [workplace], I used a Makaton symbol board and yes/no cards during every interaction, confirmed understanding by watching for consistent eye contact and nodding, and documented all communication adaptations on TrakCare so every team member used the same approach. The patient's distress during personal care reduced noticeably within two days."
 
 WRONG: "I am aware of safeguarding procedures."
-RIGHT: "At [workplace], I noticed an elderly patient becoming increasingly withdrawn and showing unexplained bruising on her forearms. I reported my observations to the senior charge nurse, completed a body map form, and documented my concerns on TrakCare. A safeguarding investigation was opened the same shift under the Adult Support and Protection (Scotland) Act 2007."
+RIGHT (adult safeguarding — detection and response): "At [workplace], I noticed an elderly patient becoming increasingly withdrawn and showing unexplained bruising on her forearms. I reported my observations to the senior charge nurse, completed a body map form, and documented my concerns on TrakCare. A safeguarding investigation was opened the same shift under the Adult Support and Protection (Scotland) Act 2007."
+
+SAFEGUARDING CHILDREN — when the person spec references the Safeguarding Children framework or experience working with children/young people:
+RIGHT: "My experience working within the Safeguarding Children framework includes recognising indicators of concern — unexplained bruising in non-mobile areas, sudden behavioural change, and age-inappropriate sexual knowledge — and responding using the agreed pathway. When a 9-year-old disclosed during a routine interaction that an adult at home 'hurt them sometimes', I kept my expression calm, used open, non-leading questions, did not promise confidentiality, and reported immediately to the named safeguarding lead. I completed a contemporaneous record of the child's exact words, time, and setting, and contributed to the multi-agency strategy meeting that followed. I hold Safeguarding Children Level 2 training and understand the thresholds for referral under the Children (Scotland) Act 1995 and Getting It Right for Every Child (GIRFEC)."
+
+SAFEGUARDING — DETECTION IS NOT ENOUGH: The statement must cover both detection AND response. Detection = what you noticed. Response = who you told, what form you completed, what pathway you followed, what the outcome was. A statement that only says "I would report concerns" fails. Name the specific referral pathway, the form completed, and the outcome.
 
 WRONG: "I have good manual handling skills."
 RIGHT: "At [workplace], I used a mobile hoist with a full-body sling to transfer non-weight-bearing patients from bed to chair, completing a manual handling risk assessment before every transfer and checking the sling for wear. For patients with partial weight-bearing, I used a banana board and transfer belt, repositioning every two hours using a foam wedge to prevent pressure area deterioration."
@@ -430,6 +444,28 @@ WRONG: "I respect diversity and treat all patients with dignity."
 CORRECT: "When supporting a Muslim patient during Ramadan, I adjusted personal care timing to avoid fasting hours, documented halal meal preferences on TrakCare, and arranged a quiet prayer space with the senior charge nurse. This reduced her anxiety from 8/10 to 3/10 within three days."
 
 Every paragraph needs: specific situation, specific actions (with tools/systems from JD or candidate profile), named professionals worked with (use exact roles from JD — occupational therapist, physiotherapist, porter, consultant, senior charge nurse, as appropriate), quantified result.
+
+## CLINICAL EVIDENCE DEPTH — MANDATORY FOR ANY EXPERIENCE PARAGRAPH
+When the statement addresses clinical or care experience, EVERY experience paragraph must contain ALL SIX elements below. Populate each from the specific JD:
+
+1. CONDITIONS (minimum 4): Name at least 4 conditions, diagnoses, or presentations common to this role. Examples by specialty:
+   - Mental health: schizophrenia, bipolar disorder, emotionally unstable personality disorder (EUPD), depression with psychosis, acute anxiety, dual diagnosis (substance misuse + mental health)
+   - Acute medical: COPD, heart failure, community-acquired pneumonia, type 2 diabetes, acute kidney injury
+   - Elderly care: vascular dementia, Alzheimer's disease, delirium, falls with hip fracture, Parkinson's disease
+   - Learning disability: autism spectrum disorder, profound and multiple learning disabilities, challenging behaviour, epilepsy
+   - Paediatric: asthma, febrile convulsions, failure to thrive, congenital conditions
+
+2. PROCEDURES ASSISTED: Name specific procedures — not generic ("clinical tasks"). Examples: blood glucose monitoring, NEWS2 observations and escalation, manual handling with hoist, catheter care, PEG feed management, medication administration under delegation, venepuncture, wound dressing with ANTT, ECG recording, bladder scanning.
+
+3. TRAINING: Name completed relevant training. Examples: PMVA, safeguarding level 2 or 3, Mental Health First Aid, Positive Behaviour Support, de-escalation, Moving and Handling Level 2, Basic Life Support, Infection Prevention and Control, dementia awareness.
+
+4. GUIDELINES / FRAMEWORKS: Name specific guidelines or frameworks followed. Examples: NICE guidelines, Mental Health (Care and Treatment) (Scotland) Act 2003, Adults with Incapacity (Scotland) Act 2000, Recovery Model, Person-Centred Care framework, Positive Behaviour Support framework, RESTORE2, SEPSIS 6, NICE CG178.
+
+5. TOOLS / DOCUMENTATION SYSTEMS: Name specific tools and systems. Examples: TrakCare, SCI Gateway, Clinical Portal, NEWS2 chart, fluid balance chart, body map form, SBAR, HoNOS, risk assessment tool, ABC behaviour chart, DATIX.
+
+6. PATIENT POPULATION / DYNAMICS: Name the specific patient group precisely — age range, acuity, and special characteristics. Examples: "adults aged 18-65 with acute psychosis on a 20-bed inpatient ward", "older adults with dementia in a community mental health team", "young people aged 16-25 with first-episode psychosis", "adults with profound learning disabilities", "forensic patients in a medium-secure unit", "children aged 5-16 with autism and challenging behaviour".
+
+All six elements must appear across the experience paragraphs.
 
 Quantification examples: "reduced anxiety from 8/10 to 3/10", "improved cooperation from 40% to 85%", "zero incidents across 6 months", "supported 20 patients daily", "within three days", "across two weeks".
 
@@ -565,6 +601,12 @@ UNDERSTANDING OF THE ROLE: Name the expanded responsibilities specific to this p
 ABILITY TO MOTIVATE: Name a specific colleague, situation, and what changed. One concrete example only — not a general statement about being a team player.
 
 TEAM WORKING: Name the team composition, your specific role in the team, and one action that served the team rather than just your own task. Numbers help: "covered the remaining 6 patients' observations for my colleague while she managed a one-to-one."
+
+RESPONDING WITH COMPASSION TO AGGRESSIVE, MALADAPTIVE, OR SOCIALLY UNACCEPTABLE BEHAVIOUR: When this criterion appears, the response must show three things: (1) the candidate stayed regulated, (2) used non-threatening body language and tone, (3) acknowledged the distress UNDERNEATH the behaviour rather than the behaviour itself.
+
+WRONG: "I remain calm when patients are aggressive."
+WRONG: "I de-escalate using my training."
+RIGHT: "When a patient on the ward became verbally aggressive during medication rounds — shouting and refusing to engage — I responded with compassion towards the behaviour by staying regulated, lowering my voice, and sitting at his eye level rather than standing over him. I acknowledged the distress underneath his behaviour rather than the behaviour itself: 'I can hear how frustrated you are — can you tell me what's worrying you about this?' He disclosed anxiety about a side effect he had not mentioned to the team. I reported this to the senior charge nurse, who reviewed his medication later that shift. I completed a DATIX incident form and gave a structured handover."
 
 FLEXIBILITY: Give a specific example — a short-notice shift, a different ward covered, a caseload change mid-shift. Match the exact phrase from the person spec ("flexible to meet the needs of the service" / "willingness to work flexible hours").
 
@@ -1002,7 +1044,24 @@ RULES:
       `## SUBHEADINGS — MANDATORY FOR STYLE 1
 Group 3-5 related criteria per subheading using EXACT KEYWORDS from person spec.
 Plan all subheadings before writing. Verify 100% essential criteria coverage.
-Stories: list all criteria addressed in the subheading.
+
+SUBHEADINGS MUST BE BRIEF KEYWORD ABBREVIATIONS (4-8 words maximum):
+The subheading is a CHAPTER TITLE — a short keyword phrase, NOT the full criterion text. Keep it short so word count goes to the evidence. Use exact PS terminology, compressed into a phrase.
+
+HOW TO ABBREVIATE:
+- Strip articles, prepositions, filler phrases — keep clinical nouns and domain terms
+- Join multiple criteria with commas or "and": "Mental health experience and communication"
+- Keep qualification abbreviations verbatim from the PS: "NVQ Level 3 or equivalent" → "NVQ Level 3"
+- Named frameworks or legislation stay verbatim: "Safeguarding Children framework" → "Safeguarding"
+
+BEFORE AND AFTER:
+WRONG: "Relevant experience working with adults with acute and chronic mental health problems | Excellent verbal and written communication skills relevant to the legal requirements of client care"
+RIGHT: "Mental health experience and communication"
+
+WRONG: "QCF/NVQ Level 3, Level 2 Maths and English, and Care Certificate"
+RIGHT: "NVQ Level 3, Maths & English, Care Certificate"
+
+EXACT PS LANGUAGE IN THE PARAGRAPH — MANDATORY: Use the person spec's precise wording inside the paragraph when naming each criterion. If the PS says "acute and chronic mental health problems" — those words appear. If the PS says "legal requirements of client care" — those words appear. The recruiter checks your statement against the PS verbatim.
 
 CRITICAL — AFTER A SUBHEADING, START WITH THE EVIDENCE IMMEDIATELY:
 The subheading already names the topic. The first sentence of the paragraph must NOT restate, echo, or paraphrase the subheading. Start directly with what the candidate did.
