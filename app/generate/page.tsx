@@ -177,6 +177,21 @@ function isCriterionAddressed(criterion: string, statement: string): boolean {
   return matches.length >= threshold
 }
 
+function getMatchExcerpt(criterion: string, statement: string): string | null {
+  const words = extractKeyWords(criterion)
+  if (words.length === 0) return null
+  const paragraphs = statement.split(/\n\n+/)
+  let bestPara = ''
+  let bestCount = 0
+  for (const para of paragraphs) {
+    const count = words.filter(w => para.toLowerCase().includes(w)).length
+    if (count > bestCount) { bestCount = count; bestPara = para }
+  }
+  if (bestCount === 0) return null
+  const clean = bestPara.replace(/\*\*/g, '').replace(/\n/g, ' ').trim()
+  return clean.length > 90 ? clean.slice(0, 90) + '…' : clean
+}
+
 // Wrap PS keyword matches in a green highlight — uses CSS class ps-mark (defined in globals.css)
 function applyHighlights(rawLine: string, criteria: string[]): string {
   if (!criteria.length) return rawLine
@@ -204,7 +219,7 @@ function applyHighlights(rawLine: string, criteria: string[]): string {
   return rawLine.replace(regex, (m) => `<mark class="ps-mark">${m}</mark>`)
 }
 
-function AnalysisPanel({ analysis, region, statement }: { analysis: StatementAnalysis | null; region: string; statement: string }) {
+function AnalysisPanel({ analysis, region, statement, onFixGaps }: { analysis: StatementAnalysis | null; region: string; statement: string; onFixGaps?: (instruction: string) => void }) {
   if (!analysis) return (
     <p className="text-gray-400 text-sm">Person specification not extracted from page. Statement was written from job advert text. If the full PS is in an attached document, the statement should still address it.</p>
   )
@@ -217,6 +232,7 @@ function AnalysisPanel({ analysis, region, statement }: { analysis: StatementAna
   const totalAddressed = addressedEssential.length + addressedDesirable.length
   const allEssentialMet = addressedEssential.length === essential.length && essential.length > 0
   const coveragePct = totalCriteria > 0 ? Math.round((totalAddressed / totalCriteria) * 100) : 0
+  const uncoveredEssential = essential.filter(c => !isCriterionAddressed(c, statement))
 
   return (
     <div className="space-y-5 text-sm">
@@ -233,6 +249,29 @@ function AnalysisPanel({ analysis, region, statement }: { analysis: StatementAna
           <p className="text-xs text-gray-500 mt-0.5">
             {addressedEssential.length}/{essential.length} essential · {addressedDesirable.length}/{desirable.length} desirable
           </p>
+        </div>
+      )}
+
+      {uncoveredEssential.length > 0 && (
+        <div className="rounded-md border border-red-300 bg-red-50 px-3 py-3">
+          <p className="text-xs font-bold text-red-700 mb-2">
+            ⚠️ {uncoveredEssential.length} essential {uncoveredEssential.length === 1 ? 'criterion' : 'criteria'} may need attention
+          </p>
+          <ul className="space-y-1 mb-3">
+            {uncoveredEssential.map((c, i) => (
+              <li key={i} className="text-xs text-red-600">• {c.length > 75 ? c.slice(0, 75) + '…' : c}</li>
+            ))}
+          </ul>
+          {onFixGaps && (
+            <button
+              onClick={() => onFixGaps(
+                `These essential criteria may not be clearly addressed in the statement. Please add specific evidence for each one:\n\n${uncoveredEssential.map((c, i) => `${i + 1}. ${c}`).join('\n')}`
+              )}
+              className="text-xs px-3 py-1.5 bg-red-600 text-white rounded font-medium hover:bg-red-700 cursor-pointer w-full text-center"
+            >
+              Rewrite to fix these gaps →
+            </button>
+          )}
         </div>
       )}
 
@@ -254,12 +293,16 @@ function AnalysisPanel({ analysis, region, statement }: { analysis: StatementAna
           <ul className="space-y-1">
             {essential.map((item, i) => {
               const addressed = isCriterionAddressed(item, statement)
+              const excerpt = addressed ? getMatchExcerpt(item, statement) : null
               return (
-                <li key={i} className="flex gap-2 text-xs">
+                <li key={i} className={`flex gap-2 text-xs rounded p-1 -mx-1 ${addressed ? '' : 'bg-red-50'}`}>
                   <span className={`flex-shrink-0 mt-0.5 font-bold ${addressed ? 'text-green-600' : 'text-red-500'}`}>
                     {addressed ? '✓' : '✗'}
                   </span>
-                  <span className={addressed ? 'text-gray-700' : 'text-red-700 font-medium'}>{item}</span>
+                  <div className="min-w-0">
+                    <div className={addressed ? 'text-gray-700' : 'text-red-700 font-semibold'}>{item}</div>
+                    {excerpt && <p className="text-gray-400 mt-0.5 italic text-xs truncate">"{excerpt}"</p>}
+                  </div>
                 </li>
               )
             })}
@@ -875,7 +918,16 @@ function GeneratePage() {
                 <h3 className="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide pb-2 border-b border-gray-100">
                   {result.promptRegion === 'scotland' ? 'Person Specification' : 'Pre-Writing Analysis'}
                 </h3>
-                <AnalysisPanel analysis={result.analysis} region={result.promptRegion} statement={result.statement} />
+                <AnalysisPanel
+                  analysis={result.analysis}
+                  region={result.promptRegion}
+                  statement={result.statement}
+                  onFixGaps={(instruction) => {
+                    setRewriteInstruction(instruction)
+                    setShowRewrite(true)
+                    setTimeout(() => statementRef.current?.scrollIntoView({ behavior: 'smooth' }), 50)
+                  }}
+                />
               </div>
             </div>
 

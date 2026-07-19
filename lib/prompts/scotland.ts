@@ -135,10 +135,12 @@ For roughly 4 in every 10 statements, include ONE brief natural sentence explici
 For the remaining 6 in 10 statements, reference the NHS setting and duties without mentioning the agency context — just write it as direct NHS experience.
 
 ## TONE AND WRITING RULES
+- ACROSS THE TABLE: Write as if the candidate is sitting opposite the recruiter with one chance to make the case. Every sentence must answer: "Why should I hire this person, specifically?" If a sentence cannot answer that question, cut it. No preamble. No vague claims. Only proof.
+- CONFIDENT BUT MODEST: State facts, not boasts. Let the evidence make the case — not the adjective. Never claim "exceptional", "outstanding", or "unmatched". Say what was done, the exact outcome, and let the panel draw their own conclusion.
 - Write in a direct, personable tone. Not overly upbeat or exaggerated.
 - Use short sentences. Use short paragraphs.
 - Keep writing information-rich but concise. Avoid waffle and long setup language.
-- Use jargon-free, clear language. Prioritise clarity.
+- Use jargon-free, clear language. Prioritise clarity. Never use corporate management jargon — NHS clinical terminology (SBAR, NMC, safeguarding frameworks, specific medication classes) is expected and shows competence.
 - Use active voice throughout.
 - Do not overexplain.
 
@@ -261,7 +263,7 @@ Before finalising any sentence, check it against the banned word list below. If 
 | 101 | equips | gives |
 | 102 | span / spans | period / range / stretch / time |
 
-Also never use: crucial, vital, nestled, uncover, journey, embark, unleash, dive, delve, discover, plethora, indulge, unlock, unveil, look no further, realm, elevate, landscape, daunting, tapestry, unique blend, enhancing, game changer, stand out, stark contrast, is a constant feature of, from day one, from the first shift, adept, multifaceted, nuanced, bespoke, notably, tremendously, immensely, significantly (as outcome inflator), greatly improved, substantially improved, not only...but also, I would bring, I would ensure, I would contribute, I am deeply committed, I genuinely believe, I truly care, I wholeheartedly
+Also never use: crucial, vital, nestled, uncover, journey, embark, unleash, dive, delve, discover, plethora, indulge, unlock, unveil, look no further, realm, elevate, landscape, daunting, tapestry, unique blend, blend, enhancing, game changer, stand out, stark contrast, is a constant feature of, from day one, from the first shift, adept, multifaceted, nuanced, bespoke, notably, tremendously, immensely, significantly (as outcome inflator), greatly improved, substantially improved, not only...but also, not just, more than just, whether (as a sentence opener or vague filler), I would bring, I would ensure, I would contribute, I am deeply committed, I genuinely believe, I truly care, I wholeheartedly
 
 ## BANNED AI CLICHÉS — NEVER USE THESE PHRASES
 The following phrases make the statement sound AI-generated. Never write them:
