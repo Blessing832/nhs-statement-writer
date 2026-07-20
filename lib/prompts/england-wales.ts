@@ -529,7 +529,7 @@ Use this exact title consistently throughout the entire statement for the previo
 The current role ALWAYS uses the actual title from the candidate profile — never changed.
 
 SPECIALTY ALIGNMENT — MANDATORY (applies alongside the VACANCY TITLE ENHANCEMENT RULE above):
-The previous role title is set to the EXACT vacancy title, which includes its specialty. Write ALL experience paragraphs in the context of that exact specialty. Never acknowledge that the candidate's background was in a different specialty:
+The previous role title is set to the EXACT vacancy title. Write ALL experience paragraphs in the context of the CLINICAL_SPECIALTY detected in STEP 0 above — from the "Main area", department, or unit field in the job posting, NOT only from the vacancy title (which may be a generic Band title with no specialty in it). Never acknowledge that the candidate's background was in a different specialty:
 NEVER: "while I may not have direct oncology experience..."
 NEVER: "my background has been in general ward care, but..."
 NEVER: "transitioning from [different specialty] to [vacancy specialty]..."
@@ -620,14 +620,21 @@ Every paragraph must contain specific evidence. No theoretical statements.
 ## CLINICAL EVIDENCE DEPTH — MANDATORY FOR ANY EXPERIENCE PARAGRAPH
 When the statement addresses clinical or care experience, EVERY experience paragraph must contain ALL SIX elements below. Do not write a generic experience paragraph — populate each element from the specific JD:
 
-1. CONDITIONS (minimum 4): Name at least 4 conditions, diagnoses, or presentations common to this specific role. Match to the JD and patient population. Examples by specialty:
+1. CONDITIONS (minimum 4): Name at least 4 conditions, diagnoses, or presentations common to this specific role. Match to the CLINICAL_SPECIALTY detected in STEP 0. Examples by specialty:
+   - Renal / dialysis: chronic kidney disease (CKD stages 3-5), end-stage renal disease (ESRD), acute kidney injury (AKI), diabetic nephropathy, renal hypertension, fluid overload, uraemia, anaemia of chronic kidney disease
    - Mental health: schizophrenia, bipolar disorder, emotionally unstable personality disorder (EUPD), depression with psychosis, acute anxiety, dual diagnosis (substance misuse + mental health)
-   - Acute medical: COPD, heart failure, community-acquired pneumonia, type 2 diabetes with complications, acute kidney injury
+   - Acute medical: COPD, heart failure, community-acquired pneumonia, type 2 diabetes with complications, acute kidney injury, sepsis
    - Elderly care: vascular dementia, Alzheimer's disease, delirium, falls with hip fracture, Parkinson's disease
    - Learning disability: autism spectrum disorder, profound and multiple learning disabilities, challenging behaviour, epilepsy
    - Paediatric: asthma, febrile convulsions, failure to thrive, congenital conditions
+   - Oncology: colorectal cancer, breast cancer, haematological malignancy, neutropenic sepsis, cancer-related fatigue, chemotherapy toxicity
+   - Cardiology: heart failure, myocardial infarction, atrial fibrillation, hypertensive crisis, post-cardiac catheterisation
+   - Maternity: ante/postnatal care, pre-eclampsia, gestational diabetes, obstetric complications, perinatal mental health
+   - Surgical: post-operative complications, wound dehiscence, DVT risk, ileus, post-anaesthetic recovery
 
-2. PROCEDURES ASSISTED: Name specific procedures the candidate has assisted with or performed — not generic ("clinical tasks"). Examples: blood glucose monitoring, NEWS2 observations and escalation, manual handling with hoist, catheter care, PEG feed management, medication administration under delegation, venepuncture, wound dressing with ANTT, nasogastric tube care, ECG recording, bladder scanning.
+2. PROCEDURES ASSISTED: Name specific procedures the candidate has assisted with or performed — not generic ("clinical tasks"). Match to the CLINICAL_SPECIALTY. Examples:
+   - Renal / dialysis: haemodialysis machine setup, arteriovenous fistula/graft (AVF/AVG) monitoring post-needling, ultrafiltration goal calculations, pre- and post-dialysis weight and blood pressure monitoring, machine alarm management, fluid balance charting, peritoneal dialysis exchange recording, access site inspection for infection or haematoma
+   - General: blood glucose monitoring, NEWS2 observations and escalation, manual handling with hoist, catheter care, PEG feed management, medication administration under delegation, venepuncture, wound dressing with ANTT, nasogastric tube care, ECG recording, bladder scanning
 
 3. TRAINING: Name completed relevant training — not just mandatory. Examples: PMVA (Prevention and Management of Violence and Aggression), safeguarding level 2 or 3, Mental Health First Aid, Positive Behaviour Support, de-escalation, Moving and Handling Level 2, Basic Life Support, medication administration training, Infection Prevention and Control, dementia awareness.
 
@@ -723,6 +730,18 @@ Generic terms to use: "electronic patient record system", "digital care record s
 REASON: NHS recruiters know NHS systems by name — using them signals direct NHS experience. Non-NHS systems (Care Vision, Nourish, Person Centred Software, Carebeans, Birdie, eMAR, NHIMS, Pakat, or any residential/domiciliary app) are not recognisable to NHS panels and must never be named.
 
 ## READING THE JOB DOCUMENTS — DO THIS FIRST
+
+STEP 0 — DETECT THE CLINICAL SPECIALTY FIRST, BEFORE ANYTHING ELSE:
+Scan the entire job posting for every specialty and department indicator. Check ALL of these fields: "Main area", "Specialty", "Site name", ward or unit name, department heading, job title, and the job description body. Identify the CLINICAL_SPECIALTY (e.g. "Renal Dialysis", "Oncology", "Mental Health", "Maternity", "Paediatrics", "Elderly Care", "Learning Disability", "Cardiology", "Surgical"). Write it internally before proceeding.
+
+THE CLINICAL_SPECIALTY OVERRIDES THE CANDIDATE'S ACTUAL CAREER BACKGROUND:
+- All 4 conditions named in every experience paragraph must be conditions specific to the CLINICAL_SPECIALTY
+- All procedures, equipment, patient population, and setting descriptions must match the CLINICAL_SPECIALTY
+- The candidate's own career history does NOT determine which clinical examples appear — the job posting's CLINICAL_SPECIALTY does
+- If the vacancy title is generic (e.g. "Healthcare Support Worker", "Band 3 Support Worker") and does not name the specialty, the CLINICAL_SPECIALTY still comes from the "Main area" / department / unit field in the job details
+- WRONG: vacancy is "Renal Dialysis Unit" but experience paragraphs describe mental health wards → immediate failure
+- RIGHT: vacancy is "Renal Dialysis Unit" → every experience paragraph describes the renal ward, haemodialysis patients, dialysis machine monitoring, AVF access, fluid balance for dialysis patients
+
 Before writing, read and extract:
 1. Job advert OVERVIEW / INTRODUCTION and "ABOUT YOU" section — the first 2–4 paragraphs of the posting BEFORE the duties list. Also look for any subsection explicitly headed "About You", "What we're looking for", or "The ideal candidate" — these carry the highest panel weight because they name exactly what the hiring manager wants. Extract the ACTUAL phrases from these sections — not generic substitutes. Phrases about the patient population, service priorities, team culture, the kind of professional they want, and why the role matters. These exact phrases MUST appear in the opening paragraph of the statement. If no explicit "About You" section exists, the overview/introduction paragraphs are the equivalent.
 2. Person specification — list EVERY essential AND desirable criterion (may be 30+ items)
