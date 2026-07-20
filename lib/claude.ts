@@ -4,6 +4,7 @@ import { getEnglandWalesPrompt } from './prompts/england-wales'
 import { getScotlandPrompt } from './prompts/scotland'
 import { getScotlandQ2Variation } from './scotland-q2-variations'
 import { fetchTrustIntel, formatTrustIntel } from './trust-intel'
+import { supabaseAdmin } from './supabase'
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!,
