@@ -64,7 +64,16 @@ export function detectRegion(url: string, rawText?: string): PromptRegion {
   return 'generic'
 }
 
-function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): string {
+async function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): Promise<string> {
+  // Check for admin-customized prompt stored in Supabase — overrides code defaults
+  if (region === 'scotland' || region === 'england-wales') {
+    try {
+      const { data } = await supabaseAdmin.from('prompts').select('content').eq('region', region).maybeSingle()
+      if (data?.content) return data.content
+    } catch {
+      // Table may not exist yet — fall through to code defaults
+    }
+  }
   if (region === 'scotland') return getScotlandPrompt(style)
   if (region === 'england-wales') return getEnglandWalesPrompt(style)
   const styleNote = style === '2'
@@ -517,7 +526,7 @@ async function generateParallel(
 }> {
   const isScotland = region === 'scotland'
   const appMode = options.applicationMode ?? 'full'
-  const systemPrompt = buildSystemPrompt(region, style)
+  const systemPrompt = await buildSystemPrompt(region, style)
 
   // Pick opening format randomly so the intro never defaults to the same structure
   const formatPool = ['A', 'B', 'C', 'D', 'E']
@@ -803,7 +812,7 @@ export async function generateStatement(
   }
 
   // Generic / civil-service: single call
-  const systemPrompt = buildSystemPrompt(region, style)
+  const systemPrompt = await buildSystemPrompt(region, style)
   const genericIntel = await fetchTrustIntel(jobData.organisation ?? '').catch(() => null)
   const genericIntelText = genericIntel ? formatTrustIntel(genericIntel) : undefined
   const userPrompt = buildUserPrompt(client, jobData, region, { ...callOptions, outputMode: 'full', trustIntelText: genericIntelText })

@@ -81,6 +81,7 @@ const TABS = [
   { label: 'Statements',     href: '/admin/statements' },
   { label: 'Quick Write',    href: '/admin/quick-write' },
   { label: 'Interview Prep', href: '/admin/interview-prep' },
+  { label: 'Prompts',        href: '/admin/prompts' },
 ]
 
 function AdminShell({
