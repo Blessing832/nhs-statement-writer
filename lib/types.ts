@@ -69,6 +69,33 @@ export interface StatementAnalysis {
   overallPct?: number
 }
 
+export interface CriterionCoverage {
+  criterion: string
+  type: 'essential' | 'desirable'
+  score: number        // 0–5 from Haiku audit
+  pass: boolean        // score >= 5
+  location: string | null
+  reason: string
+  deterministicPresent: boolean
+}
+
+export interface CoverageReport {
+  allPass: boolean
+  criteria: CriterionCoverage[]
+  patched: boolean
+  patchedStatement?: string   // set when a patch was applied — route uses this as the final statement
+  warningBanner: string[] | null
+  banned_words_found: string[]
+  missing_sections: string[]
+  verdict: string
+  tokenUsage: {
+    auditInputTokens: number
+    auditOutputTokens: number
+    patchInputTokens: number
+    patchOutputTokens: number
+  }
+}
+
 export interface GenerateResult {
   statement: string
   previousRoleDuties: string[]

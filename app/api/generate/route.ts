@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import { supabaseAdmin } from '@/lib/supabase'
 import { generateStatement, analyzeJobPosting, detectRegion } from '@/lib/claude'
-import { ScrapeResult } from '@/lib/types'
+import { ScrapeResult, CoverageReport } from '@/lib/types'
+import { runEnglandWalesPipeline } from '@/lib/statement-pipeline'
 
 export const maxDuration = 300
 
@@ -191,7 +192,34 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: message }, { status: 500 })
   }
 
-  const { statement, previousRoleDuties, analysis, promptRegion } = generated
+  let { statement, previousRoleDuties, analysis, promptRegion } = generated
+
+  // 2b. Verification pipeline — England/Wales full statements only
+  let coverageReport: CoverageReport | null = null
+  if (
+    promptRegion === 'england-wales' &&
+    applicationMode !== 'questions-only' &&
+    analysis &&
+    (analysis.essentialCriteria?.length ?? 0) > 0 &&
+    !rewriteInstruction
+  ) {
+    try {
+      const pipeline = await runEnglandWalesPipeline(statement, analysis, client)
+      coverageReport = pipeline
+      // Use the patched statement if the pipeline improved it
+      if (pipeline.patchedStatement) {
+        statement = pipeline.patchedStatement
+      }
+      const u = pipeline.tokenUsage
+      console.log(
+        `PIPELINE total tokens: audit_in=${u.auditInputTokens} audit_out=${u.auditOutputTokens}` +
+        ` patch_in=${u.patchInputTokens} patch_out=${u.patchOutputTokens}` +
+        ` patched=${pipeline.patched} all_pass=${pipeline.allPass}`
+      )
+    } catch (err) {
+      console.error('PIPELINE_ERR (non-fatal, continuing with original statement):', err)
+    }
+  }
 
   // 3. Save to DB — try with pasted_person_spec first; fall back ONLY on schema errors
   const baseRow = {
@@ -228,5 +256,6 @@ export async function POST(req: NextRequest) {
     jobTitle: (jobData as ScrapeResult).jobTitle,
     organisation: (jobData as ScrapeResult).organisation,
     source: (jobData as ScrapeResult).source,
+    coverageReport,
   })
 }

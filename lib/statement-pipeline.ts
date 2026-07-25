@@ -1,0 +1,313 @@
+import Anthropic from '@anthropic-ai/sdk'
+import fs from 'fs'
+import path from 'path'
+import { Client, StatementAnalysis, CoverageReport, CriterionCoverage } from './types'
+import { verifyCriteria } from './verify-criteria'
+
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
+
+function readPromptFile(name: string): string {
+  try {
+    return fs.readFileSync(path.join(process.cwd(), name), 'utf-8')
+  } catch {
+    throw new Error(`Missing prompt file: ${name}. Add it to the repo root.`)
+  }
+}
+
+function parseAuditJson(text: string): AuditResponse {
+  const clean = text.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim()
+  return JSON.parse(clean)
+}
+
+interface AuditCriterion {
+  id: string
+  criterion: string
+  score: number
+  location: string
+  reason: string
+  essential: boolean
+}
+
+interface AuditResponse {
+  criteria: AuditCriterion[]
+  all_pass: boolean
+  failing_ids: string[]
+  opening_ok: boolean
+  completion_ok: boolean
+  missing_sections: string[]
+  banned_words_found: string[]
+  oversized_paragraphs: string[]
+  trust_values_present: boolean
+  verdict: string
+}
+
+interface AuditResult {
+  response: AuditResponse
+  inputTokens: number
+  outputTokens: number
+}
+
+async function auditStatement(personSpec: string, statement: string): Promise<AuditResult> {
+  const systemPrompt = readPromptFile('auditor_prompt.md')
+  const userMessage = `## PERSON SPECIFICATION\n${personSpec}\n\n## STATEMENT\n${statement}`
+
+  const msg = await anthropic.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 2000,
+    system: systemPrompt,
+    messages: [{ role: 'user', content: userMessage }],
+  })
+
+  const text = msg.content[0].type === 'text' ? msg.content[0].text : ''
+  const response = parseAuditJson(text)
+
+  return {
+    response,
+    inputTokens: msg.usage.input_tokens,
+    outputTokens: msg.usage.output_tokens,
+  }
+}
+
+interface PatchResult {
+  statement: string
+  inputTokens: number
+  outputTokens: number
+}
+
+async function patchStatement(
+  statement: string,
+  failingCriteria: AuditCriterion[],
+  candidateFacts: string
+): Promise<PatchResult> {
+  const systemPrompt = readPromptFile('patch_prompt.md')
+  const userMessage = [
+    '## STATEMENT',
+    statement,
+    '',
+    '## FAILING CRITERIA',
+    JSON.stringify(failingCriteria, null, 2),
+    '',
+    '## CANDIDATE FACTS',
+    candidateFacts,
+  ].join('\n')
+
+  const msg = await anthropic.messages.create({
+    model: 'claude-sonnet-4-6',
+    max_tokens: 6000,
+    system: systemPrompt,
+    messages: [{ role: 'user', content: userMessage }],
+  })
+
+  const text = msg.content[0].type === 'text' ? msg.content[0].text.trim() : statement
+
+  return {
+    statement: text
+      .replace(/ — /g, ', ')
+      .replace(/—/g, ', ')
+      .replace(/\*\*/g, ''),
+    inputTokens: msg.usage.input_tokens,
+    outputTokens: msg.usage.output_tokens,
+  }
+}
+
+function buildPersonSpecText(analysis: StatementAnalysis): string {
+  const lines: string[] = ['ESSENTIAL:']
+  analysis.essentialCriteria.forEach((c, i) => lines.push(`E${i + 1}. ${c}`))
+  lines.push('', 'DESIRABLE:')
+  analysis.desirableCriteria.forEach((c, i) => lines.push(`D${i + 1}. ${c}`))
+  return lines.join('\n')
+}
+
+function buildCandidateFacts(client: Client): string {
+  return [
+    `Work History: ${client.work_history}`,
+    `Qualifications: ${client.qualifications}`,
+    `Skills: ${client.skills}`,
+    client.background ? `Additional Background: ${client.background}` : '',
+  ].filter(Boolean).join('\n\n')
+}
+
+function mergeCoverage(
+  auditCriteria: AuditCriterion[],
+  verifyMissingSet: Set<string>,
+  essentialCriteria: string[],
+  desirableCriteria: string[]
+): CriterionCoverage[] {
+  const essentialSet = new Set(essentialCriteria)
+  const desirableSet = new Set(desirableCriteria)
+
+  return auditCriteria.map(ac => ({
+    criterion: ac.criterion,
+    type: (essentialSet.has(ac.criterion) ? 'essential' : desirableSet.has(ac.criterion) ? 'desirable' : ac.essential ? 'essential' : 'desirable') as 'essential' | 'desirable',
+    score: ac.score,
+    pass: ac.score >= 5,
+    location: ac.location === 'MISSING' ? null : ac.location,
+    reason: ac.reason,
+    deterministicPresent: !verifyMissingSet.has(ac.criterion),
+  }))
+}
+
+export async function runEnglandWalesPipeline(
+  statement: string,
+  analysis: StatementAnalysis,
+  client: Client
+): Promise<CoverageReport> {
+  const essential = analysis.essentialCriteria ?? []
+  const desirable = analysis.desirableCriteria ?? []
+  const allCriteria = [...essential, ...desirable]
+
+  if (allCriteria.length === 0) {
+    return {
+      allPass: true,
+      criteria: [],
+      patched: false,
+      warningBanner: null,
+      banned_words_found: [],
+      missing_sections: [],
+      verdict: 'No person specification criteria found.',
+      tokenUsage: { auditInputTokens: 0, auditOutputTokens: 0, patchInputTokens: 0, patchOutputTokens: 0 },
+    }
+  }
+
+  const personSpecText = buildPersonSpecText(analysis)
+  const candidateFacts = buildCandidateFacts(client)
+
+  // ── Round 1 ──────────────────────────────────────────────────────────────
+  const verify1 = verifyCriteria(statement, allCriteria)
+  const missingSet1 = new Set(verify1.missing.map(v => v.criterion))
+
+  let audit1: AuditResult
+  try {
+    audit1 = await auditStatement(personSpecText, statement)
+  } catch (err) {
+    console.error('AUDIT_ERR round1:', err)
+    // Fall back: return deterministic-only report
+    return {
+      allPass: verify1.missing.length === 0,
+      criteria: allCriteria.map(c => ({
+        criterion: c,
+        type: essential.includes(c) ? 'essential' : 'desirable',
+        score: missingSet1.has(c) ? 0 : 3,
+        pass: !missingSet1.has(c),
+        location: null,
+        reason: missingSet1.has(c) ? 'Not found by keyword check' : 'Found by keyword check',
+        deterministicPresent: !missingSet1.has(c),
+      })),
+      patched: false,
+      warningBanner: verify1.missing.length > 0 ? verify1.missing.map(m => m.criterion) : null,
+      banned_words_found: [],
+      missing_sections: [],
+      verdict: 'Audit unavailable — keyword check used as fallback.',
+      tokenUsage: { auditInputTokens: 0, auditOutputTokens: 0, patchInputTokens: 0, patchOutputTokens: 0 },
+    }
+  }
+
+  console.log(`PIPELINE audit1 tokens: in=${audit1.inputTokens} out=${audit1.outputTokens} all_pass=${audit1.response.all_pass}`)
+
+  const needsPatch = !audit1.response.all_pass || verify1.missing.length > 0
+
+  if (!needsPatch) {
+    return {
+      allPass: true,
+      criteria: mergeCoverage(audit1.response.criteria, missingSet1, essential, desirable),
+      patched: false,
+      warningBanner: null,
+      banned_words_found: audit1.response.banned_words_found,
+      missing_sections: audit1.response.missing_sections,
+      verdict: audit1.response.verdict,
+      tokenUsage: {
+        auditInputTokens: audit1.inputTokens,
+        auditOutputTokens: audit1.outputTokens,
+        patchInputTokens: 0,
+        patchOutputTokens: 0,
+      },
+    }
+  }
+
+  // ── Patch ─────────────────────────────────────────────────────────────────
+  // Merge deterministic misses into failing list
+  const auditFailingById = new Set(audit1.response.failing_ids)
+  const deterministicMisses = audit1.response.criteria.filter(ac => missingSet1.has(ac.criterion) && !auditFailingById.has(ac.id))
+  const failingCriteria = [
+    ...audit1.response.criteria.filter(ac => auditFailingById.has(ac.id)),
+    ...deterministicMisses,
+  ]
+
+  let patchedStatement = statement
+  let patchTokens = { input: 0, output: 0 }
+
+  try {
+    const patchResult = await patchStatement(statement, failingCriteria, candidateFacts)
+    patchedStatement = patchResult.statement
+    patchTokens = { input: patchResult.inputTokens, output: patchResult.outputTokens }
+    console.log(`PIPELINE patch tokens: in=${patchTokens.input} out=${patchTokens.output}`)
+  } catch (err) {
+    console.error('PATCH_ERR:', err)
+    // Return original with warning if patch fails
+    return {
+      allPass: false,
+      criteria: mergeCoverage(audit1.response.criteria, missingSet1, essential, desirable),
+      patched: false,
+      warningBanner: failingCriteria.map(fc => fc.criterion),
+      banned_words_found: audit1.response.banned_words_found,
+      missing_sections: audit1.response.missing_sections,
+      verdict: audit1.response.verdict,
+      tokenUsage: {
+        auditInputTokens: audit1.inputTokens,
+        auditOutputTokens: audit1.outputTokens,
+        patchInputTokens: 0,
+        patchOutputTokens: 0,
+      },
+    }
+  }
+
+  // ── Round 2 audit ─────────────────────────────────────────────────────────
+  const verify2 = verifyCriteria(patchedStatement, allCriteria)
+  const missingSet2 = new Set(verify2.missing.map(v => v.criterion))
+
+  let audit2: AuditResult
+  try {
+    audit2 = await auditStatement(personSpecText, patchedStatement)
+    console.log(`PIPELINE audit2 tokens: in=${audit2.inputTokens} out=${audit2.outputTokens} all_pass=${audit2.response.all_pass}`)
+  } catch (err) {
+    console.error('AUDIT_ERR round2:', err)
+    // Return patched statement with round1 coverage data
+    return {
+      allPass: false,
+      criteria: mergeCoverage(audit1.response.criteria, missingSet2, essential, desirable),
+      patched: true,
+      warningBanner: failingCriteria.map(fc => fc.criterion),
+      banned_words_found: audit1.response.banned_words_found,
+      missing_sections: audit1.response.missing_sections,
+      verdict: audit1.response.verdict,
+      tokenUsage: {
+        auditInputTokens: audit1.inputTokens,
+        auditOutputTokens: audit1.outputTokens,
+        patchInputTokens: patchTokens.input,
+        patchOutputTokens: patchTokens.output,
+      },
+    }
+  }
+
+  const stillFailing = audit2.response.criteria.filter(ac => ac.score < 5 && ac.essential)
+  const warningBanner = (!audit2.response.all_pass && stillFailing.length > 0)
+    ? stillFailing.map(ac => `${ac.id}: ${ac.criterion} (score ${ac.score}/5 — ${ac.reason})`)
+    : null
+
+  return {
+    allPass: audit2.response.all_pass,
+    criteria: mergeCoverage(audit2.response.criteria, missingSet2, essential, desirable),
+    patched: true,
+    patchedStatement,
+    warningBanner,
+    banned_words_found: audit2.response.banned_words_found,
+    missing_sections: audit2.response.missing_sections,
+    verdict: audit2.response.verdict,
+    tokenUsage: {
+      auditInputTokens: audit1.inputTokens + audit2.inputTokens,
+      auditOutputTokens: audit1.outputTokens + audit2.outputTokens,
+      patchInputTokens: patchTokens.input,
+      patchOutputTokens: patchTokens.output,
+    },
+  }
+}

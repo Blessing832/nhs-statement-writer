@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useRef, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { StatementAnalysis } from '@/lib/types'
+import { StatementAnalysis, CoverageReport } from '@/lib/types'
 import { FileDropZone } from '@/components/FileDropZone'
 
 interface Result {
@@ -13,6 +13,7 @@ interface Result {
   organisation: string
   source?: string
   promptRegion: string
+  coverageReport?: CoverageReport | null
 }
 
 function wordCount(text: string): number {
@@ -217,6 +218,138 @@ function applyHighlights(rawLine: string, criteria: string[]): string {
   const escaped = present.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
   const regex = new RegExp(escaped.join('|'), 'gi')
   return rawLine.replace(regex, (m) => `<mark class="ps-mark">${m}</mark>`)
+}
+
+function ScorePip({ score }: { score: number }) {
+  const cfg = [
+    { label: 'Missing',    bg: 'bg-red-100',    text: 'text-red-700'    },
+    { label: 'Claimed',    bg: 'bg-orange-100', text: 'text-orange-700' },
+    { label: 'General',    bg: 'bg-amber-100',  text: 'text-amber-700'  },
+    { label: 'Evidenced',  bg: 'bg-blue-100',   text: 'text-blue-700'   },
+    { label: 'Mapped',     bg: 'bg-teal-100',   text: 'text-teal-700'   },
+    { label: 'Full',       bg: 'bg-green-100',  text: 'text-green-700'  },
+  ]
+  const c = cfg[Math.min(score, 5)]
+  return (
+    <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-xs font-bold ${c.bg} ${c.text}`}>
+      {score}/5 {c.label}
+    </span>
+  )
+}
+
+function CoverageReportPanel({ report }: { report: CoverageReport }) {
+  const [open, setOpen] = useState(false)
+  const essential = report.criteria.filter(c => c.type === 'essential')
+  const desirable = report.criteria.filter(c => c.type === 'desirable')
+  const essentialPass = essential.filter(c => c.pass).length
+  const totalPass = report.criteria.filter(c => c.pass).length
+
+  return (
+    <div className="rounded-lg border border-gray-200 overflow-hidden text-sm">
+      {/* Header */}
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer"
+      >
+        <div className="flex items-center gap-2">
+          <span className="font-semibold text-gray-800">Coverage Report</span>
+          <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${report.allPass ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+            {totalPass}/{report.criteria.length} pass
+          </span>
+          {report.patched && (
+            <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-semibold">Auto-patched</span>
+          )}
+        </div>
+        <span className="text-gray-400 text-xs">{open ? '▲ Hide' : '▼ Show'}</span>
+      </button>
+
+      {open && (
+        <div className="divide-y divide-gray-100">
+
+          {/* Warning banner */}
+          {report.warningBanner && report.warningBanner.length > 0 && (
+            <div className="px-4 py-3 bg-amber-50 border-b border-amber-200">
+              <p className="text-xs font-bold text-amber-800 mb-1.5">
+                ⚠️ Still needs manual attention after patch ({report.warningBanner.length} essential {report.warningBanner.length === 1 ? 'criterion' : 'criteria'}):
+              </p>
+              <ul className="space-y-1">
+                {report.warningBanner.map((w, i) => (
+                  <li key={i} className="text-xs text-amber-700">• {w}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Banned words */}
+          {report.banned_words_found?.length > 0 && (
+            <div className="px-4 py-2 bg-red-50">
+              <p className="text-xs font-semibold text-red-700">Banned words found: <span className="font-normal">{report.banned_words_found.join(', ')}</span></p>
+            </div>
+          )}
+
+          {/* Missing sections */}
+          {report.missing_sections?.length > 0 && (
+            <div className="px-4 py-2 bg-orange-50">
+              <p className="text-xs font-semibold text-orange-700">Missing sections: <span className="font-normal">{report.missing_sections.join(', ')}</span></p>
+            </div>
+          )}
+
+          {/* Verdict */}
+          {report.verdict && (
+            <div className="px-4 py-2 bg-gray-50">
+              <p className="text-xs text-gray-600 italic">{report.verdict}</p>
+            </div>
+          )}
+
+          {/* Essential criteria */}
+          {essential.length > 0 && (
+            <div className="px-4 py-3">
+              <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
+                Essential — {essentialPass}/{essential.length} pass
+              </p>
+              <ul className="space-y-2">
+                {essential.map((c, i) => (
+                  <li key={i} className={`rounded p-2 ${c.pass ? 'bg-green-50' : 'bg-red-50'}`}>
+                    <div className="flex items-start gap-2">
+                      <ScorePip score={c.score} />
+                      <div className="min-w-0 flex-1">
+                        <p className={`text-xs font-medium ${c.pass ? 'text-gray-700' : 'text-red-700'}`}>{c.criterion}</p>
+                        {c.reason && <p className="text-xs text-gray-400 mt-0.5 italic">{c.reason}</p>}
+                        {c.location && <p className="text-xs text-gray-400 mt-0.5">↳ "{c.location}"</p>}
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Desirable criteria */}
+          {desirable.length > 0 && (
+            <div className="px-4 py-3">
+              <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
+                Desirable — {desirable.filter(c => c.pass).length}/{desirable.length} pass
+              </p>
+              <ul className="space-y-2">
+                {desirable.map((c, i) => (
+                  <li key={i} className={`rounded p-2 ${c.pass ? 'bg-green-50' : 'bg-gray-50'}`}>
+                    <div className="flex items-start gap-2">
+                      <ScorePip score={c.score} />
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs text-gray-600">{c.criterion}</p>
+                        {c.location && <p className="text-xs text-gray-400 mt-0.5">↳ "{c.location}"</p>}
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+        </div>
+      )}
+    </div>
+  )
 }
 
 function AnalysisPanel({ analysis, region, statement, onFixGaps }: { analysis: StatementAnalysis | null; region: string; statement: string; onFixGaps?: (instruction: string) => void }) {
@@ -918,6 +1051,11 @@ function GeneratePage() {
                 <h3 className="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide pb-2 border-b border-gray-100">
                   {result.promptRegion === 'scotland' ? 'Person Specification' : 'Pre-Writing Analysis'}
                 </h3>
+                {result.coverageReport && (
+                  <div className="mb-5">
+                    <CoverageReportPanel report={result.coverageReport} />
+                  </div>
+                )}
                 <AnalysisPanel
                   analysis={result.analysis}
                   region={result.promptRegion}
