@@ -25,7 +25,7 @@ interface AuditCriterion {
   score: number
   location: string
   reason: string
-  essential: boolean
+  essential?: boolean
 }
 
 interface AuditResponse {
@@ -37,7 +37,8 @@ interface AuditResponse {
   missing_sections: string[]
   banned_words_found: string[]
   oversized_paragraphs: string[]
-  trust_values_present: boolean
+  trust_values_present?: boolean
+  board_values_present?: boolean
   verdict: string
 }
 
@@ -47,8 +48,12 @@ interface AuditResult {
   outputTokens: number
 }
 
-async function auditStatement(personSpec: string, statement: string): Promise<AuditResult> {
-  const systemPrompt = readPromptFile('auditor_prompt.md')
+async function auditStatement(
+  personSpec: string,
+  statement: string,
+  auditorPromptFile: string
+): Promise<AuditResult> {
+  const systemPrompt = readPromptFile(auditorPromptFile)
   const userMessage = `## PERSON SPECIFICATION\n${personSpec}\n\n## STATEMENT\n${statement}`
 
   const msg = await anthropic.messages.create({
@@ -77,9 +82,10 @@ interface PatchResult {
 async function patchStatement(
   statement: string,
   failingCriteria: AuditCriterion[],
-  candidateFacts: string
+  candidateFacts: string,
+  patchPromptFile: string
 ): Promise<PatchResult> {
-  const systemPrompt = readPromptFile('patch_prompt.md')
+  const systemPrompt = readPromptFile(patchPromptFile)
   const userMessage = [
     '## STATEMENT',
     statement,
@@ -130,12 +136,9 @@ function buildCandidateFacts(client: Client): string {
 function mergeCoverage(
   auditCriteria: AuditCriterion[],
   verifyMissingSet: Set<string>,
-  essentialCriteria: string[],
-  desirableCriteria: string[]
+  essentialSet: Set<string>,
+  desirableSet: Set<string>
 ): CriterionCoverage[] {
-  const essentialSet = new Set(essentialCriteria)
-  const desirableSet = new Set(desirableCriteria)
-
   return auditCriteria.map(ac => ({
     criterion: ac.criterion,
     type: (essentialSet.has(ac.criterion) ? 'essential' : desirableSet.has(ac.criterion) ? 'desirable' : ac.essential ? 'essential' : 'desirable') as 'essential' | 'desirable',
@@ -147,14 +150,23 @@ function mergeCoverage(
   }))
 }
 
-export async function runEnglandWalesPipeline(
+interface PipelineConfig {
+  auditorPromptFile: string
+  patchPromptFile: string
+  label: string
+}
+
+async function runPipeline(
   statement: string,
   analysis: StatementAnalysis,
-  client: Client
+  client: Client,
+  config: PipelineConfig
 ): Promise<CoverageReport> {
   const essential = analysis.essentialCriteria ?? []
   const desirable = analysis.desirableCriteria ?? []
   const allCriteria = [...essential, ...desirable]
+  const essentialSet = new Set(essential)
+  const desirableSet = new Set(desirable)
 
   if (allCriteria.length === 0) {
     return {
@@ -178,15 +190,14 @@ export async function runEnglandWalesPipeline(
 
   let audit1: AuditResult
   try {
-    audit1 = await auditStatement(personSpecText, statement)
+    audit1 = await auditStatement(personSpecText, statement, config.auditorPromptFile)
   } catch (err) {
-    console.error('AUDIT_ERR round1:', err)
-    // Fall back: return deterministic-only report
+    console.error(`${config.label} AUDIT_ERR round1:`, err)
     return {
       allPass: verify1.missing.length === 0,
       criteria: allCriteria.map(c => ({
         criterion: c,
-        type: essential.includes(c) ? 'essential' : 'desirable',
+        type: essentialSet.has(c) ? 'essential' : 'desirable',
         score: missingSet1.has(c) ? 0 : 3,
         pass: !missingSet1.has(c),
         location: null,
@@ -202,14 +213,14 @@ export async function runEnglandWalesPipeline(
     }
   }
 
-  console.log(`PIPELINE audit1 tokens: in=${audit1.inputTokens} out=${audit1.outputTokens} all_pass=${audit1.response.all_pass}`)
+  console.log(`${config.label} audit1 tokens: in=${audit1.inputTokens} out=${audit1.outputTokens} all_pass=${audit1.response.all_pass}`)
 
   const needsPatch = !audit1.response.all_pass || verify1.missing.length > 0
 
   if (!needsPatch) {
     return {
       allPass: true,
-      criteria: mergeCoverage(audit1.response.criteria, missingSet1, essential, desirable),
+      criteria: mergeCoverage(audit1.response.criteria, missingSet1, essentialSet, desirableSet),
       patched: false,
       warningBanner: null,
       banned_words_found: audit1.response.banned_words_found,
@@ -225,7 +236,6 @@ export async function runEnglandWalesPipeline(
   }
 
   // ── Patch ─────────────────────────────────────────────────────────────────
-  // Merge deterministic misses into failing list
   const auditFailingById = new Set(audit1.response.failing_ids)
   const deterministicMisses = audit1.response.criteria.filter(ac => missingSet1.has(ac.criterion) && !auditFailingById.has(ac.id))
   const failingCriteria = [
@@ -237,16 +247,15 @@ export async function runEnglandWalesPipeline(
   let patchTokens = { input: 0, output: 0 }
 
   try {
-    const patchResult = await patchStatement(statement, failingCriteria, candidateFacts)
+    const patchResult = await patchStatement(statement, failingCriteria, candidateFacts, config.patchPromptFile)
     patchedStatement = patchResult.statement
     patchTokens = { input: patchResult.inputTokens, output: patchResult.outputTokens }
-    console.log(`PIPELINE patch tokens: in=${patchTokens.input} out=${patchTokens.output}`)
+    console.log(`${config.label} patch tokens: in=${patchTokens.input} out=${patchTokens.output}`)
   } catch (err) {
-    console.error('PATCH_ERR:', err)
-    // Return original with warning if patch fails
+    console.error(`${config.label} PATCH_ERR:`, err)
     return {
       allPass: false,
-      criteria: mergeCoverage(audit1.response.criteria, missingSet1, essential, desirable),
+      criteria: mergeCoverage(audit1.response.criteria, missingSet1, essentialSet, desirableSet),
       patched: false,
       warningBanner: failingCriteria.map(fc => fc.criterion),
       banned_words_found: audit1.response.banned_words_found,
@@ -267,14 +276,13 @@ export async function runEnglandWalesPipeline(
 
   let audit2: AuditResult
   try {
-    audit2 = await auditStatement(personSpecText, patchedStatement)
-    console.log(`PIPELINE audit2 tokens: in=${audit2.inputTokens} out=${audit2.outputTokens} all_pass=${audit2.response.all_pass}`)
+    audit2 = await auditStatement(personSpecText, patchedStatement, config.auditorPromptFile)
+    console.log(`${config.label} audit2 tokens: in=${audit2.inputTokens} out=${audit2.outputTokens} all_pass=${audit2.response.all_pass}`)
   } catch (err) {
-    console.error('AUDIT_ERR round2:', err)
-    // Return patched statement with round1 coverage data
+    console.error(`${config.label} AUDIT_ERR round2:`, err)
     return {
       allPass: false,
-      criteria: mergeCoverage(audit1.response.criteria, missingSet2, essential, desirable),
+      criteria: mergeCoverage(audit1.response.criteria, missingSet2, essentialSet, desirableSet),
       patched: true,
       warningBanner: failingCriteria.map(fc => fc.criterion),
       banned_words_found: audit1.response.banned_words_found,
@@ -289,14 +297,14 @@ export async function runEnglandWalesPipeline(
     }
   }
 
-  const stillFailing = audit2.response.criteria.filter(ac => ac.score < 5 && ac.essential)
+  const stillFailing = audit2.response.criteria.filter(ac => ac.score < 5 && essentialSet.has(ac.criterion))
   const warningBanner = (!audit2.response.all_pass && stillFailing.length > 0)
     ? stillFailing.map(ac => `${ac.id}: ${ac.criterion} (score ${ac.score}/5 — ${ac.reason})`)
     : null
 
   return {
     allPass: audit2.response.all_pass,
-    criteria: mergeCoverage(audit2.response.criteria, missingSet2, essential, desirable),
+    criteria: mergeCoverage(audit2.response.criteria, missingSet2, essentialSet, desirableSet),
     patched: true,
     patchedStatement,
     warningBanner,
@@ -310,4 +318,28 @@ export async function runEnglandWalesPipeline(
       patchOutputTokens: patchTokens.output,
     },
   }
+}
+
+export async function runEnglandWalesPipeline(
+  statement: string,
+  analysis: StatementAnalysis,
+  client: Client
+): Promise<CoverageReport> {
+  return runPipeline(statement, analysis, client, {
+    auditorPromptFile: 'auditor_prompt.md',
+    patchPromptFile: 'patch_prompt.md',
+    label: 'PIPELINE[EW]',
+  })
+}
+
+export async function runScotlandPipeline(
+  statement: string,
+  analysis: StatementAnalysis,
+  client: Client
+): Promise<CoverageReport> {
+  return runPipeline(statement, analysis, client, {
+    auditorPromptFile: 'auditor_prompt_scotland.md',
+    patchPromptFile: 'patch_prompt_scotland.md',
+    label: 'PIPELINE[SCO]',
+  })
 }
