@@ -597,9 +597,9 @@ async function generateParallel(
     const effectiveCount = Math.max(questionCount, 2)
     statementMaxTokens = Math.min(8000, statementBase + effectiveCount * tokensPerQuestion)
   } else if (isScotland) {
-    statementMaxTokens = 2200
+    statementMaxTokens = 4000
   } else {
-    statementMaxTokens = 2600
+    statementMaxTokens = 6000
   }
 
   const [statementResult, analysisResult] = await Promise.allSettled([
