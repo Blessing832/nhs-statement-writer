@@ -623,7 +623,9 @@ async function generateParallel(
   if (statementResult.status === 'rejected') throw statementResult.reason
   const statementMsg = statementResult.value
   const stopReason = statementMsg.stop_reason
+  const rawTail = (statementMsg.content[0]?.type === 'text' ? statementMsg.content[0].text : '').slice(-200).replace(/\n/g, '\\n')
   console.log(`GEN stop_reason=${stopReason} output_tokens=${statementMsg.usage.output_tokens}/${statementMaxTokens} region=${region} mode=${appMode}`)
+  console.log(`GEN tail200: "${rawTail}"`)
   if (stopReason === 'max_tokens') {
     console.warn(`GEN TRUNCATED: hit max_tokens ceiling of ${statementMaxTokens} — statement will be incomplete`)
   }
