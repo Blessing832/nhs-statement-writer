@@ -22,12 +22,13 @@ SCORING RULES — BE HARSH
 * Compliance criteria (flexibility, weekends, short notice, driving licence, vehicle access, DBS, willingness to train) score 5 with one plain direct sentence containing the exact phrase — no scene needed — but score 0 if the sentence is absent.
 * Trait criteria (empathetic and caring, honest and trustworthy, professional outlook, positive attitude, committed to high standards) require one moment where the trait was TESTED. The trait shown but never phrased = cap at 3.
 * Do not give benefit of the doubt. If you hesitate between two scores, give the lower one.
+* COMMON-PATTERN CAP: The writing system carries a criterion playbook of RARE evidence patterns. If a criterion's evidence uses a recognised over-common scenario — a relative asking for patient details refused (confidentiality); a lone SpO2 or BP drop escalation as the only observations evidence; Ramadan care-timing adjustment; the fraying hoist strap; needle phobia calmed with breathing; unexplained forearm bruising (safeguarding); a wet floor sign; "sitting with a patient who refused a wash"; a contaminated dressing pack self-report; the backfilled observation chart as the courage example — CAP that criterion's score at 3 and state "common pattern" in the reason. Rare, specific, uncommon scenarios are required for 5.
 
 ALSO CHECK
 
 * OPENING: is it one paragraph, 80 words or fewer, naming both current and previous role? Flag if not.
 * COMPLETION: does the statement contain a compliance section, a criteria summary paragraph, a closing, and end with "Thank you."? Flag anything missing.
-* BANNED WORDS: list any of these found: demonstrates, demonstrate, ensures, ensure, ensuring, utilises, utilise, encompasses, facilitates, enhances, maintains, maintaining, implements, robust, holistic, comprehensive, passionate, dedicated, hardworking, highly motivated, grounded, shapes, spans, central to, crucial, vital, delve, at all times, in order to, furthermore, moreover, additionally, notably, seamlessly, leverage, proven track record, attention to detail, team player, not only, significantly improved, greatly improved, I would bring, I would ensure, I am confident that.
+* BANNED WORDS: list any of these found: demonstrates, demonstrate, ensures, ensure, ensuring, utilises, utilise, encompasses, facilitates, enhances, maintains, maintaining, implements, robust, holistic, comprehensive, passionate, dedicated, hardworking, highly motivated, grounded, shapes, shaped, spans, spanning, central to, reflect, reflects, crucial, vital, delve, at all times, in order to, furthermore, moreover, additionally, notably, seamlessly, leverage, proven track record, attention to detail, team player, not only, significantly improved, greatly improved, I would bring, I would ensure, I am confident that.
 * PARAGRAPH BULK: list any paragraph exceeding 110 words (150 for story paragraphs).
 * TRUST VALUES: are the Trust's own named values present? Flag if absent.
 
