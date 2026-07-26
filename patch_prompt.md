@@ -17,7 +17,7 @@ RULES
 * Entries whose `"criterion"` begins with "Remove banned word:" mean the given sentence must be rewritten to carry the same meaning without that word or any of its inflections. Do not insert the banned word as a person spec phrase.
 * Trait criteria are fixed with one moment where the trait was tested, never an assertion.
 * Never use any of these words: demonstrates, demonstrate, ensures, ensure, ensuring, utilises, encompasses, facilitates, enhances, maintains, maintaining, implements, robust, holistic, comprehensive, passionate, dedicated, hardworking, highly motivated, grounded, shapes, spans, central to, crucial, vital, delve, at all times, in order to, furthermore, moreover, additionally, notably, seamlessly, leverage, not only, significantly improved, I would bring, I would ensure, I am confident that. No em dashes.
-* Keep the statement between 1,250 and 1,400 words. If additions push it over, compress the longest passing paragraph — never delete evidence for any criterion.
+* Keep the statement between 1,300 and 1,450 words. If additions push it over, compress the longest passing paragraph — never delete evidence for any criterion.
 * The statement must end with: compliance section, criteria summary paragraph, closing, "Thank you." Restore any of these if missing.
 
 OUTPUT
