@@ -622,6 +622,11 @@ async function generateParallel(
   // Statement is critical — rethrow if it failed
   if (statementResult.status === 'rejected') throw statementResult.reason
   const statementMsg = statementResult.value
+  const stopReason = statementMsg.stop_reason
+  console.log(`GEN stop_reason=${stopReason} output_tokens=${statementMsg.usage.output_tokens}/${statementMaxTokens} region=${region} mode=${appMode}`)
+  if (stopReason === 'max_tokens') {
+    console.warn(`GEN TRUNCATED: hit max_tokens ceiling of ${statementMaxTokens} — statement will be incomplete`)
+  }
 
   // Statement: plain text, use directly
   const statementContent = statementMsg.content[0]
@@ -672,6 +677,10 @@ async function generateParallel(
         }
         break
       }
+    }
+    // Remove trailing orphan headings (heading kept but its content paragraph didn't fit)
+    while (kept.length > 0 && /^\*\*[^*]+\*\*$/.test(kept[kept.length - 1].trim())) {
+      kept.pop()
     }
     let truncated = kept.join('\n\n')
     if (!truncated.trimEnd().endsWith(CLOSING)) truncated += '\n\n' + CLOSING
