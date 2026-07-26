@@ -3,6 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import { Client, StatementAnalysis, CoverageReport, CriterionCoverage } from './types'
 import { verifyCriteria } from './verify-criteria'
+import { scanBanned, BannedWordHit } from './bannedWords'
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
 
@@ -150,6 +151,16 @@ function mergeCoverage(
   }))
 }
 
+function bannedHitsToAuditEntries(hits: BannedWordHit[]): AuditCriterion[] {
+  return hits.map((hit, i) => ({
+    id: `BW${i + 1}`,
+    criterion: `Remove banned word: "${hit.word}" — rewrite the sentence without it or any of its inflections`,
+    score: 0,
+    location: `Sentence: "${hit.sentence.slice(0, 100)}${hit.sentence.length > 100 ? '…' : ''}"`,
+    reason: `Banned word "${hit.found}" found. Rewrite without changing the surrounding meaning.`,
+  }))
+}
+
 interface PipelineConfig {
   auditorPromptFile: string
   patchPromptFile: string
@@ -184,9 +195,13 @@ async function runPipeline(
   const personSpecText = buildPersonSpecText(analysis)
   const candidateFacts = buildCandidateFacts(client)
 
-  // ── Round 1 ──────────────────────────────────────────────────────────────
+  // ── Round 1: deterministic scans ─────────────────────────────────────────
   const verify1 = verifyCriteria(statement, allCriteria)
   const missingSet1 = new Set(verify1.missing.map(v => v.criterion))
+  const bannedHits1 = scanBanned(statement)
+  if (bannedHits1.length > 0) {
+    console.log(`${config.label} banned scan: ${bannedHits1.map(h => `"${h.found}"`).join(', ')}`)
+  }
 
   let audit1: AuditResult
   try {
@@ -194,7 +209,7 @@ async function runPipeline(
   } catch (err) {
     console.error(`${config.label} AUDIT_ERR round1:`, err)
     return {
-      allPass: verify1.missing.length === 0,
+      allPass: verify1.missing.length === 0 && bannedHits1.length === 0,
       criteria: allCriteria.map(c => ({
         criterion: c,
         type: essentialSet.has(c) ? 'essential' : 'desirable',
@@ -206,7 +221,7 @@ async function runPipeline(
       })),
       patched: false,
       warningBanner: verify1.missing.length > 0 ? verify1.missing.map(m => m.criterion) : null,
-      banned_words_found: [],
+      banned_words_found: bannedHits1.map(h => h.found),
       missing_sections: [],
       verdict: 'Audit unavailable — keyword check used as fallback.',
       tokenUsage: { auditInputTokens: 0, auditOutputTokens: 0, patchInputTokens: 0, patchOutputTokens: 0 },
@@ -215,7 +230,7 @@ async function runPipeline(
 
   console.log(`${config.label} audit1 tokens: in=${audit1.inputTokens} out=${audit1.outputTokens} all_pass=${audit1.response.all_pass}`)
 
-  const needsPatch = !audit1.response.all_pass || verify1.missing.length > 0
+  const needsPatch = !audit1.response.all_pass || verify1.missing.length > 0 || bannedHits1.length > 0
 
   if (!needsPatch) {
     return {
@@ -238,7 +253,9 @@ async function runPipeline(
   // ── Patch ─────────────────────────────────────────────────────────────────
   const auditFailingById = new Set(audit1.response.failing_ids)
   const deterministicMisses = audit1.response.criteria.filter(ac => missingSet1.has(ac.criterion) && !auditFailingById.has(ac.id))
+  // Banned word hits are prepended so the patcher sees them prominently
   const failingCriteria = [
+    ...bannedHitsToAuditEntries(bannedHits1),
     ...audit1.response.criteria.filter(ac => auditFailingById.has(ac.id)),
     ...deterministicMisses,
   ]
@@ -251,6 +268,11 @@ async function runPipeline(
     patchedStatement = patchResult.statement
     patchTokens = { input: patchResult.inputTokens, output: patchResult.outputTokens }
     console.log(`${config.label} patch tokens: in=${patchTokens.input} out=${patchTokens.output}`)
+    // Post-patch banned-word scan — patcher must not introduce new banned words
+    const postPatchBanned = scanBanned(patchedStatement)
+    if (postPatchBanned.length > 0) {
+      console.warn(`${config.label} post-patch banned words still present: ${postPatchBanned.map(h => `"${h.found}"`).join(', ')}`)
+    }
   } catch (err) {
     console.error(`${config.label} PATCH_ERR:`, err)
     return {
@@ -270,7 +292,8 @@ async function runPipeline(
     }
   }
 
-  // ── Round 2 audit ─────────────────────────────────────────────────────────
+  // ── Round 2: deterministic scans + audit ─────────────────────────────────
+  const bannedHits2 = scanBanned(patchedStatement)
   const verify2 = verifyCriteria(patchedStatement, allCriteria)
   const missingSet2 = new Set(verify2.missing.map(v => v.criterion))
 
@@ -302,13 +325,18 @@ async function runPipeline(
     ? stillFailing.map(ac => `${ac.id}: ${ac.criterion} (score ${ac.score}/5 — ${ac.reason})`)
     : null
 
+  // Merge LLM-detected and deterministic post-patch banned words, deduplicated
+  const finalBannedWords = [
+    ...new Set([...audit2.response.banned_words_found, ...bannedHits2.map(h => h.found)]),
+  ]
+
   return {
-    allPass: audit2.response.all_pass,
+    allPass: audit2.response.all_pass && bannedHits2.length === 0,
     criteria: mergeCoverage(audit2.response.criteria, missingSet2, essentialSet, desirableSet),
     patched: true,
     patchedStatement,
     warningBanner,
-    banned_words_found: audit2.response.banned_words_found,
+    banned_words_found: finalBannedWords,
     missing_sections: audit2.response.missing_sections,
     verdict: audit2.response.verdict,
     tokenUsage: {
