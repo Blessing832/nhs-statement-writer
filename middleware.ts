@@ -7,10 +7,12 @@ export function middleware(request: NextRequest) {
   const host = request.headers.get('host') ?? ''
   const domain = (forwarded || host).split(':')[0].toLowerCase()
 
+  // app.easeme.live → marketing landing page
   if (domain === 'app.easeme.live') {
     return NextResponse.rewrite(new URL('/landing', request.url))
   }
 
+  // easeme.live → statement writer (pass through unchanged)
   return NextResponse.next()
 }
 
