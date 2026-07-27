@@ -1,8 +1,8 @@
 'use client'
 import { motion } from 'framer-motion'
 
-function Section({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return <section className={`px-6 ${className}`}>{children}</section>
+function Section({ children, className = '', style }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
+  return <section className={`px-6 ${className}`} style={style}>{children}</section>
 }
 
 function ServiceCard({ icon, title, desc }: { icon: string; title: string; desc: string }) {
