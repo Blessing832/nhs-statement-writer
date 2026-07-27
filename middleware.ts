@@ -1,10 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-// Hostname routing is handled in next.config.ts rewrites
-export function middleware(_request: NextRequest) {
+export function middleware(request: NextRequest) {
+  // Railway forwards the original hostname via x-forwarded-host;
+  // fall back to host header for local dev
+  const forwarded = request.headers.get('x-forwarded-host') ?? ''
+  const host = request.headers.get('host') ?? ''
+  const domain = (forwarded || host).split(':')[0].toLowerCase()
+
+  if (domain === 'app.easeme.live') {
+    return NextResponse.rewrite(new URL('/landing', request.url))
+  }
+
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: [],
+  matcher: ['/((?!_next/static|_next/image|favicon\\.ico).*)'],
 }
