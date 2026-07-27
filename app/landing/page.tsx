@@ -1,4 +1,5 @@
 'use client'
+import React from 'react'
 import { motion } from 'framer-motion'
 
 function Section({ children, className = '', style }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
@@ -90,8 +91,8 @@ export default function LandingPage() {
             href="mailto:hello@easeme.live"
             className="inline-block px-8 py-4 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all text-base"
             style={{ backgroundColor: '#005eb8' }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#003087' }}
-            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#005eb8' }}
+            onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => { e.currentTarget.style.backgroundColor = '#003087' }}
+            onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => { e.currentTarget.style.backgroundColor = '#005eb8' }}
           >
             Get started today
           </a>
@@ -210,8 +211,8 @@ export default function LandingPage() {
             href="mailto:hello@easeme.live"
             className="inline-block px-8 py-4 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all text-base"
             style={{ backgroundColor: '#005eb8' }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#003087' }}
-            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#005eb8' }}
+            onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => { e.currentTarget.style.backgroundColor = '#003087' }}
+            onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => { e.currentTarget.style.backgroundColor = '#005eb8' }}
           >
             Email us: hello@easeme.live
           </a>
