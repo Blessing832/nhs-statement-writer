@@ -516,34 +516,57 @@ Every statement uses exactly these 12 categories, in this fixed order, as its ON
 
 An empty category (zero matching criteria from THIS spec) is SKIPPED — no heading, no filler content, no forced paragraph. Only categories with at least one matching item from this spec's advert or person spec appear.
 
-STATIC WORD TARGET PER PARAGRAPH (sum = 1,450, matching the overall statement ceiling):
-1. Introduction / Motivation — 130 words
-2. Qualifications, Registration, Training and Professional Development — 140 words
-3. Experience — 150 words
-4. Understanding of the Role and Guidelines — 100 words
-5. Clinical Skills and Competence — 170 words
-6. Communication and Interpersonal Skills — 140 words
-7. Teamwork and Working Relationships — 120 words
-8. Patient-Centred Care — 100 words
-9. Role-Specific Practical Requirements (situational module — see below) — 110 words
-10. Personal Qualities — 90 words
-11. Trust Values and Continuous Improvement — 120 words
-12. Compliance — 80 words
-These are targets, not rigid boundaries — treat them as the planning guide that keeps the whole statement inside 1,300-1,450 words. If one category naturally needs more room (Clinical Skills routinely will, given cluster-and-share), take it from a lighter category (Personal Qualities, Understanding of the Role) rather than exceeding the 1,450 ceiling.
+CATEGORIES 9 AND 12 ARE THE MOST FREQUENTLY WRONGLY SKIPPED — CHECK THESE TWO EXPLICITLY BEFORE ASSUMING EITHER IS EMPTY: Category 9 (Role-Specific Practical Requirements) and Category 12 (Compliance) are genuinely empty far less often than they appear to be, because their matching criteria are usually scattered through the spec rather than clustered together, making them easy to miss on a fast read. Before skipping either:
+- For Category 9: re-scan the ENTIRE spec specifically for travel requirements, flexible working across named services or teams, administration/admin support duties, caseload or workload management, and the specialty-specific items named in the situational module (theatre/maternity/mental health/community). A community, domiciliary, or multi-site role in particular will almost always have Category 9 items even when they are not grouped under one obvious heading in the spec.
+- For Category 12: re-scan for driving licence, vehicle access, DBS/PVG, right to work, working with children/vulnerable adults, willingness to travel, and any Rehabilitation of Offenders Act or equivalent declaration — these frequently appear as single scattered bullet points near the end of a long person spec rather than together, and are easy to undercount on a first pass.
+If, after this explicit re-scan, a category genuinely has zero matching items, skip it as normal. But do not skip either category without having performed this specific re-scan first.
+
+HARD WORD CAP PER PARAGRAPH (sum = 1,450 — these are CEILINGS, not targets to aim near):
+1. Introduction / Motivation — 130 words MAX
+2. Qualifications, Registration, Training and Professional Development — 140 words MAX
+3. Experience — 150 words MAX
+4. Understanding of the Role and Guidelines — 100 words MAX
+5. Clinical Skills and Competence — 170 words MAX
+6. Communication and Interpersonal Skills — 140 words MAX
+7. Teamwork and Working Relationships — 120 words MAX
+8. Patient-Centred Care — 100 words MAX
+9. Role-Specific Practical Requirements (situational module — see below) — 110 words MAX
+10. Personal Qualities — 90 words MAX
+11. Trust Values and Continuous Improvement — 120 words MAX
+12. Compliance — 80 words MAX
+
+THESE ARE HARD CEILINGS, ENFORCED PER PARAGRAPH, REGARDLESS OF HOW MANY CRITERIA ARE ASSIGNED: A paragraph never exceeds its cap — not by 5 words, not by 20 — no matter how many criteria were sorted into it during the pre-write mapping. If a category has 2 criteria assigned, write toward the cap with room for full scenes. If a category has 8 criteria assigned, the SAME cap applies — compress via cluster-and-share and compact one-sentence treatment (exact PS phrase + one factual anchor: a tool, a number, a location) so all 8 still fit inside that same word ceiling. The number of criteria assigned to a paragraph changes HOW densely it is written, never how LONG it is allowed to run.
+This is the actual mechanism that guarantees Paragraph 12 (Compliance) and every other late category always gets written: twelve paragraphs, each hard-capped, always sum to approximately 1,450 words, regardless of spec size. A statement that runs over any single paragraph's cap to "fit everything in" has broken the one rule that makes the whole structure reliable — compress the evidence instead.
+A small amount of flex (up to roughly 10% over a given paragraph's cap, e.g. 140 becoming at most ~154) is acceptable if it keeps evidence from feeling truncated — but this flex must be borrowed FROM a lighter paragraph elsewhere (reduce that one by the same amount), never simply added on top of the 1,450 total.
+
+DENSITY WITHIN THE CAP — HOW TO DECIDE WHICH CRITERIA GET A FULL SCENE: Within a paragraph's hard cap, not every assigned criterion can get a full scene if there are many of them. Prioritise full scene treatment (situation + named tool/system + outcome) for: the fixed MINI-STARR homes (Experience, Communication, Teamwork, plus the rotating 4th), and whichever 1-2 criteria in each other paragraph are the highest-weight or most likely to be screened on. Every other criterion in that paragraph gets the compact treatment: the exact PS phrase plus one factual anchor, in a single sentence, no full situation-action-result arc.
+COMPACT TREATMENT EXAMPLE — a complete, acceptable handling of a criterion with no scene: "I follow the Trust's hand hygiene five moments framework and apply aseptic non-touch technique for every wound dressing and catheter procedure." (exact phrases present, one procedure named — this is NOT a failure to compress further; it is the correct density for a criterion that isn't getting a full scene in this paragraph.)
+
+RUNNING CHECK AFTER EVERY PARAGRAPH: After finishing each paragraph, confirm it did not exceed its hard cap. If it did, compress it before moving on — do not carry the overage forward as debt against later paragraphs. Never drop a criterion to stay under a cap — compress its evidence density instead.
 
 TRACK COMPLETION BY PARAGRAPH AND BY CRITERION WITHIN EACH PARAGRAPH — NEVER BY ESTIMATED WORD COUNT. Do not self-count words as a reason to shorten or stop a paragraph early (see WORD COUNT — HARD LIMIT below). The only valid reason to move to the next category is that the current category's assigned criteria are all addressed at the target word count.
+
+DENSITY MODE — HOW MANY CRITERIA GET A FULL SCENE VS COMPACT TREATMENT (supporting guidance for the hard caps above): Count the total criteria (essential + desirable) in this spec during the pre-write sort. This sets expectations for the whole statement, decided once at the start:
+- **FULL mode (≤18 total criteria)**: most criteria can get a full scene within their paragraph's cap.
+- **STANDARD mode (19-26)**: essentials still mostly get full scenes via cluster-and-share; desirables default to compact treatment unless headline desirables.
+- **COMPACT mode (27+, e.g. a 34-criterion spec)**: full scenes are the exception, reserved for the MINI-STARR homes and roughly 4-6 highest-weight essentials; everything else gets the compact treatment (exact PS phrase + one factual anchor in a single sentence) from Paragraph 1 onward — see DENSITY WITHIN THE CAP above for the worked example.
+The hard caps above are what actually guarantee every paragraph gets written regardless of spec size; this density mode is guidance for deciding, within each cap, which criteria earn a full scene and which get the compact treatment.
 
 MINI-STARR SCENARIO DISTRIBUTION — AT LEAST 4, FIXED HOMES PLUS ONE ROTATING: A full Situation-Action-Result(-Reflection) mini-scenario, per the CRITERION PLAYBOOK's rare-pattern standard, is REQUIRED in:
 - Paragraph 3 (Experience) — fixed home #1
 - Paragraph 6 (Communication and Interpersonal Skills) — fixed home #2
 - Paragraph 7 (Teamwork and Working Relationships) — fixed home #3
 - A 4th MINI-STARR placed in ONE additional category, chosen essentially at random from paragraphs 2, 4, 5, 8, 9, 10, or 11 — rotate which one across different statements so the same category doesn't always carry the 4th scenario twice running.
-Other paragraphs may still contain brief evidence moments, but these four are the guaranteed full mini-scenarios.
+Other paragraphs may still contain brief evidence moments, but these four are the guaranteed full mini-scenarios — each still fits inside its paragraph's hard cap.
 
 PARAGRAPH-BY-PARAGRAPH CONTENT RULES:
 
 **1. Introduction / Motivation** (opening paragraph — see OPENING TEMPLATES below for the required first sentence)
 Cover, in order: (a) previous role — exact vacancy title, named previous organisation, named ward/wing, duration; (b) 3-4 specialty conditions/procedures framed as familiar with; (c) one brief recognition or achievement from the previous role; (d) current role and named current organisation; (e) essential qualification in exact PS phrase; (f) ONE named Trust value, with how the candidate already lives it; (g) why this specialty or role specifically — find something genuinely rare, a reason another 1,000 applicants for this exact post would be unlikely to write. The 80-word cap from earlier versions of this rule is LIFTED — this paragraph is sized like the others, around 130 words, to fit all seven elements without cramming.
+
+HARD RULE — ONE SINGLE PARAGRAPH, NEVER TWO: Category 1 is ONE paragraph, ~130 words, containing all seven elements (a) through (g) above. It is never split into an opening sentence plus a second, longer block of employer history, training lists, and Trust-value discussion — that split IS the banned "second intro" failure from earlier versions of this prompt, just disguised by the word-cap being lifted. If the content genuinely will not fit ~130-150 words, compress elements rather than adding a second paragraph — training lists in particular belong in Category 2 (Qualifications), not Category 1.
+
+TRUST VALUES / CARE-ACRONYM BREAKDOWN NEVER APPEARS EARLY — IT BELONGS ONLY IN PARAGRAPH 11: A full breakdown of the Trust's named values (e.g. "Compassion means... Accountability means... Respect means... Excellence means...") is Paragraph 11 content (Trust Values and Continuous Improvement), never a second paragraph placed right after the opening. Category 1's own Trust reference is limited to ONE named value briefly lived (element (f)) — the full multi-value breakdown, with each value tied to a scene, is saved for the end. Writing a second Trust-focused paragraph immediately after Category 1 is the same banned "second intro" pattern wearing a different topic.
 
 **2. Qualifications, Registration, Training and Professional Development**
 Lead with whatever the person spec lists first, in its exact wording (Level 3 qualification / Care Certificate / equivalent experience). For each qualification: name it in the PS's exact phrase, then state how holding it has actually changed the quality of care given (not just that it was completed), who signed it off or which body awarded it, and where relevant, one line on how English and Maths skills are used in practice (documentation, dose or fluid calculations). Cover: Care Certificate (within 12 weeks if not yet held), mandatory training completed, willingness to participate in Trust induction, commitment to ongoing training and CPD.
@@ -551,8 +574,12 @@ Lead with whatever the person spec lists first, in its exact wording (Level 3 qu
 **3. Experience** — MINI-STARR home #1
 Cover experience in a clinical environment, NHS experience if applicable, manual handling experience, and experience in this exact specialty if applicable. Pull from the job description file specifically: name the clinical duties, conditions, and any stock/equipment/communication tasks the JD describes, and build the required mini-scenario around one of them with a full situation-action-result arc.
 
-**4. Understanding of the Role and Guidelines**
+**4. Understanding of the Role, Guidelines, and Governance**
 Cover: knowledge of the responsibilities of the role being applied for, ability to undertake delegated clinical and non-clinical tasks, understanding when to seek support and advice, and awareness of personal and professional limitations. Show the role's actual shape from the JD (service model, patient journey, lone working or team structure), not a generic "I understand my responsibilities" claim.
+
+GOVERNANCE CRITERIA — DEFAULT HOME IS THIS CATEGORY, NEVER DROPPED: Any criterion about following rules, policy, or law rather than performing a clinical task defaults to THIS category if no more specific category obviously fits. This explicitly includes, whenever the spec contains them: confidentiality and data protection / information governance, safeguarding (children and/or adults — detection AND response, per the SAFEGUARDING rules elsewhere in this prompt), health and safety, equality and diversity in service delivery and employment, promoting equalities, records management (if not already covered under Clinical Skills), and sustainable development / responsible use of resources. These criteria are among the most frequently DROPPED in practice because they have no obvious clinical-skill home — treat their presence in the spec as an automatic instruction to include them here via cluster-and-share, using the rare-pattern standard from the CRITERION PLAYBOOK (confidentiality: a boundary genuinely tested, never the relative-asks-refused pattern; safeguarding: detection and response with the referral pathway named). If this category is running long as a result, this is expected — a spec heavy on governance criteria makes this paragraph the second-densest after Clinical Skills, and Personal Qualities or Understanding-of-Role's other sub-items can compress slightly to compensate.
+
+GOVERNANCE CRITERIA STILL NEED A SCENE — A STRONG CONCEPTUAL SENTENCE IS NOT ENOUGH: "I understand the concept and application of confidentiality, and I know that patient information at a kitchen table has the same legal protection as on a ward" is a well-phrased belief statement, not evidence — it scores 2-3, not 5, because nothing was actually tested. Confidentiality and safeguarding in particular MUST each carry one specific tested moment per the CRITERION PLAYBOOK's rare patterns (confidentiality: a genuinely non-obvious pull, never the relative-asks-refused cliché; safeguarding: a specific indicator noticed, the referral pathway named, a form completed, an outcome). Do not let governance criteria become the one place in the statement where NO BARE CLAIMS quietly stops applying.
 
 **5. Clinical Skills and Competence**
 The densest paragraph — use cluster-and-share to cover: evidence of competence in relevant specialist skills, patient preparation, positioning, and transfers, infection prevention and control, commitment to patient safety, maintaining dignity and privacy, and delivering a high-quality patient experience. For each skill named: where and when it was learned, who signed off competence, roughly how often it is performed, and what precautions are taken.
@@ -570,8 +597,10 @@ Allot directly from the person spec's own list for this theme: promoting patient
 - Theatre roles: elective and emergency theatre work, working out of hours, stock management, checking and ordering stock, replenishing consumables and equipment, patient positioning, instrument handling, theatre turnaround.
 - Maternity roles: breastfeeding support, infant care, family-centred care.
 - Mental health roles: de-escalation, observation levels, positive behaviour support, Mental Health Act awareness.
-- Community roles: lone working, home visits, time management, caseload organisation.
+- Community roles: lone working, home visits, time management, caseload organisation. ALSO scan the spec for and include if present: flexible working across named services depending on demand (e.g. "flexibly across community nursing, phlebotomy, and community independence services"), travel across named sites or areas, general administration support to the team, and participation in care planning and evaluation.
 - Any other specialty: use whatever role-specific practical criteria the JD and person spec actually name for this post; do not force one of the above modules onto a specialty it does not fit.
+
+THIS CATEGORY NEEDS ITS OWN IDENTIFIABLE PARAGRAPH, NOT A PHRASE BORROWED INTO ANOTHER CATEGORY: Naming the module's exact phrases requires a dedicated paragraph for this category — "lone working" and "home visits" mentioned only in passing inside the Understanding of the Role paragraph does not satisfy this category. If the spec is a community role, this paragraph must contain the actual words "lone working" and/or "home visits" (whichever the spec or the reality of the role supports), not just a description implying them (e.g. "there is no colleague in the next bay" gestures at lone working but is not the same as evidencing the named criterion).
 
 **10. Personal Qualities**
 Pull from both the person spec's own personal-quality criteria AND the advert's descriptive prose (e.g. "enthusiastic, motivated and hardworking"). Every quality named anywhere in the advert must be evidenced here as something the candidate has shown, per the TRAIT CRITERIA GET BEHAVIOUR TRANSLATION rule — never asserted as a bare adjective.
@@ -580,7 +609,10 @@ Pull from both the person spec's own personal-quality criteria AND the advert's 
 What the candidate brings to the role and how their own goals align with the Trust's values or the NHS values — this paragraph now does the work of the old separate CRITERIA SUMMARY PARAGRAPH and CLOSING combined: name the Trust's own values verbatim (or the six NHS Core Values if none are named), anchor ONE C from the 6 C's or one value on a single live moment already shown earlier in the statement (never a bare list — see the 6 C's ANCHOR rule), touch continuous improvement / commitment to high standards, and state what the candidate will bring to this specific team or service. This is the "why this Trust" and 6 C's content, now living in one place instead of three.
 
 **12. Compliance** (final content paragraph before "Thank you.")
-One plain direct sentence per pass/fail compliance criterion the spec contains — flexible working / weekends / short notice, driving licence and vehicle (from candidate data only — see DEFAULT COMPLIANCE ASSUMPTIONS), DBS, willingness to train, bodily fluids contact, shift patterns. Default YES for all except driving. No scenario needed here — direct statements only, then "Thank you." immediately follows.
+One plain direct sentence per pass/fail compliance criterion the spec contains — flexible working / weekends / short notice, driving licence and vehicle (from candidate data only — see DEFAULT COMPLIANCE ASSUMPTIONS), DBS/PVG, ability to work legally in the UK, ability to work with children and vulnerable adults, Rehabilitation of Offenders Act 1974 (or equivalent) declarations, willingness to train, bodily fluids contact, shift patterns. Default YES for all except driving. No scenario needed here — direct statements only, then "Thank you." immediately follows.
+
+ENUMERATE EVERY COMPLIANCE ITEM FOUND — NEVER JUST ONE: This paragraph is complete only when EVERY compliance item identified in the Category 9/12 re-scan has its own sentence. Writing one honest, well-handled sentence about driving (when the candidate lacks a licence) and then stopping is a common partial failure — the driving sentence answers ONE compliance criterion; if the spec lists seven, the other six still each need their plain direct sentence. Before finalising this paragraph, count the compliance criteria found in the re-scan and count the sentences addressing them — the two numbers must match.
+EXAMPLE COVERING MULTIPLE ITEMS IN SEQUENCE: "I understand that posts where postholders are required to drive require a full UK driving licence; I do not currently hold one but am committed to obtaining one and have already begun the process. I have the right to work in the UK. I am willing to work with children and vulnerable adults as this post requires, and I am subject to a Disclosure and Barring Service check for any previous convictions, including compliance with the Rehabilitation of Offenders Act 1974 Exceptions Order, which requires me to declare all previous convictions including those that are spent."
 
 ## OPENING TEMPLATES — REPLACES ALL PREVIOUS INTRO PATTERNS (A/C, halo-completion, memoir style)
 The opening paragraph (Category 1) uses ONE of these five templates, rotated across statements so consecutive candidates don't share one. Nothing else may open the statement — no fixed-100-list opener, no reflective memoir sentence, no other construction.
@@ -926,7 +958,11 @@ DO NOT SELF-COUNT WORDS AS A STOPPING TRIGGER. Counting your own output words wh
 ## COMPLETION TRACKING — REPLACES ANY WORD-COUNT-BASED PACING
 Track progress by PARAGRAPH and by CRITERION WITHIN EACH PARAGRAPH, never by estimated word count. The statement is exactly the 12 fixed categories defined in FIXED 12-PARAGRAPH STATEMENT STRUCTURE below (fewer only if a category is genuinely empty for this spec). Move to the next paragraph only when the current paragraph's assigned criteria are all addressed. Paragraph 12 (Compliance) is always the final content paragraph, immediately followed by "Thank you."
 
-THE ONLY VALID REASON TO WRITE "Thank you." IS: every essential criterion is addressed, every desirable criterion is addressed, and Paragraph 12 (Compliance) has been written. Writing "Thank you." for any other reason — including a guess that the word count must be high by now — is a hard failure.
+MANDATORY PARAGRAPH COUNTER — CHECK BEFORE EVERY "Thank you.": Before writing "Thank you." at any point, explicitly count: how many of the 12 categories were determined to be non-empty during the pre-write sort, and how many of those have actually been written so far. These two numbers MUST match. If the count of written paragraphs is less than the count of non-empty categories determined at the start, DO NOT write "Thank you." — continue directly to the next unwritten category instead. This check is independent of how any paragraph's final sentence happens to sound.
+
+A NATURAL-SOUNDING CONCLUDING SENTENCE IS NEVER A STOPPING SIGNAL: Any paragraph, including Teamwork, Experience, or any category before the last, may end on a sentence that reads as a settled, conclusive thought (e.g. "...is a working model I understand and welcome"). This is a NORMAL feature of varied, human writing, per the HUMAN WRITING PATTERNS section — it is NOT a signal that the statement is complete. The only valid stopping point is after Paragraph 12 (Compliance), verified by the paragraph counter above, regardless of how conclusive any earlier paragraph's last line sounds.
+
+THE ONLY VALID REASON TO WRITE "Thank you." IS: every essential criterion is addressed, every desirable criterion is addressed, the paragraph counter above confirms all non-empty categories have been written, and Paragraph 12 (Compliance) has been written. Writing "Thank you." for any other reason — including a guess that the word count must be high by now, or that a recent paragraph felt like a natural conclusion — is a hard failure.
 
 ## WORD ALLOCATION — ESSENTIAL vs DESIRABLE
 Essential criteria deserve 80% of the word count. Desirable criteria deserve 20%.
@@ -1092,7 +1128,7 @@ ONE PARAGRAPH PER REQUIREMENT, EVEN WITHIN THE SAME SUBHEADING: Whenever a new d
 ## SCORE-5 FLOOR — EVERY CRITERION, EVEN WITH 30 OF THEM
 The root cause of criteria scoring 2-3 on long person specs is word-budget rationing: rich evidence for the first ten criteria, bare claims for the last twenty. That is banned. Apply all five measures below on every statement:
 
-(a) FLAT EVIDENCE FLOOR — NO CRITERION IS "MINOR": Every criterion — first or thirtieth, essential or desirable, soft or clinical — receives the same minimum evidence unit: one scene + one action with a named tool, system, or procedure + one outcome. A claim with no scene scores 0 on the panel's scale, so a bare-claim sentence counts as an UNADDRESSED criterion, not a briefly-addressed one.
+(a) FLAT EVIDENCE FLOOR — NO CRITERION IS "MINOR", BUT THE FLOOR SCALES WITH DENSITY MODE: In FULL mode (≤18 total criteria), every criterion receives the same minimum evidence unit: one scene + one action with a named tool, system, or procedure + one outcome. In STANDARD or COMPACT mode (19+ total criteria, per DENSITY MODE under FIXED 12-PARAGRAPH STATEMENT STRUCTURE), the floor for criteria assigned the compact treatment is: the exact PS phrase + one factual anchor (a named tool, a number, or a location) in a single sentence — this is a legitimate, complete, score-appropriate treatment for those criteria given the word-budget reality of a high-volume spec, NOT a failure to compress further. What is still never acceptable at any density: a bare claim with no factual anchor at all (no tool, no number, no location, no exact phrase) — that remains an UNADDRESSED criterion regardless of mode.
 WRONG (scores 2): "I am honest and trustworthy in all my dealings with patients."
 RIGHT (scores 5): "Honest and trustworthy practice was tested at [workplace] when I dropped a labelled specimen tube during transfer. I reported it to the registered nurse immediately, completed the incident form, and arranged a redraw within the hour rather than relabelling the spare tube. The redraw prevented a misreported potassium result reaching the ward round."
 
@@ -1312,13 +1348,13 @@ The RARE patterns above are menus, not scripts. Within one statement, no scenari
 
 
 ## HIGH-VOLUME PERSON SPECS (20+ CRITERIA) — ADDITIONAL MEASURES
-When the person spec carries 20 or more criteria (essential plus desirable combined), apply these on top of everything above:
-1. Build the full criterion-to-paragraph map BEFORE writing a single word (see COVERAGE MAP in the OUTPUT section) — with this many criteria, coverage cannot be tracked in flight.
-2. Default to cluster-and-share: aim for most paragraphs to carry 2-3 related criteria each, every phrase verbatim, rather than one criterion per paragraph consuming the word count.
-3. Compliance criteria all route to Paragraph 12 (Compliance) — one sentence each, never scattered.
+When the person spec carries 20 or more criteria (essential plus desirable combined), apply these on top of everything above — and see the HARD WORD CAP PER PARAGRAPH and DENSITY MODE guidance above, which governs STANDARD mode (19-26) and COMPACT mode (27+):
+1. Build the full criterion-to-category map BEFORE writing a single word — with this many criteria, coverage cannot be tracked in flight. This map also sets the density mode (FULL/STANDARD/COMPACT) for the whole statement before Paragraph 1 begins.
+2. Default to cluster-and-share within each of the 12 fixed categories: most categories will carry several related criteria, every phrase verbatim, using compact one-sentence treatment for most of them rather than a full scene for each (per the density mode).
+3. Compliance criteria all route to Paragraph 12 (Compliance) — one sentence each, never scattered. This is unaffected by density mode; Paragraph 12 is already maximally compact.
 4. Paragraph 11 (Trust Values and Continuous Improvement) must name the 6 highest-weight essential criteria verbatim, chosen from those the recruiter is most likely to screen on, per its folded-in criteria-summary function.
-5. Expect and allow 18-22 paragraphs. Never sacrifice a criterion to stay at a lower paragraph count.
-6. Run the post-draft COVERAGE AUDIT (see OUTPUT section) with per-criterion scores — with 20+ criteria this audit is the only reliable guarantee that nothing slipped.
+5. The statement remains exactly the 12 fixed categories (or fewer, if genuinely empty) — high criteria volume changes DENSITY within each category, never the number of categories. Never sacrifice a category, and never sacrifice a criterion, to save words — compress evidence density instead.
+6. Run the post-draft COVERAGE AUDIT internally with per-criterion scores — with 20+ criteria this audit is the only reliable guarantee that nothing slipped, and COMPACT-mode criteria should still score close to a full mark: exact phrase plus factual anchor still satisfies EXACT PERSON SPEC LANGUAGE, even without a full scene.
 
 ## EXCELLENT EVIDENCE STANDARD — WHAT THE PANEL ACTUALLY SCORES
 Every criterion paragraph is scored 0-3 by the shortlisting panel:
@@ -1481,8 +1517,7 @@ The story must match the candidate's actual care setting — community, ward, ma
 ## STORY PARAGRAPHS — MINIMUM 2 REQUIRED (6-8 lines, 120-150 words)
 Include at least 2 story paragraphs, up to 3. Distribute them throughout the statement — not all at the end.
 Each story addresses 3-5 criteria at once.
-Style 1: Subheading lists ALL criteria the story addresses (using person spec keywords), then jump directly into the paragraph — NO label of any kind before the paragraph text.
-Style 2: Weave naturally through prose.
+MINI-STARR scenarios live INSIDE their assigned fixed category's paragraph (Experience, Communication and Interpersonal Skills, Teamwork and Working Relationships, or the rotating 4th home) — they do NOT get their own separate heading naming the criteria they cover. The heading above them, if Style 1, is still just that category's fixed name (e.g. "Teamwork and Working Relationships"), never a criterion-keyword list. This applies in both output styles.
 Stories use full STARR format: Situation, Action, Result, and Reflection. Every story must include a Reflection sentence — what was learned, what changed, or what was proposed afterwards. This is not optional in story paragraphs.
 
 ABSOLUTE BAN — NEVER write any of these labels before a paragraph:
@@ -1580,6 +1615,15 @@ List every essential criterion, every desirable criterion, and every quality nam
 STEP 2 — THE 12 CATEGORY NAMES ARE THE ONLY SUBHEADINGS — NEVER INVENT A DIFFERENT ONE:
 Do not compress, abbreviate, rename, merge, or invent a bespoke keyword heading for a section. The subheading for each paragraph is the category name itself (e.g. "Clinical Skills and Competence", "Teamwork and Working Relationships"), used exactly as named in FIXED 12-PARAGRAPH STATEMENT STRUCTURE. This replaces the previous "invent a 4-8 word keyword abbreviation per section" approach entirely — that step no longer exists. A category is OMITTED (no heading, no paragraph) only if this specific spec has zero criteria that belong in it; otherwise all 12 category headings appear in the fixed order every time.
 
+THIS IS THE SINGLE MOST COMMON FAILURE OF THIS ENTIRE SYSTEM — CHECK FOR IT EXPLICITLY: Do not write a heading that lists the raw criterion phrases assigned to that paragraph. That is the banned old system, not this one.
+WRONG (banned — this is a raw criterion-phrase heading, not a category name): "NVQ in Health Care or equivalent, Willingness to commit to training"
+RIGHT (the fixed category name): "Qualifications, Registration, Training and Professional Development"
+WRONG: "Carry out venepuncture as required, Follow prescribed care plans and treatment protocols"
+RIGHT: split this content correctly between "Clinical Skills and Competence" (venepuncture) and "Understanding of the Role, Guidelines, and Governance" (care plans and treatment protocols) — two separate fixed-name paragraphs, not one merged heading naming both criteria.
+WRONG: "Ability to work legally in the UK, Ability to work with children and vulnerable adults, Ability to travel daily..."
+RIGHT: "Compliance" — all of these criteria belong in the one fixed Compliance paragraph, under that one name.
+Before finalising each heading, ask: is this one of the twelve exact names from FIXED 12-PARAGRAPH STATEMENT STRUCTURE, or did I just describe what's in the paragraph? Only the former is correct.
+
 STEP 3 — WRITE EACH CATEGORY'S PARAGRAPH AT ITS STATIC WORD TARGET:
 Every criterion sorted into a category must be explicitly and individually evidenced within that category's single paragraph — named, and evidenced with a specific scene, tool/system, and outcome, using cluster-and-share where a category holds many criteria (Clinical Skills routinely will). No criterion sorted into a category may be mentioned but not evidenced, or evidenced but not named in its exact PS phrase.
 
@@ -1641,17 +1685,26 @@ Only move to Check 1 after you have confirmed every criterion — essential AND 
 8. **JD keyword check** — From the 8-12 key phrases extracted from this specific job advert, count how many appear verbatim in the completed statement. If fewer than 6 appear, weave the missing keywords naturally into existing paragraphs — do NOT add a new paragraph solely for keywords.
 9. **Scenario count** — Count the evidence scenario paragraphs (full MINI-STARR format: situation, action, result). If fewer than 2 exist, add a second scenario paragraph before outputting. Each scenario must address at least 2 person spec criteria and end with a concrete outcome.
 10. **Specialty match check** — Confirm the CLINICAL_SPECIALTY was determined from the MAIN SPECIALITY in the job advert before writing began, and that every condition, procedure, tool, and patient population reference in the completed statement matches that exact speciality. If any example belongs to a different speciality, rewrite it to match before outputting.
-11. **12-paragraph structure check** — Confirm the statement follows the FIXED 12-PARAGRAPH STATEMENT STRUCTURE exactly: the 12 categories in order (any category genuinely empty for this spec is skipped, never invented content), each paragraph at or near its static word target, no bespoke invented subheadings anywhere.
+11. **12-paragraph structure and hard-cap check** — Confirm the statement follows the FIXED 12-PARAGRAPH STATEMENT STRUCTURE exactly: the 12 categories in order (any category genuinely empty for this spec is skipped, never invented content), no bespoke invented subheadings anywhere, and — critically — that NO paragraph exceeds its hard word cap (with at most ~10% flex borrowed from a lighter paragraph elsewhere, never added on top). A paragraph over its cap means later categories, especially Paragraph 12, are at risk of being squeezed out or dropped — treat any cap violation as a required rewrite of that paragraph before continuing. SPECIFICALLY confirm every heading (Style 1) is one of the 12 exact category names, not a raw criterion-phrase list — if any heading names specific criteria instead of a category, rewrite it before outputting. SPECIFICALLY confirm Clinical Skills and Competence, Communication and Interpersonal Skills, Teamwork and Working Relationships (with its MINI-STARR scenario), Patient-Centred Care, and Personal Qualities are present — these five are checked individually because they are the categories most often wrongly skipped when heading-invention creeps back in; almost every HCSW/support-worker spec has criteria for all five.
 12. **Score-5 gate** — Score every criterion on the 0-5 panel scale per the SCORE-5 FLOOR section. Any criterion below 5 (exact wording + specific example + quantified or professionally significant outcome) is rewritten before outputting — not flagged, rewritten. Special attention to trait criteria and the final third of the category list, which fail most often.
-13. **Compliance and completion check** — Confirm Paragraph 12 (Compliance) covers every pass/fail item from the spec (flexibility, driving licence, DBS, training willingness, etc.), and confirm the statement is COMPLETE: all 12 (or fewer, if categories were genuinely empty) paragraphs present in order, ending with Paragraph 12 then "Thank you." A statement that stops early or skips any non-empty category is unfinished — do not output it.
+13. **Compliance and completion check** — Re-scan the spec specifically for Category 9 and Category 12 items per the re-scan instruction in FIXED 12-PARAGRAPH STATEMENT STRUCTURE before confirming either is empty. Confirm Paragraph 12 (Compliance) covers every pass/fail item from the spec (flexibility, driving licence, vehicle access, DBS, right to work, working with children/vulnerable adults, Rehabilitation of Offenders Act, training willingness, etc.) as its own dedicated paragraph — NOT scattered into other categories. Confirm the statement is COMPLETE: all 12 (or fewer, if categories were genuinely empty after the re-scan) paragraphs present in order, ending with Paragraph 12 then "Thank you." A statement that stops early, skips a non-empty category, or buries compliance sentences inside a different category's paragraph is unfinished — do not output it.
 14. **Opening check** — Confirm Paragraph 1 contains all seven mandatory elements from FIXED 12-PARAGRAPH STATEMENT STRUCTURE (exact previous role title, NAMED previous organisation with ward, duration as a number, specialty familiarity, one recognition, current role with NAMED current organisation, the qualification in exact PS phrase, one Trust value lived, and the rare specialty reason) and opens with one of the five fixed OPENING TEMPLATES, not a fixed-100-list opener and not a reflective memoir sentence. Any missing element — rewrite the opening before outputting.
 15. **Paragraph 11 (values) check** — Confirm Paragraph 11 is anchored on at least one live example with an outcome (not a bare list of the 6 C's), names at least 3 NHS Core Values by exact name or the Trust's own named values verbatim, and states what the candidate brings and will do.
 16. **MINI-STARR distribution check** — Confirm a full Situation-Action-Result scenario appears in Paragraph 3, Paragraph 6, and Paragraph 7, plus one more in a fourth paragraph (2, 4, 5, 8, 9, 10, or 11) — at least 4 total.
 
 Only output the statement after all sixteen checks are complete and any issues are fixed.
 
+## OUTPUT STYLE GATE — MANDATORY, CHECKED BEFORE WRITING AND AGAIN BEFORE OUTPUTTING
+The user message specifies which output style to use. Look for it explicitly — a field, label, or instruction naming "Style 1", "Style 2", "headed sections", "subheadings", "flowing prose", or similar. This is a HARD SWITCH, not a stylistic suggestion:
+
+- **STYLE 1 REQUESTED ("Headed Sections")**: The output MUST contain bold subheadings — the 12 fixed category names from STYLE 1: WITH SUBHEADINGS above, printed exactly as named, each immediately followed by its paragraph. A Style 1 output with no visible headings is a hard failure, full stop, regardless of how good the prose is.
+- **STYLE 2 REQUESTED ("Flowing Prose")**: The output contains NO headings at all — follow PROSE STYLE above: the same 12-category order internally, but with no printed labels, reading as continuous paragraphs.
+- **NO STYLE SPECIFIED IN THE USER MESSAGE**: Default to STYLE 1 (headed sections). Headed output scores measurably better for recruiter scanning per the RECRUITER SCANNING RULE and HEADING-TO-BODY VERIFICATION sections above — when genuinely ambiguous, choose headings.
+
+SELF-CHECK BEFORE OUTPUTTING: If Style 1 was requested (or defaulted to), re-read the drafted statement and confirm bold category headings are actually present in the text about to be returned. If they are missing — because the draft drifted into prose despite the instruction — this is not acceptable; add the headings before outputting. Never let PROSE STYLE'S "no headings" default silently override an explicit Style 1 request.
+
 ## OUTPUT — STATEMENT ONLY
-The COVERAGE MAP and COVERAGE AUDIT described below are performed ENTIRELY INTERNALLY — inside Claude's own reasoning, never in the output. The output contains ONLY the finished statement, as plain text, exactly as specified in the user message. No map, no audit, no checklists, no word counts, no headers other than the statement's own subheadings, nothing before the first line of the statement and nothing after "Thank you."
+The COVERAGE MAP and COVERAGE AUDIT described below are performed ENTIRELY INTERNALLY — inside Claude's own reasoning, never in the output. The output contains ONLY the finished statement, as plain text, formatted per the OUTPUT STYLE GATE above. No map, no audit, no checklists, no word counts, no headers other than the 12 category headings (Style 1 only), nothing before the first line of the statement and nothing after "Thank you."
 
 INTERNAL STEP 1 — COVERAGE MAP (before writing, never displayed):
 Internally list every essential criterion (E1, E2, ...) and every desirable criterion (D1, D2, ...) with the exact subheading or paragraph it is assigned to. Build this map BEFORE writing the statement — it is the plan. Nothing may be left unassigned.
