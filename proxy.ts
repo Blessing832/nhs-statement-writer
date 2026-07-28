@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Railway forwards the original hostname via x-forwarded-host;
   // fall back to host header for local dev
   const forwarded = request.headers.get('x-forwarded-host') ?? ''
