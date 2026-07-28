@@ -69,9 +69,9 @@ export default function CandidatesPage() {
       {/* Stats row */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         {[
-          { label: 'Total Candidates', value: stats.total, color: '#003087' },
+          { label: 'Total Candidates', value: stats.total, color: '#072f42' },
           { label: 'Active', value: stats.active, color: '#009639' },
-          { label: 'Vacancy Alerts On', value: stats.monitored, color: '#005eb8' },
+          { label: 'Vacancy Alerts On', value: stats.monitored, color: '#0B4F6C' },
           { label: 'Expired / Inactive', value: stats.expired, color: '#d5281b' },
         ].map((s) => (
           <div key={s.label} className="bg-white rounded-lg border border-gray-200 p-4">
@@ -109,7 +109,7 @@ export default function CandidatesPage() {
 
       {loading ? (
         <div className="flex items-center gap-2 text-gray-500 py-8">
-          <div className="w-4 h-4 border-2 border-gray-300 rounded-full animate-spin" style={{ borderTopColor: '#005eb8' }} />
+          <div className="w-4 h-4 border-2 border-gray-300 rounded-full animate-spin" style={{ borderTopColor: '#0B4F6C' }} />
           <span className="text-sm">Loading candidates…</span>
         </div>
       ) : (

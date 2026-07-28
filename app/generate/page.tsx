@@ -680,7 +680,7 @@ function GeneratePage() {
               <div style={{ position: 'absolute', top: '50%', left: '18%', right: '18%', height: 2, background: '#fff', transform: 'translateY(-50%)' }} />
               <div style={{ position: 'absolute', left: '50%', top: '18%', bottom: '18%', width: 2, background: '#F4A800', transform: 'translateX(-50%)' }} />
             </div>
-            <span style={{ fontFamily: "'Fraunces', serif", fontSize: 20, fontWeight: 700, color: '#fff', letterSpacing: -0.3 }}>
+            <span style={{ fontFamily: "var(--font-fraunces), 'Fraunces', serif", fontSize: 20, fontWeight: 700, color: '#fff', letterSpacing: -0.3 }}>
               Ease<span style={{ color: '#F4A800' }}>Me</span>
             </span>
           </div>
@@ -712,7 +712,7 @@ function GeneratePage() {
               <div style={{ position: 'absolute', top: '50%', left: '18%', right: '18%', height: 2, background: '#fff', transform: 'translateY(-50%)' }} />
               <div style={{ position: 'absolute', left: '50%', top: '18%', bottom: '18%', width: 2, background: '#F4A800', transform: 'translateX(-50%)' }} />
             </div>
-            <span style={{ fontFamily: "'Fraunces', serif", fontSize: 20, fontWeight: 700, color: '#fff', letterSpacing: -0.3 }}>
+            <span style={{ fontFamily: "var(--font-fraunces), 'Fraunces', serif", fontSize: 20, fontWeight: 700, color: '#fff', letterSpacing: -0.3 }}>
               Ease<span style={{ color: '#F4A800' }}>Me</span>
             </span>
           </div>

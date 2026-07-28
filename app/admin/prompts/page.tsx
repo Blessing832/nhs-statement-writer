@@ -128,7 +128,7 @@ function PromptEditor({
             onClick={handleSave}
             disabled={saving || resetting || !isDirty}
             className="px-4 py-1.5 text-xs text-white font-semibold rounded-md cursor-pointer disabled:opacity-50 transition-colors"
-            style={{ backgroundColor: isDirty ? '#005eb8' : '#9ca3af' }}
+            style={{ backgroundColor: isDirty ? '#0B4F6C' : '#9ca3af' }}
           >
             {saving ? 'Saving…' : isDirty ? 'Save prompt' : 'No changes'}
           </button>
@@ -183,7 +183,7 @@ export default function PromptsPage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="flex items-center gap-3 text-gray-500">
-          <div className="w-5 h-5 border-2 border-gray-300 rounded-full animate-spin" style={{ borderTopColor: '#005eb8' }} />
+          <div className="w-5 h-5 border-2 border-gray-300 rounded-full animate-spin" style={{ borderTopColor: '#0B4F6C' }} />
           <span className="text-sm">Loading prompts…</span>
         </div>
       </div>

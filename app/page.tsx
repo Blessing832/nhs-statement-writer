@@ -52,7 +52,7 @@ export default function Home() {
               <div style={{ position: 'absolute', left: '50%', top: '18%', bottom: '18%', width: 2, background: '#F4A800', transform: 'translateX(-50%)' }} />
             </div>
             <div>
-              <h1 style={{ fontFamily: "'Fraunces', serif", fontSize: 20, fontWeight: 700, color: '#fff', letterSpacing: -0.3, lineHeight: 1 }}>
+              <h1 style={{ fontFamily: "var(--font-fraunces), 'Fraunces', serif", fontSize: 20, fontWeight: 700, color: '#fff', letterSpacing: -0.3, lineHeight: 1 }}>
                 Ease<span style={{ color: '#F4A800' }}>Me</span>
               </h1>
               <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 11, marginTop: 2 }}>Statement Writer</p>

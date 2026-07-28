@@ -391,7 +391,7 @@ function AdminGenerateInner() {
                 type="submit"
                 disabled={searching || !query.trim()}
                 className="px-5 py-2.5 text-sm font-semibold text-white rounded-md disabled:opacity-50 cursor-pointer"
-                style={{ backgroundColor: '#005eb8' }}
+                style={{ backgroundColor: '#0B4F6C' }}
               >
                 {searching ? 'Searching...' : 'Find'}
               </button>
@@ -445,7 +445,7 @@ function AdminGenerateInner() {
                   ]).map(({ val, label, desc }) => (
                     <button key={val} type="button" onClick={() => setInputMode(val)}
                       className="p-3 rounded-md border-2 text-sm text-left transition-colors"
-                      style={inputMode === val ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff', color: '#003087' } : { borderColor: '#e5e7eb', color: '#374151' }}>
+                      style={inputMode === val ? { borderColor: '#0B4F6C', backgroundColor: '#f0f7ff', color: '#072f42' } : { borderColor: '#e5e7eb', color: '#374151' }}>
                       <p className="font-medium">{label}</p>
                       <p className="text-xs opacity-70 mt-0.5">{desc}</p>
                     </button>
@@ -502,7 +502,7 @@ function AdminGenerateInner() {
                   <button key={val || 'auto'} type="button" title={title} onClick={() => setBodyPattern(val)}
                     className="text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer"
                     style={bodyPattern === val
-                      ? { borderColor: '#005eb8', backgroundColor: '#005eb8', color: 'white' }
+                      ? { borderColor: '#0B4F6C', backgroundColor: '#0B4F6C', color: 'white' }
                       : { borderColor: '#d1d5db', backgroundColor: 'white', color: '#374151' }}>
                     {label}
                   </button>
@@ -520,7 +520,7 @@ function AdminGenerateInner() {
                   ] as const).map(({ val, label, desc }) => (
                     <button key={val} type="button" onClick={() => setApplicationMode(val)}
                       className="w-full text-left p-3 rounded-md border-2 transition-colors"
-                      style={applicationMode === val ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff' } : { borderColor: '#e5e7eb' }}>
+                      style={applicationMode === val ? { borderColor: '#0B4F6C', backgroundColor: '#f0f7ff' } : { borderColor: '#e5e7eb' }}>
                       <p className="font-medium text-sm text-gray-800">{label}</p>
                       <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
                     </button>
@@ -539,7 +539,7 @@ function AdminGenerateInner() {
                     ].map(({ val, label, desc }) => (
                       <button key={val} type="button" onClick={() => setStyle(val)}
                         className="p-3 rounded-md border-2 text-sm text-left transition-colors"
-                        style={style === val ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff' } : { borderColor: '#e5e7eb' }}>
+                        style={style === val ? { borderColor: '#0B4F6C', backgroundColor: '#f0f7ff' } : { borderColor: '#e5e7eb' }}>
                         <p className="font-medium text-gray-800">{label}</p>
                         <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
                       </button>
@@ -576,7 +576,7 @@ function AdminGenerateInner() {
                   </div>
                   <button type="button" onClick={addQuestion}
                     className="flex items-center gap-1.5 text-sm font-semibold cursor-pointer pt-3"
-                    style={{ color: '#005eb8' }}>
+                    style={{ color: '#0B4F6C' }}>
                     <span className="text-lg leading-none">+</span> Add question
                   </button>
                 </div>
@@ -597,7 +597,7 @@ function AdminGenerateInner() {
 
               <button type="submit" disabled={loading}
                 className="w-full py-3 text-white font-semibold rounded-md disabled:opacity-60 cursor-pointer transition-colors"
-                style={{ backgroundColor: loading ? '#999' : '#005eb8' }}>
+                style={{ backgroundColor: loading ? '#999' : '#0B4F6C' }}>
                 {loading ? (loadingStep || 'Generating...') : 'Generate Statement'}
               </button>
 
@@ -620,7 +620,7 @@ function AdminGenerateInner() {
                       ))}
                     </div>
                     <div className="absolute left-0 right-0 h-0.5 animate-scan-line"
-                      style={{ backgroundColor: '#005eb8', boxShadow: '0 0 6px 2px rgba(0,94,184,0.35)' }} />
+                      style={{ backgroundColor: '#0B4F6C', boxShadow: '0 0 6px 2px rgba(0,94,184,0.35)' }} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-blue-900 mb-1">{loadingStep || 'Starting...'}</p>
@@ -633,7 +633,7 @@ function AdminGenerateInner() {
                         return (
                           <div key={step} className="flex items-center gap-1.5">
                             <div className="w-2 h-2 rounded-full transition-all duration-300"
-                              style={{ backgroundColor: active ? '#005eb8' : '#c0d8f0' }} />
+                              style={{ backgroundColor: active ? '#0B4F6C' : '#c0d8f0' }} />
                             {i < 2 && <div className="w-6 h-px" style={{ backgroundColor: '#c0d8f0' }} />}
                           </div>
                         )
@@ -654,7 +654,7 @@ function AdminGenerateInner() {
       {result && selectedClient && (
         <div className="flex flex-col flex-1 overflow-hidden">
           {/* Top bar */}
-          <div style={{ backgroundColor: '#003087' }} className="px-4 py-3 flex-shrink-0">
+          <div style={{ backgroundColor: '#072f42' }} className="px-4 py-3 flex-shrink-0">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-blue-200 text-xs">{selectedClient.full_name} · {selectedClient.client_code}</p>
@@ -675,7 +675,7 @@ function AdminGenerateInner() {
                 <button
                   onClick={() => { downloadAsDoc(result, selectedClient.full_name); setDownloaded(true); setTimeout(() => setDownloaded(false), 3000) }}
                   className="text-sm px-3 py-1.5 text-white rounded font-medium cursor-pointer transition-colors"
-                  style={{ backgroundColor: downloaded ? '#009639' : '#005eb8' }}>
+                  style={{ backgroundColor: downloaded ? '#009639' : '#0B4F6C' }}>
                   {downloaded ? 'Downloaded!' : 'Download .doc'}
                 </button>
                 <button
@@ -751,7 +751,7 @@ function AdminGenerateInner() {
                     <ol className="space-y-1.5 list-none">
                       {result.previousRoleDuties.map((d, i) => (
                         <li key={i} className="flex gap-2.5 text-sm text-gray-700">
-                          <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
+                          <span style={{ color: '#0B4F6C' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
                           <span>{d}</span>
                         </li>
                       ))}
@@ -788,7 +788,7 @@ function AdminGenerateInner() {
                     <ol className="space-y-1.5 list-none">
                       {result.currentRoleDuties.map((d, i) => (
                         <li key={i} className="flex gap-2.5 text-sm text-gray-700">
-                          <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
+                          <span style={{ color: '#0B4F6C' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
                           <span>{d}</span>
                         </li>
                       ))}
@@ -802,7 +802,7 @@ function AdminGenerateInner() {
                     <button
                       onClick={() => setShowRewrite(true)}
                       className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-800 cursor-pointer">
-                      <span style={{ color: '#005eb8' }}>&#8635;</span>
+                      <span style={{ color: '#0B4F6C' }}>&#8635;</span>
                       Rewrite with instructions
                     </button>
                   ) : (
@@ -821,7 +821,7 @@ function AdminGenerateInner() {
                           onClick={handleRewrite}
                           disabled={rewriting || !rewriteInstruction.trim()}
                           className="px-4 py-2 text-white text-sm font-medium rounded cursor-pointer disabled:opacity-50"
-                          style={{ backgroundColor: '#005eb8' }}>
+                          style={{ backgroundColor: '#0B4F6C' }}>
                           {rewriting ? 'Rewriting...' : 'Rewrite Statement'}
                         </button>
                         <button

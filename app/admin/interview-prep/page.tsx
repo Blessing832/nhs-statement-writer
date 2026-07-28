@@ -25,7 +25,7 @@ function RenderContent({ content }: { content: string }) {
       const text = t.replace(/\*\*/g, '')
       nodes.push(
         <h2 key={i} className="text-base font-bold uppercase tracking-wide mt-10 mb-3 pb-2 border-b-2"
-          style={{ color: '#003087', borderColor: '#005eb8' }}>
+          style={{ color: '#072f42', borderColor: '#0B4F6C' }}>
           {text}
         </h2>
       )
@@ -34,7 +34,7 @@ function RenderContent({ content }: { content: string }) {
 
     if (/^Q\d+\s+to\s+Q\d+:/i.test(t)) {
       nodes.push(
-        <p key={i} className="text-xs font-bold uppercase tracking-widest mt-6 mb-2" style={{ color: '#005eb8' }}>
+        <p key={i} className="text-xs font-bold uppercase tracking-widest mt-6 mb-2" style={{ color: '#0B4F6C' }}>
           {t.replace(/\*\*/g, '')}
         </p>
       )
@@ -43,7 +43,7 @@ function RenderContent({ content }: { content: string }) {
 
     if (/^Q\d+[:\s]/i.test(t)) {
       nodes.push(
-        <h3 key={i} className="font-semibold text-sm mt-6 mb-1.5 leading-snug" style={{ color: '#003087' }}>
+        <h3 key={i} className="font-semibold text-sm mt-6 mb-1.5 leading-snug" style={{ color: '#072f42' }}>
           {parseBold(t)}
         </h3>
       )
@@ -52,7 +52,7 @@ function RenderContent({ content }: { content: string }) {
 
     if (/^Part\s+\d+/i.test(t)) {
       nodes.push(
-        <h3 key={i} className="font-semibold mt-5 mb-1.5" style={{ color: '#003087' }}>
+        <h3 key={i} className="font-semibold mt-5 mb-1.5" style={{ color: '#072f42' }}>
           {t.replace(/\*\*/g, '')}
         </h3>
       )
@@ -272,7 +272,7 @@ export default function InterviewPrepPage() {
               <button
                 onClick={() => downloadAsWord(result.content, result.clientName)}
                 className="px-5 py-2 text-sm font-semibold text-white rounded-md cursor-pointer"
-                style={{ backgroundColor: '#005eb8' }}
+                style={{ backgroundColor: '#0B4F6C' }}
               >
                 Download Word Doc
               </button>
@@ -376,7 +376,7 @@ export default function InterviewPrepPage() {
           type="submit"
           disabled={loading}
           className="w-full py-3 text-white font-semibold rounded-md cursor-pointer disabled:opacity-60 transition-opacity flex items-center justify-center gap-2"
-          style={{ backgroundColor: '#005eb8' }}
+          style={{ backgroundColor: '#0B4F6C' }}
         >
           {loading ? (
             <>

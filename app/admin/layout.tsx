@@ -33,11 +33,9 @@ function LoginScreen({ onLogin }: { onLogin: (token: string) => void }) {
     <main className="min-h-screen flex items-center justify-center px-6" style={{ backgroundColor: '#f0f4f5' }}>
       <div className="w-full max-w-sm bg-white rounded-lg shadow-sm border border-gray-200 p-8">
         <div className="mb-6">
-          <div
-            className="w-12 h-12 rounded flex items-center justify-center mb-4"
-            style={{ backgroundColor: '#003087' }}
-          >
-            <span className="text-white font-bold">NHS</span>
+          <div style={{ width: 40, height: 40, border: '2px solid #F4A800', borderRadius: '50%', position: 'relative', marginBottom: 16 }}>
+            <div style={{ position: 'absolute', top: '50%', left: '18%', right: '18%', height: 2, background: '#072f42', transform: 'translateY(-50%)' }} />
+            <div style={{ position: 'absolute', left: '50%', top: '18%', bottom: '18%', width: 2, background: '#F4A800', transform: 'translateX(-50%)' }} />
           </div>
           <h1 className="text-xl font-bold text-gray-900">Admin Login</h1>
           <p className="text-sm text-gray-500 mt-1">EaseMe: NHS Careers Platform</p>
@@ -60,7 +58,7 @@ function LoginScreen({ onLogin }: { onLogin: (token: string) => void }) {
             type="submit"
             disabled={loading}
             className="w-full py-3 text-white font-semibold rounded-md cursor-pointer disabled:opacity-60"
-            style={{ backgroundColor: '#005eb8' }}
+            style={{ backgroundColor: '#0B4F6C' }}
           >
             {loading ? 'Signing in…' : 'Sign In'}
           </button>
@@ -102,24 +100,25 @@ function AdminShell({
     <AdminContext.Provider value={{ token, onLogout }}>
       <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#f0f4f5' }}>
         {/* Top header */}
-        <header style={{ backgroundColor: '#003087' }} className="py-3 px-6 shadow-md">
+        <header style={{ backgroundColor: '#072f42' }} className="py-3 px-6 shadow-md">
           <div className="max-w-5xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div
-                className="w-9 h-9 rounded-lg flex items-center justify-center shadow-sm"
-                style={{ backgroundColor: '#005eb8' }}
-              >
-                <span className="text-white font-bold text-xs">NHS</span>
+              <div style={{ width: 30, height: 30, border: '2px solid #F4A800', borderRadius: '50%', position: 'relative', flexShrink: 0 }}>
+                <div style={{ position: 'absolute', top: '50%', left: '18%', right: '18%', height: 2, background: '#fff', transform: 'translateY(-50%)' }} />
+                <div style={{ position: 'absolute', left: '50%', top: '18%', bottom: '18%', width: 2, background: '#F4A800', transform: 'translateX(-50%)' }} />
               </div>
               <div>
-                <span className="text-white font-bold text-base">EaseMe</span>
-                <span className="text-blue-300 text-xs ml-1.5 hidden sm:inline font-medium">Admin</span>
+                <span style={{ fontFamily: "var(--font-fraunces), 'Fraunces', serif", fontWeight: 700, color: '#fff', fontSize: 18 }}>
+                  Ease<span style={{ color: '#F4A800' }}>Me</span>
+                </span>
+                <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11 }} className="ml-1.5 hidden sm:inline font-medium">Admin</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <a
                 href="/"
-                className="px-3 py-1.5 text-xs text-blue-200 hover:text-white transition-colors"
+                className="px-3 py-1.5 text-xs hover:text-white transition-colors"
+                style={{ color: 'rgba(255,255,255,0.5)' }}
               >
                 ← Client Portal
               </a>
@@ -134,7 +133,7 @@ function AdminShell({
         </header>
 
         {/* Tab bar */}
-        <div style={{ backgroundColor: '#005eb8' }} className="px-6 shadow-sm">
+        <div style={{ backgroundColor: '#0B4F6C' }} className="px-6 shadow-sm">
           <div className="max-w-5xl mx-auto flex items-end gap-0.5 overflow-x-auto">
             {TABS.map((tab) => {
               const active = isActive(tab.href, tab.exact)
@@ -199,7 +198,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="flex items-center gap-3 text-gray-500">
           <div
             className="w-5 h-5 border-2 border-gray-300 rounded-full animate-spin"
-            style={{ borderTopColor: '#005eb8' }}
+            style={{ borderTopColor: '#0B4F6C' }}
           />
           <span className="text-sm">Loading…</span>
         </div>
