@@ -44,31 +44,32 @@ export default function Home() {
     <main className="min-h-screen flex flex-col bg-white">
 
       {/* ── Header ── */}
-      <header style={{ backgroundColor: '#003087' }} className="py-4 px-6">
+      <header style={{ backgroundColor: '#072f42' }} className="py-4 px-6">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div
-              style={{ backgroundColor: '#005eb8' }}
-              className="w-10 h-10 rounded-lg flex items-center justify-center shadow-sm"
-            >
-              <span className="text-white font-bold text-sm">NHS</span>
+            <div style={{ width: 32, height: 32, border: '2px solid #F4A800', borderRadius: '50%', position: 'relative', flexShrink: 0 }}>
+              <div style={{ position: 'absolute', top: '50%', left: '18%', right: '18%', height: 2, background: '#fff', transform: 'translateY(-50%)' }} />
+              <div style={{ position: 'absolute', left: '50%', top: '18%', bottom: '18%', width: 2, background: '#F4A800', transform: 'translateX(-50%)' }} />
             </div>
             <div>
-              <h1 className="text-white font-bold text-base leading-tight">EaseMe</h1>
-              <p className="text-blue-300 text-xs leading-tight">Statement Writer</p>
+              <h1 style={{ fontFamily: "'Fraunces', serif", fontSize: 20, fontWeight: 700, color: '#fff', letterSpacing: -0.3, lineHeight: 1 }}>
+                Ease<span style={{ color: '#F4A800' }}>Me</span>
+              </h1>
+              <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 11, marginTop: 2 }}>Statement Writer</p>
             </div>
           </div>
           <a
             href="/admin"
-            className="text-xs text-blue-300 hover:text-white transition-colors"
+            className="text-xs hover:text-white transition-colors"
+            style={{ color: 'rgba(255,255,255,0.4)' }}
           >
             Admin →
           </a>
         </div>
       </header>
 
-      {/* ── Blue accent bar ── */}
-      <div style={{ backgroundColor: '#005eb8' }} className="h-1" />
+      {/* ── Gold accent bar ── */}
+      <div style={{ backgroundColor: '#F4A800' }} className="h-0.5" />
 
       {/* ── Hero section ── */}
       <div className="flex-1 flex items-stretch overflow-hidden" style={{ background: 'linear-gradient(135deg, #f8faff 0%, #ffffff 50%, #f0f4f5 100%)' }}>
@@ -84,14 +85,14 @@ export default function Home() {
             >
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-5"
-                style={{ backgroundColor: '#005eb8', color: 'white' }}>
+                style={{ backgroundColor: '#0B4F6C', color: 'white' }}>
                 <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
                 NHS &amp; Civil Service Applications
               </div>
 
               <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
                 Land Your
-                <span style={{ color: '#005eb8' }} className="block">NHS Job</span>
+                <span style={{ color: '#0B4F6C' }} className="block">NHS Job</span>
                 Faster
               </h2>
               <p className="text-gray-500 text-base mb-6 leading-relaxed">
@@ -137,9 +138,9 @@ export default function Home() {
                     type="submit"
                     disabled={checking}
                     className="w-full py-3.5 px-6 text-white font-bold rounded-xl cursor-pointer transition-all text-base shadow-md hover:shadow-lg active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
-                    style={{ backgroundColor: '#005eb8' }}
-                    onMouseEnter={(e) => { if (!checking) e.currentTarget.style.backgroundColor = '#003087' }}
-                    onMouseLeave={(e) => { if (!checking) e.currentTarget.style.backgroundColor = '#005eb8' }}
+                    style={{ backgroundColor: '#0B4F6C' }}
+                    onMouseEnter={(e) => { if (!checking) e.currentTarget.style.backgroundColor = '#072f42' }}
+                    onMouseLeave={(e) => { if (!checking) e.currentTarget.style.backgroundColor = '#0B4F6C' }}
                   >
                     {checking ? 'Checking...' : 'Continue'}
                   </button>
@@ -177,12 +178,12 @@ export default function Home() {
       >
         <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-8 text-sm text-gray-500">
           <div className="flex items-center gap-2">
-            <span style={{ color: '#005eb8' }} className="font-bold text-lg">NHS</span>
+            <span style={{ color: '#0B4F6C' }} className="font-bold text-lg">NHS</span>
             <span>England &amp; Wales</span>
           </div>
           <div className="w-px h-4 bg-gray-200 hidden sm:block" />
           <div className="flex items-center gap-2">
-            <span style={{ color: '#005eb8' }} className="font-bold text-lg">NHS</span>
+            <span style={{ color: '#0B4F6C' }} className="font-bold text-lg">NHS</span>
             <span>Scotland</span>
           </div>
           <div className="w-px h-4 bg-gray-200 hidden sm:block" />

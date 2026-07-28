@@ -674,15 +674,18 @@ function GeneratePage() {
   if (invalidCode) {
     return (
       <main className="min-h-screen flex flex-col bg-gray-50">
-        <header style={{ backgroundColor: '#003087' }} className="py-4 px-6">
+        <header style={{ backgroundColor: '#072f42' }} className="py-4 px-6">
           <div className="max-w-3xl mx-auto flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#005eb8' }}>
-              <span className="text-white font-bold text-sm">NHS</span>
+            <div style={{ width: 32, height: 32, border: '2px solid #F4A800', borderRadius: '50%', position: 'relative', flexShrink: 0 }}>
+              <div style={{ position: 'absolute', top: '50%', left: '18%', right: '18%', height: 2, background: '#fff', transform: 'translateY(-50%)' }} />
+              <div style={{ position: 'absolute', left: '50%', top: '18%', bottom: '18%', width: 2, background: '#F4A800', transform: 'translateX(-50%)' }} />
             </div>
-            <span className="text-white font-bold">EaseMe</span>
+            <span style={{ fontFamily: "'Fraunces', serif", fontSize: 20, fontWeight: 700, color: '#fff', letterSpacing: -0.3 }}>
+              Ease<span style={{ color: '#F4A800' }}>Me</span>
+            </span>
           </div>
         </header>
-        <div style={{ backgroundColor: '#005eb8' }} className="h-1" />
+        <div style={{ backgroundColor: '#F4A800' }} className="h-0.5" />
         <div className="flex-1 flex items-center justify-center px-6 py-16">
           <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-8 max-w-sm w-full text-center">
             <div className="text-4xl mb-4">🔑</div>
@@ -691,7 +694,7 @@ function GeneratePage() {
               The code <span className="font-mono font-semibold text-gray-700">{clientCode}</span> does not match any active account. Check the code your consultant sent you and try again.
             </p>
             <a href="/" className="inline-block w-full py-3 text-white font-semibold rounded-xl text-sm"
-              style={{ backgroundColor: '#005eb8' }}>
+              style={{ backgroundColor: '#0B4F6C' }}>
               Back to login
             </a>
           </div>
@@ -702,13 +705,16 @@ function GeneratePage() {
 
   return (
     <main className="min-h-screen flex flex-col bg-gray-50">
-      <header style={{ backgroundColor: '#003087' }} className="py-4 px-6 flex-shrink-0">
+      <header style={{ backgroundColor: '#072f42' }} className="py-4 px-6 flex-shrink-0">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div style={{ backgroundColor: '#005eb8' }} className="w-10 h-10 rounded flex items-center justify-center">
-              <span className="text-white font-bold text-sm">NHS</span>
+            <div style={{ width: 32, height: 32, border: '2px solid #F4A800', borderRadius: '50%', position: 'relative', flexShrink: 0 }}>
+              <div style={{ position: 'absolute', top: '50%', left: '18%', right: '18%', height: 2, background: '#fff', transform: 'translateY(-50%)' }} />
+              <div style={{ position: 'absolute', left: '50%', top: '18%', bottom: '18%', width: 2, background: '#F4A800', transform: 'translateX(-50%)' }} />
             </div>
-            <h1 className="text-white text-xl font-semibold">Statement Writer</h1>
+            <span style={{ fontFamily: "'Fraunces', serif", fontSize: 20, fontWeight: 700, color: '#fff', letterSpacing: -0.3 }}>
+              Ease<span style={{ color: '#F4A800' }}>Me</span>
+            </span>
           </div>
           <div className="flex items-center gap-3">
             <div className="text-right">
@@ -727,7 +733,7 @@ function GeneratePage() {
           </div>
         </div>
       </header>
-      <div style={{ backgroundColor: '#005eb8' }} className="h-1 flex-shrink-0" />
+      <div style={{ backgroundColor: '#F4A800' }} className="h-0.5 flex-shrink-0" />
 
       {/* Single-page form */}
       {!result && (
@@ -748,7 +754,7 @@ function GeneratePage() {
                         onClick={() => { setInputMode(val); setError(''); setScrapeAutoSwitched(false) }}
                         className="p-3 rounded-md border-2 text-sm text-left transition-colors"
                         style={inputMode === val
-                          ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff', color: '#003087' }
+                          ? { borderColor: '#0B4F6C', backgroundColor: '#eef5f8', color: '#072f42' }
                           : { borderColor: '#e5e7eb', color: '#374151' }}>
                         <p className="font-medium">{label}</p>
                         <p className="text-xs opacity-70 mt-0.5">{desc}</p>
@@ -774,7 +780,7 @@ function GeneratePage() {
                         </div>
                       )}
                       <details className="group">
-                        <summary className="text-sm font-medium cursor-pointer list-none flex items-center gap-1 py-1 select-none" style={{ color: '#005eb8' }}>
+                        <summary className="text-sm font-medium cursor-pointer list-none flex items-center gap-1 py-1 select-none" style={{ color: '#0B4F6C' }}>
                           <span className="group-open:hidden">+ Add person specification (optional)</span>
                           <span className="hidden group-open:inline">− Hide person specification</span>
                         </summary>
@@ -822,7 +828,7 @@ function GeneratePage() {
                       <button key={val} type="button" onClick={() => setApplicationMode(val)}
                         className="w-full text-left p-3 rounded-md border-2 transition-colors"
                         style={applicationMode === val
-                          ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff' }
+                          ? { borderColor: '#0B4F6C', backgroundColor: '#eef5f8' }
                           : { borderColor: '#e5e7eb' }}>
                         <p className="font-medium text-sm text-gray-800">{label}</p>
                         <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
@@ -859,7 +865,7 @@ function GeneratePage() {
                     </div>
                     <button type="button" onClick={addQuestion}
                       className="flex items-center gap-1.5 text-sm font-semibold cursor-pointer pt-3"
-                      style={{ color: '#005eb8' }}>
+                      style={{ color: '#0B4F6C' }}>
                       <span className="text-lg leading-none">+</span> Add question
                     </button>
                   </div>
@@ -877,7 +883,7 @@ function GeneratePage() {
                         <button key={val} type="button" onClick={() => setStyle(val)}
                           className="p-3 rounded-md border-2 text-sm text-left transition-colors"
                           style={style === val
-                            ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff' }
+                            ? { borderColor: '#0B4F6C', backgroundColor: '#eef5f8' }
                             : { borderColor: '#e5e7eb' }}>
                           <p className="font-medium text-gray-800">{label}</p>
                           <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
@@ -902,7 +908,7 @@ function GeneratePage() {
                           onClick={() => setBodyPattern(val)}
                           className="text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer"
                           style={bodyPattern === val
-                            ? { borderColor: '#005eb8', backgroundColor: '#005eb8', color: 'white' }
+                            ? { borderColor: '#0B4F6C', backgroundColor: '#0B4F6C', color: 'white' }
                             : { borderColor: '#d1d5db', backgroundColor: 'white', color: '#374151' }}>
                           {label}
                         </button>
@@ -933,7 +939,7 @@ function GeneratePage() {
 
                 <button type="submit" disabled={loading}
                   className="w-full py-3 text-white font-semibold rounded-md cursor-pointer disabled:opacity-60 transition-colors"
-                  style={{ backgroundColor: loading ? '#64748b' : '#005eb8' }}>
+                  style={{ backgroundColor: loading ? '#64748b' : '#0B4F6C' }}>
                   {loading ? (loadingStep || 'Generating…') : 'Generate Statement'}
                 </button>
 
@@ -956,7 +962,7 @@ function GeneratePage() {
                         ))}
                       </div>
                       <div className="absolute left-0 right-0 h-0.5 animate-scan-line"
-                        style={{ backgroundColor: '#005eb8', boxShadow: '0 0 6px 2px rgba(0,94,184,0.35)' }} />
+                        style={{ backgroundColor: '#0B4F6C', boxShadow: '0 0 6px 2px rgba(11,79,108,0.45)' }} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold text-blue-900 mb-1">{loadingStep || 'Starting…'}</p>
@@ -969,7 +975,7 @@ function GeneratePage() {
                           return (
                             <div key={s} className="flex items-center gap-1.5">
                               <div className="w-2 h-2 rounded-full transition-all duration-300"
-                                style={{ backgroundColor: active ? '#005eb8' : '#c0d8f0' }} />
+                                style={{ backgroundColor: active ? '#0B4F6C' : '#b0ccd8' }} />
                               {i < 2 && <div className="w-6 h-px" style={{ backgroundColor: '#c0d8f0' }} />}
                             </div>
                           )
@@ -991,16 +997,16 @@ function GeneratePage() {
       {result && (
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Top bar */}
-          <div style={{ backgroundColor: '#003087' }} className="px-4 py-3 flex-shrink-0">
+          <div style={{ backgroundColor: '#072f42' }} className="px-4 py-3 flex-shrink-0">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="min-w-0">
-                <p className="text-blue-200 text-xs">Statement generated for</p>
+                <p style={{ color: 'rgba(244,168,0,0.7)' }} className="text-xs">Statement generated for</p>
                 <h2 className="text-white font-bold text-base sm:text-lg leading-tight truncate">{result.jobTitle}</h2>
-                {result.organisation && <p className="text-blue-200 text-sm truncate">{result.organisation}</p>}
+                {result.organisation && <p style={{ color: 'rgba(255,255,255,0.55)' }} className="text-sm truncate">{result.organisation}</p>}
               </div>
               <div className="flex items-center gap-2 flex-wrap flex-shrink-0">
                 {result.promptRegion && (
-                  <span className="text-xs px-2 py-1 rounded bg-blue-700 text-blue-100 font-medium">
+                  <span className="text-xs px-2 py-1 rounded font-medium" style={{ backgroundColor: 'rgba(244,168,0,0.15)', color: '#F4A800' }}>
                     {result.promptRegion === 'scotland' ? 'NHS Scotland' : result.promptRegion === 'england-wales' ? 'NHS England/Wales' : 'Generic'}
                   </span>
                 )}
@@ -1013,15 +1019,15 @@ function GeneratePage() {
                 <button
                   onClick={() => { downloadAsDoc(result); setDownloaded(true); setTimeout(() => setDownloaded(false), 3000) }}
                   className="text-sm px-3 py-1.5 text-white rounded font-medium cursor-pointer transition-colors"
-                  style={{ backgroundColor: downloaded ? '#009639' : '#005eb8' }}
-                  onMouseEnter={(e) => { if (!downloaded) e.currentTarget.style.backgroundColor = '#004a9f' }}
-                  onMouseLeave={(e) => { if (!downloaded) e.currentTarget.style.backgroundColor = '#005eb8' }}
+                  style={{ backgroundColor: downloaded ? '#009639' : '#0B4F6C' }}
+                  onMouseEnter={(e) => { if (!downloaded) e.currentTarget.style.backgroundColor = '#072f42' }}
+                  onMouseLeave={(e) => { if (!downloaded) e.currentTarget.style.backgroundColor = '#0B4F6C' }}
                 >
                   {downloaded ? 'Downloaded!' : 'Download .doc'}
                 </button>
                 <button
                   onClick={() => { setResult(null); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText(''); setPastedPersonSpec(''); setSparsePs(false); setDownloadedDocs([]); setSpecificQuestions(['']) }}
-                  className="text-sm px-3 py-1.5 border border-blue-400 text-blue-100 rounded font-medium hover:bg-blue-800 cursor-pointer"
+                  className="text-sm px-3 py-1.5 rounded font-medium cursor-pointer" style={{ border: '1px solid rgba(255,255,255,0.25)', color: 'rgba(255,255,255,0.8)' }}
                 >
                   New Statement
                 </button>
@@ -1134,7 +1140,7 @@ function GeneratePage() {
                     <ol className="space-y-1.5 list-none">
                       {result.previousRoleDuties.map((d, i) => (
                         <li key={i} className="flex gap-2.5 text-sm text-gray-700">
-                          <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
+                          <span style={{ color: '#0B4F6C' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
                           <span>{d}</span>
                         </li>
                       ))}
@@ -1174,7 +1180,7 @@ function GeneratePage() {
                     <ol className="space-y-1.5 list-none">
                       {result.currentRoleDuties.map((d, i) => (
                         <li key={i} className="flex gap-2.5 text-sm text-gray-700">
-                          <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
+                          <span style={{ color: '#0B4F6C' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
                           <span>{d}</span>
                         </li>
                       ))}
@@ -1189,7 +1195,7 @@ function GeneratePage() {
                       onClick={() => setShowRewrite(true)}
                       className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-800 cursor-pointer"
                     >
-                      <span style={{ color: '#005eb8' }}>&#8635;</span>
+                      <span style={{ color: '#0B4F6C' }}>&#8635;</span>
                       Rewrite with instructions
                     </button>
                   ) : (
@@ -1208,7 +1214,7 @@ function GeneratePage() {
                           onClick={handleRewrite}
                           disabled={rewriting || !rewriteInstruction.trim()}
                           className="px-4 py-2 text-white text-sm font-medium rounded cursor-pointer disabled:opacity-50"
-                          style={{ backgroundColor: '#005eb8' }}
+                          style={{ backgroundColor: '#0B4F6C' }}
                         >
                           {rewriting ? 'Rewriting...' : 'Rewrite Statement'}
                         </button>
