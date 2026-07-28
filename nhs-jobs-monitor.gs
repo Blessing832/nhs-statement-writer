@@ -161,16 +161,10 @@ function fetchJobs(url) {
   return scrapeJobs(res.getContentText());
 }
 
-/**
- * Parses the HealthJobsUK listing HTML.
- * Finds every anchor whose href points to /job/ and extracts
- * title + surrounding context for employer, location, band/salary.
- */
 function scrapeJobs(html) {
   var jobs = [];
   var seen = {};
 
-  // Match anchors linking to individual job pages
   var anchorRe = /<a\s[^>]*href="(https?:\/\/(?:www\.)?healthjobsuk\.com\/job\/[^"#?]+)[^"]*"[^>]*>([\s\S]*?)<\/a>/gi;
   var m;
 
@@ -178,11 +172,9 @@ function scrapeJobs(html) {
     var url   = m[1];
     var title = stripTags(m[2]).trim();
 
-    // Skip nav/pagination links (empty title or suspiciously short)
     if (!title || title.length < 4 || seen[url]) continue;
     seen[url] = true;
 
-    // Grab ~1 000 chars of HTML after the link for context
     var ctxRaw = html.slice(m.index, Math.min(html.length, m.index + 1000));
     var ctx    = stripTags(ctxRaw).replace(/\s+/g, ' ').trim();
 
@@ -298,16 +290,6 @@ function accumulateDailyCounts(props, newCounts) {
 
 // ─── ADMIN / DEBUG ────────────────────────────────────────────────────────────
 
-/**
- * Run this FIRST.
- * Logs:
- *  1. HTTP status (should be 200)
- *  2. Raw HTML snippet — look for job link patterns
- *  3. First 5 parsed jobs — confirm fields are extracted correctly
- *
- * If fields show "N/A", copy ~200 chars of HTML around a job title from the
- * raw snippet and share it so the regex patterns can be tuned.
- */
 function debugScrape() {
   var url = SEARCHES[0].url;
   Logger.log('Fetching: ' + url);
@@ -335,8 +317,8 @@ function debugScrape() {
   });
 
   if (jobs.length === 0) {
-    Logger.log('\nNo jobs found — site may require JavaScript or the HTML structure has changed.');
-    Logger.log('Check the raw HTML above for anchor tags containing "/job/".');
+    Logger.log('\nNo jobs found — site may require JavaScript or HTML structure differs.');
+    Logger.log('Check raw HTML above for anchor tags containing "/job/".');
   }
 }
 
