@@ -1,59 +1,53 @@
 /**
  * ╔══════════════════════════════════════════════════════════════════════════╗
- * ║     NHS VACANCY MONITOR — Google Apps Script (HealthJobsUK Scraper)     ║
- * ║     Scrapes 4 search pages · Telegram alerts · 15-min trigger           ║
+ * ║     NHS VACANCY MONITOR — Google Apps Script (trac.jobs Feed Edition)   ║
+ * ║     4 categories · Telegram alerts · 15-min trigger                     ║
  * ╚══════════════════════════════════════════════════════════════════════════╝
  *
  * ── QUICK START ──────────────────────────────────────────────────────────────
  *
- *  1. Paste this entire file into script.google.com (replace all existing code).
+ *  1. Paste this file into script.google.com (replace all existing code).
  *
  *  2. ⚙ Project Settings → Script Properties → Add:
  *       TELEGRAM_BOT_TOKEN   e.g. 7123456789:AAHxyz...
  *       TELEGRAM_CHAT_ID     e.g. -1001234567890
  *
- *  3. Run  debugScrape()  first — confirms the site is reachable and logs
- *       raw HTML so you can verify the parsing patterns are correct.
+ *  3. Run  debugFeed()  FIRST — tries 3 candidate API endpoints and logs
+ *       the HTTP status + first 2 000 chars of each response. Paste the
+ *       output here so the correct endpoint + parser can be confirmed.
  *
- *  4. Run  testTelegram()  to confirm bot messages arrive.
- *
- *  5. Run  setupTriggers()  to create the 15-min + 7am triggers.
- *
- *  6. Run  checkAllSearches()  once to baseline existing vacancies
- *       (first run records all current jobs WITHOUT sending alerts).
+ *  4. Once the working endpoint is confirmed, run  testTelegram()  then
+ *       setupTriggers()  then  checkAllSearches()  (baselines existing jobs).
  *
  * ── ADMIN FUNCTIONS ──────────────────────────────────────────────────────────
  *
- *  debugScrape()     — fetch page 1, log raw HTML + parsed jobs (no alerts)
- *  testTelegram()    — send test message
- *  setupTriggers()   — (re)create triggers
+ *  debugFeed()       — probe 3 API endpoints, log responses (no alerts)
+ *  testTelegram()    — send test Telegram message
+ *  setupTriggers()   — (re)create 15-min + 7am triggers
  *  resetSeenIds()    — wipe stored IDs and start fresh
  */
 
-// ─── SEARCH URLS ─────────────────────────────────────────────────────────────
+// ─── CATEGORY _ts CODES ─────────────────────────────────────────────────────────────
 
 var SEARCHES = [
-  {
-    name:  'Nursing & Midwifery',
-    emoji: '🩺',
-    url:   'https://www.healthjobsuk.com/job_list?JobSearch_g=303&JobSearch_re=_POST&JobSearch_re_0=1&JobSearch_re_1=1-_-_-&JobSearch_re_2=1-_-_--_-_-&JobSearch_Submit=Search&_tr=JobSearch&_ts=340737',
-  },
-  {
-    name:  'Support Services',
-    emoji: '🤝',
-    url:   'https://www.healthjobsuk.com/job_list?JobSearch_g=303&JobSearch_re=_POST&JobSearch_re_0=1&JobSearch_re_1=1-_-_-&JobSearch_re_2=1-_-_--_-_-&JobSearch_Submit=Search&_tr=JobSearch&_ts=344314',
-  },
-  {
-    name:  'Allied Health',
-    emoji: '⚕️',
-    url:   'https://www.healthjobsuk.com/job_list?JobSearch_g=303&JobSearch_re=_POST&JobSearch_re_0=1&JobSearch_re_1=1-_-_-&JobSearch_re_2=1-_-_--_-_-&JobSearch_Submit=Search&_tr=JobSearch&_ts=349040',
-  },
-  {
-    name:  'Emergency',
-    emoji: '🚨',
-    url:   'https://www.healthjobsuk.com/job_list?JobSearch_g=303&JobSearch_re=_POST&JobSearch_re_0=1&JobSearch_re_1=1-_-_-&JobSearch_re_2=1-_-_--_-_-&JobSearch_Submit=Search&_tr=JobSearch&_ts=351099',
-  },
+  { name: 'Nursing & Midwifery', emoji: '🩺', ts: '340737' },
+  { name: 'Support Services',    emoji: '🤝', ts: '344314' },
+  { name: 'Allied Health',       emoji: '⚕️', ts: '349040' },
+  { name: 'Emergency',           emoji: '🚨', ts: '351099' },
 ];
+
+// Candidate feed URL templates — {TS} is replaced with the category code.
+// debugFeed() probes all three; once one works the FEED_TEMPLATE constant
+// below should be updated to the working URL.
+var FEED_CANDIDATES = [
+  'https://feeds.trac.jobs/jobs/search?ts={TS}&format=json',
+  'https://feeds.trac.jobs/jobs/search?ts={TS}',
+  'https://www.healthjobsuk.com/api/jobs?_ts={TS}',
+];
+
+// ← UPDATE THIS after debugFeed() confirms which URL works.
+// Use the exact template string from FEED_CANDIDATES that returned 200 + data.
+var FEED_TEMPLATE = 'https://feeds.trac.jobs/jobs/search?ts={TS}&format=json';
 
 var SEEN_IDS_KEY     = 'seenVacancyIds';
 var DAILY_COUNTS_KEY = 'dailyNewCounts';
@@ -62,11 +56,58 @@ var FETCH_OPTS = {
   muteHttpExceptions: true,
   headers: {
     'User-Agent':      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Accept':          'text/html,application/xhtml+xml,*/*;q=0.9',
+    'Accept':          'application/json, application/xml, text/xml, text/html, */*',
     'Accept-Language': 'en-GB,en;q=0.9',
     'Referer':         'https://www.healthjobsuk.com/',
   },
 };
+
+// ─── DEBUG: PROBE ALL CANDIDATE ENDPOINTS ────────────────────────────────────────────
+
+/**
+ * Run this FIRST — before anything else.
+ *
+ * Tries every URL in FEED_CANDIDATES using the Support Services ts=344314.
+ * For each one logs:
+ *   • HTTP status code
+ *   • Content-Type header
+ *   • First 2 000 chars of the response body
+ *
+ * Paste the full output here so the correct endpoint and parser can be set up.
+ */
+function debugFeed() {
+  var testTs = '344314'; // Support Services
+
+  FEED_CANDIDATES.forEach(function(template, i) {
+    var url = template.replace('{TS}', testTs);
+    Logger.log('\n══════════════════════════════════════════════');
+    Logger.log('Candidate ' + (i + 1) + ': ' + url);
+    Logger.log('══════════════════════════════════════════════');
+
+    try {
+      var res         = UrlFetchApp.fetch(url, FETCH_OPTS);
+      var code        = res.getResponseCode();
+      var body        = res.getContentText();
+      var contentType = res.getHeaders()['Content-Type'] || res.getHeaders()['content-type'] || 'unknown';
+
+      Logger.log('HTTP status  : ' + code);
+      Logger.log('Content-Type : ' + contentType);
+      Logger.log('Body length  : ' + body.length + ' chars');
+      Logger.log('Body (first 2 000 chars):\n' + body.slice(0, 2000));
+
+      if (code === 200 && body.length > 100) {
+        Logger.log('✅ This endpoint returned data — likely the one to use.');
+      } else {
+        Logger.log('❌ Empty or error response.');
+      }
+    } catch (e) {
+      Logger.log('ERROR fetching: ' + e.message);
+    }
+  });
+
+  Logger.log('\n══════════════════════════════════════════════');
+  Logger.log('Done. Paste the full log above so the correct endpoint and parser can be confirmed.');
+}
 
 // ─── MAIN ENTRY POINT ─────────────────────────────────────────────────────────
 
@@ -80,7 +121,7 @@ function checkAllSearches() {
 
   SEARCHES.forEach(function(search) {
     try {
-      var jobs = fetchJobs(search.url);
+      var jobs = fetchJobs(search.ts);
       Logger.log('[' + search.name + '] found ' + jobs.length + ' listings');
 
       var fresh = jobs.filter(function(j) { return !seenIds.has(j.id); });
@@ -152,72 +193,133 @@ function sendDailySummary() {
   Logger.log('Daily summary sent. Counter reset.');
 }
 
-// ─── SCRAPING ──────────────────────────────────────────────────────────────────
+// ─── FEED FETCH & PARSE ────────────────────────────────────────────────────────────
 
-function fetchJobs(url) {
-  var res  = UrlFetchApp.fetch(url, FETCH_OPTS);
+function fetchJobs(ts) {
+  var url = FEED_TEMPLATE.replace('{TS}', ts);
+  var res = UrlFetchApp.fetch(url, FETCH_OPTS);
   var code = res.getResponseCode();
-  if (code !== 200) throw new Error('HTTP ' + code);
-  return scrapeJobs(res.getContentText());
+  if (code !== 200) throw new Error('HTTP ' + code + ' from ' + url);
+
+  var body = res.getContentText();
+  var contentType = (res.getHeaders()['Content-Type'] || res.getHeaders()['content-type'] || '').toLowerCase();
+
+  // Try JSON first, fall back to XML/HTML parsing
+  if (contentType.indexOf('json') !== -1 || body.trim().charAt(0) === '[' || body.trim().charAt(0) === '{') {
+    return parseJobsJSON(body, ts);
+  }
+  if (contentType.indexOf('xml') !== -1 || body.trim().charAt(0) === '<') {
+    return parseJobsXML(body, ts);
+  }
+
+  // Unknown format — log and return empty
+  Logger.log('Unknown response format for ts=' + ts + '. Content-Type: ' + contentType);
+  Logger.log('Body snippet: ' + body.slice(0, 500));
+  return [];
 }
 
-function scrapeJobs(html) {
+// ── JSON parser ───────────────────────────────────────────────────────────────────────
+
+function parseJobsJSON(body, ts) {
   var jobs = [];
-  var seen = {};
+  var data;
 
-  var anchorRe = /<a\s[^>]*href="(https?:\/\/(?:www\.)?healthjobsuk\.com\/job\/[^"#?]+)[^"]*"[^>]*>([\s\S]*?)<\/a>/gi;
-  var m;
+  try { data = JSON.parse(body); } catch (e) {
+    Logger.log('JSON parse error: ' + e.message);
+    return jobs;
+  }
 
-  while ((m = anchorRe.exec(html)) !== null) {
-    var url   = m[1];
-    var title = stripTags(m[2]).trim();
+  // Normalise: data may be an array or an object with a jobs/results/items key
+  var items = [];
+  if (Array.isArray(data)) {
+    items = data;
+  } else {
+    var keys = ['jobs', 'results', 'items', 'vacancies', 'data'];
+    for (var i = 0; i < keys.length; i++) {
+      if (Array.isArray(data[keys[i]])) { items = data[keys[i]]; break; }
+    }
+  }
 
-    if (!title || title.length < 4 || seen[url]) continue;
-    seen[url] = true;
+  if (items.length === 0) {
+    Logger.log('JSON parsed but no item array found. Keys: ' + Object.keys(data).join(', '));
+    Logger.log('Full response: ' + body.slice(0, 1000));
+    return jobs;
+  }
 
-    var ctxRaw = html.slice(m.index, Math.min(html.length, m.index + 1000));
-    var ctx    = stripTags(ctxRaw).replace(/\s+/g, ' ').trim();
+  items.forEach(function(item) {
+    var id = str(item.id || item.jobId || item.vacancy_id || item.ref || item.reference || '');
+    if (!id) return;
+
+    var url = str(item.url || item.link || item.apply_url || item.job_url || '');
+    if (!url) url = 'https://www.healthjobsuk.com/job/' + id;
 
     jobs.push({
-      id:       url,
-      title:    title,
-      employer: extractField(ctx, [
-        /(?:employer|organisation|trust)[:\s]+([^|•·\n]{3,60})/i,
-        /(?:nhs|foundation|hospital|trust|community|council)\s[^|•·\n]{3,50}/i,
-      ]),
-      location: extractField(ctx, [
-        /(?:location|town|city|county)[:\s]+([^|•·\n]{2,50})/i,
-      ]),
-      band: extractField(ctx, [
-        /(Band\s+\d[A-Za-z]?(?:\s*[–\-]\s*Band\s*\d[A-Za-z]?)?)/i,
-        /(?:salary|pay)[:\s]+([£][^|•·\n]{3,50})/i,
-        /([£][\d,]+\s*[-–]\s*[£][\d,]+[^|•·\n]{0,30})/,
-      ]),
-      url: url,
+      id:       url, // use URL as stable dedup key
+      title:    str(item.title || item.job_title || item.jobTitle || item.name || 'N/A'),
+      employer: str(item.employer || item.organisation || item.organization || item.trust || item.company || 'N/A'),
+      location: str(item.location || item.town || item.city || item.region || 'N/A'),
+      band:     str(item.band || item.pay_band || item.payBand || item.salary || item.salary_range || 'N/A'),
+      url:      url,
     });
+  });
+
+  return jobs;
+}
+
+// ── XML parser (RSS / Atom fallback) ─────────────────────────────────────────────────
+
+function parseJobsXML(body, ts) {
+  var jobs = [];
+
+  try {
+    var doc     = XmlService.parse(body);
+    var root    = doc.getRootElement();
+    var channel = root.getChild('channel') || root;
+    var items   = channel.getChildren('item');
+
+    if (!items || items.length === 0) {
+      // Try <job> or <vacancy> elements
+      items = root.getChildren('job') || root.getChildren('vacancy') || [];
+    }
+
+    Logger.log('XML: found ' + items.length + ' elements');
+
+    items.forEach(function(item) {
+      var link  = xmlText(item, ['link', 'url', 'job_url']);
+      var title = xmlText(item, ['title', 'job_title', 'name']);
+      if (!link && !title) return;
+
+      var id = link || ('ts-' + ts + '-' + xmlText(item, ['id', 'ref', 'guid']));
+
+      jobs.push({
+        id:       id,
+        title:    title || 'N/A',
+        employer: xmlText(item, ['employer', 'organisation', 'trust', 'company']) || 'N/A',
+        location: xmlText(item, ['location', 'town', 'city', 'region'])           || 'N/A',
+        band:     xmlText(item, ['band', 'pay_band', 'salary', 'salary_range'])   || 'N/A',
+        url:      link || 'https://www.healthjobsuk.com/job_list?_ts=' + ts,
+      });
+    });
+  } catch (e) {
+    Logger.log('XML parse error: ' + e.message + '\nSnippet: ' + body.slice(0, 500));
   }
 
   return jobs;
 }
 
-function stripTags(str) {
-  return str
-    .replace(/<script[\s\S]*?<\/script>/gi, '')
-    .replace(/<style[\s\S]*?<\/style>/gi, '')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-    .replace(/&nbsp;/g, ' ').replace(/&#\d+;/g, ' ');
-}
-
-function extractField(text, patterns) {
-  for (var i = 0; i < patterns.length; i++) {
-    var m = text.match(patterns[i]);
-    if (m) {
-      var val = (m[1] || m[0]).replace(/\s+/g, ' ').trim();
-      if (val.length >= 2) return val;
+function xmlText(el, names) {
+  for (var i = 0; i < names.length; i++) {
+    var child = el.getChild(names[i]);
+    if (child) {
+      var t = child.getText().trim();
+      if (t) return t;
     }
   }
-  return 'N/A';
+  return '';
+}
+
+function str(v) {
+  return (v === null || v === undefined) ? '' : String(v).trim();
 }
 
 // ─── TELEGRAM ─────────────────────────────────────────────────────────────────
@@ -288,39 +390,7 @@ function accumulateDailyCounts(props, newCounts) {
   props.setProperty(DAILY_COUNTS_KEY, JSON.stringify(existing));
 }
 
-// ─── ADMIN / DEBUG ────────────────────────────────────────────────────────────
-
-function debugScrape() {
-  var url = SEARCHES[0].url;
-  Logger.log('Fetching: ' + url);
-
-  var res  = UrlFetchApp.fetch(url, FETCH_OPTS);
-  var code = res.getResponseCode();
-  var html = res.getContentText();
-
-  Logger.log('HTTP status: ' + code);
-  Logger.log('Page length: ' + html.length + ' chars');
-  Logger.log('\n── Raw HTML (first 3 000 chars) ──────────────────────────────\n' + html.slice(0, 3000));
-
-  if (code !== 200) return;
-
-  var jobs = scrapeJobs(html);
-  Logger.log('\n── Parsed ' + jobs.length + ' jobs. First 5: ──────────────────────────────');
-  jobs.slice(0, 5).forEach(function(j, i) {
-    Logger.log(
-      '\n[' + (i + 1) + '] ' + j.title +
-      '\n    Employer : ' + j.employer +
-      '\n    Location : ' + j.location +
-      '\n    Band     : ' + j.band +
-      '\n    URL      : ' + j.url
-    );
-  });
-
-  if (jobs.length === 0) {
-    Logger.log('\nNo jobs found — site may require JavaScript or HTML structure differs.');
-    Logger.log('Check raw HTML above for anchor tags containing "/job/".');
-  }
-}
+// ─── ADMIN ───────────────────────────────────────────────────────────────────────────
 
 function testTelegram() {
   sendTelegramMessage('✅ NHS Vacancy Monitor — Telegram connection confirmed!');
