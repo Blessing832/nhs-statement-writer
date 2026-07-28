@@ -254,7 +254,7 @@ function PreferenceForm({ clients, existing, token, onSaved, onCancel }: {
           type="submit"
           disabled={saving}
           className="px-5 py-2.5 text-sm font-semibold text-white rounded-lg cursor-pointer disabled:opacity-60"
-          style={{ backgroundColor: '#005eb8' }}
+          style={{ backgroundColor: '#0B4F6C' }}
         >
           {saving ? 'Saving...' : existing ? 'Update' : 'Add Applicant'}
         </button>
@@ -306,7 +306,7 @@ export default function PreferencesPage() {
 
   if (loading) return (
     <div className="flex items-center justify-center py-20">
-      <div className="w-5 h-5 border-2 border-gray-300 rounded-full animate-spin" style={{ borderTopColor: '#005eb8' }} />
+      <div className="w-5 h-5 border-2 border-gray-300 rounded-full animate-spin" style={{ borderTopColor: '#0B4F6C' }} />
     </div>
   )
 
@@ -351,7 +351,7 @@ export default function PreferencesPage() {
         prefs.length === 0 ? (
           <div className="bg-white rounded-xl border border-dashed border-gray-300 p-10 text-center">
             <p className="text-gray-400 mb-4 text-sm">No applicants yet.</p>
-            <button onClick={() => setShowForm(true)} className="px-4 py-2 text-sm font-semibold text-white rounded-lg cursor-pointer" style={{ backgroundColor: '#005eb8' }}>
+            <button onClick={() => setShowForm(true)} className="px-4 py-2 text-sm font-semibold text-white rounded-lg cursor-pointer" style={{ backgroundColor: '#0B4F6C' }}>
               Add First Applicant
             </button>
           </div>

@@ -57,7 +57,7 @@ function StatementContent({ content }: { content: string }) {
     // Whole-line bold = subheading (Style 1 subheadings)
     if (/^\*\*[^*]+\*\*$/.test(t)) {
       nodes.push(
-        <p key={i} className="font-semibold text-sm mt-5 mb-1" style={{ color: '#003087' }}>
+        <p key={i} className="font-semibold text-sm mt-5 mb-1" style={{ color: '#072f42' }}>
           {t.replace(/\*\*/g, '')}
         </p>
       )
@@ -67,7 +67,7 @@ function StatementContent({ content }: { content: string }) {
     // Question labels for Scotland (Q1 / Question 1)
     if (/^(Question\s+\d+|Q\d+)\s*:/i.test(t)) {
       nodes.push(
-        <p key={i} className="font-bold text-sm mt-6 mb-2 uppercase tracking-wide" style={{ color: '#005eb8' }}>
+        <p key={i} className="font-bold text-sm mt-6 mb-2 uppercase tracking-wide" style={{ color: '#0B4F6C' }}>
           {t}
         </p>
       )
@@ -194,11 +194,11 @@ export default function StatementsPage() {
       <div className="grid grid-cols-3 gap-4 mb-6">
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <p className="text-xs text-gray-500 mb-1">Total Statements</p>
-          <p className="text-3xl font-bold" style={{ color: '#003087' }}>{statements.length}</p>
+          <p className="text-3xl font-bold" style={{ color: '#072f42' }}>{statements.length}</p>
         </div>
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <p className="text-xs text-gray-500 mb-1">This Week</p>
-          <p className="text-3xl font-bold" style={{ color: '#005eb8' }}>{thisWeek}</p>
+          <p className="text-3xl font-bold" style={{ color: '#0B4F6C' }}>{thisWeek}</p>
         </div>
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <p className="text-xs text-gray-500 mb-1">Today</p>
@@ -222,7 +222,7 @@ export default function StatementsPage() {
                 <div className="h-2 rounded-full bg-gray-100 w-40 overflow-hidden">
                   <div className="h-full rounded-full bg-green-500 transition-all" style={{ width: `${pct}%` }} />
                 </div>
-                <span className="text-sm font-semibold" style={{ color: pct === 100 ? '#009639' : pct >= 50 ? '#005eb8' : '#d4351c' }}>
+                <span className="text-sm font-semibold" style={{ color: pct === 100 ? '#009639' : pct >= 50 ? '#0B4F6C' : '#d4351c' }}>
                   {known.length > 0 ? `${pct}%` : '—'}
                 </span>
               </div>
@@ -264,7 +264,7 @@ export default function StatementsPage() {
 
       {loading ? (
         <div className="flex items-center gap-2 text-gray-500 py-8">
-          <div className="w-4 h-4 border-2 border-gray-300 rounded-full animate-spin" style={{ borderTopColor: '#005eb8' }} />
+          <div className="w-4 h-4 border-2 border-gray-300 rounded-full animate-spin" style={{ borderTopColor: '#0B4F6C' }} />
           <span className="text-sm">Loading statements…</span>
         </div>
       ) : filtered.length === 0 ? (
@@ -288,7 +288,7 @@ export default function StatementsPage() {
                     {/* Avatar */}
                     <div
                       className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
-                      style={{ backgroundColor: '#005eb8' }}
+                      style={{ backgroundColor: '#0B4F6C' }}
                     >
                       {s.client?.full_name?.charAt(0).toUpperCase() || '?'}
                     </div>
@@ -358,7 +358,7 @@ export default function StatementsPage() {
           <div className="flex items-center gap-3 min-w-0">
             <div
               className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0"
-              style={{ backgroundColor: '#005eb8' }}
+              style={{ backgroundColor: '#0B4F6C' }}
             >
               {detail?.client?.full_name?.charAt(0).toUpperCase() || '?'}
             </div>
@@ -383,7 +383,7 @@ export default function StatementsPage() {
         <div className="flex-1 overflow-y-auto">
           {detailLoading ? (
             <div className="flex items-center justify-center py-20 gap-2 text-gray-400">
-              <div className="w-5 h-5 border-2 border-gray-200 rounded-full animate-spin" style={{ borderTopColor: '#005eb8' }} />
+              <div className="w-5 h-5 border-2 border-gray-200 rounded-full animate-spin" style={{ borderTopColor: '#0B4F6C' }} />
               <span className="text-sm">Loading statement…</span>
             </div>
           ) : detail ? (
@@ -499,7 +499,7 @@ export default function StatementsPage() {
                 detail.job_title || 'statement',
               )}
               className="w-full py-2 text-sm font-semibold text-white rounded-md cursor-pointer"
-              style={{ backgroundColor: '#005eb8' }}
+              style={{ backgroundColor: '#0B4F6C' }}
             >
               Download Word Doc
             </button>

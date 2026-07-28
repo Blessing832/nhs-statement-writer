@@ -304,7 +304,7 @@ export default function QuickWritePage() {
                   <button key={val} type="button" onClick={() => setInputMode(val)}
                     className="px-3 py-1.5 rounded-full text-xs font-medium border transition-colors cursor-pointer"
                     style={inputMode === val
-                      ? { borderColor: '#005eb8', backgroundColor: '#005eb8', color: 'white' }
+                      ? { borderColor: '#0B4F6C', backgroundColor: '#0B4F6C', color: 'white' }
                       : { borderColor: '#d1d5db', backgroundColor: 'white', color: '#374151' }}>
                     {label}
                   </button>
@@ -349,7 +349,7 @@ export default function QuickWritePage() {
                   onClick={() => setForm(f => ({ ...f, bodyPattern: val }))}
                   className="text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer"
                   style={form.bodyPattern === val
-                    ? { borderColor: '#005eb8', backgroundColor: '#005eb8', color: 'white' }
+                    ? { borderColor: '#0B4F6C', backgroundColor: '#0B4F6C', color: 'white' }
                     : { borderColor: '#d1d5db', backgroundColor: 'white', color: '#374151' }}>
                   {label}
                 </button>
@@ -407,7 +407,7 @@ export default function QuickWritePage() {
                   <button key={val} type="button"
                     onClick={() => setForm(f => ({ ...f, applicationMode: val }))}
                     className="w-full text-left p-3 rounded-md border-2 transition-colors"
-                    style={form.applicationMode === val ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff' } : { borderColor: '#e5e7eb' }}>
+                    style={form.applicationMode === val ? { borderColor: '#0B4F6C', backgroundColor: '#f0f7ff' } : { borderColor: '#e5e7eb' }}>
                     <p className="font-medium text-sm text-gray-800">{label}</p>
                     <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
                   </button>
@@ -426,7 +426,7 @@ export default function QuickWritePage() {
                   ].map(({ val, label, desc }) => (
                     <button key={val} type="button" onClick={() => setForm(f => ({ ...f, style: val }))}
                       className="p-3 rounded-md border-2 text-sm text-left transition-colors"
-                      style={form.style === val ? { borderColor: '#005eb8', backgroundColor: '#f0f7ff' } : { borderColor: '#e5e7eb' }}>
+                      style={form.style === val ? { borderColor: '#0B4F6C', backgroundColor: '#f0f7ff' } : { borderColor: '#e5e7eb' }}>
                       <p className="font-medium text-gray-800">{label}</p>
                       <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
                     </button>
@@ -463,7 +463,7 @@ export default function QuickWritePage() {
                 </div>
                 <button type="button" onClick={addQuestion}
                   className="flex items-center gap-1.5 text-xs font-semibold cursor-pointer pt-3"
-                  style={{ color: '#005eb8' }}>
+                  style={{ color: '#0B4F6C' }}>
                   <span className="text-lg leading-none">+</span> Add question
                 </button>
               </div>
@@ -488,7 +488,7 @@ export default function QuickWritePage() {
 
             <button type="submit" disabled={loading}
               className="w-full py-3 text-sm font-semibold text-white rounded-md cursor-pointer disabled:opacity-60 transition-opacity"
-              style={{ backgroundColor: loading ? '#64748b' : '#005eb8' }}>
+              style={{ backgroundColor: loading ? '#64748b' : '#0B4F6C' }}>
               {loading ? (loadingStep || 'Generating...') : 'Generate Statement'}
             </button>
 
@@ -511,7 +511,7 @@ export default function QuickWritePage() {
                     ))}
                   </div>
                   <div className="absolute left-0 right-0 h-0.5 animate-scan-line"
-                    style={{ backgroundColor: '#005eb8', boxShadow: '0 0 6px 2px rgba(0,94,184,0.35)' }} />
+                    style={{ backgroundColor: '#0B4F6C', boxShadow: '0 0 6px 2px rgba(0,94,184,0.35)' }} />
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-blue-900 mb-1">{loadingStep || 'Starting...'}</p>
@@ -527,7 +527,7 @@ export default function QuickWritePage() {
       {result && (
         <div className="flex flex-col flex-1 overflow-hidden">
           {/* Top bar */}
-          <div style={{ backgroundColor: '#003087' }} className="px-4 py-3 flex-shrink-0">
+          <div style={{ backgroundColor: '#072f42' }} className="px-4 py-3 flex-shrink-0">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-blue-200 text-xs">{form.name} (Quick Write)</p>
@@ -548,7 +548,7 @@ export default function QuickWritePage() {
                 <button
                   onClick={() => downloadAsDoc(result, form.name)}
                   className="text-sm px-3 py-1.5 text-white rounded font-medium cursor-pointer"
-                  style={{ backgroundColor: '#005eb8' }}>
+                  style={{ backgroundColor: '#0B4F6C' }}>
                   Download .doc
                 </button>
                 <button
@@ -624,7 +624,7 @@ export default function QuickWritePage() {
                     <ol className="space-y-1.5 list-none">
                       {result.previousRoleDuties.map((d, i) => (
                         <li key={i} className="flex gap-2.5 text-sm text-gray-700">
-                          <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
+                          <span style={{ color: '#0B4F6C' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
                           <span>{d}</span>
                         </li>
                       ))}
@@ -660,7 +660,7 @@ export default function QuickWritePage() {
                     <ol className="space-y-1.5 list-none">
                       {result.currentRoleDuties.map((d, i) => (
                         <li key={i} className="flex gap-2.5 text-sm text-gray-700">
-                          <span style={{ color: '#005eb8' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
+                          <span style={{ color: '#0B4F6C' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
                           <span>{d}</span>
                         </li>
                       ))}
@@ -674,7 +674,7 @@ export default function QuickWritePage() {
                     <button
                       onClick={() => setShowRewrite(true)}
                       className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-800 cursor-pointer">
-                      <span style={{ color: '#005eb8' }}>&#8635;</span>
+                      <span style={{ color: '#0B4F6C' }}>&#8635;</span>
                       Rewrite with instructions
                     </button>
                   ) : (
@@ -693,7 +693,7 @@ export default function QuickWritePage() {
                           onClick={handleRewrite}
                           disabled={rewriting || !rewriteInstruction.trim()}
                           className="px-4 py-2 text-white text-sm font-medium rounded cursor-pointer disabled:opacity-50"
-                          style={{ backgroundColor: '#005eb8' }}>
+                          style={{ backgroundColor: '#0B4F6C' }}>
                           {rewriting ? 'Rewriting...' : 'Rewrite Statement'}
                         </button>
                         <button

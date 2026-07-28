@@ -244,18 +244,18 @@ export default function EditClientPage() {
 
   return (
     <main className="min-h-screen flex flex-col" style={{ backgroundColor: '#f0f4f5' }}>
-      <header style={{ backgroundColor: '#003087' }} className="py-4 px-6">
+      <header style={{ backgroundColor: '#072f42' }} className="py-4 px-6">
         <div className="max-w-3xl mx-auto flex items-center gap-3">
           <div
             className="w-10 h-10 rounded flex items-center justify-center"
-            style={{ backgroundColor: '#005eb8' }}
+            style={{ backgroundColor: '#0B4F6C' }}
           >
             <span className="text-white font-bold text-sm">NHS</span>
           </div>
           <h1 className="text-white text-xl font-semibold">Edit Client</h1>
         </div>
       </header>
-      <div style={{ backgroundColor: '#005eb8' }} className="h-2" />
+      <div style={{ backgroundColor: '#0B4F6C' }} className="h-2" />
 
       <div className="max-w-3xl mx-auto w-full px-6 py-8">
         <Link href="/admin" className="text-sm text-blue-700 hover:underline mb-6 inline-block">
@@ -265,7 +265,7 @@ export default function EditClientPage() {
         {/* Client code banner */}
         <div
           className="rounded-lg p-4 mb-6 text-white"
-          style={{ backgroundColor: '#003087' }}
+          style={{ backgroundColor: '#072f42' }}
         >
           <p className="text-sm opacity-75">Client Code</p>
           <p className="text-2xl font-bold font-mono tracking-widest">{client.client_code}</p>
@@ -364,7 +364,7 @@ export default function EditClientPage() {
                             onClick={() => { handleChange('opening_style', isSelected ? '' : s.template); setShowStylePicker(false) }}
                             className="text-left p-3 rounded-md border-2 transition-colors cursor-pointer"
                             style={isSelected
-                              ? { borderColor: '#005eb8', backgroundColor: '#dbeafe' }
+                              ? { borderColor: '#0B4F6C', backgroundColor: '#dbeafe' }
                               : { borderColor: '#e5e7eb', backgroundColor: 'white' }}
                           >
                             <p className="font-semibold text-sm text-gray-800">{s.name}</p>
@@ -593,7 +593,7 @@ export default function EditClientPage() {
                 type="submit"
                 disabled={saving}
                 className="px-6 py-2.5 text-white font-medium rounded-md cursor-pointer disabled:opacity-60"
-                style={{ backgroundColor: '#005eb8' }}
+                style={{ backgroundColor: '#0B4F6C' }}
               >
                 {saving ? 'Saving...' : 'Save Changes'}
               </button>

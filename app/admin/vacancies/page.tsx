@@ -7,9 +7,9 @@ import type { ApplicantPreferences, SearchLink } from '@/lib/vacancy/types'
 import type { Client } from '@/lib/types'
 
 const SOURCE_COLORS: Record<string, string> = {
-  nhsjobs:      '#005eb8',
+  nhsjobs:      '#0B4F6C',
   healthjobsuk: '#009639',
-  scotland:     '#003087',
+  scotland:     '#072f42',
   civilservice: '#4c2c92',
   other:        '#555',
 }
@@ -46,7 +46,7 @@ function ApplicantCard({ client, pref }: { client: Client; pref: ApplicantPrefer
         <div className="flex items-center gap-3">
           <div
             className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0"
-            style={{ backgroundColor: pref ? '#005eb8' : '#9ca3af' }}
+            style={{ backgroundColor: pref ? '#0B4F6C' : '#9ca3af' }}
           >
             {(client.full_name ?? '?').charAt(0).toUpperCase()}
           </div>
@@ -161,7 +161,7 @@ export default function VacanciesDashboard() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-24 gap-4">
-        <div className="w-6 h-6 border-2 border-gray-300 rounded-full animate-spin" style={{ borderTopColor: '#005eb8' }} />
+        <div className="w-6 h-6 border-2 border-gray-300 rounded-full animate-spin" style={{ borderTopColor: '#0B4F6C' }} />
         <p className="text-sm text-gray-400">Loading…</p>
       </div>
     )
@@ -182,7 +182,7 @@ export default function VacanciesDashboard() {
         <Link
           href="/admin/vacancies/preferences"
           className="px-4 py-2 text-sm font-semibold text-white rounded-lg shadow-sm cursor-pointer"
-          style={{ backgroundColor: '#005eb8' }}
+          style={{ backgroundColor: '#0B4F6C' }}
         >
           + Manage Links
         </Link>

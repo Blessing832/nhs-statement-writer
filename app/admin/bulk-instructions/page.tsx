@@ -191,7 +191,7 @@ export default function BulkInstructionsPage() {
             onClick={handleDraftAll}
             disabled={draftingAll}
             className="px-4 py-2 text-sm font-semibold text-white rounded-md cursor-pointer disabled:opacity-60"
-            style={{ backgroundColor: '#005eb8' }}
+            style={{ backgroundColor: '#0B4F6C' }}
           >
             {draftingAll
               ? `Drafting... ${draftAllProgress}/${rows.filter(r => !r.instructions.trim()).length}`
@@ -236,7 +236,7 @@ export default function BulkInstructionsPage() {
                     onClick={() => handleSave(row)}
                     disabled={!row.dirty || row.saving}
                     className="px-3 py-1.5 text-xs font-medium text-white rounded-md cursor-pointer disabled:opacity-40"
-                    style={{ backgroundColor: row.dirty ? '#005eb8' : '#9ca3af' }}
+                    style={{ backgroundColor: row.dirty ? '#0B4F6C' : '#9ca3af' }}
                   >
                     {row.saving ? 'Saving...' : row.saved ? 'Saved ✓' : 'Save'}
                   </button>

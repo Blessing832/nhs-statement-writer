@@ -9,7 +9,7 @@ const SECTIONS = [
     label: 'Candidate Log',
     description: 'Manage applicant profiles, subscriptions, and vacancy alert settings',
     icon: '👥',
-    color: '#005eb8',
+    color: '#0B4F6C',
   },
   {
     href: '/admin/bulk-instructions',
@@ -23,7 +23,7 @@ const SECTIONS = [
     label: 'Vacancies',
     description: 'Monitor live NHS England and HealthJobsUK job alerts for all applicants',
     icon: '🔍',
-    color: '#003087',
+    color: '#072f42',
   },
   {
     href: '/admin/statements',
@@ -78,7 +78,7 @@ export default function AdminHub() {
       >
         <div
           className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md"
-          style={{ backgroundColor: '#003087' }}
+          style={{ backgroundColor: '#072f42' }}
         >
           <span className="text-white font-bold text-base">NHS</span>
         </div>
