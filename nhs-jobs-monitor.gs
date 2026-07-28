@@ -107,6 +107,24 @@ var DAILY_COUNTS_KEY = 'dailyNewCounts';
 // ─── MAIN ENTRY POINT (runs every 15 minutes via trigger) ────────────────────
 
 function checkAllSearches() {
+  // ── API reachability probe ──────────────────────────────────────────────────
+  try {
+    var probe = UrlFetchApp.fetch(
+      buildUrl(API_BASE, { sort: 'publicationDateDesc', pageSize: '1' }),
+      { muteHttpExceptions: true, headers: { Accept: 'application/xml, text/xml, */*' } }
+    );
+    var probeCode = probe.getResponseCode();
+    Logger.log('API reachability check: HTTP ' + probeCode);
+    if (probeCode !== 200) {
+      Logger.log('API not reachable — aborting. Response:\n' + probe.getContentText().slice(0, 500));
+      return;
+    }
+  } catch (probeErr) {
+    Logger.log('API reachability check FAILED: ' + probeErr.message);
+    return;
+  }
+  // ───────────────────────────────────────────────────────────────────────────
+
   var props    = PropertiesService.getScriptProperties();
   var seenIds  = loadSeenIds(props);
   var isFirstRun = seenIds.size === 0;
@@ -394,16 +412,17 @@ function setupTriggers() {
 // ─── UTILITY HELPERS ─────────────────────────────────────────────────────────
 
 function buildUrl(base, params) {
+  if (!params || typeof params !== 'object') return base;
   var parts = [];
   Object.keys(params).forEach(function(k) {
     var v = params[k];
-    // Encode key; allow commas through in values (some APIs need literal commas)
+    if (v === undefined || v === null || v === '') return; // skip empty values
     parts.push(
       encodeURIComponent(k) + '=' +
-      encodeURIComponent(v).replace(/%2C/gi, ',')
+      encodeURIComponent(String(v)).replace(/%2C/gi, ',')
     );
   });
-  return base + '?' + parts.join('&');
+  return parts.length ? base + '?' + parts.join('&') : base;
 }
 
 function loadSeenIds(props) {
