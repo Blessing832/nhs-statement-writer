@@ -27,7 +27,7 @@
  *  resetSeenIds()    — wipe stored IDs and start fresh
  */
 
-// ─── CATEGORY _ts CODES ─────────────────────────────────────────────────────────────
+// ─── CATEGORY _ts CODES ───────────────────────────────────────────────────────
 
 var SEARCHES = [
   { name: 'Nursing & Midwifery', emoji: '🩺', ts: '340737' },
@@ -62,7 +62,7 @@ var FETCH_OPTS = {
   },
 };
 
-// ─── DEBUG: PROBE ALL CANDIDATE ENDPOINTS ────────────────────────────────────────────
+// ─── DEBUG: PROBE ALL CANDIDATE ENDPOINTS ────────────────────────────────────
 
 /**
  * Run this FIRST — before anything else.
@@ -193,7 +193,7 @@ function sendDailySummary() {
   Logger.log('Daily summary sent. Counter reset.');
 }
 
-// ─── FEED FETCH & PARSE ────────────────────────────────────────────────────────────
+// ─── FEED FETCH & PARSE ───────────────────────────────────────────────────────
 
 function fetchJobs(ts) {
   var url = FEED_TEMPLATE.replace('{TS}', ts);
@@ -218,7 +218,7 @@ function fetchJobs(ts) {
   return [];
 }
 
-// ── JSON parser ───────────────────────────────────────────────────────────────────────
+// ── JSON parser ───────────────────────────────────────────────────────────────
 
 function parseJobsJSON(body, ts) {
   var jobs = [];
@@ -266,7 +266,7 @@ function parseJobsJSON(body, ts) {
   return jobs;
 }
 
-// ── XML parser (RSS / Atom fallback) ─────────────────────────────────────────────────
+// ── XML parser (RSS / Atom fallback) ─────────────────────────────────────────
 
 function parseJobsXML(body, ts) {
   var jobs = [];
@@ -390,7 +390,7 @@ function accumulateDailyCounts(props, newCounts) {
   props.setProperty(DAILY_COUNTS_KEY, JSON.stringify(existing));
 }
 
-// ─── ADMIN ───────────────────────────────────────────────────────────────────────────
+// ─── ADMIN ────────────────────────────────────────────────────────────────────
 
 function testTelegram() {
   sendTelegramMessage('✅ NHS Vacancy Monitor — Telegram connection confirmed!');
