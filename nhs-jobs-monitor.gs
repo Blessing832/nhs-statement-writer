@@ -1,63 +1,57 @@
 /**
  * ╔══════════════════════════════════════════════════════════════════════════╗
- * ║       NHS JOBS VACANCY MONITOR — Google Apps Script (RSS Edition)       ║
- * ║       Monitors 4 RSS feeds · Telegram alerts · 15-min trigger           ║
+ * ║     NHS VACANCY MONITOR — Google Apps Script (HealthJobsUK Scraper)     ║
+ * ║     Scrapes 4 search pages · Telegram alerts · 15-min trigger           ║
  * ╚══════════════════════════════════════════════════════════════════════════╝
  *
  * ── QUICK START ──────────────────────────────────────────────────────────────
  *
- *  1. Go to https://script.google.com → New project → paste this entire file.
+ *  1. Paste this entire file into script.google.com (replace all existing code).
  *
- *  2. Add your credentials:
- *       ⚙ Project Settings → Script Properties → Add property:
+ *  2. ⚙ Project Settings → Script Properties → Add:
+ *       TELEGRAM_BOT_TOKEN   e.g. 7123456789:AAHxyz...
+ *       TELEGRAM_CHAT_ID     e.g. -1001234567890
  *
- *       TELEGRAM_BOT_TOKEN   token from @BotFather  e.g. 7123456789:AAHxyz...
- *       TELEGRAM_CHAT_ID     your chat/group ID     e.g. -1001234567890
+ *  3. Run  debugScrape()  first — confirms the site is reachable and logs
+ *       raw HTML so you can verify the parsing patterns are correct.
  *
- *  3. HOW TO GET TELEGRAM CREDENTIALS
- *       Bot token  : Message @BotFather on Telegram → /newbot → follow prompts
- *       Personal ID: Message @userinfobot → it replies with your ID
- *       Group ID   : Add @userinfobot to the group → it posts the group ID
+ *  4. Run  testTelegram()  to confirm bot messages arrive.
  *
- *  4. Run  debugRSS()  first — confirm the feed returns XML (not 403).
+ *  5. Run  setupTriggers()  to create the 15-min + 7am triggers.
  *
- *  5. Run  testTelegram()  to confirm bot messages arrive.
- *
- *  6. Run  setupTriggers()  once to create both time-based triggers.
- *
- *  7. Run  checkAllSearches()  once manually to baseline existing vacancies.
- *       First run records all current listings WITHOUT sending alerts.
+ *  6. Run  checkAllSearches()  once to baseline existing vacancies
+ *       (first run records all current jobs WITHOUT sending alerts).
  *
  * ── ADMIN FUNCTIONS ──────────────────────────────────────────────────────────
  *
- *  debugRSS()        — fetch feed 1, log raw XML (no alerts sent)
- *  testTelegram()    — send a test message to confirm bot works
- *  setupTriggers()   — (re)create 15-min + 7am triggers
+ *  debugScrape()     — fetch page 1, log raw HTML + parsed jobs (no alerts)
+ *  testTelegram()    — send test message
+ *  setupTriggers()   — (re)create triggers
  *  resetSeenIds()    — wipe stored IDs and start fresh
  */
 
-// ─── RSS FEED URLS ────────────────────────────────────────────────────────────
+// ─── SEARCH URLS ─────────────────────────────────────────────────────────────
 
 var SEARCHES = [
   {
     name:  'Nursing & Midwifery',
     emoji: '🩺',
-    url:   'https://www.jobs.nhs.uk/api/rss/search?staffGroup=NURSING_AND_MIDWIFERY_REGD&payBand=BAND_3,BAND_4&contractType=Permanent&sort=publicationDateDesc',
+    url:   'https://www.healthjobsuk.com/job_list?JobSearch_g=303&JobSearch_re=_POST&JobSearch_re_0=1&JobSearch_re_1=1-_-_-&JobSearch_re_2=1-_-_--_-_-&JobSearch_Submit=Search&_tr=JobSearch&_ts=340737',
   },
   {
     name:  'Support Services',
     emoji: '🤝',
-    url:   'https://www.jobs.nhs.uk/api/rss/search?staffGroup=CLINICAL_SERVICES&payBand=BAND_2,BAND_3,BAND_4&contractType=Permanent&sort=publicationDateDesc',
+    url:   'https://www.healthjobsuk.com/job_list?JobSearch_g=303&JobSearch_re=_POST&JobSearch_re_0=1&JobSearch_re_1=1-_-_-&JobSearch_re_2=1-_-_--_-_-&JobSearch_Submit=Search&_tr=JobSearch&_ts=344314',
   },
   {
     name:  'Allied Health',
     emoji: '⚕️',
-    url:   'https://www.jobs.nhs.uk/api/rss/search?staffGroup=ALLIED_HEALTH_PROF&payBand=BAND_3,BAND_4&contractType=Permanent&sort=publicationDateDesc',
+    url:   'https://www.healthjobsuk.com/job_list?JobSearch_g=303&JobSearch_re=_POST&JobSearch_re_0=1&JobSearch_re_1=1-_-_-&JobSearch_re_2=1-_-_--_-_-&JobSearch_Submit=Search&_tr=JobSearch&_ts=349040',
   },
   {
     name:  'Emergency',
     emoji: '🚨',
-    url:   'https://www.jobs.nhs.uk/api/rss/search?staffGroup=CLINICAL_SERVICES&keyword=emergency&payBand=BAND_3,BAND_4&contractType=Permanent&sort=publicationDateDesc',
+    url:   'https://www.healthjobsuk.com/job_list?JobSearch_g=303&JobSearch_re=_POST&JobSearch_re_0=1&JobSearch_re_1=1-_-_-&JobSearch_re_2=1-_-_--_-_-&JobSearch_Submit=Search&_tr=JobSearch&_ts=351099',
   },
 ];
 
@@ -68,9 +62,9 @@ var FETCH_OPTS = {
   muteHttpExceptions: true,
   headers: {
     'User-Agent':      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Accept':          'application/rss+xml, application/xml, text/xml, */*;q=0.9',
+    'Accept':          'text/html,application/xhtml+xml,*/*;q=0.9',
     'Accept-Language': 'en-GB,en;q=0.9',
-    'Referer':         'https://www.jobs.nhs.uk/',
+    'Referer':         'https://www.healthjobsuk.com/',
   },
 };
 
@@ -86,16 +80,16 @@ function checkAllSearches() {
 
   SEARCHES.forEach(function(search) {
     try {
-      var vacancies = fetchRSS(search.url);
-      Logger.log('[' + search.name + '] fetched ' + vacancies.length + ' items');
+      var jobs = fetchJobs(search.url);
+      Logger.log('[' + search.name + '] found ' + jobs.length + ' listings');
 
-      var fresh = vacancies.filter(function(v) { return !seenIds.has(v.id); });
-      vacancies.forEach(function(v) { seenIds.add(v.id); });
+      var fresh = jobs.filter(function(j) { return !seenIds.has(j.id); });
+      jobs.forEach(function(j) { seenIds.add(j.id); });
 
       if (!isFirstRun) {
-        fresh.forEach(function(v) {
-          if (!newById[v.id]) {
-            newById[v.id] = Object.assign({}, v, {
+        fresh.forEach(function(j) {
+          if (!newById[j.id]) {
+            newById[j.id] = Object.assign({}, j, {
               searchName:  search.name,
               searchEmoji: search.emoji,
             });
@@ -116,21 +110,21 @@ function checkAllSearches() {
   if (isFirstRun) {
     Logger.log('First run — baseline recorded. No alerts sent.');
     sendTelegramMessage(
-      '✅ NHS Jobs Monitor is now active!\n\n' +
+      '✅ NHS Vacancy Monitor is now active!\n\n' +
       'Baseline recorded across all 4 categories.\n' +
       'You will receive alerts as new vacancies appear.'
     );
     return;
   }
 
-  var newVacancies = Object.values(newById);
-  newVacancies.forEach(function(v) {
-    sendVacancyAlert(v);
+  var newJobs = Object.values(newById);
+  newJobs.forEach(function(j) {
+    sendVacancyAlert(j);
     Utilities.sleep(300);
   });
 
   accumulateDailyCounts(props, dailyCounts);
-  Logger.log('Done. Alerted on ' + newVacancies.length + ' new vacancies.');
+  Logger.log('Done. Alerted on ' + newJobs.length + ' new vacancies.');
 }
 
 // ─── DAILY SUMMARY (7 am trigger) ────────────────────────────────────────────
@@ -148,7 +142,7 @@ function sendDailySummary() {
   var today = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'EEE d MMM yyyy');
 
   sendTelegramMessage(
-    '📊 NHS JOBS OVERNIGHT SUMMARY\n' +
+    '📊 NHS VACANCY OVERNIGHT SUMMARY\n' +
     '📅 ' + today + '\n\n' +
     lines.join('\n') +
     '\n\n🔢 Total: ' + total + ' new vacancies'
@@ -158,133 +152,92 @@ function sendDailySummary() {
   Logger.log('Daily summary sent. Counter reset.');
 }
 
-// ─── RSS FETCH & PARSE ────────────────────────────────────────────────────────
+// ─── SCRAPING ──────────────────────────────────────────────────────────────────
 
-function fetchRSS(url) {
-  Logger.log('Fetching: ' + url);
+function fetchJobs(url) {
   var res  = UrlFetchApp.fetch(url, FETCH_OPTS);
   var code = res.getResponseCode();
+  if (code !== 200) throw new Error('HTTP ' + code);
+  return scrapeJobs(res.getContentText());
+}
 
-  if (code !== 200) {
-    throw new Error('HTTP ' + code + ' from ' + url);
+/**
+ * Parses the HealthJobsUK listing HTML.
+ * Finds every anchor whose href points to /job/ and extracts
+ * title + surrounding context for employer, location, band/salary.
+ */
+function scrapeJobs(html) {
+  var jobs = [];
+  var seen = {};
+
+  // Match anchors linking to individual job pages
+  var anchorRe = /<a\s[^>]*href="(https?:\/\/(?:www\.)?healthjobsuk\.com\/job\/[^"#?]+)[^"]*"[^>]*>([\s\S]*?)<\/a>/gi;
+  var m;
+
+  while ((m = anchorRe.exec(html)) !== null) {
+    var url   = m[1];
+    var title = stripTags(m[2]).trim();
+
+    // Skip nav/pagination links (empty title or suspiciously short)
+    if (!title || title.length < 4 || seen[url]) continue;
+    seen[url] = true;
+
+    // Grab ~1 000 chars of HTML after the link for context
+    var ctxRaw = html.slice(m.index, Math.min(html.length, m.index + 1000));
+    var ctx    = stripTags(ctxRaw).replace(/\s+/g, ' ').trim();
+
+    jobs.push({
+      id:       url,
+      title:    title,
+      employer: extractField(ctx, [
+        /(?:employer|organisation|trust)[:\s]+([^|•·\n]{3,60})/i,
+        /(?:nhs|foundation|hospital|trust|community|council)\s[^|•·\n]{3,50}/i,
+      ]),
+      location: extractField(ctx, [
+        /(?:location|town|city|county)[:\s]+([^|•·\n]{2,50})/i,
+      ]),
+      band: extractField(ctx, [
+        /(Band\s+\d[A-Za-z]?(?:\s*[–\-]\s*Band\s*\d[A-Za-z]?)?)/i,
+        /(?:salary|pay)[:\s]+([£][^|•·\n]{3,50})/i,
+        /([£][\d,]+\s*[-–]\s*[£][\d,]+[^|•·\n]{0,30})/,
+      ]),
+      url: url,
+    });
   }
 
-  return parseRSS(res.getContentText());
+  return jobs;
 }
 
-function parseRSS(xmlText) {
-  var vacancies = [];
-
-  try {
-    var doc     = XmlService.parse(xmlText);
-    var root    = doc.getRootElement();
-    var channel = root.getChild('channel');
-
-    if (!channel) {
-      Logger.log('No <channel> found. Snippet:\n' + xmlText.slice(0, 600));
-      return vacancies;
-    }
-
-    var items = channel.getChildren('item');
-    Logger.log('Parsed ' + items.length + ' <item> elements');
-
-    items.forEach(function(item) {
-      var v = extractItem(item);
-      if (v) vacancies.push(v);
-    });
-
-  } catch (parseErr) {
-    Logger.log('XmlService failed (' + parseErr.message + ') — falling back to regex parser');
-    vacancies = parseRSSWithRegex(xmlText);
-  }
-
-  return vacancies;
+function stripTags(str) {
+  return str
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ').replace(/&#\d+;/g, ' ');
 }
 
-function extractItem(item) {
-  var title   = itemText(item, 'title');
-  var link    = itemText(item, 'link');
-  var desc    = itemText(item, 'description');
-  var pubDate = itemText(item, 'pubDate');
-
-  if (!link) return null;
-
-  var plain = desc.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim();
-
-  return {
-    id:          link,
-    title:       title || 'N/A',
-    employer:    field(plain, [/employer[:\s]+([^\n|]+)/i, /organisation[:\s]+([^\n|]+)/i]),
-    location:    field(plain, [/location[:\s]+([^\n|]+)/i, /town[:\s]+([^\n|]+)/i]),
-    payBand:     field(plain, [/pay\s*band[:\s]+([^\n|]+)/i, /band\s+(\d[^\n|]*)/i, /salary[:\s]+([^\n|]+)/i]),
-    closingDate: field(plain, [/closing\s*date[:\s]+([^\n|]+)/i, /closes?[:\s]+([^\n|]+)/i, /deadline[:\s]+([^\n|]+)/i]),
-    directUrl:   link,
-    pubDate:     pubDate,
-    rawDesc:     plain,
-  };
-}
-
-function itemText(item, tag) {
-  var el = item.getChild(tag);
-  return el ? el.getText().trim() : '';
-}
-
-function parseRSSWithRegex(xmlText) {
-  var vacancies = [];
-  var blocks    = xmlText.match(/<item[\s>][\s\S]*?<\/item>/gi) || [];
-
-  blocks.forEach(function(block) {
-    var title   = cdataOrTag(block, 'title');
-    var link    = cdataOrTag(block, 'link');
-    var desc    = cdataOrTag(block, 'description');
-    var pubDate = cdataOrTag(block, 'pubDate');
-
-    if (!link) return;
-
-    var plain = desc.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-
-    vacancies.push({
-      id:          link,
-      title:       title || 'N/A',
-      employer:    field(plain, [/employer[:\s]+([^\n|]+)/i]),
-      location:    field(plain, [/location[:\s]+([^\n|]+)/i]),
-      payBand:     field(plain, [/pay\s*band[:\s]+([^\n|]+)/i, /band\s+(\d[^\n|]*)/i]),
-      closingDate: field(plain, [/closing\s*date[:\s]+([^\n|]+)/i, /closes?[:\s]+([^\n|]+)/i]),
-      directUrl:   link,
-      pubDate:     pubDate,
-      rawDesc:     plain,
-    });
-  });
-
-  return vacancies;
-}
-
-function cdataOrTag(xml, tag) {
-  var re = new RegExp('<' + tag + '>(?:<!\\[CDATA\\[([\\s\\S]*?)\\]\\]>|([\\s\\S]*?))<\\/' + tag + '>', 'i');
-  var m  = xml.match(re);
-  if (!m) return '';
-  return (m[1] !== undefined ? m[1] : m[2] || '').trim();
-}
-
-function field(text, patterns) {
+function extractField(text, patterns) {
   for (var i = 0; i < patterns.length; i++) {
     var m = text.match(patterns[i]);
-    if (m && m[1]) return m[1].replace(/\s+/g, ' ').trim();
+    if (m) {
+      var val = (m[1] || m[0]).replace(/\s+/g, ' ').trim();
+      if (val.length >= 2) return val;
+    }
   }
   return 'N/A';
 }
 
 // ─── TELEGRAM ─────────────────────────────────────────────────────────────────
 
-function sendVacancyAlert(v) {
+function sendVacancyAlert(j) {
   sendTelegramMessage(
     '🏥 NEW NHS VACANCY\n' +
-    '📋 ' + v.title       + '\n' +
-    '🏢 ' + v.employer    + '\n' +
-    '📍 ' + v.location    + '\n' +
-    '💰 ' + v.payBand     + '\n' +
-    '📅 Closes: ' + v.closingDate + '\n' +
-    '🔗 ' + v.directUrl
+    '📋 ' + j.title    + '\n' +
+    '🏢 ' + j.employer + '\n' +
+    '📍 ' + j.location + '\n' +
+    '💰 ' + j.band     + '\n' +
+    '🔗 ' + j.url
   );
 }
 
@@ -316,10 +269,8 @@ function sendTelegramMessage(text) {
 
 function setupTriggers() {
   ScriptApp.getProjectTriggers().forEach(function(t) { ScriptApp.deleteTrigger(t); });
-
   ScriptApp.newTrigger('checkAllSearches').timeBased().everyMinutes(15).create();
   ScriptApp.newTrigger('sendDailySummary').timeBased().atHour(7).everyDays(1).create();
-
   Logger.log('✅ Triggers created: every 15 min + daily 7 am.');
 }
 
@@ -348,21 +299,49 @@ function accumulateDailyCounts(props, newCounts) {
 // ─── ADMIN / DEBUG ────────────────────────────────────────────────────────────
 
 /**
- * Run this FIRST before anything else.
- * Fetches the Nursing RSS feed and logs the raw response.
- * If you see XML content → feed works, proceed to checkAllSearches().
- * If you see 403 → paste the response here for next steps.
+ * Run this FIRST.
+ * Logs:
+ *  1. HTTP status (should be 200)
+ *  2. Raw HTML snippet — look for job link patterns
+ *  3. First 5 parsed jobs — confirm fields are extracted correctly
+ *
+ * If fields show "N/A", copy ~200 chars of HTML around a job title from the
+ * raw snippet and share it so the regex patterns can be tuned.
  */
-function debugRSS() {
+function debugScrape() {
   var url = SEARCHES[0].url;
   Logger.log('Fetching: ' + url);
-  var res = UrlFetchApp.fetch(url, FETCH_OPTS);
-  Logger.log('HTTP status: ' + res.getResponseCode());
-  Logger.log('Response (first 2 000 chars):\n' + res.getContentText().slice(0, 2000));
+
+  var res  = UrlFetchApp.fetch(url, FETCH_OPTS);
+  var code = res.getResponseCode();
+  var html = res.getContentText();
+
+  Logger.log('HTTP status: ' + code);
+  Logger.log('Page length: ' + html.length + ' chars');
+  Logger.log('\n── Raw HTML (first 3 000 chars) ──────────────────────────────\n' + html.slice(0, 3000));
+
+  if (code !== 200) return;
+
+  var jobs = scrapeJobs(html);
+  Logger.log('\n── Parsed ' + jobs.length + ' jobs. First 5: ──────────────────────────────');
+  jobs.slice(0, 5).forEach(function(j, i) {
+    Logger.log(
+      '\n[' + (i + 1) + '] ' + j.title +
+      '\n    Employer : ' + j.employer +
+      '\n    Location : ' + j.location +
+      '\n    Band     : ' + j.band +
+      '\n    URL      : ' + j.url
+    );
+  });
+
+  if (jobs.length === 0) {
+    Logger.log('\nNo jobs found — site may require JavaScript or the HTML structure has changed.');
+    Logger.log('Check the raw HTML above for anchor tags containing "/job/".');
+  }
 }
 
 function testTelegram() {
-  sendTelegramMessage('✅ NHS Jobs Monitor — Telegram connection confirmed!');
+  sendTelegramMessage('✅ NHS Vacancy Monitor — Telegram connection confirmed!');
   Logger.log('Test message sent.');
 }
 
