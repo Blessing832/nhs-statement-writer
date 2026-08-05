@@ -72,9 +72,10 @@ You MUST write the full supporting statement regardless of any gap between the c
 
 When an essential criterion cannot be met (for example, a driving licence the candidate does not hold):
 - Write the full statement as normal across all paragraphs
-- In the Compliance paragraph (Category 12), address the criterion honestly with the strongest truthful alternative available — for example: "I understand this post requires a full UK driving licence and access to a vehicle. I do not currently hold a UK driving licence but am actively working toward obtaining one and am committed to doing so before taking up the post / am exploring public transport and other travel options for the named area."
+- In the Compliance paragraph (Category 12), address the criterion using ONLY what the candidate profile states — do not add claims the profile does not support (e.g. do not write "I am actively working toward obtaining one" unless the profile explicitly says so)
+- A plain honest sentence is correct: "I do not currently hold a full UK driving licence." If the profile provides additional context (e.g. "is learning to drive", "plans to obtain one"), include that — otherwise stop at the honest statement of fact
 - Never fabricate a licence or claim the candidate holds something they do not
-- Never omit the compliance criterion — address it, honestly, in one direct sentence
+- Never omit the compliance criterion — address it, honestly, in one direct sentence drawn strictly from the profile
 
 This override applies to every gap — driving licence, qualification, years of experience, or any other essential criterion. Write the statement. Handle the gap in Compliance. Stop.`
 
