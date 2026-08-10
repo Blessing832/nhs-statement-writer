@@ -1,65 +1,48 @@
-import cron from 'node-cron'
-import { resetVacancies } from './vacancies-db'
+const ACTOR_ID = 'kinaesthetic_millionaire~nhs-uk-jobs-scraper'
+const APIFY_BASE = 'https://api.apify.com/v2'
+const WEBHOOK_URL = `${process.env.NEXT_PUBLIC_BASE_URL ?? 'https://easeme.live'}/api/vacancies/ingest`
 
-let started = false
-
-function todayUK(): string {
-  return new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' }) // YYYY-MM-DD
-}
-
-async function triggerApifyScraper() {
+export async function triggerApifyScrape(): Promise<string | null> {
   const token = process.env.APIFY_API_TOKEN
   if (!token) {
-    console.error('[vacancies] APIFY_API_TOKEN not set — skipping run')
-    return
+    console.error('VACANCY_SCHEDULER: APIFY_API_TOKEN not set, skipping scrape')
+    return null
   }
 
-  const today = todayUK()
-  const body = {
-    startUrls: [
-      {
-        url: `https://www.jobs.nhs.uk/candidate/search/results?payBand=BAND_3%2CBAND_4&workingPattern=full-time&contractType=Permanent&staffGroup=NURSING_AND_MIDWIFERY_REGD&searchFormType=sortBy&sort=publicationDateDesc&language=en&publishedFrom=${today}`,
-      },
-      {
-        url: `https://www.jobs.nhs.uk/candidate/search/results?payBand=BAND_3%2CBAND_4&workingPattern=full-time&contractType=Permanent&staffGroup=ALLIED_HEALTH_PROF&searchFormType=sortBy&sort=publicationDateDesc&language=en&publishedFrom=${today}`,
-      },
-    ],
-    maxItems: 50,
+  const res = await fetch(
+    `${APIFY_BASE}/acts/${encodeURIComponent(ACTOR_ID)}/runs?token=${token}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        webhooks: [
+          {
+            eventTypes: ['ACTOR.RUN.SUCCEEDED'],
+            requestUrl: WEBHOOK_URL,
+          },
+        ],
+      }),
+    }
+  )
+
+  if (!res.ok) {
+    const body = await res.text()
+    console.error(`VACANCY_SCHEDULER: Apify trigger failed ${res.status} — ${body.slice(0, 200)}`)
+    return null
   }
 
-  try {
-    const res = await fetch(
-      `https://api.apify.com/v2/acts/kinaesthetic_millionaire~nhs-uk-jobs-scraper/runs?token=${token}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      }
-    )
-    const data = await res.json() as { data?: { id: string } }
-    console.log(`[vacancies] Apify run started: ${data.data?.id ?? 'unknown'} (date=${today})`)
-  } catch (err) {
-    console.error('[vacancies] Failed to trigger Apify scraper:', err)
-  }
+  const json = await res.json()
+  const runId: string = json?.data?.id ?? 'unknown'
+  console.log(`VACANCY_SCHEDULER: Apify run started — runId=${runId}`)
+  return runId
 }
 
-export function startVacancyScheduler() {
-  if (started) return
-  started = true
-
-  const opts = { timezone: 'Europe/London' }
-
-  // Trigger Apify scraper 4x on weekdays (UK time)
-  cron.schedule('30 10 * * 1-5', triggerApifyScraper, opts)
-  cron.schedule('0 12 * * 1-5',  triggerApifyScraper, opts)
-  cron.schedule('0 14 * * 1-5',  triggerApifyScraper, opts)
-  cron.schedule('0 16 * * 1-5',  triggerApifyScraper, opts)
-
-  // Midnight reset — wipe vacancies so each day starts fresh
-  cron.schedule('0 0 * * *', () => {
-    resetVacancies()
-    console.log('[vacancies] Midnight reset: table cleared')
-  }, opts)
-
-  console.log('[vacancies] Scheduler started — 4xdaily Mon-Fri + midnight reset (Europe/London)')
+export async function fetchApifyDataset(datasetId: string): Promise<Record<string, unknown>[]> {
+  const token = process.env.APIFY_API_TOKEN
+  const res = await fetch(
+    `${APIFY_BASE}/datasets/${datasetId}/items?format=json&token=${token}`,
+    { headers: { Accept: 'application/json' } }
+  )
+  if (!res.ok) throw new Error(`Apify dataset fetch failed: ${res.status}`)
+  return res.json()
 }
