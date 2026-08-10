@@ -65,18 +65,32 @@ export function detectRegion(url: string, rawText?: string): PromptRegion {
   return 'generic'
 }
 
+const ESSENTIAL_CRITERIA_OVERRIDE = `
+
+## CRITICAL OVERRIDE — ESSENTIAL CRITERIA GAPS — READ THIS LAST, FOLLOW IT ALWAYS
+You MUST write the full supporting statement regardless of any gap between the candidate's profile and the person specification. Do NOT refuse to write. Do NOT recommend the candidate reconsider applying. Do NOT flag missing criteria as a reason to withhold the statement. Your role is to write the strongest honest statement possible with the evidence available — the employer's shortlisting panel makes hiring decisions, not you.
+
+When an essential criterion cannot be met (for example, a driving licence the candidate does not hold):
+- Write the full statement as normal across all paragraphs
+- In the Compliance paragraph (Category 12), address the criterion using ONLY what the candidate profile states — do not add claims the profile does not support (e.g. do not write "I am actively working toward obtaining one" unless the profile explicitly says so)
+- A plain honest sentence is correct: "I do not currently hold a full UK driving licence." If the profile provides additional context (e.g. "is learning to drive", "plans to obtain one"), include that — otherwise stop at the honest statement of fact
+- Never fabricate a licence or claim the candidate holds something they do not
+- Never omit the compliance criterion — address it, honestly, in one direct sentence drawn strictly from the profile
+
+This override applies to every gap — driving licence, qualification, years of experience, or any other essential criterion. Write the statement. Handle the gap in Compliance. Stop.`
+
 async function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): Promise<string> {
   // Check for admin-customized prompt stored in Supabase — overrides code defaults
   if (region === 'scotland' || region === 'england-wales') {
     try {
       const { data } = await supabaseAdmin.from('prompts').select('content').eq('region', region).maybeSingle()
-      if (data?.content) return data.content
+      if (data?.content) return data.content + ESSENTIAL_CRITERIA_OVERRIDE
     } catch {
       // Table may not exist yet — fall through to code defaults
     }
   }
-  if (region === 'scotland') return getScotlandPrompt(style)
-  if (region === 'england-wales') return getEnglandWalesPrompt(style)
+  if (region === 'scotland') return getScotlandPrompt(style) + ESSENTIAL_CRITERIA_OVERRIDE
+  if (region === 'england-wales') return getEnglandWalesPrompt(style) + ESSENTIAL_CRITERIA_OVERRIDE
   const styleNote = style === '2'
     ? '\n- Write in continuous flowing prose with NO subheadings or bold section headers anywhere'
     : '\n- Use bold subheadings. Group 3-4 related criteria per subheading. The subheading must name every criterion it covers using person spec wording. Every criterion in the subheading must be explicitly evidenced in the paragraph. Every criterion from the person spec must be assigned to exactly one section — no criterion may be skipped. Plan all subheadings and confirm 100% coverage before writing.'
@@ -635,8 +649,8 @@ async function generateParallel(
   if (statementContent.type !== 'text') throw new Error('Unexpected response type from Claude')
   let statement = statementContent.text
     .trim()
-    .replace(/ \u2014 /g, ', ')
-    .replace(/\u2014/g, ', ')
+    .replace(/ — /g, ', ')
+    .replace(/—/g, ', ')
     .replace(/ -- /g, ', ')
     .replace(/--/g, ', ')
     .replace(/\*\*/g, '')
@@ -695,7 +709,7 @@ async function generateParallel(
   const analysisMsg = analysisResult.status === 'fulfilled' ? analysisResult.value : null
   const analysisContent = analysisMsg?.content[0]
   if (analysisContent?.type === 'text') {
-    const cleanedAnalysis = analysisContent.text.replace(/ \u2014 /g, ', ').replace(/\u2014/g, ', ').replace(/ -- /g, ', ').replace(/--/g, ', ')
+    const cleanedAnalysis = analysisContent.text.replace(/ — /g, ', ').replace(/—/g, ', ').replace(/ -- /g, ', ').replace(/--/g, ', ')
     const jsonMatch = cleanedAnalysis.match(/\{[\s\S]*\}/)
     if (jsonMatch) {
       try {
@@ -839,7 +853,7 @@ export async function generateStatement(
   const content = message.content[0]
   if (content.type !== 'text') throw new Error('Unexpected response type from Claude')
 
-  const cleanedText = content.text.replace(/ \u2014 /g, ', ').replace(/\u2014/g, ', ').replace(/ -- /g, ', ').replace(/--/g, ', ')
+  const cleanedText = content.text.replace(/ — /g, ', ').replace(/—/g, ', ').replace(/ -- /g, ', ').replace(/--/g, ', ')
   const jsonMatch = cleanedText.match(/\{[\s\S]*\}/)
   if (!jsonMatch) throw new Error('Could not parse Claude response as JSON')
 
@@ -857,7 +871,7 @@ export async function generateStatement(
   if (!parsed.statement) throw new Error('Claude response missing statement field')
 
   return {
-    statement: parsed.statement.replace(/ \u2014 /g, ', ').replace(/\u2014/g, ', ').replace(/ -- /g, ', ').replace(/--/g, ', ').replace(/\*\*/g, ''),
+    statement: parsed.statement.replace(/ — /g, ', ').replace(/—/g, ', ').replace(/ -- /g, ', ').replace(/--/g, ', ').replace(/\*\*/g, ''),
     previousRoleDuties: Array.isArray(parsed.previousRoleDuties) ? parsed.previousRoleDuties : [],
     currentRoleDuties: [],
     analysis: parsed.analysis || null,
