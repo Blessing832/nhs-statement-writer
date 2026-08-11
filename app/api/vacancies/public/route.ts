@@ -1,14 +1,13 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 
-// Public (unauthenticated) endpoint — returns today's vacancies for the client portal
+// Public (unauthenticated) endpoint — returns current vacancies for the client portal.
+// No date filter needed: the ingest route purges previous-day rows after every scrape,
+// so whatever is in the table is already today's data.
 export async function GET() {
-  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/London' })
-
   const { data, error } = await supabaseAdmin
     .from('nhs_vacancies')
     .select('id, title, employer, location, band, contract_type, closing_date, url, scraped_at, date_posted')
-    .eq('scrape_date', today)
     .order('scraped_at', { ascending: false })
     .limit(200)
 
