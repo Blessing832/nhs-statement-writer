@@ -26,7 +26,7 @@ function mapItem(item: Record<string, unknown>): {
   return {
     external_id,
     title: title || 'NHS Vacancy',
-    employer: str(item.employer || item.organisation || item.organization || item.trust || item.company),
+    employer: str(item.employer || item.companyName || item.organisation || item.organization || item.trust || item.company),
     location: str(item.location || item.town || item.city || item.region),
     band: str(item.band || item.payBand || item.pay_band || item.salary || item.salaryRange || item.salary_range),
     contract_type: str(item.contractType || item.contract_type || item.employmentType || item.employment_type),
