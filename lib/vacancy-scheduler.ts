@@ -9,19 +9,17 @@ export async function triggerApifyScrape(): Promise<string | null> {
     return null
   }
 
+  // Apify requires webhooks as a URL-safe base64-encoded query param, not in the body.
+  // The body is actor input; putting webhooks there causes them to be silently ignored.
+  const webhooksParam = Buffer.from(
+    JSON.stringify([{ eventTypes: ['ACTOR.RUN.SUCCEEDED'], requestUrl: WEBHOOK_URL }])
+  ).toString('base64url')
+
   const res = await fetch(
-    `${APIFY_BASE}/acts/${encodeURIComponent(ACTOR_ID)}/runs?token=${token}`,
+    `${APIFY_BASE}/acts/${encodeURIComponent(ACTOR_ID)}/runs?token=${token}&webhooks=${webhooksParam}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        webhooks: [
-          {
-            eventTypes: ['ACTOR.RUN.SUCCEEDED'],
-            requestUrl: WEBHOOK_URL,
-          },
-        ],
-      }),
     }
   )
 
