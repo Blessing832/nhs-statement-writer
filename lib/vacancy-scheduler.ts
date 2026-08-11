@@ -1,5 +1,5 @@
 // Apify saved task — has the correct NHS Jobs URL and pay band filters pre-configured
-const TASK_ID = '5R1zvNeDHZyZ2BkdW'
+const TASK_ID = 'deola1122~nhs-uk-jobs-scraper-task'
 const APIFY_BASE = 'https://api.apify.com/v2'
 const WEBHOOK_URL = `${process.env.NEXT_PUBLIC_BASE_URL ?? 'https://easeme.live'}/api/vacancies/ingest`
 
