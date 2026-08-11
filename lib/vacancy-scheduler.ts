@@ -15,11 +15,18 @@ export async function triggerApifyScrape(): Promise<string | null> {
     JSON.stringify([{ eventTypes: ['ACTOR.RUN.SUCCEEDED'], requestUrl: WEBHOOK_URL }])
   ).toString('base64url')
 
+  // Actor input: startUrls tells the scraper where to begin; maxItems caps the run.
+  const actorInput = {
+    startUrls: [{ url: 'https://www.jobs.nhs.uk/candidate/search' }],
+    maxItems: 100,
+  }
+
   const res = await fetch(
     `${APIFY_BASE}/acts/${encodeURIComponent(ACTOR_ID)}/runs?token=${token}&webhooks=${webhooksParam}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(actorInput),
     }
   )
 
