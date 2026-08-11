@@ -21,6 +21,14 @@ interface LiveVacancy {
   scraped_at: string
 }
 
+interface TrackingEntry {
+  client_code: string
+  vacancy_id: string
+  vacancy_title: string
+  status: 'done' | 'closed'
+  marked_at: string
+}
+
 // ── helpers ───────────────────────────────────────────────────────────────────
 
 const SOURCE_COLORS: Record<string, string> = {
@@ -64,7 +72,7 @@ function isNew(scrapedAt: string): boolean {
 
 // ── Tab 2 components ──────────────────────────────────────────────────────────
 
-function ApplicantCard({ client, pref }: { client: Client; pref: ApplicantPreferences | null }) {
+function ApplicantCard({ client, pref, doneCount, closedCount }: { client: Client; pref: ApplicantPreferences | null; doneCount: number; closedCount: number }) {
   const [open, setOpen] = useState(false)
   const links: SearchLink[] = pref?.search_links ?? []
   const hasLinks = links.length > 0
@@ -88,6 +96,16 @@ function ApplicantCard({ client, pref }: { client: Client; pref: ApplicantPrefer
           </div>
         </div>
         <div className="flex items-center gap-2">
+          {doneCount > 0 && (
+            <span className="text-xs px-2 py-0.5 rounded-full font-semibold bg-green-100 text-green-700">
+              {doneCount} applied
+            </span>
+          )}
+          {closedCount > 0 && (
+            <span className="text-xs px-2 py-0.5 rounded-full font-semibold bg-gray-100 text-gray-500">
+              {closedCount} closed
+            </span>
+          )}
           {pref ? (
             <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${hasLinks ? 'bg-blue-50 text-blue-700' : 'bg-yellow-50 text-yellow-700'}`}>
               {hasLinks ? `${links.length} ${links.length === 1 ? 'link' : 'links'}` : 'No links yet'}
@@ -337,21 +355,33 @@ const cardVariants: Variants = {
 function ApplicantLinksTab({ token }: { token: string }) {
   const [clients, setClients] = useState<Client[]>([])
   const [prefs, setPrefs]   = useState<ApplicantPreferences[]>([])
+  const [tracking, setTracking] = useState<TrackingEntry[]>([])
   const [loading, setLoading] = useState(true)
 
   const fetchData = useCallback(async () => {
-    const [cRes, pRes] = await Promise.all([
+    const [cRes, pRes, tRes] = await Promise.all([
       fetch('/api/clients', { headers: { 'x-admin-token': token } }),
       fetch('/api/vacancies/preferences', { headers: { 'x-admin-token': token } }),
+      fetch('/api/vacancies/track?all=1', { headers: { 'x-admin-token': token } }),
     ])
     if (cRes.ok) setClients(await cRes.json())
     if (pRes.ok) setPrefs(await pRes.json())
+    if (tRes.ok) setTracking(await tRes.json())
     setLoading(false)
   }, [token])
 
   useEffect(() => { if (token) fetchData() }, [token, fetchData])
 
   const prefMap = new Map(prefs.map(p => [p.client_id, p]))
+
+  const trackingByCode = new Map<string, { done: number; closed: number }>()
+  for (const entry of tracking) {
+    const curr = trackingByCode.get(entry.client_code) ?? { done: 0, closed: 0 }
+    if (entry.status === 'done')   curr.done++
+    if (entry.status === 'closed') curr.closed++
+    trackingByCode.set(entry.client_code, curr)
+  }
+  const totalApplied = tracking.filter(e => e.status === 'done').length
   const active   = clients.filter(c => c.is_active && new Date() <= new Date(c.subscription_end))
   const inactive = clients.filter(c => !c.is_active || new Date() > new Date(c.subscription_end))
   const withLinks = active.filter(c => (prefMap.get(c.id)?.search_links ?? []).length > 0)
@@ -375,6 +405,11 @@ function ApplicantLinksTab({ token }: { token: string }) {
             {withLinks.length} of {active.length} active candidates have links
             {noLinks.length > 0 && <span className="text-yellow-600"> · {noLinks.length} still need setting up</span>}
           </p>
+          {totalApplied > 0 && (
+            <p className="text-sm text-green-700 font-semibold mt-0.5">
+              {totalApplied} application{totalApplied !== 1 ? 's' : ''} logged today across all candidates
+            </p>
+          )}
         </div>
         <Link
           href="/admin/vacancies/preferences"
@@ -401,7 +436,7 @@ function ApplicantLinksTab({ token }: { token: string }) {
           <motion.div className="space-y-3" initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.05 } } }}>
             {withLinks.map(client => (
               <motion.div key={client.id} variants={cardVariants}>
-                <ApplicantCard client={client} pref={prefMap.get(client.id) ?? null} />
+                <ApplicantCard client={client} pref={prefMap.get(client.id) ?? null} doneCount={trackingByCode.get(client.client_code)?.done ?? 0} closedCount={trackingByCode.get(client.client_code)?.closed ?? 0} />
               </motion.div>
             ))}
           </motion.div>
@@ -416,7 +451,7 @@ function ApplicantLinksTab({ token }: { token: string }) {
           <motion.div className="space-y-3" initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.05 } } }}>
             {noLinks.map(client => (
               <motion.div key={client.id} variants={cardVariants}>
-                <ApplicantCard client={client} pref={prefMap.get(client.id) ?? null} />
+                <ApplicantCard client={client} pref={prefMap.get(client.id) ?? null} doneCount={trackingByCode.get(client.client_code)?.done ?? 0} closedCount={trackingByCode.get(client.client_code)?.closed ?? 0} />
               </motion.div>
             ))}
           </motion.div>

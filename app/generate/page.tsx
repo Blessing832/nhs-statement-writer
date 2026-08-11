@@ -479,17 +479,36 @@ interface PublicVacancy {
   scraped_at: string
 }
 
-function ClientVacanciesView() {
+function ClientVacanciesView({ clientCode }: { clientCode: string }) {
   const [vacancies, setVacancies] = useState<PublicVacancy[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
+  const [tracking, setTracking] = useState<Record<string, string>>({})
 
   useEffect(() => {
-    fetch('/api/vacancies/public')
-      .then(r => r.ok ? r.json() : [])
-      .then(data => { setVacancies(data); setLoading(false) })
-      .catch(() => setLoading(false))
-  }, [])
+    Promise.all([
+      fetch('/api/vacancies/public').then(r => r.ok ? r.json() : []),
+      fetch(`/api/vacancies/track?code=${encodeURIComponent(clientCode)}`).then(r => r.ok ? r.json() : {}),
+    ]).then(([vacs, trk]) => {
+      setVacancies(vacs)
+      setTracking(trk)
+      setLoading(false)
+    }).catch(() => setLoading(false))
+  }, [clientCode])
+
+  const markVacancy = async (vacancyId: string, title: string, status: string) => {
+    setTracking(prev => {
+      const next = { ...prev }
+      if (status) next[vacancyId] = status
+      else delete next[vacancyId]
+      return next
+    })
+    await fetch('/api/vacancies/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ client_code: clientCode, vacancy_id: vacancyId, vacancy_title: title, status }),
+    })
+  }
 
   const isNew = (scrapedAt: string) =>
     Date.now() - new Date(scrapedAt).getTime() < 2 * 60 * 60 * 1000
@@ -504,6 +523,8 @@ function ClientVacanciesView() {
       (v.band ?? '').toLowerCase().includes(q)
     )
   })
+
+  const doneCount = Object.values(tracking).filter(s => s === 'done').length
 
   if (loading) {
     return (
@@ -525,9 +546,16 @@ function ClientVacanciesView() {
             onChange={e => setSearch(e.target.value)}
             className="flex-1 px-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 bg-white"
           />
-          {vacancies.length > 0 && (
-            <p className="text-xs text-gray-400 shrink-0">{filtered.length} of {vacancies.length} jobs</p>
-          )}
+          <div className="flex items-center gap-3 shrink-0">
+            {doneCount > 0 && (
+              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-100 text-green-700">
+                {doneCount} applied
+              </span>
+            )}
+            {vacancies.length > 0 && (
+              <p className="text-xs text-gray-400">{filtered.length} of {vacancies.length} jobs</p>
+            )}
+          </div>
         </div>
 
         {vacancies.length === 0 ? (
@@ -538,50 +566,84 @@ function ClientVacanciesView() {
           </div>
         ) : (
           <div className="space-y-3">
-            {filtered.map(v => (
-              <a
-                key={v.id}
-                href={v.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block bg-white rounded-xl border border-gray-200 px-5 py-4 hover:border-blue-300 hover:shadow-sm transition-all group"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="min-w-0 flex items-start gap-2">
-                    {isNew(v.scraped_at) && (
-                      <span className="shrink-0 mt-0.5 text-xs font-bold px-1.5 py-0.5 rounded bg-green-500 text-white leading-none">NEW</span>
-                    )}
-                    <div className="min-w-0">
-                      <p className="font-semibold text-gray-900 text-sm group-hover:text-blue-700 transition-colors truncate">{v.title}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">{v.employer || 'NHS'}</p>
+            {filtered.map(v => {
+              const status = tracking[v.id]
+              return (
+                <div
+                  key={v.id}
+                  className={`bg-white rounded-xl border px-5 py-4 transition-all ${
+                    status === 'done'   ? 'border-green-300 bg-green-50' :
+                    status === 'closed' ? 'border-gray-200 opacity-60'  :
+                    'border-gray-200'
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="min-w-0 flex items-start gap-2">
+                      {isNew(v.scraped_at) && (
+                        <span className="shrink-0 mt-0.5 text-xs font-bold px-1.5 py-0.5 rounded bg-green-500 text-white leading-none">NEW</span>
+                      )}
+                      <div className="min-w-0">
+                        <p className="font-semibold text-gray-900 text-sm truncate">{v.title}</p>
+                        <p className="text-xs text-gray-500 mt-0.5">{v.employer || 'NHS'}</p>
+                      </div>
                     </div>
+                    <a
+                      href={v.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-blue-600 shrink-0 font-medium mt-0.5 hover:underline"
+                    >
+                      Apply ↗
+                    </a>
                   </div>
-                  <span className="text-xs text-blue-600 shrink-0 font-medium mt-0.5">Apply ↗</span>
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    {v.location && (
+                      <span className="inline-flex items-center gap-1 text-xs bg-gray-50 text-gray-600 px-2 py-1 rounded-md border border-gray-100">
+                        📍 {v.location}
+                      </span>
+                    )}
+                    {v.band && (
+                      <span className="inline-flex items-center gap-1 text-xs bg-green-50 text-green-700 px-2 py-1 rounded-md border border-green-100">
+                        💰 {v.band}
+                      </span>
+                    )}
+                    {v.contract_type && (
+                      <span className="inline-flex items-center gap-1 text-xs bg-purple-50 text-purple-700 px-2 py-1 rounded-md border border-purple-100">
+                        {v.contract_type}
+                      </span>
+                    )}
+                    {v.closing_date && (
+                      <span className="inline-flex items-center gap-1 text-xs bg-orange-50 text-orange-700 px-2 py-1 rounded-md border border-orange-100">
+                        Closes {v.closing_date}
+                      </span>
+                    )}
+                  </div>
+                  {/* Application status buttons */}
+                  <div className="flex gap-2 mt-3 pt-3 border-t border-gray-100">
+                    <button
+                      onClick={() => markVacancy(v.id, v.title, status === 'done' ? '' : 'done')}
+                      className={`flex-1 text-xs font-bold py-2 rounded-lg transition-colors ${
+                        status === 'done'
+                          ? 'bg-green-500 text-white'
+                          : 'bg-gray-100 text-gray-500 hover:bg-green-100 hover:text-green-700'
+                      }`}
+                    >
+                      ✓ DONE
+                    </button>
+                    <button
+                      onClick={() => markVacancy(v.id, v.title, status === 'closed' ? '' : 'closed')}
+                      className={`flex-1 text-xs font-bold py-2 rounded-lg transition-colors ${
+                        status === 'closed'
+                          ? 'bg-gray-500 text-white'
+                          : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                      }`}
+                    >
+                      ✕ Closed
+                    </button>
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {v.location && (
-                    <span className="inline-flex items-center gap-1 text-xs bg-gray-50 text-gray-600 px-2 py-1 rounded-md border border-gray-100">
-                      📍 {v.location}
-                    </span>
-                  )}
-                  {v.band && (
-                    <span className="inline-flex items-center gap-1 text-xs bg-green-50 text-green-700 px-2 py-1 rounded-md border border-green-100">
-                      💰 {v.band}
-                    </span>
-                  )}
-                  {v.contract_type && (
-                    <span className="inline-flex items-center gap-1 text-xs bg-purple-50 text-purple-700 px-2 py-1 rounded-md border border-purple-100">
-                      {v.contract_type}
-                    </span>
-                  )}
-                  {v.closing_date && (
-                    <span className="inline-flex items-center gap-1 text-xs bg-orange-50 text-orange-700 px-2 py-1 rounded-md border border-orange-100">
-                      Closes {v.closing_date}
-                    </span>
-                  )}
-                </div>
-              </a>
-            ))}
+              )
+            })}
           </div>
         )}
       </div>
@@ -884,7 +946,7 @@ function GeneratePage() {
       </div>
 
       {/* Vacancies view */}
-      {view === 'vacancies' && <ClientVacanciesView />}
+      {view === 'vacancies' && <ClientVacanciesView clientCode={clientCode} />}
 
       {/* Single-page form */}
       {view === 'generator' && !result && (
