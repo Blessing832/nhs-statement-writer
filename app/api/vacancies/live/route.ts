@@ -7,6 +7,7 @@ function isAuthorised(req: NextRequest): boolean {
 
 export async function GET(req: NextRequest) {
   if (!isAuthorised(req)) {
+    console.warn('VACANCIES LIVE: unauthorised request (token mismatch or missing)')
     return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
   }
 
@@ -16,6 +17,11 @@ export async function GET(req: NextRequest) {
     .order('scraped_at', { ascending: false })
     .limit(500)
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (error) {
+    console.error('VACANCIES LIVE: Supabase error:', error.message)
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+
+  console.log(`VACANCIES LIVE: returning ${(data ?? []).length} rows`)
   return NextResponse.json(data ?? [])
 }
