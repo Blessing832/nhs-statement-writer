@@ -10,7 +10,9 @@ async function runScrape() {
   }
 }
 
-// 7am, 12pm, 5pm UK time — picks up morning posts, lunchtime, end-of-day
-cron.schedule('0 7,12,17 * * *', runScrape, { timezone: 'Europe/London' })
+// 10:30am, 12:30pm, 2:30pm UK time
+cron.schedule('30 10,12,14 * * *', runScrape, { timezone: 'Europe/London' })
+// 4:00pm UK time
+cron.schedule('0 16 * * *', runScrape, { timezone: 'Europe/London' })
 
-console.log('VACANCY_CRON: scheduler started (7am / 12pm / 5pm London)')
+console.log('VACANCY_CRON: scheduler started (10:30am / 12:30pm / 2:30pm / 4pm London)')

@@ -58,6 +58,10 @@ function timeAgo(iso: string): string {
   return `${Math.floor(h / 24)}d ago`
 }
 
+function isNew(scrapedAt: string): boolean {
+  return Date.now() - new Date(scrapedAt).getTime() < 2 * 60 * 60 * 1000
+}
+
 // ── Tab 2 components ──────────────────────────────────────────────────────────
 
 function ApplicantCard({ client, pref }: { client: Client; pref: ApplicantPreferences | null }) {
@@ -160,11 +164,16 @@ function VacancyRow({ v }: { v: LiveVacancy }) {
       className="block bg-white rounded-xl border border-gray-200 px-5 py-4 hover:border-blue-300 hover:shadow-sm transition-all group"
     >
       <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <p className="font-semibold text-gray-900 text-sm group-hover:text-blue-700 transition-colors truncate">
-            {v.title}
-          </p>
-          <p className="text-xs text-gray-500 mt-0.5">{v.employer || 'NHS'}</p>
+        <div className="min-w-0 flex items-start gap-2">
+          {isNew(v.scraped_at) && (
+            <span className="shrink-0 mt-0.5 text-xs font-bold px-1.5 py-0.5 rounded bg-green-500 text-white leading-none">NEW</span>
+          )}
+          <div>
+            <p className="font-semibold text-gray-900 text-sm group-hover:text-blue-700 transition-colors truncate">
+              {v.title}
+            </p>
+            <p className="text-xs text-gray-500 mt-0.5">{v.employer || 'NHS'}</p>
+          </div>
         </div>
         <span className="text-xs text-gray-400 shrink-0">{timeAgo(v.scraped_at)}</span>
       </div>
@@ -302,7 +311,7 @@ function LiveVacanciesTab({ token }: { token: string }) {
             Results appear automatically once the scraper completes.
           </p>
           <p className="text-xs text-gray-400">
-            Automatic scrapes run at 7am, 12pm and 5pm (London time).
+            Automatic scrapes run at 10:30am, 12:30pm, 2:30pm and 4pm (London time).
           </p>
         </div>
       ) : filtered.length === 0 ? (

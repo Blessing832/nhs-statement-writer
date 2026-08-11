@@ -465,6 +465,132 @@ function AnalysisPanel({ analysis, region, statement, onFixGaps }: { analysis: S
   )
 }
 
+// ── Client-facing vacancy board ───────────────────────────────────────────────
+
+interface PublicVacancy {
+  id: string
+  title: string
+  employer: string
+  location: string
+  band: string
+  contract_type: string
+  closing_date: string
+  url: string
+  scraped_at: string
+}
+
+function ClientVacanciesView() {
+  const [vacancies, setVacancies] = useState<PublicVacancy[]>([])
+  const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    fetch('/api/vacancies/public')
+      .then(r => r.ok ? r.json() : [])
+      .then(data => { setVacancies(data); setLoading(false) })
+      .catch(() => setLoading(false))
+  }, [])
+
+  const isNew = (scrapedAt: string) =>
+    Date.now() - new Date(scrapedAt).getTime() < 2 * 60 * 60 * 1000
+
+  const filtered = vacancies.filter(v => {
+    if (!search.trim()) return true
+    const q = search.toLowerCase()
+    return (
+      v.title.toLowerCase().includes(q) ||
+      (v.employer ?? '').toLowerCase().includes(q) ||
+      (v.location ?? '').toLowerCase().includes(q) ||
+      (v.band ?? '').toLowerCase().includes(q)
+    )
+  })
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-24 gap-3">
+        <div className="w-6 h-6 border-2 border-gray-300 rounded-full animate-spin" style={{ borderTopColor: '#0B4F6C' }} />
+        <p className="text-sm text-gray-400">Loading today's vacancies…</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex-1 overflow-y-auto">
+      <div className="max-w-3xl mx-auto px-6 py-8">
+        <div className="flex items-center gap-4 mb-6">
+          <input
+            type="text"
+            placeholder="Search title, employer, location…"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="flex-1 px-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 bg-white"
+          />
+          {vacancies.length > 0 && (
+            <p className="text-xs text-gray-400 shrink-0">{filtered.length} of {vacancies.length} jobs</p>
+          )}
+        </div>
+
+        {vacancies.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-3xl mb-3">🏥</p>
+            <p className="text-gray-700 font-semibold mb-1">No vacancies yet today</p>
+            <p className="text-sm text-gray-400">Today's NHS jobs are refreshed at 10:30am, 12:30pm, 2:30pm and 4pm.</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {filtered.map(v => (
+              <a
+                key={v.id}
+                href={v.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block bg-white rounded-xl border border-gray-200 px-5 py-4 hover:border-blue-300 hover:shadow-sm transition-all group"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0 flex items-start gap-2">
+                    {isNew(v.scraped_at) && (
+                      <span className="shrink-0 mt-0.5 text-xs font-bold px-1.5 py-0.5 rounded bg-green-500 text-white leading-none">NEW</span>
+                    )}
+                    <div className="min-w-0">
+                      <p className="font-semibold text-gray-900 text-sm group-hover:text-blue-700 transition-colors truncate">{v.title}</p>
+                      <p className="text-xs text-gray-500 mt-0.5">{v.employer || 'NHS'}</p>
+                    </div>
+                  </div>
+                  <span className="text-xs text-blue-600 shrink-0 font-medium mt-0.5">Apply ↗</span>
+                </div>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {v.location && (
+                    <span className="inline-flex items-center gap-1 text-xs bg-gray-50 text-gray-600 px-2 py-1 rounded-md border border-gray-100">
+                      📍 {v.location}
+                    </span>
+                  )}
+                  {v.band && (
+                    <span className="inline-flex items-center gap-1 text-xs bg-green-50 text-green-700 px-2 py-1 rounded-md border border-green-100">
+                      💰 {v.band}
+                    </span>
+                  )}
+                  {v.contract_type && (
+                    <span className="inline-flex items-center gap-1 text-xs bg-purple-50 text-purple-700 px-2 py-1 rounded-md border border-purple-100">
+                      {v.contract_type}
+                    </span>
+                  )}
+                  {v.closing_date && (
+                    <span className="inline-flex items-center gap-1 text-xs bg-orange-50 text-orange-700 px-2 py-1 rounded-md border border-orange-100">
+                      Closes {v.closing_date}
+                    </span>
+                  )}
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 function GeneratePage() {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -497,6 +623,8 @@ function GeneratePage() {
   const [rewriteInstruction, setRewriteInstruction] = useState('')
   const [rewriting, setRewriting] = useState(false)
   const [rewriteError, setRewriteError] = useState('')
+
+  const [view, setView] = useState<'generator' | 'vacancies'>('generator')
 
   const statementRef = useRef<HTMLDivElement>(null)
   const statementHeadRef = useRef<HTMLDivElement>(null)
@@ -735,8 +863,31 @@ function GeneratePage() {
       </header>
       <div style={{ backgroundColor: '#F4A800' }} className="h-0.5 flex-shrink-0" />
 
+      {/* Tab bar */}
+      <div className="flex gap-1 px-6 border-b border-gray-200 bg-white flex-shrink-0">
+        {([
+          { id: 'generator', label: 'Statement Generator' },
+          { id: 'vacancies', label: "Today's Vacancies" },
+        ] as const).map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setView(tab.id)}
+            className={`px-5 py-2.5 text-sm font-semibold border-b-2 -mb-px transition-colors ${
+              view === tab.id
+                ? 'border-blue-700 text-blue-700'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Vacancies view */}
+      {view === 'vacancies' && <ClientVacanciesView />}
+
       {/* Single-page form */}
-      {!result && (
+      {view === 'generator' && !result && (
         <div className="flex-1 overflow-y-auto">
           <div className="max-w-2xl mx-auto w-full px-6 py-8">
             <div className="bg-white rounded-xl border border-gray-200 p-6">
@@ -994,7 +1145,7 @@ function GeneratePage() {
       )}
 
       {/* Results */}
-      {result && (
+      {view === 'generator' && result && (
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Top bar */}
           <div style={{ backgroundColor: '#072f42' }} className="px-4 py-3 flex-shrink-0">
