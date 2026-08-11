@@ -15,11 +15,6 @@ export async function GET() {
     JSON.stringify([{ eventTypes: ['ACTOR.RUN.SUCCEEDED'], requestUrl: webhookUrl }])
   ).toString('base64url')
 
-  const actorInput = {
-    startUrls: [{ url: 'https://www.jobs.nhs.uk/candidate/search' }],
-    maxItems: 10,
-  }
-
   let apifyResponse: unknown = null
   let apifyStatus: number | null = null
   let triggerError: string | null = null
@@ -30,7 +25,6 @@ export async function GET() {
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(actorInput),
       }
     )
     apifyStatus = res.status
