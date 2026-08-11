@@ -1,4 +1,5 @@
-const ACTOR_ID = 'kinaesthetic_millionaire~nhs-uk-jobs-scraper'
+// Apify saved task — has the correct NHS Jobs URL and pay band filters pre-configured
+const TASK_ID = '5R1zvNeDHZyZ2BkdW'
 const APIFY_BASE = 'https://api.apify.com/v2'
 const WEBHOOK_URL = `${process.env.NEXT_PUBLIC_BASE_URL ?? 'https://easeme.live'}/api/vacancies/ingest`
 
@@ -10,22 +11,16 @@ export async function triggerApifyScrape(): Promise<string | null> {
   }
 
   // Apify requires webhooks as a URL-safe base64-encoded query param, not in the body.
-  // The body is actor input; putting webhooks there causes them to be silently ignored.
   const webhooksParam = Buffer.from(
     JSON.stringify([{ eventTypes: ['ACTOR.RUN.SUCCEEDED'], requestUrl: WEBHOOK_URL }])
   ).toString('base64url')
 
-  const actorInput = {
-    startUrls: [{ url: 'https://www.jobs.nhs.uk/candidate/search/results?keyword=&location=' }],
-    maxItemsPerStartUrl: 100,
-  }
-
+  // Trigger the saved task (uses task's pre-configured input — URL, pay bands, max items)
   const res = await fetch(
-    `${APIFY_BASE}/acts/${encodeURIComponent(ACTOR_ID)}/runs?token=${token}&webhooks=${webhooksParam}`,
+    `${APIFY_BASE}/actor-tasks/${TASK_ID}/runs?token=${token}&webhooks=${webhooksParam}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(actorInput),
     }
   )
 
