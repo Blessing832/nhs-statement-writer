@@ -230,7 +230,12 @@ async function runPipeline(
 
   console.log(`${config.label} audit1 tokens: in=${audit1.inputTokens} out=${audit1.outputTokens} all_pass=${audit1.response.all_pass}`)
 
-  const needsPatch = !audit1.response.all_pass || verify1.missing.length > 0 || bannedHits1.length > 0
+  // ── Patch — only for essential failures and banned words ─────────────────
+  // Desirable-only misses are shown in the coverage report but don't block.
+  const essentialFailing = audit1.response.criteria.filter(
+    ac => ac.score < 5 && essentialSet.has(ac.criterion)
+  )
+  const needsPatch = essentialFailing.length > 0 || bannedHits1.length > 0
 
   if (!needsPatch) {
     return {
@@ -251,13 +256,19 @@ async function runPipeline(
   }
 
   // ── Patch ─────────────────────────────────────────────────────────────────
-  const auditFailingById = new Set(audit1.response.failing_ids)
-  const deterministicMisses = audit1.response.criteria.filter(ac => missingSet1.has(ac.criterion) && !auditFailingById.has(ac.id))
-  // Banned word hits are prepended so the patcher sees them prominently
+  // Focus the patcher only on essential failures + banned words so it's concise and fast.
+  const auditFailingEssentialIds = new Set(
+    audit1.response.criteria
+      .filter(ac => ac.score < 5 && essentialSet.has(ac.criterion))
+      .map(ac => ac.id)
+  )
+  const deterministicEssentialMisses = audit1.response.criteria.filter(
+    ac => missingSet1.has(ac.criterion) && essentialSet.has(ac.criterion) && !auditFailingEssentialIds.has(ac.id)
+  )
   const failingCriteria = [
     ...bannedHitsToAuditEntries(bannedHits1),
-    ...audit1.response.criteria.filter(ac => auditFailingById.has(ac.id)),
-    ...deterministicMisses,
+    ...audit1.response.criteria.filter(ac => auditFailingEssentialIds.has(ac.id)),
+    ...deterministicEssentialMisses,
   ]
 
   let patchedStatement = statement
