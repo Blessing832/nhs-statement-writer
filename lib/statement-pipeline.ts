@@ -161,10 +161,47 @@ function bannedHitsToAuditEntries(hits: BannedWordHit[]): AuditCriterion[] {
   }))
 }
 
+function trimToWordLimit(text: string, limit: number): string {
+  const words = text.trim().split(/\s+/).filter(Boolean)
+  if (words.length <= limit) return text
+
+  const CLOSING = 'Thank you.'
+  const closingIdx = text.indexOf(CLOSING)
+  const statementPart = closingIdx >= 0 ? text.slice(0, closingIdx + CLOSING.length) : text
+  const questionsTail = closingIdx >= 0 ? text.slice(closingIdx + CLOSING.length) : ''
+
+  const paragraphs = statementPart.split(/\n\n+/)
+  let totalWords = 0
+  const kept: string[] = []
+  for (const para of paragraphs) {
+    const paraWordCount = para.trim().split(/\s+/).filter(Boolean).length
+    if (totalWords + paraWordCount <= limit) {
+      kept.push(para)
+      totalWords += paraWordCount
+    } else {
+      const remaining = limit - totalWords
+      if (remaining > 15) {
+        const paraWords = para.trim().split(/\s+/)
+        const partial = paraWords.slice(0, remaining).join(' ')
+        const lastPeriod = partial.lastIndexOf('.')
+        if (lastPeriod > partial.length * 0.6) kept.push(partial.slice(0, lastPeriod + 1))
+      }
+      break
+    }
+  }
+  while (kept.length > 0 && /^\*\*[^*]+\*\*$/.test(kept[kept.length - 1].trim())) {
+    kept.pop()
+  }
+  let truncated = kept.join('\n\n')
+  if (!truncated.trimEnd().endsWith(CLOSING)) truncated += '\n\n' + CLOSING
+  return truncated + questionsTail
+}
+
 interface PipelineConfig {
   auditorPromptFile: string
   patchPromptFile: string
   label: string
+  wordLimit: number
 }
 
 async function runPipeline(
@@ -276,9 +313,10 @@ async function runPipeline(
 
   try {
     const patchResult = await patchStatement(statement, failingCriteria, candidateFacts, config.patchPromptFile)
-    patchedStatement = patchResult.statement
+    patchedStatement = trimToWordLimit(patchResult.statement, config.wordLimit)
     patchTokens = { input: patchResult.inputTokens, output: patchResult.outputTokens }
-    console.log(`${config.label} patch tokens: in=${patchTokens.input} out=${patchTokens.output}`)
+    const patchedWordCount = patchedStatement.trim().split(/\s+/).filter(Boolean).length
+    console.log(`${config.label} patch tokens: in=${patchTokens.input} out=${patchTokens.output} words=${patchedWordCount}`)
     // Post-patch banned-word scan — patcher must not introduce new banned words
     const postPatchBanned = scanBanned(patchedStatement)
     if (postPatchBanned.length > 0) {
@@ -368,6 +406,7 @@ export async function runEnglandWalesPipeline(
     auditorPromptFile: 'auditor_prompt.md',
     patchPromptFile: 'patch_prompt.md',
     label: 'PIPELINE[EW]',
+    wordLimit: 1400,
   })
 }
 
@@ -380,5 +419,6 @@ export async function runScotlandPipeline(
     auditorPromptFile: 'auditor_prompt_scotland.md',
     patchPromptFile: 'patch_prompt_scotland.md',
     label: 'PIPELINE[SCO]',
+    wordLimit: 1130,
   })
 }
