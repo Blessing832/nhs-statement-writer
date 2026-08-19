@@ -182,6 +182,65 @@ function splitSentences(text: string): string[] {
   return sentences
 }
 
+// ─── deterministic replacement ────────────────────────────────────────────────
+
+function inflectReplacement(base: string, found: string): string {
+  // Phrases and multi-word replacements: no inflection
+  if (base.includes(' ') || found.includes(' ')) return base
+  // Empty replacement (phrase deletion)
+  if (!base) return base
+
+  const fl = found.toLowerCase()
+  const bl = base.toLowerCase()
+
+  if (fl.endsWith('ing')) {
+    if (bl.endsWith('e') && !bl.endsWith('ee')) return base.slice(0, -1) + 'ing'
+    return base + 'ing'
+  }
+  if (fl.endsWith('tion') || fl.endsWith('tions')) {
+    return base  // aspiration → aim (base form; context handles plurality)
+  }
+  if (fl.endsWith('ment')) return base  // empowerment → support
+  if (fl.endsWith('ively')) return base + 'ly'
+  if (fl.endsWith('ive')) return base
+  if (fl.endsWith('ion') || fl.endsWith('ions')) return fl.endsWith('ions') ? base + 's' : base
+  if (fl.endsWith('ed')) {
+    if (bl.endsWith('e')) return base + 'd'
+    return base + 'ed'
+  }
+  if (fl.endsWith('es')) return base + 's'
+  if (fl.endsWith('s') && !fl.endsWith('ss')) return base + 's'
+
+  return base
+}
+
+// wordMap: canonical banned word → replacement base form (from DB)
+export function applyReplacements(
+  statement: string,
+  wordMap: Map<string, string>
+): string {
+  if (wordMap.size === 0) return statement
+  let result = statement
+
+  for (const { pattern, word } of BANNED_PATTERNS) {
+    const replacementBase = wordMap.get(word)
+    if (replacementBase === undefined) continue  // not in DB — skip
+
+    result = result.replace(new RegExp(pattern.source, 'gi'), (found) => {
+      const replacement = inflectReplacement(replacementBase, found)
+      if (!replacement) return ''  // phrase deletion
+
+      // Preserve capitalisation of the first letter
+      const isCapitalised = found.charAt(0) !== found.charAt(0).toLowerCase()
+      if (isCapitalised) return replacement.charAt(0).toUpperCase() + replacement.slice(1)
+      return replacement
+    })
+  }
+
+  // Clean up any double spaces left by empty-string deletions
+  return result.replace(/  +/g, ' ').replace(/ ([.,;:!?])/g, '$1').trim()
+}
+
 // ─── public API ───────────────────────────────────────────────────────────────
 
 export function scanBanned(statement: string): BannedWordHit[] {

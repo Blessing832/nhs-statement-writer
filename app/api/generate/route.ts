@@ -4,6 +4,22 @@ import { supabaseAdmin } from '@/lib/supabase'
 import { generateStatement, analyzeJobPosting, detectRegion } from '@/lib/claude'
 import { ScrapeResult, CoverageReport } from '@/lib/types'
 import { runEnglandWalesPipeline, runScotlandPipeline } from '@/lib/statement-pipeline'
+import { applyReplacements } from '@/lib/bannedWords'
+
+// ── Banned-word replacement map — cached in-process for 5 minutes ─────────────
+let bwCache: { map: Map<string, string>; expiresAt: number } | null = null
+
+async function getReplacementMap(): Promise<Map<string, string>> {
+  if (bwCache && bwCache.expiresAt > Date.now()) return bwCache.map
+  const { data } = await supabaseAdmin
+    .from('banned_words')
+    .select('word, replacement')
+    .eq('enabled', true)
+  const map = new Map<string, string>()
+  for (const row of data ?? []) map.set(row.word, row.replacement)
+  bwCache = { map, expiresAt: Date.now() + 5 * 60 * 1000 }
+  return map
+}
 
 export const maxDuration = 300
 
@@ -223,6 +239,18 @@ export async function POST(req: NextRequest) {
     } catch (err) {
       console.error('PIPELINE_ERR (non-fatal, continuing with original statement):', err)
     }
+  }
+
+  // 2c. Deterministic banned-word replacement — final pass after pipeline
+  try {
+    const replacementMap = await getReplacementMap()
+    const before = statement
+    statement = applyReplacements(statement, replacementMap)
+    if (statement !== before) {
+      console.log('BANNED_WORD_REPLACER: applied replacements')
+    }
+  } catch (err) {
+    console.error('BANNED_WORD_REPLACER_ERR (non-fatal):', err)
   }
 
   // 3. Save to DB — try with pasted_person_spec first; fall back ONLY on schema errors

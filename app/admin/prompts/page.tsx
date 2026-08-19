@@ -1,13 +1,285 @@
 'use client'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
 import { AdminContext } from '@/lib/admin-context'
 
 type PromptEntry = { content: string; isCustom: boolean; updatedAt?: string }
 type Prompts = { 'england-wales': PromptEntry; scotland: PromptEntry }
 
+type BannedWordRow = {
+  id: string
+  word: string
+  replacement: string
+  pattern_type: 'verb' | 'adjective' | 'noun' | 'phrase' | 'other'
+  enabled: boolean
+  created_at: string
+}
+
 const REGION_LABELS: Record<string, string> = {
   'england-wales': 'England & Wales',
   scotland: 'Scotland',
+}
+
+const TYPE_LABELS: Record<string, string> = {
+  verb: 'Verb',
+  adjective: 'Adjective / Adverb',
+  noun: 'Noun',
+  phrase: 'Phrase',
+  other: 'Other',
+}
+
+const TYPE_COLOURS: Record<string, string> = {
+  verb:      'bg-blue-50 text-blue-700 border-blue-200',
+  adjective: 'bg-purple-50 text-purple-700 border-purple-200',
+  noun:      'bg-amber-50 text-amber-700 border-amber-200',
+  phrase:    'bg-green-50 text-green-700 border-green-200',
+  other:     'bg-gray-100 text-gray-600 border-gray-200',
+}
+
+// ── Banned Words Panel ─────────────────────────────────────────────────────────
+
+function BannedWordsPanel({ token }: { token: string }) {
+  const [rows, setRows] = useState<BannedWordRow[]>([])
+  const [loading, setLoading] = useState(true)
+  const [filter, setFilter] = useState('')
+  const [typeFilter, setTypeFilter] = useState<string>('all')
+  const [addWord, setAddWord] = useState('')
+  const [addReplacement, setAddReplacement] = useState('')
+  const [addType, setAddType] = useState<string>('other')
+  const [adding, setAdding] = useState(false)
+  const [addError, setAddError] = useState<string | null>(null)
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [editVal, setEditVal] = useState('')
+  const wordInputRef = useRef<HTMLInputElement>(null)
+
+  const load = async () => {
+    setLoading(true)
+    const res = await fetch('/api/admin/banned-words', { headers: { 'x-admin-token': token } })
+    if (res.ok) setRows(await res.json())
+    setLoading(false)
+  }
+
+  useEffect(() => { load() }, [])
+
+  const handleAdd = async () => {
+    if (!addWord.trim()) return
+    setAdding(true)
+    setAddError(null)
+    const res = await fetch('/api/admin/banned-words', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+      body: JSON.stringify({ word: addWord.trim(), replacement: addReplacement.trim(), pattern_type: addType }),
+    })
+    if (res.ok) {
+      setAddWord('')
+      setAddReplacement('')
+      setAddType('other')
+      await load()
+      wordInputRef.current?.focus()
+    } else {
+      const d = await res.json()
+      setAddError(d.error || 'Failed to add')
+    }
+    setAdding(false)
+  }
+
+  const handleToggle = async (row: BannedWordRow) => {
+    await fetch('/api/admin/banned-words', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+      body: JSON.stringify({ id: row.id, enabled: !row.enabled }),
+    })
+    setRows(r => r.map(x => x.id === row.id ? { ...x, enabled: !x.enabled } : x))
+  }
+
+  const handleDelete = async (id: string, word: string) => {
+    if (!confirm(`Remove "${word}" from the banned list?`)) return
+    await fetch('/api/admin/banned-words', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+      body: JSON.stringify({ id }),
+    })
+    setRows(r => r.filter(x => x.id !== id))
+  }
+
+  const handleSaveEdit = async (id: string) => {
+    await fetch('/api/admin/banned-words', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+      body: JSON.stringify({ id, replacement: editVal }),
+    })
+    setRows(r => r.map(x => x.id === id ? { ...x, replacement: editVal } : x))
+    setEditingId(null)
+  }
+
+  const filtered = rows.filter(r => {
+    const matchType = typeFilter === 'all' || r.pattern_type === typeFilter
+    const matchText = !filter || r.word.includes(filter.toLowerCase()) || r.replacement.toLowerCase().includes(filter.toLowerCase())
+    return matchType && matchText
+  })
+
+  const enabledCount = rows.filter(r => r.enabled).length
+
+  return (
+    <div className="space-y-4">
+      {/* Info banner */}
+      <div className="rounded-lg border border-blue-200 bg-blue-50 px-4 py-3">
+        <p className="text-sm font-medium text-blue-900">How it works</p>
+        <p className="text-xs text-blue-800 mt-1">
+          After every statement is generated, banned words are automatically swapped for their replacement.
+          Disabled words are still scanned and flagged in the coverage report, but are not auto-replaced.
+          Run <code className="bg-blue-100 px-1 rounded">supabase-migration-banned-words.sql</code> once if this list is empty.
+        </p>
+        <p className="text-xs text-blue-700 mt-1 font-medium">{enabledCount} of {rows.length} words active</p>
+      </div>
+
+      {/* Add new word */}
+      <div className="bg-white rounded-lg border border-gray-200 p-4 space-y-3">
+        <h3 className="text-sm font-semibold text-gray-900">Add banned word</h3>
+        <div className="flex gap-2 flex-wrap">
+          <input
+            ref={wordInputRef}
+            value={addWord}
+            onChange={e => setAddWord(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleAdd()}
+            placeholder="Banned word or phrase"
+            className="flex-1 min-w-40 border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
+          <input
+            value={addReplacement}
+            onChange={e => setAddReplacement(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleAdd()}
+            placeholder="Replacement (leave blank to delete phrase)"
+            className="flex-1 min-w-48 border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
+          <select
+            value={addType}
+            onChange={e => setAddType(e.target.value)}
+            className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none cursor-pointer"
+          >
+            {Object.entries(TYPE_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
+          </select>
+          <button
+            onClick={handleAdd}
+            disabled={adding || !addWord.trim()}
+            className="px-4 py-2 text-sm text-white font-semibold rounded-md disabled:opacity-50 cursor-pointer transition-colors"
+            style={{ backgroundColor: '#0B4F6C' }}
+          >
+            {adding ? 'Adding…' : 'Add'}
+          </button>
+        </div>
+        {addError && <p className="text-xs text-red-600">{addError}</p>}
+      </div>
+
+      {/* Filter bar */}
+      <div className="flex gap-2 flex-wrap items-center">
+        <input
+          value={filter}
+          onChange={e => setFilter(e.target.value)}
+          placeholder="Search words…"
+          className="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+        />
+        <div className="flex gap-1">
+          {['all', 'verb', 'adjective', 'noun', 'phrase', 'other'].map(t => (
+            <button
+              key={t}
+              onClick={() => setTypeFilter(t)}
+              className={`px-3 py-1.5 text-xs font-medium rounded-full border cursor-pointer transition-colors ${
+                typeFilter === t
+                  ? 'bg-gray-800 text-white border-gray-800'
+                  : 'bg-white text-gray-600 border-gray-300 hover:border-gray-500'
+              }`}
+            >
+              {t === 'all' ? `All (${rows.length})` : `${TYPE_LABELS[t]} (${rows.filter(r => r.pattern_type === t).length})`}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Table */}
+      {loading ? (
+        <div className="text-sm text-gray-400 py-8 text-center">Loading…</div>
+      ) : (
+        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide w-8">On</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Banned word</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Type</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Replacement</th>
+                <th className="px-4 py-3 w-16"></th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {filtered.length === 0 && (
+                <tr><td colSpan={5} className="px-4 py-8 text-center text-gray-400 text-sm">No results</td></tr>
+              )}
+              {filtered.map(row => (
+                <tr key={row.id} className={`transition-colors ${row.enabled ? '' : 'opacity-40'}`}>
+                  {/* Toggle */}
+                  <td className="px-4 py-3">
+                    <button
+                      onClick={() => handleToggle(row)}
+                      className={`w-9 h-5 rounded-full transition-colors cursor-pointer relative ${row.enabled ? 'bg-green-500' : 'bg-gray-300'}`}
+                      title={row.enabled ? 'Disable' : 'Enable'}
+                    >
+                      <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all ${row.enabled ? 'left-[18px]' : 'left-0.5'}`} />
+                    </button>
+                  </td>
+                  {/* Word */}
+                  <td className="px-4 py-3 font-mono text-gray-900 font-medium">{row.word}</td>
+                  {/* Type */}
+                  <td className="px-4 py-3">
+                    <span className={`inline-block text-xs font-medium px-2 py-0.5 rounded-full border ${TYPE_COLOURS[row.pattern_type] || TYPE_COLOURS.other}`}>
+                      {TYPE_LABELS[row.pattern_type] || row.pattern_type}
+                    </span>
+                  </td>
+                  {/* Replacement — inline edit */}
+                  <td className="px-4 py-3">
+                    {editingId === row.id ? (
+                      <div className="flex gap-1 items-center">
+                        <input
+                          autoFocus
+                          value={editVal}
+                          onChange={e => setEditVal(e.target.value)}
+                          onKeyDown={e => { if (e.key === 'Enter') handleSaveEdit(row.id); if (e.key === 'Escape') setEditingId(null) }}
+                          className="border border-blue-400 rounded px-2 py-1 text-xs focus:outline-none w-40"
+                        />
+                        <button onClick={() => handleSaveEdit(row.id)} className="text-xs text-green-700 font-semibold cursor-pointer hover:underline">Save</button>
+                        <button onClick={() => setEditingId(null)} className="text-xs text-gray-400 cursor-pointer hover:underline">Cancel</button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => { setEditingId(row.id); setEditVal(row.replacement) }}
+                        className="text-gray-600 hover:text-blue-600 cursor-pointer text-left group"
+                        title="Click to edit replacement"
+                      >
+                        {row.replacement
+                          ? <span className="font-mono">{row.replacement}</span>
+                          : <span className="text-gray-300 italic text-xs">(delete phrase)</span>
+                        }
+                        <span className="ml-1 text-gray-300 group-hover:text-blue-400 text-xs">✎</span>
+                      </button>
+                    )}
+                  </td>
+                  {/* Delete */}
+                  <td className="px-4 py-3 text-right">
+                    <button
+                      onClick={() => handleDelete(row.id, row.word)}
+                      className="text-xs text-red-400 hover:text-red-600 cursor-pointer"
+                      title="Remove"
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  )
 }
 
 function WordCount({ text }: { text: string }) {
@@ -160,7 +432,7 @@ export default function PromptsPage() {
   const [prompts, setPrompts] = useState<Prompts | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState<'england-wales' | 'scotland'>('england-wales')
+  const [activeTab, setActiveTab] = useState<'england-wales' | 'scotland' | 'banned-words'>('england-wales')
 
   const load = async () => {
     setLoading(true)
@@ -239,7 +511,7 @@ export default function PromptsPage() {
 );`}</pre>
       </div>
 
-      {/* Region tabs */}
+      {/* Tabs */}
       <div className="flex gap-1 border-b border-gray-200">
         {(['england-wales', 'scotland'] as const).map((r) => (
           <button
@@ -257,16 +529,30 @@ export default function PromptsPage() {
             )}
           </button>
         ))}
+        <button
+          onClick={() => setActiveTab('banned-words')}
+          className={`px-5 py-2.5 text-sm font-medium rounded-t-md cursor-pointer transition-colors ${
+            activeTab === 'banned-words'
+              ? 'bg-white border border-b-white border-gray-200 text-gray-900 -mb-px'
+              : 'text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          Banned Words
+        </button>
       </div>
 
-      {/* Active editor */}
-      <PromptEditor
-        key={activeTab}
-        region={activeTab}
-        entry={prompts[activeTab]}
-        token={token}
-        onSaved={load}
-      />
+      {/* Active panel */}
+      {activeTab === 'banned-words' ? (
+        <BannedWordsPanel token={token} />
+      ) : (
+        <PromptEditor
+          key={activeTab}
+          region={activeTab}
+          entry={prompts[activeTab]}
+          token={token}
+          onSaved={load}
+        />
+      )}
     </div>
   )
 }
