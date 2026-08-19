@@ -1,4 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk'
+import fs from 'fs'
+import path from 'path'
 import { Client, ScrapeResult, StatementAnalysis } from './types'
 import { getEnglandWalesPrompt } from './prompts/england-wales'
 import { getScotlandPrompt } from './prompts/scotland'
@@ -90,7 +92,14 @@ async function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): Promis
     }
   }
   if (region === 'scotland') return getScotlandPrompt(style) + ESSENTIAL_CRITERIA_OVERRIDE
-  if (region === 'england-wales') return getEnglandWalesPrompt(style) + ESSENTIAL_CRITERIA_OVERRIDE
+  if (region === 'england-wales') {
+    // Try V2.9 master prompt file before falling back to code default
+    try {
+      const v2Prompt = fs.readFileSync(path.join(process.cwd(), 'nhs_supporting_statement_master_prompt_v2_9.md'), 'utf-8')
+      if (v2Prompt.trim()) return v2Prompt + ESSENTIAL_CRITERIA_OVERRIDE
+    } catch { /* file not present — fall through */ }
+    return getEnglandWalesPrompt(style) + ESSENTIAL_CRITERIA_OVERRIDE
+  }
   const styleNote = style === '2'
     ? '\n- Write in continuous flowing prose with NO subheadings or bold section headers anywhere'
     : '\n- Use bold subheadings. Group 3-4 related criteria per subheading. The subheading must name every criterion it covers using person spec wording. Every criterion in the subheading must be explicitly evidenced in the paragraph. Every criterion from the person spec must be assigned to exactly one section — no criterion may be skipped. Plan all subheadings and confirm 100% coverage before writing.'

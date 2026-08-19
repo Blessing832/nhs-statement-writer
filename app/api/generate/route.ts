@@ -3,7 +3,8 @@ import Anthropic from '@anthropic-ai/sdk'
 import { supabaseAdmin } from '@/lib/supabase'
 import { generateStatement, analyzeJobPosting, detectRegion } from '@/lib/claude'
 import { ScrapeResult, CoverageReport } from '@/lib/types'
-import { runEnglandWalesPipeline, runScotlandPipeline } from '@/lib/statement-pipeline'
+import { runScotlandPipeline } from '@/lib/statement-pipeline'
+import { runNHSV2Pipeline } from '@/lib/nhs-v2-pipeline'
 import { applyReplacements } from '@/lib/bannedWords'
 
 // ── Banned-word replacement map — cached in-process for 5 minutes ─────────────
@@ -225,7 +226,7 @@ export async function POST(req: NextRequest) {
     try {
       const pipeline = pipelineRegion === 'scotland'
         ? await runScotlandPipeline(statement, analysis, client)
-        : await runEnglandWalesPipeline(statement, analysis, client)
+        : await runNHSV2Pipeline(statement, analysis, client)
       coverageReport = pipeline
       if (pipeline.patchedStatement) {
         statement = pipeline.patchedStatement
