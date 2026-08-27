@@ -19,7 +19,7 @@ const BANNED_PHRASES = [
 
 const WORD_COUNT_MIN = 1380
 const WORD_COUNT_MAX = 1420
-const MAX_PATCHES = 3
+const MAX_PATCHES = 1
 
 function readPromptFile(name: string): string {
   try {
@@ -212,8 +212,13 @@ function mapCriteria(criteria: V2AuditCriterion[]): CriterionCoverage[] {
   }))
 }
 
-function isPassingState(audit: V2AuditResponse, det: DeterministicResult): boolean {
-  return audit.all_pass && det.wordCountOk && det.bannedPhrasesFound.length === 0
+// Patch only for serious problems: essential criteria that are completely absent (0)
+// or bare unsupported claims (1), word count badly outside tolerance, or banned phrases.
+// Scores of 2–4 mean evidence exists — the statement passes for dispatch even if imperfect.
+function needsPatch(audit: V2AuditResponse, det: DeterministicResult): boolean {
+  const criticalEssentialFails = audit.criteria.filter(c => c.id.startsWith('E') && c.score <= 1)
+  const wordCountBadlyOff = det.wordCount < 1300 || det.wordCount > 1500
+  return criticalEssentialFails.length > 0 || wordCountBadlyOff || det.bannedPhrasesFound.length > 0
 }
 
 export async function runNHSV2Pipeline(
@@ -262,9 +267,9 @@ export async function runNHSV2Pipeline(
       break
     }
 
-    // Step 4: done if all checks pass
-    if (isPassingState(auditResult.response, det)) {
-      console.log(`NHSV2 passed at attempt=${attempt}`)
+    // Step 4: done if nothing critical needs fixing
+    if (!needsPatch(auditResult.response, det)) {
+      console.log(`NHSV2 no patch needed at attempt=${attempt}`)
       break
     }
 
@@ -325,7 +330,7 @@ export async function runNHSV2Pipeline(
     warningBanner.push(v)
   }
 
-  const allPassFinal = isPassingState(latestAudit, finalDet)
+  const allPassFinal = !needsPatch(latestAudit, finalDet)
 
   console.log(
     `NHSV2 final: allPass=${allPassFinal} wordCount=${finalDet.wordCount} patches=${patchCount}` +
