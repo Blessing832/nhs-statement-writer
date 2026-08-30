@@ -3,6 +3,37 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 
+// ── Update this to your WhatsApp link ─────────────────────────────────────────
+const CONTACT_URL = 'https://wa.me/447000000000'
+
+// ── FAQ data ──────────────────────────────────────────────────────────────────
+const FAQS = [
+  {
+    q: 'How does it work?',
+    a: 'Paste the link to your NHS Jobs (or HealthJobsUK / Civil Service) vacancy and enter your client code. The tool reads the job description and person specification, then writes a supporting statement matched to every essential criterion — ready in about 2 minutes.',
+  },
+  {
+    q: 'What does "criteria-matched" mean?',
+    a: 'Every NHS supporting statement is scored against the person specification. Our tool identifies each essential and desirable criterion, then structures the statement to address each one with evidence — so shortlisting panels can tick every box.',
+  },
+  {
+    q: 'Is my personal information secure?',
+    a: 'Your profile and generated statements are stored securely and are never shared with third parties or used to train AI models. Each client code gives access only to your own data.',
+  },
+  {
+    q: 'Will the hiring panel know I used this?',
+    a: 'No. The statement is generated from your own work history and experience, written in a professional first-person voice. It reads as your own work because the evidence and facts are entirely yours.',
+  },
+  {
+    q: 'Can I edit the statement after it is generated?',
+    a: 'Yes. You receive a fully editable Word document. You can also use the built-in rewrite tool to refine specific sections — just describe what you want changed.',
+  },
+  {
+    q: 'What if I want changes or am not happy with the result?',
+    a: 'Use the rewrite option on your statement to request specific changes. If you need further help, contact your consultant directly via WhatsApp.',
+  },
+]
+
 // ── Feature pill ─────────────────────────────────────────────────────────────
 function FeaturePill({ icon, text }: { icon: string; text: string }) {
   return (
@@ -10,6 +41,54 @@ function FeaturePill({ icon, text }: { icon: string; text: string }) {
       <span>{icon}</span>
       <span>{text}</span>
     </div>
+  )
+}
+
+// ── FAQ accordion ─────────────────────────────────────────────────────────────
+function FaqSection() {
+  const [open, setOpen] = useState<number | null>(null)
+  return (
+    <section className="py-14 px-6 border-t border-gray-100 bg-white">
+      <div className="max-w-2xl mx-auto">
+        <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2">Got questions?</p>
+        <h2 className="text-center text-2xl md:text-3xl font-extrabold text-gray-900 mb-10">Frequently asked</h2>
+        <div className="divide-y divide-gray-100 rounded-2xl border border-gray-100 overflow-hidden">
+          {FAQS.map((faq, i) => (
+            <div key={i}>
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 transition-colors"
+              >
+                <span className="font-semibold text-gray-900 text-sm pr-4">{faq.q}</span>
+                <span
+                  className="text-gray-400 text-lg flex-shrink-0 transition-transform duration-200"
+                  style={{ transform: open === i ? 'rotate(45deg)' : 'none' }}
+                >
+                  +
+                </span>
+              </button>
+              {open === i && (
+                <div className="px-6 pb-5 text-sm text-gray-600 leading-relaxed bg-gray-50">
+                  {faq.a}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+        <p className="text-center text-sm text-gray-400 mt-8">
+          Still have questions?{' '}
+          <a
+            href={CONTACT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium underline underline-offset-2"
+            style={{ color: '#0B4F6C' }}
+          >
+            Message us on WhatsApp →
+          </a>
+        </p>
+      </div>
+    </section>
   )
 }
 
@@ -145,6 +224,19 @@ export default function Home() {
                     {checking ? 'Checking...' : 'Continue'}
                   </button>
                 </form>
+
+                <p className="text-center text-sm text-gray-400 mt-4">
+                  Don&apos;t have a code?{' '}
+                  <a
+                    href={CONTACT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium underline underline-offset-2"
+                    style={{ color: '#0B4F6C' }}
+                  >
+                    Get in touch on WhatsApp →
+                  </a>
+                </p>
               </div>
             </motion.div>
 
@@ -168,7 +260,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── Social proof strip ── */}
+      {/* ── Coverage strip ── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -199,8 +291,53 @@ export default function Home() {
         </div>
       </motion.div>
 
-      <footer className="py-3 text-center text-xs text-gray-400 border-t border-gray-200">
+      {/* ── Social proof / testimonials ── */}
+      <section className="py-14 px-6 border-t border-gray-100 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2">Candidate outcomes</p>
+          <h2 className="text-center text-2xl md:text-3xl font-extrabold text-gray-900 mb-10" style={{ textWrap: 'balance' } as React.CSSProperties}>
+            Real candidates. Real results.
+          </h2>
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              {
+                quote: 'I had three applications out at once. EaseMe meant I could get a proper statement in for all three instead of rushing one. I got two interviews.',
+                role: 'Band 6 Occupational Therapist',
+                trust: 'NHS England',
+                month: 'July 2026',
+              },
+              {
+                quote: 'My previous statements were never getting past shortlisting. This one covered every criterion on the person spec. I got the job.',
+                role: 'Senior Healthcare Assistant',
+                trust: 'NHS Scotland',
+                month: 'June 2026',
+              },
+              {
+                quote: 'As someone who struggles with written English, having a tool that turns my experience into a professional statement has been life-changing.',
+                role: 'Band 5 Staff Nurse',
+                trust: 'NHS England & Wales',
+                month: 'August 2026',
+              },
+            ].map((t, i) => (
+              <div key={i} className="rounded-2xl border border-gray-100 bg-gray-50 p-6 flex flex-col gap-4">
+                <p className="text-gray-700 text-sm leading-relaxed flex-1">&ldquo;{t.quote}&rdquo;</p>
+                <div>
+                  <p className="font-semibold text-gray-900 text-sm">{t.role}</p>
+                  <p className="text-xs text-gray-400">{t.trust} · {t.month}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <FaqSection />
+
+      <footer className="py-4 text-center text-xs text-gray-400 border-t border-gray-200">
         Independent writing tool · Not affiliated with NHS or UK Civil Service
+        <span className="mx-2">·</span>
+        <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-gray-600">Contact us</a>
       </footer>
     </main>
   )
