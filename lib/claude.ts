@@ -373,7 +373,7 @@ ${options.specificQuestions || ''}`
     const hasExtraQuestions = !!(options.specificQuestions && options.applicationMode === 'statement-questions')
     const yearsStr = options.yearsHint || 'over 2'
     const formatHintLine = options.openingFormatHint
-      ? `MANDATORY OPENING FORMAT: Use Format ${options.openingFormatHint}. Replace every [X] placeholder with "${yearsStr}". NEVER write "several years", "many years", or "a number of years" — always use "${yearsStr} years".\n\n`
+      ? `MANDATORY OPENING TEMPLATE: Use Opening Template ${options.openingFormatHint} from the OPENING TEMPLATES section — the exact numbered sentence listed there. Replace every [X] placeholder with "${yearsStr}". NEVER write "several years", "many years", or "a number of years" — always use "${yearsStr} years".\n\n`
       : ''
     const patternLine = !options.bodyPattern
       ? ''
@@ -538,6 +538,7 @@ async function generateParallel(
     previousStatement?: string
     applicationMode?: ApplicationMode
     bodyPattern?: string
+    openingTemplate?: '1' | '2' | '3' | '4' | '5'
   },
   region: 'scotland' | 'england-wales',
   style: '1' | '2'
@@ -552,9 +553,9 @@ async function generateParallel(
   const appMode = options.applicationMode ?? 'full'
   const systemPrompt = await buildSystemPrompt(region, style)
 
-  // Pick opening format randomly so the intro never defaults to the same structure
-  const formatPool = ['A', 'B', 'C', 'D', 'E']
-  const openingFormatHint = formatPool[Math.floor(Math.random() * formatPool.length)]
+  // Use user-selected opening template (1-5) or pick one randomly
+  const formatPool = ['1', '2', '3', '4', '5']
+  const openingFormatHint = options.openingTemplate || formatPool[Math.floor(Math.random() * formatPool.length)]
 
   // Random years: avoids "several years" — use a specific number
   const yearsPool = ['over 2', 'over 3']
@@ -823,6 +824,7 @@ export async function generateStatement(
     vacancyUrl?: string
     applicationMode?: ApplicationMode
     bodyPattern?: string
+    openingTemplate?: '1' | '2' | '3' | '4' | '5'
   } = {}
 ): Promise<{
   statement: string
@@ -840,6 +842,7 @@ export async function generateStatement(
     previousStatement: options.previousStatement,
     applicationMode: options.applicationMode ?? 'full',
     bodyPattern: options.bodyPattern,
+    openingTemplate: options.openingTemplate,
   }
 
   if (region === 'scotland' || region === 'england-wales') {

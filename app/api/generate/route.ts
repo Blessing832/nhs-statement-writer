@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
     previousStatement,
     applicationMode,
     bodyPattern,
+    openingTemplate,
     pastedPersonSpec,
   } = await req.json()
 
@@ -155,6 +156,7 @@ export async function POST(req: NextRequest) {
       vacancyUrl: vacancy_url,
       applicationMode: applicationMode || 'full',
       bodyPattern: bodyPattern || undefined,
+      openingTemplate: openingTemplate || undefined,
     })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error'
