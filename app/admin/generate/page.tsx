@@ -173,6 +173,7 @@ function AdminGenerateInner() {
   const [pastedPersonSpec, setPastedPersonSpec] = useState('')
   const [style, setStyle] = useState<'1' | '2'>('1')
   const [bodyPattern, setBodyPattern] = useState<'' | '1' | '2' | '3'>('')
+  const [openingTemplate, setOpeningTemplate] = useState<'' | '1' | '2' | '3' | '4' | '5'>('')
   const [applicationMode, setApplicationMode] = useState<'full' | 'questions-only' | 'statement-questions'>('full')
   const [specificQuestions, setSpecificQuestions] = useState<string[]>([''])
 
@@ -319,7 +320,7 @@ function AdminGenerateInner() {
 
     try {
       const { result: data, jobData } = await runGenerate(
-        { client_code: selectedClient.client_code, vacancy_url: usedUrl, style, applicationMode, specificQuestions: questionsText() || undefined, bodyPattern: bodyPattern || undefined, pastedPersonSpec: pastedPersonSpec.trim() || undefined, instructions: writerNotes.trim() || undefined },
+        { client_code: selectedClient.client_code, vacancy_url: usedUrl, style, applicationMode, specificQuestions: questionsText() || undefined, bodyPattern: bodyPattern || undefined, openingTemplate: openingTemplate || undefined, pastedPersonSpec: pastedPersonSpec.trim() || undefined, instructions: writerNotes.trim() || undefined },
         preloaded,
         controller.signal
       )
@@ -352,6 +353,7 @@ function AdminGenerateInner() {
           rewriteInstruction: rewriteInstruction.trim(),
           previousStatement: result.statement,
           bodyPattern: bodyPattern || undefined,
+          openingTemplate: openingTemplate || undefined,
         },
         cachedJobData ?? undefined
       )
@@ -490,18 +492,20 @@ function AdminGenerateInner() {
                 </div>
               )}
 
-              {/* Depth style — always visible regardless of input mode */}
+              {/* Opening style */}
               <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="text-xs text-gray-500 mr-0.5">Writing style:</span>
+                <span className="text-xs text-gray-500 mr-0.5">Opening style:</span>
                 {([
-                  { val: '' as const, label: 'Auto', title: 'Best fit chosen for this candidate' },
-                  { val: '1' as const, label: '1 – Story-led', title: '2-3 deep narrative scenes; all other paragraphs tight and short' },
-                  { val: '2' as const, label: '2 – Evidence-led', title: 'Every paragraph 3-4 sentences, packed with procedures, systems and outcomes' },
-                  { val: '3' as const, label: '3 – Trust Lead', title: 'Opens with why this role and why this trust (with researched specifics), then two criteria per paragraph — no 6 Cs' },
+                  { val: '' as const, label: 'Auto', title: 'AI picks the opening automatically' },
+                  { val: '1' as const, label: '1', title: '"After carefully going through the job advert and person specification list, I am writing to apply for the [vacancy title]..."' },
+                  { val: '2' as const, label: '2', title: '"Having worked as a [role] for [X] years, I believe taking up the role of [vacancy title] within [Trust] is the natural next step..."' },
+                  { val: '3' as const, label: '3', title: '"I am writing to apply for the position of [vacancy title]..."' },
+                  { val: '4' as const, label: '4', title: '"Having cared for people with [condition] for over [X] years, I believe I have the necessary skills to take up the role of [vacancy title]..."' },
+                  { val: '5' as const, label: '5', title: '"My background and experience match the requirements of the role of [vacancy title]..."' },
                 ]).map(({ val, label, title }) => (
-                  <button key={val || 'auto'} type="button" title={title} onClick={() => setBodyPattern(val)}
+                  <button key={val || 'auto'} type="button" title={title} onClick={() => setOpeningTemplate(val)}
                     className="text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer"
-                    style={bodyPattern === val
+                    style={openingTemplate === val
                       ? { borderColor: '#0B4F6C', backgroundColor: '#0B4F6C', color: 'white' }
                       : { borderColor: '#d1d5db', backgroundColor: 'white', color: '#374151' }}>
                     {label}
