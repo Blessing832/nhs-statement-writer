@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
-
-function verifyAdmin(req: NextRequest): boolean {
-  return req.headers.get('x-admin-token') === process.env.ADMIN_SECRET
-}
+import { verifyAdminToken as verifyAdmin } from '@/lib/auth'
 
 // GET — list all banned words
 export async function GET(req: NextRequest) {

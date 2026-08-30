@@ -878,8 +878,17 @@ export async function generateStatement(
   if (content.type !== 'text') throw new Error('Unexpected response type from Claude')
 
   const cleanedText = content.text.replace(/ — /g, ', ').replace(/—/g, ', ').replace(/ -- /g, ', ').replace(/--/g, ', ')
-  const jsonMatch = cleanedText.match(/\{[\s\S]*\}/)
-  if (!jsonMatch) throw new Error('Could not parse Claude response as JSON')
+
+  // Try to extract JSON: code fence first, then bare object match
+  let rawJson: string | null = null
+  const fenceMatch = cleanedText.match(/```(?:json)?\s*([\s\S]*?)```/)
+  if (fenceMatch) {
+    rawJson = fenceMatch[1].trim()
+  } else {
+    const objMatch = cleanedText.match(/\{[\s\S]*\}/)
+    rawJson = objMatch ? objMatch[0] : null
+  }
+  if (!rawJson) throw new Error('Could not parse Claude response as JSON')
 
   let parsed: {
     statement: string
@@ -887,9 +896,16 @@ export async function generateStatement(
     analysis?: StatementAnalysis & { meetsAllEssential?: boolean }
   }
   try {
-    parsed = JSON.parse(jsonMatch[0])
+    parsed = JSON.parse(rawJson)
   } catch {
-    throw new Error('Invalid JSON in Claude response')
+    // Last resort: strip any trailing non-JSON characters after the final }
+    const trimmed = rawJson.slice(0, rawJson.lastIndexOf('}') + 1)
+    try {
+      parsed = JSON.parse(trimmed)
+    } catch {
+      console.error('Invalid JSON from Claude (first 500 chars):', rawJson.slice(0, 500))
+      throw new Error('Invalid JSON in Claude response')
+    }
   }
 
   if (!parsed.statement) throw new Error('Claude response missing statement field')

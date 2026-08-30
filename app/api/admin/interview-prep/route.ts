@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import Anthropic from '@anthropic-ai/sdk'
+import { verifyAdminToken } from '@/lib/auth'
 
 export const maxDuration = 300
-
-function isAuthorised(req: NextRequest): boolean {
-  return req.headers.get('x-admin-token') === process.env.ADMIN_SECRET
-}
 
 const SYSTEM_PROMPT = `You are a senior NHS interview preparation specialist with 20 years of coaching experience. You write polished, publication-quality interview preparation packs that win job offers. Your output is detailed, specific, and reads as though written by a professional editor who deeply understands NHS culture and clinical practice.
 
@@ -36,7 +33,7 @@ QUALIFICATION MATCHING RULE — APPLIES TO ALL SECTIONS:
 - If the candidate holds higher qualifications than the role requires, mention them briefly only where they add value — e.g. "I also hold a postgraduate qualification which has strengthened my understanding of service delivery" — do not list the full title unless directly relevant`
 
 export async function POST(req: NextRequest) {
-  if (!isAuthorised(req)) {
+  if (!verifyAdminToken(req)) {
     return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
   }
 

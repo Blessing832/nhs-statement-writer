@@ -2,15 +2,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { generateStatement } from '@/lib/claude'
 import { scrapeJobUrl } from '@/lib/job-scraper'
 import type { Client, ScrapeResult } from '@/lib/types'
+import { verifyAdminToken } from '@/lib/auth'
 
 export const maxDuration = 300
 
-function isAuthorised(req: NextRequest): boolean {
-  return req.headers.get('x-admin-token') === process.env.ADMIN_SECRET
-}
-
 export async function POST(req: NextRequest) {
-  if (!isAuthorised(req)) {
+  if (!verifyAdminToken(req)) {
     return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
   }
 

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { verifyAdminToken } from '@/lib/auth'
 
 // GET ?code=X        → { [vacancy_id]: 'done'|'closed' } for that client (unauthenticated)
 // GET ?all=1         → all rows (requires x-admin-token header)
@@ -8,7 +9,7 @@ export async function GET(req: NextRequest) {
   const all  = req.nextUrl.searchParams.get('all') === '1'
 
   if (all) {
-    if (req.headers.get('x-admin-token') !== process.env.ADMIN_SECRET) {
+    if (!verifyAdminToken(req)) {
       return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
     }
     const { data, error } = await supabaseAdmin

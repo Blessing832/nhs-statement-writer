@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import type { EmploymentType, VacancySource, SearchLink } from '@/lib/vacancy/types'
-
-function isAuthorised(req: NextRequest): boolean {
-  const secret = req.headers.get('x-admin-token')
-  return secret === process.env.ADMIN_SECRET
-}
+import { verifyAdminToken as isAuthorised } from '@/lib/auth'
 
 // GET /api/vacancies/preferences — list all preferences
 export async function GET(req: NextRequest) {
