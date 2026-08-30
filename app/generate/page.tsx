@@ -479,19 +479,33 @@ interface PublicVacancy {
   scraped_at: string
 }
 
+interface SearchLink { id: string; label: string; url: string }
+
+function timeAgoClient(iso: string): string {
+  const diff = Date.now() - new Date(iso).getTime()
+  const h = Math.floor(diff / 3_600_000)
+  const m = Math.floor((diff % 3_600_000) / 60_000)
+  if (h === 0) return `${m}m ago`
+  if (h < 24) return `${h}h ago`
+  return `${Math.floor(h / 24)}d ago`
+}
+
 function ClientVacanciesView({ clientCode }: { clientCode: string }) {
   const [vacancies, setVacancies] = useState<PublicVacancy[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [tracking, setTracking] = useState<Record<string, string>>({})
+  const [myLinks, setMyLinks] = useState<SearchLink[]>([])
 
   useEffect(() => {
     Promise.all([
       fetch('/api/vacancies/public').then(r => r.ok ? r.json() : []),
       fetch(`/api/vacancies/track?code=${encodeURIComponent(clientCode)}`).then(r => r.ok ? r.json() : {}),
-    ]).then(([vacs, trk]) => {
+      fetch(`/api/vacancies/my-links?code=${encodeURIComponent(clientCode)}`).then(r => r.ok ? r.json() : []),
+    ]).then(([vacs, trk, links]) => {
       setVacancies(vacs)
       setTracking(trk)
+      setMyLinks(links)
       setLoading(false)
     }).catch(() => setLoading(false))
   }, [clientCode])
@@ -558,6 +572,27 @@ function ClientVacanciesView({ clientCode }: { clientCode: string }) {
           </div>
         </div>
 
+        {/* Candidate's own job search links */}
+        {myLinks.length > 0 && (
+          <div className="mb-6 bg-blue-50 border border-blue-100 rounded-xl px-5 py-4">
+            <p className="text-xs font-semibold text-blue-700 mb-2 uppercase tracking-wide">Your Job Search Links</p>
+            <div className="flex flex-wrap gap-2">
+              {myLinks.map(link => (
+                <a
+                  key={link.id}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-white shadow-sm hover:opacity-90 transition-opacity"
+                  style={{ backgroundColor: '#0B4F6C' }}
+                >
+                  {link.label} ↗
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
         {vacancies.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-3xl mb-3">🏥</p>
@@ -587,14 +622,17 @@ function ClientVacanciesView({ clientCode }: { clientCode: string }) {
                         <p className="text-xs text-gray-500 mt-0.5">{v.employer || 'NHS'}</p>
                       </div>
                     </div>
-                    <a
-                      href={v.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-blue-600 shrink-0 font-medium mt-0.5 hover:underline"
-                    >
-                      Apply ↗
-                    </a>
+                    <div className="flex flex-col items-end gap-1 shrink-0">
+                      <a
+                        href={v.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-blue-600 font-medium hover:underline"
+                      >
+                        Apply ↗
+                      </a>
+                      <span className="text-xs text-gray-400">{timeAgoClient(v.scraped_at)}</span>
+                    </div>
                   </div>
                   <div className="flex flex-wrap gap-2 mt-3">
                     {v.location && (
