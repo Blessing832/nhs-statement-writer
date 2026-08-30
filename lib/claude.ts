@@ -95,9 +95,14 @@ UK locations (England, Wales, Scotland, Northern Ireland, and named UK cities an
 
 async function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): Promise<string> {
   // Check for admin-customized prompt stored in Supabase — overrides code defaults
-  if (region === 'scotland' || region === 'england-wales') {
+  // Generic / civil-service also try the england-wales custom prompt so unrecognized UK job boards
+  // benefit from the same EaseMe prompt rather than the bare generic fallback.
+  const supabaseRegion = (region === 'scotland') ? 'scotland'
+    : (region === 'england-wales' || region === 'generic' || region === 'civil-service') ? 'england-wales'
+    : null
+  if (supabaseRegion) {
     try {
-      const { data } = await supabaseAdmin.from('prompts').select('content').eq('region', region).maybeSingle()
+      const { data } = await supabaseAdmin.from('prompts').select('content').eq('region', supabaseRegion).maybeSingle()
       if (data?.content) return data.content + ESSENTIAL_CRITERIA_OVERRIDE
     } catch {
       // Table may not exist yet — fall through to code defaults
