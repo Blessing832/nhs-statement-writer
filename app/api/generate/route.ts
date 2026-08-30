@@ -24,6 +24,26 @@ async function getReplacementMap(): Promise<Map<string, string>> {
 
 export const maxDuration = 300
 
+async function logGenerateError(opts: {
+  clientId?: string
+  clientCode?: string
+  vacancyUrl?: string
+  errorType: string
+  errorMessage: string
+  httpStatus: number
+}) {
+  try {
+    await supabaseAdmin.from('generate_errors').insert({
+      client_id: opts.clientId ?? null,
+      client_code: opts.clientCode ?? null,
+      vacancy_url: opts.vacancyUrl ?? null,
+      error_type: opts.errorType,
+      error_message: opts.errorMessage.slice(0, 500),
+      http_status: opts.httpStatus,
+    })
+  } catch { /* fire-and-forget — never block the response */ }
+}
+
 export async function POST(req: NextRequest) {
   const {
     client_code,
@@ -168,9 +188,12 @@ export async function POST(req: NextRequest) {
       console.error(`CLAUDE_ERR_OTHER msg=${String(message).slice(0, 300)}`)
     }
 
+    const logBase = { clientId: client.id, clientCode: client_code, vacancyUrl: vacancy_url }
+
     if (err instanceof Anthropic.APIError) {
       // Overloaded — transient, user should retry
       if (err.status === 529 || err.type === 'overloaded_error') {
+        void logGenerateError({ ...logBase, errorType: 'overloaded', errorMessage: message, httpStatus: 503 })
         return NextResponse.json(
           { error: 'The AI service is busy right now. Please wait a moment and try again.' },
           { status: 503 }
@@ -178,6 +201,7 @@ export async function POST(req: NextRequest) {
       }
       // Invalid / missing API key
       if (err.status === 401 || err.type === 'authentication_error') {
+        void logGenerateError({ ...logBase, errorType: 'auth', errorMessage: message, httpStatus: 503 })
         return NextResponse.json(
           { error: 'The statement writer is temporarily unavailable (authentication). Please contact your administrator.' },
           { status: 503 }
@@ -191,6 +215,7 @@ export async function POST(req: NextRequest) {
         message.toLowerCase().includes('billing') ||
         message.toLowerCase().includes('quota')
       ) {
+        void logGenerateError({ ...logBase, errorType: 'billing', errorMessage: message, httpStatus: 503 })
         return NextResponse.json(
           { error: 'The statement writer is temporarily unavailable. If you have just added credits, please wait 1-2 minutes and try again. Otherwise contact your administrator.' },
           { status: 503 }
@@ -202,12 +227,14 @@ export async function POST(req: NextRequest) {
       message.toLowerCase().includes('quota') ||
       message.toLowerCase().includes('overloaded')
     ) {
+      void logGenerateError({ ...logBase, errorType: 'overloaded', errorMessage: message, httpStatus: 503 })
       return NextResponse.json(
         { error: 'The statement writer is temporarily unavailable. Please wait a moment and try again.' },
         { status: 503 }
       )
     }
 
+    void logGenerateError({ ...logBase, errorType: 'unknown', errorMessage: message, httpStatus: 500 })
     return NextResponse.json({ error: message }, { status: 500 })
   }
 

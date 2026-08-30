@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { motion, type Variants } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import { useAdminToken } from '@/lib/admin-context'
 
 const SECTIONS = [
@@ -65,8 +66,19 @@ const card: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.38, ease: 'easeOut' } },
 }
 
+interface ErrorSummary { count: number; recent: { id: string; created_at: string; client_code: string; error_type: string }[] }
+
 export default function AdminHub() {
-  const { onLogout } = useAdminToken()
+  const { token, onLogout } = useAdminToken()
+  const [errors, setErrors] = useState<ErrorSummary | null>(null)
+
+  useEffect(() => {
+    if (!token) return
+    fetch('/api/admin/generate-errors', { headers: { 'x-admin-token': token } })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d) setErrors(d) })
+      .catch(() => {})
+  }, [token])
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-12">
@@ -85,6 +97,30 @@ export default function AdminHub() {
         <h2 className="text-2xl font-bold text-gray-900 mb-1">Welcome back</h2>
         <p className="text-gray-400 text-sm">Choose a section to manage</p>
       </motion.div>
+
+      {errors && errors.count > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3"
+        >
+          <p className="text-sm font-semibold text-red-700">
+            ⚠ {errors.count} generate {errors.count === 1 ? 'failure' : 'failures'} in the last 24 hours
+          </p>
+          <div className="mt-2 space-y-1">
+            {errors.recent.slice(0, 5).map(e => (
+              <p key={e.id} className="text-xs text-red-600">
+                {new Date(e.created_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+                {' · '}{e.client_code || 'unknown'}
+                {' · '}<span className="font-medium">{e.error_type}</span>
+              </p>
+            ))}
+            {errors.count > 5 && (
+              <p className="text-xs text-red-400">…and {errors.count - 5} more</p>
+            )}
+          </div>
+        </motion.div>
+      )}
 
       <motion.div
         className="grid grid-cols-1 gap-4 sm:grid-cols-2"

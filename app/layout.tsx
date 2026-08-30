@@ -18,8 +18,14 @@ const fraunces = Fraunces({
 })
 
 export const metadata: Metadata = {
-  title: 'EaseMe | Statement Writer',
-  description: 'Professional supporting statement generator for NHS and Civil Service job applications',
+  title: 'EaseMe — NHS Supporting Statement Writer',
+  description: 'Get a criteria-matched NHS supporting statement ready in 2 minutes. Covers NHS England & Wales, NHS Scotland, Civil Service and HealthJobsUK. Download as a Word doc.',
+  keywords: 'NHS supporting statement, NHS job application help, person specification NHS, NHS statement writer, supporting statement generator, NHS application criteria',
+  openGraph: {
+    title: 'EaseMe — NHS Supporting Statement Writer',
+    description: 'Criteria-matched NHS supporting statements in 2 minutes. NHS England & Wales, Scotland, Civil Service, HealthJobsUK.',
+    type: 'website',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
