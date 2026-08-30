@@ -60,19 +60,7 @@ export function detectRegion(url: string, rawText?: string): PromptRegion {
     ) {
       return 'scotland'
     }
-    // NHS, local authority health/social care, and reablement roles all benefit from the V2.9 prompt
-    if (
-      t.includes('nhs') ||
-      t.includes('foundation trust') ||
-      t.includes('nhs trust') ||
-      t.includes('reablement') ||
-      t.includes('care certificate') ||
-      t.includes('person specification') ||
-      t.includes('essential criteria') ||
-      t.includes('supporting statement') ||
-      t.includes('social care') ||
-      t.includes('care and support')
-    ) {
+    if (t.includes('nhs') || t.includes('foundation trust') || t.includes('nhs trust')) {
       return 'england-wales'
     }
   }
@@ -126,7 +114,7 @@ async function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): Promis
   }
   const styleNote = style === '2'
     ? '\n- Write in continuous flowing prose with NO subheadings or bold section headers anywhere'
-    : '\n- Group 3-4 related criteria per section under a short bold Markdown header using **double asterisks** (e.g. **Communication and Record-Keeping (Criteria 8 and 9)**). Do NOT write "Bold Subheading:", "Subheading:", or any other prefix before the header — write only the header text itself in bold. Every criterion must appear in exactly one section. Plan all headers before writing to confirm 100% person spec coverage.'
+    : '\n- Use bold subheadings. Group 3-4 related criteria per subheading. The subheading must name every criterion it covers using person spec wording. Every criterion in the subheading must be explicitly evidenced in the paragraph. Every criterion from the person spec must be assigned to exactly one section — no criterion may be skipped. Plan all subheadings and confirm 100% coverage before writing.'
   return `You are an expert UK job application writer. Write a compelling supporting statement for this NHS or public sector role.
 - Address every essential criterion from the person specification
 - Use NHS language and terminology
