@@ -79,7 +79,19 @@ When an essential criterion cannot be met (for example, a driving licence the ca
 - Never fabricate a licence or claim the candidate holds something they do not
 - Never omit the compliance criterion — address it, honestly, in one direct sentence drawn strictly from the profile
 
-This override applies to every gap — driving licence, qualification, years of experience, or any other essential criterion. Write the statement. Handle the gap in Compliance. Stop.`
+This override applies to every gap — driving licence, qualification, years of experience, or any other essential criterion. Write the statement. Handle the gap in Compliance. Stop.
+
+## CRITICAL — NON-UK LOCATIONS BANNED FROM EVERY STATEMENT
+NEVER name any country, city, region, or geographic location outside the United Kingdom anywhere in the statement — not in the opening paragraph, not in criterion paragraphs, not in any context. This includes country names (Nigeria, Ghana, Philippines, India, USA, etc.), city names (Lagos, Accra, Manila, Delhi, etc.), and any region or continent reference.
+
+If the candidate's profile includes experience from overseas, describe it generically using size and type only:
+- WRONG: "At Lagos University Teaching Hospital in Nigeria, I worked on a busy 40-bed ward..."
+- RIGHT: "At a 400-bed tertiary teaching hospital, I worked on a busy 40-bed ward..."
+- WRONG: "My experience in Ghana prepared me..."
+- RIGHT: "My previous hospital experience prepared me..."
+
+Use: "a large tertiary hospital", "a busy district hospital", "a 500-bed multi-specialty hospital", "a community health centre" — never the country, city, or institution name of a non-UK employer.
+UK locations (England, Wales, Scotland, Northern Ireland, and named UK cities and regions) are allowed where relevant.`
 
 async function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): Promise<string> {
   // Check for admin-customized prompt stored in Supabase — overrides code defaults
