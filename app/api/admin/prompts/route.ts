@@ -2,11 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { getEnglandWalesPrompt } from '@/lib/prompts/england-wales'
 import { getScotlandPrompt } from '@/lib/prompts/scotland'
-
-function verifyAdmin(req: NextRequest): boolean {
-  const token = req.headers.get('x-admin-token')
-  return token === process.env.ADMIN_SECRET
-}
+import { verifyAdminToken as verifyAdmin } from '@/lib/auth'
 
 // GET — return both prompts (custom if saved, else code default)
 export async function GET() {

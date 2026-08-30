@@ -1,16 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
-
-function isAuthorised(req: NextRequest): boolean {
-  const secret = req.headers.get('x-admin-token')
-  return secret === process.env.ADMIN_SECRET
-}
+import { verifyAdminToken } from '@/lib/auth'
 
 export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  if (!isAuthorised(req)) {
+  if (!verifyAdminToken(req)) {
     return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
   }
 
