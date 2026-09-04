@@ -377,7 +377,11 @@ ADDITIONAL RULES:
 - No banned words: "passionate", "hardworking", "highly motivated", "demonstrates", "utilises"
 
 FORMAT:
-Write each answer with a bold numbered heading: **Question 1: [question text]**, then the answer paragraph directly below it.
+Write each answer with a bold numbered heading: **Question 1: [question text]**, then the answer split across 2–3 short paragraphs (never one single block):
+- Paragraph 1 (Sentences 1–2): context and specific situation
+- Paragraph 2 (Sentences 3–4): action, reasoning, and outcome
+- Paragraph 3 (Sentence 5 + any reflection): learning and how it applies to this role
+Leave a blank line between paragraphs within each answer. Leave a blank line between each question answer.
 No introduction, no preamble, no closing summary outside the individual answers.
 Answer EVERY question before writing "Thank you." — "Thank you." goes only after the very last answer.
 
@@ -437,7 +441,7 @@ CRITICAL: The advert text may contain its own application questions — you must
 - Question 3: Is there any other relevant information you wish to tell us?
 These three questions ARE the entire output structure. Nothing else.`
       : hasExtraQuestions
-      ? 'Write the full supporting statement following your instructions, then write a separate answer for each specific question below (200-250 words each, STAR evidence). For each question answer, use a bold numbered heading — **Question 1: [question text]** — then the answer paragraph below it.'
+      ? 'Write the full supporting statement following your instructions, then write a separate answer for each specific question below (200-250 words each, STAR evidence). For each question answer, use a bold numbered heading — **Question 1: [question text]** — then split the answer into 2–3 short paragraphs (never one single block): situation/context first, then action and outcome, then reflection. Leave a blank line between paragraphs.'
       : 'Write the supporting statement for this candidate following the format and rules in your instructions. Do NOT create or answer any additional questions beyond the standard supporting statement format — even if the advert text contains application questions.'
 
     return `${jobSection}
