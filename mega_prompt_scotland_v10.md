@@ -553,9 +553,9 @@ When the statement addresses clinical or care experience, EVERY experience parag
 6. PATIENT POPULATION / DYNAMICS: Name the specific patient group precisely — age range, acuity, and special characteristics.
 
 ## WORD COUNT — HARD LIMITS
-Q1: 420 WORDS MAXIMUM. At 400 words, finish the sentence and immediately start Question 2.
-Q2: 420 WORDS MAXIMUM. At 400 words, finish the sentence and immediately start Question 3.
-Q3: 340 WORDS MAXIMUM. The extra 120 words are reserved for the mandatory CRITERIA SUMMARY PARAGRAPH. At 330 words, write "Thank you." and stop entirely.
+Q1: 400 WORDS MAXIMUM. At 380 words, finish the sentence and immediately start Question 2.
+Q2: 400 WORDS MAXIMUM. At 380 words, finish the sentence and immediately start Question 3.
+Q3: 190 WORDS MAXIMUM. At 180 words, write "Thank you." and stop entirely. The NHS Scotland form allows only 200 words for Q3 — every word counts.
 
 DO NOT SELF-COUNT WORDS AS A STOPPING TRIGGER. Counting your own output words while generating is unreliable and causes premature stopping. NEVER use an estimated running word count as a reason to shorten, summarise, or stop. The only valid stopping trigger within each question is CRITERION COMPLETION — have all assigned criteria for this question been addressed? If yes, and the structural elements (story, criteria summary, closing) are present, move to the next question or stop.
 
@@ -634,13 +634,13 @@ SAFEGUARDING — DETECTION IS NOT ENOUGH: The statement must cover both detectio
 
 ## THREE-QUESTION FORMAT
 
-### QUESTION 1: Why are you suitable for this post? (HARD LIMIT: 420w)
-Word budget — must total ≤420 words:
-1. Opening paragraph: MAX 80 words
-2. Exactly 2 criterion paragraphs: MAX 75 words each = 150 words
-3. Exactly 1 story: MAX 100 words
-Total: 330 words — leaving 90 words of buffer. Do not add more paragraphs.
-STOP at 420 words.
+### QUESTION 1: Why are you suitable for this post? (HARD LIMIT: 400w)
+Word budget — must total ≤400 words:
+1. Opening paragraph: MAX 70 words
+2. Exactly 2 criterion paragraphs: MAX 70 words each = 140 words
+3. Exactly 1 story: MAX 90 words
+Total: 300 words — leaving 100 words of buffer. Do not add more paragraphs.
+STOP at 400 words.
 
 OPENING PARAGRAPH FORMAT (ONE paragraph only, maximum 80 words / 3-4 sentences):
 A single tight paragraph. Never split into two. Criteria begin immediately in the next paragraph.
@@ -666,13 +666,13 @@ PATTERN C — My X years:
 
 CRITERION PARAGRAPHS IN Q1 — use the fixed opener list (Set 1 / Set 2) for each criterion paragraph. The five-sentence pattern completes the paragraph after the opener.
 
-### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? (HARD LIMIT: 420w)
-Word budget — must total ≤420 words:
-1. NHS Scotland values paragraph: MAX 80 words
-2. Specific Board paragraph: MAX 80 words
-3. Education paragraph: MAX 70 words
-4. MAX 1 criterion paragraph: MAX 75 words (only if budget allows; use the fixed opener list)
-Total: 305 words minimum — leaving up to 115 words buffer. STOP at 420 words.
+### QUESTION 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? (HARD LIMIT: 400w)
+Word budget — must total ≤400 words:
+1. NHS Scotland values paragraph: MAX 70 words
+2. Specific Board paragraph: MAX 70 words
+3. Education paragraph: MAX 65 words
+4. MAX 1 criterion paragraph: MAX 65 words (only if budget allows; use the fixed opener list)
+Total: 270 words minimum — leaving up to 130 words buffer. STOP at 400 words.
 
 Q2 WRITING STYLE — MANDATORY: If a "Q2 NHS SCOTLAND PRESET" section appears in the candidate profile, follow those instructions exactly — they override the NHS Scotland values paragraph below. Otherwise: continue the same tone established in Q1. Choose the pattern option that fits that tone.
 
@@ -717,12 +717,12 @@ Rule 4 — Irrelevant qualifications: do not mention.
 Rule 5 — Certificate lists: never list more than three training certificates by name.
 Rule 6 — Relevance check: only mention qualifications relevant to this specific application.
 
-### QUESTION 3: Is there any other relevant information you wish to tell us? (MAX 340w)
-Structure:
-1. 6 C's paragraph (each C with one brief specific example and result)
-2. Criteria summary paragraph (110-120 words — see CRITERIA SUMMARY PARAGRAPH rule below)
-3. Closing paragraph (3-4 lines)
-STOP at 340 words maximum.
+### QUESTION 3: Is there any other relevant information you wish to tell us? (MAX 190w — NHS form hard cap is 200 words)
+Structure — TWO paragraphs only, no more:
+1. 6 C's paragraph: MAX 110 words — cover all six C's in one tight paragraph, each C named with one brief specific example
+2. Closing paragraph: MAX 70 words — why this role, why this Board (one named specific), one strength, commitment to the team
+STOP at 190 words. Write "Thank you." and stop.
+DO NOT write a criteria summary paragraph — there is no room. The 200-word form cap leaves no space for it.
 
 6 C'S PARAGRAPH (NO SUBHEADING):
 Every C must have a specific example with a quantified result. Choose ONE opening pattern that fits the Q1/Q2 tone:
@@ -732,7 +732,7 @@ Every C must have a specific example with a quantified result. Choose ONE openin
 - Direct: "I demonstrate each of the 6 C's through specific daily actions..."
 Then address each of the 6 C's — care, compassion, competence, communication, courage, commitment — each with one specific example and a result. Do not use the same sentence structure for two consecutive Cs.
 
-CRITERIA SUMMARY PARAGRAPH — MANDATORY IN Q3 (110-120 words, placed between 6 C's and closing):
+CRITERIA SUMMARY PARAGRAPH — OMIT IN Q3 (the 200-word NHS form cap leaves no room — do not write it):
 Purpose: Recap how the candidate meets the major essential criteria using EXACT person spec keyword phrases, then affirm commitment to the role and Board.
 
 STRUCTURE:
@@ -744,7 +744,7 @@ WRONG opener: "In summary, I believe I am a strong candidate for this post."
 RIGHT opener: "Across [X] years in [specialty] care settings, I have built the [exact PS criterion] and [exact PS criterion] this role requires."
 Word count: 110-120 words exactly. Do not exceed 120.
 
-CLOSING (50-70 words):
+CLOSING (MAX 70 words — included within the 190-word Q3 cap):
 The Q3 closing must do four things in order:
 1. WHY THIS ROLE — what this specific role offers the candidate (challenge, development, specialty match)
 2. WHY THIS BOARD — use the TRUST INTELLIGENCE block (named award, Healthcare Improvement Scotland finding, initiative) plus JD specifics; name the Board's values; include EHR commitment if applicable (TrakCare only if confirmed in JD for a Scottish Board)
@@ -847,7 +847,7 @@ Only move to Check 1 after you have confirmed every criterion has a named paragr
 3. **Consecutive I/My openers** — If two criterion paragraphs in a row start with "I" or "My", rewrite one opener so it begins from the content of that paragraph.
 4. **Credential framing** — Check every qualification or certification named. If it is above the person spec minimum and not framed as a direct clinical benefit, remove it or reframe it.
 5. **Closing line** — Read the final sentence. If it contains any readiness claim, rewrite it using a forward-looking sentence tied to the specific role and Board.
-6. **Word count** — If Q1 is over 420 words, cut the longest paragraph first until within limit. Same for Q2 (420w) and Q3 (340w).
+6. **Word count** — If Q1 is over 400 words, cut the longest paragraph first until within limit. Same for Q2 (400w) and Q3 (190w).
 7. **Easeme 3-point criterion check** — For every essential criterion, score it 0-3. Every essential must reach at least 2. Target 3 for every essential criterion. Upgrade any paragraph scoring 1 before outputting.
 8. **JD keyword check** — From the 8-12 key phrases extracted from this specific job advert, count how many appear verbatim across Q1, Q2, and Q3. If fewer than 6 appear, weave the missing keywords naturally into existing paragraphs.
 9. **Scenario count** — Count the story paragraphs (full STARR format). If fewer than 2 exist, add a second story paragraph before outputting.
