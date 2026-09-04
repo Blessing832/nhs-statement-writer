@@ -91,16 +91,6 @@ function AnalysisPanel({ analysis, region }: { analysis: StatementAnalysis | nul
           <p className="text-gray-600 leading-relaxed text-sm">{analysis.jobSummary}</p>
         </Section>
       )}
-      {analysis.essentialCriteria?.length > 0 && (
-        <Section title={`Essential Criteria (${analysis.essentialCriteria.length})`}>
-          <BulletList items={analysis.essentialCriteria} icon="&#10003;" colour="text-green-600 font-bold" />
-        </Section>
-      )}
-      {analysis.desirableCriteria?.length > 0 && (
-        <Section title="Desirable Criteria">
-          <BulletList items={analysis.desirableCriteria} icon="&#9702;" colour="text-blue-400" />
-        </Section>
-      )}
     </div>
   )
 }

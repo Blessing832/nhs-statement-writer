@@ -1295,31 +1295,10 @@ function GeneratePage() {
             </div>
           )}
 
-          {/* Side by side on desktop, stacked on mobile */}
-          <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
-            {/* LEFT: Analysis — full width on mobile, fixed sidebar on desktop */}
-            <div className="md:w-80 md:flex-shrink-0 border-b md:border-b-0 md:border-r border-gray-200 bg-white overflow-y-auto">
-              <div className="p-5">
-                <h3 className="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide pb-2 border-b border-gray-100">
-                  {result.promptRegion === 'scotland' ? 'Person Specification' : 'Pre-Writing Analysis'}
-                </h3>
-                {result.coverageReport && (
-                  <div className="mb-5">
-                    <CoverageReportPanel report={result.coverageReport} />
-                  </div>
-                )}
-                <AnalysisPanel
-                  analysis={result.analysis}
-                  region={result.promptRegion}
-                  statement={result.statement}
-                  hideGaps
-                />
-              </div>
-            </div>
-
-            {/* RIGHT: Statement + duties */}
-            <div className="flex-1 overflow-y-auto bg-white">
-              <div className="p-6 max-w-3xl">
+          {/* Statement area — full width */}
+          <div className="flex-1 overflow-hidden">
+            <div className="flex-1 overflow-y-auto bg-white h-full">
+              <div className="p-6 max-w-3xl mx-auto">
                 <div ref={statementHeadRef} className="flex items-center justify-between mb-4">
                   <h3 className="font-bold text-gray-800 text-base">Supporting Statement</h3>
                   <div className="flex items-center gap-3">
