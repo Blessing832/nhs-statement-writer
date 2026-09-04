@@ -459,10 +459,10 @@ Output as plain text only. Do NOT wrap in JSON. Do NOT add any preamble. Start d
 ${isScotland
   ? `MANDATORY: Output ONLY the three standard questions listed above. No other sections.
 
-HARD WORD LIMITS:
-- Question 1: Why are you suitable for this post? — 420 words maximum
-- Question 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? — 420 words maximum
-- Question 3: Is there any other relevant information that will assist us in shortlisting your application? — 340 words maximum — end with "Thank you." and stop`
+HARD WORD LIMITS (NHS Scotland form caps — do NOT exceed):
+- Question 1: Why are you suitable for this post? — 400 words maximum (form cap 450 — stay well under)
+- Question 2: Why do you want to work in NHS Scotland / for this Board? What relevant education and training do you have? — 400 words maximum (form cap 450 — stay well under)
+- Question 3: Is there any other relevant information? — 190 words maximum (form cap 200 — no criteria summary, two paragraphs only: 6 C's + closing) — end with "Thank you." and stop`
   : hasExtraQuestions
   ? `HARD WORD LIMIT FOR MAIN STATEMENT: 1,400 words. Write "Thank you." to close the statement when done.
 
@@ -693,7 +693,7 @@ async function generateParallel(
   // Questions-only mode: no limit enforced — the prompt controls per-question word counts.
   // Statement+questions mode: only trim the statement portion before "Thank you.";
   //   preserve the extra question answers that follow it.
-  const wordLimit = isScotland ? 1160 : 1400
+  const wordLimit = isScotland ? 1100 : 1400
   if (appMode !== 'questions-only' && statement.split(/\s+/).length > wordLimit) {
     // For statement-questions, split at "Thank you." to preserve question answers
     const CLOSING = 'Thank you.'
