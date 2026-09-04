@@ -58,6 +58,7 @@ export async function POST(req: NextRequest) {
     bodyPattern,
     openingTemplate,
     pastedPersonSpec,
+    regionOverride,
   } = await req.json()
 
   if (!client_code || !vacancy_url || !jobData) {
@@ -136,7 +137,7 @@ export async function POST(req: NextRequest) {
           previousRoleDuties: [],
           currentRoleDuties: [],
           analysis: cachedAnalysis,
-          promptRegion: detectRegion(vacancy_url, (enrichedJobData as ScrapeResult).rawText),
+          promptRegion: regionOverride || detectRegion(vacancy_url, (enrichedJobData as ScrapeResult).rawText),
           jobTitle: existing.job_title,
           organisation: existing.organisation,
           source: 'cached',
@@ -177,6 +178,7 @@ export async function POST(req: NextRequest) {
       applicationMode: applicationMode || 'full',
       bodyPattern: bodyPattern || undefined,
       openingTemplate: openingTemplate || undefined,
+      regionOverride: regionOverride || undefined,
     })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error'

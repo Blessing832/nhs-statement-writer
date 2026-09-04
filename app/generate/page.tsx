@@ -698,9 +698,9 @@ function GeneratePage() {
 
   const [clientName, setClientName] = useState<string | null>(null)
   const [invalidCode, setInvalidCode] = useState(false)
-  const [inputMode, setInputMode] = useState<'url' | 'text'>('url')
   const [vacancyUrl, setVacancyUrl] = useState('')
   const [jobDescText, setJobDescText] = useState('')
+  const [regionOverride, setRegionOverride] = useState<'' | 'england-wales' | 'scotland'>('')
   const [pastedPersonSpec, setPastedPersonSpec] = useState('')
   const [writerNotes, setWriterNotes] = useState('')
   const [sparsePs, setSparsePs] = useState(false)
@@ -719,7 +719,6 @@ function GeneratePage() {
   const [copiedDuties, setCopiedDuties] = useState(false)
   const [downloaded, setDownloaded] = useState(false)
 
-  const [scrapeAutoSwitched, setScrapeAutoSwitched] = useState(false)
   const [showRewrite, setShowRewrite] = useState(false)
   const [rewriteInstruction, setRewriteInstruction] = useState('')
   const [rewriting, setRewriting] = useState(false)
@@ -817,10 +816,18 @@ function GeneratePage() {
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (inputMode === 'url' && !vacancyUrl.trim()) { setError('Please paste the job vacancy link'); return }
-    if (inputMode === 'text') {
-      const words = jobDescText.trim().split(/\s+/).filter(Boolean).length
-      if (words < 40) { setError('Please paste more of the job advert text. Copy everything on the page: the job title, duties, and person specification.'); return }
+    const hasText = jobDescText.trim().split(/\s+/).filter(Boolean).length >= 40
+    const hasUrl = !!vacancyUrl.trim()
+    if (!hasText && !hasUrl) {
+      setError('Paste the job advert text, or provide a link to the job advert.')
+      return
+    }
+    if (!hasText && hasUrl) {
+      // URL-only mode — valid, will scrape
+    }
+    if (hasText && jobDescText.trim().split(/\s+/).filter(Boolean).length < 40 && !hasUrl) {
+      setError('Please paste more of the job advert text. Copy everything on the page: the job title, duties, and person specification.')
+      return
     }
 
     setLoading(true)
@@ -832,14 +839,14 @@ function GeneratePage() {
     const controller = new AbortController()
     abortControllerRef.current = controller
 
-    const usedUrl = inputMode === 'url' ? vacancyUrl.trim() : 'text-paste'
-    const preloaded = inputMode === 'text'
+    const usedUrl = hasText ? (vacancyUrl.trim() || 'text-paste') : vacancyUrl.trim()
+    const preloaded = hasText
       ? { jobTitle: '', organisation: '', jobDescription: jobDescText.trim(), personSpec: '', rawText: jobDescText.trim(), source: 'manual' }
       : undefined
 
     try {
       const { result: data, jobData } = await callGenerate(
-        { client_code: clientCode, vacancy_url: usedUrl, style, applicationMode, specificQuestions: questionsText() || undefined, bodyPattern: bodyPattern || undefined, openingTemplate: openingTemplate || undefined, pastedPersonSpec: pastedPersonSpec.trim() || undefined, instructions: writerNotes.trim() || undefined },
+        { client_code: clientCode, vacancy_url: usedUrl, style, applicationMode, specificQuestions: questionsText() || undefined, bodyPattern: bodyPattern || undefined, openingTemplate: openingTemplate || undefined, pastedPersonSpec: pastedPersonSpec.trim() || undefined, instructions: writerNotes.trim() || undefined, regionOverride: regionOverride || undefined },
         setLoadingStep,
         preloaded,
         controller.signal
@@ -851,15 +858,7 @@ function GeneratePage() {
     } catch (err) {
       if (err instanceof Error && err.name === 'AbortError') return
       const raw = err instanceof Error ? err.message : ''
-      const isIosTimeout = raw === 'Load failed' || raw.toLowerCase().includes('load failed') || raw.toLowerCase().includes('network request failed')
-      const isScrapeFailure = inputMode === 'url' && (isIosTimeout || raw.toLowerCase().includes('could not read') || raw.toLowerCase().includes('job advert') || raw.toLowerCase().includes('could not connect'))
-      if (isScrapeFailure) {
-        setInputMode('text')
-        setScrapeAutoSwitched(true)
-        setError('The link could not be read automatically. Open the job advert, copy all the text on the page, and paste it in the box below.')
-      } else {
-        setError(raw || 'Network error. Please check your connection and try again.')
-      }
+      setError(raw || 'Network error. Please check your connection and try again.')
     } finally {
       abortControllerRef.current = null
       setLoading(false)
@@ -872,7 +871,7 @@ function GeneratePage() {
     setRewriting(true)
     setRewriteError('')
     try {
-      const usedUrl = inputMode === 'url' ? vacancyUrl.trim() : 'text-paste'
+      const usedUrl = vacancyUrl.trim() || 'text-paste'
       const { result: data } = await callGenerate(
         {
           client_code: clientCode,
@@ -994,78 +993,71 @@ function GeneratePage() {
             <div className="bg-white rounded-xl border border-gray-200 p-6">
               <form onSubmit={handleGenerate} className="space-y-5">
 
-                {/* Job advert source */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Job advert</label>
-                  <div className="grid grid-cols-2 gap-2 mb-3">
-                    {([
-                      { val: 'url' as const, label: 'Paste Link', desc: 'NHS Jobs, HealthJobsUK…' },
-                      { val: 'text' as const, label: 'Paste Text', desc: 'Copy from the job page' },
-                    ]).map(({ val, label, desc }) => (
-                      <button key={val} type="button"
-                        onClick={() => { setInputMode(val); setError(''); setScrapeAutoSwitched(false) }}
-                        className="p-3 rounded-md border-2 text-sm text-left transition-colors"
-                        style={inputMode === val
-                          ? { borderColor: '#0B4F6C', backgroundColor: '#eef5f8', color: '#072f42' }
-                          : { borderColor: '#e5e7eb', color: '#374151' }}>
-                        <p className="font-medium">{label}</p>
-                        <p className="text-xs opacity-70 mt-0.5">{desc}</p>
-                      </button>
-                    ))}
+                {/* Job advert */}
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Job advert text</label>
+                    <p className="text-xs text-gray-500 mb-2">Copy all text from the job page (Ctrl+A → Copy) and paste below. Or drop a PDF/Word file.</p>
+                    <FileDropZone onText={(t) => { setJobDescText(t); setError('') }} disabled={loading} />
+                    <textarea value={jobDescText}
+                      onChange={(e) => { setJobDescText(e.target.value); setError('') }}
+                      placeholder="Paste the full job description and person specification here…" rows={8} disabled={loading}
+                      className="w-full mt-2 px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-none" />
+                    <p className="text-xs text-gray-400 mt-1">{jobDescText.trim().split(/\s+/).filter(Boolean).length} words pasted</p>
                   </div>
 
-                  {inputMode === 'url' && (
-                    <div className="space-y-3">
-                      <input type="url" value={vacancyUrl}
-                        onChange={(e) => { setVacancyUrl(e.target.value); setError('') }}
-                        placeholder="https://www.jobs.nhs.uk/candidate/jobadvert/..." disabled={loading}
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
-                        style={{ fontSize: '16px' }} />
-                      {downloadedDocs.length > 0 && (
-                        <div className="rounded-md border border-green-200 bg-green-50 px-3 py-2 text-xs text-green-800">
-                          <strong>✓ Documents downloaded:</strong> {downloadedDocs.join(', ')}
-                        </div>
-                      )}
-                      {sparsePs && (
-                        <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
-                          <strong>Person spec not fully found.</strong> Paste it below to improve your statement.
-                        </div>
-                      )}
-                      <details className="group">
-                        <summary className="text-sm font-medium cursor-pointer list-none flex items-center gap-1 py-1 select-none" style={{ color: '#0B4F6C' }}>
-                          <span className="group-open:hidden">+ Add person specification (optional)</span>
-                          <span className="hidden group-open:inline">− Hide person specification</span>
-                        </summary>
-                        <div className="mt-2 space-y-2">
-                          <FileDropZone onText={setPastedPersonSpec} disabled={loading} />
-                          <textarea value={pastedPersonSpec} onChange={(e) => setPastedPersonSpec(e.target.value)}
-                            placeholder="Or paste person specification criteria here…" rows={4} disabled={loading}
-                            className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-y" />
-                        </div>
-                      </details>
-                    </div>
-                  )}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Job link <span className="font-normal text-gray-400">(optional — helps download attachments)</span></label>
+                    <input type="url" value={vacancyUrl}
+                      onChange={(e) => { setVacancyUrl(e.target.value); setError('') }}
+                      placeholder="https://www.jobs.nhs.uk/candidate/jobadvert/..." disabled={loading}
+                      className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+                      style={{ fontSize: '16px' }} />
+                    {downloadedDocs.length > 0 && (
+                      <div className="rounded-md border border-green-200 bg-green-50 px-3 py-2 text-xs text-green-800 mt-2">
+                        <strong>✓ Documents downloaded:</strong> {downloadedDocs.join(', ')}
+                      </div>
+                    )}
+                    {sparsePs && (
+                      <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800 mt-2">
+                        <strong>Person spec not fully found.</strong> Paste it below to improve your statement.
+                      </div>
+                    )}
+                  </div>
 
-                  {inputMode === 'text' && (
-                    <div className="space-y-2">
-                      {scrapeAutoSwitched ? (
-                        <div className="rounded-md bg-amber-50 border border-amber-200 px-3 py-2 text-sm text-amber-800 space-y-1">
-                          <p className="font-semibold">How to copy on your phone:</p>
-                          <p>1. Open the job link in a new tab.</p>
-                          <p>2. Tap and hold any text, then choose <strong>Select All</strong>.</p>
-                          <p>3. Tap <strong>Copy</strong>, come back and paste below.</p>
-                        </div>
-                      ) : (
-                        <p className="text-xs text-gray-500">Copy all text from the job page (Ctrl+A → Copy), then paste below. Or drop a PDF/Word file.</p>
-                      )}
-                      <FileDropZone onText={(t) => { setJobDescText(t); setError('') }} disabled={loading} />
-                      <textarea value={jobDescText}
-                        onChange={(e) => { setJobDescText(e.target.value); setError('') }}
-                        placeholder="Paste the full job description here…" rows={8} disabled={loading}
-                        className="w-full mt-2 px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-none" />
-                      <p className="text-xs text-gray-400">{jobDescText.trim().split(/\s+/).filter(Boolean).length} words pasted</p>
+                  <details className="group">
+                    <summary className="text-sm font-medium cursor-pointer list-none flex items-center gap-1 py-1 select-none" style={{ color: '#0B4F6C' }}>
+                      <span className="group-open:hidden">+ Add person specification separately (optional)</span>
+                      <span className="hidden group-open:inline">− Hide person specification</span>
+                    </summary>
+                    <div className="mt-2 space-y-2">
+                      <FileDropZone onText={setPastedPersonSpec} disabled={loading} />
+                      <textarea value={pastedPersonSpec} onChange={(e) => setPastedPersonSpec(e.target.value)}
+                        placeholder="Or paste person specification criteria here…" rows={4} disabled={loading}
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-y" />
                     </div>
-                  )}
+                  </details>
+
+                  {/* Region picker */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">NHS region</label>
+                    <div className="flex gap-2 flex-wrap">
+                      {([
+                        { val: '' as const, label: 'Auto-detect' },
+                        { val: 'england-wales' as const, label: 'NHS England & Wales' },
+                        { val: 'scotland' as const, label: 'NHS Scotland' },
+                      ]).map(({ val, label }) => (
+                        <button key={val} type="button" onClick={() => setRegionOverride(val)}
+                          className="px-3 py-1.5 rounded-full border text-sm transition-colors"
+                          style={regionOverride === val
+                            ? { borderColor: '#0B4F6C', backgroundColor: '#0B4F6C', color: '#fff' }
+                            : { borderColor: '#d1d5db', color: '#374151' }}>
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                    <p className="text-xs text-gray-400 mt-1">Auto-detect works for most NHS Jobs / HealthJobsUK links. Choose manually if you pasted text from a different source.</p>
+                  </div>
                 </div>
 
                 {/* Application type */}

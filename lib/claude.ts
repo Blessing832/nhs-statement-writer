@@ -842,6 +842,7 @@ export async function generateStatement(
     applicationMode?: ApplicationMode
     bodyPattern?: string
     openingTemplate?: '1' | '2' | '3' | '4' | '5'
+    regionOverride?: 'england-wales' | 'scotland'
   } = {}
 ): Promise<{
   statement: string
@@ -850,7 +851,7 @@ export async function generateStatement(
   analysis: StatementAnalysis | null
   promptRegion: PromptRegion
 }> {
-  const region = options.vacancyUrl ? detectRegion(options.vacancyUrl, jobData.rawText) : 'generic'
+  const region: PromptRegion = options.regionOverride || (options.vacancyUrl ? detectRegion(options.vacancyUrl, jobData.rawText) : 'generic')
   const style = options.style || '1'
   const callOptions = {
     instructions: options.instructions,

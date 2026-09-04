@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
     rewriteInstruction,
     previousStatement,
     cachedJobData,
+    regionOverride,
   } = await req.json()
 
   const hasUrl = !!vacancy_url?.trim()
@@ -123,6 +124,7 @@ export async function POST(req: NextRequest) {
       specificQuestions: specificQuestions || undefined,
       rewriteInstruction: rewriteInstruction || undefined,
       previousStatement: previousStatement || undefined,
+      regionOverride: regionOverride || undefined,
     })
 
     return NextResponse.json({
