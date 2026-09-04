@@ -167,9 +167,9 @@ function AdminGenerateInner() {
   const [selectedClient, setSelectedClient] = useState<ClientMatch | null>(null)
 
   // Step 2: generate form
-  const [inputMode, setInputMode] = useState<'url' | 'text'>('url')
   const [vacancyUrl, setVacancyUrl] = useState('')
   const [jobDescText, setJobDescText] = useState('')
+  const [regionOverride, setRegionOverride] = useState<'' | 'england-wales' | 'scotland'>('')
   const [pastedPersonSpec, setPastedPersonSpec] = useState('')
   const [style, setStyle] = useState<'1' | '2'>('1')
   const [bodyPattern, setBodyPattern] = useState<'' | '1' | '2' | '3'>('')
@@ -300,10 +300,9 @@ function AdminGenerateInner() {
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!selectedClient) return
-    if (inputMode === 'url' && !vacancyUrl.trim()) { setError('Paste the job vacancy link'); return }
-    if (inputMode === 'text' && jobDescText.trim().split(/\s+/).filter(Boolean).length < 80) {
-      setError('Please paste more text from the job advert.'); return
-    }
+    const hasText = jobDescText.trim().split(/\s+/).filter(Boolean).length >= 40
+    const hasUrl = !!vacancyUrl.trim()
+    if (!hasText && !hasUrl) { setError('Paste the job advert text, or provide a link to the job advert.'); return }
 
     setLoading(true)
     setError('')
@@ -313,14 +312,14 @@ function AdminGenerateInner() {
     const controller = new AbortController()
     abortControllerRef.current = controller
 
-    const usedUrl = inputMode === 'url' ? vacancyUrl.trim() : 'text-paste'
-    const preloaded = inputMode === 'text'
+    const usedUrl = hasText ? (vacancyUrl.trim() || 'text-paste') : vacancyUrl.trim()
+    const preloaded = hasText
       ? { jobTitle: '', organisation: '', jobDescription: jobDescText.trim(), personSpec: '', rawText: jobDescText.trim(), source: 'manual' }
       : undefined
 
     try {
       const { result: data, jobData } = await runGenerate(
-        { client_code: selectedClient.client_code, vacancy_url: usedUrl, style, applicationMode, specificQuestions: questionsText() || undefined, bodyPattern: bodyPattern || undefined, openingTemplate: openingTemplate || undefined, pastedPersonSpec: pastedPersonSpec.trim() || undefined, instructions: writerNotes.trim() || undefined },
+        { client_code: selectedClient.client_code, vacancy_url: usedUrl, style, applicationMode, specificQuestions: questionsText() || undefined, bodyPattern: bodyPattern || undefined, openingTemplate: openingTemplate || undefined, pastedPersonSpec: pastedPersonSpec.trim() || undefined, instructions: writerNotes.trim() || undefined, regionOverride: regionOverride || undefined },
         preloaded,
         controller.signal
       )
@@ -343,7 +342,7 @@ function AdminGenerateInner() {
     setRewriting(true)
     setRewriteError('')
     try {
-      const usedUrl = inputMode === 'url' ? vacancyUrl.trim() : 'text-paste'
+      const usedUrl = vacancyUrl.trim() || 'text-paste'
       const { result: data } = await runGenerate(
         {
           client_code: selectedClient.client_code,
@@ -437,60 +436,60 @@ function AdminGenerateInner() {
 
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <form onSubmit={handleGenerate} className="space-y-5">
-              {/* Input mode */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Job advert source</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {([
-                    { val: 'url' as const, label: 'Paste Link', desc: 'NHS Jobs, HealthJobsUK, etc.' },
-                    { val: 'text' as const, label: 'Paste Text', desc: 'Copy text from the page' },
-                  ]).map(({ val, label, desc }) => (
-                    <button key={val} type="button" onClick={() => setInputMode(val)}
-                      className="p-3 rounded-md border-2 text-sm text-left transition-colors"
-                      style={inputMode === val ? { borderColor: '#0B4F6C', backgroundColor: '#f0f7ff', color: '#072f42' } : { borderColor: '#e5e7eb', color: '#374151' }}>
-                      <p className="font-medium">{label}</p>
-                      <p className="text-xs opacity-70 mt-0.5">{desc}</p>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {inputMode === 'url' ? (
-                <>
+              {/* Job advert */}
+              <div className="space-y-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Job Vacancy Link <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Job advert text</label>
+                  <p className="text-xs text-gray-500 mb-2">Select all text on the job page (Ctrl+A → Ctrl+C) and paste here. Or drop a PDF/Word file.</p>
+                  <FileDropZone onText={(t) => { setJobDescText(t); setError('') }} disabled={loading} />
+                  <textarea value={jobDescText} onChange={(e) => { setJobDescText(e.target.value); setError('') }}
+                    placeholder="Paste the full job description and person specification here…"
+                    rows={10} disabled={loading}
+                    className="w-full mt-2 px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-none" />
+                  <p className="text-xs text-gray-400 mt-1">{jobDescText.trim().split(/\s+/).filter(Boolean).length} words</p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Job link <span className="font-normal text-gray-400">(optional — helps download attachments)</span></label>
                   <input type="url" value={vacancyUrl} onChange={(e) => { setVacancyUrl(e.target.value); setError('') }}
                     placeholder="https://www.jobs.nhs.uk/..."
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                     disabled={loading} />
                 </div>
-                <div className="mt-3">
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Person Specification <span className="text-xs font-normal text-gray-400">(optional)</span>
-                  </label>
-                  <FileDropZone onText={setPastedPersonSpec} disabled={loading} />
-                  <textarea
-                    value={pastedPersonSpec}
-                    onChange={(e) => setPastedPersonSpec(e.target.value)}
-                    placeholder="Or paste person specification criteria here..."
-                    rows={4}
-                    className="w-full mt-2 px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-y"
-                    disabled={loading}
-                  />
-                </div>
-                </>
-              ) : (
+
+                <details className="group">
+                  <summary className="text-sm font-medium cursor-pointer list-none flex items-center gap-1 py-1 select-none" style={{ color: '#0B4F6C' }}>
+                    <span className="group-open:hidden">+ Add person specification separately (optional)</span>
+                    <span className="hidden group-open:inline">− Hide person specification</span>
+                  </summary>
+                  <div className="mt-2 space-y-2">
+                    <FileDropZone onText={setPastedPersonSpec} disabled={loading} />
+                    <textarea value={pastedPersonSpec} onChange={(e) => setPastedPersonSpec(e.target.value)}
+                      placeholder="Or paste person specification criteria here…" rows={4} disabled={loading}
+                      className="w-full px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-y" />
+                  </div>
+                </details>
+
+                {/* Region picker */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Job Description Text <span className="text-red-500">*</span></label>
-                  <p className="text-xs text-gray-500 mb-2">Select all text on the job page (Ctrl+A then Ctrl+C) and paste here. Or drop a PDF/Word file below.</p>
-                  <FileDropZone onText={(t) => { setJobDescText(t); setError('') }} disabled={loading} />
-                  <textarea value={jobDescText} onChange={(e) => { setJobDescText(e.target.value); setError('') }}
-                    placeholder="Paste the full job description and person specification here..."
-                    rows={10} disabled={loading}
-                    className="w-full mt-2 px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none resize-none" />
-                  <p className="text-xs text-gray-400 mt-1">{jobDescText.trim().split(/\s+/).filter(Boolean).length} words</p>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">NHS region</label>
+                  <div className="flex gap-2 flex-wrap">
+                    {([
+                      { val: '' as const, label: 'Auto-detect' },
+                      { val: 'england-wales' as const, label: 'NHS England & Wales' },
+                      { val: 'scotland' as const, label: 'NHS Scotland' },
+                    ]).map(({ val, label }) => (
+                      <button key={val} type="button" onClick={() => setRegionOverride(val)}
+                        className="px-3 py-1.5 rounded-full border text-sm transition-colors"
+                        style={regionOverride === val
+                          ? { borderColor: '#0B4F6C', backgroundColor: '#0B4F6C', color: '#fff' }
+                          : { borderColor: '#d1d5db', color: '#374151' }}>
+                        {label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              )}
+              </div>
 
               {/* Opening style */}
               <div className="flex items-center gap-1.5 flex-wrap">
