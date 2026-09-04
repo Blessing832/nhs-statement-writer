@@ -352,7 +352,7 @@ function CoverageReportPanel({ report }: { report: CoverageReport }) {
   )
 }
 
-function AnalysisPanel({ analysis, region, statement, onFixGaps }: { analysis: StatementAnalysis | null; region: string; statement: string; onFixGaps?: (instruction: string) => void }) {
+function AnalysisPanel({ analysis, region, statement, onFixGaps, hideGaps = false }: { analysis: StatementAnalysis | null; region: string; statement: string; onFixGaps?: (instruction: string) => void; hideGaps?: boolean }) {
   if (!analysis) return (
     <p className="text-gray-400 text-sm">Person specification not extracted from page. Statement was written from job advert text. If the full PS is in an attached document, the statement should still address it.</p>
   )
@@ -385,7 +385,7 @@ function AnalysisPanel({ analysis, region, statement, onFixGaps }: { analysis: S
         </div>
       )}
 
-      {uncoveredEssential.length > 0 && (
+      {!hideGaps && uncoveredEssential.length > 0 && (
         <div className="rounded-md border border-red-300 bg-red-50 px-3 py-3">
           <p className="text-xs font-bold text-red-700 mb-2">
             ⚠️ {uncoveredEssential.length} essential {uncoveredEssential.length === 1 ? 'criterion' : 'criteria'} may need attention
@@ -424,7 +424,7 @@ function AnalysisPanel({ analysis, region, statement, onFixGaps }: { analysis: S
       {essential.length > 0 && (
         <Section title={`Essential Criteria (${addressedEssential.length}/${essential.length})`}>
           <ul className="space-y-1">
-            {essential.map((item, i) => {
+            {essential.filter(item => !hideGaps || isCriterionAddressed(item, statement)).map((item, i) => {
               const addressed = isCriterionAddressed(item, statement)
               const excerpt = addressed ? getMatchExcerpt(item, statement) : null
               return (
@@ -446,7 +446,7 @@ function AnalysisPanel({ analysis, region, statement, onFixGaps }: { analysis: S
       {desirable.length > 0 && (
         <Section title={`Desirable Criteria (${addressedDesirable.length}/${desirable.length})`}>
           <ul className="space-y-1">
-            {desirable.map((item, i) => {
+            {desirable.filter(item => !hideGaps || isCriterionAddressed(item, statement)).map((item, i) => {
               const addressed = isCriterionAddressed(item, statement)
               return (
                 <li key={i} className="flex gap-2 text-xs">
@@ -1312,11 +1312,7 @@ function GeneratePage() {
                   analysis={result.analysis}
                   region={result.promptRegion}
                   statement={result.statement}
-                  onFixGaps={(instruction) => {
-                    setRewriteInstruction(instruction)
-                    setShowRewrite(true)
-                    setTimeout(() => statementRef.current?.scrollIntoView({ behavior: 'smooth' }), 50)
-                  }}
+                  hideGaps
                 />
               </div>
             </div>
@@ -1344,11 +1340,7 @@ function GeneratePage() {
                 </div>
 
                 <div ref={statementRef}>
-                  <StatementDisplay
-                    text={result.statement}
-                    essential={result.analysis?.essentialCriteria ?? []}
-                    desirable={result.analysis?.desirableCriteria ?? []}
-                  />
+                  <StatementDisplay text={result.statement} />
                 </div>
 
                 {/* Previous Role Duties */}
