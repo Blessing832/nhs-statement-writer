@@ -4,26 +4,34 @@ import { useState, useCallback, useId } from 'react'
 interface FileDropZoneProps {
   onText: (text: string) => void
   disabled?: boolean
+  append?: boolean
 }
 
 const ACCEPT = '.pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 
-export function FileDropZone({ onText, disabled }: FileDropZoneProps) {
+export function FileDropZone({ onText, disabled, append = false }: FileDropZoneProps) {
   const [uploading, setUploading] = useState(false)
   const [dragging, setDragging] = useState(false)
+  const [fileCount, setFileCount] = useState(0)
   const inputId = useId()
 
-  const processFile = useCallback(async (file: File) => {
+  const processFiles = useCallback(async (files: FileList | File[]) => {
+    const list = Array.from(files)
+    if (!list.length) return
     setUploading(true)
+    setFileCount(list.length)
     try {
-      const fd = new FormData()
-      fd.append('file', file)
-      const res = await fetch('/api/parse-doc', { method: 'POST', body: fd })
-      const data = await res.json()
-      if (res.ok) onText(data.text)
-      else alert(data.error || 'Could not read file')
+      for (const file of list) {
+        const fd = new FormData()
+        fd.append('file', file)
+        const res = await fetch('/api/parse-doc', { method: 'POST', body: fd })
+        const data = await res.json()
+        if (res.ok) onText(data.text)
+        else alert(data.error || `Could not read ${file.name}`)
+      }
     } finally {
       setUploading(false)
+      setFileCount(0)
     }
   }, [onText])
 
@@ -34,9 +42,9 @@ export function FileDropZone({ onText, disabled }: FileDropZoneProps) {
     e.stopPropagation()
     setDragging(false)
     if (isDisabled) return
-    const file = e.dataTransfer.files[0]
-    if (file) processFile(file)
-  }, [isDisabled, processFile])
+    const files = e.dataTransfer.files
+    if (files.length) processFiles(files)
+  }, [isDisabled, processFiles])
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
@@ -65,24 +73,28 @@ export function FileDropZone({ onText, disabled }: FileDropZoneProps) {
           : 'border-gray-300 bg-white hover:border-blue-400 hover:bg-blue-50',
       ].join(' ')}
     >
-      {/* hidden real file input — label click opens it natively */}
+      {/* hidden real file input */}
       <input
         id={inputId}
         type="file"
         accept={ACCEPT}
+        multiple
         className="hidden"
         disabled={isDisabled}
         onChange={async (e) => {
-          const file = e.target.files?.[0]
-          if (file) { await processFile(file); e.target.value = '' }
+          if (e.target.files?.length) {
+            await processFiles(e.target.files)
+            e.target.value = ''
+          }
         }}
       />
 
       {uploading ? (
-        <p className="text-center text-xs font-medium text-blue-700">Reading file…</p>
+        <p className="text-center text-xs font-medium text-blue-700">
+          {fileCount > 1 ? `Reading ${fileCount} files…` : 'Reading file…'}
+        </p>
       ) : (
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-          {/* Click-to-browse button — uses htmlFor so click is always reliable */}
           <label
             htmlFor={inputId}
             className={[
@@ -99,7 +111,7 @@ export function FileDropZone({ onText, disabled }: FileDropZoneProps) {
           <span className="text-xs text-gray-400">or</span>
 
           <span className={`text-xs font-medium ${dragging ? 'text-blue-700' : 'text-gray-500'}`}>
-            {dragging ? 'Drop file here' : 'drag & drop PDF / Word'}
+            {dragging ? 'Drop files here' : 'drag & drop PDF / Word — multiple files OK'}
           </span>
         </div>
       )}

@@ -999,7 +999,7 @@ function GeneratePage() {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Job advert text</label>
                     <p className="text-xs text-gray-500 mb-2">Copy all text from the job page (Ctrl+A → Copy) and paste below. Or drop a PDF/Word file.</p>
-                    <FileDropZone onText={(t) => { setJobDescText(t); setError('') }} disabled={loading} />
+                    <FileDropZone onText={(t) => { setJobDescText(prev => prev ? prev + '\n\n' + t : t); setError('') }} disabled={loading} />
                     <textarea value={jobDescText}
                       onChange={(e) => { setJobDescText(e.target.value); setError('') }}
                       placeholder="Paste the full job description and person specification here…" rows={8} disabled={loading}
