@@ -338,6 +338,7 @@ function AdminGenerateInner() {
           client_code: selectedClient.client_code,
           vacancy_url: usedUrl,
           style,
+          applicationMode,
           specificQuestions: questionsText() || undefined,
           rewriteInstruction: rewriteInstruction.trim(),
           previousStatement: result.statement,

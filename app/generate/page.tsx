@@ -877,6 +877,7 @@ function GeneratePage() {
           client_code: clientCode,
           vacancy_url: usedUrl,
           style,
+          applicationMode,
           specificQuestions: questionsText() || undefined,
           rewriteInstruction: rewriteInstruction.trim(),
           previousStatement: result.statement,

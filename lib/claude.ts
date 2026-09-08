@@ -572,7 +572,6 @@ async function generateParallel(
 }> {
   const isScotland = region === 'scotland'
   const appMode = options.applicationMode ?? 'full'
-  const systemPrompt = await buildSystemPrompt(region, style)
 
   // Use user-selected opening template (1-5) or pick one randomly
   const formatPool = ['1', '2', '3', '4', '5']
@@ -586,14 +585,12 @@ async function generateParallel(
   const depthStylePool = ['1', '2', '3']
   const bodyPattern = options.bodyPattern || depthStylePool[Math.floor(Math.random() * depthStylePool.length)]
 
-  // Fetch real recent news about the Trust/Board so the "why here" answer
-  // references specific achievements rather than generic praise.
-  // Runs with a hard timeout — statement generation continues even if it fails.
-  let trustIntelText: string | undefined
-  if (jobData.organisation) {
-    const intel = await fetchTrustIntel(jobData.organisation).catch(() => null)
-    if (intel) trustIntelText = formatTrustIntel(intel)
-  }
+  // Fetch system prompt and trust intel in parallel — neither depends on the other
+  const [systemPrompt, intelResult] = await Promise.all([
+    buildSystemPrompt(region, style),
+    jobData.organisation ? fetchTrustIntel(jobData.organisation).catch(() => null) : Promise.resolve(null),
+  ])
+  const trustIntelText = intelResult ? formatTrustIntel(intelResult) : undefined
 
   // Determine statement output mode
   const statementOutputMode =
@@ -613,38 +610,31 @@ async function generateParallel(
     outputMode: 'analysis-only',
   })
 
-  // max_tokens for statement call:
-  //   Scotland: 1060w target → cap 2200
-  //   England full: 1570w target → cap 2600
-  //   Questions-only: 250w per question, min 7 questions → min 6000, scale up
-  //   Statement+questions: statement base + 2 question budget minimum
-  //
-  // Question count: detect multiple question formats
+  // max_tokens sized to actual output — overprovision causes Claude to fill the budget
+  // 1,400-word statement ≈ 1,900 tokens; 1,100-word Scotland ≈ 1,500 tokens
+  // 250-word question answer ≈ 380 tokens each
   const questionCount = options.specificQuestions
     ? Math.max(
-        (options.specificQuestions.match(/^\d+\./gm) || []).length,          // "1. Question"
-        (options.specificQuestions.match(/^\d+\)/gm) || []).length,          // "1) Question"
-        (options.specificQuestions.match(/^Question\s+\d+/gim) || []).length, // "Question 1:"
-        (options.specificQuestions.match(/^Q\d+[:.]/gim) || []).length,      // "Q1. Question"
+        (options.specificQuestions.match(/^\d+\./gm) || []).length,
+        (options.specificQuestions.match(/^\d+\)/gm) || []).length,
+        (options.specificQuestions.match(/^Question\s+\d+/gim) || []).length,
+        (options.specificQuestions.match(/^Q\d+[:.]/gim) || []).length,
       )
     : 0
-  // ~500 tokens per question: 250 words * ~1.3 tokens/word + ~120 for bold heading
-  const tokensPerQuestion = 500
+  const tokensPerQuestion = 420  // 250w × 1.3 tok/w + heading
 
   let statementMaxTokens: number
   if (appMode === 'questions-only') {
-    // Always budget for at least 7 questions; scale higher if more detected
-    const effectiveCount = Math.max(questionCount, 7)
-    statementMaxTokens = Math.min(8000, Math.max(6000, effectiveCount * tokensPerQuestion + 1000))
+    const effectiveCount = Math.max(questionCount, 3)
+    statementMaxTokens = Math.min(5000, Math.max(2000, effectiveCount * tokensPerQuestion + 400))
   } else if (appMode === 'statement-questions') {
-    const statementBase = isScotland ? 2200 : 2800
-    // Budget for at least 2 extra questions
+    const statementBase = isScotland ? 1800 : 2200
     const effectiveCount = Math.max(questionCount, 2)
-    statementMaxTokens = Math.min(8000, statementBase + effectiveCount * tokensPerQuestion)
+    statementMaxTokens = Math.min(5000, statementBase + effectiveCount * tokensPerQuestion)
   } else if (isScotland) {
-    statementMaxTokens = 4000
+    statementMaxTokens = 2200  // 1,100w × 1.3 + buffer
   } else {
-    statementMaxTokens = 6000
+    statementMaxTokens = 2800  // 1,400w × 1.3 + buffer
   }
 
   const [statementResult, analysisResult] = await Promise.allSettled([
@@ -872,14 +862,18 @@ export async function generateStatement(
   }
 
   // Generic / civil-service: single call
-  const systemPrompt = await buildSystemPrompt(region, style)
-  const genericIntel = await fetchTrustIntel(jobData.organisation ?? '').catch(() => null)
+  const [systemPrompt, genericIntel] = await Promise.all([
+    buildSystemPrompt(region, style),
+    jobData.organisation ? fetchTrustIntel(jobData.organisation).catch(() => null) : Promise.resolve(null),
+  ])
   const genericIntelText = genericIntel ? formatTrustIntel(genericIntel) : undefined
-  const userPrompt = buildUserPrompt(client, jobData, region, { ...callOptions, outputMode: 'full', trustIntelText: genericIntelText })
+  const genericOutputMode = callOptions.applicationMode === 'questions-only' ? 'questions-only' : 'statement-only'
+  const userPrompt = buildUserPrompt(client, jobData, region, { ...callOptions, outputMode: genericOutputMode, trustIntelText: genericIntelText })
 
+  const genericMaxTokens = callOptions.applicationMode === 'questions-only' ? 4000 : 2800
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
-    max_tokens: 3000,
+    max_tokens: genericMaxTokens,
     system: systemPrompt,
     messages: [{ role: 'user', content: userPrompt }],
   })

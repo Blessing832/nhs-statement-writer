@@ -250,6 +250,7 @@ export async function POST(req: NextRequest) {
   if (
     pipelineRegion &&
     applicationMode !== 'questions-only' &&
+    applicationMode !== 'statement-questions' &&
     analysis &&
     (analysis.essentialCriteria?.length ?? 0) > 0 &&
     !rewriteInstruction
