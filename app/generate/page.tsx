@@ -1406,6 +1406,39 @@ function GeneratePage() {
                   </div>
                 )}
 
+                {/* Person Specification */}
+                {(result.analysis?.essentialCriteria?.length > 0 || result.analysis?.desirableCriteria?.length > 0) && (
+                  <div className="mt-8 border-t border-gray-100 pt-6">
+                    <h3 className="font-bold text-gray-800 text-sm mb-3">Person Specification</h3>
+                    {result.analysis.essentialCriteria?.length > 0 && (
+                      <div className="mb-4">
+                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Essential</p>
+                        <ol className="space-y-1.5 list-none">
+                          {result.analysis.essentialCriteria.map((c: string, i: number) => (
+                            <li key={i} className="flex gap-2.5 text-sm text-gray-700">
+                              <span style={{ color: '#0B4F6C' }} className="flex-shrink-0 font-bold min-w-[1.2rem]">{i + 1}.</span>
+                              <span>{c}</span>
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                    )}
+                    {result.analysis.desirableCriteria?.length > 0 && (
+                      <div>
+                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Desirable</p>
+                        <ol className="space-y-1.5 list-none">
+                          {result.analysis.desirableCriteria.map((c: string, i: number) => (
+                            <li key={i} className="flex gap-2.5 text-sm text-gray-700">
+                              <span className="flex-shrink-0 font-bold min-w-[1.2rem] text-gray-400">{i + 1}.</span>
+                              <span>{c}</span>
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 {/* Rewrite */}
                 <div className="border-t border-gray-100 pt-6 mt-6">
                   {!showRewrite ? (
