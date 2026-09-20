@@ -19,7 +19,7 @@ const BANNED_PHRASES = [
 
 const WORD_COUNT_MIN = 1380
 const WORD_COUNT_MAX = 1420
-const MAX_PATCHES = 1
+const MAX_PATCHES = 2
 
 function readPromptFile(name: string): string {
   try {
@@ -212,11 +212,10 @@ function mapCriteria(criteria: V2AuditCriterion[]): CriterionCoverage[] {
   }))
 }
 
-// Patch only for serious problems: essential criteria that are completely absent (0)
-// or bare unsupported claims (1), word count badly outside tolerance, or banned phrases.
-// Scores of 2–4 mean evidence exists — the statement passes for dispatch even if imperfect.
+// Patch when essential criteria score ≤3 (missing, bare claim, general, or mapped but lacking outcome),
+// word count badly off, or banned phrases found.
 function needsPatch(audit: V2AuditResponse, det: DeterministicResult): boolean {
-  const criticalEssentialFails = audit.criteria.filter(c => c.id.startsWith('E') && c.score <= 1)
+  const criticalEssentialFails = audit.criteria.filter(c => c.id.startsWith('E') && c.score <= 3)
   const wordCountBadlyOff = det.wordCount < 1300 || det.wordCount > 1500
   return criticalEssentialFails.length > 0 || wordCountBadlyOff || det.bannedPhrasesFound.length > 0
 }
