@@ -306,6 +306,7 @@ function PromptEditor({
   const [text, setText] = useState(entry.content)
   const [saving, setSaving] = useState(false)
   const [resetting, setResetting] = useState(false)
+  const [syncing, setSyncing] = useState(false)
   const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
 
   // Keep text in sync if parent data refreshes
@@ -333,6 +334,25 @@ function PromptEditor({
       setStatus({ type: 'error', message: 'Network error — please try again' })
     } finally {
       setSaving(false)
+    }
+  }
+
+  const handleLoadBuiltIn = async () => {
+    if (!confirm(`Load the latest built-in ${REGION_LABELS[region]} prompt into the editor? Your current text will be replaced (but not saved to Supabase until you click "Save prompt").`)) return
+    setSyncing(true)
+    setStatus(null)
+    try {
+      const res = await fetch('/api/admin/prompts?built_in=1')
+      if (!res.ok) throw new Error('Failed to fetch built-in prompt')
+      const data = await res.json()
+      const builtIn = data[region]?.content
+      if (!builtIn) throw new Error('Built-in prompt not found')
+      setText(builtIn)
+      setStatus({ type: 'success', message: 'Latest built-in prompt loaded into editor. Click "Save prompt" to apply it.' })
+    } catch (e) {
+      setStatus({ type: 'error', message: e instanceof Error ? e.message : 'Failed to load built-in prompt' })
+    } finally {
+      setSyncing(false)
     }
   }
 
@@ -387,10 +407,18 @@ function PromptEditor({
           </div>
         </div>
         <div className="flex items-center gap-2">
+          <button
+            onClick={handleLoadBuiltIn}
+            disabled={syncing || saving || resetting}
+            className="px-3 py-1.5 text-xs text-blue-700 border border-blue-300 bg-blue-50 rounded-md hover:bg-blue-100 cursor-pointer disabled:opacity-50 transition-colors"
+            title="Load the latest code default into the editor (does not save automatically)"
+          >
+            {syncing ? 'Loading…' : '↓ Load latest built-in'}
+          </button>
           {entry.isCustom && (
             <button
               onClick={handleReset}
-              disabled={resetting || saving}
+              disabled={resetting || saving || syncing}
               className="px-3 py-1.5 text-xs text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer disabled:opacity-50 transition-colors"
             >
               {resetting ? 'Resetting…' : 'Reset to default'}
