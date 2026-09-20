@@ -424,14 +424,14 @@ End with the mandatory criteria summary paragraph, then the closing paragraph ("
     const scotlandStyleLine = isScotland
       ? options.style === '2'
         ? `MANDATORY STRUCTURE: Flowing prose — NO subheadings anywhere in Q1. Use linking phrases between paragraphs. Do NOT insert any bold labels or section headers.\n\n`
-        : `MANDATORY STRUCTURE: Group 3-4 related criteria per bold subheading. The subheading names every criterion it covers using person spec wording. Every criterion named in a subheading must be explicitly evidenced in that paragraph. Every criterion from the person spec must appear in exactly one section — no criterion may be skipped. Confirm 100% coverage before writing.\n\n`
+        : `MANDATORY STRUCTURE: Use the ATTRIBUTE SECTION headings from the person specification table as bold subheadings — e.g. **Education/Qualification/Training**, **Experience**, **Knowledge and Skills**, **Other** — using whatever category names actually appear in the document. Under each bold heading, address ALL criteria listed in that section using 2-3 paragraphs of STAR evidence. Every criterion from the person spec must be addressed under its correct section — no criterion may be skipped. Confirm 100% coverage before writing.\n\n`
       : region === 'england-wales'
       ? options.style === '2'
         ? `MANDATORY STRUCTURE: Flowing prose — NO subheadings anywhere in the statement. Use only transition phrases between paragraphs. Do NOT insert any bold labels or section headers.\n\n`
-        : `MANDATORY STRUCTURE: Group 3-4 related criteria per bold subheading. The subheading names every criterion it covers using exact person spec wording. Every criterion named in the subheading must be explicitly and individually evidenced within that paragraph. Every criterion from the person spec must appear in exactly one section — no criterion may be skipped. Plan all subheadings and confirm 100% coverage before writing a single word.\n\n`
+        : `MANDATORY STRUCTURE: Use the ATTRIBUTE SECTION headings from the person specification table as bold subheadings — e.g. **Education/Qualification/Training**, **Experience**, **Knowledge and Skills**, **Other** — using whatever category names actually appear in the document. Under each bold heading, address ALL criteria listed in that section in 2-3 paragraphs of STAR evidence. Every criterion from the person spec must be addressed under its correct section — no criterion may be skipped. Plan all section headings and confirm 100% coverage before writing a single word.\n\n`
       : options.style === '2'
         ? `MANDATORY STRUCTURE: Flowing prose — NO subheadings or bold section labels anywhere.\n\n`
-        : `MANDATORY STRUCTURE: Group 3-4 related criteria per bold subheading. The subheading names every criterion it covers using person spec wording. Every criterion named must be explicitly evidenced in that paragraph. No criterion may be skipped.\n\n`
+        : `MANDATORY STRUCTURE: Use the ATTRIBUTE SECTION headings from the person specification table as bold subheadings — e.g. **Education/Qualification/Training**, **Experience**, **Knowledge and Skills**, **Other**. Under each heading, address ALL criteria in that section using 2-3 paragraphs of STAR evidence. No criterion may be skipped.\n\n`
     const outputInstruction = isRewrite
       ? 'Rewrite the statement following the instruction. Keep all strong content. Improve what was asked.'
       : isScotland
