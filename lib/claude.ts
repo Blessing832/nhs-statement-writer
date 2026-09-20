@@ -193,7 +193,7 @@ function buildUserPrompt(
   const isScotland = region === 'scotland'
   const isRewrite = !!(options.rewriteInstruction && options.previousStatement)
   const outputMode = options.outputMode ?? 'full'
-  const dutiesCount = isScotland ? '6' : '8'
+  const dutiesCount = '7'
   const rawText = buildRawText(jobData.rawText)
 
   const jobSection = `## JOB DETAILS
@@ -256,29 +256,29 @@ Return ONLY a single valid JSON object - no text before or after:
   "desirableCriteria": ["desirable criteria if any"]
 }
 
-DUTIES RULES — read every rule before writing a single duty:
-Every duty must be a PURE TASK SENTENCE. Even though you can see employer names and organisation names in the candidate profile above, you MUST NOT include any of them in the duties list. Not at the start, not at the end, not in a sub-clause.
+DUTIES RULES — produce exactly 7 highly specific, outcome-focused bullet points from the candidate's most recent/relevant previous role. Write in past tense. Retain real employer and NHS Trust names where they appear in the candidate profile — do not anonymise.
 
-WRONG — contains organisation or location reference (never do this):
-"Supported service users in care planning within the Sirona Care and Health CIC NHS setting."
-"Maintained records using Care Vision at ACE Healthcare Ltd."
-"Delivered patient care across the Bristol Royal Infirmary inpatient wards."
+Each duty must:
+- Begin with a strong past tense action verb (Delivered, Led, Coordinated, Implemented, Managed, Monitored, Escalated, Improved, Developed, Supported, Streamlined, etc.)
+- Exceed 25 words — be specific, evidence-based and outcome-focused
+- Clearly outline: the situation or context, the specific action taken, collaboration involved, governance or quality considerations where relevant, and measurable impact on patient care, service delivery, compliance, or organisational performance
+- Mirror the exact task vocabulary and key phrases from the vacancy job description and person specification
+- Demonstrate continuity with the target role — quality improvement, patient-centred delivery, MDT collaboration, safeguarding awareness, and quantifiable outcomes where credible
 
-CORRECT — pure task, zero organisation or location reference:
-"Supported service users and carers to participate in care planning discussions, ensuring their views informed day-to-day service delivery."
-"Maintained accurate involvement records and documentation using electronic care record systems."
-"Delivered personal care to patients, maintaining dignity and privacy at all times."
+WRONG — too short, generic, no outcome:
+"Supported service users in care planning."
+"Maintained records using electronic systems."
 
-RULES:
-- Start every duty with a past tense verb: Assisted, Supported, Delivered, Monitored, Documented, Escalated, Participated, Undertook, Maintained, Coordinated, Gathered, Promoted, Performed...
-- Mirror the EXACT task vocabulary and keywords from the vacancy job description
-- Each duty: one sentence, 20-35 words, no location or employer reference anywhere
-- NEVER write the word "NHS" in any duty — not "NHS standards", not "NHS Trust", not "NHS guidelines", not "NHS Care Certificate", not "NHS Direct", nothing
-- NEVER name any employer, hospital, Board, company, care home, department, ward, or geographic location — this includes Southmead Hospital, Bristol Royal Infirmary, and every other named hospital worldwide
-- NEVER name any UK-specific healthcare software or EHR system: SystmOne, Lorenzo, Datix, EMIS, RiO, PARIS, TrakCare, CERNER, PAS, Electronic Prescribing System by brand name — write "electronic patient record system", "clinical information system", or "medication management system" instead
-- NEVER reference NHS pay bands (Band 3, Band 5, Band 7, etc.) or UK job grades
-- NEVER name specific UK training programmes or certificates (Oliver McGowan Training, NHS Care Certificate, Safeguarding Level 2, etc.) — describe the skill generically instead
-- Previous role duties ONLY — do not describe the current role`
+CORRECT — specific, detailed, outcome-focused, past tense:
+"Coordinated multidisciplinary care planning meetings for a caseload of 20+ patients with complex mental health needs, ensuring treatment plans were reviewed, updated, and communicated to all stakeholders within agreed governance timescales, contributing to a measurable reduction in unplanned admissions."
+"Identified a recurring gap in medication administration documentation during a ward audit and escalated findings to the ward manager, resulting in a revised protocol adopted across the unit and a 30% improvement in compliance at the next internal review."
+
+ADDITIONAL RULES:
+- NEVER write the word "NHS" as a standalone description (e.g. not "NHS standards" generically — instead name the specific standard or framework)
+- NEVER name UK-specific healthcare software by brand (SystmOne, Lorenzo, EMIS, RiO, TrakCare, Cerner, PARIS, Datix) — write "electronic patient record system", "clinical information system", or "medication management system"
+- NEVER reference NHS pay bands (Band 3, Band 5, etc.)
+- NEVER name specific UK training certificates as credentials (Oliver McGowan, NHS Care Certificate) — describe the competency demonstrated instead
+- Previous role duties ONLY — do not describe the current or target role`
     }
 
     return `${jobSection}
@@ -309,29 +309,29 @@ Return ONLY a single valid JSON object - no text before or after:
   "meetsAllEssential": true
 }
 
-DUTIES RULES — read every rule before writing a single duty:
-Every duty must be a PURE TASK SENTENCE. Even though you can see employer names and organisation names in the candidate profile above, you MUST NOT include any of them in the duties list. Not at the start, not at the end, not in a sub-clause.
+DUTIES RULES — produce exactly 7 highly specific, outcome-focused bullet points from the candidate's most recent/relevant previous role. Write in past tense. Retain real employer and NHS Trust names where they appear in the candidate profile — do not anonymise.
 
-WRONG — contains organisation or location reference (never do this):
-"Supported service users in care planning within the Sirona Care and Health CIC NHS setting."
-"Maintained records using Care Vision at ACE Healthcare Ltd."
-"Delivered patient care across the Bristol Royal Infirmary inpatient wards."
+Each duty must:
+- Begin with a strong past tense action verb (Delivered, Led, Coordinated, Implemented, Managed, Monitored, Escalated, Improved, Developed, Supported, Streamlined, etc.)
+- Exceed 25 words — be specific, evidence-based and outcome-focused
+- Clearly outline: the situation or context, the specific action taken, collaboration involved, governance or quality considerations where relevant, and measurable impact on patient care, service delivery, compliance, or organisational performance
+- Mirror the exact task vocabulary and key phrases from the vacancy job description and person specification
+- Demonstrate continuity with the target role — quality improvement, patient-centred delivery, MDT collaboration, safeguarding awareness, and quantifiable outcomes where credible
 
-CORRECT — pure task, zero organisation or location reference:
-"Supported service users and carers to participate in care planning discussions, ensuring their views informed day-to-day service delivery."
-"Maintained accurate involvement records and documentation using electronic care record systems."
-"Delivered personal care to patients, maintaining dignity and privacy at all times."
+WRONG — too short, generic, no outcome:
+"Supported service users in care planning."
+"Maintained records using electronic systems."
 
-RULES:
-- Start every duty with a past tense verb: Assisted, Supported, Delivered, Monitored, Documented, Escalated, Participated, Undertook, Maintained, Coordinated, Gathered, Promoted, Performed...
-- Mirror the EXACT task vocabulary and keywords from the vacancy job description
-- Each duty: one sentence, 20-35 words, no location or employer reference anywhere
-- NEVER write the word "NHS" in any duty — not "NHS standards", not "NHS Trust", not "NHS guidelines", not "NHS Care Certificate", not "NHS Direct", nothing
-- NEVER name any employer, hospital, Board, company, care home, department, ward, or geographic location — this includes Southmead Hospital, Bristol Royal Infirmary, and every other named hospital worldwide
-- NEVER name any UK-specific healthcare software or EHR system: SystmOne, Lorenzo, Datix, EMIS, RiO, PARIS, TrakCare, CERNER, PAS, Electronic Prescribing System by brand name — write "electronic patient record system", "clinical information system", or "medication management system" instead
-- NEVER reference NHS pay bands (Band 3, Band 5, Band 7, etc.) or UK job grades
-- NEVER name specific UK training programmes or certificates (Oliver McGowan Training, NHS Care Certificate, Safeguarding Level 2, etc.) — describe the skill generically instead
-- Previous role duties ONLY — do not describe the current role
+CORRECT — specific, detailed, outcome-focused, past tense:
+"Coordinated multidisciplinary care planning meetings for a caseload of 20+ patients with complex mental health needs, ensuring treatment plans were reviewed, updated, and communicated to all stakeholders within agreed governance timescales, contributing to a measurable reduction in unplanned admissions."
+"Identified a recurring gap in medication administration documentation during a ward audit and escalated findings to the ward manager, resulting in a revised protocol adopted across the unit and a 30% improvement in compliance at the next internal review."
+
+ADDITIONAL RULES:
+- NEVER write the word "NHS" as a standalone description (e.g. not "NHS standards" generically — instead name the specific standard or framework)
+- NEVER name UK-specific healthcare software by brand (SystmOne, Lorenzo, EMIS, RiO, TrakCare, Cerner, PARIS, Datix) — write "electronic patient record system", "clinical information system", or "medication management system"
+- NEVER reference NHS pay bands (Band 3, Band 5, etc.)
+- NEVER name specific UK training certificates as credentials (Oliver McGowan, NHS Care Certificate) — describe the competency demonstrated instead
+- Previous role duties ONLY — do not describe the current or target role
 - essentialCriteria must list EVERY criterion from all sections of the JDPS table`
   }
 
@@ -476,13 +476,27 @@ For each additional question:
 - NEVER use em dashes (—), use a comma instead. No generic claims. Every answer must end with a concrete attributable outcome.`
   : `HARD WORD LIMIT: 1,400 words — write "Thank you." and STOP. Do NOT write any section after "Thank you." — no Key Duties, no summaries, nothing.`}
 
-CRITICAL:
+CRITICAL — STATEMENT WRITING STANDARDS:
 - NEVER use em dashes (—) — use a comma instead
-- Do not bold or highlight any words
+- Do not bold or highlight any words (except Style 1 section headings)
 - Do NOT write a Key Duties section — the statement ends at "Thank you."
+- Retain real employer and NHS Trust names where they appear naturally in examples — do not anonymise
 - Address EVERY essential criterion with specific STAR evidence — expect 20-40 criteria from the JDPS, not just the bullet list in the job advert
 - The JDPS table has criteria across Education, Experience, Special Aptitudes, Disposition, Physical Requirements, and Particular Requirements — address ALL sections
-- Criteria that appear potentially weak MUST still be addressed confidently with specific evidence from the candidate's history${options.extractedCriteria && (options.extractedCriteria.essential.length > 0 || options.extractedCriteria.desirable.length > 0) ? `
+- Criteria that appear potentially weak MUST still be addressed confidently with specific evidence from the candidate's history
+
+STAR EVIDENCE STANDARDS — apply to every criterion paragraph:
+- SITUATION: Set the scene with specific context (role, setting, patient group, caseload size, challenge faced)
+- TASK: State what you were personally responsible for
+- ACTION (most important — must be detailed): Explain the exact steps taken, decisions made, methods or frameworks applied, how you collaborated with colleagues or MDT members, how you managed risks, governance considerations, or quality processes
+- RESULT: State a measurable, credible outcome — impact on patient care, service delivery, operational performance, compliance, quality improvement, or stakeholder outcomes
+
+CONTENT REQUIREMENTS:
+- Integrate relevant governance frameworks, safeguarding awareness, MDT collaboration, service improvement methodologies, and digital/EHR systems where applicable and genuine
+- Embed NHS values (compassion, respect, commitment, accountability, collaboration, quality) through practical examples — never as generic claims
+- Demonstrate continuity of professional development and progression across roles
+- Write in professional British English — clear, authentic, evidence-based, and tailored to this specific role and Trust
+- Conclude with a short paragraph reinforcing suitability, service ethos, and commitment to continuous professional development${options.extractedCriteria && (options.extractedCriteria.essential.length > 0 || options.extractedCriteria.desirable.length > 0) ? `
 
 ## EXTRACTED PERSON SPECIFICATION — MANDATORY CHECKLIST
 Every criterion below MUST appear in the statement with STAR evidence. Do NOT skip any.
@@ -519,29 +533,29 @@ Return ONLY a single valid JSON object:
   "previousRoleDuties": ["exactly ${dutiesCount} duties — see rules below"]
 }
 
-DUTIES RULES — read every rule before writing a single duty:
-Every duty must be a PURE TASK SENTENCE. Even though you can see employer names and organisation names in the candidate profile above, you MUST NOT include any of them in the duties list. Not at the start, not at the end, not in a sub-clause.
+DUTIES RULES — produce exactly 7 highly specific, outcome-focused bullet points from the candidate's most recent/relevant previous role. Write in past tense. Retain real employer and NHS Trust names where they appear in the candidate profile — do not anonymise.
 
-WRONG — contains organisation or location reference (never do this):
-"Supported service users in care planning within the Sirona Care and Health CIC NHS setting."
-"Maintained records using Care Vision at ACE Healthcare Ltd."
-"Delivered patient care across the Bristol Royal Infirmary inpatient wards."
+Each duty must:
+- Begin with a strong past tense action verb (Delivered, Led, Coordinated, Implemented, Managed, Monitored, Escalated, Improved, Developed, Supported, Streamlined, etc.)
+- Exceed 25 words — be specific, evidence-based and outcome-focused
+- Clearly outline: the situation or context, the specific action taken, collaboration involved, governance or quality considerations where relevant, and measurable impact on patient care, service delivery, compliance, or organisational performance
+- Mirror the exact task vocabulary and key phrases from the vacancy job description and person specification
+- Demonstrate continuity with the target role — quality improvement, patient-centred delivery, MDT collaboration, safeguarding awareness, and quantifiable outcomes where credible
 
-CORRECT — pure task, zero organisation or location reference:
-"Supported service users and carers to participate in care planning discussions, ensuring their views informed day-to-day service delivery."
-"Maintained accurate involvement records and documentation using electronic care record systems."
-"Delivered personal care to patients, maintaining dignity and privacy at all times."
+WRONG — too short, generic, no outcome:
+"Supported service users in care planning."
+"Maintained records using electronic systems."
 
-RULES:
-- Start every duty with a past tense verb: Assisted, Supported, Delivered, Monitored, Documented, Escalated, Participated, Undertook, Maintained, Coordinated, Gathered, Promoted, Performed...
-- Mirror the EXACT task vocabulary and keywords from the vacancy job description
-- Each duty: one sentence, 20-35 words, no location or employer reference anywhere
-- NEVER write the word "NHS" in any duty — not "NHS standards", not "NHS Trust", not "NHS guidelines", not "NHS Care Certificate", not "NHS Direct", nothing
-- NEVER name any employer, hospital, Board, company, care home, department, ward, or geographic location — this includes Southmead Hospital, Bristol Royal Infirmary, and every other named hospital worldwide
-- NEVER name any UK-specific healthcare software or EHR system: SystmOne, Lorenzo, Datix, EMIS, RiO, PARIS, TrakCare, CERNER, PAS, Electronic Prescribing System by brand name — write "electronic patient record system", "clinical information system", or "medication management system" instead
-- NEVER reference NHS pay bands (Band 3, Band 5, Band 7, etc.) or UK job grades
-- NEVER name specific UK training programmes or certificates (Oliver McGowan Training, NHS Care Certificate, Safeguarding Level 2, etc.) — describe the skill generically instead
-- Previous role duties ONLY — do not describe the current role
+CORRECT — specific, detailed, outcome-focused, past tense:
+"Coordinated multidisciplinary care planning meetings for a caseload of 20+ patients with complex mental health needs, ensuring treatment plans were reviewed, updated, and communicated to all stakeholders within agreed governance timescales, contributing to a measurable reduction in unplanned admissions."
+"Identified a recurring gap in medication administration documentation during a ward audit and escalated findings to the ward manager, resulting in a revised protocol adopted across the unit and a 30% improvement in compliance at the next internal review."
+
+ADDITIONAL RULES:
+- NEVER write the word "NHS" as a standalone description (e.g. not "NHS standards" generically — instead name the specific standard or framework)
+- NEVER name UK-specific healthcare software by brand (SystmOne, Lorenzo, EMIS, RiO, TrakCare, Cerner, PARIS, Datix) — write "electronic patient record system", "clinical information system", or "medication management system"
+- NEVER reference NHS pay bands (Band 3, Band 5, etc.)
+- NEVER name specific UK training certificates as credentials (Oliver McGowan, NHS Care Certificate) — describe the competency demonstrated instead
+- Previous role duties ONLY — do not describe the current or target role
 
 CRITICAL:
 - NEVER use em dashes (—) — use a comma instead
