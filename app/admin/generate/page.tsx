@@ -78,6 +78,8 @@ function AnalysisPanel({ analysis, region }: { analysis: StatementAnalysis | nul
   if (!analysis) return (
     <p className="text-gray-400 text-sm">Person specification not extracted. Statement was written from job advert text.</p>
   )
+  const essential = analysis.essentialCriteria ?? []
+  const desirable = analysis.desirableCriteria ?? []
   return (
     <div className="space-y-5 text-sm">
       {analysis.meetsAllEssential && (
@@ -95,6 +97,32 @@ function AnalysisPanel({ analysis, region }: { analysis: StatementAnalysis | nul
         <Section title="Role Overview">
           <p className="text-gray-600 leading-relaxed text-sm">{analysis.jobSummary}</p>
         </Section>
+      )}
+      {essential.length > 0 && (
+        <div>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Essential Criteria</p>
+          <ol className="space-y-2 list-none">
+            {essential.map((c: string, i: number) => (
+              <li key={i} className="flex gap-2 text-xs text-gray-700">
+                <span style={{ color: '#0B4F6C' }} className="flex-shrink-0 font-bold">{i + 1}.</span>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+      {desirable.length > 0 && (
+        <div>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Desirable Criteria</p>
+          <ol className="space-y-2 list-none">
+            {desirable.map((c: string, i: number) => (
+              <li key={i} className="flex gap-2 text-xs text-gray-500">
+                <span className="flex-shrink-0 font-bold">{i + 1}.</span>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
       )}
     </div>
   )
