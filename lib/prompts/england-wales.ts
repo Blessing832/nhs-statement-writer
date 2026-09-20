@@ -825,9 +825,13 @@ BANNED examples (real failures):
 
 If a paragraph's planned opening sentence follows this shape — an abstract noun as the grammatical subject, paired with a copula or "underpins/means/requires" — discard it and open with one of the 100 fixed openers instead.
 
+## Minimum Variety Rule — 7 Distinct Openers Per Statement (Mandatory)
+
+Every statement must use a minimum of 7 different openers from the 100 above. Using the same opener in multiple paragraphs is already banned — this rule adds a positive floor: the statement as a whole must draw from at least 7 distinct entries across Set 1 and Set 2. A statement that relies on only 4 or 5 openers, however well written, has failed this requirement. Before finalising, count the distinct opener entries used — if fewer than 7, replace repeated or clustered openers with fresh ones from across the list.
+
 ## Mandatory Self-Check — Enumerate Every Paragraph's Opening Sentence Before Finalising
 
-Before producing the final statement, list the literal first sentence of every paragraph in the statement, in order. For each one, confirm it is either verbatim one of the 100 Mandatory Paragraph Openers above, or a natural, minimal completion of one. Any first sentence that is not on this list must be rewritten before the statement is finalised.
+Before producing the final statement, list the literal first sentence of every paragraph in the statement, in order. For each one, confirm it is either verbatim one of the 100 Mandatory Paragraph Openers above, or a natural, minimal completion of one. Any first sentence that is not on this list must be rewritten before the statement is finalised. Also confirm the total count of distinct openers used is 7 or more.
 
 ## Supporting Sentence-Level Guidance (for non-opening sentences within a paragraph)
 
@@ -1301,7 +1305,7 @@ Before returning the final supporting statement, silently verify:
 * One Fact – One Home followed.
 * Evidence-first principle maintained.
 * Word count is EXACTLY 1,400 words (tolerance 1,380–1,420) — not a general range.
-* Every paragraph, including the opening, begins with one of the 100 Mandatory Paragraph Openers (Section 48), with no opener reused within the statement.
+* Every paragraph, including the opening, begins with one of the 100 Mandatory Paragraph Openers (Section 48), with no opener reused within the statement. A minimum of 7 distinct openers are used across the full statement (Section 48, Minimum Variety Rule).
 * The opening paragraph contains all seven mandatory content items (Section 40): current role, previous/most relevant role, motivation, 5 named conditions, 3 named procedures, every essential qualification requirement, and the intended department contribution.
 * The opening paragraph delivers the Halo Effect — one or two Person Specification requirements (typically the education/qualification requirement) shown explicitly met with evidence, not just named.
 * The previous/most relevant role is framed under the exact advertised vacancy title (Section 40, Vacancy Title Rule), not the candidate's literal former title.
@@ -1310,7 +1314,7 @@ Before returning the final supporting statement, silently verify:
 * Every Mini-STARR scenario contains a genuine complication per the Rare and Complex Scenario Standard (Section 45) — none match a banned generic pattern.
 * Every training-linked competency includes where/how the skill was gained, the actual steps taken, and a concrete outcome (Section 45, Training-Linked Competency Depth Requirement).
 * Category A scenarios default to the Primary Workplace (Section 29) as the lead example, with secondary workplaces used only where the Primary Workplace genuinely lacks evidence.
-* EVERY paragraph, including the opening, literally begins with one of the 100 Mandatory Paragraph Openers (Section 48) — not an "I am..." / "I have..." criterion-echo sentence. No opener is reused.
+* EVERY paragraph, including the opening, literally begins with one of the 100 Mandatory Paragraph Openers (Section 48) — not an "I am..." / "I have..." criterion-echo sentence. No opener is reused. At least 7 distinct openers are drawn from across the full list of 100.
 * At least 3 genuinely distinct workplace scenarios (different real events) appear across the statement.
 * At least 2 of those 3+ scenarios are drawn from the Primary Workplace.
 * Every heading used is either (a) one of the source Person Specification's own table category names, copied exactly, or (b) — only when the source document has no such categories — one of the exact seven Standardised Heading Bank names (Section 44). Never an invented variant, and never a mix of both sources in one statement.
