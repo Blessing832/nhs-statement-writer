@@ -94,33 +94,34 @@ Use: "a large tertiary hospital", "a busy district hospital", "a 500-bed multi-s
 UK locations (England, Wales, Scotland, Northern Ireland, and named UK cities and regions) are allowed where relevant.`
 
 async function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): Promise<string> {
-  // Check for admin-customized prompt stored in Supabase — overrides code defaults
-  // Generic / civil-service also try the england-wales custom prompt so unrecognized UK job boards
-  // benefit from the same EaseMe prompt rather than the bare generic fallback.
+  // Step 1: resolve base prompt (Supabase custom → code default)
+  let base = ''
+
   const supabaseRegion = (region === 'scotland') ? 'scotland'
     : (region === 'england-wales' || region === 'generic' || region === 'civil-service') ? 'england-wales'
     : null
+
   if (supabaseRegion) {
     try {
       const { data } = await supabaseAdmin.from('prompts').select('content').eq('region', supabaseRegion).maybeSingle()
-      if (data?.content) return data.content + ESSENTIAL_CRITERIA_OVERRIDE
-    } catch {
-      // Table may not exist yet — fall through to code defaults
-    }
+      if (data?.content) base = data.content
+    } catch { /* table may not exist yet */ }
   }
-  if (region === 'scotland') return getScotlandPrompt(style) + ESSENTIAL_CRITERIA_OVERRIDE
-  if (region === 'england-wales') {
-    // Try V2.9 master prompt file before falling back to code default
-    try {
-      const v2Prompt = fs.readFileSync(path.join(process.cwd(), 'nhs_supporting_statement_master_prompt_v2_9.md'), 'utf-8')
-      if (v2Prompt.trim()) return v2Prompt + ESSENTIAL_CRITERIA_OVERRIDE
-    } catch { /* file not present — fall through */ }
-    return getEnglandWalesPrompt(style) + ESSENTIAL_CRITERIA_OVERRIDE
-  }
-  const styleNote = style === '2'
-    ? '\n- Write in continuous flowing prose with NO subheadings or bold section headers anywhere'
-    : '\n- Use bold subheadings. Group 3-4 related criteria per subheading. The subheading must name every criterion it covers using person spec wording. Every criterion in the subheading must be explicitly evidenced in the paragraph. Every criterion from the person spec must be assigned to exactly one section — no criterion may be skipped. Plan all subheadings and confirm 100% coverage before writing.'
-  return `You are an expert UK job application writer. Write a compelling supporting statement for this NHS or public sector role.
+
+  if (!base) {
+    if (region === 'scotland') {
+      base = getScotlandPrompt(style)
+    } else if (region === 'england-wales') {
+      try {
+        const v2Prompt = fs.readFileSync(path.join(process.cwd(), 'nhs_supporting_statement_master_prompt_v2_9.md'), 'utf-8')
+        if (v2Prompt.trim()) base = v2Prompt
+      } catch { /* file not present */ }
+      if (!base) base = getEnglandWalesPrompt(style)
+    } else {
+      const styleNote = style === '2'
+        ? '\n- Write in continuous flowing prose with NO subheadings or bold section headers anywhere'
+        : '\n- Use bold subheadings. Group 3-4 related criteria per subheading. The subheading must name every criterion it covers using person spec wording. Every criterion in the subheading must be explicitly evidenced in the paragraph. Every criterion from the person spec must be assigned to exactly one section — no criterion may be skipped. Plan all subheadings and confirm 100% coverage before writing.'
+      base = `You are an expert UK job application writer. Write a compelling supporting statement for this NHS or public sector role.
 - Address every essential criterion from the person specification
 - Use NHS language and terminology
 - Write 800-1,200 words
@@ -155,6 +156,31 @@ FOUR CRITICAL FAILURES — check every paragraph before outputting:
 2. DUTIES LISTED WITHOUT SCENARIO/WARD/FIGURE: Name the ward type, describe one specific instance, give an outcome figure. WRONG: "I carry out blood pressure, SpO2, and blood glucose monitoring." RIGHT: "On the 20-bed inpatient ward I complete observations for 6 patients every 4 hours. When a blood pressure of 88/54 fell below the 90-120 systolic threshold, I rechecked at 90/56 and escalated; the patient was reviewed within 10 minutes and recovered to 102/68 by the next round."
 3. SBAR AS LABEL NOT CONTENT: Never "I used SBAR." Write the actual content. WRONG: "I escalated using SBAR format." RIGHT: "I escalated: Situation — 'SpO2 has dropped to 89% over 15 minutes.' Background — 'Admitted with chest infection 3 days ago, was 95% this morning.' Assessment — 'More breathless, RR increased to 24.' Recommendation — 'I think he needs review now.' The nurse attended within 3 minutes."
 4. COMPETENCE BOUNDARY WITHOUT EXACT PROCEDURE: Name the exact procedure, where competency ended, and the supervision steps. WRONG: "When something fell outside my competency I escalated." RIGHT: "I was asked to assist with a NPWT wound dressing, outside my sign-off. I told the nurse, 'I have not been signed off on NPWT equipment.' She supervised me through 3 changes over 2 weeks, checking seal technique and canister pressure, before signing off my competency record."`
+    }
+  }
+
+  // Step 2: inject managed paragraph openers override if the table has rows
+  let openerOverride = ''
+  try {
+    const { data: openerRows } = await supabaseAdmin
+      .from('paragraph_openers')
+      .select('set_number, position, text')
+      .eq('enabled', true)
+      .order('set_number')
+      .order('position')
+
+    if (openerRows && openerRows.length > 0) {
+      const set1 = openerRows.filter((r: { set_number: number }) => r.set_number === 1)
+      const set2 = openerRows.filter((r: { set_number: number }) => r.set_number === 2)
+      if (set1.length > 0 || set2.length > 0) {
+        const s1 = set1.map((r: { text: string }, i: number) => `${i + 1}. ${r.text}`).join('\n')
+        const s2 = set2.map((r: { text: string }, i: number) => `${i + 1}. ${r.text}`).join('\n')
+        openerOverride = `\n\n## ADMIN OVERRIDE — PARAGRAPH OPENERS (AUTHORITATIVE LIST)\nThe following is the complete, authoritative list of permitted paragraph openers for this statement. Use ONLY openers from these sets. This list supersedes any opener list elsewhere in these instructions. Minimum variety rule: use at least 7 distinct openers across the full statement.\n\n**Set 1**\n${s1}\n\n**Set 2**\n${s2}`
+      }
+    }
+  } catch { /* paragraph_openers table may not exist yet — no override */ }
+
+  return base + openerOverride + ESSENTIAL_CRITERIA_OVERRIDE
 }
 
 // Smart truncation: take first 8,000 chars (JD intro + duties) + last 16,000 chars

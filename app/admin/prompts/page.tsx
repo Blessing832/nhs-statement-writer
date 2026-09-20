@@ -14,6 +14,15 @@ type BannedWordRow = {
   created_at: string
 }
 
+type OpenerRow = {
+  id: number
+  set_number: 1 | 2
+  position: number
+  text: string
+  enabled: boolean
+  created_at: string
+}
+
 const REGION_LABELS: Record<string, string> = {
   'england-wales': 'England & Wales',
   scotland: 'Scotland',
@@ -282,6 +291,249 @@ function BannedWordsPanel({ token }: { token: string }) {
   )
 }
 
+// ── Paragraph Openers Panel ────────────────────────────────────────────────────
+
+function ParagraphOpenersPanel({ token }: { token: string }) {
+  const [rows, setRows] = useState<OpenerRow[]>([])
+  const [loading, setLoading] = useState(true)
+  const [setFilter, setSetFilter] = useState<'all' | 1 | 2>('all')
+  const [addSet, setAddSet] = useState<1 | 2>(1)
+  const [addText, setAddText] = useState('')
+  const [adding, setAdding] = useState(false)
+  const [addError, setAddError] = useState<string | null>(null)
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const [editVal, setEditVal] = useState('')
+  const textInputRef = useRef<HTMLInputElement>(null)
+
+  const load = async () => {
+    setLoading(true)
+    const res = await fetch('/api/admin/paragraph-openers')
+    if (res.ok) {
+      setRows(await res.json())
+    } else if (res.status === 500) {
+      const d = await res.json()
+      if (d.error?.includes('does not exist')) setRows([])
+    }
+    setLoading(false)
+  }
+
+  useEffect(() => { load() }, [])
+
+  const nextPosition = (set: 1 | 2) => {
+    const inSet = rows.filter(r => r.set_number === set)
+    return inSet.length > 0 ? Math.max(...inSet.map(r => r.position)) + 1 : 1
+  }
+
+  const handleAdd = async () => {
+    if (!addText.trim()) return
+    setAdding(true)
+    setAddError(null)
+    const res = await fetch('/api/admin/paragraph-openers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+      body: JSON.stringify({ set_number: addSet, position: nextPosition(addSet), text: addText.trim() }),
+    })
+    if (res.ok) {
+      setAddText('')
+      await load()
+      textInputRef.current?.focus()
+    } else {
+      const d = await res.json()
+      setAddError(d.error || 'Failed to add')
+    }
+    setAdding(false)
+  }
+
+  const handleToggle = async (row: OpenerRow) => {
+    await fetch('/api/admin/paragraph-openers', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+      body: JSON.stringify({ id: row.id, enabled: !row.enabled }),
+    })
+    setRows(r => r.map(x => x.id === row.id ? { ...x, enabled: !x.enabled } : x))
+  }
+
+  const handleDelete = async (id: number, text: string) => {
+    if (!confirm(`Remove this opener?\n\n"${text}"`)) return
+    await fetch('/api/admin/paragraph-openers', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+      body: JSON.stringify({ id }),
+    })
+    setRows(r => r.filter(x => x.id !== id))
+  }
+
+  const handleSaveEdit = async (id: number) => {
+    await fetch('/api/admin/paragraph-openers', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+      body: JSON.stringify({ id, text: editVal }),
+    })
+    setRows(r => r.map(x => x.id === id ? { ...x, text: editVal } : x))
+    setEditingId(null)
+  }
+
+  const filtered = rows.filter(r => setFilter === 'all' || r.set_number === setFilter)
+  const enabledCount = rows.filter(r => r.enabled).length
+  const set1Count = rows.filter(r => r.set_number === 1).length
+  const set2Count = rows.filter(r => r.set_number === 2).length
+
+  return (
+    <div className="space-y-4">
+      {/* Info banner */}
+      <div className="rounded-lg border border-blue-200 bg-blue-50 px-4 py-3">
+        <p className="text-sm font-medium text-blue-900">How it works</p>
+        <p className="text-xs text-blue-800 mt-1">
+          Every paragraph in a generated statement must begin with one of the enabled openers below.
+          Set 1 is for statement-opening and early body paragraphs; Set 2 for mid-statement paragraphs.
+          Disabled openers are excluded from generation.
+          Run <code className="bg-blue-100 px-1 rounded">supabase-migration-paragraph-openers.sql</code> once if this list is empty.
+        </p>
+        <p className="text-xs text-blue-700 mt-1 font-medium">
+          {enabledCount} of {rows.length} openers active &middot; Set 1: {set1Count} &middot; Set 2: {set2Count}
+        </p>
+      </div>
+
+      {/* Add new opener */}
+      <div className="bg-white rounded-lg border border-gray-200 p-4 space-y-3">
+        <h3 className="text-sm font-semibold text-gray-900">Add opener</h3>
+        <div className="flex gap-2 flex-wrap">
+          <select
+            value={addSet}
+            onChange={e => setAddSet(Number(e.target.value) as 1 | 2)}
+            className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none cursor-pointer"
+          >
+            <option value={1}>Set 1</option>
+            <option value={2}>Set 2</option>
+          </select>
+          <input
+            ref={textInputRef}
+            value={addText}
+            onChange={e => setAddText(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleAdd()}
+            placeholder="Opener text (e.g. Throughout my career, I have…)"
+            className="flex-1 min-w-64 border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
+          <button
+            onClick={handleAdd}
+            disabled={adding || !addText.trim()}
+            className="px-4 py-2 text-sm text-white font-semibold rounded-md disabled:opacity-50 cursor-pointer transition-colors"
+            style={{ backgroundColor: '#0B4F6C' }}
+          >
+            {adding ? 'Adding…' : 'Add'}
+          </button>
+        </div>
+        {addError && <p className="text-xs text-red-600">{addError}</p>}
+      </div>
+
+      {/* Set filter tabs */}
+      <div className="flex gap-1">
+        {([['all', `All (${rows.length})`], [1, `Set 1 (${set1Count})`], [2, `Set 2 (${set2Count})`]] as const).map(([val, label]) => (
+          <button
+            key={String(val)}
+            onClick={() => setSetFilter(val)}
+            className={`px-4 py-1.5 text-xs font-medium rounded-full border cursor-pointer transition-colors ${
+              setFilter === val
+                ? 'bg-gray-800 text-white border-gray-800'
+                : 'bg-white text-gray-600 border-gray-300 hover:border-gray-500'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {/* Table */}
+      {loading ? (
+        <div className="text-sm text-gray-400 py-8 text-center">Loading…</div>
+      ) : rows.length === 0 ? (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
+          <p className="text-sm font-medium text-amber-800">No openers found</p>
+          <p className="text-xs text-amber-700 mt-1">
+            Run <code className="bg-amber-100 px-1 rounded">supabase-migration-paragraph-openers.sql</code> in your Supabase SQL editor to create the table and seed the default 100 openers.
+          </p>
+        </div>
+      ) : (
+        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide w-8">On</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide w-16">Set</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide w-10">#</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Opener text</th>
+                <th className="px-4 py-3 w-16"></th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {filtered.length === 0 && (
+                <tr><td colSpan={5} className="px-4 py-8 text-center text-gray-400 text-sm">No results</td></tr>
+              )}
+              {filtered.map(row => (
+                <tr key={row.id} className={`transition-colors ${row.enabled ? '' : 'opacity-40'}`}>
+                  {/* Toggle */}
+                  <td className="px-4 py-3">
+                    <button
+                      onClick={() => handleToggle(row)}
+                      className={`w-9 h-5 rounded-full transition-colors cursor-pointer relative ${row.enabled ? 'bg-green-500' : 'bg-gray-300'}`}
+                      title={row.enabled ? 'Disable' : 'Enable'}
+                    >
+                      <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all ${row.enabled ? 'left-[18px]' : 'left-0.5'}`} />
+                    </button>
+                  </td>
+                  {/* Set badge */}
+                  <td className="px-4 py-3">
+                    <span className={`inline-block text-xs font-medium px-2 py-0.5 rounded-full border ${row.set_number === 1 ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-teal-50 text-teal-700 border-teal-200'}`}>
+                      Set {row.set_number}
+                    </span>
+                  </td>
+                  {/* Position */}
+                  <td className="px-4 py-3 text-gray-400 text-xs font-mono">{row.position}</td>
+                  {/* Text — inline edit */}
+                  <td className="px-4 py-3">
+                    {editingId === row.id ? (
+                      <div className="flex gap-1 items-center">
+                        <input
+                          autoFocus
+                          value={editVal}
+                          onChange={e => setEditVal(e.target.value)}
+                          onKeyDown={e => { if (e.key === 'Enter') handleSaveEdit(row.id); if (e.key === 'Escape') setEditingId(null) }}
+                          className="border border-blue-400 rounded px-2 py-1 text-xs focus:outline-none w-full max-w-lg"
+                        />
+                        <button onClick={() => handleSaveEdit(row.id)} className="text-xs text-green-700 font-semibold cursor-pointer hover:underline whitespace-nowrap">Save</button>
+                        <button onClick={() => setEditingId(null)} className="text-xs text-gray-400 cursor-pointer hover:underline whitespace-nowrap">Cancel</button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => { setEditingId(row.id); setEditVal(row.text) }}
+                        className="text-gray-700 hover:text-blue-600 cursor-pointer text-left group text-sm"
+                        title="Click to edit"
+                      >
+                        {row.text}
+                        <span className="ml-1 text-gray-300 group-hover:text-blue-400 text-xs">✎</span>
+                      </button>
+                    )}
+                  </td>
+                  {/* Delete */}
+                  <td className="px-4 py-3 text-right">
+                    <button
+                      onClick={() => handleDelete(row.id, row.text)}
+                      className="text-xs text-red-400 hover:text-red-600 cursor-pointer"
+                      title="Remove"
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  )
+}
+
 function WordCount({ text }: { text: string }) {
   const words = text.trim() ? text.trim().split(/\s+/).length : 0
   const chars = text.length
@@ -460,7 +712,7 @@ export default function PromptsPage() {
   const [prompts, setPrompts] = useState<Prompts | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState<'england-wales' | 'scotland' | 'banned-words'>('england-wales')
+  const [activeTab, setActiveTab] = useState<'england-wales' | 'scotland' | 'banned-words' | 'paragraph-openers'>('england-wales')
 
   const load = async () => {
     setLoading(true)
@@ -567,11 +819,23 @@ export default function PromptsPage() {
         >
           Banned Words
         </button>
+        <button
+          onClick={() => setActiveTab('paragraph-openers')}
+          className={`px-5 py-2.5 text-sm font-medium rounded-t-md cursor-pointer transition-colors ${
+            activeTab === 'paragraph-openers'
+              ? 'bg-white border border-b-white border-gray-200 text-gray-900 -mb-px'
+              : 'text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          Paragraph Openers
+        </button>
       </div>
 
       {/* Active panel */}
       {activeTab === 'banned-words' ? (
         <BannedWordsPanel token={token} />
+      ) : activeTab === 'paragraph-openers' ? (
+        <ParagraphOpenersPanel token={token} />
       ) : (
         <PromptEditor
           key={activeTab}
