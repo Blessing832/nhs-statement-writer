@@ -78,6 +78,8 @@ function AnalysisPanel({ analysis, region }: { analysis: StatementAnalysis | nul
   if (!analysis) return (
     <p className="text-gray-400 text-sm">Person specification not extracted. Statement was written from job advert text.</p>
   )
+  const essential = analysis.essentialCriteria ?? []
+  const desirable = analysis.desirableCriteria ?? []
   return (
     <div className="space-y-5 text-sm">
       {analysis.meetsAllEssential && (
@@ -95,6 +97,32 @@ function AnalysisPanel({ analysis, region }: { analysis: StatementAnalysis | nul
         <Section title="Role Overview">
           <p className="text-gray-600 leading-relaxed text-sm">{analysis.jobSummary}</p>
         </Section>
+      )}
+      {essential.length > 0 && (
+        <div>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Essential Criteria</p>
+          <ol className="space-y-2 list-none">
+            {essential.map((c: string, i: number) => (
+              <li key={i} className="flex gap-2 text-xs text-gray-700">
+                <span style={{ color: '#0B4F6C' }} className="flex-shrink-0 font-bold">{i + 1}.</span>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+      {desirable.length > 0 && (
+        <div>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Desirable Criteria</p>
+          <ol className="space-y-2 list-none">
+            {desirable.map((c: string, i: number) => (
+              <li key={i} className="flex gap-2 text-xs text-gray-500">
+                <span className="flex-shrink-0 font-bold">{i + 1}.</span>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
       )}
     </div>
   )
@@ -156,8 +184,6 @@ function AdminGenerateInner() {
   const [searchError, setSearchError] = useState('')
   const [selectedClient, setSelectedClient] = useState<ClientMatch | null>(null)
 
-  const [clientSearchLinks, setClientSearchLinks] = useState<{ id: string; label: string; url: string }[]>([])
-
   // Step 2: generate form
   const [vacancyUrl, setVacancyUrl] = useState('')
   const [jobDescText, setJobDescText] = useState('')
@@ -206,10 +232,6 @@ function AdminGenerateInner() {
         if (res.ok && data.clients?.length > 0) {
           const exact = data.clients.find((c: ClientMatch) => c.client_code === prefillCode.toUpperCase()) ?? data.clients[0]
           setSelectedClient(exact)
-          fetch(`/api/vacancies/my-links?code=${encodeURIComponent(exact.client_code)}`)
-            .then(r => r.ok ? r.json() : [])
-            .then(links => setClientSearchLinks(links))
-            .catch(() => {})
         }
       } catch { /* ignore */ }
     })()
@@ -242,11 +264,6 @@ function AdminGenerateInner() {
     setQuery('')
     setError('')
     setResult(null)
-    setClientSearchLinks([])
-    fetch(`/api/vacancies/my-links?code=${encodeURIComponent(client.client_code)}`)
-      .then(r => r.ok ? r.json() : [])
-      .then(links => setClientSearchLinks(links))
-      .catch(() => {})
   }
 
   const handleCancel = () => {
@@ -423,38 +440,17 @@ function AdminGenerateInner() {
       {selectedClient && !result && (
         <div className="max-w-3xl mx-auto w-full px-6 py-8">
           {/* Client badge */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 mb-5">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-bold text-blue-900">{selectedClient.full_name}</p>
-                <p className="text-xs font-mono text-blue-600">{selectedClient.client_code}</p>
-              </div>
-              <button
-                onClick={() => { setSelectedClient(null); setResult(null); setError(''); setClientSearchLinks([]) }}
-                className="text-xs text-blue-500 hover:text-blue-700 cursor-pointer"
-              >
-                Change
-              </button>
+          <div className="bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 mb-5 flex items-center justify-between">
+            <div>
+              <p className="text-sm font-bold text-blue-900">{selectedClient.full_name}</p>
+              <p className="text-xs font-mono text-blue-600">{selectedClient.client_code}</p>
             </div>
-            {clientSearchLinks.length > 0 && (
-              <div className="mt-3 pt-3 border-t border-blue-200">
-                <p className="text-xs font-semibold text-blue-700 mb-2 uppercase tracking-wide">Job Search Links</p>
-                <div className="flex flex-wrap gap-2">
-                  {clientSearchLinks.map(link => (
-                    <a
-                      key={link.id}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium text-white shadow-sm hover:opacity-90 transition-opacity"
-                      style={{ backgroundColor: '#0B4F6C' }}
-                    >
-                      {link.label} ↗
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )}
+            <button
+              onClick={() => { setSelectedClient(null); setResult(null); setError('') }}
+              className="text-xs text-blue-500 hover:text-blue-700 cursor-pointer"
+            >
+              Change
+            </button>
           </div>
 
           <div className="bg-white rounded-xl border border-gray-200 p-6">
@@ -464,7 +460,7 @@ function AdminGenerateInner() {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Job advert text</label>
                   <p className="text-xs text-gray-500 mb-2">Select all text on the job page (Ctrl+A → Ctrl+C) and paste here. Or drop a PDF/Word file.</p>
-                  <FileDropZone onText={(t) => { setJobDescText(prev => prev ? prev + '\n\n' + t : t); setError('') }} disabled={loading} />
+                  <FileDropZone onText={(t) => { setJobDescText(t); setError('') }} disabled={loading} />
                   <textarea value={jobDescText} onChange={(e) => { setJobDescText(e.target.value); setError('') }}
                     placeholder="Paste the full job description and person specification here…"
                     rows={10} disabled={loading}

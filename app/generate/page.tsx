@@ -999,7 +999,7 @@ function GeneratePage() {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Job advert text</label>
                     <p className="text-xs text-gray-500 mb-2">Copy all text from the job page (Ctrl+A → Copy) and paste below. Or drop a PDF/Word file.</p>
-                    <FileDropZone onText={(t) => { setJobDescText(prev => prev ? prev + '\n\n' + t : t); setError('') }} disabled={loading} />
+                    <FileDropZone onText={(t) => { setJobDescText(t); setError('') }} disabled={loading} />
                     <textarea value={jobDescText}
                       onChange={(e) => { setJobDescText(e.target.value); setError('') }}
                       placeholder="Paste the full job description and person specification here…" rows={8} disabled={loading}
@@ -1296,53 +1296,9 @@ function GeneratePage() {
             </div>
           )}
 
-          {/* Two-column: left = role info + person spec, right = statement */}
-          <div className="flex-1 flex overflow-hidden">
-
-            {/* Left panel */}
-            <div className="w-72 flex-shrink-0 border-r border-gray-200 overflow-y-auto bg-gray-50 p-4 hidden lg:block">
-              {result.analysis ? (
-                <div className="space-y-5 text-sm">
-                  {result.analysis.jobSummary && result.promptRegion !== 'scotland' && (
-                    <div>
-                      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Role Overview</p>
-                      <p className="text-gray-600 leading-relaxed text-xs">{result.analysis.jobSummary}</p>
-                    </div>
-                  )}
-                  {result.analysis.essentialCriteria?.length > 0 && (
-                    <div>
-                      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Essential Criteria</p>
-                      <ol className="space-y-2 list-none">
-                        {result.analysis.essentialCriteria.map((c: string, i: number) => (
-                          <li key={i} className="flex gap-2 text-xs text-gray-700">
-                            <span style={{ color: '#0B4F6C' }} className="flex-shrink-0 font-bold">{i + 1}.</span>
-                            <span>{c}</span>
-                          </li>
-                        ))}
-                      </ol>
-                    </div>
-                  )}
-                  {result.analysis.desirableCriteria?.length > 0 && (
-                    <div>
-                      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Desirable Criteria</p>
-                      <ol className="space-y-2 list-none">
-                        {result.analysis.desirableCriteria.map((c: string, i: number) => (
-                          <li key={i} className="flex gap-2 text-xs text-gray-500">
-                            <span className="flex-shrink-0 font-bold">{i + 1}.</span>
-                            <span>{c}</span>
-                          </li>
-                        ))}
-                      </ol>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <p className="text-gray-400 text-xs">Person specification not extracted. Statement was written from job advert text only.</p>
-              )}
-            </div>
-
-            {/* Right panel — statement */}
-            <div className="flex-1 overflow-y-auto bg-white">
+          {/* Statement area — full width */}
+          <div className="flex-1 overflow-hidden">
+            <div className="flex-1 overflow-y-auto bg-white h-full">
               <div className="p-6 max-w-3xl mx-auto">
                 <div ref={statementHeadRef} className="flex items-center justify-between mb-4">
                   <h3 className="font-bold text-gray-800 text-base">Supporting Statement</h3>

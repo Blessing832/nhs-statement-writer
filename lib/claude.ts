@@ -187,6 +187,7 @@ function buildUserPrompt(
     bodyPattern?: string
     style?: '1' | '2'
     trustIntelText?: string
+    extractedCriteria?: { essential: string[]; desirable: string[] }
   }
 ): string {
   const isScotland = region === 'scotland'
@@ -481,7 +482,16 @@ CRITICAL:
 - Do NOT write a Key Duties section — the statement ends at "Thank you."
 - Address EVERY essential criterion with specific STAR evidence — expect 20-40 criteria from the JDPS, not just the bullet list in the job advert
 - The JDPS table has criteria across Education, Experience, Special Aptitudes, Disposition, Physical Requirements, and Particular Requirements — address ALL sections
-- Criteria that appear potentially weak MUST still be addressed confidently with specific evidence from the candidate's history`
+- Criteria that appear potentially weak MUST still be addressed confidently with specific evidence from the candidate's history${options.extractedCriteria && (options.extractedCriteria.essential.length > 0 || options.extractedCriteria.desirable.length > 0) ? `
+
+## EXTRACTED PERSON SPECIFICATION — MANDATORY CHECKLIST
+Every criterion below MUST appear in the statement with STAR evidence. Do NOT skip any.
+
+ESSENTIAL (address every one — no exceptions):
+${options.extractedCriteria.essential.map((c, i) => `${i + 1}. ${c}`).join('\n')}${options.extractedCriteria.desirable.length > 0 ? `
+
+DESIRABLE (address as many as possible):
+${options.extractedCriteria.desirable.map((c, i) => `${i + 1}. ${c}`).join('\n')}` : ''}` : ''}`
   }
 
   // --- full mode: generic/civil-service single call ---
@@ -596,6 +606,34 @@ async function generateParallel(
   const statementOutputMode =
     appMode === 'questions-only' ? 'questions-only' : 'statement-only'
 
+  // Fast Haiku pre-pass: extract the person spec criteria list so the statement
+  // call receives an explicit checklist rather than relying on self-identification.
+  // Runs on Haiku (~3s) and completes before the main Sonnet calls.
+  let extractedCriteria: { essential: string[]; desirable: string[] } | undefined
+  if (appMode !== 'questions-only') {
+    try {
+      const rawText = jobData.rawText.length <= 24000 ? jobData.rawText : jobData.rawText.slice(0, 8000) + jobData.rawText.slice(-16000)
+      const preExtractMsg = await anthropic.messages.create({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1200,
+        system: 'You are an NHS job application analyst. Extract ONLY the person specification criteria from the job posting. Return a JSON object with two arrays: "essential" and "desirable". Each item is a plain string. Include ALL criteria from every section (Education, Experience, Skills, Aptitudes, Disposition, Physical, Particular Requirements, etc.). Do not include job duties, responsibilities, or descriptions. Return only valid JSON, no markdown.',
+        messages: [{ role: 'user', content: `Extract all person specification criteria from this job posting:\n\n${rawText}` }],
+      })
+      const preText = preExtractMsg.content[0].type === 'text' ? preExtractMsg.content[0].text.trim() : ''
+      const clean = preText.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim()
+      const parsed = JSON.parse(clean)
+      if (Array.isArray(parsed.essential) && parsed.essential.length > 0) {
+        extractedCriteria = {
+          essential: parsed.essential.filter((c: unknown) => typeof c === 'string'),
+          desirable: Array.isArray(parsed.desirable) ? parsed.desirable.filter((c: unknown) => typeof c === 'string') : [],
+        }
+        console.log(`PRE_EXTRACT essential=${extractedCriteria.essential.length} desirable=${extractedCriteria.desirable.length}`)
+      }
+    } catch (err) {
+      console.warn('PRE_EXTRACT failed (non-fatal, continuing without explicit checklist):', err)
+    }
+  }
+
   const statementUserPrompt = buildUserPrompt(client, jobData, region, {
     ...options,
     outputMode: statementOutputMode,
@@ -604,6 +642,7 @@ async function generateParallel(
     bodyPattern,
     style,
     trustIntelText,
+    extractedCriteria,
   })
 
   const analysisUserPrompt = buildUserPrompt(client, jobData, region, {

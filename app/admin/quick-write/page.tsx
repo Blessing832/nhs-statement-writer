@@ -292,7 +292,7 @@ export default function QuickWritePage() {
               <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1">Job advert text</label>
                 <p className="text-xs text-gray-500 mb-2">Drop a PDF/Word file or paste the full job advert text below.</p>
-                <FileDropZone onText={(t) => { setJobDescText(prev => prev ? prev + '\n\n' + t : t); setError('') }} disabled={loading} />
+                <FileDropZone onText={(t) => { setJobDescText(t); setError('') }} disabled={loading} />
                 <textarea value={jobDescText} onChange={(e) => { setJobDescText(e.target.value); setError('') }}
                   placeholder="Paste the full job description here: job title, duties, person specification, essential criteria, desirable criteria…"
                   rows={8} disabled={loading}
