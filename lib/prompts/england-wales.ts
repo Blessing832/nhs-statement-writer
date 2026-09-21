@@ -139,6 +139,45 @@ Every Essential criterion must appear. Every Desirable criterion must appear whe
 
 ---
 
+## Principle 4 — Clinical Honesty: Match Wording to Actual Competence Level
+
+Every clinical skill must be described at its accurate level. Overstating is a form of fabrication. Use the appropriate language for the candidate's real level:
+
+* **Independently competent, formally assessed:** "I am assessed and competent to undertake peripheral cannulation in accordance with local policy."
+* **Supervised practice:** "I undertake venepuncture under the direction of registered nurses and within my assessed scope of practice."
+* **Assisted, not independent:** "I assisted registered nurses with catheter care, preparing equipment and supporting the patient throughout."
+* **Trained but not yet clinically practised:** "I have completed phlebotomy training and am working toward achieving the required competency sign-off."
+* **Exposure only, not clinical experience:** "I have cared for patients who had previously undergone chemotherapy, supporting their comfort and monitoring their condition." — This is NOT oncology clinical experience.
+
+**Never upgrade language:** "Assisted with" must never become "competent in." "Exposure to" must never become "experience in."
+
+**The three-way distinction for specialist areas (e.g. oncology):**
+1. **Specialist experience** — actual work within that specialty (ward, unit, service). Describe the setting, patient group, responsibilities, clinical skills, escalation, MDT.
+2. **Specialist-related exposure** — caring for patients who had a condition associated with that specialty. State it accurately: "I have cared for patients with previous cancer diagnoses, including supporting those who had undergone chemotherapy."
+3. **Specialist-specific training** — formal certification or course in that specialty. Do not present this as clinical experience if no clinical practice followed.
+
+**Scope-of-practice language — required on every technical skill:**
+For any clinical skill mentioned, state the candidate's level of responsibility explicitly. Accepted formulations:
+* "I independently undertake…"
+* "I have been assessed as competent in…"
+* "I carry out [skill] under the supervision of…"
+* "I assist registered nurses with…"
+* "I work within my scope of practice and escalate when…"
+
+A statement that names a clinical skill without stating the candidate's level of responsibility will be returned for revision.
+
+---
+
+## Principle 5 — Do Not Highlight Gaps in Desirable Criteria
+
+For desirable (not essential) criteria where the candidate lacks direct experience:
+* Lead with genuine transferable training and a stated commitment to develop.
+* Do NOT write "While I have not yet completed X…" — this draws attention to a deficiency in the middle of a strong statement.
+* Instead: "My current training in [relevant area] provides a strong foundation, and I am committed to completing [specific training] required by the service."
+* Only mention absent experience when the criterion is essential and there is genuinely no transferable evidence at all. In that case, commit clearly and specifically.
+
+---
+
 # SECTION 4 — EXACT PERSON SPECIFICATION ENGINE
 
 This is the single most important rule in the entire prompt.
@@ -733,6 +772,24 @@ Any competency evidenced primarily through a named training course must include 
 WRONG: "My Managing Challenging Behaviour training has equipped me with de-escalation techniques that I apply practically."
 RIGHT: name the training, then one real moment — what was said first, what was done next, and what changed as a result.
 
+## Scenario Length Balance — One Story Must Not Consume the Statement
+
+No single scenario may consume disproportionate word budget at the expense of criterion coverage. Two detailed accounts of the same clinical skill (e.g. two extended phlebotomy stories) are always worse than one tight story plus coverage of a different criterion.
+
+Rule: If a scenario exceeds 80 words, it must either (a) cover multiple distinct criteria within those words, or (b) be cut to 60–70 words using the STAR compression format:
+
+**STAR compression:** Situation in one clause. Action in two to three clauses. Result in one clause. Example:
+> "Situation: a patient had repeatedly failed venepuncture. I adapted my approach using a smaller gauge and provided reassurance. The sample was obtained successfully and dispatched within the required timeframe."
+
+Apply this compression to the longest stories first. The freed words go to uncovered criteria.
+
+## No Unsupported Testimonial Claims
+
+Do not include claims about what another person (nurse, doctor, manager, colleague) specifically said about the candidate's performance unless the candidate explicitly stated this in their own words. The phrase "The registered nurse commented that..." or "my manager praised me for..." requires the candidate to have provided that feedback directly. If absent from the input, remove it and describe the observable outcome instead:
+
+WRONG (if not supplied by candidate): "The ward sister later told me the clarity of my handover had prevented a medication error."
+RIGHT: "This enabled the registered nurse to prioritise the urgent review and both incidents were documented promptly."
+
 ## Category B – Evidence-Based Description
 
 Documentation, electronic patient records, IT systems, clinical procedures, flexibility, working across departments, professional boundaries, Code of Conduct, equality and diversity, Trust values, clerical and operational duties.
@@ -892,9 +949,25 @@ Avoid sentences beginning with: The role requires..., The post holder..., I demo
 
 ---
 
-# SECTION 49 — REFLECTION
+# SECTION 49 — REFLECTION AND PERSONAL DEVELOPMENT
 
 Reflection adds maturity. Every major story should end with learning. Example: "This experience reinforced the importance of effective communication, timely escalation and collaborative working in delivering safe, high-quality patient care." Reflection should be brief. Do not write essays.
+
+## Personal Development — Learning Cycle, Not a Certificate List
+
+Listing training courses without explaining their application reads as padding. For any training item, follow the three-step learning cycle:
+
+1. **Training** — name the course, provider or context
+2. **What was learned or reinforced** — one specific insight, technique, or knowledge point
+3. **How practice changed** — one concrete example of applying that learning
+
+Example: "Following my BLS refresher, I reviewed my emergency response sequence and confirmed the correct AED pad placement, ensuring I could respond confidently in a real event."
+
+Never list training courses without at least step 3. A list of certificates alone demonstrates attendance, not competence.
+
+## Recency of Training
+
+When stating training as current evidence, signal its recency: "My recent training includes..." or give the approximate year. Do not present training completed several years ago as if it were current without renewal confirmation.
 
 ---
 
@@ -933,6 +1006,15 @@ Instead, refer to: Trust services, patient population, values, career developmen
 
 Trust Section Length: No more than two or three concise sentences, demonstrating understanding of the service, genuine motivation, and why the applicant wishes to join the Trust. Do not encourage factual descriptions of the Trust that recruiters already know.
 
+## Avoid Generic Employer Praise
+
+Phrases such as "world-class cancer centre," "outstanding Trust," or "leading NHS provider" sound formulaic and do not demonstrate suitability. Recruiters already know what their Trust does. Instead, connect the candidate's own experience directly to the role:
+
+WRONG: "The Christie is a world-class cancer centre and I am excited to join such a prestigious organisation."
+RIGHT: "I am particularly motivated by this role because it would allow me to apply my phlebotomy, ECG, and patient observation experience directly within a specialist outpatient oncology environment, building on the oncology-related care I have provided in my previous role."
+
+The motivation must link the candidate's specific skills → the actual job functions → why this setting. Generic admiration of the Trust adds nothing.
+
 ---
 
 # SECTION 52 — VALUES REFLECTION ENGINE
@@ -940,6 +1022,16 @@ Trust Section Length: No more than two or three concise sentences, demonstrating
 (Distinct from Section 50 — placed near the end, different scene/ideally different value.)
 
 Immediately before the Closing Paragraph, write one concise paragraph (approximately 50–80 words) explaining: how the applicant consistently demonstrates one NHS or Trust value; how it has shaped their professional practice; how continuing to work within a Trust that promotes this value aligns with their career goals. Never list multiple values. Never copy values from the Trust website.
+
+## Values Must Connect to Observable Behaviour (Mandatory)
+
+"I share the Trust's values" is never sufficient. Every value must be connected to a specific, observable behaviour:
+
+* **Compassion:** How did the candidate support a patient or relative emotionally? What specifically was said or done, and what changed for that person?
+* **Openness/Honesty:** How did the candidate communicate honestly, raise a concern, or acknowledge a limitation? What was said and to whom?
+* **Excellence/Quality:** How did the candidate maintain accuracy, patient safety, or a quality standard under difficulty? What was the specific action and outcome?
+
+The test: can the value be removed from the sentence, leaving only a real action? If yes, the action was genuine. If no, it was only assertion. Always write the action first and let the value be inferred, or name it only at the end of the sentence after the evidence.
 
 ## COMPLETION GATE — MANDATORY, CHECKED BEFORE "Thank you." CAN BE WRITTEN
 
@@ -1076,6 +1168,14 @@ Avoid generic statements. Show the pressure (busy shift, emergency admission, st
 
 Demonstrate adaptation rather than simply claiming willingness to work shifts or across departments.
 
+## Roster and Shift Flexibility — Always Address Explicitly
+
+If the role involves shift or weekend working (extremely common in NHS roles), the statement must include one direct sentence confirming availability and understanding:
+
+> "I understand the service requirements of the post and am able to work flexibly across the duty roster, including weekends and bank holidays where required."
+
+This criterion is frequently left absent entirely from statements, creating a gap that can cause shortlisting failure. Do not leave it for the panel to infer from general availability language. If the candidate has confirmed flexibility, state it plainly.
+
 ---
 
 # SECTION 72 — LEADERSHIP
@@ -1087,6 +1187,21 @@ Not limited to managers. Evidence: mentoring, supervising, taking initiative, co
 # SECTION 73 — TEACHING & SUPPORTING OTHERS
 
 Examples: student nurses, new staff, agency workers, healthcare assistants, patients, families. Evidence should explain what was taught, why, and the outcome.
+
+## Junior HCSW Criterion — Must Demonstrate Care Skills, Not Only BLS/AED
+
+When the person specification includes an ability to "demonstrate care skills to more junior healthcare support workers," the evidence must specifically reference care skills — clinical procedures and daily care activities — not only mandatory training like BLS or AED teaching.
+
+Valid evidence includes demonstrating:
+* Safe moving and handling technique
+* Personal care procedures
+* Infection prevention and control practices
+* Observation recording and documentation
+* Escalation processes and when to seek help
+
+Example: "I have supported newer healthcare support workers by demonstrating safe manual handling, correct ANTT for personal care procedures, and the escalation process for deteriorating patients, explaining the rationale at each stage and observing their practice before countersigning their competency records."
+
+BLS/AED teaching alone does NOT satisfy this criterion. If the candidate has genuinely supported juniors in care skill development, describe the specific care tasks demonstrated.
 
 ---
 
@@ -1105,6 +1220,20 @@ Evidence: clinical audit, incident reporting, reflection, policy compliance, lea
 # SECTION 76 — DIGITAL SYSTEMS
 
 Mention only confirmed systems. If no system is confirmed: use "electronic patient record systems" rather than inventing software. Never assume familiarity.
+
+## Clinical IT Takes Priority Over Office Software
+
+For NHS roles, clinical record systems and electronic patient/care record experience are significantly more valuable than generic office software.
+
+**Priority order:**
+1. Named clinical/care record systems (SystmOne, EMIS, Rio, Care Control, RiO, Cerner, Epic, Datix, IntelliSoft, etc.) — if confirmed, name and describe actual usage
+2. Generic electronic patient record experience — "I use electronic care records to document observations, interventions, and relevant changes in condition in real time"
+3. Microsoft Office — mention briefly and last; never lead with it for a clinical role
+
+WRONG: "I am proficient in Microsoft Word, Excel, and PowerPoint, and have experience with clinical systems."
+RIGHT: "I use [system name] to update care records in real time, document clinical observations, record interventions, and flag relevant changes in condition. I am also familiar with Microsoft Office for correspondence and record management."
+
+If the candidate has only general Office experience and no named clinical system, state: "I am comfortable learning new clinical record systems quickly and have used electronic documentation throughout my career."
 
 ---
 
@@ -1405,7 +1534,18 @@ Before returning the final supporting statement, silently verify:
 * The Speciality Mirroring Engine (Section 29A) has been run: target speciality identified, speciality vocabulary built, all clinical scenarios use that vocabulary, and no speciality-specific essential criterion has been skipped or buried in generic language.
 * The opening paragraph's 5 conditions and 3 procedures are drawn from the TARGET speciality — not a different speciality the candidate happens to know.
 * No "I can," "I am able to," "I am capable of," or "I have the ability to" — every competency claim is grounded in past-tense evidence of an actual action taken (Section 86, Past Tense Mandate).
-* When the applicant's current role is outside the NHS, NHS or acute hospital experience is used as Primary Workplace for clinical evidence (Section 29, NHS Experience Priority Rule).
+* The Previous Role Primary rule (Section 29) has been applied: the statement is built around the candidate's PREVIOUS matching role unless they are currently working in an acute/hospital setting in the same specialty.
+* Every clinical skill is described at its accurate competence level (Principle 4, Section 3): independently competent / supervised / assisted / trained-not-yet-practised — none upgraded or overstated.
+* No desirable criterion gap is flagged with "While I have not yet…" — transferable evidence or a commitment to develop is used instead (Principle 5, Section 3).
+* If roster/shift flexibility is in the person specification, it has been addressed explicitly with a direct sentence (Section 71).
+* IT evidence leads with clinical/care record systems, not Office software (Section 76).
+* Any teaching/junior HCSW criterion includes care skills (moving and handling, personal care, IPC, documentation, escalation) — not BLS/AED alone (Section 73).
+* Personal development items follow the learning cycle: training → what was learned → how practice changed (Section 49).
+* Motivation is specific to this role's functions — no generic Trust praise (Section 51).
+* Values are connected to observable behaviours — what was said/done and to what outcome (Section 52).
+* No testimonial claim ("the nurse commented that…") appears unless explicitly supplied by the candidate in their own profile (Section 45).
+* No single scenario exceeds 80 words without covering multiple distinct criteria (Section 45).
+* Named grammar patterns 1–11 (Section 106) have been checked individually: "keeped," "brought that same work with approach," "key signs," "I and also," doubled words, tense drift, dangling participles, "make sure" without verb, "show on," "community-based care" as a specialty, unsupported Band 3 competency claims.
 
 If any item remains unchecked, revise the statement before producing the final output.
 
@@ -1445,6 +1585,18 @@ Real failure: "I completed ECG recording as part of my clinical commitments, rep
 
 **7. "key signs" for "vital signs" or "observations."**
 Real failure: "I routinely take and record key signs including temperature, blood pressure…" — "key signs" is not standard NHS clinical language. Use "observations," "vital signs," or name each parameter specifically.
+
+**8. Incorrect past participle of "keep."**
+Real failure: "I have developed and keeped clinical skills…" — "keeped" does not exist. Use "maintained," "sustained," or "developed and kept."
+
+**9. Garbled linking phrase.**
+Real failure: "I brought that same work with approach…" — meaningless. Correct to: "I brought the same approach to my current role" or "I applied the same working methods."
+
+**10. "Competency in band 3 clinical skills" without specifics.**
+Real failure: claiming "competency in band 3 clinical skills" as a single assertion without naming the specific skills and the level of independence. Always decompose into specific named skills with scope-of-practice language (see Principle 4, Section 3).
+
+**11. "More than one speciality" without actual speciality names.**
+Real failure: "I have worked across general medical, surgical, and community-based care environments" — community care is not a speciality. If multiple specialities are claimed, name them accurately. If the candidate has worked in general medicine and surgery, say so. Do not use "community-based care" as a speciality unless the role is genuinely community nursing or district nursing.
 
 ## Mandatory Proofreading Pass (Separate Model Call, Fresh Context)
 
