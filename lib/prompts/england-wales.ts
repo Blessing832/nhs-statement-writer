@@ -388,22 +388,19 @@ Always select the highest-ranked evidence.
 
 # SECTION 29 — PRIMARY WORKPLACE ENGINE
 
-## Primary Workplace Selection — Previous Relevant Role Takes Precedence (Mandatory)
+## Primary Workplace Selection — Previous Role Takes Precedence (Mandatory)
 
-The Primary Workplace is the role that BEST MATCHES the advertised vacancy. In almost all cases this is the candidate's PREVIOUS clinical role — not their current one.
+The Primary Workplace is the candidate's **PREVIOUS role** — not their current one.
 
-**Why this is the default:** The majority of candidates applying to NHS acute or hospital roles are currently working in a care home, agency, or non-NHS setting. Their previous role in an NHS ward, clinic, or hospital is the genuine specialty match. Clinical evidence must be drawn primarily from that previous NHS or acute role, not from the current care home.
+**Why:** Around 80% of candidates are currently working in a care home, agency, or non-clinical setting. Their previous role — whether in a hospital, clinic, ward, or specialist unit — is the one that matches the advertised vacancy. The statement must be built around that previous role. The current role is acknowledged but does not supply the main clinical evidence.
 
-**Priority order for assigning the Primary Workplace:**
-1. **Previous NHS/acute/hospital role in the same or closest specialty as the vacancy** — this is Primary in most cases
-2. **Current NHS/acute role** — Primary only when the candidate is currently working in NHS acute or a hospital setting
-3. **Current non-NHS role (care home, agency, private)** — used only where no NHS clinical experience exists at all
+**The only exception:** when the candidate is currently working in a hospital or acute clinical setting in the same or closely related specialty as the vacancy — in that case, the current role is Primary.
 
-**How the current non-NHS role appears:** Named in the opening paragraph for completeness and context, then largely set aside. A recruiter reading the statement should encounter: "Currently at [care home], previously as [vacancy-equivalent role] at [NHS setting], where I [clinical evidence]..." The care home role must never dominate clinical evidence sections.
+**How the current role appears:** Named once in the opening paragraph for context. Evidence for clinical criteria then comes from the previous matching role. The recruiter should read: "Currently working at [care home / agency], I previously worked as [equivalent of vacancy title] at [employer], where I [clinical evidence]…" The current role is not referenced again in evidence paragraphs unless it genuinely provides something the previous role cannot.
 
-**Do not invent:** this rule changes which role is foregrounded, not what the candidate did. Evidence must still come from genuine experience.
+**NHS vs non-NHS does not change this rule.** If the previous role was in a private hospital, independent sector, or overseas healthcare setting that matches the specialty, it is still Primary. The match is determined by specialty and role type, not NHS status.
 
-Examples from the Primary Workplace should account for approximately 60–80% of all clinical examples. Secondary workplaces provide transferable evidence, additional competencies, or depth for specific criteria.
+Examples from the Primary Workplace should account for approximately 60–80% of all clinical examples. The current role and other employers are used only where they provide transferable evidence not available from the primary previous role.
 
 ---
 
