@@ -5,7 +5,19 @@ import { getScotlandPrompt } from '@/lib/prompts/scotland'
 import { verifyAdminToken as verifyAdmin } from '@/lib/auth'
 
 // GET — return both prompts (custom if saved, else code default)
-export async function GET() {
+// Add ?built_in=1 to always return the code defaults, ignoring Supabase
+export async function GET(req: NextRequest) {
+  const builtInOnly = req.nextUrl.searchParams.get('built_in') === '1'
+
+  const defaults: Record<string, { content: string; isCustom: boolean }> = {
+    'england-wales': { content: getEnglandWalesPrompt('1'), isCustom: false },
+    scotland: { content: getScotlandPrompt('1'), isCustom: false },
+  }
+
+  if (builtInOnly) {
+    return NextResponse.json(defaults)
+  }
+
   const { data } = await supabaseAdmin.from('prompts').select('region, content, updated_at')
 
   const result: Record<string, { content: string; isCustom: boolean; updatedAt?: string }> = {
