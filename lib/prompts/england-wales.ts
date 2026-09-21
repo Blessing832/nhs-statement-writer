@@ -388,17 +388,22 @@ Always select the highest-ranked evidence.
 
 # SECTION 29 — PRIMARY WORKPLACE ENGINE
 
-## Default Assumption — Current/Most Recent Role IS the Same Specialty (Mandatory)
+## Primary Workplace Selection — Previous Relevant Role Takes Precedence (Mandatory)
 
-Treat the applicant's current or most recent relevant role as being in the SAME specialty and service area as the advertised vacancy by default. This is the working assumption throughout the entire statement, not only in the opening paragraph. Do not write content anywhere in the statement that hedges, downplays, or casts doubt on the specialty match — no "less specialty-specific," "general," or "transferable" framing applied to the Primary Workplace.
+The Primary Workplace is the role that BEST MATCHES the advertised vacancy. In almost all cases this is the candidate's PREVIOUS clinical role — not their current one.
 
-This does not license inventing duties, conditions, or patient groups the applicant did not genuinely encounter (Section 3, Principle 1 still applies in full). It means: where the applicant's real employer and real duties DO sit within the advertised specialty, present that fact as the strongest possible match.
+**Why this is the default:** The majority of candidates applying to NHS acute or hospital roles are currently working in a care home, agency, or non-NHS setting. Their previous role in an NHS ward, clinic, or hospital is the genuine specialty match. Clinical evidence must be drawn primarily from that previous NHS or acute role, not from the current care home.
 
-Examples from the Primary Workplace should account for approximately 60–80% of all clinical examples. Other employers should only be used where they provide transferable experience, different competencies, stronger evidence for another criterion, or additional perspective.
+**Priority order for assigning the Primary Workplace:**
+1. **Previous NHS/acute/hospital role in the same or closest specialty as the vacancy** — this is Primary in most cases
+2. **Current NHS/acute role** — Primary only when the candidate is currently working in NHS acute or a hospital setting
+3. **Current non-NHS role (care home, agency, private)** — used only where no NHS clinical experience exists at all
 
-## NHS Experience Priority Rule
+**How the current non-NHS role appears:** Named in the opening paragraph for completeness and context, then largely set aside. A recruiter reading the statement should encounter: "Currently at [care home], previously as [vacancy-equivalent role] at [NHS setting], where I [clinical evidence]..." The care home role must never dominate clinical evidence sections.
 
-When the applicant's current role is outside the NHS (agency, care home, private provider, non-clinical), treat the most recent NHS or NHS-equivalent acute/community hospital role as the Primary Workplace for clinical evidence purposes. The current role is still named in the opening paragraph, but NHS experience takes precedence when assigning examples to criteria. Where no NHS experience exists, the most relevant clinical experience regardless of sector is Primary.
+**Do not invent:** this rule changes which role is foregrounded, not what the candidate did. Evidence must still come from genuine experience.
+
+Examples from the Primary Workplace should account for approximately 60–80% of all clinical examples. Secondary workplaces provide transferable evidence, additional competencies, or depth for specific criteria.
 
 ---
 
@@ -406,14 +411,18 @@ When the applicant's current role is outside the NHS (agency, care home, private
 
 Every statement must be written inside the vocabulary and clinical frame of the TARGET SPECIALITY. The target speciality is the clinical world of the advertised post — not the candidate's current speciality.
 
-## Step 1 — Identify the Target Speciality
+## Step 1 — Identify the Target Speciality from the Full Advert Body
 
-Extract the target speciality before writing a single sentence, from:
-1. The exact job title (e.g., "Healthcare Assistant — Oncology Outpatients," "Band 5 Nurse — Maternity")
-2. The unit or department named in the JD (e.g., "Christie Department 1, 22, and 35," "Labour Ward," "NICU")
-3. Essential criteria that name specific experience (e.g., "experience in oncology essential," "previous maternity experience required")
+**Read the complete job description before declaring the speciality.** The job title alone is insufficient. A post titled "Outpatient HCA" may serve an oncology chemotherapy day unit; "Ward 6 Healthcare Assistant" may be a renal unit; "Community Support Worker" may specialise in acquired brain injury. The speciality is in the body of the advert — not only the title.
 
-This identified speciality governs all clinical scenarios, all terminology, and all procedure names throughout the statement.
+Extract the target speciality from ALL of the following, reading the full text:
+1. **Job title** — starting point only, not sufficient on its own
+2. **Unit, ward, or department name** in the JD (e.g., "Christie Department 1, 22, and 35" = oncology; "Labour Ward" = maternity)
+3. **Conditions and patient groups mentioned** in the JD body (e.g., "patients receiving chemotherapy," "women in active labour," "patients with cardiac conditions") — these reveal the speciality even when the title doesn't name it
+4. **Procedures and equipment listed** in the JD or person spec (e.g., CTG monitoring = maternity; SACT administration = oncology; dialysis = renal)
+5. **Essential criteria naming specific experience** (e.g., "experience in oncology essential," "previous maternity experience required")
+
+The speciality identified from the full advert body governs all clinical scenarios, all terminology, and all procedure names throughout the statement. If the advert body names oncology patients, write oncology. If it names maternity, write maternity. If multiple specialities are served (e.g., a mixed outpatient unit), use the dominant one and reference others where criteria require it.
 
 ## Step 2 — Build the Speciality Vocabulary Before Writing
 
@@ -1417,11 +1426,28 @@ Two further measures complement the numbered-matrix architecture:
 
 # SECTION 106 — GRAMMAR AND TEMPLATE-PATTERN AUDIT
 
-## Two Named Recurring Corruptions — Check By Name
+## Named Recurring Corruptions — Check Each One By Name
 
-1. **"reflect on" corrupted to "show on."** Real failures: "helped me show on pacing," "I showed on my communication." Any instance of "show/showed/showing on [my/their] [noun]" is almost certainly this corruption — correct to "reflect on."
+**1. "reflect on" corrupted to "show on."**
+Real failures: "helped me show on pacing," "I showed on my communication." Any instance of "show/showed/showing on [my/their] [noun]" is almost certainly this corruption — correct to "reflect on."
 
-2. **"ensure" corrupted into ungrammatical "make sure."** Real failures: "make sure the care plan showed their preferences accurately," "make sure the registered nurse was informed," "to make sure coordinated, recovery-focused care" (missing a verb). Where "make sure" is followed directly by a noun phrase with no verb, or breaks a past-tense list, correct the tense and use "ensured."
+**2. "ensure/ensured" corrupted to ungrammatical "make sure."**
+Real failures: "make sure the care plan showed their preferences accurately," "make sure the registered nurse was informed," "to make sure coordinated, recovery-focused care" (missing a verb). Where "make sure" is followed directly by a noun phrase with no verb, or breaks a past-tense list, correct and use "ensured."
+
+**3. "I and also" — wrong conjunction.**
+Real failure: "I and also carried out urinalysis." This is grammatically wrong in every context. The correct forms are: "I also carried out…" (for addition) or "I carried out urinalysis and also…" (for a list). Scan every sentence for "I and also" and rewrite.
+
+**4. Tense drift within a paragraph.**
+Real failure: "At East and West Healthcare Ltd I work across busy clinic environments… I routinely take and record key signs… When a blood pressure of 88/54 fell below threshold, I rechecked…" — mixing present tense ("I work," "I take") with past tense ("fell," "rechecked") in the same passage about a previous employer. Rule: all descriptions of duties and events at any named employer are written in simple past tense. "I worked," "I carried out," "I took," "I recorded." Present tense is only used for general professional principles that still apply today.
+
+**5. Doubled article or word.**
+Real failure: "the the patient," "a a ward." Scan for any word immediately repeated.
+
+**6. Pronoun-confusion in list construction.**
+Real failure: "I completed ECG recording as part of my clinical commitments, reporting results promptly to nursing or medical staff on completion." — the dangling participle "reporting" is grammatically attached to the wrong subject. Rewrite: "I completed ECG recording as part of my clinical commitments and reported results promptly to nursing or medical staff on completion."
+
+**7. "key signs" for "vital signs" or "observations."**
+Real failure: "I routinely take and record key signs including temperature, blood pressure…" — "key signs" is not standard NHS clinical language. Use "observations," "vital signs," or name each parameter specifically.
 
 ## Mandatory Proofreading Pass (Separate Model Call, Fresh Context)
 

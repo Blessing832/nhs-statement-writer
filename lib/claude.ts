@@ -756,6 +756,11 @@ async function generateParallel(
     .replace(/\*\*/g, '')
     // Strip any "Story:", "Scenario:", "Story 1:", "Scenario 2:" labels the model may add
     .replace(/^(Story|Scenario)\s*\d*\s*:\s*/gim, '')
+    // Deterministic grammar fixes
+    .replace(/\bI and also\b/g, 'I also')          // "I and also carried out" → "I also carried out"
+    .replace(/\band also I\b/g, 'and I also')       // "and also I carried" → "and I also carried"
+    .replace(/\bkey signs\b/gi, 'vital signs')      // non-standard NHS language
+    .replace(/\b(\w+)( \1){1,2}\b/g, '$1')         // doubled words: "the the" → "the"
   if (!statement) throw new Error('Statement generation returned an empty response')
 
   // Enforce word count limit on the MAIN STATEMENT only.
