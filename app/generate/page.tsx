@@ -713,6 +713,8 @@ function GeneratePage() {
   const [specificQuestions, setSpecificQuestions] = useState<string[]>([''])
   const [loading, setLoading] = useState(false)
   const [loadingStep, setLoadingStep] = useState('')
+  const [progress, setProgress] = useState(0)
+  const progressIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const [error, setError] = useState('')
   const [result, setResult] = useState<Result | null>(null)
   const [copied, setCopied] = useState(false)
@@ -730,6 +732,10 @@ function GeneratePage() {
   const statementHeadRef = useRef<HTMLDivElement>(null)
   const dutiesRef = useRef<HTMLDivElement>(null)
   const abortControllerRef = useRef<AbortController | null>(null)
+
+  useEffect(() => {
+    return () => { if (progressIntervalRef.current) clearInterval(progressIntervalRef.current) }
+  }, [])
 
   useEffect(() => {
     if (!clientCode) { router.push('/'); return }
@@ -801,8 +807,30 @@ function GeneratePage() {
   const handleCancel = () => {
     abortControllerRef.current?.abort()
     abortControllerRef.current = null
+    if (progressIntervalRef.current) { clearInterval(progressIntervalRef.current); progressIntervalRef.current = null }
     setLoading(false)
     setLoadingStep('')
+    setProgress(0)
+  }
+
+  const startProgress = () => {
+    setProgress(0)
+    let current = 0
+    if (progressIntervalRef.current) clearInterval(progressIntervalRef.current)
+    progressIntervalRef.current = setInterval(() => {
+      setProgress(prev => {
+        // Fast 0→15 (scraping), medium 15→50 (writing starting), slow 50→95 (writing body)
+        const increment = prev < 15 ? 3 : prev < 50 ? 1.2 : prev < 80 ? 0.5 : 0.15
+        const next = Math.min(prev + increment, 95)
+        current = next
+        return next
+      })
+    }, 600)
+  }
+
+  const stopProgress = (success: boolean) => {
+    if (progressIntervalRef.current) { clearInterval(progressIntervalRef.current); progressIntervalRef.current = null }
+    setProgress(success ? 100 : 0)
   }
 
   const questionsText = () =>
@@ -835,6 +863,7 @@ function GeneratePage() {
     setResult(null)
     setCachedJobData(null)
     setDownloadedDocs([])
+    startProgress()
 
     const controller = new AbortController()
     abortControllerRef.current = controller
@@ -851,11 +880,13 @@ function GeneratePage() {
         preloaded,
         controller.signal
       )
+      stopProgress(true)
       setResult(data)
       setCachedJobData(jobData)
       setShowRewrite(false)
       setRewriteInstruction('')
     } catch (err) {
+      stopProgress(false)
       if (err instanceof Error && err.name === 'AbortError') return
       const raw = err instanceof Error ? err.message : ''
       setError(raw || 'Network error. Please check your connection and try again.')
@@ -1185,9 +1216,20 @@ function GeneratePage() {
                 )}
 
                 <button type="submit" disabled={loading}
-                  className="w-full py-3 text-white font-semibold rounded-md cursor-pointer disabled:opacity-60 transition-colors"
-                  style={{ backgroundColor: loading ? '#64748b' : '#0B4F6C' }}>
-                  {loading ? (loadingStep || 'Generating…') : 'Generate Statement'}
+                  className="w-full py-3 text-white font-semibold rounded-md cursor-pointer disabled:opacity-60 transition-colors relative overflow-hidden"
+                  style={{ backgroundColor: loading ? '#0B4F6C' : '#0B4F6C' }}>
+                  {loading && (
+                    <span className="absolute inset-0 left-0 top-0 bottom-0 transition-all duration-500"
+                      style={{ width: `${progress}%`, backgroundColor: 'rgba(255,255,255,0.15)' }} />
+                  )}
+                  <span className="relative flex items-center justify-center gap-2">
+                    {loading ? (
+                      <>
+                        <span>{loadingStep.includes('Reading') ? 'Reading advert…' : 'Writing statement…'}</span>
+                        <span className="font-bold tabular-nums">{Math.round(progress)}%</span>
+                      </>
+                    ) : 'Generate Statement'}
+                  </span>
                 </button>
 
                 {loading && (
