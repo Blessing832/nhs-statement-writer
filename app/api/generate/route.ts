@@ -237,7 +237,7 @@ export async function POST(req: NextRequest) {
     }
 
     void logGenerateError({ ...logBase, errorType: 'unknown', errorMessage: message, httpStatus: 500 })
-    return NextResponse.json({ error: message }, { status: 500 })
+    return NextResponse.json({ error: 'Statement generation failed. Please try again or contact your administrator.' }, { status: 500 })
   }
 
   let { statement, previousRoleDuties, analysis, promptRegion } = generated

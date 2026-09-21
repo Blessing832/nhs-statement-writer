@@ -746,7 +746,7 @@ async function generateParallel(
 
   // Statement: plain text, use directly
   const statementContent = statementMsg.content[0]
-  if (statementContent.type !== 'text') throw new Error('Unexpected response type from Claude')
+  if (statementContent.type !== 'text') throw new Error('Unexpected response type from generation service')
   let statement = statementContent.text
     .trim()
     .replace(/ — /g, ', ')
@@ -756,7 +756,7 @@ async function generateParallel(
     .replace(/\*\*/g, '')
     // Strip any "Story:", "Scenario:", "Story 1:", "Scenario 2:" labels the model may add
     .replace(/^(Story|Scenario)\s*\d*\s*:\s*/gim, '')
-  if (!statement) throw new Error('Claude returned an empty statement')
+  if (!statement) throw new Error('Statement generation returned an empty response')
 
   // Enforce word count limit on the MAIN STATEMENT only.
   // Questions-only mode: no limit enforced — the prompt controls per-question word counts.
@@ -958,7 +958,7 @@ export async function generateStatement(
   })
 
   const content = message.content[0]
-  if (content.type !== 'text') throw new Error('Unexpected response type from Claude')
+  if (content.type !== 'text') throw new Error('Unexpected response type from generation service')
 
   const cleanedText = content.text.replace(/ — /g, ', ').replace(/—/g, ', ').replace(/ -- /g, ', ').replace(/--/g, ', ')
 
@@ -971,7 +971,7 @@ export async function generateStatement(
     const objMatch = cleanedText.match(/\{[\s\S]*\}/)
     rawJson = objMatch ? objMatch[0] : null
   }
-  if (!rawJson) throw new Error('Could not parse Claude response as JSON')
+  if (!rawJson) throw new Error('Could not parse generation response')
 
   let parsed: {
     statement: string
@@ -986,8 +986,8 @@ export async function generateStatement(
     try {
       parsed = JSON.parse(trimmed)
     } catch {
-      console.error('Invalid JSON from Claude (first 500 chars):', rawJson.slice(0, 500))
-      throw new Error('Invalid JSON in Claude response')
+      console.error('Invalid JSON from generation service (first 500 chars):', rawJson.slice(0, 500))
+      throw new Error('Invalid response format from generation service')
     }
   }
 
