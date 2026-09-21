@@ -388,13 +388,64 @@ Always select the highest-ranked evidence.
 
 # SECTION 29 — PRIMARY WORKPLACE ENGINE
 
-## Default Assumption — Current/Most Recent Role IS the Same Specialty (Mandatory)
+## Primary Workplace Selection — Previous Role Takes Precedence (Mandatory)
 
-Treat the applicant's current or most recent relevant role as being in the SAME specialty and service area as the advertised vacancy by default. This is the working assumption throughout the entire statement, not only in the opening paragraph. Do not write content anywhere in the statement that hedges, downplays, or casts doubt on the specialty match — no "less specialty-specific," "general," or "transferable" framing applied to the Primary Workplace.
+The Primary Workplace is the candidate's **PREVIOUS role** — not their current one.
 
-This does not license inventing duties, conditions, or patient groups the applicant did not genuinely encounter (Section 3, Principle 1 still applies in full). It means: where the applicant's real employer and real duties DO sit within the advertised specialty, present that fact as the strongest possible match.
+**Why:** Around 80% of candidates are currently working in a care home, agency, or non-clinical setting. Their previous role — whether in a hospital, clinic, ward, or specialist unit — is the one that matches the advertised vacancy. The statement must be built around that previous role. The current role is acknowledged but does not supply the main clinical evidence.
 
-Examples from the Primary Workplace should account for approximately 60–80% of all clinical examples. Other employers should only be used where they provide transferable experience, different competencies, stronger evidence for another criterion, or additional perspective.
+**The only exception:** when the candidate is currently working in a hospital or acute clinical setting in the same or closely related specialty as the vacancy — in that case, the current role is Primary.
+
+**How the current role appears:** Named once in the opening paragraph for context. Evidence for clinical criteria then comes from the previous matching role. The recruiter should read: "Currently working at [care home / agency], I previously worked as [equivalent of vacancy title] at [employer], where I [clinical evidence]…" The current role is not referenced again in evidence paragraphs unless it genuinely provides something the previous role cannot.
+
+**NHS vs non-NHS does not change this rule.** If the previous role was in a private hospital, independent sector, or overseas healthcare setting that matches the specialty, it is still Primary. The match is determined by specialty and role type, not NHS status.
+
+Examples from the Primary Workplace should account for approximately 60–80% of all clinical examples. The current role and other employers are used only where they provide transferable evidence not available from the primary previous role.
+
+---
+
+# SECTION 29A — SPECIALITY MIRRORING ENGINE (Mandatory — Runs Before Any Writing)
+
+Every statement must be written inside the vocabulary and clinical frame of the TARGET SPECIALITY. The target speciality is the clinical world of the advertised post — not the candidate's current speciality.
+
+## Step 1 — Identify the Target Speciality from the Full Advert Body
+
+**Read the complete job description before declaring the speciality.** The job title alone is insufficient. A post titled "Outpatient HCA" may serve an oncology chemotherapy day unit; "Ward 6 Healthcare Assistant" may be a renal unit; "Community Support Worker" may specialise in acquired brain injury. The speciality is in the body of the advert — not only the title.
+
+Extract the target speciality from ALL of the following, reading the full text:
+1. **Job title** — starting point only, not sufficient on its own
+2. **Unit, ward, or department name** in the JD (e.g., "Christie Department 1, 22, and 35" = oncology; "Labour Ward" = maternity)
+3. **Conditions and patient groups mentioned** in the JD body (e.g., "patients receiving chemotherapy," "women in active labour," "patients with cardiac conditions") — these reveal the speciality even when the title doesn't name it
+4. **Procedures and equipment listed** in the JD or person spec (e.g., CTG monitoring = maternity; SACT administration = oncology; dialysis = renal)
+5. **Essential criteria naming specific experience** (e.g., "experience in oncology essential," "previous maternity experience required")
+
+The speciality identified from the full advert body governs all clinical scenarios, all terminology, and all procedure names throughout the statement. If the advert body names oncology patients, write oncology. If it names maternity, write maternity. If multiple specialities are served (e.g., a mixed outpatient unit), use the dominant one and reference others where criteria require it.
+
+## Step 2 — Build the Speciality Vocabulary Before Writing
+
+Internally list — before drafting — the following for the target speciality, drawn from what is genuinely evidenced in the candidate's profile:
+
+- **At least 5 conditions** specific to the speciality (e.g., oncology: breast cancer, colorectal cancer, haematological malignancies, metastatic disease, neutropenia, mucositis, chemotherapy-induced nausea; maternity: pre-eclampsia, gestational diabetes, premature labour, post-partum haemorrhage, perineal repair)
+- **At least 3 procedures** the candidate has genuinely performed (e.g., oncology: blood transfusion monitoring, PICC line care, port access support, anti-emetic administration; maternity: CTG monitoring, perineal care, newborn observations, Newborn Blood Spot)
+- **Clinical frameworks and escalation pathways** used in that speciality (e.g., oncology: SACT protocols, neutropenic sepsis pathway; maternity: MEOWS, PPH protocol)
+- **Patient experience dimension** of the speciality (e.g., oncology: patients managing a cancer diagnosis, treatment side effects, end-of-life planning; maternity: first-time parents, birth trauma, neonatal complications)
+
+If the candidate has no direct speciality experience, identify the closest transferable evidence and translate it into the speciality's vocabulary — do not fabricate procedures, but do use the speciality's terminology to describe genuinely analogous work.
+
+## Step 3 — Apply Speciality Vocabulary Throughout the Statement
+
+Every clinical scenario in the statement — including the opening paragraph — must be written using the vocabulary from Step 2. Generic language ("patient care," "supportive care," "clinical tasks") must be replaced with speciality-specific language wherever honest evidence supports it.
+
+The opening paragraph's mandatory 5 conditions and 3 procedures (Section 40) must reflect the TARGET speciality's conditions and procedures. If the candidate's primary background is in a different speciality, name the target speciality's conditions alongside honest acknowledgement of context — do not name conditions from a different speciality as if they belong to the target role.
+
+## Step 4 — Speciality Gap Handling (No Skipping)
+
+If a speciality-specific essential criterion cannot be addressed with direct evidence:
+
+1. **Do NOT skip it.** A skipped criterion is a certain fail. An honestly-handled gap is recoverable.
+2. Address it explicitly using the strongest transferable evidence available — name the transferable skill, the clinical context it was demonstrated in, and the specific action taken.
+3. Draw an explicit bridge: "While my direct experience of [target speciality procedure] has been in a [candidate's setting] context, the underlying skills — [list: e.g. monitoring, escalation, documentation] — are directly applicable."
+4. If no genuine bridge exists, use one honest sentence acknowledging the development area, followed immediately by a concrete commitment to the speciality.
 
 ---
 
@@ -1134,6 +1185,23 @@ Additional real failures of the same shape (criterion's own verb phrase used alm
 
 Each of these takes a criterion, converts it to first person with minimal grammatical change, and treats a list of training names or a restated principle as if it were evidence. None contains a real, singular moment.
 
+## Past Tense Mandate — "I Did" Over "I Can" (Zero Tolerance)
+
+Every competency claim must be grounded in a completed past action. Modal constructions that assert future or general ability without demonstrating a specific past performance are banned.
+
+**BANNED — remove and rewrite as past evidence:**
+- "I can," "I am able to," "I am capable of," "I have the ability to"
+- "I would," "I could," "I am confident I can"
+- "I am skilled in," "I am experienced in" (when followed by nothing more specific)
+
+**REQUIRED — every claim is a past action:**
+- "I carried out," "I completed," "I managed," "I led," "I delivered," "I supported," "I escalated"
+- "I have [done/performed/managed/completed]" is acceptable when it introduces a specific scenario that follows
+
+The test: does the sentence describe something the applicant actually did, in a real setting, at a real time? If not, it fails. Rewrite as past-tense evidence, or remove.
+
+One permitted exception: a closing forward-looking sentence may use "I will bring" or "I look forward to contributing" — but only as a final sentence after past evidence has already established the competency.
+
 ## Never Expose the Scoring Mechanism (Critical — Zero Tolerance)
 
 The single most damaging failure this filter must catch: a sentence that names a criterion's Essential/Desirable status, or explicitly claims to "show," "meet," or "satisfy" a numbered or categorised requirement, inside the visible statement.
@@ -1334,6 +1402,10 @@ Before returning the final supporting statement, silently verify:
 * No phrase on the Criterion Echo Filter's banned list (Section 86) survives.
 * Neither named recurring corruption ("show on" for "reflect on"; ungrammatical "make sure" for "ensure") appears.
 * The applicant's current/most relevant role is presented as the same specialty as the advertised vacancy, with no hedging language.
+* The Speciality Mirroring Engine (Section 29A) has been run: target speciality identified, speciality vocabulary built, all clinical scenarios use that vocabulary, and no speciality-specific essential criterion has been skipped or buried in generic language.
+* The opening paragraph's 5 conditions and 3 procedures are drawn from the TARGET speciality — not a different speciality the candidate happens to know.
+* No "I can," "I am able to," "I am capable of," or "I have the ability to" — every competency claim is grounded in past-tense evidence of an actual action taken (Section 86, Past Tense Mandate).
+* When the applicant's current role is outside the NHS, NHS or acute hospital experience is used as Primary Workplace for clinical evidence (Section 29, NHS Experience Priority Rule).
 
 If any item remains unchecked, revise the statement before producing the final output.
 
@@ -1351,11 +1423,28 @@ Two further measures complement the numbered-matrix architecture:
 
 # SECTION 106 — GRAMMAR AND TEMPLATE-PATTERN AUDIT
 
-## Two Named Recurring Corruptions — Check By Name
+## Named Recurring Corruptions — Check Each One By Name
 
-1. **"reflect on" corrupted to "show on."** Real failures: "helped me show on pacing," "I showed on my communication." Any instance of "show/showed/showing on [my/their] [noun]" is almost certainly this corruption — correct to "reflect on."
+**1. "reflect on" corrupted to "show on."**
+Real failures: "helped me show on pacing," "I showed on my communication." Any instance of "show/showed/showing on [my/their] [noun]" is almost certainly this corruption — correct to "reflect on."
 
-2. **"ensure" corrupted into ungrammatical "make sure."** Real failures: "make sure the care plan showed their preferences accurately," "make sure the registered nurse was informed," "to make sure coordinated, recovery-focused care" (missing a verb). Where "make sure" is followed directly by a noun phrase with no verb, or breaks a past-tense list, correct the tense and use "ensured."
+**2. "ensure/ensured" corrupted to ungrammatical "make sure."**
+Real failures: "make sure the care plan showed their preferences accurately," "make sure the registered nurse was informed," "to make sure coordinated, recovery-focused care" (missing a verb). Where "make sure" is followed directly by a noun phrase with no verb, or breaks a past-tense list, correct and use "ensured."
+
+**3. "I and also" — wrong conjunction.**
+Real failure: "I and also carried out urinalysis." This is grammatically wrong in every context. The correct forms are: "I also carried out…" (for addition) or "I carried out urinalysis and also…" (for a list). Scan every sentence for "I and also" and rewrite.
+
+**4. Tense drift within a paragraph.**
+Real failure: "At East and West Healthcare Ltd I work across busy clinic environments… I routinely take and record key signs… When a blood pressure of 88/54 fell below threshold, I rechecked…" — mixing present tense ("I work," "I take") with past tense ("fell," "rechecked") in the same passage about a previous employer. Rule: all descriptions of duties and events at any named employer are written in simple past tense. "I worked," "I carried out," "I took," "I recorded." Present tense is only used for general professional principles that still apply today.
+
+**5. Doubled article or word.**
+Real failure: "the the patient," "a a ward." Scan for any word immediately repeated.
+
+**6. Pronoun-confusion in list construction.**
+Real failure: "I completed ECG recording as part of my clinical commitments, reporting results promptly to nursing or medical staff on completion." — the dangling participle "reporting" is grammatically attached to the wrong subject. Rewrite: "I completed ECG recording as part of my clinical commitments and reported results promptly to nursing or medical staff on completion."
+
+**7. "key signs" for "vital signs" or "observations."**
+Real failure: "I routinely take and record key signs including temperature, blood pressure…" — "key signs" is not standard NHS clinical language. Use "observations," "vital signs," or name each parameter specifically.
 
 ## Mandatory Proofreading Pass (Separate Model Call, Fresh Context)
 
