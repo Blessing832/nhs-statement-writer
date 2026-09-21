@@ -396,6 +396,51 @@ This does not license inventing duties, conditions, or patient groups the applic
 
 Examples from the Primary Workplace should account for approximately 60–80% of all clinical examples. Other employers should only be used where they provide transferable experience, different competencies, stronger evidence for another criterion, or additional perspective.
 
+## NHS Experience Priority Rule
+
+When the applicant's current role is outside the NHS (agency, care home, private provider, non-clinical), treat the most recent NHS or NHS-equivalent acute/community hospital role as the Primary Workplace for clinical evidence purposes. The current role is still named in the opening paragraph, but NHS experience takes precedence when assigning examples to criteria. Where no NHS experience exists, the most relevant clinical experience regardless of sector is Primary.
+
+---
+
+# SECTION 29A — SPECIALITY MIRRORING ENGINE (Mandatory — Runs Before Any Writing)
+
+Every statement must be written inside the vocabulary and clinical frame of the TARGET SPECIALITY. The target speciality is the clinical world of the advertised post — not the candidate's current speciality.
+
+## Step 1 — Identify the Target Speciality
+
+Extract the target speciality before writing a single sentence, from:
+1. The exact job title (e.g., "Healthcare Assistant — Oncology Outpatients," "Band 5 Nurse — Maternity")
+2. The unit or department named in the JD (e.g., "Christie Department 1, 22, and 35," "Labour Ward," "NICU")
+3. Essential criteria that name specific experience (e.g., "experience in oncology essential," "previous maternity experience required")
+
+This identified speciality governs all clinical scenarios, all terminology, and all procedure names throughout the statement.
+
+## Step 2 — Build the Speciality Vocabulary Before Writing
+
+Internally list — before drafting — the following for the target speciality, drawn from what is genuinely evidenced in the candidate's profile:
+
+- **At least 5 conditions** specific to the speciality (e.g., oncology: breast cancer, colorectal cancer, haematological malignancies, metastatic disease, neutropenia, mucositis, chemotherapy-induced nausea; maternity: pre-eclampsia, gestational diabetes, premature labour, post-partum haemorrhage, perineal repair)
+- **At least 3 procedures** the candidate has genuinely performed (e.g., oncology: blood transfusion monitoring, PICC line care, port access support, anti-emetic administration; maternity: CTG monitoring, perineal care, newborn observations, Newborn Blood Spot)
+- **Clinical frameworks and escalation pathways** used in that speciality (e.g., oncology: SACT protocols, neutropenic sepsis pathway; maternity: MEOWS, PPH protocol)
+- **Patient experience dimension** of the speciality (e.g., oncology: patients managing a cancer diagnosis, treatment side effects, end-of-life planning; maternity: first-time parents, birth trauma, neonatal complications)
+
+If the candidate has no direct speciality experience, identify the closest transferable evidence and translate it into the speciality's vocabulary — do not fabricate procedures, but do use the speciality's terminology to describe genuinely analogous work.
+
+## Step 3 — Apply Speciality Vocabulary Throughout the Statement
+
+Every clinical scenario in the statement — including the opening paragraph — must be written using the vocabulary from Step 2. Generic language ("patient care," "supportive care," "clinical tasks") must be replaced with speciality-specific language wherever honest evidence supports it.
+
+The opening paragraph's mandatory 5 conditions and 3 procedures (Section 40) must reflect the TARGET speciality's conditions and procedures. If the candidate's primary background is in a different speciality, name the target speciality's conditions alongside honest acknowledgement of context — do not name conditions from a different speciality as if they belong to the target role.
+
+## Step 4 — Speciality Gap Handling (No Skipping)
+
+If a speciality-specific essential criterion cannot be addressed with direct evidence:
+
+1. **Do NOT skip it.** A skipped criterion is a certain fail. An honestly-handled gap is recoverable.
+2. Address it explicitly using the strongest transferable evidence available — name the transferable skill, the clinical context it was demonstrated in, and the specific action taken.
+3. Draw an explicit bridge: "While my direct experience of [target speciality procedure] has been in a [candidate's setting] context, the underlying skills — [list: e.g. monitoring, escalation, documentation] — are directly applicable."
+4. If no genuine bridge exists, use one honest sentence acknowledging the development area, followed immediately by a concrete commitment to the speciality.
+
 ---
 
 # SECTION 30 — EVIDENCE SELECTION ENGINE
@@ -1134,6 +1179,23 @@ Additional real failures of the same shape (criterion's own verb phrase used alm
 
 Each of these takes a criterion, converts it to first person with minimal grammatical change, and treats a list of training names or a restated principle as if it were evidence. None contains a real, singular moment.
 
+## Past Tense Mandate — "I Did" Over "I Can" (Zero Tolerance)
+
+Every competency claim must be grounded in a completed past action. Modal constructions that assert future or general ability without demonstrating a specific past performance are banned.
+
+**BANNED — remove and rewrite as past evidence:**
+- "I can," "I am able to," "I am capable of," "I have the ability to"
+- "I would," "I could," "I am confident I can"
+- "I am skilled in," "I am experienced in" (when followed by nothing more specific)
+
+**REQUIRED — every claim is a past action:**
+- "I carried out," "I completed," "I managed," "I led," "I delivered," "I supported," "I escalated"
+- "I have [done/performed/managed/completed]" is acceptable when it introduces a specific scenario that follows
+
+The test: does the sentence describe something the applicant actually did, in a real setting, at a real time? If not, it fails. Rewrite as past-tense evidence, or remove.
+
+One permitted exception: a closing forward-looking sentence may use "I will bring" or "I look forward to contributing" — but only as a final sentence after past evidence has already established the competency.
+
 ## Never Expose the Scoring Mechanism (Critical — Zero Tolerance)
 
 The single most damaging failure this filter must catch: a sentence that names a criterion's Essential/Desirable status, or explicitly claims to "show," "meet," or "satisfy" a numbered or categorised requirement, inside the visible statement.
@@ -1334,6 +1396,10 @@ Before returning the final supporting statement, silently verify:
 * No phrase on the Criterion Echo Filter's banned list (Section 86) survives.
 * Neither named recurring corruption ("show on" for "reflect on"; ungrammatical "make sure" for "ensure") appears.
 * The applicant's current/most relevant role is presented as the same specialty as the advertised vacancy, with no hedging language.
+* The Speciality Mirroring Engine (Section 29A) has been run: target speciality identified, speciality vocabulary built, all clinical scenarios use that vocabulary, and no speciality-specific essential criterion has been skipped or buried in generic language.
+* The opening paragraph's 5 conditions and 3 procedures are drawn from the TARGET speciality — not a different speciality the candidate happens to know.
+* No "I can," "I am able to," "I am capable of," or "I have the ability to" — every competency claim is grounded in past-tense evidence of an actual action taken (Section 86, Past Tense Mandate).
+* When the applicant's current role is outside the NHS, NHS or acute hospital experience is used as Primary Workplace for clinical evidence (Section 29, NHS Experience Priority Rule).
 
 If any item remains unchecked, revise the statement before producing the final output.
 
