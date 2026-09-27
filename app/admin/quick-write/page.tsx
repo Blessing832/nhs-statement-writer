@@ -167,7 +167,7 @@ ${currDuties}
 }
 
 export default function QuickWritePage() {
-  const { token } = useAdminToken()
+  const { token, onLogout } = useAdminToken()
 
   const [jobDescText, setJobDescText] = useState('')
   const [regionOverride, setRegionOverride] = useState<'' | 'england-wales' | 'scotland'>('')
@@ -226,6 +226,7 @@ export default function QuickWritePage() {
     })
     const data = await res.json().catch(() => ({ error: 'Server error.' }))
     if (!res.ok) {
+      if (res.status === 401) { onLogout(); return null as unknown as Result }
       const errMsg = typeof data.error === 'string' ? data.error : (data.error?.message || data.message || '')
       throw new Error(errMsg || 'Something went wrong')
     }
@@ -249,9 +250,7 @@ export default function QuickWritePage() {
 
     try {
       const data = await callApi({}, controller.signal)
-      setResult(data)
-      setShowRewrite(false)
-      setRewriteInstruction('')
+      if (data) { setResult(data); setShowRewrite(false); setRewriteInstruction('') }
     } catch (err) {
       if (err instanceof Error && err.name === 'AbortError') return
       setError(err instanceof Error ? err.message : 'Network error, please try again')
@@ -279,9 +278,7 @@ export default function QuickWritePage() {
         rewriteInstruction: rewriteInstruction.trim(),
         previousStatement: result.statement,
       })
-      setResult(data)
-      setShowRewrite(false)
-      setRewriteInstruction('')
+      if (data) { setResult(data); setShowRewrite(false); setRewriteInstruction('') }
     } catch (err) {
       setRewriteError(err instanceof Error ? err.message : 'Rewrite failed. Please try again.')
     } finally {
