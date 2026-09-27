@@ -721,9 +721,9 @@ async function generateParallel(
       anthropic.messages.create({
         model: 'claude-sonnet-4-6',
         max_tokens: statementMaxTokens,
-        system: systemPrompt,
+        system: [{ type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } }],
         messages: [{ role: 'user', content: statementUserPrompt }],
-      })
+      } as Parameters<typeof anthropic.messages.create>[0])
     ),
     anthropic.messages.create({
       model: 'claude-sonnet-4-6',
@@ -958,9 +958,9 @@ export async function generateStatement(
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: genericMaxTokens,
-    system: systemPrompt,
+    system: [{ type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } }],
     messages: [{ role: 'user', content: userPrompt }],
-  })
+  } as Parameters<typeof anthropic.messages.create>[0])
 
   const content = message.content[0]
   if (content.type !== 'text') throw new Error('Unexpected response type from generation service')
