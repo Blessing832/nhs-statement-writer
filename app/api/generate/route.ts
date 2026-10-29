@@ -239,12 +239,7 @@ export async function POST(req: NextRequest) {
     }
 
     void logGenerateError({ ...logBase, errorType: 'unknown', errorMessage: message, httpStatus: 500 })
-    // Surface the real error for admin/Copilot failures so the admin can diagnose
-    const isAdminRequest = !!req.headers.get('x-admin-token')
-    const userFacingError = isAdminRequest
-      ? message
-      : 'Statement generation failed. Please try again or contact your administrator.'
-    return NextResponse.json({ error: userFacingError }, { status: 500 })
+    return NextResponse.json({ error: message || 'Statement generation failed. Please try again or contact your administrator.' }, { status: 500 })
   }
 
   let { statement, previousRoleDuties, analysis, promptRegion } = generated
