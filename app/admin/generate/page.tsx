@@ -632,7 +632,7 @@ function AdminGenerateInner() {
                 </div>
                 {provider === 'copilot' && (
                   <p className="text-xs text-amber-700 mt-2 bg-amber-50 border border-amber-200 rounded px-2 py-1">
-                    Uses GitHub Models (GPT-4o). Requires GITHUB_TOKEN in Railway env vars.
+                    Uses OpenAI GPT-4o. Requires OPENAI_API_KEY in Railway env vars.
                   </p>
                 )}
               </div>

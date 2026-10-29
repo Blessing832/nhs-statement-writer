@@ -13,23 +13,23 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!,
 })
 
-// GitHub Models (Copilot) — uses native fetch, no extra package needed
-async function callGitHubModels(
+// GPT-4o via OpenAI API — used for the admin Copilot toggle
+async function callGPT4o(
   systemPrompt: string,
   userPrompt: string,
   maxTokens: number
 ): Promise<string> {
-  const token = process.env.GITHUB_TOKEN
-  if (!token) throw new Error('GITHUB_TOKEN is not configured on this server. Add it in Railway → Variables.')
+  const apiKey = process.env.OPENAI_API_KEY
+  if (!apiKey) throw new Error('OPENAI_API_KEY is not configured. Add it in Railway → Variables → OPENAI_API_KEY.')
 
   const controller = new AbortController()
   const timeout = setTimeout(() => controller.abort(), 120_000)
 
   let res: Response
   try {
-    res = await fetch('https://models.inference.ai.azure.com/chat/completions', {
+    res = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
       body: JSON.stringify({
         model: 'gpt-4o',
         messages: [
@@ -44,14 +44,14 @@ async function callGitHubModels(
     const cause = fetchErr instanceof Error
       ? ((fetchErr as NodeJS.ErrnoException).cause as Error)?.message || fetchErr.message
       : String(fetchErr)
-    throw new Error(`GitHub Models connection failed (network error): ${cause}`)
+    throw new Error(`GPT-4o connection failed: ${cause}`)
   } finally {
     clearTimeout(timeout)
   }
 
   if (!res.ok) {
     const body = await res.text().catch(() => '')
-    throw new Error(`GitHub Models error ${res.status}: ${body.slice(0, 300)}`)
+    throw new Error(`GPT-4o error ${res.status}: ${body.slice(0, 300)}`)
   }
   const data = await res.json() as { choices: { message: { content: string } }[] }
   return data.choices[0]?.message?.content ?? ''
@@ -765,7 +765,7 @@ async function generateParallel(
   // Copilot (GitHub Models / GPT-4o) path — statement only; analysis always stays on Claude
   if (options.provider === 'copilot') {
     const [copilotResult, analysisResult] = await Promise.allSettled([
-      withRetry(() => callGitHubModels(systemPrompt, statementUserPrompt, statementMaxTokens)),
+      withRetry(() => callGPT4o(systemPrompt, statementUserPrompt, statementMaxTokens)),
       anthropic.messages.create({
         model: 'claude-sonnet-4-6',
         max_tokens: 2000,
