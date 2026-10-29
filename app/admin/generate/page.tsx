@@ -305,7 +305,7 @@ function AdminGenerateInner() {
     setLoadingStep('Writing supporting statement...')
     const genRes = await fetch('/api/generate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
       body: JSON.stringify({ ...body, jobData: scrapeData, provider }),
       signal,
     })
