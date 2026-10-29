@@ -71,6 +71,7 @@ export interface StatementAnalysis {
   notes?: string
   promptVersion?: string
   hasTitleMismatch?: boolean
+  storyWarning?: string
   notesParsed?: {
     titleCheck?: string
     gaps: string[]

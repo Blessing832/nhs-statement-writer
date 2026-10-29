@@ -359,26 +359,24 @@ async function generateParallelV3(
   const generationModel = process.env.GENERATION_MODEL || 'claude-sonnet-4-6'
   const appMode = options.applicationMode ?? 'full'
 
-  // ── Story gate ─────────────────────────────────────────────────────────────
-  const momentsFields = [
+  // ── Story check (warning only — never blocks generation) ───────────────────
+  const storyFields = [
     client.q_difficult_situation,
     client.q_proudest_moment,
     client.q_colleagues_say,
     client.q_skills_equipment,
     client.q_why_trust,
+    client.work_history,
+    client.background,
   ].filter(Boolean)
 
-  const richMoments = momentsFields.filter(f => countWordsV3(f ?? '') >= 40)
-  const storyGateOverride = options.storyGateOverride === true
+  const totalStoryWords = storyFields.reduce((n, f) => n + countWordsV3(f ?? ''), 0)
+  const storyWarning = totalStoryWords < 150
+    ? `This candidate has little stored story detail (${totalStoryWords} words). The statement may be thin. Consider updating their profile.`
+    : undefined
 
-  if (richMoments.length < 2 && !storyGateOverride) {
-    throw new Error(
-      `STORY_GATE: Collect at least two real stories from the candidate before generating. ` +
-      `Only ${richMoments.length} of 5 MOMENTS fields contain 40 or more words.`
-    )
-  }
-  if (richMoments.length < 2 && storyGateOverride) {
-    console.warn(`STORY_GATE_OVERRIDE: admin bypassed story gate for client ${client.id} — only ${richMoments.length} rich moments`)
+  if (storyWarning) {
+    console.warn(`STORY_CHECK: ${storyWarning} (client ${client.id})`)
   }
 
   // ── Analysis call FIRST ────────────────────────────────────────────────────
@@ -511,6 +509,7 @@ async function generateParallelV3(
       notesParsed: parsedNotes,
       hasTitleMismatch,
       promptVersion: 'v3',
+      storyWarning,
     } : null,
     promptRegion: 'england-wales',
     rawStatement: rawStatementFull,

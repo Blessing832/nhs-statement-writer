@@ -212,9 +212,6 @@ function AdminGenerateInner() {
   const [copiedDuties, setCopiedDuties] = useState(false)
   const [downloaded, setDownloaded] = useState(false)
 
-  const [provider, setProvider] = useState<'claude' | 'copilot'>('claude')
-  const [storyGate, setStoryGate] = useState(false)
-  const [storyGateOverride, setStoryGateOverride] = useState(false)
 
   const [showRewrite, setShowRewrite] = useState(false)
   const [rewriteInstruction, setRewriteInstruction] = useState('')
@@ -308,13 +305,12 @@ function AdminGenerateInner() {
     const genRes = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
-      body: JSON.stringify({ ...body, jobData: scrapeData, provider, storyGateOverride }),
+      body: JSON.stringify({ ...body, jobData: scrapeData }),
       signal,
     })
     const genData = await genRes.json().catch(() => ({ error: 'Server error on generate.' }))
     if (!genRes.ok) {
-      if (genRes.status === 422 && genData.storyGate) {
-        setStoryGate(true)
+      if (genRes.status === 422) {
         setLoading(false)
         setLoadingStep('')
         return null
@@ -334,7 +330,6 @@ function AdminGenerateInner() {
 
     setLoading(true)
     setError('')
-    setStoryGate(false)
     setResult(null)
     setCachedJobData(null)
 
@@ -628,35 +623,6 @@ function AdminGenerateInner() {
                   disabled={loading} />
               </div>
 
-              {/* AI Provider Toggle */}
-              <div className="border border-gray-200 rounded-lg p-3 bg-gray-50">
-                <p className="text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wide">AI Provider (Admin only)</p>
-                <div className="flex gap-2">
-                  <button type="button" onClick={() => setProvider('claude')}
-                    className={`flex-1 py-2 text-sm font-medium rounded-md border transition-colors cursor-pointer ${provider === 'claude' ? 'bg-[#0B4F6C] text-white border-[#0B4F6C]' : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'}`}>
-                    Claude (default)
-                  </button>
-                  <button type="button" disabled
-                    className="flex-1 py-2 text-sm font-medium rounded-md border transition-colors opacity-40 cursor-not-allowed bg-white text-gray-400 border-gray-200"
-                    title="Copilot is not available for live client generations. Use Quick Write for admin testing only.">
-                    Copilot / GPT-4o
-                  </button>
-                </div>
-                <p className="text-xs text-gray-500 mt-2 bg-gray-50 border border-gray-200 rounded px-2 py-1">
-                  Copilot is unavailable for live client generations pending privacy notice update. Use Claude.
-                </p>
-              </div>
-
-              {storyGate && (
-                <div className="bg-amber-50 border border-amber-300 rounded-md p-3 space-y-2">
-                  <p className="text-sm text-amber-800 font-semibold">Story gate: not enough candidate stories</p>
-                  <p className="text-xs text-amber-700">At least 2 MOMENTS fields need 40+ words for V3. Check the candidate profile.</p>
-                  <label className="flex items-center gap-2 text-xs text-amber-800 cursor-pointer">
-                    <input type="checkbox" checked={storyGateOverride} onChange={e => setStoryGateOverride(e.target.checked)} />
-                    Admin override — generate anyway (will be logged)
-                  </label>
-                </div>
-              )}
 
               {error && <div className="bg-red-50 border border-red-200 rounded-md p-3 text-red-700 text-sm">{error}</div>}
 
@@ -732,9 +698,6 @@ function AdminGenerateInner() {
                     {result.promptRegion === 'scotland' ? 'NHS Scotland' : result.promptRegion === 'england-wales' ? 'NHS England/Wales' : 'Generic'}
                   </span>
                 )}
-                {provider === 'copilot' && (
-                  <span className="text-xs px-2 py-1 rounded bg-amber-500 text-white font-medium">Copilot / GPT-4o</span>
-                )}
                 <button
                   onClick={() => { navigator.clipboard.writeText(result.statement); setCopied(true); setTimeout(() => setCopied(false), 3000) }}
                   className="text-sm px-3 py-1.5 bg-white text-gray-800 rounded font-medium hover:bg-gray-100 cursor-pointer">
@@ -760,6 +723,12 @@ function AdminGenerateInner() {
             {/* LEFT: Analysis sidebar */}
             <div className="md:w-80 md:flex-shrink-0 border-b md:border-b-0 md:border-r border-gray-200 bg-white overflow-y-auto">
               <div className="p-5">
+                {result.analysis?.storyWarning && (
+                  <div className="bg-amber-50 border border-amber-300 rounded-md p-3 mb-4">
+                    <p className="text-sm text-amber-800 font-semibold">⚠ Thin profile</p>
+                    <p className="text-xs text-amber-700 mt-1">{result.analysis.storyWarning}</p>
+                  </div>
+                )}
                 <h3 className="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide pb-2 border-b border-gray-100">
                   {result.promptRegion === 'scotland' ? 'Person Specification' : 'Pre-Writing Analysis'}
                 </h3>
@@ -801,12 +770,22 @@ function AdminGenerateInner() {
                     )}
                     {result.analysis.notesParsed.questions.length > 0 && (
                       <div>
-                        <p className="text-xs font-semibold text-blue-700 mb-1">Questions</p>
-                        <ul className="space-y-0.5">
+                        <p className="text-xs font-semibold text-blue-700 mb-1">Questions for candidate</p>
+                        <ul className="space-y-0.5 mb-2">
                           {result.analysis.notesParsed.questions.map((q: string, i: number) => (
                             <li key={i} className="text-xs text-blue-700">• {q}</li>
                           ))}
                         </ul>
+                        {selectedClient && (
+                          <a
+                            href={`/admin/clients/${selectedClient.client_code}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block text-xs font-medium text-white rounded px-3 py-1.5 mt-1"
+                            style={{ backgroundColor: '#0B4F6C' }}>
+                            Open {selectedClient.full_name}&apos;s profile →
+                          </a>
+                        )}
                       </div>
                     )}
                   </div>
