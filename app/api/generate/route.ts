@@ -296,16 +296,19 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // 2c. Deterministic banned-word replacement — final pass after pipeline
-  try {
-    const replacementMap = await getReplacementMap()
-    const before = statement
-    statement = applyReplacements(statement, replacementMap)
-    if (statement !== before) {
-      console.log('BANNED_WORD_REPLACER: applied replacements')
+  // 2c. Deterministic banned-word replacement — V2 only; V3 uses flag-mode rewrite instead
+  const activePromptVersion = (process.env.PROMPT_VERSION || 'v2').toLowerCase()
+  if (activePromptVersion !== 'v3') {
+    try {
+      const replacementMap = await getReplacementMap()
+      const before = statement
+      statement = applyReplacements(statement, replacementMap)
+      if (statement !== before) {
+        console.log('BANNED_WORD_REPLACER: applied replacements')
+      }
+    } catch (err) {
+      console.error('BANNED_WORD_REPLACER_ERR (non-fatal):', err)
     }
-  } catch (err) {
-    console.error('BANNED_WORD_REPLACER_ERR (non-fatal):', err)
   }
 
   // 3. Save to DB — try with pasted_person_spec first; fall back ONLY on schema errors
