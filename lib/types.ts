@@ -67,6 +67,23 @@ export interface StatementAnalysis {
   meetsAllEssential?: boolean
   criteriaScores?: CriterionScore[]
   overallPct?: number
+  // V3 fields
+  notes?: string
+  promptVersion?: string
+  hasTitleMismatch?: boolean
+  notesParsed?: {
+    titleCheck?: string
+    gaps: string[]
+    coverage: string[]
+    questions: string[]
+  }
+}
+
+export interface CriterionCheck {
+  id: string
+  wording: string
+  found: boolean
+  sentence?: string
 }
 
 export interface CriterionCoverage {

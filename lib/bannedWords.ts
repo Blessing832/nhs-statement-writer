@@ -150,7 +150,7 @@ const BANNED_PATTERNS: BannedPattern[] = [
   ph('invaluable experience'),
   ph('from day one'),
   ph('from the first shift'),
-  // Outcome-linking phrases
+  // Outcome-linking phrases (keep — flagged but not auto-replaced)
   ph('This resulted in'),
   ph('This led to'),
   ph('As a result'),
@@ -164,6 +164,14 @@ const BANNED_PATTERNS: BannedPattern[] = [
   ph('I am deeply committed'),
   ph('I genuinely believe'),
   ph('I truly care'),
+
+  // ── Regex flags (V3) — flagged, never auto-replaced ───────────────────────
+  // "as per my person specification" / "as outlined in the person specification"
+  { pattern: /\b(as (?:per|outlined in) (?:my |the )?person spec(?:ification)?)\b/i, word: 'ps-reference' },
+  // "show on my" e.g. "I will show on my application"
+  { pattern: /\bshow (?:this |it )?on my\b/i, word: 'show-on-my' },
+  // "make sure" followed by a noun phrase (not "make sure I" or "make sure that I")
+  { pattern: /\bmake sure (?!I |that I )([a-z])/i, word: 'make-sure-noun' },
 ]
 
 // ─── sentence splitter ────────────────────────────────────────────────────────

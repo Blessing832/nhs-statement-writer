@@ -5,6 +5,7 @@ import { generateStatement, analyzeJobPosting, detectRegion } from '@/lib/claude
 import { ScrapeResult, CoverageReport } from '@/lib/types'
 import { runScotlandPipeline } from '@/lib/statement-pipeline'
 import { runNHSV2Pipeline } from '@/lib/nhs-v2-pipeline'
+import { runNHSV3Pipeline } from '@/lib/nhs-v3-pipeline'
 import { applyReplacements } from '@/lib/bannedWords'
 
 // ── Banned-word replacement map — cached in-process for 5 minutes ─────────────
@@ -60,6 +61,7 @@ export async function POST(req: NextRequest) {
     pastedPersonSpec,
     regionOverride,
     provider,
+    storyGateOverride,
   } = await req.json()
 
   if (!client_code || !vacancy_url || !jobData) {
@@ -113,12 +115,14 @@ export async function POST(req: NextRequest) {
   // 1c. URL duplicate checks — only for real job URLs, not rewrites, not text-paste
   const isRealUrl = vacancy_url && vacancy_url.startsWith('http')
   if (isRealUrl && !rewriteInstruction) {
-    // Rule 1: Same applicant cannot generate from the same URL more than once
+    // Rule 1: Same applicant cannot generate from the same URL more than once (per prompt version)
+    const currentPromptVersion = (process.env.PROMPT_VERSION || 'v2').toLowerCase()
     const { count: priorCount } = await supabaseAdmin
       .from('statements')
       .select('*', { count: 'exact', head: true })
       .eq('client_id', client.id)
       .eq('vacancy_url', vacancy_url)
+      .or(`prompt_version.eq.${currentPromptVersion},prompt_version.is.null`)
 
     if ((priorCount ?? 0) >= 1) {
       // Return the existing statement so the user gets their result without a new API call
@@ -127,6 +131,7 @@ export async function POST(req: NextRequest) {
         .select('generated_statement, job_title, organisation')
         .eq('client_id', client.id)
         .eq('vacancy_url', vacancy_url)
+        .or(`prompt_version.eq.${currentPromptVersion},prompt_version.is.null`)
         .order('created_at', { ascending: false })
         .limit(1)
         .single()
@@ -181,9 +186,14 @@ export async function POST(req: NextRequest) {
       openingTemplate: openingTemplate || undefined,
       regionOverride: regionOverride || undefined,
       provider: provider === 'copilot' ? 'copilot' : 'claude',
+      storyGateOverride: storyGateOverride === true,
     })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error'
+
+    if (message.startsWith('STORY_GATE:')) {
+      return NextResponse.json({ error: message, storyGate: true }, { status: 422 })
+    }
 
     if (err instanceof Anthropic.APIError) {
       const body = err.error ? JSON.stringify(err.error).slice(0, 300) : 'no-body'
@@ -248,12 +258,15 @@ export async function POST(req: NextRequest) {
   }
 
   let { statement, previousRoleDuties, analysis, promptRegion } = generated
+  const rawStatement = (generated as { rawStatement?: string }).rawStatement ?? null
+  const promptVersion = (process.env.PROMPT_VERSION || 'v2').toLowerCase()
 
   // 2b. Verification pipeline — England/Wales and Scotland full statements only
   let coverageReport: CoverageReport | null = null
   const pipelineRegion = promptRegion === 'england-wales' ? 'england-wales'
     : promptRegion === 'scotland' ? 'scotland'
     : null
+  const useV3Pipeline = promptVersion === 'v3' && pipelineRegion === 'england-wales'
   if (
     pipelineRegion &&
     applicationMode !== 'questions-only' &&
@@ -265,7 +278,9 @@ export async function POST(req: NextRequest) {
     try {
       const pipeline = pipelineRegion === 'scotland'
         ? await runScotlandPipeline(statement, analysis, client)
-        : await runNHSV2Pipeline(statement, analysis, client)
+        : useV3Pipeline
+          ? await runNHSV3Pipeline(statement, analysis, client)
+          : await runNHSV2Pipeline(statement, analysis, client)
       coverageReport = pipeline
       if (pipeline.patchedStatement) {
         statement = pipeline.patchedStatement
@@ -281,16 +296,19 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // 2c. Deterministic banned-word replacement — final pass after pipeline
-  try {
-    const replacementMap = await getReplacementMap()
-    const before = statement
-    statement = applyReplacements(statement, replacementMap)
-    if (statement !== before) {
-      console.log('BANNED_WORD_REPLACER: applied replacements')
+  // 2c. Deterministic banned-word replacement — V2 only; V3 uses flag-mode rewrite instead
+  const activePromptVersion = (process.env.PROMPT_VERSION || 'v2').toLowerCase()
+  if (activePromptVersion !== 'v3') {
+    try {
+      const replacementMap = await getReplacementMap()
+      const before = statement
+      statement = applyReplacements(statement, replacementMap)
+      if (statement !== before) {
+        console.log('BANNED_WORD_REPLACER: applied replacements')
+      }
+    } catch (err) {
+      console.error('BANNED_WORD_REPLACER_ERR (non-fatal):', err)
     }
-  } catch (err) {
-    console.error('BANNED_WORD_REPLACER_ERR (non-fatal):', err)
   }
 
   // 3. Save to DB — try with pasted_person_spec first; fall back ONLY on schema errors
@@ -303,6 +321,8 @@ export async function POST(req: NextRequest) {
     key_duties: previousRoleDuties.length > 0 ? previousRoleDuties : (analysis?.keyDuties || []),
     is_rewrite: !!rewriteInstruction,
     rewrite_instruction: rewriteInstruction || null,
+    raw_statement: rawStatement,
+    prompt_version: promptVersion,
   }
   const { error: insertError } = await supabaseAdmin.from('statements').insert({
     ...baseRow,

@@ -31,6 +31,12 @@ export async function POST(req: NextRequest) {
     cachedJobData,
     regionOverride,
     provider,
+    storyGateOverride,
+    q_difficult_situation,
+    q_why_trust,
+    q_colleagues_say,
+    q_proudest_moment,
+    q_skills_equipment,
   } = await req.json()
 
   const hasUrl = !!vacancy_url?.trim()
@@ -106,11 +112,11 @@ export async function POST(req: NextRequest) {
     subscription_end: new Date(Date.now() + 86400000).toISOString(),
     is_active: true,
     created_at: new Date().toISOString(),
-    q_difficult_situation: '',
-    q_why_trust: '',
-    q_colleagues_say: '',
-    q_proudest_moment: '',
-    q_skills_equipment: '',
+    q_difficult_situation: q_difficult_situation || '',
+    q_why_trust: q_why_trust || '',
+    q_colleagues_say: q_colleagues_say || '',
+    q_proudest_moment: q_proudest_moment || '',
+    q_skills_equipment: q_skills_equipment || '',
   }
 
   // Step 3: Generate the statement
@@ -127,7 +133,10 @@ export async function POST(req: NextRequest) {
       previousStatement: previousStatement || undefined,
       regionOverride: regionOverride || undefined,
       provider: provider === 'copilot' ? 'copilot' : 'claude',
+      storyGateOverride: storyGateOverride === true,
     })
+
+    const rawStatement = (generated as { rawStatement?: string }).rawStatement ?? undefined
 
     return NextResponse.json({
       statement: generated.statement,
@@ -138,10 +147,14 @@ export async function POST(req: NextRequest) {
       organisation: jobData.organisation,
       promptRegion: generated.promptRegion,
       cachedJobData: jobData,
+      rawStatement,
     })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error'
     console.error('[quick-write] Claude error:', message)
+    if (message.startsWith('STORY_GATE:')) {
+      return NextResponse.json({ error: message, storyGate: true }, { status: 422 })
+    }
     return NextResponse.json({ error: message }, { status: 500 })
   }
 }

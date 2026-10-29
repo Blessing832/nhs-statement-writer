@@ -4,6 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import { Client, ScrapeResult, StatementAnalysis } from './types'
 import { getEnglandWalesPrompt } from './prompts/england-wales'
+import { getEnglandWalesV3Prompt } from './prompts/england-wales-v3'
 import { getScotlandPrompt } from './prompts/scotland'
 import { getScotlandQ2Variation } from './scotland-q2-variations'
 import { fetchTrustIntel, formatTrustIntel } from './trust-intel'
@@ -13,32 +14,43 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!,
 })
 
-// GitHub Models (Copilot) — uses native fetch, no extra package needed
-async function callGitHubModels(
+// OpenAI GPT-4o — uses native fetch, no extra package needed
+async function callGPT4o(
   systemPrompt: string,
   userPrompt: string,
   maxTokens: number
 ): Promise<string> {
-  const token = process.env.GITHUB_TOKEN
-  if (!token) throw new Error('GITHUB_TOKEN is not configured on this server. Add it in Railway → Variables.')
-  const res = await fetch('https://models.inference.ai.azure.com/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify({
-      model: 'gpt-4o',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt },
-      ],
-      max_tokens: maxTokens,
-    }),
-  })
-  if (!res.ok) {
-    const body = await res.text().catch(() => '')
-    throw new Error(`GitHub Models error ${res.status}: ${body.slice(0, 300)}`)
+  const apiKey = process.env.OPENAI_API_KEY
+  if (!apiKey) throw new Error('OPENAI_API_KEY is not configured. Add it in Railway → Variables.')
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 120000)
+  try {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+      body: JSON.stringify({
+        model: 'gpt-4o',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt },
+        ],
+        max_tokens: maxTokens,
+      }),
+      signal: controller.signal,
+    })
+    if (!res.ok) {
+      const body = await res.text().catch(() => '')
+      throw new Error(`OpenAI GPT-4o error ${res.status}: ${body.slice(0, 300)}`)
+    }
+    const data = await res.json() as { choices: { message: { content: string } }[] }
+    return data.choices[0]?.message?.content ?? ''
+  } catch (fetchErr: unknown) {
+    const cause = fetchErr instanceof Error && (fetchErr as NodeJS.ErrnoException).cause
+    const causeMsg = cause instanceof Error ? cause.message : ''
+    throw new Error(`GPT-4o connection failed${causeMsg ? ': ' + causeMsg : ''}`)
+  } finally {
+    clearTimeout(timeout)
   }
-  const data = await res.json() as { choices: { message: { content: string } }[] }
-  return data.choices[0]?.message?.content ?? ''
 }
 
 async function withRetry<T>(fn: () => Promise<T>, maxRetries = 2): Promise<T> {
@@ -121,6 +133,391 @@ If the candidate's profile includes experience from overseas, describe it generi
 
 Use: "a large tertiary hospital", "a busy district hospital", "a 500-bed multi-specialty hospital", "a community health centre" — never the country, city, or institution name of a non-UK employer.
 UK locations (England, Wales, Scotland, Northern Ireland, and named UK cities and regions) are allowed where relevant.`
+
+// ── V3 helpers ────────────────────────────────────────────────────────────────
+
+export function countWordsV3(text: string): number {
+  return text?.trim().split(/\s+/).filter(Boolean).length ?? 0
+}
+
+export function parseNotesSection(notes: string): { titleCheck?: string; gaps: string[]; coverage: string[]; questions: string[] } {
+  const titleCheckMatch = notes.match(/TITLE CHECK[:\s]+([\s\S]*?)(?=\nGAPS[:\s]|\nCOVERAGE[:\s]|\nQUESTIONS[:\s]|$)/i)
+  const gapsMatch = notes.match(/GAPS[:\s]+([\s\S]*?)(?=\nCOVERAGE[:\s]|\nQUESTIONS[:\s]|\nTITLE CHECK[:\s]|$)/i)
+  const coverageMatch = notes.match(/COVERAGE[:\s]+([\s\S]*?)(?=\nQUESTIONS[:\s]|\nGAPS[:\s]|\nTITLE CHECK[:\s]|$)/i)
+  const questionsMatch = notes.match(/QUESTIONS[:\s]+([\s\S]*?)(?=\nGAPS[:\s]|\nCOVERAGE[:\s]|\nTITLE CHECK[:\s]|$)/i)
+  const parseList = (text?: string) => text
+    ? text.split('\n').map(l => l.replace(/^[•\-*]\s*/, '').trim()).filter(Boolean)
+    : []
+  return {
+    titleCheck: titleCheckMatch?.[1]?.trim(),
+    gaps: parseList(gapsMatch?.[1]),
+    coverage: parseList(coverageMatch?.[1]),
+    questions: parseList(questionsMatch?.[1]),
+  }
+}
+
+function buildV3UserPrompt(
+  client: Client,
+  jobData: ScrapeResult,
+  essentialCriteria: string[],
+  desirableCriteria: string[],
+  options: {
+    instructions?: string
+    specificQuestions?: string
+    rewriteInstruction?: string
+    bodyPattern?: string
+    openingTemplate?: string
+    applicationMode?: ApplicationMode
+    style?: '1' | '2'
+  },
+  trustIntelText: string | undefined
+): string {
+  const rawText = buildRawText(jobData.rawText)
+  const criteriaBlock = [
+    '=== CRITERIA ===',
+    'Essential:',
+    ...essentialCriteria.map((c, i) => `E${i + 1}. ${c} — Section: General`),
+    'Desirable:',
+    ...desirableCriteria.map((c, i) => `D${i + 1}. ${c} — Section: General`),
+  ].join('\n')
+
+  const jobBlock = [
+    '=== JOB ===',
+    `Title: ${jobData.jobTitle}`,
+    `Organisation: ${jobData.organisation}`,
+    rawText.slice(0, 6000),
+  ].join('\n')
+
+  const trustBlock = [
+    '=== TRUST ===',
+    trustIntelText || '(No trust information available)',
+  ].join('\n')
+
+  // Privacy: do NOT include client.full_name
+  const candidateLines = [
+    '=== CANDIDATE ===',
+    `Work history: ${client.work_history || ''}`,
+    `Qualifications: ${client.qualifications || ''}`,
+    `Skills: ${client.skills || ''}`,
+    `Background: ${client.background || ''}`,
+  ]
+  if (client.special_instructions) candidateLines.push(client.special_instructions)
+  if (options.specificQuestions && options.applicationMode === 'statement-questions') {
+    candidateLines.push(`\nApplication Questions:\n${options.specificQuestions}`)
+  }
+
+  const momentsBlock = [
+    '=== MOMENTS ===',
+    `Difficult situation: ${client.q_difficult_situation || '(not provided)'}`,
+    `Proudest moment: ${client.q_proudest_moment || '(not provided)'}`,
+    `What colleagues say: ${client.q_colleagues_say || '(not provided)'}`,
+    `Skills and equipment: ${client.q_skills_equipment || '(not provided)'}`,
+    `Why this Trust: ${client.q_why_trust || '(not provided)'}`,
+  ].join('\n')
+
+  const styleBlock = `=== STYLE ===\n${options.style || '1'}`
+
+  const instructionLines: string[] = ['=== INSTRUCTIONS ===']
+  if (options.instructions) instructionLines.push(options.instructions)
+  if (options.rewriteInstruction) instructionLines.push(`REWRITE INSTRUCTION: ${options.rewriteInstruction}`)
+  if (options.bodyPattern) instructionLines.push(`Depth style: ${options.bodyPattern}`)
+  if (options.openingTemplate) instructionLines.push(`Preferred opening style: ${options.openingTemplate}`)
+  if (instructionLines.length === 1) instructionLines.push('(none)')
+
+  return [
+    criteriaBlock,
+    '',
+    jobBlock,
+    '',
+    trustBlock,
+    '',
+    candidateLines.join('\n'),
+    '',
+    momentsBlock,
+    '',
+    styleBlock,
+    '',
+    instructionLines.join('\n'),
+  ].join('\n')
+}
+
+async function enforceWordCountV3(text: string, attempt = 0): Promise<string> {
+  const wc = countWordsV3(text)
+  if (wc >= 1380 && wc <= 1420) return text
+  if (attempt >= 2) {
+    console.warn(`V3 word count still off after 2 attempts: ${wc} words — returning closest version`)
+    return text
+  }
+  console.log(`V3 word count adjustment attempt ${attempt + 1}: ${wc} words → targeting 1,400`)
+  const msg = await anthropic.messages.create({
+    model: 'claude-sonnet-4-6',
+    max_tokens: 2800,
+    system: 'You are a precise text editor.',
+    messages: [{
+      role: 'user',
+      content: `This NHS supporting statement is ${wc} words. Adjust it to exactly 1,400 words (range 1,380–1,420).\n\nRules:\n- Keep every section and every exact person specification criterion phrase\n- Keep the closing line "Thank you." unchanged\n- Cut adjectives, repeated points and filler only\n- Return ONLY the adjusted statement text\n\n${text}`,
+    }],
+  })
+  const adjusted = msg.content[0].type === 'text' ? msg.content[0].text.trim() : text
+  return enforceWordCountV3(adjusted, attempt + 1)
+}
+
+async function applyV3WordFilter(
+  statement: string,
+  essentialCriteria: string[],
+  desirableCriteria: string[],
+  dbRows: Array<{ word: string; replacement: string; enabled: boolean }>
+): Promise<string> {
+  const { scanBanned } = await import('./bannedWords')
+  const allCriterionText = [...essentialCriteria, ...desirableCriteria].join(' ').toLowerCase()
+
+  const hitIsInCriterion = (hit: string) => {
+    try {
+      return new RegExp(`\\b${hit.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(allCriterionText)
+    } catch { return false }
+  }
+
+  // Static banned word hits
+  const staticHits = scanBanned(statement).map(h => h.word)
+
+  // DB hits (whole-word, case-insensitive)
+  const dbHits = dbRows
+    .filter(r => r.enabled)
+    .filter(r => {
+      try {
+        return new RegExp(`\\b${r.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(statement)
+      } catch { return false }
+    })
+    .map(r => r.word)
+
+  const allHits = [...new Set([...staticHits, ...dbHits])]
+  const filteredHits = allHits.filter(h => !hitIsInCriterion(h))
+
+  if (filteredHits.length === 0) return statement
+
+  // Find affected sentences
+  const sentences = statement.match(/[^.!?]+[.!?]*/g) || []
+  const affectedSentences = sentences.filter(s =>
+    filteredHits.some(h => {
+      try {
+        return new RegExp(`\\b${h.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(s)
+      } catch { return false }
+    })
+  )
+
+  if (affectedSentences.length === 0) return statement
+
+  const msg = await anthropic.messages.create({
+    model: 'claude-sonnet-4-6',
+    max_tokens: 1500,
+    system: 'You are a precise text editor.',
+    messages: [{
+      role: 'user',
+      content: `Rewrite these sentences without the words/phrases listed. Keep meaning, tense and grammar. Keep any exact person specification phrase unchanged. Return them in the same order, one per line, numbered.\n\nWords to avoid: ${filteredHits.map(h => '"' + h + '"').join(', ')}\n\nSentences:\n${affectedSentences.map((s, i) => `${i + 1}. ${s.trim()}`).join('\n')}`,
+    }],
+  })
+
+  const rewrittenText = msg.content[0].type === 'text' ? msg.content[0].text.trim() : ''
+  const rewrittenLines = rewrittenText.split('\n')
+    .map(l => l.replace(/^\d+\.\s*/, '').trim())
+    .filter(Boolean)
+
+  if (rewrittenLines.length !== affectedSentences.length) return statement
+
+  let result = statement
+  affectedSentences.forEach((orig, i) => {
+    if (rewrittenLines[i]) {
+      result = result.replace(orig, rewrittenLines[i])
+    }
+  })
+  return result
+}
+
+async function generateParallelV3(
+  client: Client,
+  jobData: ScrapeResult,
+  options: {
+    instructions?: string
+    specificQuestions?: string
+    rewriteInstruction?: string
+    previousStatement?: string
+    applicationMode?: ApplicationMode
+    bodyPattern?: string
+    openingTemplate?: '1' | '2' | '3' | '4' | '5'
+    provider?: 'claude' | 'copilot'
+    storyGateOverride?: boolean
+  },
+  style: '1' | '2'
+): Promise<{
+  statement: string
+  previousRoleDuties: string[]
+  currentRoleDuties: string[]
+  analysis: StatementAnalysis | null
+  promptRegion: PromptRegion
+  rawStatement?: string
+}> {
+  const generationModel = process.env.GENERATION_MODEL || 'claude-sonnet-4-6'
+  const appMode = options.applicationMode ?? 'full'
+
+  // ── Story gate ─────────────────────────────────────────────────────────────
+  const momentsFields = [
+    client.q_difficult_situation,
+    client.q_proudest_moment,
+    client.q_colleagues_say,
+    client.q_skills_equipment,
+    client.q_why_trust,
+  ].filter(Boolean)
+
+  const richMoments = momentsFields.filter(f => countWordsV3(f ?? '') >= 40)
+  const storyGateOverride = options.storyGateOverride === true
+
+  if (richMoments.length < 2 && !storyGateOverride) {
+    throw new Error(
+      `STORY_GATE: Collect at least two real stories from the candidate before generating. ` +
+      `Only ${richMoments.length} of 5 MOMENTS fields contain 40 or more words.`
+    )
+  }
+  if (richMoments.length < 2 && storyGateOverride) {
+    console.warn(`STORY_GATE_OVERRIDE: admin bypassed story gate for client ${client.id} — only ${richMoments.length} rich moments`)
+  }
+
+  // ── Analysis call FIRST ────────────────────────────────────────────────────
+  const analysisUserPrompt = buildUserPrompt(client, jobData, 'england-wales', { outputMode: 'analysis-only' })
+  const [analysisResult, intelResult] = await Promise.all([
+    anthropic.messages.create({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 2000,
+      system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
+      messages: [{ role: 'user', content: analysisUserPrompt }],
+    }),
+    jobData.organisation ? fetchTrustIntel(jobData.organisation).catch(() => null) : Promise.resolve(null),
+  ])
+
+  const trustIntelText = intelResult ? formatTrustIntel(intelResult) : undefined
+
+  let essentialCriteria: string[] = []
+  let desirableCriteria: string[] = []
+  let previousRoleDuties: string[] = []
+  let analysis: StatementAnalysis | null = null
+
+  const analysisContent = analysisResult.content[0]
+  if (analysisContent?.type === 'text') {
+    const cleanedAnalysis = analysisContent.text.replace(/ — /g, ', ').replace(/—/g, ', ')
+    const jsonMatch = cleanedAnalysis.match(/\{[\s\S]*\}/)
+    if (jsonMatch) {
+      try {
+        const p: {
+          enhancedPreviousTitle?: string
+          jobSummary?: string
+          essentialCriteria?: string[]
+          desirableCriteria?: string[]
+          meetsAllEssential?: boolean
+          previousRoleDuties?: string[]
+        } = JSON.parse(jsonMatch[0])
+        essentialCriteria = Array.isArray(p.essentialCriteria) ? p.essentialCriteria : []
+        desirableCriteria = Array.isArray(p.desirableCriteria) ? p.desirableCriteria : []
+        previousRoleDuties = Array.isArray(p.previousRoleDuties) ? p.previousRoleDuties : []
+        if (essentialCriteria.length > 0) {
+          analysis = {
+            jobSummary: p.jobSummary || '',
+            enhancedPreviousTitle: p.enhancedPreviousTitle,
+            essentialCriteria,
+            desirableCriteria,
+            candidateStrengths: [],
+            potentialGaps: [],
+            keyDuties: [],
+            meetsAllEssential: p.meetsAllEssential,
+          }
+        }
+      } catch { /* non-critical */ }
+    }
+  }
+
+  // ── Build V3 user prompt ───────────────────────────────────────────────────
+  const v3UserPrompt = buildV3UserPrompt(
+    client,
+    jobData,
+    essentialCriteria,
+    desirableCriteria,
+    { ...options, style },
+    trustIntelText
+  )
+
+  // ── Generation call ────────────────────────────────────────────────────────
+  const v3SystemPrompt = getEnglandWalesV3Prompt()
+  let rawOutput: string
+
+  if (options.provider === 'copilot') {
+    rawOutput = await withRetry(() => callGPT4o(v3SystemPrompt, v3UserPrompt, 4000))
+  } else {
+    const statementMsg = await withRetry(() =>
+      anthropic.messages.create({
+        model: generationModel,
+        max_tokens: 4000,
+        system: v3SystemPrompt,
+        messages: [{ role: 'user', content: v3UserPrompt }],
+      } as MessageCreateParamsNonStreaming)
+    )
+    rawOutput = statementMsg.content[0]?.type === 'text' ? statementMsg.content[0].text.trim() : ''
+  }
+
+  // ── Parse ===NOTES=== ──────────────────────────────────────────────────────
+  const rawStatementFull = rawOutput
+  const notesDelimiter = '===NOTES==='
+  const delimIdx = rawOutput.indexOf(notesDelimiter)
+  let statement = delimIdx >= 0 ? rawOutput.slice(0, delimIdx).trim() : rawOutput.trim()
+  const notesText = delimIdx >= 0 ? rawOutput.slice(delimIdx + notesDelimiter.length).trim() : ''
+
+  const parsedNotes = parseNotesSection(notesText)
+  const hasTitleMismatch = parsedNotes.titleCheck?.toLowerCase().includes('mismatch') ?? false
+
+  // ── Basic cleaning ─────────────────────────────────────────────────────────
+  statement = statement
+    .replace(/ — /g, ', ')
+    .replace(/—/g, ', ')
+    .replace(/ -- /g, ', ')
+    .replace(/--/g, ', ')
+    .replace(/\*\*/g, '')
+    .replace(/^(Story|Scenario)\s*\d*\s*:\s*/gim, '')
+  if (!statement) throw new Error('V3 generation returned empty statement')
+
+  // ── Word count enforcement ─────────────────────────────────────────────────
+  if (appMode !== 'questions-only') {
+    statement = await enforceWordCountV3(statement)
+  }
+
+  // ── V3 flag-mode word filter ───────────────────────────────────────────────
+  try {
+    let dbRows: Array<{ word: string; replacement: string; enabled: boolean }> = []
+    try {
+      const { data } = await supabaseAdmin.from('banned_words').select('word, replacement, enabled')
+      dbRows = (data ?? []) as Array<{ word: string; replacement: string; enabled: boolean }>
+    } catch { /* non-critical */ }
+    statement = await applyV3WordFilter(statement, essentialCriteria, desirableCriteria, dbRows)
+  } catch (err) {
+    console.warn('V3 word filter failed (non-fatal):', err)
+  }
+
+  console.log(`V3 GEN region=england-wales mode=${appMode} provider=${options.provider || 'claude'} wc=${countWordsV3(statement)} titleMismatch=${hasTitleMismatch}`)
+
+  return {
+    statement,
+    previousRoleDuties,
+    currentRoleDuties: [],
+    analysis: analysis ? {
+      ...analysis,
+      notes: notesText,
+      potentialGaps: parsedNotes.gaps,
+      notesParsed: parsedNotes,
+      hasTitleMismatch,
+      promptVersion: 'v3',
+    } : null,
+    promptRegion: 'england-wales',
+    rawStatement: rawStatementFull,
+  }
+}
+
+// ── V2 system prompt builder ───────────────────────────────────────────────────
 
 async function buildSystemPrompt(region: PromptRegion, style: '1' | '2'): Promise<string> {
   // Step 1: resolve base prompt (Supabase custom → code default)
@@ -268,8 +665,6 @@ ${rawText}${options.trustIntelText ? '\n\n' + options.trustIntelText : ''}`
   ].filter(Boolean).join('\n\n')
 
   const clientSection = `## CANDIDATE PROFILE
-Full Name: ${client.full_name ?? ''}
-
 Work History:
 ${client.work_history ?? ''}
 
@@ -640,6 +1035,7 @@ async function generateParallel(
     bodyPattern?: string
     openingTemplate?: '1' | '2' | '3' | '4' | '5'
     provider?: 'claude' | 'copilot'
+    storyGateOverride?: boolean
   },
   region: 'scotland' | 'england-wales',
   style: '1' | '2'
@@ -649,7 +1045,17 @@ async function generateParallel(
   currentRoleDuties: string[]
   analysis: StatementAnalysis | null
   promptRegion: PromptRegion
+  rawStatement?: string
 }> {
+  const generationModel = process.env.GENERATION_MODEL || 'claude-sonnet-4-6'
+  const promptVersion = (process.env.PROMPT_VERSION || 'v2').toLowerCase()
+  const useV3 = promptVersion === 'v3'
+
+  // V3 routing for England/Wales
+  if (useV3 && region === 'england-wales') {
+    return generateParallelV3(client, jobData, options, style)
+  }
+
   const isScotland = region === 'scotland'
   const appMode = options.applicationMode ?? 'full'
 
@@ -746,10 +1152,10 @@ async function generateParallel(
     statementMaxTokens = 2800  // 1,400w × 1.3 + buffer
   }
 
-  // Copilot (GitHub Models / GPT-4o) path — statement only; analysis always stays on Claude
+  // Copilot (OpenAI GPT-4o) path — statement only; analysis always stays on Claude
   if (options.provider === 'copilot') {
     const [copilotResult, analysisResult] = await Promise.allSettled([
-      withRetry(() => callGitHubModels(systemPrompt, statementUserPrompt, statementMaxTokens)),
+      withRetry(() => callGPT4o(systemPrompt, statementUserPrompt, statementMaxTokens)),
       anthropic.messages.create({
         model: 'claude-sonnet-4-6',
         max_tokens: 2000,
@@ -790,7 +1196,7 @@ async function generateParallel(
   const [statementResult, analysisResult] = await Promise.allSettled([
     withRetry(() =>
       anthropic.messages.create({
-        model: 'claude-sonnet-4-6',
+        model: generationModel,
         max_tokens: statementMaxTokens,
         system: [{ type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } }],
         messages: [{ role: 'user', content: statementUserPrompt }],
@@ -993,6 +1399,7 @@ export async function generateStatement(
     openingTemplate?: '1' | '2' | '3' | '4' | '5'
     regionOverride?: 'england-wales' | 'scotland'
     provider?: 'claude' | 'copilot'
+    storyGateOverride?: boolean
   } = {}
 ): Promise<{
   statement: string
@@ -1000,6 +1407,7 @@ export async function generateStatement(
   currentRoleDuties: string[]
   analysis: StatementAnalysis | null
   promptRegion: PromptRegion
+  rawStatement?: string
 }> {
   const region: PromptRegion = options.regionOverride || (options.vacancyUrl ? detectRegion(options.vacancyUrl, jobData.rawText) : 'generic')
   const style = options.style || '1'
@@ -1012,6 +1420,7 @@ export async function generateStatement(
     bodyPattern: options.bodyPattern,
     openingTemplate: options.openingTemplate,
     provider: options.provider,
+    storyGateOverride: options.storyGateOverride,
   }
 
   if (region === 'scotland' || region === 'england-wales') {
