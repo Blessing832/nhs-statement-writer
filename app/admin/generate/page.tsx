@@ -213,6 +213,8 @@ function AdminGenerateInner() {
   const [downloaded, setDownloaded] = useState(false)
 
   const [provider, setProvider] = useState<'claude' | 'copilot'>('claude')
+  const [storyGate, setStoryGate] = useState(false)
+  const [storyGateOverride, setStoryGateOverride] = useState(false)
 
   const [showRewrite, setShowRewrite] = useState(false)
   const [rewriteInstruction, setRewriteInstruction] = useState('')
@@ -279,7 +281,7 @@ function AdminGenerateInner() {
     body: Record<string, unknown>,
     preloadedJobData?: Record<string, unknown>,
     signal?: AbortSignal
-  ): Promise<{ result: Result; jobData: Record<string, unknown> }> => {
+  ): Promise<{ result: Result; jobData: Record<string, unknown> } | null> => {
     let scrapeData: Record<string, unknown>
     if (preloadedJobData) {
       scrapeData = preloadedJobData
@@ -306,11 +308,17 @@ function AdminGenerateInner() {
     const genRes = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
-      body: JSON.stringify({ ...body, jobData: scrapeData, provider }),
+      body: JSON.stringify({ ...body, jobData: scrapeData, provider, storyGateOverride }),
       signal,
     })
     const genData = await genRes.json().catch(() => ({ error: 'Server error on generate.' }))
     if (!genRes.ok) {
+      if (genRes.status === 422 && genData.storyGate) {
+        setStoryGate(true)
+        setLoading(false)
+        setLoadingStep('')
+        return null
+      }
       const genErr = typeof genData.error === 'string' ? genData.error : (genData.error?.message || genData.message || '')
       throw new Error(genErr || 'Failed to generate statement.')
     }
@@ -326,6 +334,7 @@ function AdminGenerateInner() {
 
     setLoading(true)
     setError('')
+    setStoryGate(false)
     setResult(null)
     setCachedJobData(null)
 
@@ -338,15 +347,17 @@ function AdminGenerateInner() {
       : undefined
 
     try {
-      const { result: data, jobData } = await runGenerate(
+      const generated = await runGenerate(
         { client_code: selectedClient.client_code, vacancy_url: usedUrl, style, applicationMode, specificQuestions: questionsText() || undefined, bodyPattern: bodyPattern || undefined, openingTemplate: openingTemplate || undefined, pastedPersonSpec: pastedPersonSpec.trim() || undefined, instructions: writerNotes.trim() || undefined, regionOverride: regionOverride || undefined },
         preloaded,
         controller.signal
       )
-      setResult(data)
-      setCachedJobData(jobData)
-      setShowRewrite(false)
-      setRewriteInstruction('')
+      if (generated) {
+        setResult(generated.result)
+        setCachedJobData(generated.jobData)
+        setShowRewrite(false)
+        setRewriteInstruction('')
+      }
     } catch (err) {
       if (err instanceof Error && err.name === 'AbortError') return
       setError(err instanceof Error ? err.message : 'Network error. Please try again.')
@@ -363,7 +374,7 @@ function AdminGenerateInner() {
     setRewriteError('')
     try {
       const usedUrl = vacancyUrl.trim() || 'text-paste'
-      const { result: data } = await runGenerate(
+      const rewriteGenerated = await runGenerate(
         {
           client_code: selectedClient.client_code,
           vacancy_url: usedUrl,
@@ -377,7 +388,7 @@ function AdminGenerateInner() {
         },
         cachedJobData ?? undefined
       )
-      setResult(data)
+      if (rewriteGenerated) setResult(rewriteGenerated.result)
       setShowRewrite(false)
       setRewriteInstruction('')
     } catch (err) {
@@ -625,17 +636,27 @@ function AdminGenerateInner() {
                     className={`flex-1 py-2 text-sm font-medium rounded-md border transition-colors cursor-pointer ${provider === 'claude' ? 'bg-[#0B4F6C] text-white border-[#0B4F6C]' : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'}`}>
                     Claude (default)
                   </button>
-                  <button type="button" onClick={() => setProvider('copilot')}
-                    className={`flex-1 py-2 text-sm font-medium rounded-md border transition-colors cursor-pointer ${provider === 'copilot' ? 'bg-[#0B4F6C] text-white border-[#0B4F6C]' : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'}`}>
+                  <button type="button" disabled
+                    className="flex-1 py-2 text-sm font-medium rounded-md border transition-colors opacity-40 cursor-not-allowed bg-white text-gray-400 border-gray-200"
+                    title="Copilot is not available for live client generations. Use Quick Write for admin testing only.">
                     Copilot / GPT-4o
                   </button>
                 </div>
-                {provider === 'copilot' && (
-                  <p className="text-xs text-amber-700 mt-2 bg-amber-50 border border-amber-200 rounded px-2 py-1">
-                    Uses GitHub Models (GPT-4o). Requires GITHUB_TOKEN in Railway env vars.
-                  </p>
-                )}
+                <p className="text-xs text-gray-500 mt-2 bg-gray-50 border border-gray-200 rounded px-2 py-1">
+                  Copilot is unavailable for live client generations pending privacy notice update. Use Claude.
+                </p>
               </div>
+
+              {storyGate && (
+                <div className="bg-amber-50 border border-amber-300 rounded-md p-3 space-y-2">
+                  <p className="text-sm text-amber-800 font-semibold">Story gate: not enough candidate stories</p>
+                  <p className="text-xs text-amber-700">At least 2 MOMENTS fields need 40+ words for V3. Check the candidate profile.</p>
+                  <label className="flex items-center gap-2 text-xs text-amber-800 cursor-pointer">
+                    <input type="checkbox" checked={storyGateOverride} onChange={e => setStoryGateOverride(e.target.checked)} />
+                    Admin override — generate anyway (will be logged)
+                  </label>
+                </div>
+              )}
 
               {error && <div className="bg-red-50 border border-red-200 rounded-md p-3 text-red-700 text-sm">{error}</div>}
 
@@ -743,6 +764,53 @@ function AdminGenerateInner() {
                   {result.promptRegion === 'scotland' ? 'Person Specification' : 'Pre-Writing Analysis'}
                 </h3>
                 <AnalysisPanel analysis={result.analysis} region={result.promptRegion} />
+
+                {/* V3 Notes Panel */}
+                {result.analysis?.notesParsed && (
+                  <div className="mt-5 pt-4 border-t border-gray-100 space-y-3">
+                    <h4 className="font-semibold text-gray-500 uppercase tracking-wide text-xs">V3 Writer Notes</h4>
+                    {result.analysis.hasTitleMismatch && (
+                      <div className="bg-red-50 border border-red-300 rounded px-3 py-2 text-xs text-red-800 font-semibold">
+                        ⚠ TITLE CHECK: MISMATCH — {result.analysis.notesParsed.titleCheck}
+                      </div>
+                    )}
+                    {!result.analysis.hasTitleMismatch && result.analysis.notesParsed.titleCheck && (
+                      <div className="bg-green-50 border border-green-200 rounded px-3 py-2 text-xs text-green-800">
+                        ✓ TITLE CHECK: {result.analysis.notesParsed.titleCheck}
+                      </div>
+                    )}
+                    {result.analysis.notesParsed.gaps.length > 0 && (
+                      <div>
+                        <p className="text-xs font-semibold text-amber-700 mb-1">Gaps</p>
+                        <ul className="space-y-0.5">
+                          {result.analysis.notesParsed.gaps.map((g: string, i: number) => (
+                            <li key={i} className="text-xs text-amber-800">• {g}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {result.analysis.notesParsed.coverage.length > 0 && (
+                      <div>
+                        <p className="text-xs font-semibold text-gray-500 mb-1">Coverage</p>
+                        <ul className="space-y-0.5">
+                          {result.analysis.notesParsed.coverage.map((c: string, i: number) => (
+                            <li key={i} className="text-xs text-gray-600">• {c}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {result.analysis.notesParsed.questions.length > 0 && (
+                      <div>
+                        <p className="text-xs font-semibold text-blue-700 mb-1">Questions</p>
+                        <ul className="space-y-0.5">
+                          {result.analysis.notesParsed.questions.map((q: string, i: number) => (
+                            <li key={i} className="text-xs text-blue-700">• {q}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 

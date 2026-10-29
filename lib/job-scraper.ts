@@ -50,11 +50,15 @@ function extractNextDataJobText(html: string): string {
     const data = JSON.parse(match[1]) as unknown
     const texts: string[] = []
 
+    let inPersonSpec = false
     function walk(obj: unknown, depth: number): void {
       if (depth > 15) return
       if (typeof obj === 'string') {
         const clean = stripHtml(obj).replace(/\s+/g, ' ').trim()
-        if (clean.length > 80) texts.push(clean)
+        // Track when we enter a person specification section
+        if (/person\s+spec(?:ification)?/i.test(clean)) inPersonSpec = true
+        // Inside person spec keep ALL non-empty strings (criteria items can be short)
+        if (inPersonSpec ? clean.length > 0 : clean.length > 80) texts.push(clean)
       } else if (Array.isArray(obj)) {
         for (const v of obj) walk(v, depth + 1)
       } else if (obj !== null && typeof obj === 'object') {
