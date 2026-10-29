@@ -241,12 +241,19 @@ function buildV3UserPrompt(
   ].join('\n')
 }
 
+function stripNotesSection(text: string): string {
+  // Strip ===NOTES=== and everything after it (handles spaces/case variants)
+  const idx = text.search(/={3}\s*NOTES\s*={3}/i)
+  return idx >= 0 ? text.slice(0, idx).trim() : text.trim()
+}
+
 async function enforceWordCountV3(text: string, attempt = 0): Promise<string> {
-  const wc = countWordsV3(text)
-  if (wc >= 1380 && wc <= 1420) return text
+  const clean = stripNotesSection(text)
+  const wc = countWordsV3(clean)
+  if (wc >= 1380 && wc <= 1420) return clean
   if (attempt >= 2) {
     console.warn(`V3 word count still off after 2 attempts: ${wc} words — returning closest version`)
-    return text
+    return clean
   }
   console.log(`V3 word count adjustment attempt ${attempt + 1}: ${wc} words → targeting 1,400`)
   const msg = await anthropic.messages.create({
@@ -255,10 +262,10 @@ async function enforceWordCountV3(text: string, attempt = 0): Promise<string> {
     system: 'You are a precise text editor.',
     messages: [{
       role: 'user',
-      content: `This NHS supporting statement is ${wc} words. Adjust it to exactly 1,400 words (range 1,380–1,420).\n\nRules:\n- Keep every section and every exact person specification criterion phrase\n- Keep the closing line "Thank you." unchanged\n- Cut adjectives, repeated points and filler only\n- Return ONLY the adjusted statement text\n\n${text}`,
+      content: `This NHS supporting statement is ${wc} words. Adjust it to exactly 1,400 words (range 1,380–1,420).\n\nRules:\n- Keep every section and every exact person specification criterion phrase\n- Keep the closing line "Thank you." unchanged\n- Cut adjectives, repeated points and filler only\n- Return ONLY the adjusted statement text, nothing else\n- Do NOT add any notes, analysis or metadata after the statement\n\n${clean}`,
     }],
   })
-  const adjusted = msg.content[0].type === 'text' ? msg.content[0].text.trim() : text
+  const adjusted = msg.content[0].type === 'text' ? stripNotesSection(msg.content[0].text) : clean
   return enforceWordCountV3(adjusted, attempt + 1)
 }
 
@@ -461,10 +468,11 @@ async function generateParallelV3(
 
   // ── Parse ===NOTES=== ──────────────────────────────────────────────────────
   const rawStatementFull = rawOutput
-  const notesDelimiter = '===NOTES==='
-  const delimIdx = rawOutput.indexOf(notesDelimiter)
+  // Use regex to handle spaces/case variants: ===NOTES===, === NOTES ===, etc.
+  const notesMatch = rawOutput.match(/={3}\s*NOTES\s*={3}/i)
+  const delimIdx = notesMatch ? rawOutput.indexOf(notesMatch[0]) : -1
   let statement = delimIdx >= 0 ? rawOutput.slice(0, delimIdx).trim() : rawOutput.trim()
-  const notesText = delimIdx >= 0 ? rawOutput.slice(delimIdx + notesDelimiter.length).trim() : ''
+  const notesText = delimIdx >= 0 ? rawOutput.slice(delimIdx + (notesMatch?.[0].length ?? 11)).trim() : ''
 
   const parsedNotes = parseNotesSection(notesText)
   const hasTitleMismatch = parsedNotes.titleCheck?.toLowerCase().includes('mismatch') ?? false
@@ -495,6 +503,9 @@ async function generateParallelV3(
   } catch (err) {
     console.warn('V3 word filter failed (non-fatal):', err)
   }
+
+  // Final defensive strip — ensure NOTES never leak into the returned statement
+  statement = stripNotesSection(statement)
 
   console.log(`V3 GEN region=england-wales mode=${appMode} provider=${options.provider || 'claude'} wc=${countWordsV3(statement)} titleMismatch=${hasTitleMismatch}`)
 
