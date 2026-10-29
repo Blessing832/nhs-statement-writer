@@ -12,6 +12,34 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!,
 })
 
+// GitHub Models (Copilot) — uses native fetch, no extra package needed
+async function callGitHubModels(
+  systemPrompt: string,
+  userPrompt: string,
+  maxTokens: number
+): Promise<string> {
+  const token = process.env.GITHUB_TOKEN
+  if (!token) throw new Error('GITHUB_TOKEN is not configured on this server. Add it in Railway → Variables.')
+  const res = await fetch('https://models.inference.ai.azure.com/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    body: JSON.stringify({
+      model: 'gpt-4o',
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt },
+      ],
+      max_tokens: maxTokens,
+    }),
+  })
+  if (!res.ok) {
+    const body = await res.text().catch(() => '')
+    throw new Error(`GitHub Models error ${res.status}: ${body.slice(0, 300)}`)
+  }
+  const data = await res.json() as { choices: { message: { content: string } }[] }
+  return data.choices[0]?.message?.content ?? ''
+}
+
 async function withRetry<T>(fn: () => Promise<T>, maxRetries = 2): Promise<T> {
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     try {
@@ -610,6 +638,7 @@ async function generateParallel(
     applicationMode?: ApplicationMode
     bodyPattern?: string
     openingTemplate?: '1' | '2' | '3' | '4' | '5'
+    provider?: 'claude' | 'copilot'
   },
   region: 'scotland' | 'england-wales',
   style: '1' | '2'
@@ -714,6 +743,47 @@ async function generateParallel(
     statementMaxTokens = 2200  // 1,100w × 1.3 + buffer
   } else {
     statementMaxTokens = 2800  // 1,400w × 1.3 + buffer
+  }
+
+  // Copilot (GitHub Models / GPT-4o) path — statement only; analysis always stays on Claude
+  if (options.provider === 'copilot') {
+    const [copilotResult, analysisResult] = await Promise.allSettled([
+      withRetry(() => callGitHubModels(systemPrompt, statementUserPrompt, statementMaxTokens)),
+      anthropic.messages.create({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 2000,
+        system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
+        messages: [{ role: 'user', content: analysisUserPrompt }],
+      }),
+    ])
+    if (copilotResult.status === 'rejected') throw copilotResult.reason
+    const copilotStatement = copilotResult.value
+    console.log(`GEN provider=copilot region=${region} mode=${appMode}`)
+
+    // Re-use the analysis parsing below by constructing compatible objects
+    const analysisMsg = analysisResult.status === 'fulfilled' ? analysisResult.value : null
+    const analysisContent = analysisMsg?.content[0]
+    let analysis: StatementAnalysis | null = null
+    let previousRoleDuties: string[] = []
+    if (analysisContent?.type === 'text') {
+      const cleanedAnalysis = analysisContent.text.replace(/ — /g, ', ').replace(/—/g, ', ').replace(/ -- /g, ', ').replace(/--/g, ', ')
+      const jsonMatch = cleanedAnalysis.match(/\{[\s\S]*\}/)
+      if (jsonMatch) {
+        try {
+          const parsed = JSON.parse(jsonMatch[0])
+          if (parsed.analysis) analysis = parsed.analysis
+          if (Array.isArray(parsed.previousRoleDuties)) previousRoleDuties = parsed.previousRoleDuties
+        } catch { /* non-critical */ }
+      }
+    }
+
+    return {
+      statement: copilotStatement.trim(),
+      analysis,
+      previousRoleDuties,
+      currentRoleDuties: [],
+      promptRegion: region,
+    }
   }
 
   const [statementResult, analysisResult] = await Promise.allSettled([
@@ -921,6 +991,7 @@ export async function generateStatement(
     bodyPattern?: string
     openingTemplate?: '1' | '2' | '3' | '4' | '5'
     regionOverride?: 'england-wales' | 'scotland'
+    provider?: 'claude' | 'copilot'
   } = {}
 ): Promise<{
   statement: string
@@ -939,6 +1010,7 @@ export async function generateStatement(
     applicationMode: options.applicationMode ?? 'full',
     bodyPattern: options.bodyPattern,
     openingTemplate: options.openingTemplate,
+    provider: options.provider,
   }
 
   if (region === 'scotland' || region === 'england-wales') {

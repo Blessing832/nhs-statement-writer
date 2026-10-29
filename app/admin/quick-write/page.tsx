@@ -203,6 +203,8 @@ export default function QuickWritePage() {
   const [copied, setCopied] = useState(false)
   const [copiedDuties, setCopiedDuties] = useState(false)
 
+  const [provider, setProvider] = useState<'claude' | 'copilot'>('claude')
+
   const [showRewrite, setShowRewrite] = useState(false)
   const [rewriteInstruction, setRewriteInstruction] = useState('')
   const [rewriting, setRewriting] = useState(false)
@@ -221,7 +223,7 @@ export default function QuickWritePage() {
     const res = await fetch('/api/admin/quick-write', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
-      body: JSON.stringify({ ...form, jobDescText: jobDescText || undefined, regionOverride: regionOverride || undefined, specificQuestions: questionsText() || undefined, ...extra }),
+      body: JSON.stringify({ ...form, jobDescText: jobDescText || undefined, regionOverride: regionOverride || undefined, specificQuestions: questionsText() || undefined, provider, ...extra }),
       signal,
     })
     const data = await res.json().catch(() => ({ error: 'Server error.' }))
@@ -498,6 +500,26 @@ export default function QuickWritePage() {
                 className="w-full px-3 py-2 border border-orange-300 rounded text-xs focus:outline-none resize-none bg-orange-50" />
             </div>
 
+            {/* AI Provider Toggle */}
+            <div className="border border-gray-200 rounded-lg p-3 bg-gray-50">
+              <p className="text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wide">AI Provider (Admin only)</p>
+              <div className="flex gap-2">
+                <button type="button" onClick={() => setProvider('claude')}
+                  className={`flex-1 py-2 text-sm font-medium rounded-md border transition-colors cursor-pointer ${provider === 'claude' ? 'bg-[#0B4F6C] text-white border-[#0B4F6C]' : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'}`}>
+                  Claude (default)
+                </button>
+                <button type="button" onClick={() => setProvider('copilot')}
+                  className={`flex-1 py-2 text-sm font-medium rounded-md border transition-colors cursor-pointer ${provider === 'copilot' ? 'bg-[#0B4F6C] text-white border-[#0B4F6C]' : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'}`}>
+                  Copilot / GPT-4o
+                </button>
+              </div>
+              {provider === 'copilot' && (
+                <p className="text-xs text-amber-700 mt-2 bg-amber-50 border border-amber-200 rounded px-2 py-1">
+                  Uses GitHub Models (GPT-4o). Requires GITHUB_TOKEN in Railway env vars.
+                </p>
+              )}
+            </div>
+
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-md px-4 py-3">
                 <p className="text-sm text-red-700">{error}</p>
@@ -557,6 +579,9 @@ export default function QuickWritePage() {
                   <span className="text-xs px-2 py-1 rounded bg-blue-700 text-blue-100 font-medium">
                     {result.promptRegion === 'scotland' ? 'NHS Scotland' : result.promptRegion === 'england-wales' ? 'NHS England/Wales' : 'Generic'}
                   </span>
+                )}
+                {provider === 'copilot' && (
+                  <span className="text-xs px-2 py-1 rounded bg-amber-500 text-white font-medium">Copilot / GPT-4o</span>
                 )}
                 <button
                   onClick={() => { navigator.clipboard.writeText(result.statement); setCopied(true); setTimeout(() => setCopied(false), 3000) }}
