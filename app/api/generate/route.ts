@@ -59,6 +59,7 @@ export async function POST(req: NextRequest) {
     openingTemplate,
     pastedPersonSpec,
     regionOverride,
+    provider,
   } = await req.json()
 
   if (!client_code || !vacancy_url || !jobData) {
@@ -179,6 +180,7 @@ export async function POST(req: NextRequest) {
       bodyPattern: bodyPattern || undefined,
       openingTemplate: openingTemplate || undefined,
       regionOverride: regionOverride || undefined,
+      provider: provider === 'copilot' ? 'copilot' : 'claude',
     })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error'
