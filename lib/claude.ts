@@ -21,18 +21,34 @@ async function callGitHubModels(
 ): Promise<string> {
   const token = process.env.GITHUB_TOKEN
   if (!token) throw new Error('GITHUB_TOKEN is not configured on this server. Add it in Railway → Variables.')
-  const res = await fetch('https://models.inference.ai.azure.com/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify({
-      model: 'gpt-4o',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt },
-      ],
-      max_tokens: maxTokens,
-    }),
-  })
+
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 120_000)
+
+  let res: Response
+  try {
+    res = await fetch('https://models.inference.ai.azure.com/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({
+        model: 'gpt-4o',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt },
+        ],
+        max_tokens: maxTokens,
+      }),
+      signal: controller.signal,
+    })
+  } catch (fetchErr) {
+    const cause = fetchErr instanceof Error
+      ? ((fetchErr as NodeJS.ErrnoException).cause as Error)?.message || fetchErr.message
+      : String(fetchErr)
+    throw new Error(`GitHub Models connection failed (network error): ${cause}`)
+  } finally {
+    clearTimeout(timeout)
+  }
+
   if (!res.ok) {
     const body = await res.text().catch(() => '')
     throw new Error(`GitHub Models error ${res.status}: ${body.slice(0, 300)}`)
