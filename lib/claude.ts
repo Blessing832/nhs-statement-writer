@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
+import type { MessageCreateParamsNonStreaming } from '@anthropic-ai/sdk/resources/messages'
 import fs from 'fs'
 import path from 'path'
 import { Client, ScrapeResult, StatementAnalysis } from './types'
@@ -793,7 +794,7 @@ async function generateParallel(
         max_tokens: statementMaxTokens,
         system: [{ type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } }],
         messages: [{ role: 'user', content: statementUserPrompt }],
-      } as Parameters<typeof anthropic.messages.create>[0])
+      } as MessageCreateParamsNonStreaming)
     ),
     anthropic.messages.create({
       model: 'claude-sonnet-4-6',
@@ -1032,7 +1033,7 @@ export async function generateStatement(
     max_tokens: genericMaxTokens,
     system: [{ type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } }],
     messages: [{ role: 'user', content: userPrompt }],
-  } as Parameters<typeof anthropic.messages.create>[0])
+  } as MessageCreateParamsNonStreaming)
 
   const content = message.content[0]
   if (content.type !== 'text') throw new Error('Unexpected response type from generation service')
