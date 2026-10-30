@@ -372,6 +372,172 @@ async function applyV3WordFilter(
   return result
 }
 
+// ── Paragraph-level word limit trimming ───────────────────────────────────────
+
+function isHeadingParagraph(para: string): boolean {
+  const t = para.trim()
+  if (!t) return false
+  const words = t.split(/\s+/).filter(Boolean)
+  // Heading: short (< 10 words), no sentence-ending punctuation
+  return words.length < 10 && !/[.!?]$/.test(t)
+}
+
+function findCriterionPhrasesInParagraph(
+  para: string,
+  essential: string[],
+  desirable: string[]
+): string[] {
+  const lowerPara = para.toLowerCase()
+  const found: string[] = []
+  for (const c of [...essential, ...desirable]) {
+    const words = c.trim().split(/\s+/).filter(Boolean)
+    if (words.length === 0) continue
+    if (words.length <= 3) {
+      if (lowerPara.includes(c.toLowerCase())) found.push(c)
+      continue
+    }
+    for (let i = 0; i <= words.length - 4; i++) {
+      if (lowerPara.includes(words.slice(i, i + 4).join(' ').toLowerCase())) {
+        if (!found.includes(c)) found.push(c)
+        break
+      }
+    }
+  }
+  return found
+}
+
+async function rewriteParagraphToLimit(
+  para: string,
+  wordLimit: number,
+  criterionPhrases: string[]
+): Promise<string> {
+  const keepLine = criterionPhrases.length > 0
+    ? ` Keep these exact phrases unchanged: ${criterionPhrases.map(p => `"${p}"`).join(', ')}.`
+    : ''
+  const msg = await anthropic.messages.create({
+    model: 'claude-sonnet-4-6',
+    max_tokens: 300,
+    temperature: 0.7,
+    system: 'You are a precise text editor. Return only the rewritten paragraph, nothing else before or after it.',
+    messages: [{
+      role: 'user',
+      content: `Rewrite this paragraph in at most ${wordLimit} words.${keepLine} Keep the facts. Cut adjectives and repetition. Return only the rewritten paragraph.\n\n${para}`,
+    }],
+  })
+  const out = msg.content[0]?.type === 'text' ? msg.content[0].text.trim() : ''
+  return out || para
+}
+
+async function trimStatementV3(
+  statement: string,
+  essentialCriteria: string[],
+  desirableCriteria: string[]
+): Promise<string> {
+  const countW = (t: string) => t.trim().split(/\s+/).filter(Boolean).length
+
+  let paragraphs = statement.split(/\n\n+/).filter(p => p.trim())
+
+  // Opening = first non-heading paragraph
+  const openingIdx = paragraphs.findIndex(p => !isHeadingParagraph(p))
+
+  const getLimit = (idx: number) => idx === openingIdx ? 170 : 130
+
+  // Up to 3 rounds; each round rewrites all over-limit paragraphs in parallel
+  for (let round = 0; round < 3; round++) {
+    const overLimit = paragraphs
+      .map((para, idx) => ({ idx, para, limit: getLimit(idx) }))
+      .filter(({ para, idx }) => !isHeadingParagraph(para) && countW(para) > getLimit(idx))
+
+    if (overLimit.length === 0) break
+
+    console.log(`V3_TRIM round=${round + 1} paragraphs_over=${overLimit.length}`)
+
+    const rewrites = await Promise.all(
+      overLimit.map(({ para, limit }) =>
+        rewriteParagraphToLimit(
+          para, limit,
+          findCriterionPhrasesInParagraph(para, essentialCriteria, desirableCriteria)
+        ).catch(() => para)
+      )
+    )
+
+    overLimit.forEach(({ idx }, j) => { paragraphs[idx] = rewrites[j] })
+  }
+
+  let result = paragraphs.join('\n\n')
+
+  // Fallback: if total still > 1,420, rewrite longest content paragraphs at 100 words
+  if (countW(result) > 1420) {
+    const contentByLength = paragraphs
+      .map((para, idx) => ({ idx, para }))
+      .filter(({ para }) => !isHeadingParagraph(para))
+      .sort((a, b) => countW(b.para) - countW(a.para))
+
+    for (const { idx, para } of contentByLength) {
+      if (countW(paragraphs.join('\n\n')) <= 1420) break
+      const fallbackLimit = idx === openingIdx ? 150 : 100
+      if (countW(para) <= fallbackLimit) continue
+      try {
+        paragraphs[idx] = await rewriteParagraphToLimit(
+          para, fallbackLimit,
+          findCriterionPhrasesInParagraph(para, essentialCriteria, desirableCriteria)
+        )
+        console.log(`V3_TRIM_FALLBACK idx=${idx} wc=${countW(paragraphs[idx])}`)
+      } catch { /* non-fatal */ }
+    }
+
+    result = paragraphs.join('\n\n')
+  }
+
+  const finalWc = countW(result)
+  if (finalWc > 1420) {
+    throw new Error(`V3_WORD_LIMIT: statement is ${finalWc} words after all trim attempts — reduce manually`)
+  }
+
+  console.log(`V3_TRIM complete: ${finalWc} words`)
+  return result
+}
+
+// ── Name / placeholder check ───────────────────────────────────────────────────
+
+async function cleanNameFromStatementV3(
+  statement: string,
+  fullName: string
+): Promise<string> {
+  let result = statement
+
+  // 1. "My name is ..." sentence
+  if (/[Mm]y\s+name\s+is/.test(result)) {
+    console.warn('V3_NAME_CHECK: found "My name is" — removing sentence')
+    result = result.replace(/[^.!?\n]*[Mm]y\s+name\s+is[^.!?\n]*[.!?]\s*/g, '')
+  }
+
+  // 2. Candidate's actual name (any part longer than 2 chars)
+  if (fullName) {
+    for (const part of fullName.trim().split(/\s+/).filter(p => p.length > 2)) {
+      const escaped = part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      const re = new RegExp(`[^.!?\\n]*\\b${escaped}\\b[^.!?\\n]*[.!?]`, 'g')
+      if (re.test(result)) {
+        console.warn(`V3_NAME_CHECK: found name "${part}" — removing sentence`)
+        result = result.replace(re, '')
+      }
+    }
+  }
+
+  // 3. Square-bracket placeholders e.g. [Candidate Name], [Trust Name]
+  if (/\[[^\]]{1,100}\]/.test(result)) {
+    console.warn('V3_NAME_CHECK: found square-bracket placeholder — removing')
+    // Remove the whole sentence if possible, otherwise just the bracket
+    result = result.replace(/[^.!?\n]*\[[^\]]{1,100}\][^.!?\n]*[.!?]\s*/g, '')
+    result = result.replace(/\[[^\]]{1,100}\]/g, '')
+  }
+
+  return result
+    .replace(/[ \t]{2,}/g, ' ')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+}
+
 async function generateParallelV3(
   client: Client,
   jobData: ScrapeResult,
@@ -583,9 +749,9 @@ async function generateParallelV3(
     .replace(/^(Story|Scenario)\s*\d*\s*:\s*/gim, '')
   if (!statement) throw new Error('V3 generation returned empty statement')
 
-  // ── Word count enforcement ─────────────────────────────────────────────────
+  // ── Paragraph-level word limit enforcement ────────────────────────────────
   if (appMode !== 'questions-only') {
-    statement = await enforceWordCountV3(statement)
+    statement = await trimStatementV3(statement, essentialCriteria, desirableCriteria)
   }
 
   // ── V3 flag-mode word filter ───────────────────────────────────────────────
@@ -601,14 +767,23 @@ async function generateParallelV3(
     console.warn('V3 word filter failed (non-fatal):', err)
   }
 
-  // Second word count pass — only needed if the filter changed the statement
+  // Second trim pass if filter changed word count significantly
   const filterChangedWords = Math.abs(countWordsV3(statement) - countWordsV3(preFilterStatement)) > 5
-  if (filterChangedWords) {
-    statement = await enforceWordCountV3(statement)
+  if (filterChangedWords && appMode !== 'questions-only') {
+    statement = await trimStatementV3(statement, essentialCriteria, desirableCriteria)
   }
+
+  // ── Name / placeholder check ───────────────────────────────────────────────
+  statement = await cleanNameFromStatementV3(statement, client.full_name)
 
   // Final defensive strip — ensure NOTES never leak into the returned statement
   statement = stripNotesSection(statement)
+
+  // Hard final guard — never return a statement over 1,420 words
+  const finalWc = countWordsV3(statement)
+  if (finalWc > 1420) {
+    throw new Error(`V3_WORD_LIMIT: statement is ${finalWc} words after all trim attempts — reduce manually`)
+  }
 
   console.log(`V3 GEN region=england-wales mode=${appMode} provider=${options.provider || 'claude'} wc=${countWordsV3(statement)} titleMismatch=${hasTitleMismatch}`)
 

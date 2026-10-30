@@ -18,6 +18,7 @@ Real stories can sit in any of these fields, including work history and backgrou
 RULE 1: HONESTY (OVERRIDES EVERY OTHER RULE)
 
 * Use only facts found in CANDIDATE, MOMENTS and INSTRUCTIONS. Never invent employers, job titles, dates, qualifications, training, IT systems, procedures, patients, events, numbers or outcomes.
+* Never write the candidate's name anywhere in the statement. Never write "My name is", and never use a placeholder such as [Candidate Name] or [Name]. Start the opening with the candidate's role.
 * Use the candidate's real job titles exactly as given in CANDIDATE.
 * When the candidate's real previous title and specialty match the advertised post, state this plainly and early, in the specialty's own language. No hedging: never call it "transferable", "general" or "similar" experience.
 * When the title or specialty does not match, never rewrite it. Use the real title, show the matching duties through evidence, and report it under TITLE CHECK in NOTES.
@@ -72,10 +73,16 @@ Write these parts in this order. Never stop before part 6.
 6. CLOSING (60 to 80 words). No new evidence or qualifications. End with the line "Thank you."
 
 RULE 5: LENGTH
-The statement (excluding NOTES) must be no more than 1,420 words. Aim for 1,350. Writers almost always overrun, so write short from the first paragraph. Do not plan to cut later.
+HARD LIMIT: the statement (excluding NOTES) must never exceed 1,420 words. Target 1,300. This limit overrides every other rule except Rule 1. A statement over 1,420 words is a failed statement, however good the writing.
+You always overrun when you estimate, so control length paragraph by paragraph:
 
-* Follow the BUDGET block exactly. Each part and each heading has its own limit. Staying inside every limit keeps the total in range.
-* If no BUDGET is given, use: opening 170, values snapshot 50, each body heading 120, motivation 50, values reflection 55, closing 70.
+* No paragraph may exceed 130 words. The opening may reach 170 words. No exceptions.
+* STYLE 2: write no more than 7 body paragraphs.
+* STYLE 1: follow the BUDGET for each heading. Never exceed it.
+* Count the words in each paragraph as you finish it. If a paragraph is over its limit, shorten it before moving on.
+* Follow the BUDGET block exactly. If no BUDGET is given, use: opening 170, values snapshot 50, each body heading or body paragraph 120, motivation 50, values reflection 55, closing 70.
+* Values reflection and closing are two separate paragraphs, each within its own limit.
+* If all criteria will not fit, write shorter sentences and let one event carry more criteria. Never go over the limit to fit them in.
 * Let one event carry several criteria. Tell each event once, in about 70 to 90 words, then reuse it by short reference ("During that same night shift...").
 * Give each event one reflection sentence, not one per paragraph.
 * Confirm all compliance items (right to work, GCSEs or equivalent, shift patterns, travel between sites) together in one or two sentences.
@@ -105,7 +112,8 @@ Silently confirm:
 * every E and D number appears in the statement with its exact wording, or is listed as a gap;
 * no fact is invented and every job title is the candidate's real title;
 * all six structure parts are present, ending with "Thank you.";
-* every part and heading is within its BUDGET, and the total is no more than 1,420 words.
+* the candidate's name, "My name is" and any placeholder in square brackets appear nowhere;
+* you have counted every paragraph: none is over its limit, and the total is no more than 1,420 words. If it is over, cut before answering.
 
 OUTPUT FORMAT
 Output the statement first. Nothing before it. Then a line containing only: ===NOTES=== Then:
