@@ -279,9 +279,10 @@ function stripNotesSection(text: string): string {
 async function enforceWordCountV3(text: string, attempt = 0): Promise<string> {
   const clean = stripNotesSection(text)
   const wc = countWordsV3(clean)
-  if (wc >= 1380 && wc <= 1420) return clean
-  if (attempt >= 2) {
-    console.warn(`V3 word count still off after 2 attempts: ${wc} words — returning closest version`)
+  // Accept 1,300–1,420: BUDGET block + Rule 5 aim for 1,350 so most outputs land here
+  if (wc >= 1300 && wc <= 1420) return clean
+  if (attempt >= 1) {
+    console.warn(`V3 word count still off after 1 attempt: ${wc} words — returning closest version`)
     return clean
   }
   console.log(`V3 word count adjustment attempt ${attempt + 1}: ${wc} words → targeting 1,400`)
@@ -417,60 +418,46 @@ async function generateParallelV3(
     console.warn(`STORY_CHECK: ${storyWarning} (client ${client.id})`)
   }
 
-  // ── Analysis call FIRST ────────────────────────────────────────────────────
-  const analysisUserPrompt = buildUserPrompt(client, jobData, 'england-wales', { outputMode: 'analysis-only' })
-  const [analysisResult, intelResult] = await Promise.all([
+  // ── Step 1: Haiku criteria extraction + trust intel (parallel, ~8s) ─────────
+  // Using Haiku to extract criteria quickly lets us start generation and analysis
+  // in parallel in Step 2, instead of waiting for a Sonnet analysis before generating.
+  const rawTextForExtract = jobData.rawText.length <= 24000
+    ? jobData.rawText
+    : jobData.rawText.slice(0, 8000) + jobData.rawText.slice(-16000)
+
+  const [haikuExtractMsg, intelResult] = await Promise.all([
     anthropic.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 2000,
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1200,
       temperature: 0,
-      system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
-      messages: [{ role: 'user', content: analysisUserPrompt }],
-    }),
+      system: 'You are an NHS job application analyst. Extract ONLY the person specification criteria from the job posting. Return a JSON object with two arrays: "essential" and "desirable". Each item is a plain string. Include ALL criteria from every section (Education, Experience, Skills, Aptitudes, Disposition, Particular Requirements, etc.). Do not include job duties or descriptions. Return only valid JSON, no markdown.',
+      messages: [{ role: 'user', content: `Extract all person specification criteria from this job posting:\n\n${rawTextForExtract}` }],
+    }).catch(() => null),
     jobData.organisation ? fetchTrustIntel(jobData.organisation).catch(() => null) : Promise.resolve(null),
   ])
 
   const trustIntelText = intelResult ? formatTrustIntel(intelResult) : undefined
 
+  // Parse Haiku criteria — used to build the generation prompt
   let essentialCriteria: string[] = []
   let desirableCriteria: string[] = []
-  let previousRoleDuties: string[] = []
-  let analysis: StatementAnalysis | null = null
-
-  const analysisContent = analysisResult.content[0]
-  if (analysisContent?.type === 'text') {
-    const cleanedAnalysis = analysisContent.text.replace(/ — /g, ', ').replace(/—/g, ', ')
-    const jsonMatch = cleanedAnalysis.match(/\{[\s\S]*\}/)
-    if (jsonMatch) {
-      try {
-        const p: {
-          enhancedPreviousTitle?: string
-          jobSummary?: string
-          essentialCriteria?: string[]
-          desirableCriteria?: string[]
-          meetsAllEssential?: boolean
-          previousRoleDuties?: string[]
-        } = JSON.parse(jsonMatch[0])
-        essentialCriteria = Array.isArray(p.essentialCriteria) ? p.essentialCriteria : []
-        desirableCriteria = Array.isArray(p.desirableCriteria) ? p.desirableCriteria : []
-        previousRoleDuties = Array.isArray(p.previousRoleDuties) ? p.previousRoleDuties : []
-        if (essentialCriteria.length > 0) {
-          analysis = {
-            jobSummary: p.jobSummary || '',
-            enhancedPreviousTitle: p.enhancedPreviousTitle,
-            essentialCriteria,
-            desirableCriteria,
-            candidateStrengths: [],
-            potentialGaps: [],
-            keyDuties: [],
-            meetsAllEssential: p.meetsAllEssential,
-          }
-        }
-      } catch { /* non-critical */ }
-    }
+  if (haikuExtractMsg) {
+    try {
+      const haikuText = haikuExtractMsg.content[0]?.type === 'text' ? haikuExtractMsg.content[0].text.trim() : ''
+      const cleanJson = haikuText.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim()
+      const parsed = JSON.parse(cleanJson)
+      if (Array.isArray(parsed.essential) && parsed.essential.length > 0) {
+        essentialCriteria = parsed.essential.filter((c: unknown) => typeof c === 'string')
+        desirableCriteria = Array.isArray(parsed.desirable) ? parsed.desirable.filter((c: unknown) => typeof c === 'string') : []
+        console.log(`V3_HAIKU_EXTRACT essential=${essentialCriteria.length} desirable=${desirableCriteria.length}`)
+      }
+    } catch { /* non-critical — generation proceeds without explicit criteria list */ }
   }
 
-  // ── Build V3 user prompt ───────────────────────────────────────────────────
+  // ── Step 2: Sonnet analysis + generation in parallel (~25s) ───────────────
+  // Both calls run at the same time. Analysis enriches the UI and pipeline;
+  // generation uses the Haiku-extracted criteria already in the user prompt.
+  const analysisUserPrompt = buildUserPrompt(client, jobData, 'england-wales', { outputMode: 'analysis-only' })
   const v3UserPrompt = buildV3UserPrompt(
     client,
     jobData,
@@ -479,24 +466,98 @@ async function generateParallelV3(
     { ...options, style },
     trustIntelText
   )
-
-  // ── Generation call ────────────────────────────────────────────────────────
   const v3SystemPrompt = getEnglandWalesV3Prompt()
+
+  let previousRoleDuties: string[] = []
+  let analysis: StatementAnalysis | null = null
   let rawOutput: string
 
+  const analysisCall = anthropic.messages.create({
+    model: 'claude-sonnet-4-6',
+    max_tokens: 2000,
+    temperature: 0,
+    system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
+    messages: [{ role: 'user', content: analysisUserPrompt }],
+  }).catch(() => null)
+
   if (options.provider === 'copilot') {
-    rawOutput = await withRetry(() => callGPT4o(v3SystemPrompt, v3UserPrompt, 4000))
+    const [analysisResult, copilotOutput] = await Promise.all([
+      analysisCall,
+      withRetry(() => callGPT4o(v3SystemPrompt, v3UserPrompt, 4000)),
+    ])
+    rawOutput = copilotOutput
+    if (analysisResult) {
+      const analysisContent = analysisResult.content[0]
+      if (analysisContent?.type === 'text') {
+        const cleanedAnalysis = analysisContent.text.replace(/ — /g, ', ').replace(/—/g, ', ')
+        const jsonMatch = cleanedAnalysis.match(/\{[\s\S]*\}/)
+        if (jsonMatch) {
+          try {
+            const p: {
+              enhancedPreviousTitle?: string; jobSummary?: string
+              essentialCriteria?: string[]; desirableCriteria?: string[]
+              meetsAllEssential?: boolean; previousRoleDuties?: string[]
+            } = JSON.parse(jsonMatch[0])
+            if (Array.isArray(p.essentialCriteria) && p.essentialCriteria.length > 0) {
+              essentialCriteria = p.essentialCriteria
+              desirableCriteria = Array.isArray(p.desirableCriteria) ? p.desirableCriteria : []
+            }
+            previousRoleDuties = Array.isArray(p.previousRoleDuties) ? p.previousRoleDuties : []
+            if (essentialCriteria.length > 0) {
+              analysis = {
+                jobSummary: p.jobSummary || '', enhancedPreviousTitle: p.enhancedPreviousTitle,
+                essentialCriteria, desirableCriteria,
+                candidateStrengths: [], potentialGaps: [], keyDuties: [],
+                meetsAllEssential: p.meetsAllEssential,
+              }
+            }
+          } catch { /* non-critical */ }
+        }
+      }
+    }
   } else {
-    const statementMsg = await withRetry(() =>
-      anthropic.messages.create({
-        model: generationModel,
-        max_tokens: 2400,
-        temperature: 1.0,
-        system: v3SystemPrompt,
-        messages: [{ role: 'user', content: v3UserPrompt }],
-      } as MessageCreateParamsNonStreaming)
-    )
+    const [analysisResult, statementMsg] = await Promise.all([
+      analysisCall,
+      withRetry(() =>
+        anthropic.messages.create({
+          model: generationModel,
+          max_tokens: 2600,
+          temperature: 1.0,
+          system: v3SystemPrompt,
+          messages: [{ role: 'user', content: v3UserPrompt }],
+        } as MessageCreateParamsNonStreaming)
+      ),
+    ])
     rawOutput = statementMsg.content[0]?.type === 'text' ? statementMsg.content[0].text.trim() : ''
+    if (analysisResult) {
+      const analysisContent = analysisResult.content[0]
+      if (analysisContent?.type === 'text') {
+        const cleanedAnalysis = analysisContent.text.replace(/ — /g, ', ').replace(/—/g, ', ')
+        const jsonMatch = cleanedAnalysis.match(/\{[\s\S]*\}/)
+        if (jsonMatch) {
+          try {
+            const p: {
+              enhancedPreviousTitle?: string; jobSummary?: string
+              essentialCriteria?: string[]; desirableCriteria?: string[]
+              meetsAllEssential?: boolean; previousRoleDuties?: string[]
+            } = JSON.parse(jsonMatch[0])
+            if (Array.isArray(p.essentialCriteria) && p.essentialCriteria.length > 0) {
+              essentialCriteria = p.essentialCriteria
+              desirableCriteria = Array.isArray(p.desirableCriteria) ? p.desirableCriteria : []
+            }
+            previousRoleDuties = Array.isArray(p.previousRoleDuties) ? p.previousRoleDuties : []
+            if (essentialCriteria.length > 0) {
+              analysis = {
+                jobSummary: p.jobSummary || '', enhancedPreviousTitle: p.enhancedPreviousTitle,
+                essentialCriteria, desirableCriteria,
+                candidateStrengths: [], potentialGaps: [], keyDuties: [],
+                meetsAllEssential: p.meetsAllEssential,
+              }
+            }
+          } catch { /* non-critical */ }
+        }
+      }
+    }
   }
 
   // ── Parse ===NOTES=== ──────────────────────────────────────────────────────
