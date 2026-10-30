@@ -734,62 +734,6 @@ function AdminGenerateInner() {
                 </h3>
                 <AnalysisPanel analysis={result.analysis} region={result.promptRegion} />
 
-                {/* V3 Notes Panel */}
-                {result.analysis?.notesParsed && (
-                  <div className="mt-5 pt-4 border-t border-gray-100 space-y-3">
-                    <h4 className="font-semibold text-gray-500 uppercase tracking-wide text-xs">V3 Writer Notes</h4>
-                    {result.analysis.hasTitleMismatch && (
-                      <div className="bg-red-50 border border-red-300 rounded px-3 py-2 text-xs text-red-800 font-semibold">
-                        ⚠ TITLE CHECK: MISMATCH — {result.analysis.notesParsed.titleCheck}
-                      </div>
-                    )}
-                    {!result.analysis.hasTitleMismatch && result.analysis.notesParsed.titleCheck && (
-                      <div className="bg-green-50 border border-green-200 rounded px-3 py-2 text-xs text-green-800">
-                        ✓ TITLE CHECK: {result.analysis.notesParsed.titleCheck}
-                      </div>
-                    )}
-                    {result.analysis.notesParsed.gaps.length > 0 && (
-                      <div>
-                        <p className="text-xs font-semibold text-amber-700 mb-1">Gaps</p>
-                        <ul className="space-y-0.5">
-                          {result.analysis.notesParsed.gaps.map((g: string, i: number) => (
-                            <li key={i} className="text-xs text-amber-800">• {g}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {result.analysis.notesParsed.coverage.length > 0 && (
-                      <div>
-                        <p className="text-xs font-semibold text-gray-500 mb-1">Coverage</p>
-                        <ul className="space-y-0.5">
-                          {result.analysis.notesParsed.coverage.map((c: string, i: number) => (
-                            <li key={i} className="text-xs text-gray-600">• {c}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {result.analysis.notesParsed.questions.length > 0 && (
-                      <div>
-                        <p className="text-xs font-semibold text-blue-700 mb-1">Questions for candidate</p>
-                        <ul className="space-y-0.5 mb-2">
-                          {result.analysis.notesParsed.questions.map((q: string, i: number) => (
-                            <li key={i} className="text-xs text-blue-700">• {q}</li>
-                          ))}
-                        </ul>
-                        {selectedClient && (
-                          <a
-                            href={`/admin/clients/${selectedClient.client_code}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-block text-xs font-medium text-white rounded px-3 py-1.5 mt-1"
-                            style={{ backgroundColor: '#0B4F6C' }}>
-                            Open {selectedClient.full_name}&apos;s profile →
-                          </a>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                )}
               </div>
             </div>
 

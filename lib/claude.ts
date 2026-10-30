@@ -504,6 +504,9 @@ async function generateParallelV3(
     console.warn('V3 word filter failed (non-fatal):', err)
   }
 
+  // Second word count pass — word filter rewrites can add words
+  statement = await enforceWordCountV3(statement)
+
   // Final defensive strip — ensure NOTES never leak into the returned statement
   statement = stripNotesSection(statement)
 
