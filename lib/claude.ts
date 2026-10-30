@@ -258,7 +258,7 @@ async function enforceWordCountV3(text: string, attempt = 0): Promise<string> {
   console.log(`V3 word count adjustment attempt ${attempt + 1}: ${wc} words → targeting 1,400`)
   const msg = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
-    max_tokens: 2800,
+    max_tokens: 2000,
     temperature: 0.7,
     system: 'You are a precise text editor. You MUST hit the target word count.',
     messages: [{
@@ -461,7 +461,7 @@ async function generateParallelV3(
     const statementMsg = await withRetry(() =>
       anthropic.messages.create({
         model: generationModel,
-        max_tokens: 4000,
+        max_tokens: 2400,
         temperature: 1.0,
         system: v3SystemPrompt,
         messages: [{ role: 'user', content: v3UserPrompt }],
@@ -499,6 +499,7 @@ async function generateParallelV3(
   }
 
   // ── V3 flag-mode word filter ───────────────────────────────────────────────
+  const preFilterStatement = statement
   try {
     let dbRows: Array<{ word: string; replacement: string; enabled: boolean }> = []
     try {
@@ -510,8 +511,11 @@ async function generateParallelV3(
     console.warn('V3 word filter failed (non-fatal):', err)
   }
 
-  // Second word count pass — word filter rewrites can add words
-  statement = await enforceWordCountV3(statement)
+  // Second word count pass — only needed if the filter changed the statement
+  const filterChangedWords = Math.abs(countWordsV3(statement) - countWordsV3(preFilterStatement)) > 5
+  if (filterChangedWords) {
+    statement = await enforceWordCountV3(statement)
+  }
 
   // Final defensive strip — ensure NOTES never leak into the returned statement
   statement = stripNotesSection(statement)

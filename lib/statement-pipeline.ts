@@ -101,7 +101,7 @@ async function patchStatement(
 
   const msg = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
-    max_tokens: 6000,
+    max_tokens: 3500,
     temperature: 0.7,
     system: systemPrompt,
     messages: [{ role: 'user', content: userMessage }],

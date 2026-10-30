@@ -81,7 +81,7 @@ Write these parts in this order. Never stop before part 6.
 6. CLOSING (80 to 120 words). No new evidence or qualifications. End with the line "Thank you."
 
 RULE 5: LENGTH
-The statement (excluding NOTES) must be between 1,380 and 1,420 words, aiming for 1,400. To cut, remove adjectives, repeated points and filler. Never drop a criterion or a structure part to save words.
+The statement (excluding NOTES) must be between 1,380 and 1,420 words. Write concisely — aim for 1,380 so there is room to add words if any section is thin, but never exceed 1,420. To cut, remove adjectives, repeated points and filler. Never drop a criterion or a structure part to save words.
 
 RULE 6: VOICE
 
