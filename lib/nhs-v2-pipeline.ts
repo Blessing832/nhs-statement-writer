@@ -54,7 +54,9 @@ function trimToWordLimit(text: string, limit: number): string {
   const closingIdx = text.indexOf(CLOSING)
   const statementPart = closingIdx >= 0 ? text.slice(0, closingIdx + CLOSING.length) : text
   const questionsTail = closingIdx >= 0 ? text.slice(closingIdx + CLOSING.length) : ''
-  const paragraphs = statementPart.split(/\n\n+/)
+  // Normalise: ensure headings and standalone bold lines always open a new paragraph
+  const normalized = statementPart.replace(/\n(?=\*\*[^\n]+\*\*)/g, '\n\n')
+  const paragraphs = normalized.split(/\n\n+/).filter(p => p.trim())
   let totalWords = 0
   const kept: string[] = []
   for (const para of paragraphs) {
@@ -68,7 +70,7 @@ function trimToWordLimit(text: string, limit: number): string {
         const paraWords = para.trim().split(/\s+/)
         const partial = paraWords.slice(0, remaining).join(' ')
         const lastPeriod = partial.lastIndexOf('.')
-        if (lastPeriod > partial.length * 0.6) kept.push(partial.slice(0, lastPeriod + 1))
+        if (lastPeriod > partial.length * 0.5) kept.push(partial.slice(0, lastPeriod + 1))
       }
       break
     }
@@ -159,6 +161,7 @@ async function v2Audit(
   const msg = await anthropic.messages.create({
     model: 'claude-haiku-4-5-20251001',
     max_tokens: 4000,
+    temperature: 0,
     system: systemPrompt,
     messages: [{ role: 'user', content: userMessage }],
   })
@@ -189,12 +192,13 @@ async function v2Patch(
   const msg = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 6000,
+    temperature: 0.7,
     system: systemPrompt,
     messages: [{ role: 'user', content: userMessage }],
   })
   const text = msg.content[0].type === 'text' ? msg.content[0].text.trim() : statement
   return {
-    statement: text.replace(/ — /g, ', ').replace(/—/g, ', ').replace(/\*\*/g, ''),
+    statement: text.replace(/ — /g, ', ').replace(/—/g, ', ').replace(/ – /g, ', ').replace(/–/g, ', ').replace(/\*\*/g, ''),
     inputTokens: msg.usage.input_tokens,
     outputTokens: msg.usage.output_tokens,
   }

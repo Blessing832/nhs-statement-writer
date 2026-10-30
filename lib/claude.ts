@@ -259,10 +259,11 @@ async function enforceWordCountV3(text: string, attempt = 0): Promise<string> {
   const msg = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 2800,
-    system: 'You are a precise text editor.',
+    temperature: 0.7,
+    system: 'You are a precise text editor. You MUST hit the target word count.',
     messages: [{
       role: 'user',
-      content: `This NHS supporting statement is ${wc} words. Adjust it to exactly 1,400 words (range 1,380–1,420).\n\nRules:\n- Keep every section and every exact person specification criterion phrase\n- Keep the closing line "Thank you." unchanged\n- Cut adjectives, repeated points and filler only\n- Return ONLY the adjusted statement text, nothing else\n- Do NOT add any notes, analysis or metadata after the statement\n\n${clean}`,
+      content: `This NHS supporting statement is ${wc} words. You MUST rewrite it to land between 1,380 and 1,420 words. Target 1,400 words exactly.\n\nMANDATORY rules:\n- Keep every section and every exact person specification criterion phrase\n- Keep the closing line "Thank you." unchanged\n- ${wc > 1420 ? 'CUT words: remove adjectives, repeated points, filler phrases, over-long sentences' : 'ADD words: expand thin examples, add one more specific detail per criterion'}\n- Return ONLY the statement text — nothing else before or after it\n- Do NOT add any section marked NOTES or ===NOTES===\n\nCURRENT STATEMENT (${wc} words — must become 1,380–1,420):\n${clean}`,
     }],
   })
   const adjusted = msg.content[0].type === 'text' ? stripNotesSection(msg.content[0].text) : clean
@@ -317,6 +318,7 @@ async function applyV3WordFilter(
   const msg = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 1500,
+    temperature: 0.7,
     system: 'You are a precise text editor.',
     messages: [{
       role: 'user',
@@ -392,6 +394,7 @@ async function generateParallelV3(
     anthropic.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: 2000,
+      temperature: 0,
       system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
       messages: [{ role: 'user', content: analysisUserPrompt }],
     }),
@@ -459,6 +462,7 @@ async function generateParallelV3(
       anthropic.messages.create({
         model: generationModel,
         max_tokens: 4000,
+        temperature: 1.0,
         system: v3SystemPrompt,
         messages: [{ role: 'user', content: v3UserPrompt }],
       } as MessageCreateParamsNonStreaming)
@@ -481,6 +485,8 @@ async function generateParallelV3(
   statement = statement
     .replace(/ — /g, ', ')
     .replace(/—/g, ', ')
+    .replace(/ – /g, ', ')
+    .replace(/–/g, ', ')
     .replace(/ -- /g, ', ')
     .replace(/--/g, ', ')
     .replace(/\*\*/g, '')
@@ -1105,6 +1111,7 @@ async function generateParallel(
       const preExtractMsg = await anthropic.messages.create({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 1200,
+        temperature: 0,
         system: 'You are an NHS job application analyst. Extract ONLY the person specification criteria from the job posting. Return a JSON object with two arrays: "essential" and "desirable". Each item is a plain string. Include ALL criteria from every section (Education, Experience, Skills, Aptitudes, Disposition, Physical, Particular Requirements, etc.). Do not include job duties, responsibilities, or descriptions. Return only valid JSON, no markdown.',
         messages: [{ role: 'user', content: `Extract all person specification criteria from this job posting:\n\n${rawText}` }],
       })
@@ -1172,6 +1179,7 @@ async function generateParallel(
       anthropic.messages.create({
         model: 'claude-sonnet-4-6',
         max_tokens: 2000,
+        temperature: 0,
         system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
         messages: [{ role: 'user', content: analysisUserPrompt }],
       }),
@@ -1211,6 +1219,7 @@ async function generateParallel(
       anthropic.messages.create({
         model: generationModel,
         max_tokens: statementMaxTokens,
+        temperature: 1.0,
         system: [{ type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } }],
         messages: [{ role: 'user', content: statementUserPrompt }],
       } as MessageCreateParamsNonStreaming)
@@ -1218,6 +1227,7 @@ async function generateParallel(
     anthropic.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: 2000,
+      temperature: 0,
       system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
       messages: [{ role: 'user', content: analysisUserPrompt }],
     }),
@@ -1241,6 +1251,8 @@ async function generateParallel(
     .trim()
     .replace(/ — /g, ', ')
     .replace(/—/g, ', ')
+    .replace(/ – /g, ', ')
+    .replace(/–/g, ', ')
     .replace(/ -- /g, ', ')
     .replace(/--/g, ', ')
     .replace(/\*\*/g, '')
@@ -1269,7 +1281,8 @@ async function generateParallel(
       ? statement.slice(closingIdx + CLOSING.length)
       : ''
 
-    const paragraphs = statementPart.split(/\n\n+/)
+    const normalizedPart = statementPart.replace(/\n(?=\*\*[^\n]+\*\*)/g, '\n\n')
+    const paragraphs = normalizedPart.split(/\n\n+/).filter(p => p.trim())
     let totalWords = 0
     const kept: string[] = []
     for (const para of paragraphs) {
@@ -1284,7 +1297,7 @@ async function generateParallel(
           const paraWords = para.trim().split(/\s+/)
           const partial = paraWords.slice(0, remaining).join(' ')
           const lastPeriod = partial.lastIndexOf('.')
-          if (lastPeriod > partial.length * 0.6) kept.push(partial.slice(0, lastPeriod + 1))
+          if (lastPeriod > partial.length * 0.5) kept.push(partial.slice(0, lastPeriod + 1))
         }
         break
       }
@@ -1364,6 +1377,7 @@ export async function analyzeJobPosting(
     const msg = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: 2000,
+      temperature: 0,
       system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
       messages: [{ role: 'user', content: prompt }],
     })
@@ -1372,6 +1386,8 @@ export async function analyzeJobPosting(
     const cleaned = content.text
       .replace(/ — /g, ', ')
       .replace(/—/g, ', ')
+      .replace(/ – /g, ', ')
+      .replace(/–/g, ', ')
       .replace(/ -- /g, ', ')
       .replace(/--/g, ', ')
     const jsonMatch = cleaned.match(/\{[\s\S]*\}/)
@@ -1453,6 +1469,7 @@ export async function generateStatement(
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: genericMaxTokens,
+    temperature: 1.0,
     system: [{ type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } }],
     messages: [{ role: 'user', content: userPrompt }],
   } as MessageCreateParamsNonStreaming)
@@ -1460,7 +1477,7 @@ export async function generateStatement(
   const content = message.content[0]
   if (content.type !== 'text') throw new Error('Unexpected response type from generation service')
 
-  const cleanedText = content.text.replace(/ — /g, ', ').replace(/—/g, ', ').replace(/ -- /g, ', ').replace(/--/g, ', ')
+  const cleanedText = content.text.replace(/ — /g, ', ').replace(/—/g, ', ').replace(/ – /g, ', ').replace(/–/g, ', ').replace(/ -- /g, ', ').replace(/--/g, ', ')
 
   // Try to extract JSON: code fence first, then bare object match
   let rawJson: string | null = null

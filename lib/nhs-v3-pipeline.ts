@@ -89,6 +89,7 @@ export async function runNHSV3Pipeline(
   const auditMsg = await anthropic.messages.create({
     model: 'claude-haiku-4-5',
     max_tokens: 3000,
+    temperature: 0,
     system: auditorPrompt,
     messages: [{ role: 'user', content: userMsg }],
   })
@@ -141,6 +142,7 @@ export async function runNHSV3Pipeline(
       const patchMsg = await anthropic.messages.create({
         model: 'claude-haiku-4-5',
         max_tokens: 3500,
+        temperature: 0.7,
         system: patchPrompt,
         messages: [{
           role: 'user',
@@ -160,6 +162,7 @@ export async function runNHSV3Pipeline(
       const reAuditMsg = await anthropic.messages.create({
         model: 'claude-haiku-4-5',
         max_tokens: 3000,
+        temperature: 0,
         system: auditorPrompt,
         messages: [{ role: 'user', content: `PERSON SPECIFICATION:\n${criteriaText}\n\nSTATEMENT:\n${currentStatement}` }],
       })

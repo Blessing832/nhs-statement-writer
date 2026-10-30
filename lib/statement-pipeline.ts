@@ -60,6 +60,7 @@ async function auditStatement(
   const msg = await anthropic.messages.create({
     model: 'claude-haiku-4-5-20251001',
     max_tokens: 4000,
+    temperature: 0,
     system: systemPrompt,
     messages: [{ role: 'user', content: userMessage }],
   })
@@ -101,6 +102,7 @@ async function patchStatement(
   const msg = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 6000,
+    temperature: 0.7,
     system: systemPrompt,
     messages: [{ role: 'user', content: userMessage }],
   })
@@ -111,6 +113,8 @@ async function patchStatement(
     statement: text
       .replace(/ — /g, ', ')
       .replace(/—/g, ', ')
+      .replace(/ – /g, ', ')
+      .replace(/–/g, ', ')
       .replace(/\*\*/g, ''),
     inputTokens: msg.usage.input_tokens,
     outputTokens: msg.usage.output_tokens,
