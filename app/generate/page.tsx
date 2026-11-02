@@ -25,6 +25,32 @@ function renderBold(text: string): string {
   return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
 }
 
+// Clean statement text for display — strips artifacts that should never be visible
+function cleanStatementForDisplay(text: string): string {
+  return text
+    // Strip divider-only lines (---, ===, ___, ***) before splitting into paragraphs
+    .replace(/^[ \t]*[-_*=]{2,}[ \t]*$/gm, '')
+    // Replace em-dashes and en-dashes with commas
+    .replace(/ — /g, ', ').replace(/—/g, ', ')
+    .replace(/ – /g, ', ').replace(/–/g, ', ')
+    .replace(/ -- /g, ', ').replace(/--/g, ', ')
+    // Strip any remaining bare ** that renderBold won't catch (e.g. standalone **)
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\*\*/g, '')
+    // Strip leading markdown heading markers (# Heading, ## Heading)
+    .replace(/^#{1,3}\s+/gm, '')
+    // Collapse triple+ newlines
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+}
+
+// True when a paragraph is just a section heading (short, no sentence-ending punctuation)
+function isHeadingLine(para: string): boolean {
+  const t = para.trim()
+  const words = t.split(/\s+/).filter(Boolean)
+  return words.length < 10 && !/[.!?]$/.test(t) && t.length > 0
+}
+
 // Convert statement text to paragraphs for display, with PS keyword highlights and paragraph-level criterion chips
 function StatementDisplay({
   text,
@@ -35,11 +61,13 @@ function StatementDisplay({
   essential?: string[]
   desirable?: string[]
 }) {
+  const cleaned = cleanStatementForDisplay(text)
   const allCriteria = [...essential, ...desirable]
-  const paragraphs = text.split(/\n\n+/)
+  const paragraphs = cleaned.split(/\n\n+/).filter(p => p.trim())
   return (
     <div className="space-y-4 text-gray-800 leading-relaxed text-sm">
       {paragraphs.map((para, i) => {
+        const isHeading = isHeadingLine(para)
         const lines = para.split('\n')
 
         // Criterion chips: which PS points does this paragraph cover?
@@ -50,6 +78,14 @@ function StatementDisplay({
           .map((c, idx) => ({ label: `D${idx + 1}`, criterion: c }))
           .filter(({ criterion }) => isCriterionAddressed(criterion, para))
         const covered = [...coveredEssential, ...coveredDesirable]
+
+        if (isHeading) {
+          return (
+            <p key={i} className="font-semibold text-gray-800 mt-2">
+              <span dangerouslySetInnerHTML={{ __html: renderBold(para.trim()) }} />
+            </p>
+          )
+        }
 
         return (
           <div key={i}>
@@ -80,6 +116,91 @@ function StatementDisplay({
           </div>
         )
       })}
+    </div>
+  )
+}
+
+// Compact criteria panel for the results sidebar
+function CriteriaListPanel({
+  analysis,
+  coverageReport,
+  statement,
+}: {
+  analysis: StatementAnalysis | null
+  coverageReport: CoverageReport | null | undefined
+  statement: string
+}) {
+  const essential = analysis?.essentialCriteria ?? []
+  const desirable = analysis?.desirableCriteria ?? []
+
+  if (essential.length === 0 && desirable.length === 0) {
+    return <p className="text-gray-400 text-xs leading-relaxed">Criteria not extracted from this job advert. Statement was written from the full job text.</p>
+  }
+
+  // Prefer deterministic coverage report; fall back to keyword matching
+  const foundMap: Record<string, boolean> = {}
+  if (coverageReport?.criteria?.length) {
+    coverageReport.criteria.forEach(c => { foundMap[c.criterion] = c.deterministicPresent })
+  }
+  const isFound = (c: string) => c in foundMap ? foundMap[c] : isCriterionAddressed(c, statement)
+
+  const essentialFound = essential.filter(c => isFound(c)).length
+  const desirableFound = desirable.filter(c => isFound(c)).length
+
+  return (
+    <div className="space-y-5 text-xs">
+      {coverageReport?.patched && (
+        <div className="rounded bg-blue-50 border border-blue-200 px-2.5 py-1.5 text-blue-700 font-medium">
+          Auto-improved after review
+        </div>
+      )}
+      {coverageReport?.warningBanner && coverageReport.warningBanner.length > 0 && (
+        <div className="rounded bg-amber-50 border border-amber-200 px-2.5 py-1.5 text-amber-700">
+          {coverageReport.warningBanner.join(' · ')}
+        </div>
+      )}
+      {essential.length > 0 && (
+        <div>
+          <p className="font-semibold text-gray-500 uppercase tracking-wide mb-2">
+            Essential <span className="font-normal normal-case">({essentialFound}/{essential.length} found)</span>
+          </p>
+          <ol className="space-y-1.5 list-none">
+            {essential.map((c, i) => {
+              const found = isFound(c)
+              return (
+                <li key={i} className="flex gap-1.5 items-start">
+                  <span style={{ color: '#0B4F6C' }} className="flex-shrink-0 font-bold mt-0.5 min-w-[1.2rem]">{i + 1}.</span>
+                  <span className={found ? 'text-gray-700 flex-1' : 'text-red-600 flex-1'}>{c}</span>
+                  <span className={`flex-shrink-0 font-bold ml-1 ${found ? 'text-green-600' : 'text-red-500'}`}>
+                    {found ? '✓' : '✗'}
+                  </span>
+                </li>
+              )
+            })}
+          </ol>
+        </div>
+      )}
+      {desirable.length > 0 && (
+        <div>
+          <p className="font-semibold text-gray-500 uppercase tracking-wide mb-2">
+            Desirable <span className="font-normal normal-case">({desirableFound}/{desirable.length} found)</span>
+          </p>
+          <ol className="space-y-1.5 list-none">
+            {desirable.map((c, i) => {
+              const found = isFound(c)
+              return (
+                <li key={i} className="flex gap-1.5 items-start">
+                  <span className="flex-shrink-0 font-bold mt-0.5 min-w-[1.2rem] text-gray-400">{i + 1}.</span>
+                  <span className={found ? 'text-gray-600 flex-1' : 'text-gray-400 flex-1'}>{c}</span>
+                  <span className={`flex-shrink-0 font-bold ml-1 ${found ? 'text-green-600' : 'text-gray-400'}`}>
+                    {found ? '✓' : '○'}
+                  </span>
+                </li>
+              )
+            })}
+          </ol>
+        </div>
+      )}
     </div>
   )
 }
@@ -1338,9 +1459,21 @@ function GeneratePage() {
             </div>
           )}
 
-          {/* Statement area — full width */}
-          <div className="flex-1 overflow-hidden">
-            <div className="flex-1 overflow-y-auto bg-white h-full">
+          {/* Two-column layout: left criteria panel, right statement */}
+          <div className="flex-1 flex flex-row overflow-hidden">
+            {/* Left: criteria panel */}
+            <div className="hidden md:flex md:flex-col w-72 flex-shrink-0 border-r border-gray-200 bg-gray-50 overflow-y-auto">
+              <div className="p-5">
+                <p className="font-bold text-xs uppercase tracking-wide text-gray-500 mb-4">Person Specification</p>
+                <CriteriaListPanel
+                  analysis={result.analysis}
+                  coverageReport={result.coverageReport}
+                  statement={result.statement}
+                />
+              </div>
+            </div>
+            {/* Right: statement */}
+            <div className="flex-1 overflow-y-auto bg-white">
               <div className="p-6 max-w-3xl mx-auto">
                 <div ref={statementHeadRef} className="flex items-center justify-between mb-4">
                   <h3 className="font-bold text-gray-800 text-base">Supporting Statement</h3>
