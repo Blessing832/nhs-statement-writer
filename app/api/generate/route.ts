@@ -283,7 +283,13 @@ export async function POST(req: NextRequest) {
           : await runNHSV2Pipeline(statement, analysis, client)
       coverageReport = pipeline
       if (pipeline.patchedStatement) {
-        statement = pipeline.patchedStatement
+        const patchedWc = pipeline.patchedStatement.trim().split(/\s+/).filter(Boolean).length
+        const wcHardLimit = promptRegion === 'scotland' ? 1100 : 1420
+        if (patchedWc <= wcHardLimit) {
+          statement = pipeline.patchedStatement
+        } else {
+          console.warn(`PIPELINE_PATCH_OVERRUN: ${patchedWc} words — discarding patch, keeping original`)
+        }
       }
       const u = pipeline.tokenUsage
       console.log(
