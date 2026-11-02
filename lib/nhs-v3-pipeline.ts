@@ -46,6 +46,21 @@ function deterministicCheck(statement: string): DeterministicResult {
   return { wordCount, wordCountOk, bannedPhrasesFound }
 }
 
+function buildCandidateFacts(client: Client): string {
+  const parts: string[] = []
+  if (client.full_name) parts.push(`Name (for reference only, never write in statement): ${client.full_name}`)
+  if (client.work_history) parts.push(`Work history: ${client.work_history}`)
+  if (client.qualifications) parts.push(`Qualifications: ${client.qualifications}`)
+  if (client.background) parts.push(`Background: ${client.background}`)
+  if (client.skills) parts.push(`Skills: ${client.skills}`)
+  if (client.q_difficult_situation) parts.push(`Difficult situation: ${client.q_difficult_situation}`)
+  if (client.q_proudest_moment) parts.push(`Proudest moment: ${client.q_proudest_moment}`)
+  if (client.q_colleagues_say) parts.push(`Colleagues say: ${client.q_colleagues_say}`)
+  if (client.q_skills_equipment) parts.push(`Skills and equipment: ${client.q_skills_equipment}`)
+  if (client.q_why_trust) parts.push(`Why this trust: ${client.q_why_trust}`)
+  return parts.join('\n\n') || 'No candidate facts available.'
+}
+
 export async function runNHSV3Pipeline(
   statement: string,
   analysis: StatementAnalysis,
@@ -139,6 +154,15 @@ export async function runNHSV3Pipeline(
         return combinedFailingIds.includes(id)
       })
 
+      const auditResultForPatch = {
+        failing_ids: combinedFailingIds,
+        all_pass: false,
+        banned_phrases_found: bannedFound,
+        word_count: det.wordCount,
+        word_count_ok: det.wordCountOk,
+      }
+      const candidateFacts = buildCandidateFacts(client)
+
       const patchMsg = await anthropic.messages.create({
         model: 'claude-haiku-4-5',
         max_tokens: 2400,
@@ -146,14 +170,15 @@ export async function runNHSV3Pipeline(
         system: patchPrompt,
         messages: [{
           role: 'user',
-          content: `FAILING CRITERIA:\n${failingCriteria.join('\n')}\n\nSTATEMENT:\n${currentStatement}`,
+          content: `STATEMENT:\n${currentStatement}\n\nAUDIT RESULT:\n${JSON.stringify(auditResultForPatch, null, 2)}\n\nCANDIDATE FACTS:\n${candidateFacts}`,
         }],
       })
       tokenUsage.patchInputTokens += patchMsg.usage.input_tokens
       tokenUsage.patchOutputTokens += patchMsg.usage.output_tokens
 
       const patchText = patchMsg.content[0]?.type === 'text' ? patchMsg.content[0].text.trim() : ''
-      if (patchText && patchText.length > 200) {
+      // Only accept the patch if it looks like a real statement (not a meta-response)
+      if (patchText && countWords(patchText) >= 600 && patchText.toLowerCase().includes('thank you')) {
         currentStatement = patchText
         patched = true
       }
