@@ -339,6 +339,11 @@ Do not use:
 - Bullet points inside the statement
 - Bold text
 - Corporate jargon
+- Divider lines of any kind (dashes, underscores, equals signs, asterisks)
+
+Paragraph separation:
+
+Separate paragraphs with one blank line only. Never use divider lines.
 
 Sentence rules:
 

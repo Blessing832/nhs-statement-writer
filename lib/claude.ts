@@ -754,6 +754,9 @@ async function generateParallelV3(
 
   // ── Basic cleaning ─────────────────────────────────────────────────────────
   statement = statement
+    // Strip divider-only lines (---, ___, ***, ===) BEFORE em-dash replacement
+    // to prevent "--" → ", " turning "---" into ", -"
+    .replace(/^[ \t]*[\-_*=]{2,}[ \t]*$/gm, '')
     .replace(/ — /g, ', ')
     .replace(/—/g, ', ')
     .replace(/ – /g, ', ')
@@ -791,6 +794,12 @@ async function generateParallelV3(
 
   // ── Name / placeholder check ───────────────────────────────────────────────
   statement = await cleanNameFromStatementV3(statement, client.full_name)
+
+  // Fix joined sentences produced by cleanup steps (e.g. "disorders.I am", "policy.These")
+  // Only insert space when a real word start follows punctuation — capital+lowercase or "I "
+  statement = statement
+    .replace(/([.!?])([A-Z][a-z])/g, '$1 $2')
+    .replace(/([.!?])(I[ \n])/g, '$1 $2')
 
   // Final defensive strip — ensure NOTES never leak into the returned statement
   statement = stripNotesSection(statement)

@@ -176,7 +176,21 @@ export async function runNHSV3Pipeline(
       tokenUsage.patchInputTokens += patchMsg.usage.input_tokens
       tokenUsage.patchOutputTokens += patchMsg.usage.output_tokens
 
-      const patchText = patchMsg.content[0]?.type === 'text' ? patchMsg.content[0].text.trim() : ''
+      let patchText = patchMsg.content[0]?.type === 'text' ? patchMsg.content[0].text.trim() : ''
+
+      // Post-patch deterministic clean: remove V3 rule violations the model introduced
+      if (patchText) {
+        patchText = patchText
+          // Remove bare criterion IDs (E1, D3, E11, etc.) that should never appear in statement text
+          .replace(/\b[ED]\d+\b/g, '')
+          // Unwrap criterion phrases in long quotation marks (keep the text, remove the quotes)
+          .replace(/"([^"]{20,})"/g, '$1')
+          // Remove sentences starting with banned criterion-paste openers
+          .replace(/^(Evidence of|Can demonstrate|Ability to)\b[^.!?\n]*[.!?]\s*/gim, '')
+          .replace(/\n{3,}/g, '\n\n')
+          .trim()
+      }
+
       // Only accept the patch if it looks like a real statement (not a meta-response)
       if (patchText && countWords(patchText) >= 600 && patchText.toLowerCase().includes('thank you')) {
         currentStatement = patchText

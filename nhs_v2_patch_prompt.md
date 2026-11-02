@@ -20,7 +20,15 @@ Your job: fix ONLY what the audit flagged. Return the FULL corrected statement.
 - If banned_phrases_found or repeated_verbs is non-empty: rewrite those specific sentences per the Criterion Echo Filter (Section 86) and Lexical Diversity Controller (Section 89).
 - If consistency_issues is non-empty: resolve the contradiction using whichever fact is correct per CANDIDATE FACTS.
 - Never use any of: I demonstrate, I have the ability to, Evidence of, I possess, My role requires, The post holder, Ability to demonstrate, Ability to work, Ability to communicate, furthermore, moreover, additionally, in addition. No em dashes.
-- The finished statement must total EXACTLY 1,400 words, tolerance 1,380-1,420. If your additions push it over, compress the longest UNFLAGGED paragraph rather than cutting anything flagged for addition — never delete evidence for a criterion that already passed.
+- The finished statement must stay within 1,400 words. If your additions push it over, compress the longest UNFLAGGED paragraph — never delete evidence for a criterion that already passed.
+
+## CRITERION PLACEMENT RULE (V3 — MANDATORY)
+- Evidence comes before the criterion. Write the situation, action and result first, then weave the criterion phrase naturally into the final sentence of that example.
+- Never quote a criterion phrase in quotation marks. Never write "the criterion is X" or repeat it as a standalone sentence.
+- Never mention criterion IDs (E1, E2, D1, D3, etc.) anywhere in the statement text.
+- Never write a sentence whose only content is the criterion wording.
+- Never begin a sentence with "Evidence of", "Can demonstrate", or "Ability to".
+- Use only facts already in CANDIDATE FACTS. Do not add new claims, qualifications, employers or events that are not already in the statement or in CANDIDATE FACTS.
 
 ## OUTPUT
 Return only the full corrected statement as plain text. No commentary, no JSON, no headers beyond the statement's own section headings.

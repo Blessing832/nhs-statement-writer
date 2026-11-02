@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useAdminToken } from '@/lib/admin-context'
 import { FileDropZone } from '@/components/FileDropZone'
-import { StatementAnalysis } from '@/lib/types'
+import { StatementAnalysis, CoverageReport } from '@/lib/types'
 
 interface ClientMatch {
   id: string
@@ -18,6 +18,7 @@ interface Result {
   previousRoleDuties: string[]
   currentRoleDuties: string[]
   analysis: StatementAnalysis | null
+  coverageReport: CoverageReport | null
   jobTitle: string
   organisation: string
   promptRegion: string
@@ -74,26 +75,40 @@ function BulletList({ items, icon, colour }: { items: string[]; icon: string; co
   )
 }
 
-function AnalysisPanel({ analysis, region }: { analysis: StatementAnalysis | null; region: string }) {
-  if (!analysis) return (
+function AnalysisPanel({ analysis, coverageReport, region }: { analysis: StatementAnalysis | null; coverageReport: CoverageReport | null; region: string }) {
+  const essential = analysis?.essentialCriteria ?? []
+  const desirable = analysis?.desirableCriteria ?? []
+
+  // Build a found-map from coverageReport if available
+  const foundMap: Record<string, boolean> = {}
+  if (coverageReport?.criteria) {
+    coverageReport.criteria.forEach((c, i) => {
+      const id = c.type === 'essential'
+        ? `E${essential.findIndex(e => e === c.criterion) + 1}`
+        : `D${desirable.findIndex(d => d === c.criterion) + 1}`
+      foundMap[c.criterion] = c.deterministicPresent
+    })
+  }
+
+  const hasData = essential.length > 0 || desirable.length > 0
+  if (!hasData) return (
     <p className="text-gray-400 text-sm">Person specification not extracted. Statement was written from job advert text.</p>
   )
-  const essential = analysis.essentialCriteria ?? []
-  const desirable = analysis.desirableCriteria ?? []
+
   return (
     <div className="space-y-5 text-sm">
-      {analysis.meetsAllEssential && (
+      {analysis?.meetsAllEssential && (
         <div className="rounded-md bg-green-50 border border-green-200 px-3 py-2 text-green-800 text-xs font-medium">
           All essential criteria met
         </div>
       )}
-      {analysis.enhancedPreviousTitle && region !== 'scotland' && (
+      {analysis?.enhancedPreviousTitle && region !== 'scotland' && (
         <div className="rounded-md bg-blue-50 border border-blue-200 px-3 py-2">
           <p className="text-xs text-blue-600 font-medium mb-0.5">Enhanced Previous Title</p>
           <p className="text-blue-800 font-semibold text-sm">{analysis.enhancedPreviousTitle}</p>
         </div>
       )}
-      {analysis.jobSummary && region !== 'scotland' && (
+      {analysis?.jobSummary && region !== 'scotland' && (
         <Section title="Role Overview">
           <p className="text-gray-600 leading-relaxed text-sm">{analysis.jobSummary}</p>
         </Section>
@@ -102,12 +117,21 @@ function AnalysisPanel({ analysis, region }: { analysis: StatementAnalysis | nul
         <div>
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Essential Criteria</p>
           <ol className="space-y-2 list-none">
-            {essential.map((c: string, i: number) => (
-              <li key={i} className="flex gap-2 text-xs text-gray-700">
-                <span style={{ color: '#0B4F6C' }} className="flex-shrink-0 font-bold">{i + 1}.</span>
-                <span>{c}</span>
-              </li>
-            ))}
+            {essential.map((c: string, i: number) => {
+              const found = foundMap[c]
+              const hasStatus = c in foundMap
+              return (
+                <li key={i} className="flex gap-2 text-xs">
+                  <span style={{ color: '#0B4F6C' }} className="flex-shrink-0 font-bold mt-0.5">{i + 1}.</span>
+                  <span className={hasStatus ? (found ? 'text-gray-700' : 'text-red-600') : 'text-gray-700'}>{c}</span>
+                  {hasStatus && (
+                    <span className={`flex-shrink-0 text-xs font-semibold ml-auto pl-2 ${found ? 'text-green-600' : 'text-red-500'}`}>
+                      {found ? 'FOUND' : 'NOT FOUND'}
+                    </span>
+                  )}
+                </li>
+              )
+            })}
           </ol>
         </div>
       )}
@@ -115,12 +139,21 @@ function AnalysisPanel({ analysis, region }: { analysis: StatementAnalysis | nul
         <div>
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Desirable Criteria</p>
           <ol className="space-y-2 list-none">
-            {desirable.map((c: string, i: number) => (
-              <li key={i} className="flex gap-2 text-xs text-gray-500">
-                <span className="flex-shrink-0 font-bold">{i + 1}.</span>
-                <span>{c}</span>
-              </li>
-            ))}
+            {desirable.map((c: string, i: number) => {
+              const found = foundMap[c]
+              const hasStatus = c in foundMap
+              return (
+                <li key={i} className="flex gap-2 text-xs">
+                  <span className="flex-shrink-0 font-bold mt-0.5 text-gray-400">{i + 1}.</span>
+                  <span className={hasStatus ? (found ? 'text-gray-600' : 'text-red-500') : 'text-gray-500'}>{c}</span>
+                  {hasStatus && (
+                    <span className={`flex-shrink-0 text-xs font-semibold ml-auto pl-2 ${found ? 'text-green-600' : 'text-red-400'}`}>
+                      {found ? 'FOUND' : 'NOT FOUND'}
+                    </span>
+                  )}
+                </li>
+              )
+            })}
           </ol>
         </div>
       )}
@@ -732,7 +765,7 @@ function AdminGenerateInner() {
                 <h3 className="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide pb-2 border-b border-gray-100">
                   {result.promptRegion === 'scotland' ? 'Person Specification' : 'Pre-Writing Analysis'}
                 </h3>
-                <AnalysisPanel analysis={result.analysis} region={result.promptRegion} />
+                <AnalysisPanel analysis={result.analysis} coverageReport={result.coverageReport} region={result.promptRegion} />
 
               </div>
             </div>
