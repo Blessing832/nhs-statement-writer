@@ -140,19 +140,21 @@ export function countWordsV3(text: string): number {
   return text?.trim().split(/\s+/).filter(Boolean).length ?? 0
 }
 
-export function parseNotesSection(notes: string): { titleCheck?: string; gaps: string[]; coverage: string[]; questions: string[] } {
-  const titleCheckMatch = notes.match(/TITLE CHECK[:\s]+([\s\S]*?)(?=\nGAPS[:\s]|\nCOVERAGE[:\s]|\nQUESTIONS[:\s]|$)/i)
-  const gapsMatch = notes.match(/GAPS[:\s]+([\s\S]*?)(?=\nCOVERAGE[:\s]|\nQUESTIONS[:\s]|\nTITLE CHECK[:\s]|$)/i)
-  const coverageMatch = notes.match(/COVERAGE[:\s]+([\s\S]*?)(?=\nQUESTIONS[:\s]|\nGAPS[:\s]|\nTITLE CHECK[:\s]|$)/i)
-  const questionsMatch = notes.match(/QUESTIONS[:\s]+([\s\S]*?)(?=\nGAPS[:\s]|\nCOVERAGE[:\s]|\nTITLE CHECK[:\s]|$)/i)
+export function parseNotesSection(notes: string): { titleCheck?: string; gaps: string[]; coverage: string[]; questions: string[]; previousRoleDuties: string[] } {
+  const titleCheckMatch = notes.match(/TITLE CHECK[:\s]+([\s\S]*?)(?=\nGAPS[:\s]|\nESSENTIAL GAP|\nCOVERAGE[:\s]|\nQUESTIONS[:\s]|\nWORD COUNT|\nPREVIOUS ROLE DUTIES|$)/i)
+  const gapsMatch = notes.match(/GAPS[:\s]+([\s\S]*?)(?=\nCOVERAGE[:\s]|\nQUESTIONS[:\s]|\nWORD COUNT|\nPREVIOUS ROLE DUTIES|\nTITLE CHECK[:\s]|$)/i)
+  const coverageMatch = notes.match(/COVERAGE[:\s]+([\s\S]*?)(?=\nQUESTIONS[:\s]|\nWORD COUNT|\nPREVIOUS ROLE DUTIES|\nGAPS[:\s]|\nTITLE CHECK[:\s]|$)/i)
+  const questionsMatch = notes.match(/QUESTIONS[:\s]+([\s\S]*?)(?=\nWORD COUNT|\nPREVIOUS ROLE DUTIES|\nGAPS[:\s]|\nCOVERAGE[:\s]|\nTITLE CHECK[:\s]|$)/i)
+  const dutiesMatch = notes.match(/PREVIOUS ROLE DUTIES[:\s]+([\s\S]*?)(?=\nGAPS[:\s]|\nCOVERAGE[:\s]|\nQUESTIONS[:\s]|\nTITLE CHECK[:\s]|$)/i)
   const parseList = (text?: string) => text
-    ? text.split('\n').map(l => l.replace(/^[•\-*]\s*/, '').trim()).filter(Boolean)
+    ? text.split('\n').map(l => l.replace(/^[•\-*\d]+[\.\)]\s*/, '').trim()).filter(Boolean)
     : []
   return {
     titleCheck: titleCheckMatch?.[1]?.trim(),
     gaps: parseList(gapsMatch?.[1]),
     coverage: parseList(coverageMatch?.[1]),
     questions: parseList(questionsMatch?.[1]),
+    previousRoleDuties: parseList(dutiesMatch?.[1]),
   }
 }
 
@@ -760,6 +762,11 @@ async function generateParallelV3(
 
   const parsedNotes = parseNotesSection(notesText)
   const hasTitleMismatch = parsedNotes.titleCheck?.toLowerCase().includes('mismatch') ?? false
+
+  // Use duties from the V3 generation output; fall back to analysis-extracted duties
+  if (parsedNotes.previousRoleDuties.length > 0) {
+    previousRoleDuties = parsedNotes.previousRoleDuties
+  }
 
   // ── Basic cleaning ─────────────────────────────────────────────────────────
   statement = statement

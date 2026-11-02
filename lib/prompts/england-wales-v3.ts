@@ -522,6 +522,17 @@ Maximum 3 questions that would strengthen the application
 WORD COUNT:
 Word count for each section, then the total statement word count
 
+PREVIOUS ROLE DUTIES:
+List exactly 7 key duties from the candidate's most recent relevant previous role.
+Write every duty in past tense.
+Begin each with a strong past-tense action verb (Delivered, Led, Coordinated, Implemented, Managed, Monitored, Escalated, Improved, Developed, Supported, Streamlined, etc.).
+Each duty must exceed 25 words and be specific, outcome-focused and evidence-based.
+Include: the situation or context, the specific action taken, any collaboration or governance angle, and a measurable impact on patient care, service delivery or organisational performance.
+Retain real employer or NHS Trust names where they appear in the candidate profile.
+Do not name UK-specific software by brand — write "electronic patient record system" or "clinical information system".
+Do not reference NHS pay bands.
+Format: numbered list, 1 through 7, one duty per line.
+
 ==================================================
 FINAL QUALITY CHECK
 ==================================================
