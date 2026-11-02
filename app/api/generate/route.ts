@@ -283,10 +283,18 @@ export async function POST(req: NextRequest) {
           : await runNHSV2Pipeline(statement, analysis, client)
       coverageReport = pipeline
       if (pipeline.patchedStatement) {
-        const patchedWc = pipeline.patchedStatement.trim().split(/\s+/).filter(Boolean).length
+        // Clean em-dashes from patched statement (Haiku may still generate them despite the prompt rule)
+        const cleaned = pipeline.patchedStatement
+          .replace(/^[ \t]*[-_*=]{2,}[ \t]*$/gm, '')
+          .replace(/ — /g, ', ').replace(/—/g, ', ')
+          .replace(/ – /g, ', ').replace(/–/g, ', ')
+          .replace(/ -- /g, ', ').replace(/--/g, ', ')
+          .replace(/\*\*/g, '')
+          .trim()
+        const patchedWc = cleaned.split(/\s+/).filter(Boolean).length
         const wcHardLimit = promptRegion === 'scotland' ? 1100 : 1400
         if (patchedWc <= wcHardLimit) {
-          statement = pipeline.patchedStatement
+          statement = cleaned
         } else {
           console.warn(`PIPELINE_PATCH_OVERRUN: ${patchedWc} words — discarding patch, keeping original`)
         }

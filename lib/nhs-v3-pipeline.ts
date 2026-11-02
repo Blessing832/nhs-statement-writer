@@ -182,6 +182,12 @@ export async function runNHSV3Pipeline(
       // Post-patch deterministic clean: remove V3 rule violations the model introduced
       if (patchText) {
         patchText = patchText
+          // Strip divider-only lines FIRST so -- → ", " doesn't turn "---" into ", -"
+          .replace(/^[ \t]*[-_*=]{2,}[ \t]*$/gm, '')
+          // Em-dashes and en-dashes → commas (prompt bans em-dashes; Haiku still generates them)
+          .replace(/ — /g, ', ').replace(/—/g, ', ')
+          .replace(/ – /g, ', ').replace(/–/g, ', ')
+          .replace(/ -- /g, ', ').replace(/--/g, ', ')
           // Remove bare criterion IDs (E1, D3, E11, etc.) that should never appear in statement text
           .replace(/\b[ED]\d+\b/g, '')
           // Unwrap criterion phrases in long quotation marks (keep the text, remove the quotes)
