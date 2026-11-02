@@ -284,7 +284,7 @@ export async function POST(req: NextRequest) {
       coverageReport = pipeline
       if (pipeline.patchedStatement) {
         const patchedWc = pipeline.patchedStatement.trim().split(/\s+/).filter(Boolean).length
-        const wcHardLimit = promptRegion === 'scotland' ? 1100 : 1420
+        const wcHardLimit = promptRegion === 'scotland' ? 1100 : 1400
         if (patchedWc <= wcHardLimit) {
           statement = pipeline.patchedStatement
         } else {

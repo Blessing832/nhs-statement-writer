@@ -15,8 +15,8 @@ const BANNED_PHRASES_V3 = [
   'The post holder',
 ]
 
-const WORD_COUNT_MIN = 1380
-const WORD_COUNT_MAX = 1420
+const WORD_COUNT_MIN = 1150
+const WORD_COUNT_MAX = 1400
 const MAX_PATCHES = 2
 
 function readPromptFile(name: string): string | null {
@@ -222,7 +222,7 @@ export async function runNHSV3Pipeline(
 
   const allPass = (auditResult.all_pass ?? false) && finalDet.bannedPhrasesFound.length === 0 && finalDet.wordCountOk
   const warningBanners: string[] = []
-  if (!finalDet.wordCountOk) warningBanners.push(`Word count ${finalDet.wordCount} (target 1,380–1,420)`)
+  if (!finalDet.wordCountOk) warningBanners.push(`Word count ${finalDet.wordCount} (target 1,150–1,400)`)
   if (finalDet.bannedPhrasesFound.length > 0) warningBanners.push(`Banned phrases: ${finalDet.bannedPhrasesFound.join(', ')}`)
   if (auditResult.non_uk_locations?.length) warningBanners.push(`Non-UK locations: ${auditResult.non_uk_locations.join(', ')}`)
 

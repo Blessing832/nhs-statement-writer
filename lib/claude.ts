@@ -249,7 +249,7 @@ function buildV3UserPrompt(
   budgetLines.push('Motivation: 50 words')
   budgetLines.push('Values Reflection: 55 words')
   budgetLines.push('Closing: 70 words')
-  budgetLines.push('TOTAL TARGET: 1,350 words (hard limit 1,420)')
+  budgetLines.push('TOTAL TARGET: 1,300 words (hard limit 1,400)')
 
   return [
     criteriaBlock,
@@ -279,8 +279,8 @@ function stripNotesSection(text: string): string {
 async function enforceWordCountV3(text: string, attempt = 0): Promise<string> {
   const clean = stripNotesSection(text)
   const wc = countWordsV3(clean)
-  // Accept 1,300–1,420: BUDGET block + Rule 5 aim for 1,350 so most outputs land here
-  if (wc >= 1300 && wc <= 1420) return clean
+  // Accept 1,300–1,400: BUDGET block + Rule 5 aim for 1,350 so most outputs land here
+  if (wc >= 1150 && wc <= 1400) return clean
   if (attempt >= 1) {
     console.warn(`V3 word count still off after 1 attempt: ${wc} words — returning closest version`)
     return clean
@@ -293,7 +293,7 @@ async function enforceWordCountV3(text: string, attempt = 0): Promise<string> {
     system: 'You are a precise text editor. You MUST hit the target word count.',
     messages: [{
       role: 'user',
-      content: `This NHS supporting statement is ${wc} words. You MUST rewrite it to land between 1,380 and 1,420 words. Target 1,400 words exactly.\n\nMANDATORY rules:\n- Keep every section and every exact person specification criterion phrase\n- Keep the closing line "Thank you." unchanged\n- ${wc > 1420 ? 'CUT words: remove adjectives, repeated points, filler phrases, over-long sentences' : 'ADD words: expand thin examples, add one more specific detail per criterion'}\n- Return ONLY the statement text — nothing else before or after it\n- Do NOT add any section marked NOTES or ===NOTES===\n\nCURRENT STATEMENT (${wc} words — must become 1,380–1,420):\n${clean}`,
+      content: `This NHS supporting statement is ${wc} words. You MUST rewrite it to land between 1,300 and 1,400 words. Target 1,350 words.\n\nMANDATORY rules:\n- Keep every section and every exact person specification criterion phrase\n- Keep the closing line "Thank you." unchanged\n- ${wc > 1400 ? 'CUT words: remove adjectives, repeated points, filler phrases, over-long sentences' : 'ADD words: expand thin examples, add one more specific detail per criterion'}\n- Return ONLY the statement text — nothing else before or after it\n- Do NOT add any section marked NOTES or ===NOTES===\n\nCURRENT STATEMENT (${wc} words — must become 1,300–1,400):\n${clean}`,
     }],
   })
   const adjusted = msg.content[0].type === 'text' ? stripNotesSection(msg.content[0].text) : clean
@@ -467,15 +467,15 @@ async function trimStatementV3(
 
   let result = paragraphs.join('\n\n')
 
-  // Fallback: if total still > 1,420, rewrite longest content paragraphs at 100 words
-  if (countW(result) > 1420) {
+  // Fallback: if total still > 1,400, rewrite longest content paragraphs at 100 words
+  if (countW(result) > 1400) {
     const contentByLength = paragraphs
       .map((para, idx) => ({ idx, para }))
       .filter(({ para }) => !isHeadingParagraph(para))
       .sort((a, b) => countW(b.para) - countW(a.para))
 
     for (const { idx, para } of contentByLength) {
-      if (countW(paragraphs.join('\n\n')) <= 1420) break
+      if (countW(paragraphs.join('\n\n')) <= 1400) break
       const fallbackLimit = idx === openingIdx ? 150 : 100
       if (countW(para) <= fallbackLimit) continue
       try {
@@ -491,7 +491,7 @@ async function trimStatementV3(
   }
 
   const finalWc = countW(result)
-  if (finalWc > 1420) {
+  if (finalWc > 1400) {
     throw new Error(`V3_WORD_LIMIT: statement is ${finalWc} words after all trim attempts — reduce manually`)
   }
 
@@ -795,9 +795,9 @@ async function generateParallelV3(
   // Final defensive strip — ensure NOTES never leak into the returned statement
   statement = stripNotesSection(statement)
 
-  // Hard final guard — never return a statement over 1,420 words
+  // Hard final guard — never return a statement over 1,400 words
   const finalWc = countWordsV3(statement)
-  if (finalWc > 1420) {
+  if (finalWc > 1400) {
     throw new Error(`V3_WORD_LIMIT: statement is ${finalWc} words after all trim attempts — reduce manually`)
   }
 

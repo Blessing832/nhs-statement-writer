@@ -299,7 +299,7 @@ export default function QuickWritePage() {
   }
 
   const wc = result ? wordCount(result.statement) : 0
-  const wcLimit = result?.promptRegion === 'scotland' ? 1100 : 1420
+  const wcLimit = result?.promptRegion === 'scotland' ? 1100 : 1400
   const wcColour = wc > wcLimit ? 'text-red-600 font-bold' : wc > wcLimit * 0.93 ? 'text-amber-600' : 'text-green-700'
 
   return (

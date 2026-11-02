@@ -57,24 +57,38 @@ INSTRUCTIONS
 - Additional instructions for this application
 
 BUDGET
-- Word allowance
+- Additional word guidance if supplied
 
 ==================================================
 PRIMARY OBJECTIVE
 ==================================================
 
-Every criterion must be addressed.
+Every criterion must be addressed and evidenced.
+
+Do not make claims.
+
+Do not write:
+
+- I can...
+- I am able to...
+- I understand...
+- I possess...
+- I have the ability to...
+- I am passionate about...
+- I have excellent...
+
+Instead show evidence through actions and results.
 
 For every criterion:
 
-1. Provide evidence.
-2. Explain actions taken.
-3. Explain the result.
-4. Place the exact criterion wording naturally at the end of the example whenever possible.
+1. Give an example.
+2. Explain what was done.
+3. Explain the outcome.
+4. Place the exact criterion wording naturally after the evidence.
 
-Evidence should come before the criterion.
+Evidence comes before the criterion.
 
-Never begin a paragraph by repeating criterion wording.
+Never begin a paragraph with criterion wording.
 
 ==================================================
 MANDATORY STRUCTURE
@@ -83,22 +97,20 @@ MANDATORY STRUCTURE
 PART 1 - OPENING
 
 Length:
-150-180 words
-Hard maximum:
-170 words
+150-170 words
 
 Include:
 
 - Current role
 - Most relevant experience
-- Use the exact title of the advertised role when referring to comparable prior experience
+- Use the exact title of the advertised role when describing equivalent previous experience
 - Relevant qualifications
-- Relevant registration if provided
-- Why the role is attractive
-- Why the organisation is attractive
+- Professional registration if available
+- Why the role interests the candidate
+- Why the organisation interests the candidate
 - Up to 5 relevant conditions
 - Up to 3 relevant procedures
-- Key strengths brought to the role
+- Key strengths evidenced by experience
 
 PART 2 - VALUES SNAPSHOT
 
@@ -109,32 +121,98 @@ Requirements:
 
 - One trust value only
 - One routine workplace example only
-- No other themes
+- No additional themes
 
 PART 3 - BODY
 
 STYLE 1
 
-Use section headings.
+Use headings based on person specification themes.
 
-Headings should follow the person specification themes.
-
-Criteria must remain in the same order they appear in the person specification.
+Keep criteria in the same order they appear in the person specification.
 
 STYLE 2
 
 No headings.
 
-Maximum:
-7 paragraphs.
+Maximum 7 paragraphs.
 
 All criteria must still appear.
 
-For every criterion:
+==================================================
+SCENARIO RULE
+==================================================
 
-Situation -> Action -> Result -> Criterion
+The supporting statement must contain at least 3 substantial workplace scenarios.
 
+Each scenario must include:
+
+- Situation
+- Action
+- Result
+
+The action section should be the longest part.
+
+One scenario may evidence multiple criteria.
+
+Do not create a separate scenario for every criterion.
+
+Use a small number of strong examples that cover multiple criteria.
+
+==================================================
+ACTION-FIRST WRITING RULE
+==================================================
+
+Go straight to what was done.
+
+Avoid lengthy explanations.
+
+Prefer:
+
+"A patient's condition deteriorated during my shift. I repeated observations, escalated concerns using SBAR, informed the nurse in charge and arranged urgent review. Treatment was started promptly and the patient stabilised."
+
+Avoid:
+
+"I understand the importance of recognising deterioration and can respond appropriately."
+
+Actions and outcomes should be prioritised over description.
+
+==================================================
+RESULT RULE
+==================================================
+
+Every example must include a result.
+
+Examples:
+
+- patient stabilised
+- treatment started promptly
+- documentation completed accurately
+- concern resolved
+- ward target achieved
+- patient satisfaction improved
+- delay avoided
+- waiting time reduced
+- positive feedback received
+- process adopted by colleagues
+
+Do not finish examples with actions alone.
+
+==================================================
+CRITERIA EFFICIENCY RULE
+==================================================
+
+Where one piece of evidence supports several criteria, combine them.
+
+One scenario may cover 3-5 criteria.
+
+Avoid creating a separate paragraph for every criterion.
+
+This is essential for maintaining the word limit.
+
+==================================================
 PART 4 - MOTIVATION
+==================================================
 
 Length:
 2-3 sentences
@@ -145,9 +223,13 @@ Explain:
 - Why this service
 - Why this role
 
-Use trust-specific information whenever available.
+Use trust-specific facts whenever available.
 
+Avoid generic statements.
+
+==================================================
 PART 5 - VALUES REFLECTION
+==================================================
 
 Length:
 50-60 words
@@ -155,10 +237,12 @@ Length:
 Requirements:
 
 - Different trust value from Part 2
-- Explain how the value has influenced practice over time
-- Use reflection rather than description
+- Explain how the value has shaped practice over time
+- Reflect rather than describe
 
+==================================================
 PART 6 - CLOSING
+==================================================
 
 Length:
 60-80 words
@@ -168,19 +252,30 @@ Requirements:
 - No new evidence
 - Summarise suitability
 - Reinforce commitment
-- Final sentence must be:
+
+Final sentence must be:
 
 Thank you.
 
 ==================================================
-WORD LIMITS
+WORD CONTROL RULE
 ==================================================
 
 Target:
-1,300 words
+1,150-1,350 words
 
 Hard maximum:
-1,420 words
+1,400 words
+
+Never exceed 1,400 words.
+
+If approaching the limit:
+
+1. Shorten examples.
+2. Merge criteria into existing scenarios.
+3. Remove repetition.
+4. Remove generic motivation language.
+5. Keep all criteria addressed.
 
 Opening:
 Maximum 170 words
@@ -198,13 +293,13 @@ VOICE AND STYLE
 Write:
 
 - First person
-- Professional
-- Warm
-- Credible
-- Specific
 - Plain British English
+- Warm
+- Specific
+- Credible
+- Professional
 
-Use:
+Use simple verbs:
 
 - helped
 - supported
@@ -216,6 +311,8 @@ Use:
 - escalated
 - arranged
 - monitored
+- assessed
+- updated
 
 Avoid:
 
@@ -241,7 +338,6 @@ Do not use:
 - Em dashes
 - Bullet points inside the statement
 - Bold text
-- Marketing language
 - Corporate jargon
 
 Sentence rules:
@@ -266,15 +362,19 @@ Do not write:
 
 "not theoretical but practised"
 
-Multiple stacked adjectives
-
 "I understand that this role requires"
+
+"I can"
+
+"I am able to"
+
+"I have the ability to"
 
 ==================================================
 JOB TITLE RULE
 ==================================================
 
-Present comparable previous experience using the exact title of the advertised role.
+Use the exact advertised job title when describing equivalent previous experience.
 
 Assume role matching has already been completed.
 
@@ -282,21 +382,19 @@ Assume role matching has already been completed.
 CRITERIA COVERAGE RULE
 ==================================================
 
-Every essential criterion (E1, E2...)
+Every Essential criterion (E1, E2...)
 
-Every desirable criterion (D1, D2...)
+Every Desirable criterion (D1, D2...)
 
 must either:
 
-A.
-Appear in the supporting statement using its exact wording
+A. Appear in the supporting statement using its exact wording
 
 OR
 
-B.
-Be listed in GAPS.
+B. Appear in GAPS.
 
-No criterion may be omitted silently.
+No criterion may be omitted.
 
 ==================================================
 OUTPUT FORMAT
@@ -304,42 +402,48 @@ OUTPUT FORMAT
 
 Output the supporting statement first.
 
-Do not include introductions, explanations or commentary.
+Do not include explanations before the statement.
 
-After the statement write exactly:
+After the statement write:
 
 ===NOTES===
-
-Then provide:
 
 TITLE CHECK:
 MATCH or MISMATCH with explanation
 
 GAPS:
-Any criteria lacking strong evidence
+Criteria with missing or weak evidence
 
 COVERAGE:
 List every criterion and where it appears
 
 QUESTIONS:
-Maximum 3 specific questions that would strengthen future versions
+Maximum 3 questions that would strengthen the application
+
+WORD COUNT:
+Total statement word count
 
 ==================================================
-QUALITY CHECKS BEFORE OUTPUT
+FINAL QUALITY CHECK
 ==================================================
 
-Verify:
+Before output verify:
 
-All mandatory sections included
+Total word count does not exceed 1,400 words
+At least 3 workplace scenarios included
+All scenarios contain actions and results
+No unsupported claims
+No "I can" statements
+No "I understand" statements
 Every criterion addressed or listed in gaps
 Exact criterion wording preserved
-Word limits respected
-Trust values used correctly
 Opening under 170 words
+Trust values used correctly
 Closing ends with "Thank you."
 No banned phrases
 No em dashes
-First-person voice throughout
-Evidence precedes criterion wording
+First-person voice maintained
+Evidence appears before criterion wording
+Criteria combined efficiently where possible
 STYLE rules followed`
 }
