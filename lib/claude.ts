@@ -414,8 +414,9 @@ async function rewriteParagraphToLimit(
   const keepLine = criterionPhrases.length > 0
     ? ` Keep these exact phrases unchanged: ${criterionPhrases.map(p => `"${p}"`).join(', ')}.`
     : ''
+  // Haiku is fast enough for paragraph-level cuts and costs far less than Sonnet
   const msg = await anthropic.messages.create({
-    model: 'claude-sonnet-4-6',
+    model: 'claude-haiku-4-5-20251001',
     max_tokens: 300,
     temperature: 0.7,
     system: 'You are a precise text editor. Return only the rewritten paragraph, nothing else before or after it.',
