@@ -727,6 +727,20 @@ async function generateParallelV3(
     }
   }
 
+  // Fallback: Sonnet analysis failed or returned no criteria — use Haiku-extracted ones
+  // so the UI criteria panel and the V3 pipeline always have data to work with.
+  if (!analysis && essentialCriteria.length > 0) {
+    analysis = {
+      jobSummary: '',
+      essentialCriteria,
+      desirableCriteria,
+      candidateStrengths: [],
+      potentialGaps: [],
+      keyDuties: [],
+    }
+    console.log('V3: Sonnet analysis empty — using Haiku criteria as fallback')
+  }
+
   // ── Parse ===NOTES=== ──────────────────────────────────────────────────────
   const rawStatementFull = rawOutput
   // Use regex to handle spaces/case variants: ===NOTES===, === NOTES ===, etc.
@@ -748,6 +762,7 @@ async function generateParallelV3(
     .replace(/--/g, ', ')
     .replace(/\*\*/g, '')
     .replace(/^(Story|Scenario)\s*\d*\s*:\s*/gim, '')
+    .replace(/\s*\([ED]\d+(?:[,;]\s*[ED]\d+)*\)/g, '')
   if (!statement) throw new Error('V3 generation returned empty statement')
 
   // ── Paragraph-level word limit enforcement ────────────────────────────────
