@@ -424,7 +424,7 @@ async function rewriteParagraphToLimit(
       role: 'user',
       content: `Rewrite this paragraph in at most ${wordLimit} words.${keepLine} Keep the facts. Cut adjectives and repetition. Return only the rewritten paragraph.\n\n${para}`,
     }],
-  })
+  }, { timeout: 25000 })
   const out = msg.content[0]?.type === 'text' ? msg.content[0].text.trim() : ''
   return out || para
 }
@@ -599,7 +599,7 @@ async function generateParallelV3(
       temperature: 0,
       system: 'You are an NHS job application analyst. Extract ONLY the person specification criteria from the job posting. Return a JSON object with two arrays: "essential" and "desirable". Each item is a plain string. Include ALL criteria from every section (Education, Experience, Skills, Aptitudes, Disposition, Particular Requirements, etc.). Do not include job duties or descriptions. Return only valid JSON, no markdown.',
       messages: [{ role: 'user', content: `Extract all person specification criteria from this job posting:\n\n${rawTextForExtract}` }],
-    }).catch(() => null),
+    }, { timeout: 60000 }).catch(() => null),
     jobData.organisation ? fetchTrustIntel(jobData.organisation).catch(() => null) : Promise.resolve(null),
   ])
 
@@ -645,7 +645,7 @@ async function generateParallelV3(
     temperature: 0,
     system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
     messages: [{ role: 'user', content: analysisUserPrompt }],
-  }).catch(() => null)
+  }, { timeout: 120000 }).catch(() => null)
 
   if (options.provider === 'copilot') {
     const [analysisResult, copilotOutput] = await Promise.all([
@@ -692,7 +692,7 @@ async function generateParallelV3(
           temperature: 1.0,
           system: v3SystemPrompt,
           messages: [{ role: 'user', content: v3UserPrompt }],
-        } as MessageCreateParamsNonStreaming)
+        } as MessageCreateParamsNonStreaming, { timeout: 180000 })
       ),
     ])
     rawOutput = statementMsg.content[0]?.type === 'text' ? statementMsg.content[0].text.trim() : ''
