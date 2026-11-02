@@ -21,6 +21,18 @@ CRITERIA
 - Desirable criteria use D1, D2, D3...
 - Use the exact wording provided.
 
+METHOD
+- Assessment method for each criterion, taken from the person specification.
+- A = Application form / supporting statement
+- I = Interview
+- T = Test
+- C = Certificate / document check
+- A criterion may have more than one method (e.g. A/I).
+- If METHOD is empty for a criterion, treat it as A.
+
+BAND
+- Agenda for Change band of the advertised role (e.g. Band 5, Band 6, Band 7, Band 8a).
+
 JOB
 - Job title
 - Organisation
@@ -35,9 +47,12 @@ TRUST
 
 CANDIDATE
 - Qualifications
-- Registration
+- UK registration status (registered with PIN, application in progress, decision letter received, or not yet applied)
+- Registering body (NMC, HCPC, GMC, GPhC or other)
 - Employment history
+- Overseas work setting (hospital type, size, bed numbers, patient ratios, specialty)
 - Clinical experience
+- UK-specific training or exposure (OSCE, CBT, adaptation programmes, e-learning, UK placements)
 - Skills
 - Professional background
 - Special instructions
@@ -48,22 +63,27 @@ MOMENTS
 - Colleague feedback
 - Equipment and systems used
 - Reason for applying
+- Learning or change in practice after an event
 
 STYLE
-- 1 = headed format
+- 1 = headed format (default)
 - 2 = continuous prose
+- If STYLE is empty, use Style 1.
+- Use Style 2 only when the trust or advert asks for prose.
 
 INSTRUCTIONS
 - Additional instructions for this application
 
 BUDGET
-- Additional word guidance if supplied
+- Word or character limit stated by the trust or advert.
+- If BUDGET is supplied, it replaces all word targets in this prompt.
+- Scale every section proportionally to fit BUDGET.
 
 ==================================================
 PRIMARY OBJECTIVE
 ==================================================
 
-Every criterion must be addressed and evidenced.
+Every criterion must be addressed and evidenced at the right depth for its assessment method.
 
 Do not make claims.
 
@@ -79,16 +99,56 @@ Do not write:
 
 Instead show evidence through actions and results.
 
-For every criterion:
+For every criterion assessed by A:
 
-1. Give an example.
-2. Explain what was done.
-3. Explain the outcome.
-4. Place the exact criterion wording naturally after the evidence.
+1. Open with a short signpost sentence if it helps the panel locate the evidence.
+2. Give an example.
+3. Explain what was done.
+4. Explain the outcome.
+5. Place the criterion wording naturally after the evidence.
 
-Evidence comes before the criterion.
+A signpost sentence must be short and must not be the criterion wording copied verbatim.
 
-Never begin a paragraph with criterion wording.
+==================================================
+ASSESSMENT METHOD RULE
+==================================================
+
+Weight evidence by METHOD.
+
+A (including A/I, A/T):
+- Full evidence inside a scenario.
+- Highest priority for words.
+
+C only:
+- One factual line confirming the qualification, registration or certificate.
+- No scenario needed.
+- The application form already captures these details.
+
+I only or T only:
+- One brief mention, or fold into an existing scenario.
+- Do not build a scenario for these.
+
+Use the words saved on C, I and T criteria to strengthen A criteria.
+
+==================================================
+BAND RULE
+==================================================
+
+Pitch all evidence at the level of the advertised BAND.
+
+Band 5:
+- Safe practice, escalation, documentation, teamwork, communication, learning.
+
+Band 6:
+- All Band 5 themes plus supervising juniors, coordinating shifts, teaching students, managing a caseload, early leadership.
+
+Band 7:
+- Leading a team or service area, audit, quality improvement, managing staff performance, rotas, governance, incident investigation.
+
+Band 8a and above:
+- Service development, strategy, budget responsibility, workforce planning, multi-team leadership, policy, measurable service-level outcomes.
+
+Where the candidate's experience sits below the advertised band, lead with the evidence closest to the band level.
 
 ==================================================
 MANDATORY STRUCTURE
@@ -97,39 +157,28 @@ MANDATORY STRUCTURE
 PART 1 - OPENING
 
 Length:
-150-170 words
+100-130 words
 
-Include:
+Include only:
 
 - Current role
-- Most relevant experience
+- Work setting described in UK terms (e.g. "a 40-bed acute medical ward in a 600-bed teaching hospital")
 - Use the exact title of the advertised role when describing equivalent previous experience
-- Relevant qualifications
-- Professional registration if available
-- Why the role interests the candidate
-- Why the organisation interests the candidate
-- Up to 5 relevant conditions
-- Up to 3 relevant procedures
-- Key strengths evidenced by experience
+- UK registration status in one clear line
+- One headline strength evidenced by experience
+- Conditions and procedures only if listed in the job description, maximum 3 in total
 
-PART 2 - VALUES SNAPSHOT
+Do not include motivation here. Motivation belongs in Part 3.
 
-Length:
-40-60 words
-
-Requirements:
-
-- One trust value only
-- One routine workplace example only
-- No additional themes
-
-PART 3 - BODY
+PART 2 - BODY
 
 STYLE 1
 
 Use headings based on person specification themes.
 
-Keep criteria in the same order they appear in the person specification.
+Follow the order of criteria in the person specification.
+
+Where a scenario covers criteria from more than one heading, place it under the heading of its main criterion and cross-reference briefly elsewhere.
 
 STYLE 2
 
@@ -137,7 +186,66 @@ No headings.
 
 Maximum 7 paragraphs.
 
+Order paragraphs by scenario.
+
 All criteria must still appear.
+
+VALUES IN THE BODY
+
+Name one trust value inside one body scenario where the evidence shows it.
+
+Do not write a separate values paragraph in the body.
+
+PART 3 - MOTIVATION
+
+Length:
+2-3 sentences
+
+Explain:
+
+- Why this trust
+- Why this service
+- Why this role
+
+Use trust-specific facts whenever available.
+
+Avoid generic statements.
+
+PART 4 - VALUES REFLECTION
+
+Length:
+50-60 words
+
+Requirements:
+
+- Different trust value from the one named in the body
+- Explain how the value has shaped practice over time
+- Reflect rather than describe
+
+PART 5 - CLOSING
+
+Length:
+50-70 words
+
+Requirements:
+
+- No new evidence
+- Summarise suitability
+- Reinforce commitment
+- End naturally. Do not use a fixed closing line.
+
+==================================================
+TRUST VALUES FALLBACK
+==================================================
+
+If TRUST values are empty, use the NHS Constitution values:
+
+- Working together for patients
+- Respect and dignity
+- Commitment to quality of care
+- Compassion
+- Improving lives
+- Everyone counts
 
 ==================================================
 SCENARIO RULE
@@ -153,11 +261,44 @@ Each scenario must include:
 
 The action section should be the longest part.
 
-One scenario may evidence multiple criteria.
+At least one scenario must also include one line of learning: what the candidate changed in their practice afterwards.
+
+One scenario may evidence 2-3 criteria.
+
+Never combine more than 3 criteria in one scenario.
 
 Do not create a separate scenario for every criterion.
 
-Use a small number of strong examples that cover multiple criteria.
+==================================================
+INTERNATIONAL CONTEXT RULE
+==================================================
+
+Translate overseas experience into UK terms.
+
+Describe settings by size, specialty and workload, not by hospital name alone.
+
+Link evidence to UK frameworks only where the candidate has real exposure through practice, OSCE, adaptation programmes or UK training. Examples:
+
+- NEWS2
+- SBAR
+- NICE guidance
+- NMC Code / HCPC Standards / GMC Good Medical Practice
+- Mental Capacity Act 2005
+- Safeguarding procedures
+- Incident reporting
+- Duty of candour
+
+Use UK spelling and terms: ward, A&E, GP, theatre, discharge summary, nurse in charge, multidisciplinary team.
+
+Do not mention visa sponsorship, immigration status or right to work. These belong on the application form.
+
+==================================================
+CONFIDENTIALITY RULE
+==================================================
+
+Anonymise all patients and colleagues.
+
+No names, initials, exact dates, rare diagnoses with locations, or any detail that could identify a person.
 
 ==================================================
 ACTION-FIRST WRITING RULE
@@ -199,67 +340,10 @@ Examples:
 Do not finish examples with actions alone.
 
 ==================================================
-CRITERIA EFFICIENCY RULE
-==================================================
-
-Where one piece of evidence supports several criteria, combine them.
-
-One scenario may cover 3-5 criteria.
-
-Avoid creating a separate paragraph for every criterion.
-
-This is essential for maintaining the word limit.
-
-==================================================
-PART 4 - MOTIVATION
-==================================================
-
-Length:
-2-3 sentences
-
-Explain:
-
-- Why this trust
-- Why this service
-- Why this role
-
-Use trust-specific facts whenever available.
-
-Avoid generic statements.
-
-==================================================
-PART 5 - VALUES REFLECTION
-==================================================
-
-Length:
-50-60 words
-
-Requirements:
-
-- Different trust value from Part 2
-- Explain how the value has shaped practice over time
-- Reflect rather than describe
-
-==================================================
-PART 6 - CLOSING
-==================================================
-
-Length:
-60-80 words
-
-Requirements:
-
-- No new evidence
-- Summarise suitability
-- Reinforce commitment
-
-Final sentence must be:
-
-Thank you.
-
-==================================================
 WORD CONTROL RULE
 ==================================================
+
+If BUDGET is supplied, BUDGET overrides everything below.
 
 Target:
 1,150-1,350 words
@@ -267,18 +351,19 @@ Target:
 Hard maximum:
 1,400 words
 
-Never exceed 1,400 words.
+Never exceed the limit.
 
 If approaching the limit:
 
-1. Shorten examples.
-2. Merge criteria into existing scenarios.
-3. Remove repetition.
-4. Remove generic motivation language.
-5. Keep all criteria addressed.
+1. Reduce C, I and T criteria to one line each.
+2. Shorten examples.
+3. Merge criteria into existing scenarios, maximum 3 per scenario.
+4. Remove repetition.
+5. Remove generic motivation language.
+6. Keep all criteria addressed.
 
 Opening:
-Maximum 170 words
+Maximum 130 words
 
 All other paragraphs:
 Maximum 130 words
@@ -387,19 +472,25 @@ Assume role matching has already been completed.
 CRITERIA COVERAGE RULE
 ==================================================
 
-Every Essential criterion (E1, E2...)
+Every Essential criterion (E1, E2...) must either:
 
-Every Desirable criterion (D1, D2...)
+A. Appear in the statement using its exact wording
 
-must either:
+OR
 
-A. Appear in the supporting statement using its exact wording
+B. Appear in GAPS.
+
+Every Desirable criterion (D1, D2...) must either:
+
+A. Appear in the statement using its exact wording or a close paraphrase that keeps its key terms
 
 OR
 
 B. Appear in GAPS.
 
 No criterion may be omitted.
+
+Avoid stacking exact criterion phrases back to back. Spread them across the evidence so the text reads naturally.
 
 ==================================================
 OUTPUT FORMAT
@@ -416,17 +507,20 @@ After the statement write:
 TITLE CHECK:
 MATCH or MISMATCH with explanation
 
+ESSENTIAL GAP WARNING:
+If any Essential criterion assessed by A has no evidence, state that the application is unlikely to be shortlisted and name the criterion. Otherwise write "None".
+
 GAPS:
 Criteria with missing or weak evidence
 
 COVERAGE:
-List every criterion and where it appears
+List every criterion, its METHOD, and where it appears
 
 QUESTIONS:
 Maximum 3 questions that would strengthen the application
 
 WORD COUNT:
-Total statement word count
+Word count for each section, then the total statement word count
 
 ==================================================
 FINAL QUALITY CHECK
@@ -434,21 +528,32 @@ FINAL QUALITY CHECK
 
 Before output verify:
 
-Total word count does not exceed 1,400 words
-At least 3 workplace scenarios included
-All scenarios contain actions and results
-No unsupported claims
-No "I can" statements
-No "I understand" statements
-Every criterion addressed or listed in gaps
-Exact criterion wording preserved
-Opening under 170 words
-Trust values used correctly
-Closing ends with "Thank you."
-No banned phrases
-No em dashes
-First-person voice maintained
-Evidence appears before criterion wording
-Criteria combined efficiently where possible
-STYLE rules followed`
+□ Word count within BUDGET or 1,400 words
+□ At least 3 workplace scenarios included
+□ All scenarios contain actions and results
+□ At least one scenario includes learning
+□ No scenario covers more than 3 criteria
+□ Evidence weighted by METHOD
+□ Evidence pitched at the advertised BAND
+□ No unsupported claims
+□ No "I can" statements
+□ No "I understand" statements
+□ Every criterion addressed or listed in gaps
+□ Exact wording preserved for Essential criteria
+□ Opening under 130 words and free of motivation
+□ Motivation appears only in Part 3
+□ One trust value in the body, a different one in Part 4
+□ Trust values fallback used if TRUST is empty
+□ Overseas setting described in UK terms
+□ UK registration status stated clearly
+□ No visa or immigration content
+□ All patients and colleagues anonymised
+□ UK spelling and terms used
+□ Closing ends naturally with no fixed line
+□ No banned phrases
+□ No em dashes
+□ First-person voice maintained
+□ Evidence appears before criterion wording
+□ STYLE rules followed
+□ Sameness check: any sentence generic enough to appear in another candidate's statement has been rewritten with a candidate-specific detail`
 }

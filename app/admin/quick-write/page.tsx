@@ -26,8 +26,22 @@ function renderBold(text: string): string {
   return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
 }
 
+function cleanStatementForDisplay(text: string): string {
+  return text
+    .replace(/^[ \t]*[-_*=]{2,}[ \t]*$/gm, '')
+    .replace(/ — /g, ', ').replace(/—/g, ', ')
+    .replace(/ – /g, ', ').replace(/–/g, ', ')
+    .replace(/ -- /g, ', ').replace(/--/g, ', ')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\*\*/g, '')
+    .replace(/^#{1,3}\s+/gm, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+}
+
 function StatementDisplay({ text }: { text: string }) {
-  const paragraphs = text.split(/\n\n+/)
+  const cleaned = cleanStatementForDisplay(text)
+  const paragraphs = cleaned.split(/\n\n+/).filter(p => p.trim())
   return (
     <div className="space-y-3 text-gray-800 leading-relaxed text-sm">
       {paragraphs.map((para, i) => {

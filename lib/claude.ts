@@ -173,13 +173,21 @@ function buildV3UserPrompt(
   trustIntelText: string | undefined
 ): string {
   const rawText = buildRawText(jobData.rawText)
+
+  // Extract AFC band from job text (e.g. "Band 5", "Band 6", "Band 8a")
+  const bandMatch = rawText.match(/\bBand\s+(\d+[a-c]?)\b/i)
+  const afcBand = bandMatch ? `Band ${bandMatch[1]}` : '(not specified — assume Band 5)'
+
   const criteriaBlock = [
     '=== CRITERIA ===',
+    '(METHOD not available from advert — treat all criteria as A)',
     'Essential:',
-    ...essentialCriteria.map((c, i) => `E${i + 1}. ${c} — Section: General`),
+    ...essentialCriteria.map((c, i) => `E${i + 1}. ${c}`),
     'Desirable:',
-    ...desirableCriteria.map((c, i) => `D${i + 1}. ${c} — Section: General`),
+    ...desirableCriteria.map((c, i) => `D${i + 1}. ${c}`),
   ].join('\n')
+
+  const bandBlock = `=== BAND ===\n${afcBand}`
 
   const jobBlock = [
     '=== JOB ===',
@@ -224,35 +232,36 @@ function buildV3UserPrompt(
   if (options.openingTemplate) instructionLines.push(`Preferred opening style: ${options.openingTemplate}`)
   if (instructionLines.length === 1) instructionLines.push('(none)')
 
-  // ── BUDGET block ──────────────────────────────────────────────────────────
-  // Fixed structure words: opening 165 + snapshot 50 + motivation 50 +
-  // reflection 55 + closing 70 = 390. Remaining 960 split across body sections.
+  // ── BUDGET block (5-part structure: Opening + Body + Motivation + Values Reflection + Closing) ──
+  // Fixed structure words: opening 115 + motivation 50 + reflection 55 + closing 60 = 280.
+  // Remaining ~1,020 words go to body sections.
   const DEFAULT_BODY_HEADINGS = [
-    'Professional Qualifications and Continuous Development',
-    'Relevant Health and Social Care Experience',
-    'Communication and Collaborative Working',
-    'Digital Skills and Clinical Documentation',
-    'Safeguarding, Accountability and Professional Practice',
-    'Person-Centred Care, Equality and Confidentiality',
-    'Specialist Practice and Service Delivery',
+    'Professional Qualifications and Registration',
+    'Relevant Clinical Experience',
+    'Communication and Teamwork',
+    'Digital Skills and Documentation',
+    'Safeguarding and Professional Practice',
+    'Person-Centred Care and Equality',
+    'Specialist Skills and Service Delivery',
   ]
   const useStyle = options.style || '1'
   const budgetLines: string[] = ['=== BUDGET ===']
-  budgetLines.push('Opening: 165 words (max 170)')
-  budgetLines.push('Values Snapshot: 50 words')
+  budgetLines.push('Opening: 115 words (max 130)')
   if (useStyle === '1') {
-    const perHeading = Math.round(960 / DEFAULT_BODY_HEADINGS.length)
+    const perHeading = Math.round(1020 / DEFAULT_BODY_HEADINGS.length)
     DEFAULT_BODY_HEADINGS.forEach(h => budgetLines.push(`${h}: ${perHeading} words`))
   } else {
-    budgetLines.push('Body (continuous prose): 960 words')
+    budgetLines.push('Body (continuous prose): 1,020 words')
   }
   budgetLines.push('Motivation: 50 words')
   budgetLines.push('Values Reflection: 55 words')
-  budgetLines.push('Closing: 70 words')
+  budgetLines.push('Closing: 60 words')
   budgetLines.push('TOTAL TARGET: 1,300 words (hard limit 1,400)')
 
   return [
     criteriaBlock,
+    '',
+    bandBlock,
     '',
     jobBlock,
     '',
