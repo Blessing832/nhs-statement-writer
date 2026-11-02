@@ -165,7 +165,7 @@ export async function runNHSV3Pipeline(
 
       const patchMsg = await anthropic.messages.create({
         model: 'claude-haiku-4-5',
-        max_tokens: 2400,
+        max_tokens: 3500,
         temperature: 0.7,
         system: patchPrompt,
         messages: [{

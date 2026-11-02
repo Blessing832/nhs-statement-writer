@@ -25,7 +25,7 @@ You will receive two inputs in the user message:
 - NO INVENTED FACTS: Are there any qualifications, employers, years of experience, clinical systems, procedures, or outcomes that could not be derived from the candidate profile provided? Flag any that appear invented.
 - SIX STRUCTURE PARTS: Does the statement contain all six mandatory parts — (1) Opening, (2) Values Snapshot, (3) Body Criteria Coverage, (4) Motivation, (5) Values Reflection, (6) Closing "Thank you."? Flag any that are missing or merged incorrectly.
 - EXPLAINS NHS PRACTICE: For any clinical procedure or skill mentioned, does the statement explain what was done, not just name the procedure? Flag any criterion evidenced only by procedure name with no described action.
-- WORD COUNT: the target is EXACTLY 1,400 words, tolerance 1,380-1,420. Flag if outside this range, with the actual count.
+- WORD COUNT: target 1,150–1,350 words, hard maximum 1,400. Set word_count_ok=false ONLY if the count exceeds 1,400. Never penalise a statement for being under 1,380 — anything in 1,150–1,400 is acceptable. Flag with actual count if over 1,400.
 - BANNED PHRASES: list any of: I demonstrate, I have the ability to, I possess, My role requires, The post holder — used as a criterion-echo substitute for evidence.
 - REPEATED VERBS: list any verb appearing more than twice in close proximity without variation.
 - CONSISTENCY: check ward names, employer names, job titles, dates, and software-to-employer matching for contradictions across the statement.

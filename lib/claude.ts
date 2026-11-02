@@ -238,7 +238,7 @@ function buildV3UserPrompt(
   ]
   const useStyle = options.style || '1'
   const budgetLines: string[] = ['=== BUDGET ===']
-  budgetLines.push('Opening: 165 words (max 180)')
+  budgetLines.push('Opening: 165 words (max 170)')
   budgetLines.push('Values Snapshot: 50 words')
   if (useStyle === '1') {
     const perHeading = Math.round(960 / DEFAULT_BODY_HEADINGS.length)
