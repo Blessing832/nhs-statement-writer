@@ -117,7 +117,8 @@ export async function runNHSV3Pipeline(
     failing_ids?: string[]
     real_job_titles_used?: boolean
     no_invented_facts?: boolean
-    six_structure_parts_present?: Record<string, boolean>
+    six_structure_parts_present?: Record<string, boolean>  // legacy field name
+    five_structure_parts_present?: Record<string, boolean>
     word_count?: number
     word_count_ok?: boolean
     banned_phrases_found?: string[]
@@ -192,7 +193,8 @@ export async function runNHSV3Pipeline(
       }
 
       // Only accept the patch if it looks like a real statement (not a meta-response)
-      if (patchText && countWords(patchText) >= 600 && patchText.toLowerCase().includes('thank you')) {
+      // New prompt no longer requires "Thank you." — check word count + paragraph count instead
+      if (patchText && countWords(patchText) >= 600 && patchText.split(/\n\n+/).filter(p => p.trim()).length >= 3) {
         currentStatement = patchText
         patched = true
       }

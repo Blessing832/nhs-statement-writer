@@ -450,7 +450,7 @@ async function trimStatementV3(
   // Opening = first non-heading paragraph
   const openingIdx = paragraphs.findIndex(p => !isHeadingParagraph(p))
 
-  const getLimit = (idx: number) => idx === openingIdx ? 170 : 130
+  const getLimit = (_idx: number) => 130
 
   // Up to 3 rounds; each round rewrites all over-limit paragraphs in parallel
   for (let round = 0; round < 3; round++) {
@@ -697,7 +697,7 @@ async function generateParallelV3(
       withRetry(() =>
         anthropic.messages.create({
           model: generationModel,
-          max_tokens: 2600,
+          max_tokens: 3500,
           temperature: 1.0,
           system: v3SystemPrompt,
           messages: [{ role: 'user', content: v3UserPrompt }],

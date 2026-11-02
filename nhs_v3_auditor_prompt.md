@@ -23,7 +23,7 @@ You will receive two inputs in the user message:
 ## ALSO CHECK
 - REAL JOB TITLES: Does the statement use real job titles (e.g. "Registered Nurse", "Band 5 Nurse") rather than the exact advertised vacancy title in the opening? Flag if the opening uses the candidate's former literal title instead of the advertised vacancy title. (V3 rule: opening must use the exact advertised vacancy title.)
 - NO INVENTED FACTS: Are there any qualifications, employers, years of experience, clinical systems, procedures, or outcomes that could not be derived from the candidate profile provided? Flag any that appear invented.
-- SIX STRUCTURE PARTS: Does the statement contain all six mandatory parts — (1) Opening, (2) Values Snapshot, (3) Body Criteria Coverage, (4) Motivation, (5) Values Reflection, (6) Closing "Thank you."? Flag any that are missing or merged incorrectly.
+- FIVE STRUCTURE PARTS: Does the statement contain all five mandatory parts — (1) Opening (introduces candidate, role, setting, registration), (2) Body with criteria coverage (at least 3 workplace scenarios), (3) Motivation (why this trust/service/role), (4) Values Reflection (trust value shaped over time), (5) Closing (natural closing paragraph, no specific phrase required)? Flag any that are missing or merged incorrectly.
 - EXPLAINS NHS PRACTICE: For any clinical procedure or skill mentioned, does the statement explain what was done, not just name the procedure? Flag any criterion evidenced only by procedure name with no described action.
 - WORD COUNT: target 1,150–1,350 words, hard maximum 1,400. Set word_count_ok=false ONLY if the count exceeds 1,400. Never penalise a statement for being under 1,380 — anything in 1,150–1,400 is acceptable. Flag with actual count if over 1,400.
 - BANNED PHRASES: list any of: I demonstrate, I have the ability to, I possess, My role requires, The post holder — used as a criterion-echo substitute for evidence.
@@ -43,7 +43,7 @@ You will receive two inputs in the user message:
   "real_job_titles_note": "<what title was used vs what was advertised, or 'OK'>",
   "no_invented_facts": true/false,
   "invented_facts_found": ["<item>"],
-  "six_structure_parts_present": {"opening": true, "values_snapshot": true, "body_criteria": true, "motivation": true, "values_reflection": true, "closing_thank_you": true},
+  "five_structure_parts_present": {"opening": true, "body_criteria": true, "motivation": true, "values_reflection": true, "closing": true},
   "explains_nhs_practice": true/false,
   "practice_gaps": ["<criterion id>: <procedure named but not explained>"],
   "word_count": 1412,
@@ -57,6 +57,6 @@ You will receive two inputs in the user message:
   "verdict": "<one sentence: shortlist-safe or reject-risk and why>"
 }
 
-"all_pass" is true ONLY if every criterion scores 4 or 5, real_job_titles_used and no_invented_facts are true, all six_structure_parts_present values are true, word_count_ok is true, and banned_phrases_found is empty. Score every single criterion — never skip one.
+"all_pass" is true ONLY if every criterion scores 4 or 5, real_job_titles_used and no_invented_facts are true, all five_structure_parts_present values are true, word_count_ok is true, and banned_phrases_found is empty. Score every single criterion — never skip one.
 
 "failing_ids" must contain ONLY criteria that score 2 or below (absent, or mentioned with no example). Do NOT include criteria that score 3 or 4 in failing_ids — those are addressed and do not need patching.
