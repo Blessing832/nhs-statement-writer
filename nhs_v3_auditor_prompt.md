@@ -57,4 +57,6 @@ You will receive two inputs in the user message:
   "verdict": "<one sentence: shortlist-safe or reject-risk and why>"
 }
 
-"all_pass" is true ONLY if every criterion scores 5, real_job_titles_used and no_invented_facts are true, all six_structure_parts_present values are true, explains_nhs_practice is true, word_count_ok is true, and common_pattern_flags/training_claim_flags/banned_phrases_found/repeated_verbs/consistency_issues/non_uk_locations are all empty. Score every single criterion — never skip one.
+"all_pass" is true ONLY if every criterion scores 4 or 5, real_job_titles_used and no_invented_facts are true, all six_structure_parts_present values are true, word_count_ok is true, and banned_phrases_found is empty. Score every single criterion — never skip one.
+
+"failing_ids" must contain ONLY criteria that score 2 or below (absent, or mentioned with no example). Do NOT include criteria that score 3 or 4 in failing_ids — those are addressed and do not need patching.

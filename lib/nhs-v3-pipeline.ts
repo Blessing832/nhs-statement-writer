@@ -107,7 +107,7 @@ export async function runNHSV3Pipeline(
     temperature: 0,
     system: auditorPrompt,
     messages: [{ role: 'user', content: userMsg }],
-  })
+  }, { timeout: 60000 })
   tokenUsage.auditInputTokens += auditMsg.usage.input_tokens
   tokenUsage.auditOutputTokens += auditMsg.usage.output_tokens
 
@@ -172,7 +172,7 @@ export async function runNHSV3Pipeline(
           role: 'user',
           content: `STATEMENT:\n${currentStatement}\n\nAUDIT RESULT:\n${JSON.stringify(auditResultForPatch, null, 2)}\n\nCANDIDATE FACTS:\n${candidateFacts}`,
         }],
-      })
+      }, { timeout: 90000 })
       tokenUsage.patchInputTokens += patchMsg.usage.input_tokens
       tokenUsage.patchOutputTokens += patchMsg.usage.output_tokens
 
@@ -204,7 +204,7 @@ export async function runNHSV3Pipeline(
         temperature: 0,
         system: auditorPrompt,
         messages: [{ role: 'user', content: `PERSON SPECIFICATION:\n${criteriaText}\n\nSTATEMENT:\n${currentStatement}` }],
-      })
+      }, { timeout: 60000 })
       tokenUsage.auditInputTokens += reAuditMsg.usage.input_tokens
       tokenUsage.auditOutputTokens += reAuditMsg.usage.output_tokens
 
