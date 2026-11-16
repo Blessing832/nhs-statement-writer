@@ -99,7 +99,11 @@ export async function fetchTrustIntel(rawOrganisation: string): Promise<TrustInt
           if (seen.has(item.title)) continue
           seen.add(item.title)
           const combined = (item.title + ' ' + item.snippet).toLowerCase()
-          if (!combined.includes(trustName.toLowerCase().split(' ')[0])) continue
+          // Match on the distinctive part of the name ("Royal Devon", not "Royal" or "The")
+          const distinctive = trustName
+            .replace(/\b(the|nhs|foundation|trust|university|hospitals?|teaching|health|care|board|and|of)\b/gi, ' ')
+            .replace(/\s+/g, ' ').trim().toLowerCase()
+          if (!distinctive || !combined.includes(distinctive)) continue
           allItems.push(item)
         }
       } catch { /* network errors are silent — trust intel is best-effort */ }
@@ -122,13 +126,13 @@ export function formatTrustIntel(intel: TrustIntel): string {
 
   const newsBlock = intel.items.length > 0
     ? `### RECENT ACHIEVEMENTS AND NEWS
-The following are real, recent news items about ${intel.trustName}. You MUST reference at least one of these specific achievements or initiatives in the WHY THIS TRUST paragraph. Do NOT use generic praise — use the actual names, dates, and specifics from these items.
+The following are recent news headlines that may be about ${intel.trustName}. They are optional. Use at most one, only if it is clearly about this organisation, positive, and relevant to the role.
 
 ${lines.join('\n')}`
     : ''
 
   const sections = newsBlock
 
-  return `## TRUST INTELLIGENCE — USE THIS IN THE "WHY THIS TRUST" PARAGRAPH
+  return `## TRUST NEWS (optional)
 ${sections}`
 }

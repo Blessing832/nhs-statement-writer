@@ -124,7 +124,7 @@ describe('verifyCriteriaV3', () => {
 
   const statement = `
     I communicate effectively with patients and colleagues daily.
-    I apply clinical risk assessment to all patient interactions.
+    I apply clinical risk assessment frameworks to all patient interactions.
     Thank you.
   `
 

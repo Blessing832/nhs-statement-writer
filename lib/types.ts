@@ -60,6 +60,8 @@ export interface StatementAnalysis {
   jdKeywords?: string[]
   essentialCriteria: string[]
   desirableCriteria: string[]
+  // criterion text → assessment method (A, I, T, C or a combination)
+  criteriaMethods?: Record<string, string>
   keyDuties: string[]
   subheadingPlan?: string[]
   candidateStrengths: string[]

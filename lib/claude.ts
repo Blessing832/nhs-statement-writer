@@ -176,8 +176,10 @@ function buildV3UserPrompt(
     openingTemplate?: string
     applicationMode?: ApplicationMode
     style?: '1' | '2'
+    previousStatement?: string
   },
-  trustIntelText: string | undefined
+  trustIntelText: string | undefined,
+  extract: { methods?: Record<string, string>; trustValues?: string[] } = {}
 ): string {
   const rawText = buildRawText(jobData.rawText)
 
@@ -185,13 +187,13 @@ function buildV3UserPrompt(
   const bandMatch = rawText.match(/\bBand\s+(\d+[a-c]?)\b/i)
   const afcBand = bandMatch ? `Band ${bandMatch[1]}` : '(not specified — assume Band 5)'
 
+  const methodOf = (c: string) => extract.methods?.[c] || 'A'
   const criteriaBlock = [
     '=== CRITERIA ===',
-    '(METHOD not available from advert — treat all criteria as A)',
     'Essential:',
-    ...essentialCriteria.map((c, i) => `E${i + 1}. ${c}`),
+    ...essentialCriteria.map((c, i) => `E${i + 1}. ${c} [METHOD: ${methodOf(c)}]`),
     'Desirable:',
-    ...desirableCriteria.map((c, i) => `D${i + 1}. ${c}`),
+    ...desirableCriteria.map((c, i) => `D${i + 1}. ${c} [METHOD: ${methodOf(c)}]`),
   ].join('\n')
 
   const bandBlock = `=== BAND ===\n${afcBand}`
@@ -205,7 +207,10 @@ function buildV3UserPrompt(
 
   const trustBlock = [
     '=== TRUST ===',
-    trustIntelText || '(No trust information available)',
+    extract.trustValues?.length
+      ? `Trust values (taken from the advert): ${extract.trustValues.join('; ')}`
+      : '(Trust values not stated in the advert)',
+    trustIntelText || '(No trust news available)',
   ].join('\n')
 
   // Privacy: do NOT include client.full_name
@@ -235,31 +240,24 @@ function buildV3UserPrompt(
   const instructionLines: string[] = ['=== INSTRUCTIONS ===']
   if (options.instructions) instructionLines.push(options.instructions)
   if (options.rewriteInstruction) instructionLines.push(`REWRITE INSTRUCTION: ${options.rewriteInstruction}`)
-  if (options.bodyPattern) instructionLines.push(`Depth style: ${options.bodyPattern}`)
-  if (options.openingTemplate) instructionLines.push(`Preferred opening style: ${options.openingTemplate}`)
   if (instructionLines.length === 1) instructionLines.push('(none)')
+  if (options.rewriteInstruction && options.previousStatement) {
+    instructionLines.push(
+      '',
+      'This is a REWRITE. Start from the PREVIOUS STATEMENT below. Apply the rewrite instruction and keep everything it does not ask you to change.',
+      '=== PREVIOUS STATEMENT ===',
+      options.previousStatement
+    )
+  }
 
   // ── BUDGET block (5-part structure: Opening + Body + Motivation + Values Reflection + Closing) ──
-  // Fixed structure words: opening 115 + motivation 50 + reflection 55 + closing 60 = 280.
-  // Remaining ~1,020 words go to body sections.
-  const DEFAULT_BODY_HEADINGS = [
-    'Professional Qualifications and Registration',
-    'Relevant Clinical Experience',
-    'Communication and Teamwork',
-    'Digital Skills and Documentation',
-    'Safeguarding and Professional Practice',
-    'Person-Centred Care and Equality',
-    'Specialist Skills and Service Delivery',
-  ]
   const useStyle = options.style || '1'
   const budgetLines: string[] = ['=== BUDGET ===']
   budgetLines.push('Opening: 115 words (max 130)')
-  if (useStyle === '1') {
-    const perHeading = Math.round(1020 / DEFAULT_BODY_HEADINGS.length)
-    DEFAULT_BODY_HEADINGS.forEach(h => budgetLines.push(`${h}: ${perHeading} words`))
-  } else {
-    budgetLines.push('Body (continuous prose): 1,020 words')
-  }
+  budgetLines.push(useStyle === '1'
+    ? 'Body: about 1,000 words under 4 to 6 headings. Take the headings from this person specification (its own section names or themes), not from a standard list. Give more words to headings holding the most METHOD A criteria.'
+    : 'Body (continuous prose): about 1,000 words')
+  budgetLines.push('Body paragraphs: 60 to 130 words each, with lengths that vary')
   budgetLines.push('Motivation: 50 words')
   budgetLines.push('Values Reflection: 55 words')
   budgetLines.push('Closing: 60 words')
@@ -316,6 +314,13 @@ async function enforceWordCountV3(text: string, attempt = 0): Promise<string> {
   return enforceWordCountV3(adjusted, attempt + 1)
 }
 
+const V3_ORDINARY_NHS_WORDS = new Set([
+  'ensure', 'maintain', 'implement', 'liaise', 'collaborate', 'reflect', 'enhance',
+  'holistic', 'comprehensive', 'dedicated', 'compassionate', 'vital', 'crucial',
+  'additionally', 'at all times', 'in relation to', 'in order to', 'attention to detail',
+  'This resulted in', 'This led to', 'As a result', 'not only',
+])
+
 async function applyV3WordFilter(
   statement: string,
   essentialCriteria: string[],
@@ -331,8 +336,9 @@ async function applyV3WordFilter(
     } catch { return false }
   }
 
-  // Static banned word hits
-  const staticHits = scanBanned(statement).map(h => h.word)
+  // Static banned word hits. Ordinary NHS vocabulary is left alone: rewriting it costs a
+  // model call and makes the text sound less like a healthcare worker wrote it.
+  const staticHits = scanBanned(statement).map(h => h.word).filter(w => !V3_ORDINARY_NHS_WORDS.has(w))
 
   // DB hits (whole-word, case-insensitive)
   const dbHits = dbRows
@@ -452,12 +458,12 @@ async function trimStatementV3(
 ): Promise<string> {
   const countW = (t: string) => t.trim().split(/\s+/).filter(Boolean).length
 
-  let paragraphs = statement.split(/\n\n+/).filter(p => p.trim())
+  const paragraphs = statement.split(/\n\n+/).filter(p => p.trim())
 
   // Opening = first non-heading paragraph
   const openingIdx = paragraphs.findIndex(p => !isHeadingParagraph(p))
 
-  const getLimit = (_idx: number) => 130
+  const getLimit = (_idx: number) => 150
 
   // Up to 3 rounds; each round rewrites all over-limit paragraphs in parallel
   for (let round = 0; round < 3; round++) {
@@ -529,15 +535,15 @@ async function cleanNameFromStatementV3(
     result = result.replace(/[^.!?\n]*[Mm]y\s+name\s+is[^.!?\n]*[.!?]\s*/g, '')
   }
 
-  // 2. Candidate's actual name (any part longer than 2 chars)
-  if (fullName) {
-    for (const part of fullName.trim().split(/\s+/).filter(p => p.length > 2)) {
-      const escaped = part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-      const re = new RegExp(`[^.!?\\n]*\\b${escaped}\\b[^.!?\\n]*[.!?]`, 'g')
-      if (re.test(result)) {
-        console.warn(`V3_NAME_CHECK: found name "${part}" — removing sentence`)
-        result = result.replace(re, '')
-      }
+  // 2. Candidate's full name: remove the name itself, never the sentence around it.
+  //    Single name parts are not matched: names such as Grace, Hope or Faith are ordinary words.
+  const nameParts = (fullName || '').trim().split(/\s+/).filter(Boolean)
+  if (nameParts.length >= 2) {
+    const escaped = nameParts.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s+')
+    const re = new RegExp(`\\b${escaped}\\b,?\\s*`, 'gi')
+    if (re.test(result)) {
+      console.warn('V3_NAME_CHECK: found candidate full name — removed')
+      result = result.replace(re, '')
     }
   }
 
@@ -603,162 +609,126 @@ async function generateParallelV3(
     console.warn(`STORY_CHECK: ${storyWarning} (client ${client.id})`)
   }
 
-  // ── Step 1: Haiku criteria extraction + trust intel (parallel, ~8s) ─────────
-  // Using Haiku to extract criteria quickly lets us start generation and analysis
-  // in parallel in Step 2, instead of waiting for a Sonnet analysis before generating.
+  // ── Step 1: one criteria extraction + trust intel (parallel) ────────────────
+  // This single list drives the generation prompt, the audit, the patch and the UI,
+  // so the writer and the checker always number and word the criteria identically.
   const safeRawText = jobData.rawText ?? ''
   const rawTextForExtract = safeRawText.length <= 24000
     ? safeRawText
     : safeRawText.slice(0, 8000) + safeRawText.slice(-16000)
 
-  const [haikuExtractMsg, intelResult] = await Promise.all([
-    anthropic.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1200,
-      temperature: 0,
-      system: 'You are an NHS job application analyst. Extract ONLY the person specification criteria from the job posting. Return a JSON object with two arrays: "essential" and "desirable". Each item is a plain string. Include ALL criteria from every section (Education, Experience, Skills, Aptitudes, Disposition, Particular Requirements, etc.). Do not include job duties or descriptions. Return only valid JSON, no markdown.',
-      messages: [{ role: 'user', content: `Extract all person specification criteria from this job posting:\n\n${rawTextForExtract}` }],
-    }, { timeout: 60000 }).catch(() => null),
+  const EXTRACT_SYSTEM = `You are an NHS job application analyst. Read the whole job posting; the person specification is often at the END.
+Return ONLY valid JSON, no markdown, in this shape:
+{"essential":[{"text":"...","method":"A"}],"desirable":[{"text":"...","method":"A"}],"trustValues":["..."],"jobSummary":"..."}
+Rules:
+- "essential" and "desirable": EVERY person specification criterion from every section (Qualifications, Experience, Knowledge, Skills, Aptitudes, Values, Other requirements). One criterion per item, in the order they appear, using the advert's exact wording. Split a bullet only when it clearly lists separate requirements. Do not include job duties.
+- "method": how the advert says the criterion is assessed: A (application form), I (interview), T (test), C (certificate or document check), or a combination such as "A/I". If the advert does not say, use "C" for a bare qualification, professional registration, DBS, driving licence or right-to-work requirement, and "A" for everything else.
+- "trustValues": the organisation's own stated values exactly as written in the advert (for example "Kind", "Respectful", "Teamwork"). Empty array if the advert does not state them.
+- "jobSummary": one or two plain sentences on the role, the service and the band.`
+
+  const runExtract = (model: string) => anthropic.messages.create({
+    model,
+    max_tokens: 4000,
+    temperature: 0,
+    system: EXTRACT_SYSTEM,
+    messages: [{ role: 'user', content: `Job posting:\n\n${rawTextForExtract}` }],
+  } as MessageCreateParamsNonStreaming, { timeout: 90000 }).catch(() => null)
+
+  let essentialCriteria: string[] = []
+  let desirableCriteria: string[] = []
+  const criteriaMethods: Record<string, string> = {}
+  let trustValues: string[] = []
+  let jobSummary = ''
+
+  const parseExtract = (msg: Anthropic.Message | null): boolean => {
+    if (!msg) return false
+    try {
+      const text = msg.content[0]?.type === 'text' ? msg.content[0].text : ''
+      const jsonMatch = text.match(/\{[\s\S]*\}/)
+      if (!jsonMatch) return false
+      const parsed = JSON.parse(jsonMatch[0])
+      const read = (arr: unknown): string[] => {
+        if (!Array.isArray(arr)) return []
+        const out: string[] = []
+        for (const item of arr) {
+          const text = (typeof item === 'string' ? item : (item as { text?: unknown })?.text)
+          if (typeof text !== 'string' || !text.trim()) continue
+          const clean = text.trim()
+          const method = typeof item === 'object' && item && typeof (item as { method?: unknown }).method === 'string'
+            ? ((item as { method: string }).method.toUpperCase().match(/[AITC]/g) ?? ['A']).join('/')
+            : 'A'
+          if (!out.includes(clean)) { out.push(clean); criteriaMethods[clean] = method }
+        }
+        return out
+      }
+      const ess = read(parsed.essential)
+      if (ess.length === 0) return false
+      essentialCriteria = ess
+      desirableCriteria = read(parsed.desirable).filter(c => !ess.includes(c))
+      trustValues = Array.isArray(parsed.trustValues) ? parsed.trustValues.filter((v: unknown) => typeof v === 'string' && v.trim()).slice(0, 8) : []
+      jobSummary = typeof parsed.jobSummary === 'string' ? parsed.jobSummary : ''
+      return true
+    } catch { return false }
+  }
+
+  const [extractMsg, intelResult] = await Promise.all([
+    runExtract('claude-haiku-4-5-20251001'),
     jobData.organisation ? fetchTrustIntel(jobData.organisation).catch(() => null) : Promise.resolve(null),
   ])
 
+  // A statement written without the criteria list cannot be shortlisted, so if the
+  // fast extraction fails or is cut off, repeat it once on the stronger model.
+  if (!parseExtract(extractMsg)) {
+    console.warn(`V3_EXTRACT fast extraction failed (stop_reason=${extractMsg?.stop_reason ?? 'no-response'}) — retrying on ${generationModel}`)
+    parseExtract(await runExtract(generationModel))
+  }
+  console.log(`V3_EXTRACT essential=${essentialCriteria.length} desirable=${desirableCriteria.length} trustValues=${trustValues.length}`)
+
   const trustIntelText = intelResult ? formatTrustIntel(intelResult) : undefined
 
-  // Parse Haiku criteria — used to build the generation prompt
-  let essentialCriteria: string[] = []
-  let desirableCriteria: string[] = []
-  if (haikuExtractMsg) {
-    try {
-      const haikuText = haikuExtractMsg.content[0]?.type === 'text' ? haikuExtractMsg.content[0].text.trim() : ''
-      const cleanJson = haikuText.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim()
-      const parsed = JSON.parse(cleanJson)
-      if (Array.isArray(parsed.essential) && parsed.essential.length > 0) {
-        essentialCriteria = parsed.essential.filter((c: unknown) => typeof c === 'string')
-        desirableCriteria = Array.isArray(parsed.desirable) ? parsed.desirable.filter((c: unknown) => typeof c === 'string') : []
-        console.log(`V3_HAIKU_EXTRACT essential=${essentialCriteria.length} desirable=${desirableCriteria.length}`)
-      }
-    } catch { /* non-critical — generation proceeds without explicit criteria list */ }
-  }
-
-  // ── Step 2: Sonnet analysis + generation in parallel (~25s) ───────────────
-  // Both calls run at the same time. Analysis enriches the UI and pipeline;
-  // generation uses the Haiku-extracted criteria already in the user prompt.
-  const analysisUserPrompt = buildUserPrompt(client, jobData, 'england-wales', { outputMode: 'analysis-only' })
+  // ── Step 2: generation ─────────────────────────────────────────────────────
   const v3UserPrompt = buildV3UserPrompt(
     client,
     jobData,
     essentialCriteria,
     desirableCriteria,
     { ...options, style },
-    trustIntelText
+    trustIntelText,
+    { methods: criteriaMethods, trustValues }
   )
   const v3SystemPrompt = getEnglandWalesV3Prompt()
 
   let previousRoleDuties: string[] = []
-  let analysis: StatementAnalysis | null = null
   let rawOutput: string
 
-  const analysisCall = anthropic.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 2000,
-    temperature: 0,
-    system: 'You are an expert NHS job application analyst. Extract information accurately from the job posting and candidate profile. The person specification may appear at the END of the document — read all of it.',
-    messages: [{ role: 'user', content: analysisUserPrompt }],
-  }, { timeout: 120000 }).catch(() => null)
-
   if (options.provider === 'copilot') {
-    const [analysisResult, copilotOutput] = await Promise.all([
-      analysisCall,
-      withRetry(() => callGPT4o(v3SystemPrompt, v3UserPrompt, 4000)),
-    ])
-    rawOutput = copilotOutput
-    if (analysisResult) {
-      const analysisContent = analysisResult.content[0]
-      if (analysisContent?.type === 'text') {
-        const cleanedAnalysis = analysisContent.text.replace(/ — /g, ', ').replace(/—/g, ', ')
-        const jsonMatch = cleanedAnalysis.match(/\{[\s\S]*\}/)
-        if (jsonMatch) {
-          try {
-            const p: {
-              enhancedPreviousTitle?: string; jobSummary?: string
-              essentialCriteria?: string[]; desirableCriteria?: string[]
-              meetsAllEssential?: boolean; previousRoleDuties?: string[]
-            } = JSON.parse(jsonMatch[0])
-            if (Array.isArray(p.essentialCriteria) && p.essentialCriteria.length > 0) {
-              essentialCriteria = p.essentialCriteria
-              desirableCriteria = Array.isArray(p.desirableCriteria) ? p.desirableCriteria : []
-            }
-            previousRoleDuties = Array.isArray(p.previousRoleDuties) ? p.previousRoleDuties : []
-            if (essentialCriteria.length > 0) {
-              analysis = {
-                jobSummary: p.jobSummary || '', enhancedPreviousTitle: p.enhancedPreviousTitle,
-                essentialCriteria, desirableCriteria,
-                candidateStrengths: [], potentialGaps: [], keyDuties: [],
-                meetsAllEssential: p.meetsAllEssential,
-              }
-            }
-          } catch { /* non-critical */ }
-        }
-      }
-    }
+    rawOutput = await withRetry(() => callGPT4o(v3SystemPrompt, v3UserPrompt, 4000))
   } else {
-    const [analysisResult, statementMsg] = await Promise.all([
-      analysisCall,
-      withRetry(() =>
-        anthropic.messages.create({
-          model: generationModel,
-          max_tokens: 4096,
-          temperature: 1.0,
-          system: v3SystemPrompt,
-          messages: [{ role: 'user', content: v3UserPrompt }],
-        } as MessageCreateParamsNonStreaming, { timeout: 180000 })
-      ),
-    ])
+    const statementMsg = await withRetry(() =>
+      anthropic.messages.create({
+        model: generationModel,
+        max_tokens: 4096,
+        temperature: 1.0,
+        system: [{ type: 'text', text: v3SystemPrompt, cache_control: { type: 'ephemeral' } }],
+        messages: [{ role: 'user', content: v3UserPrompt }],
+      } as MessageCreateParamsNonStreaming, { timeout: 180000 })
+    )
     rawOutput = statementMsg.content[0]?.type === 'text' ? statementMsg.content[0].text.trim() : ''
-    if (analysisResult) {
-      const analysisContent = analysisResult.content[0]
-      if (analysisContent?.type === 'text') {
-        const cleanedAnalysis = analysisContent.text.replace(/ — /g, ', ').replace(/—/g, ', ')
-        const jsonMatch = cleanedAnalysis.match(/\{[\s\S]*\}/)
-        if (jsonMatch) {
-          try {
-            const p: {
-              enhancedPreviousTitle?: string; jobSummary?: string
-              essentialCriteria?: string[]; desirableCriteria?: string[]
-              meetsAllEssential?: boolean; previousRoleDuties?: string[]
-            } = JSON.parse(jsonMatch[0])
-            if (Array.isArray(p.essentialCriteria) && p.essentialCriteria.length > 0) {
-              essentialCriteria = p.essentialCriteria
-              desirableCriteria = Array.isArray(p.desirableCriteria) ? p.desirableCriteria : []
-            }
-            previousRoleDuties = Array.isArray(p.previousRoleDuties) ? p.previousRoleDuties : []
-            if (essentialCriteria.length > 0) {
-              analysis = {
-                jobSummary: p.jobSummary || '', enhancedPreviousTitle: p.enhancedPreviousTitle,
-                essentialCriteria, desirableCriteria,
-                candidateStrengths: [], potentialGaps: [], keyDuties: [],
-                meetsAllEssential: p.meetsAllEssential,
-              }
-            }
-          } catch { /* non-critical */ }
-        }
-      }
-    }
+    const u = statementMsg.usage
+    console.log(`V3_GEN_USAGE in=${u.input_tokens} out=${u.output_tokens} cache_read=${u.cache_read_input_tokens ?? 0} stop=${statementMsg.stop_reason}`)
   }
 
-  // Fallback: Sonnet analysis failed or returned no criteria — use Haiku-extracted ones
-  // so the UI criteria panel and the V3 pipeline always have data to work with.
-  if (!analysis && essentialCriteria.length > 0) {
-    analysis = {
-      jobSummary: '',
-      essentialCriteria,
-      desirableCriteria,
-      candidateStrengths: [],
-      potentialGaps: [],
-      keyDuties: [],
-    }
-    console.log('V3: Sonnet analysis empty — using Haiku criteria as fallback')
-  }
+  const analysis: StatementAnalysis | null = essentialCriteria.length > 0
+    ? {
+        jobSummary,
+        essentialCriteria,
+        desirableCriteria,
+        criteriaMethods,
+        candidateStrengths: [],
+        potentialGaps: [],
+        keyDuties: [],
+      }
+    : null
 
   // ── Parse ===NOTES=== ──────────────────────────────────────────────────────
   const rawStatementFull = rawOutput
@@ -781,6 +751,8 @@ async function generateParallelV3(
     // Strip divider-only lines (---, ___, ***, ===) BEFORE em-dash replacement
     // to prevent "--" → ", " turning "---" into ", -"
     .replace(/^[ \t]*[\-_*=]{2,}[ \t]*$/gm, '')
+    // Number ranges keep their meaning: "2019–2021" → "2019 to 2021"
+    .replace(/(\d)\s*[–—]\s*(\d)/g, '$1 to $2')
     .replace(/ — /g, ', ')
     .replace(/—/g, ', ')
     .replace(/ – /g, ', ')

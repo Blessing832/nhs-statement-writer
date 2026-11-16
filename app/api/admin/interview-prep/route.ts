@@ -58,9 +58,8 @@ export async function POST(req: NextRequest) {
 
   const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
 
+  // Privacy: never send client.full_name to an AI provider
   const userPrompt = `## CANDIDATE PROFILE
-Name: ${client.full_name}
-
 Work History:
 ${client.work_history || 'Not provided'}
 

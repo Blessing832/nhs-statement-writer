@@ -16,8 +16,6 @@ export async function POST(req: NextRequest) {
   const prompt = `You are helping an NHS job application service set up unique personalisation instructions for each candidate. These instructions ensure every candidate's statements have a distinct voice, tone, and focus — they do NOT override core writing rules, they ADD personal colour on top of them.
 
 ## CANDIDATE PROFILE
-Name: ${full_name}
-
 Work History:
 ${work_history || 'Not provided'}
 

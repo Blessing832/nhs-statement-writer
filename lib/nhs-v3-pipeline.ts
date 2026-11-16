@@ -17,7 +17,26 @@ const BANNED_PHRASES_V3 = [
 
 const WORD_COUNT_MIN = 1150
 const WORD_COUNT_MAX = 1400
-const MAX_PATCHES = 2
+const MAX_PATCHED_PARAGRAPHS = 4
+
+const PATCH_SYSTEM = `You repair an NHS supporting statement so that specific person specification criteria are properly evidenced. You are given the statement as numbered paragraphs, the criteria that are missing or weak, and the candidate's real facts.
+
+RULES
+- Use ONLY facts found in CANDIDATE FACTS. Never invent an employer, ward, patient event, number, tool, course or outcome.
+- If CANDIDATE FACTS contain nothing that evidences a criterion, do not write about it. List its id in "unevidenced".
+- Fix a criterion by rewriting the one existing paragraph where its evidence fits best. Keep everything in that paragraph that already works, including any other criterion wording already in it.
+- Show what the candidate did and what happened as a result, then work the criterion's key terms into the sentence that follows the evidence. Do not paste the criterion as a sentence of its own.
+- Match the surrounding voice: first person, plain British English, short sentences, the words a working nurse or healthcare assistant would use. No em dashes, no bullet points, no bold, no criterion ids.
+- A rewritten paragraph must stay under 150 words.
+- Never rewrite a heading. Rewrite at most ${MAX_PATCHED_PARAGRAPHS} paragraphs. Leave every other paragraph alone.
+
+OUTPUT: JSON only, no other text:
+{"edits":[{"paragraph":<number>,"text":"<full replacement paragraph>"}],"unevidenced":["E3"]}`
+
+function isHeading(para: string): boolean {
+  const t = para.trim()
+  return t.split(/\s+/).filter(Boolean).length < 10 && !/[.!?]$/.test(t)
+}
 
 function readPromptFile(name: string): string | null {
   try {
@@ -47,8 +66,8 @@ function deterministicCheck(statement: string): DeterministicResult {
 }
 
 function buildCandidateFacts(client: Client): string {
+  // Privacy: never send client.full_name to an AI provider
   const parts: string[] = []
-  if (client.full_name) parts.push(`Name (for reference only, never write in statement): ${client.full_name}`)
   if (client.work_history) parts.push(`Work history: ${client.work_history}`)
   if (client.qualifications) parts.push(`Qualifications: ${client.qualifications}`)
   if (client.background) parts.push(`Background: ${client.background}`)
@@ -67,7 +86,6 @@ export async function runNHSV3Pipeline(
   client: Client
 ): Promise<CoverageReport> {
   const auditorPrompt = readPromptFile('nhs_v3_auditor_prompt.md')
-  const patchPrompt = readPromptFile('nhs_v2_patch_prompt.md')
 
   // If V3 auditor prompt is missing, fall back gracefully
   if (!auditorPrompt) {
@@ -88,18 +106,25 @@ export async function runNHSV3Pipeline(
   const essentialCriteria = analysis.essentialCriteria ?? []
   const desirableCriteria = analysis.desirableCriteria ?? []
   const allCriteria = [...essentialCriteria, ...desirableCriteria]
+  const methodTag = (c: string) => {
+    const m = analysis.criteriaMethods?.[c]
+    return m && !m.includes('A') ? ` [${m}]` : ''
+  }
 
   const criteriaText = [
     'Essential:',
-    ...essentialCriteria.map((c, i) => `E${i + 1}. ${c}`),
+    ...essentialCriteria.map((c, i) => `E${i + 1}. ${c}${methodTag(c)}`),
     'Desirable:',
-    ...desirableCriteria.map((c, i) => `D${i + 1}. ${c}`),
+    ...desirableCriteria.map((c, i) => `D${i + 1}. ${c}${methodTag(c)}`),
   ].join('\n')
 
-  let tokenUsage = { auditInputTokens: 0, auditOutputTokens: 0, patchInputTokens: 0, patchOutputTokens: 0 }
+  const tokenUsage = { auditInputTokens: 0, auditOutputTokens: 0, patchInputTokens: 0, patchOutputTokens: 0 }
 
   // ── First audit ────────────────────────────────────────────────────────────
-  const userMsg = `PERSON SPECIFICATION:\n${criteriaText}\n\nSTATEMENT:\n${statement}`
+  const candidateFacts = buildCandidateFacts(client)
+  const buildAuditMsg = (text: string) =>
+    `PERSON SPECIFICATION:\n${criteriaText}\n\nCANDIDATE FACTS:\n${candidateFacts}\n\nSTATEMENT:\n${text}`
+  const userMsg = buildAuditMsg(statement)
 
   const auditMsg = await anthropic.messages.create({
     model: 'claude-haiku-4-5',
@@ -117,6 +142,7 @@ export async function runNHSV3Pipeline(
     failing_ids?: string[]
     real_job_titles_used?: boolean
     no_invented_facts?: boolean
+    invented_facts_found?: string[]
     six_structure_parts_present?: Record<string, boolean>  // legacy field name
     five_structure_parts_present?: Record<string, boolean>
     word_count?: number
@@ -138,95 +164,101 @@ export async function runNHSV3Pipeline(
   const firstAllPass = (auditResult.all_pass ?? false) && bannedFound.length === 0 && det.wordCountOk
 
   // ── Deterministic verify ───────────────────────────────────────────────────
-  const criteriaChecks = verifyCriteriaV3(statement, essentialCriteria, desirableCriteria)
-  const notFoundIds = criteriaChecks.filter(c => !c.found).map(c => c.id)
+  let criteriaChecks = verifyCriteriaV3(statement, essentialCriteria, desirableCriteria)
 
-  // Merge NOT FOUND into failing_ids
+  // A keyword miss alone is not a failure: only patch a criterion the auditor also
+  // scored 3 or below (or did not score at all).
+  const auditScore = new Map((auditResult.criteria ?? []).map(c => [c.id, c.score]))
+  const notFoundIds = criteriaChecks
+    .filter(c => !c.found && (auditScore.get(c.id) ?? 0) <= 3)
+    .map(c => c.id)
   const combinedFailingIds = [...new Set([...failingIds, ...notFoundIds])]
 
   let currentStatement = statement
   let patched = false
 
-  // ── Patch if needed ────────────────────────────────────────────────────────
-  if (!firstAllPass && combinedFailingIds.length > 0 && patchPrompt) {
-    for (let attempt = 0; attempt < MAX_PATCHES; attempt++) {
-      const failingCriteria = allCriteria.filter((_, i) => {
-        const id = i < essentialCriteria.length ? `E${i + 1}` : `D${i - essentialCriteria.length + 1}`
-        return combinedFailingIds.includes(id)
-      })
+  // ── Patch if needed: rewrite only the affected paragraphs, splice in code ───
+  if (!firstAllPass && combinedFailingIds.length > 0) {
+    try {
+      const idOf = (i: number) => i < essentialCriteria.length ? `E${i + 1}` : `D${i - essentialCriteria.length + 1}`
+      const failingLines = allCriteria
+        .map((c, i) => ({ id: idOf(i), c }))
+        .filter(x => combinedFailingIds.includes(x.id))
+        .map(x => {
+          const reason = (auditResult.criteria ?? []).find(a => a.id === x.id)?.reason
+          return `${x.id}. ${x.c}${reason ? ` (auditor: ${reason})` : ''}`
+        })
 
-      const auditResultForPatch = {
-        failing_ids: combinedFailingIds,
-        all_pass: false,
-        banned_phrases_found: bannedFound,
-        word_count: det.wordCount,
-        word_count_ok: det.wordCountOk,
-      }
-      const candidateFacts = buildCandidateFacts(client)
+      const paragraphs = statement.split(/\n\n+/).filter(p => p.trim())
+      const numbered = paragraphs
+        .map((p, i) => `[${i + 1}]${isHeading(p) ? ' (heading)' : ''} ${p.trim()}`)
+        .join('\n\n')
 
       const patchMsg = await anthropic.messages.create({
-        model: 'claude-haiku-4-5',
-        max_tokens: 3500,
-        temperature: 0.7,
-        system: patchPrompt,
+        model: process.env.GENERATION_MODEL || 'claude-sonnet-4-6',
+        max_tokens: 1500,
+        system: PATCH_SYSTEM,
         messages: [{
           role: 'user',
-          content: `STATEMENT:\n${currentStatement}\n\nAUDIT RESULT:\n${JSON.stringify(auditResultForPatch, null, 2)}\n\nCANDIDATE FACTS:\n${candidateFacts}`,
+          content: `CRITERIA TO FIX:\n${failingLines.join('\n')}\n\nCANDIDATE FACTS:\n${candidateFacts}\n\nSTATEMENT PARAGRAPHS:\n${numbered}`,
         }],
       }, { timeout: 90000 })
       tokenUsage.patchInputTokens += patchMsg.usage.input_tokens
       tokenUsage.patchOutputTokens += patchMsg.usage.output_tokens
 
-      let patchText = patchMsg.content[0]?.type === 'text' ? patchMsg.content[0].text.trim() : ''
+      const patchText = patchMsg.content[0]?.type === 'text' ? patchMsg.content[0].text : ''
+      const patchJson = patchText.match(/\{[\s\S]*\}/)
+      const parsed: { edits?: Array<{ paragraph?: number; text?: string }> } = patchJson ? JSON.parse(patchJson[0]) : {}
 
-      // Post-patch deterministic clean: remove V3 rule violations the model introduced
-      if (patchText) {
-        patchText = patchText
-          // Strip divider-only lines FIRST so -- → ", " doesn't turn "---" into ", -"
-          .replace(/^[ \t]*[-_*=]{2,}[ \t]*$/gm, '')
-          // Em-dashes and en-dashes → commas (prompt bans em-dashes; Haiku still generates them)
-          .replace(/ — /g, ', ').replace(/—/g, ', ')
-          .replace(/ – /g, ', ').replace(/–/g, ', ')
-          .replace(/ -- /g, ', ').replace(/--/g, ', ')
-          // Remove bare criterion IDs (E1, D3, E11, etc.) that should never appear in statement text
-          .replace(/\b[ED]\d+\b/g, '')
-          // Unwrap criterion phrases in long quotation marks (keep the text, remove the quotes)
-          .replace(/"([^"]{20,})"/g, '$1')
-          // Remove sentences starting with banned criterion-paste openers
-          .replace(/^(Evidence of|Can demonstrate|Ability to)\b[^.!?\n]*[.!?]\s*/gim, '')
-          .replace(/\n{3,}/g, '\n\n')
+      const next = [...paragraphs]
+      let applied = 0
+      for (const edit of parsed.edits ?? []) {
+        if (applied >= MAX_PATCHED_PARAGRAPHS) break
+        const idx = (edit.paragraph ?? 0) - 1
+        const text = (edit.text ?? '')
+          .replace(/(\d)\s*[–—]\s*(\d)/g, '$1 to $2')
+          .replace(/\s*[–—]\s*/g, ', ')
+          .replace(/\*\*/g, '')
+          .replace(/\s*\(?\b[ED]\d+\b\)?/g, '')
+          .replace(/\s+/g, ' ')
           .trim()
+        if (idx < 0 || idx >= next.length || isHeading(next[idx])) continue
+        const wc = countWords(text)
+        if (wc < 30 || wc > 170) continue
+        next[idx] = text
+        applied++
       }
 
-      // Only accept the patch if it looks like a real statement (not a meta-response)
-      // New prompt no longer requires "Thank you." — check word count + paragraph count instead
-      if (patchText && countWords(patchText) >= 600 && patchText.split(/\n\n+/).filter(p => p.trim()).length >= 3) {
-        currentStatement = patchText
+      const candidate = next.join('\n\n')
+      if (applied > 0 && countWords(candidate) <= WORD_COUNT_MAX) {
+        currentStatement = candidate
         patched = true
+        console.log(`V3_PATCH paragraphs_rewritten=${applied} criteria=${combinedFailingIds.join(',')}`)
       }
+    } catch (err) {
+      console.warn('V3_PATCH failed (non-fatal):', err instanceof Error ? err.message : err)
+    }
 
-      // Re-audit
-      const reAuditMsg = await anthropic.messages.create({
-        model: 'claude-haiku-4-5',
-        max_tokens: 3000,
-        temperature: 0,
-        system: auditorPrompt,
-        messages: [{ role: 'user', content: `PERSON SPECIFICATION:\n${criteriaText}\n\nSTATEMENT:\n${currentStatement}` }],
-      }, { timeout: 60000 })
-      tokenUsage.auditInputTokens += reAuditMsg.usage.input_tokens
-      tokenUsage.auditOutputTokens += reAuditMsg.usage.output_tokens
-
-      const reAuditText = reAuditMsg.content[0]?.type === 'text' ? reAuditMsg.content[0].text : ''
-      const reJsonMatch = reAuditText.match(/\{[\s\S]*\}/)
-      if (reJsonMatch) {
-        try {
+    // Re-audit once so the reported scores describe the text the user actually receives
+    if (patched) {
+      try {
+        const reAuditMsg = await anthropic.messages.create({
+          model: 'claude-haiku-4-5',
+          max_tokens: 3000,
+          temperature: 0,
+          system: auditorPrompt,
+          messages: [{ role: 'user', content: buildAuditMsg(currentStatement) }],
+        }, { timeout: 60000 })
+        tokenUsage.auditInputTokens += reAuditMsg.usage.input_tokens
+        tokenUsage.auditOutputTokens += reAuditMsg.usage.output_tokens
+        const reAuditText = reAuditMsg.content[0]?.type === 'text' ? reAuditMsg.content[0].text : ''
+        const reJsonMatch = reAuditText.match(/\{[\s\S]*\}/)
+        if (reJsonMatch) {
           const reAudit = JSON.parse(reJsonMatch[0])
-          if (reAudit.all_pass) {
-            auditResult = reAudit
-            break
-          }
-        } catch { /* non-critical */ }
-      }
+          if (Array.isArray(reAudit.criteria) && reAudit.criteria.length > 0) auditResult = reAudit
+        }
+        criteriaChecks = verifyCriteriaV3(currentStatement, essentialCriteria, desirableCriteria)
+      } catch { /* non-critical — keep first audit */ }
     }
   }
 
@@ -236,7 +268,7 @@ export async function runNHSV3Pipeline(
     criterion: c.criterion,
     type: c.id.startsWith('E') ? 'essential' : 'desirable',
     score: c.score,
-    pass: c.score >= 5,
+    pass: c.score >= 4,
     location: c.location ?? null,
     reason: c.reason ?? '',
     deterministicPresent: criteriaChecks.find(ch => ch.id === c.id)?.found ?? false,
@@ -246,6 +278,7 @@ export async function runNHSV3Pipeline(
   const warningBanners: string[] = []
   if (!finalDet.wordCountOk) warningBanners.push(`Word count ${finalDet.wordCount} (target 1,150–1,400)`)
   if (finalDet.bannedPhrasesFound.length > 0) warningBanners.push(`Banned phrases: ${finalDet.bannedPhrasesFound.join(', ')}`)
+  if (auditResult.invented_facts_found?.length) warningBanners.push(`Check these details against the candidate's real history: ${auditResult.invented_facts_found.join('; ')}`)
   if (auditResult.non_uk_locations?.length) warningBanners.push(`Non-UK locations: ${auditResult.non_uk_locations.join(', ')}`)
 
   return {
