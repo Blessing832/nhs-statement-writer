@@ -22,10 +22,11 @@ function festiveNow(): boolean {
 const subscribe = () => () => {}
 
 // Server and first client render see "off", so there is no hydration mismatch.
-function useFestive(): boolean {
+function useFestive(opts: { snow?: boolean } = {}): boolean {
   const pathname = usePathname()
   const season = useSyncExternalStore(subscribe, festiveNow, () => false)
-  return season && !pathname.startsWith('/admin')
+  // Snow stays off the admin and statement-writing pages so it never sits over text people are reading.
+  return season && !(opts.snow && (pathname.startsWith('/admin') || pathname.startsWith('/generate')))
 }
 
 const BULB_COLOURS = ['#C8102E', '#F4A800', '#1E9E5A', '#4DA3FF']
@@ -63,7 +64,7 @@ const FLAKES = Array.from({ length: 32 }, (_, i) => {
 })
 
 export function Snowfall() {
-  const on = useFestive()
+  const on = useFestive({ snow: true })
   if (!on) return null
   return (
     <div className="snowfall" aria-hidden="true">

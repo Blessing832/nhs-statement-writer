@@ -239,13 +239,13 @@ export default function StatementsPage() {
       })()}
 
       {/* Search + filter */}
-      <div className="flex items-center justify-between mb-4 gap-3">
+      <div className="flex flex-wrap items-center justify-between mb-4 gap-3">
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by candidate, job title, or organisation…"
-          className="px-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-72"
+          className="px-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-72"
         />
         <div className="flex items-center gap-1 bg-gray-100 rounded-md p-0.5">
           {(['all', 'pasted', 'missing'] as const).map((f) => (

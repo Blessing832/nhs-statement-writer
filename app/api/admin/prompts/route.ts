@@ -7,6 +7,9 @@ import { verifyAdminToken as verifyAdmin } from '@/lib/auth'
 // GET — return both prompts (custom if saved, else code default)
 // Add ?built_in=1 to always return the code defaults, ignoring Supabase
 export async function GET(req: NextRequest) {
+  if (!verifyAdmin(req)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
   const builtInOnly = req.nextUrl.searchParams.get('built_in') === '1'
 
   const defaults: Record<string, { content: string; isCustom: boolean }> = {

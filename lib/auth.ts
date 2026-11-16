@@ -3,8 +3,13 @@ import { createHmac } from 'crypto'
 
 const TOKEN_TTL_MS = 24 * 60 * 60 * 1000 // 24 hours
 
+export function adminSecretConfigured(): boolean {
+  return (process.env.ADMIN_SECRET ?? '').length >= 12
+}
+
 function hmacSign(payload: string): string {
   const secret = process.env.ADMIN_SECRET ?? ''
+  if (secret.length < 12) throw new Error('ADMIN_SECRET is not set or too short')
   return createHmac('sha256', secret).update(payload).digest('hex')
 }
 
@@ -17,6 +22,7 @@ export function createAdminToken(): string {
 }
 
 export function verifyAdminToken(req: NextRequest): boolean {
+  if (!adminSecretConfigured()) return false
   const raw = req.headers.get('x-admin-token')
   if (!raw) return false
   try {

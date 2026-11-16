@@ -77,7 +77,9 @@ const TABS = [
   { label: 'Candidates',     href: '/admin/candidates' },
   { label: 'Vacancies',      href: '/admin/vacancies' },
   { label: 'Statements',     href: '/admin/statements' },
+  { label: 'Generate',       href: '/admin/generate' },
   { label: 'Quick Write',    href: '/admin/quick-write' },
+  { label: 'Bulk Instructions', href: '/admin/bulk-instructions' },
   { label: 'Interview Prep', href: '/admin/interview-prep' },
   { label: 'Prompts',        href: '/admin/prompts' },
 ]

@@ -209,7 +209,7 @@ function BannedWordsPanel({ token }: { token: string }) {
         <div className="text-sm text-gray-400 py-8 text-center">Loading…</div>
       ) : (
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto"><table className="w-full text-sm min-w-[560px]">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide w-8">On</th>
@@ -284,7 +284,7 @@ function BannedWordsPanel({ token }: { token: string }) {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         </div>
       )}
     </div>
@@ -307,7 +307,7 @@ function ParagraphOpenersPanel({ token }: { token: string }) {
 
   const load = async () => {
     setLoading(true)
-    const res = await fetch('/api/admin/paragraph-openers')
+    const res = await fetch('/api/admin/paragraph-openers', { headers: { 'x-admin-token': token } })
     if (res.ok) {
       setRows(await res.json())
     } else if (res.status === 500) {
@@ -455,7 +455,7 @@ function ParagraphOpenersPanel({ token }: { token: string }) {
         </div>
       ) : (
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto"><table className="w-full text-sm min-w-[560px]">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide w-8">On</th>
@@ -527,7 +527,7 @@ function ParagraphOpenersPanel({ token }: { token: string }) {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         </div>
       )}
     </div>
@@ -594,7 +594,7 @@ function PromptEditor({
     setSyncing(true)
     setStatus(null)
     try {
-      const res = await fetch('/api/admin/prompts?built_in=1')
+      const res = await fetch('/api/admin/prompts?built_in=1', { headers: { 'x-admin-token': token } })
       if (!res.ok) throw new Error('Failed to fetch built-in prompt')
       const data = await res.json()
       const builtIn = data[region]?.content
@@ -718,7 +718,7 @@ export default function PromptsPage() {
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch('/api/admin/prompts')
+      const res = await fetch('/api/admin/prompts', { headers: { 'x-admin-token': token } })
       if (!res.ok) throw new Error('Failed to load prompts')
       const data = await res.json()
       setPrompts(data)
@@ -792,12 +792,12 @@ export default function PromptsPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 border-b border-gray-200">
+      <div className="flex gap-1 border-b border-gray-200 overflow-x-auto">
         {(['england-wales', 'scotland'] as const).map((r) => (
           <button
             key={r}
             onClick={() => setActiveTab(r)}
-            className={`px-5 py-2.5 text-sm font-medium rounded-t-md cursor-pointer transition-colors ${
+            className={`shrink-0 px-4 sm:px-5 py-2.5 text-sm font-medium rounded-t-md cursor-pointer transition-colors ${
               activeTab === r
                 ? 'bg-white border border-b-white border-gray-200 text-gray-900 -mb-px'
                 : 'text-gray-500 hover:text-gray-700'
@@ -811,7 +811,7 @@ export default function PromptsPage() {
         ))}
         <button
           onClick={() => setActiveTab('banned-words')}
-          className={`px-5 py-2.5 text-sm font-medium rounded-t-md cursor-pointer transition-colors ${
+          className={`shrink-0 px-4 sm:px-5 py-2.5 text-sm font-medium rounded-t-md cursor-pointer transition-colors ${
             activeTab === 'banned-words'
               ? 'bg-white border border-b-white border-gray-200 text-gray-900 -mb-px'
               : 'text-gray-500 hover:text-gray-700'
@@ -821,7 +821,7 @@ export default function PromptsPage() {
         </button>
         <button
           onClick={() => setActiveTab('paragraph-openers')}
-          className={`px-5 py-2.5 text-sm font-medium rounded-t-md cursor-pointer transition-colors ${
+          className={`shrink-0 px-4 sm:px-5 py-2.5 text-sm font-medium rounded-t-md cursor-pointer transition-colors ${
             activeTab === 'paragraph-openers'
               ? 'bg-white border border-b-white border-gray-200 text-gray-900 -mb-px'
               : 'text-gray-500 hover:text-gray-700'

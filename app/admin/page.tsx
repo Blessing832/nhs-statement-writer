@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { motion, type Variants } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { useAdminToken } from '@/lib/admin-context'
+import { FestivePill } from '@/components/Festive'
 
 const SECTIONS = [
   {
@@ -66,7 +67,7 @@ const card: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.38, ease: 'easeOut' } },
 }
 
-interface ErrorSummary { count: number; recent: { id: string; created_at: string; client_code: string; error_type: string }[] }
+interface ErrorSummary { count: number; recent: { id: string; created_at: string; client_code: string; error_type: string; error_message?: string | null; vacancy_url?: string | null }[] }
 
 export default function AdminHub() {
   const { token, onLogout } = useAdminToken()
@@ -92,8 +93,9 @@ export default function AdminHub() {
           className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md"
           style={{ backgroundColor: '#072f42' }}
         >
-          <span className="text-white font-bold text-base">NHS</span>
+          <span className="text-white font-bold text-base" style={{ fontFamily: "var(--font-fraunces), serif" }}>E<span style={{ color: '#F4A800' }}>M</span></span>
         </div>
+        <div className="mb-2"><FestivePill /></div>
         <h2 className="text-2xl font-bold text-gray-900 mb-1">Welcome back</h2>
         <p className="text-gray-400 text-sm">Choose a section to manage</p>
       </motion.div>
@@ -109,11 +111,15 @@ export default function AdminHub() {
           </p>
           <div className="mt-2 space-y-1">
             {errors.recent.slice(0, 5).map(e => (
-              <p key={e.id} className="text-xs text-red-600">
-                {new Date(e.created_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
-                {' · '}{e.client_code || 'unknown'}
-                {' · '}<span className="font-medium">{e.error_type}</span>
-              </p>
+              <div key={e.id} className="text-xs text-red-600">
+                <p>
+                  {new Date(e.created_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+                  {' · '}{e.client_code || 'unknown'}
+                  {' · '}<span className="font-medium">{e.error_type}</span>
+                </p>
+                {e.error_message && <p className="text-red-500 break-words pl-3">{e.error_message}</p>}
+                {e.vacancy_url && <p className="text-red-400 break-all pl-3">{e.vacancy_url}</p>}
+              </div>
             ))}
             {errors.count > 5 && (
               <p className="text-xs text-red-400">…and {errors.count - 5} more</p>

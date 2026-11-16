@@ -15,28 +15,26 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const { id } = await params
   const body = await req.json()
 
-  const baseUpdate = {
-    full_name: body.full_name,
-    work_history: body.work_history,
-    qualifications: body.qualifications,
-    skills: body.skills,
-    background: body.background,
-    special_instructions: body.special_instructions ?? '',
-    opening_style: body.opening_style ?? '',
-    scotland_q2_variation: body.scotland_q2_variation ?? '',
-    subscription_end: body.subscription_end,
-    is_active: body.is_active,
-    q_difficult_situation: body.q_difficult_situation ?? '',
-    q_why_trust: body.q_why_trust ?? '',
-    q_colleagues_say: body.q_colleagues_say ?? '',
-    q_proudest_moment: body.q_proudest_moment ?? '',
-    q_skills_equipment: body.q_skills_equipment ?? '',
+  // Only update the fields that were sent, so a partial save (for example one
+  // instruction from the bulk page) can never blank the rest of the profile.
+  const FIELDS = [
+    'full_name', 'work_history', 'qualifications', 'skills', 'background',
+    'special_instructions', 'opening_style', 'scotland_q2_variation',
+    'subscription_end', 'is_active',
+    'q_difficult_situation', 'q_why_trust', 'q_colleagues_say', 'q_proudest_moment', 'q_skills_equipment',
+  ] as const
+  const baseUpdate: Record<string, unknown> = {}
+  for (const f of FIELDS) {
+    if (body[f] !== undefined) baseUpdate[f] = body[f]
+  }
+  if (Object.keys(baseUpdate).length === 0 && body.statement_limit === undefined) {
+    return NextResponse.json({ error: 'No fields to update' }, { status: 400 })
   }
 
   // Try with statement_limit; fall back silently if the column doesn't exist yet
   let { data, error } = await supabaseAdmin
     .from('clients')
-    .update({ ...baseUpdate, statement_limit: body.statement_limit ?? null })
+    .update(body.statement_limit !== undefined ? { ...baseUpdate, statement_limit: body.statement_limit } : baseUpdate)
     .eq('id', id)
     .select()
     .single()

@@ -3,7 +3,8 @@ import { supabaseAdmin } from '@/lib/supabase'
 import { verifyAdminToken as verifyAdmin } from '@/lib/auth'
 
 // GET — list all paragraph openers
-export async function GET() {
+export async function GET(req: NextRequest) {
+  if (!verifyAdmin(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const { data, error } = await supabaseAdmin
     .from('paragraph_openers')
     .select('*')

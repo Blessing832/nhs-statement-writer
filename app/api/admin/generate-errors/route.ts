@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
 
   const { data, count } = await supabaseAdmin
     .from('generate_errors')
-    .select('id, created_at, client_code, error_type, http_status', { count: 'exact' })
+    .select('id, created_at, client_code, error_type, http_status, error_message, vacancy_url', { count: 'exact' })
     .gte('created_at', since.toISOString())
     .order('created_at', { ascending: false })
     .limit(20)

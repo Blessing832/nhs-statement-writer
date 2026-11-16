@@ -14,6 +14,7 @@ interface Result {
   source?: string
   promptRegion: string
   coverageReport?: CoverageReport | null
+  cached?: boolean
 }
 
 function wordCount(text: string): number {
@@ -65,7 +66,7 @@ function StatementDisplay({
   const allCriteria = [...essential, ...desirable]
   const paragraphs = cleaned.split(/\n\n+/).filter(p => p.trim())
   return (
-    <div className="space-y-4 text-gray-800 leading-relaxed text-sm">
+    <div className="space-y-4 text-gray-800 leading-relaxed text-base sm:text-sm max-w-prose sm:max-w-none">
       {paragraphs.map((para, i) => {
         const isHeading = isHeadingLine(para)
         const lines = para.split('\n')
@@ -763,7 +764,7 @@ function ClientVacanciesView({ clientCode }: { clientCode: string }) {
                     )}
                     {v.band && (
                       <span className="inline-flex items-center gap-1 text-xs bg-green-50 text-green-700 px-2 py-1 rounded-md border border-green-100">
-                        💰 {v.band}
+                        {v.band}
                       </span>
                     )}
                     {v.contract_type && (
@@ -787,7 +788,7 @@ function ClientVacanciesView({ clientCode }: { clientCode: string }) {
                           : 'bg-gray-100 text-gray-500 hover:bg-green-100 hover:text-green-700'
                       }`}
                     >
-                      ✓ DONE
+                      Applied
                     </button>
                     <button
                       onClick={() => markVacancy(v.id, v.title, status === 'closed' ? '' : 'closed')}
@@ -919,6 +920,9 @@ function GeneratePage() {
     const genData = await genRes.json().catch(() => ({ error: 'Server error on generate.' }))
     if (!genRes.ok) {
       const genErr = typeof genData.error === 'string' ? genData.error : (genData.error?.message || genData.message || '')
+      if (genData.storyGate) {
+        throw new Error('We need a little more detail about your experience before we can write a strong statement. Please ask your consultant to add more to your profile, then try again.')
+      }
       throw new Error(genErr || 'Failed to generate statement. Please try again.')
     }
 
@@ -1003,6 +1007,7 @@ function GeneratePage() {
       )
       stopProgress(true)
       setResult(data)
+      window.scrollTo({ top: 0 })
       setCachedJobData(jobData)
       setShowRewrite(false)
       setRewriteInstruction('')
@@ -1405,9 +1410,9 @@ function GeneratePage() {
 
       {/* Results */}
       {view === 'generator' && result && (
-        <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Top bar */}
-          <div style={{ backgroundColor: '#072f42' }} className="px-4 py-3 flex-shrink-0">
+        <div className="flex-1 flex flex-col">
+          {/* Top bar (stays in view so Copy and Download are always reachable) */}
+          <div style={{ backgroundColor: '#072f42' }} className="px-4 py-3 flex-shrink-0 sticky top-0 z-30 shadow-md">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="min-w-0">
                 <p style={{ color: 'rgba(244,168,0,0.7)' }} className="text-xs">Statement generated for</p>
@@ -1444,6 +1449,12 @@ function GeneratePage() {
               </div>
             </div>
           </div>
+
+          {result.cached && (
+            <div className="px-4 py-2 text-xs bg-blue-50 border-b border-blue-200 text-blue-800">
+              This is the statement we already saved for this job link. To change it, use Rewrite below.
+            </div>
+          )}
 
           {/* Document extraction banner */}
           {(downloadedDocs.length > 0 || sparsePs) && (
@@ -1502,7 +1513,7 @@ function GeneratePage() {
                 {result.previousRoleDuties?.length > 0 && (
                   <div ref={dutiesRef} className="mt-8 border-t border-gray-100 pt-6">
                     <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-bold text-gray-800 text-sm">Key Duties - Previous Role <span className="text-gray-400 font-normal">(past tense)</span></h3>
+                      <h3 className="font-bold text-gray-800 text-sm">Previous role duties</h3>
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => {
@@ -1545,7 +1556,7 @@ function GeneratePage() {
                 {result.currentRoleDuties?.length > 0 && (
                   <div ref={result.previousRoleDuties?.length > 0 ? undefined : dutiesRef} className="mt-6 border-t border-gray-100 pt-6">
                     <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-bold text-gray-800 text-sm">Key Duties - This Role <span className="text-gray-400 font-normal">(present tense)</span></h3>
+                      <h3 className="font-bold text-gray-800 text-sm">Current role duties</h3>
                       {result.previousRoleDuties?.length === 0 && (
                         <div className="flex items-center gap-2">
                           <button

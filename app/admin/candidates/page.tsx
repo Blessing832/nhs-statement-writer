@@ -67,7 +67,7 @@ export default function CandidatesPage() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-6">
       {/* Stats row */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
         {[
           { label: 'Total Candidates', value: stats.total, color: '#072f42' },
           { label: 'Active', value: stats.active, color: '#009639' },
@@ -82,15 +82,15 @@ export default function CandidatesPage() {
       </div>
 
       {/* Controls */}
-      <div className="flex items-center justify-between gap-4 mb-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by name or code…"
-          className="px-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
+          className="px-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-64"
         />
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Link
             href="/admin/vacancies/preferences"
             className="px-4 py-2 text-sm font-medium border rounded-md text-gray-700 border-gray-300 hover:bg-gray-50"
@@ -164,8 +164,8 @@ function CandidateTable({
   return (
     <div>
       <h2 className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">{title}</h2>
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-white rounded-lg border border-gray-200 overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead>
             <tr style={{ backgroundColor: '#f8f9fa' }} className="border-b border-gray-200">
               <th className="text-left px-4 py-3 font-medium text-gray-600">Name</th>

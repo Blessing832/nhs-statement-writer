@@ -52,23 +52,13 @@ export default function NewClientPage() {
 
   return (
     <main className="min-h-screen flex flex-col" style={{ backgroundColor: '#f0f4f5' }}>
-      <header style={{ backgroundColor: '#072f42' }} className="py-4 px-6">
-        <div className="max-w-3xl mx-auto flex items-center gap-3">
-          <div
-            className="w-10 h-10 rounded flex items-center justify-center"
-            style={{ backgroundColor: '#0B4F6C' }}
-          >
-            <span className="text-white font-bold text-sm">NHS</span>
-          </div>
-          <h1 className="text-white text-xl font-semibold">Add New Client</h1>
-        </div>
-      </header>
-      <div style={{ backgroundColor: '#0B4F6C' }} className="h-2" />
-
       <div className="max-w-3xl mx-auto w-full px-6 py-8">
-        <Link href="/admin" className="text-sm text-blue-700 hover:underline mb-6 inline-block">
-          ← Back to dashboard
-        </Link>
+        <nav className="text-sm text-gray-500 mb-2" aria-label="Breadcrumb">
+          <Link href="/admin/candidates" className="text-blue-700 hover:underline">Candidates</Link>
+          <span className="mx-1.5">/</span>
+          <span>Add New Client</span>
+        </nav>
+        <h1 className="text-2xl font-bold text-gray-900 mb-5">Add New Client</h1>
 
         <div className="bg-white rounded-lg border border-gray-200 p-8">
           <h2 className="text-xl font-bold text-gray-900 mb-6">Client Details</h2>
