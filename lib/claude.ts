@@ -196,6 +196,18 @@ function buildV3UserPrompt(
     ...desirableCriteria.map((c, i) => `D${i + 1}. ${c} [METHOD: ${methodOf(c)}]`),
   ].join('\n')
 
+  const FACTUAL_RE = /\b(GCSE|NVQ|diploma|degree|certificate|registered|registration|NMC|HCPC|DBS|driving licen[cs]e|right to work|shift pattern|weekends?|bank holidays?)\b/i
+  const factualCriteria = [...essentialCriteria, ...desirableCriteria].filter(c =>
+    methodOf(c) === 'C' || (FACTUAL_RE.test(c) && c.split(/\s+/).length <= 18)
+  )
+  const factualBlock = factualCriteria.length > 0
+    ? [
+        '=== SHORT FACTUAL CRITERIA ===',
+        'State each in one plain line under "Qualifications and Requirements" (Style 1) or one short paragraph straight after the opening (Style 2), only if CANDIDATE shows it. Do not repeat them anywhere else, and never in the closing.',
+        ...factualCriteria.map(c => `- ${c}`),
+      ].join('\n')
+    : ''
+
   const bandBlock = `=== BAND ===\n${afcBand}`
 
   const jobBlock = [
@@ -255,7 +267,7 @@ function buildV3UserPrompt(
   const budgetLines: string[] = ['=== BUDGET ===']
   budgetLines.push('Opening: 115 words (max 130)')
   budgetLines.push(useStyle === '1'
-    ? 'Body: about 1,000 words under 4 to 6 headings. Take the headings from this person specification (its own section names or themes), not from a standard list. Give more words to headings holding the most METHOD A criteria.'
+    ? 'Body: about 1,000 words. First a short "Qualifications and Requirements" section (one line per factual criterion), then 4 to 6 headings built from the person specification\'s own wording for the criteria beneath them. Give more words to headings holding the most METHOD A criteria.'
     : 'Body (continuous prose): about 1,000 words')
   budgetLines.push('Body paragraphs: 60 to 130 words each, with lengths that vary')
   budgetLines.push('Motivation: 50 words')
@@ -266,6 +278,7 @@ function buildV3UserPrompt(
   return [
     criteriaBlock,
     '',
+    ...(factualBlock ? [factualBlock, ''] : []),
     bandBlock,
     '',
     jobBlock,
@@ -321,6 +334,22 @@ const V3_ORDINARY_NHS_WORDS = new Set([
   'This resulted in', 'This led to', 'As a result', 'not only',
 ])
 
+const V3_TELL_DESCRIPTIONS: Record<string, string> = {
+  'spec-meta': 'any mention of the person specification, essential or desirable criteria, or what the role requires (describe the candidate\'s own work instead)',
+  'stock-metaphor': 'stock metaphors such as thread, grounding, underpin, second nature (say the plain thing)',
+  'contrast-not': 'the "X is not Y, it is Z" or "not from X" contrast pattern (state the point directly)',
+  'stock-opener': 'generic scene-setting (start with a concrete fact instead)',
+  'lesson-ending': 'a lesson-learned sentence ("that experience reinforced...") (end on the result instead)',
+  'ps-reference': 'references to the person specification',
+}
+
+// Small fixes for names models often misspell
+function fixKnownSpellings(text: string): string {
+  return text
+    .replace(/\bOliver McGowen\b/g, 'Oliver McGowan')
+    .replace(/\bMcGowen\b/g, 'McGowan')
+}
+
 async function applyV3WordFilter(
   statement: string,
   essentialCriteria: string[],
@@ -329,67 +358,62 @@ async function applyV3WordFilter(
 ): Promise<string> {
   const { scanBanned } = await import('./bannedWords')
   const allCriterionText = [...essentialCriteria, ...desirableCriteria].join(' ').toLowerCase()
-
-  const hitIsInCriterion = (hit: string) => {
-    try {
-      return new RegExp(`\\b${hit.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(allCriterionText)
-    } catch { return false }
+  const esc = (t: string) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const inCriterion = (hit: string) => {
+    try { return new RegExp(`\\b${esc(hit)}\\b`, 'i').test(allCriterionText) } catch { return false }
   }
 
-  // Static banned word hits. Ordinary NHS vocabulary is left alone: rewriting it costs a
-  // model call and makes the text sound less like a healthcare worker wrote it.
-  const staticHits = scanBanned(statement).map(h => h.word).filter(w => !V3_ORDINARY_NHS_WORDS.has(w))
+  // Sentences flagged by the built-in tell list. Ordinary NHS vocabulary is left alone:
+  // rewriting it costs a model call and makes the text sound less like a healthcare worker.
+  const staticHits = scanBanned(statement)
+    .filter(h => !V3_ORDINARY_NHS_WORDS.has(h.word))
+    .filter(h => !inCriterion(h.found) && !inCriterion(h.word))
 
-  // DB hits (whole-word, case-insensitive)
-  const dbHits = dbRows
-    .filter(r => r.enabled)
-    .filter(r => {
-      try {
-        return new RegExp(`\\b${r.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(statement)
-      } catch { return false }
-    })
-    .map(r => r.word)
-
-  const allHits = [...new Set([...staticHits, ...dbHits])]
-  const filteredHits = allHits.filter(h => !hitIsInCriterion(h))
-
-  if (filteredHits.length === 0) return statement
-
-  // Find affected sentences
   const sentences = statement.match(/[^.!?]+[.!?]*/g) || []
-  const affectedSentences = sentences.filter(s =>
-    filteredHits.some(h => {
-      try {
-        return new RegExp(`\\b${h.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(s)
-      } catch { return false }
-    })
-  )
+  const flagged = new Map<string, Set<string>>() // sentence -> what to avoid
+  const flag = (sentence: string, what: string) => {
+    const key = sentence.trim()
+    if (!key) return
+    if (!flagged.has(key)) flagged.set(key, new Set())
+    flagged.get(key)!.add(what)
+  }
 
-  if (affectedSentences.length === 0) return statement
+  for (const h of staticHits) {
+    flag(h.sentence, V3_TELL_DESCRIPTIONS[h.word] ?? `"${h.found}"`)
+  }
 
+  // Admin-managed banned words (whole-word, case-insensitive)
+  for (const r of dbRows.filter(r => r.enabled)) {
+    if (inCriterion(r.word)) continue
+    let re: RegExp
+    try { re = new RegExp(`\\b${esc(r.word)}\\b`, 'i') } catch { continue }
+    for (const s of sentences) if (re.test(s)) flag(s, `"${r.word}"`)
+  }
+
+  if (flagged.size === 0) return statement
+
+  const affected = [...flagged.entries()]
   const msg = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 1500,
     temperature: 0.7,
-    system: 'You are a precise text editor.',
+    system: 'You are a precise text editor. You make a statement read like a real healthcare worker wrote it.',
     messages: [{
       role: 'user',
-      content: `Rewrite these sentences without the words/phrases listed. Keep meaning, tense and grammar. Keep any exact person specification phrase unchanged. Return them in the same order, one per line, numbered.\n\nWords to avoid: ${filteredHits.map(h => '"' + h + '"').join(', ')}\n\nSentences:\n${affectedSentences.map((s, i) => `${i + 1}. ${s.trim()}`).join('\n')}`,
+      content: `Rewrite each numbered sentence so it no longer contains the problem listed beside it. Keep the facts, tense and first-person voice, in plain British English. If a sentence only states a lesson or summary, shorten it to its factual part. Keep any exact person specification wording unchanged. Return the sentences in the same order, one per line, numbered, with no extra lines.\n\n${affected.map(([sent, what], i) => `${i + 1}. [avoid: ${[...what].join('; ')}] ${sent}`).join('\n')}`,
     }],
   })
 
-  const rewrittenText = msg.content[0].type === 'text' ? msg.content[0].text.trim() : ''
+  const rewrittenText = msg.content[0]?.type === 'text' ? msg.content[0].text.trim() : ''
   const rewrittenLines = rewrittenText.split('\n')
-    .map(l => l.replace(/^\d+\.\s*/, '').trim())
+    .map(l => l.replace(/^\d+\.\s*/, '').replace(/^\[avoid:[^\]]*\]\s*/, '').trim())
     .filter(Boolean)
 
-  if (rewrittenLines.length !== affectedSentences.length) return statement
+  if (rewrittenLines.length !== affected.length) return statement
 
   let result = statement
-  affectedSentences.forEach((orig, i) => {
-    if (rewrittenLines[i]) {
-      result = result.replace(orig, rewrittenLines[i])
-    }
+  affected.forEach(([orig], i) => {
+    if (rewrittenLines[i]) result = result.replace(orig, rewrittenLines[i])
   })
   return result
 }
@@ -790,6 +814,8 @@ Rules:
 
   // ── Name / placeholder check ───────────────────────────────────────────────
   statement = await cleanNameFromStatementV3(statement, client.full_name)
+
+  statement = fixKnownSpellings(statement)
 
   // Fix joined sentences produced by cleanup steps (e.g. "disorders.I am", "policy.These")
   // Only insert space when a real word start follows punctuation — capital+lowercase or "I "

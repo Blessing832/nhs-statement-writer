@@ -172,6 +172,14 @@ const BANNED_PATTERNS: BannedPattern[] = [
   { pattern: /\bshow (?:this |it )?on my\b/i, word: 'show-on-my' },
   // "make sure" followed by a noun phrase (not "make sure I" or "make sure that I")
   { pattern: /\bmake sure (?!I |that I )([a-z])/i, word: 'make-sure-noun' },
+
+  // Machine-writing tells that recruiters spot. Labels are described to the rewriter in claude.ts.
+  { pattern: /\b(person spec(?:ification)?s?|(?:essential|desirable) (?:criteri(?:a|on)|requirements?)|(?:this|the) role requires|meet(?:s|ing)? the (?:essential|desirable))\b/i, word: 'spec-meta' },
+  { pattern: /\b(consistent thread|second nature|underpin(?:s|ned|ning)?|grounding|cornerstone|backbone|hallmark|fabric of)\b/i, word: 'stock-metaphor' },
+  { pattern: /\b((?:is|are|was|were) not (?:an? )?[a-z]+(?: [a-z]+){0,3}[;,] (?:it|they|but))\b/i, word: 'contrast-not' },
+  { pattern: /(, not from [^.,;]{3,60}[,.])/i, word: 'contrast-not' },
+  { pattern: /\b(one of the most (?:significant|important|challenging|vulnerable) (?:moments|times)|at a time when)\b/i, word: 'stock-opener' },
+  { pattern: /\b((?:that|this) (?:experience|incident|situation|moment|shift) (?:reinforced|taught|showed|highlighted|reminded|strengthened)(?: my| me)?)\b/i, word: 'lesson-ending' },
 ]
 
 // ─── sentence splitter ────────────────────────────────────────────────────────

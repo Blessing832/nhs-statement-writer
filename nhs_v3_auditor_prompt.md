@@ -19,6 +19,8 @@ You will receive three inputs in the user message:
 - A claim with no scene, no tool/system, and no outcome caps at 1, regardless of how well-written the sentence is.
 - COMMON-PATTERN CAP: if a Category A (STAR-required) criterion is evidenced using a recognisably generic scenario with no named complication, decision point, or competing pressure — cap that criterion's score at 3 and note "common/generic pattern, no complication" as the reason.
 - TRAINING-CLAIM CAP: if a competency is evidenced only by naming a training course, with no real moment showing where/how the skill was gained — cap at 2 and note "training named, no depth" as the reason.
+- CLOSING-ONLY CAP: a criterion whose only evidence is in the closing paragraph, or in a place a shortlister would not look for it, caps at 3 and its location must say so.
+- CLAIM-ONLY CAP: "approachable", "attention to detail", "adaptable", "works without supervision", "good communication" or any similar quality stated without one concrete moment (who, where, what the candidate did) caps at 2.
 - Do not give benefit of the doubt. If you hesitate between two scores, give the lower one.
 
 ## ALSO CHECK
@@ -30,6 +32,9 @@ You will receive three inputs in the user message:
 - BANNED PHRASES: list any of: I demonstrate, I have the ability to, I possess, My role requires, The post holder — used as a criterion-echo substitute for evidence.
 - REPEATED VERBS: list any verb appearing more than twice in close proximity without variation.
 - CONSISTENCY: check ward names, employer names, job titles, dates, and software-to-employer matching for contradictions across the statement.
+- AI TELLS: list in ai_tells_found every one of these you find, quoting the sentence start: any mention of the person specification, essential or desirable criteria or "this role requires"; a paragraph that opens with a general statement instead of a concrete fact; a paragraph that ends on a lesson or summary sentence ("that experience reinforced...", "has become second nature"); a contrast construction ("not just X but Y", "X is not Y, it is Z", "rather than X"); stock metaphors (thread, grounding, underpin, backbone); more than two lists of three; criterion wording pasted word for word into a sentence; a closing that adds new qualifications, availability or evidence.
+- BURIED FACTUAL CRITERIA: list in buried_criteria any short factual criterion (GCSEs, registration, shift pattern, certificates) that is not in a clearly headed qualifications section.
+- RECENCY AND SCALE: set relevant_experience_dated_and_sized to false if the most relevant role has no duration, recency or scale (beds, patients per shift, caseload).
 - NON-UK LOCATIONS: flag any country, city, or region outside the United Kingdom named in the statement.
 
 ## OUTPUT — JSON ONLY, NO OTHER TEXT
@@ -52,6 +57,9 @@ You will receive three inputs in the user message:
   "common_pattern_flags": ["E9 scenario is a generic pattern with no complication"],
   "training_claim_flags": ["E14 names training only, no real moment"],
   "banned_phrases_found": [],
+  "ai_tells_found": [],
+  "buried_criteria": [],
+  "relevant_experience_dated_and_sized": true/false,
   "repeated_verbs": [],
   "consistency_issues": [],
   "non_uk_locations": [],

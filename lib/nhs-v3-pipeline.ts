@@ -27,6 +27,8 @@ RULES
 - Show what the candidate did and what happened as a result, then work the criterion's key terms into the sentence that follows the evidence. Do not paste the criterion as a sentence of its own.
 - Match the surrounding voice: first person, plain British English, short sentences, the words a working nurse or healthcare assistant would use. No em dashes, no bullet points, no bold, no criterion ids.
 - A rewritten paragraph must stay under 150 words.
+- Do not mention the person specification or criteria. No "not X but Y" or "X is not Y, it is Z" constructions. Do not end a paragraph on a lesson sentence ("that experience reinforced..."). No stock metaphors (thread, grounding, underpin, second nature).
+- Never state a qualification, course, registration or employer that is not in CANDIDATE FACTS.
 - Never rewrite a heading. Rewrite at most ${MAX_PATCHED_PARAGRAPHS} paragraphs. Leave every other paragraph alone.
 
 OUTPUT: JSON only, no other text:
@@ -142,6 +144,9 @@ export async function runNHSV3Pipeline(
     real_job_titles_used?: boolean
     no_invented_facts?: boolean
     invented_facts_found?: string[]
+    ai_tells_found?: string[]
+    buried_criteria?: string[]
+    relevant_experience_dated_and_sized?: boolean
     six_structure_parts_present?: Record<string, boolean>  // legacy field name
     five_structure_parts_present?: Record<string, boolean>
     word_count?: number
@@ -277,6 +282,9 @@ export async function runNHSV3Pipeline(
   const warningBanners: string[] = []
   if (!finalDet.wordCountOk) warningBanners.push(`Word count ${finalDet.wordCount} (target 1,150–1,400)`)
   if (finalDet.bannedPhrasesFound.length > 0) warningBanners.push(`Banned phrases: ${finalDet.bannedPhrasesFound.join(', ')}`)
+  if (auditResult.ai_tells_found?.length) warningBanners.push(`Reads as machine-written in places: ${auditResult.ai_tells_found.slice(0, 4).join('; ')}`)
+  if (auditResult.buried_criteria?.length) warningBanners.push(`Hard-to-find criteria: ${auditResult.buried_criteria.slice(0, 4).join('; ')}`)
+  if (auditResult.relevant_experience_dated_and_sized === false) warningBanners.push('Most relevant role has no duration or scale: ask the candidate for dates and unit size')
   if (auditResult.non_uk_locations?.length) warningBanners.push(`Non-UK locations: ${auditResult.non_uk_locations.join(', ')}`)
 
   return {

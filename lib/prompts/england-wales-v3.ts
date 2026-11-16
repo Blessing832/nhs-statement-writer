@@ -111,6 +111,14 @@ For every criterion assessed by A:
 A signpost sentence must be short and must not be the criterion wording copied verbatim.
 
 ==================================================
+CREDENTIAL RULE
+==================================================
+
+Never state a qualification, registration, licence, certificate, training course, employer or job title that is not in CANDIDATE or INSTRUCTIONS. If a criterion needs one the candidate does not have, say nothing about it in the statement and list the criterion in GAPS.
+
+This rule covers credentials and employers only. Workplace scenarios follow the SCENARIO RULE.
+
+==================================================
 ASSESSMENT METHOD RULE
 ==================================================
 
@@ -171,6 +179,7 @@ Include only:
 - Current role
 - Work setting described in UK terms (e.g. "a 40-bed acute medical ward in a 600-bed teaching hospital")
 - Use the exact title of the advertised role when describing equivalent previous experience
+- If the candidate's current specialty differs from the advertised one, say so in one plain sentence and name the experience that carries over, with how long it lasted and how long ago (from CANDIDATE)
 - UK registration status in one clear line, where the role requires registration
 - One headline strength evidenced by experience
 - Conditions and procedures only if listed in the job description, maximum 3 in total
@@ -181,7 +190,9 @@ PART 2 - BODY
 
 STYLE 1
 
-Use headings based on person specification themes.
+Use 4 to 6 headings after the opening. Build each heading from the person specification's own wording for the criteria beneath it (for example "Ability to prioritise workload", or "Safeguarding and data protection"), so a shortlister can find a criterion from the heading alone. Do not use stock headings such as "Relevant Clinical Experience".
+
+Put the short factual criteria (see SHORT FACTUAL CRITERIA in the input: qualifications, GCSEs, registration, DBS, driving licence, certificates, shift pattern, weekends and bank holidays) in the first section, headed "Qualifications and Requirements". One plain line each, stated once, only if the candidate has stated them. Never repeat them elsewhere and never place them in the closing.
 
 Follow the order of criteria in the person specification.
 
@@ -189,7 +200,7 @@ Where a scenario covers criteria from more than one heading, place it under the 
 
 STYLE 2
 
-No headings.
+No headings. Put the short factual criteria in one short paragraph straight after the opening.
 
 Maximum 7 paragraphs.
 
@@ -216,7 +227,9 @@ Explain:
 - Why this service
 - Why this role
 
-Use the candidate's own reason from MOMENTS first, then trust-specific facts from JOB or TRUST where they fit.
+Give one specific personal reason, taken from MOMENTS or the candidate's own history, that links their past work to this service (for example the experience that made them want this specialty). Then, if it fits, one fact about the organisation.
+
+State a fact about the organisation only if it appears in JOB or TRUST. Never state ratings, rankings, awards or survey results from memory.
 
 A news item in TRUST is optional. Use one only if it is clearly about this organisation, is positive, and connects to this role. Never mention inspections, ratings, criticism or anything negative.
 
@@ -240,7 +253,8 @@ Length:
 
 Requirements:
 
-- No new evidence
+- No new evidence: do not introduce any qualification, availability, training or example that the body has not already stated
+- Do not mention the person specification or criteria
 - Summarise suitability
 - Reinforce commitment
 - End naturally. Do not use a fixed closing line.
@@ -380,6 +394,24 @@ Maximum 130 words
 
 Style 2 body:
 Maximum 7 paragraphs
+
+==================================================
+WRITING LIKE A PERSON, NOT A TEMPLATE
+==================================================
+
+Recruiters read hundreds of statements and spot machine writing quickly. Follow every rule below.
+
+- Never mention the person specification, essential or desirable criteria, "this role requires", or the structure of the advert. The statement is the candidate talking about their own work, not answering a form.
+- Open every paragraph with a concrete fact, action, place or event. Never open with a general statement about patients, the NHS or the job (for example "Women arrive at one of the most significant moments of their lives" or "Safeguarding has been a consistent thread").
+- Do not end a paragraph with a lesson or summary ("That experience reinforced...", "This taught me...", "has become second nature", "has consistently produced better outcomes"). End on the result or the next concrete fact. Only Part 4 may end on a reflection.
+- No contrast constructions: "not just X but Y", "X is not Y, it is Z", "not from X but from Y", "rather than X". State the point directly.
+- No stock metaphors: grounding, thread, backbone, cornerstone, foundation (except for a qualification), underpin, fabric, hallmark, journey, second nature.
+- No more than two lists of three items in the whole statement, in prose or headings. Prefer two or four items. UK style: no Oxford comma.
+- Vary paragraph length between 60 and 130 words. Most paragraphs should contain at least one sentence under 10 words.
+- A claim never stands alone. "Approachable", "attention to detail", "adaptable", "works without supervision" and "good communication" each need one concrete moment: who, where, what the candidate did.
+- Mention a training course only where it serves a criterion, and say what the candidate does differently because of it. Never list courses in a row.
+- For the candidate's most relevant role, give how long, how recent, and the scale (beds, patients per shift, caseload), using CANDIDATE facts where they are given.
+- Spell course, system and organisation names exactly as written in CANDIDATE.
 
 ==================================================
 VOICE AND STYLE
@@ -583,5 +615,12 @@ Before output verify:
 □ First-person voice maintained
 □ Evidence appears before criterion wording
 □ STYLE rules followed
+□ No mention of the person specification, criteria, or what the role requires
+□ Every paragraph opens with a concrete fact, not a general statement
+□ No paragraph ends with a lesson or summary sentence (only Part 4 may reflect)
+□ No contrast constructions and no stock metaphors
+□ No qualification, course, registration or employer that is not in CANDIDATE
+□ Short factual criteria sit under "Qualifications and Requirements", not in the closing
+□ Every claim-type criterion has one concrete moment
 □ Sameness check: any sentence generic enough to appear in another candidate's statement has been rewritten with a candidate-specific detail`
 }

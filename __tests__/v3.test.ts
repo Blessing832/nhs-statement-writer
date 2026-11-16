@@ -189,3 +189,39 @@ describe('story gate word count threshold', () => {
     expect(countWordsV3(longText)).toBeGreaterThanOrEqual(40)
   })
 })
+
+describe('machine-writing tell detection', () => {
+  const words = (s: string) => scanBanned(s).map(h => h.word)
+
+  it('flags references to the person specification', () => {
+    expect(words('This gives me a grounding across the full range of this person specification.')).toContain('spec-meta')
+    expect(words('My Level 3 Diploma is meeting the desirable NVQ Level 3 equivalent.')).not.toEqual([])
+    expect(words('I use Word and Excel, covering the IT skills this role requires.')).toContain('spec-meta')
+  })
+
+  it('flags stock metaphors', () => {
+    expect(words('Safeguarding training has been a consistent thread through my development.')).toContain('stock-metaphor')
+    expect(words('I know the documentation processes that underpin safe NHS practice.')).toContain('stock-metaphor')
+    expect(words('Working with bank staff has become second nature.')).toContain('stock-metaphor')
+  })
+
+  it('flags contrast constructions', () => {
+    expect(words('Confidentiality is not an abstract principle; it guides what I say every shift.')).toContain('contrast-not')
+    expect(words('That reputation comes from the team delivering care every shift, not from a certificate on a wall.')).toContain('contrast-not')
+  })
+
+  it('flags generic openers and lesson endings', () => {
+    expect(words('Women arrive at one of the most significant moments of their lives, often anxious.')).toContain('stock-opener')
+    expect(words('That experience reinforced my understanding of escalation.')).toContain('lesson-ending')
+  })
+
+  it('does not flag plain concrete sentences', () => {
+    const plain = [
+      'I took observations at 06:00 and told the nurse in charge straight away.',
+      'On the ward I support six to eight patients each shift.',
+      'I record fluid balances and check medication charts.',
+      'My Care Certificate was signed off by my line manager.',
+    ]
+    for (const s of plain) expect(words(s)).toEqual([])
+  })
+})
