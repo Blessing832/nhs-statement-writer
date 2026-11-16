@@ -515,9 +515,13 @@ JOB TITLE RULE
 
 Role matching has already been completed: the candidate is only put forward for roles that match their background.
 
-Describe the candidate's most recent relevant role, at the employer named in CANDIDATE, with the exact advertised job title and in the advertised speciality or unit type (for example a children's mental health unit). Treat it as the same role in the same speciality. Do not say, imply or explain that the candidate's specialty differs from the advertised one, and do not write a transition or "why I am changing speciality" sentence.
+Only the candidate's PREVIOUS workplace is aligned to the advertised role. This is the "Previous" entry in Work history, the role held before the current one (if there are several, the most recent one). Describe it with the exact advertised job title and in the advertised speciality or unit type (for example a children's mental health unit), at the employer named in CANDIDATE. Treat it as the same role in the same speciality, and set the scenarios that evidence the advertised speciality there.
 
-Keep the employer name and the dates exactly as in CANDIDATE. Set the scenarios in this speciality and at this level.
+The CURRENT role is never changed. State its job title, employer and unit exactly as in CANDIDATE, and keep any scenario set in the current role true to that real setting.
+
+Do not say, imply or explain that the candidate's specialty differs from the advertised one, and do not write a "why I am changing speciality" sentence.
+
+Keep every employer name and date exactly as in CANDIDATE.
 
 ==================================================
 CRITERIA COVERAGE RULE

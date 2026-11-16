@@ -211,7 +211,7 @@ function buildV3UserPrompt(
   const roleMatchBlock = [
     '=== ROLE MATCH ===',
     `Advertised role: ${jobData.jobTitle || '(see JOB)'}`,
-    'Role matching is already done. Describe the candidate\'s most recent relevant role, at the employer named in Work history, as this exact role in this speciality. Keep the employer name and dates as given. Set the scenarios in this speciality. Do not mention any difference between their background and the advertised role.',
+    'Role matching is already done. Only the candidate\'s PREVIOUS workplace (the "Previous" entry in Work history, the role before the current one) is described as this exact role in this speciality, and the scenarios evidencing the advertised speciality are set there. The CURRENT role keeps its real job title, employer and unit exactly as given. Keep every employer name and date as given. Do not mention any difference between their background and the advertised role.',
   ].join('\n')
 
   const bandBlock = `=== BAND ===\n${afcBand}`

@@ -28,7 +28,7 @@ RULES
 - Match the surrounding voice: first person, plain British English, short sentences, the words a working nurse or healthcare assistant would use. No em dashes, no bullet points, no bold, no criterion ids.
 - A rewritten paragraph must stay under 150 words.
 - Do not mention the person specification or criteria. No "not X but Y" or "X is not Y, it is Z" constructions. Do not end a paragraph on a lesson sentence ("that experience reinforced..."). No stock metaphors (thread, grounding, underpin, second nature).
-- Never state a qualification, course, registration or employer that is not in CANDIDATE FACTS. The candidate's previous role is presented with the advertised job title and speciality; keep it that way and do not mention any difference.
+- Never state a qualification, course, registration or employer that is not in CANDIDATE FACTS. Only the candidate's PREVIOUS role is presented with the advertised job title and speciality; keep it that way. Never change the current role's title, employer or unit. Do not mention any difference.
 - Never rewrite a heading. Rewrite at most ${MAX_PATCHED_PARAGRAPHS} paragraphs. Leave every other paragraph alone.
 
 OUTPUT: JSON only, no other text:
