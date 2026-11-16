@@ -17,6 +17,15 @@ interface Result {
   cached?: boolean
 }
 
+const OPENING_OPTIONS = [
+  { val: '' as const, label: 'Auto', title: 'AI picks the opening automatically' },
+                        { val: '1' as const, label: '1', title: '"After carefully going through the job advert and person specification list, I am writing to apply for the [vacancy title]..."' },
+                        { val: '2' as const, label: '2', title: '"Having worked as a [role] for [X] years, I believe taking up the role of [vacancy title] within [Trust] is the natural next step..."' },
+                        { val: '3' as const, label: '3', title: '"I am writing to apply for the position of [vacancy title]..."' },
+                        { val: '4' as const, label: '4', title: '"Having cared for people with [condition] for over [X] years, I believe I have the necessary skills to take up the role of [vacancy title]..."' },
+                        { val: '5' as const, label: '5', title: '"My background and experience match the requirements of the role of [vacancy title]..."' }
+] as const
+
 function wordCount(text: string): number {
   return text.trim().split(/\s+/).filter((w) => w.length > 0).length
 }
@@ -860,9 +869,25 @@ function GeneratePage() {
   }, [])
 
   useEffect(() => {
+    if (!result || !clientCode) return
+    try {
+      sessionStorage.setItem(`easeme_result_${clientCode}`, JSON.stringify({ result, jobData: cachedJobData, vacancyUrl }))
+    } catch { /* storage full or unavailable */ }
+  }, [result, cachedJobData, vacancyUrl, clientCode])
+
+  useEffect(() => {
     if (!clientCode) { router.push('/'); return }
     const saved = localStorage.getItem(`writer_notes_${clientCode}`)
     if (saved) setWriterNotes(saved)
+    try {
+      const raw = sessionStorage.getItem(`easeme_result_${clientCode}`)
+      const stored = raw ? JSON.parse(raw) : null
+      if (stored?.result?.statement) {
+        setResult(stored.result)
+        setCachedJobData(stored.jobData ?? null)
+        setVacancyUrl(stored.vacancyUrl ?? '')
+      }
+    } catch { /* storage unavailable or corrupt: start fresh */ }
     fetch(`/api/client-info?code=${encodeURIComponent(clientCode)}`)
       .then((r) => {
         if (!r.ok) { setInvalidCode(true); return null }
@@ -986,6 +1011,7 @@ function GeneratePage() {
     setLoading(true)
     setError('')
     setResult(null)
+    try { sessionStorage.removeItem(`easeme_result_${clientCode}`) } catch { /* ignore */ }
     setCachedJobData(null)
     setDownloadedDocs([])
     startProgress()
@@ -1055,6 +1081,14 @@ function GeneratePage() {
 
   const wc = result ? wordCount(result.statement) : 0
   const wcLimit = result?.promptRegion === 'scotland' ? 1100 : 1400
+  const failingCriteria = result?.coverageReport?.criteria?.filter(c => !c.deterministicPresent || !c.pass) ?? []
+  const coveredCount = result?.coverageReport?.criteria?.filter(c => c.deterministicPresent && c.pass).length ?? 0
+  const totalCriteria = result?.coverageReport?.criteria?.length ?? 0
+  const handleFixGaps = () => {
+    setRewriteInstruction(`Strengthen the evidence for these criteria with a clear example for each, and keep everything else as it is: ${failingCriteria.slice(0, 6).map(c => c.criterion).join('; ')}`)
+    setShowRewrite(true)
+    setTimeout(() => document.getElementById('rewrite-panel')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50)
+  }
   const wcColour = wc > wcLimit ? 'text-red-600 font-bold' : wc > wcLimit * 0.93 ? 'text-amber-600' : 'text-green-700'
 
   if (invalidCode) {
@@ -1300,17 +1334,10 @@ function GeneratePage() {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Opening style</label>
                     <div className="flex items-center gap-1.5 flex-wrap">
-                      {([
-                        { val: '' as const, label: 'Auto', title: 'AI picks the opening automatically' },
-                        { val: '1' as const, label: '1', title: '"After carefully going through the job advert and person specification list, I am writing to apply for the [vacancy title]..."' },
-                        { val: '2' as const, label: '2', title: '"Having worked as a [role] for [X] years, I believe taking up the role of [vacancy title] within [Trust] is the natural next step..."' },
-                        { val: '3' as const, label: '3', title: '"I am writing to apply for the position of [vacancy title]..."' },
-                        { val: '4' as const, label: '4', title: '"Having cared for people with [condition] for over [X] years, I believe I have the necessary skills to take up the role of [vacancy title]..."' },
-                        { val: '5' as const, label: '5', title: '"My background and experience match the requirements of the role of [vacancy title]..."' },
-                      ]).map(({ val, label, title }) => (
+                      {OPENING_OPTIONS.map(({ val, label, title }) => (
                         <button key={val || 'auto'} type="button" title={title}
                           onClick={() => setOpeningTemplate(val)}
-                          className="text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer"
+                          className="text-sm min-w-[44px] min-h-[40px] px-3 rounded-full border transition-colors cursor-pointer"
                           style={openingTemplate === val
                             ? { borderColor: '#0B4F6C', backgroundColor: '#0B4F6C', color: 'white' }
                             : { borderColor: '#d1d5db', backgroundColor: 'white', color: '#374151' }}>
@@ -1318,6 +1345,9 @@ function GeneratePage() {
                         </button>
                       ))}
                     </div>
+                    <p className="text-xs text-gray-500 mt-2 italic">
+                      {OPENING_OPTIONS.find(o => o.val === openingTemplate)?.title}
+                    </p>
                   </div>
                 )}
 
@@ -1415,9 +1445,9 @@ function GeneratePage() {
           <div style={{ backgroundColor: '#072f42' }} className="px-4 py-3 flex-shrink-0 sticky top-0 z-30 shadow-md">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="min-w-0">
-                <p style={{ color: 'rgba(244,168,0,0.7)' }} className="text-xs">Statement generated for</p>
+                <p style={{ color: 'rgba(244,168,0,0.7)' }} className="text-xs hidden sm:block">Statement generated for</p>
                 <h2 className="text-white font-bold text-base sm:text-lg leading-tight truncate">{result.jobTitle}</h2>
-                {result.organisation && <p style={{ color: 'rgba(255,255,255,0.55)' }} className="text-sm truncate">{result.organisation}</p>}
+                {result.organisation && <p style={{ color: 'rgba(255,255,255,0.55)' }} className="text-sm truncate hidden sm:block">{result.organisation}</p>}
               </div>
               <div className="flex items-center gap-2 flex-wrap flex-shrink-0">
                 {result.promptRegion && (
@@ -1441,7 +1471,7 @@ function GeneratePage() {
                   {downloaded ? 'Downloaded!' : 'Download .doc'}
                 </button>
                 <button
-                  onClick={() => { setResult(null); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText(''); setPastedPersonSpec(''); setSparsePs(false); setDownloadedDocs([]); setSpecificQuestions(['']) }}
+                  onClick={() => { try { sessionStorage.removeItem(`easeme_result_${clientCode}`) } catch { /* ignore */ } setResult(null); setShowRewrite(false); setRewriteInstruction(''); setVacancyUrl(''); setJobDescText(''); setPastedPersonSpec(''); setSparsePs(false); setDownloadedDocs([]); setSpecificQuestions(['']) }}
                   className="text-sm px-3 py-1.5 rounded font-medium cursor-pointer" style={{ border: '1px solid rgba(255,255,255,0.25)', color: 'rgba(255,255,255,0.8)' }}
                 >
                   New Statement
@@ -1481,11 +1511,34 @@ function GeneratePage() {
                   coverageReport={result.coverageReport}
                   statement={result.statement}
                 />
+                {failingCriteria.length > 0 && (
+                  <button type="button" onClick={handleFixGaps} className="mt-4 w-full py-2 text-xs font-semibold text-white rounded-md cursor-pointer" style={{ backgroundColor: '#0B4F6C' }}>
+                    Rewrite to strengthen {failingCriteria.length} {failingCriteria.length === 1 ? 'criterion' : 'criteria'}
+                  </button>
+                )}
               </div>
             </div>
             {/* Right: statement */}
             <div className="flex-1 overflow-y-auto bg-white">
               <div className="p-6 max-w-3xl mx-auto">
+                <details className="md:hidden mb-5 rounded-lg border border-gray-200 bg-gray-50">
+                  <summary className="px-4 py-3 text-sm font-semibold text-gray-700 cursor-pointer">
+                    Person specification check{totalCriteria > 0 ? `: ${coveredCount} of ${totalCriteria} strongly covered` : ''}
+                  </summary>
+                  <div className="px-4 pb-4">
+                    <CriteriaListPanel
+                      analysis={result.analysis}
+                      coverageReport={result.coverageReport}
+                      statement={result.statement}
+                    />
+                    {failingCriteria.length > 0 && (
+                      <button type="button" onClick={handleFixGaps} className="mt-4 w-full py-2.5 text-sm font-semibold text-white rounded-md cursor-pointer" style={{ backgroundColor: '#0B4F6C' }}>
+                        Rewrite to strengthen {failingCriteria.length} {failingCriteria.length === 1 ? 'criterion' : 'criteria'}
+                      </button>
+                    )}
+                  </div>
+                </details>
+
                 <div ref={statementHeadRef} className="flex items-center justify-between mb-4">
                   <h3 className="font-bold text-gray-800 text-base">Supporting Statement</h3>
                   <div className="flex items-center gap-3">
@@ -1593,7 +1646,7 @@ function GeneratePage() {
                 )}
 
                 {/* Rewrite */}
-                <div className="border-t border-gray-100 pt-6 mt-6">
+                <div id="rewrite-panel" className="border-t border-gray-100 pt-6 mt-6">
                   {!showRewrite ? (
                     <button
                       onClick={() => setShowRewrite(true)}
