@@ -4,12 +4,12 @@ import { createHmac } from 'crypto'
 const TOKEN_TTL_MS = 24 * 60 * 60 * 1000 // 24 hours
 
 export function adminSecretConfigured(): boolean {
-  return (process.env.ADMIN_SECRET ?? '').length >= 12
+  return (process.env.ADMIN_SECRET ?? '').length > 0
 }
 
 function hmacSign(payload: string): string {
   const secret = process.env.ADMIN_SECRET ?? ''
-  if (secret.length < 12) throw new Error('ADMIN_SECRET is not set or too short')
+  if (!secret) throw new Error('ADMIN_SECRET is not set')
   return createHmac('sha256', secret).update(payload).digest('hex')
 }
 

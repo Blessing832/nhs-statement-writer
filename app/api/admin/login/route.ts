@@ -12,7 +12,7 @@ function clientIp(req: NextRequest): string {
 
 export async function POST(req: NextRequest) {
   if (!adminSecretConfigured()) {
-    console.error('ADMIN_LOGIN_DISABLED: ADMIN_SECRET is missing or shorter than 12 characters')
+    console.error('ADMIN_LOGIN_DISABLED: ADMIN_SECRET is not set')
     return NextResponse.json({ error: 'Admin login is not configured' }, { status: 503 })
   }
 
