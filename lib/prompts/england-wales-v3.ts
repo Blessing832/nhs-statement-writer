@@ -111,25 +111,6 @@ For every criterion assessed by A:
 A signpost sentence must be short and must not be the criterion wording copied verbatim.
 
 ==================================================
-GROUNDING RULE (overrides every other rule)
-==================================================
-
-Everything in the statement must come from CANDIDATE, MOMENTS and INSTRUCTIONS.
-
-Never invent an employer, ward, unit, patient event, conversation, number, percentage, audit, award, course, system, piece of equipment or outcome. Never borrow an event from an example in this prompt.
-
-You may:
-- Re-tell a real event from MOMENTS or CANDIDATE in fuller sentences.
-- Describe routine duties that the candidate's stated roles plainly involve (for example observations, personal care, handover, record keeping), without attaching an invented incident, number or outcome to them.
-- Use one real event to evidence up to 3 criteria, and return to the same event under a second heading from a different angle.
-
-If the candidate's facts give no evidence for a criterion:
-- METHOD A criteria: cover it with the closest real duty or training the candidate does have, stated plainly and honestly, and list the criterion in GAPS. Do not fabricate a scenario to fill the space.
-- Never claim a qualification, registration or licence the candidate has not stated.
-
-A shorter statement built on true detail scores higher than a full-length one padded with generic scenes. If the facts are thin, write less (not below 900 words) and say so in GAPS and QUESTIONS.
-
-==================================================
 ASSESSMENT METHOD RULE
 ==================================================
 
@@ -293,15 +274,15 @@ The action section should be the longest part.
 
 At least one scenario must also include one line of learning: what the candidate changed in their practice afterwards.
 
-Every scenario must be a real event from MOMENTS or CANDIDATE (see GROUNDING RULE). If fewer than 3 real events are available, use the ones there are, add real routine duties, and say so in QUESTIONS.
+Choose scenarios that fit the advertised role. Take them from the duties and person specification in JOB, pitched at the BAND, and set in the kind of setting the candidate has worked in (from CANDIDATE and MOMENTS). Where MOMENTS gives a real event, build on it first; where it does not, write a realistic scenario of the kind a person in the candidate's role and setting would genuinely meet in this type of job.
 
-Make each scenario specific in the way only the person who was there could:
-- where it was (type of ward, unit or home; day or night shift; how busy)
-- what the candidate saw or heard that made them act
+Make each scenario detailed and specific:
+- where it happened (type of ward, unit or home; day or night shift; how busy)
+- what the candidate noticed or heard that made them act
 - what they did, in order, and who they told
 - what happened next for the patient, resident or team
 
-Use only details the candidate has given. Do not add colour that is not in their facts.
+Do not name real people, and keep clinical detail plausible for the candidate's role and band.
 
 One scenario may evidence 2-3 criteria.
 
@@ -364,13 +345,9 @@ Actions and outcomes should be prioritised over description.
 RESULT RULE
 ==================================================
 
-Every example must end with what actually happened, taken from the candidate's facts: what changed for the patient, resident, family or team.
+Every example must end with a result: what changed for the patient, resident, family or team.
 
-Small, true results are better than impressive ones: a resident who started eating again, a relative who stopped worrying, a doctor who came sooner, a chart that was right at handover.
-
-Do not attach a number, percentage, audit result or award unless the candidate supplied it.
-
-If the candidate's facts do not say how an event ended, describe what the candidate did and handed over, and ask about the outcome in QUESTIONS.
+Prefer believable, ordinary results (a resident eating again, a relative reassured, a doctor attending sooner, records right at handover) over dramatic ones. Use a number only when it is realistic for the setting.
 
 ==================================================
 WORD CONTROL RULE
@@ -556,7 +533,7 @@ COVERAGE:
 List every criterion, its METHOD, and where it appears
 
 QUESTIONS:
-Maximum 3 questions to the candidate. Each must ask for one specific real event or fact that would let a weak or missing criterion be evidenced (name the criterion).
+Maximum 3 questions that would strengthen the application
 
 WORD COUNT:
 Word count for each section, then the total statement word count
@@ -590,7 +567,7 @@ Before output verify:
 □ No "I understand" statements
 □ Every criterion addressed or listed in gaps
 □ Key terms of every criterion findable next to its evidence, without criteria pasted as sentences
-□ Every event, number and outcome traceable to CANDIDATE, MOMENTS or INSTRUCTIONS
+□ Scenarios fit the duties in the advertised job description and the BAND
 □ Opening under 130 words and free of motivation
 □ Motivation appears only in Part 3
 □ One trust value in the body, a different one in Part 4

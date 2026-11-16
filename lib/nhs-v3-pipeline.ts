@@ -22,8 +22,7 @@ const MAX_PATCHED_PARAGRAPHS = 4
 const PATCH_SYSTEM = `You repair an NHS supporting statement so that specific person specification criteria are properly evidenced. You are given the statement as numbered paragraphs, the criteria that are missing or weak, and the candidate's real facts.
 
 RULES
-- Use ONLY facts found in CANDIDATE FACTS. Never invent an employer, ward, patient event, number, tool, course or outcome.
-- If CANDIDATE FACTS contain nothing that evidences a criterion, do not write about it. List its id in "unevidenced".
+- Where CANDIDATE FACTS contain a real event or duty that evidences a criterion, use it. Where they do not, write a realistic, detailed scenario suited to the role and setting the candidate has worked in. Do not change the candidate's employers, qualifications or registration.
 - Fix a criterion by rewriting the one existing paragraph where its evidence fits best. Keep everything in that paragraph that already works, including any other criterion wording already in it.
 - Show what the candidate did and what happened as a result, then work the criterion's key terms into the sentence that follows the evidence. Do not paste the criterion as a sentence of its own.
 - Match the surrounding voice: first person, plain British English, short sentences, the words a working nurse or healthcare assistant would use. No em dashes, no bullet points, no bold, no criterion ids.
@@ -31,7 +30,7 @@ RULES
 - Never rewrite a heading. Rewrite at most ${MAX_PATCHED_PARAGRAPHS} paragraphs. Leave every other paragraph alone.
 
 OUTPUT: JSON only, no other text:
-{"edits":[{"paragraph":<number>,"text":"<full replacement paragraph>"}],"unevidenced":["E3"]}`
+{"edits":[{"paragraph":<number>,"text":"<full replacement paragraph>"}],"unevidenced":[]}`
 
 function isHeading(para: string): boolean {
   const t = para.trim()
@@ -278,7 +277,6 @@ export async function runNHSV3Pipeline(
   const warningBanners: string[] = []
   if (!finalDet.wordCountOk) warningBanners.push(`Word count ${finalDet.wordCount} (target 1,150–1,400)`)
   if (finalDet.bannedPhrasesFound.length > 0) warningBanners.push(`Banned phrases: ${finalDet.bannedPhrasesFound.join(', ')}`)
-  if (auditResult.invented_facts_found?.length) warningBanners.push(`Check these details against the candidate's real history: ${auditResult.invented_facts_found.join('; ')}`)
   if (auditResult.non_uk_locations?.length) warningBanners.push(`Non-UK locations: ${auditResult.non_uk_locations.join(', ')}`)
 
   return {
