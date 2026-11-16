@@ -581,6 +581,8 @@ async function generateParallelV3(
   const generationModel = process.env.GENERATION_MODEL || 'claude-sonnet-4-6'
   const appMode = options.applicationMode ?? 'full'
 
+  console.log(`V3_START model=${generationModel} mode=${appMode} rawTextLen=${jobData.rawText?.length ?? 'null'}`)
+
   // ── Story check (warning only — never blocks generation) ───────────────────
   const storyFields = [
     client.q_difficult_situation,
@@ -604,9 +606,10 @@ async function generateParallelV3(
   // ── Step 1: Haiku criteria extraction + trust intel (parallel, ~8s) ─────────
   // Using Haiku to extract criteria quickly lets us start generation and analysis
   // in parallel in Step 2, instead of waiting for a Sonnet analysis before generating.
-  const rawTextForExtract = jobData.rawText.length <= 24000
-    ? jobData.rawText
-    : jobData.rawText.slice(0, 8000) + jobData.rawText.slice(-16000)
+  const safeRawText = jobData.rawText ?? ''
+  const rawTextForExtract = safeRawText.length <= 24000
+    ? safeRawText
+    : safeRawText.slice(0, 8000) + safeRawText.slice(-16000)
 
   const [haikuExtractMsg, intelResult] = await Promise.all([
     anthropic.messages.create({
@@ -946,7 +949,8 @@ FOUR CRITICAL FAILURES — check every paragraph before outputting:
 // Smart truncation: take first 8,000 chars (JD intro + duties) + last 16,000 chars
 // (person spec JDPS table is almost always at the END of NHS documents).
 // Total = 24,000 chars — extra chars go to the end to capture full JDPS tables.
-function buildRawText(rawText: string): string {
+function buildRawText(rawText: string | null | undefined): string {
+  if (!rawText) return ''
   if (rawText.length <= 24000) return rawText
   const start = rawText.slice(0, 8000)
   const end = rawText.slice(-16000)
@@ -1561,7 +1565,7 @@ async function generateParallel(
 
   // Statement: plain text, use directly
   const statementContent = statementMsg.content[0]
-  if (statementContent.type !== 'text') throw new Error('Unexpected response type from generation service')
+  if (!statementContent || statementContent.type !== 'text') throw new Error('Unexpected response type from generation service')
   let statement = statementContent.text
     .trim()
     .replace(/ — /g, ', ')
