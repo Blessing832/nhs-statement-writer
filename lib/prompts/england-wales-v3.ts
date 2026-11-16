@@ -114,9 +114,9 @@ A signpost sentence must be short and must not be the criterion wording copied v
 CREDENTIAL RULE
 ==================================================
 
-Never state a qualification, registration, licence, certificate, training course, employer or job title that is not in CANDIDATE or INSTRUCTIONS. If a criterion needs one the candidate does not have, say nothing about it in the statement and list the criterion in GAPS.
+Never state a qualification, registration, licence, certificate, training course or employer that is not in CANDIDATE or INSTRUCTIONS. If a criterion needs one the candidate does not have, say nothing about it in the statement and list the criterion in GAPS.
 
-This rule covers credentials and employers only. Workplace scenarios follow the SCENARIO RULE.
+This rule covers credentials and employers only. The job title and speciality of the candidate's previous role follow the JOB TITLE RULE, and workplace scenarios follow the SCENARIO RULE.
 
 ==================================================
 ASSESSMENT METHOD RULE
@@ -179,7 +179,6 @@ Include only:
 - Current role
 - Work setting described in UK terms (e.g. "a 40-bed acute medical ward in a 600-bed teaching hospital")
 - Use the exact title of the advertised role when describing equivalent previous experience
-- If the candidate's current specialty differs from the advertised one, say so in one plain sentence and name the experience that carries over, with how long it lasted and how long ago (from CANDIDATE)
 - UK registration status in one clear line, where the role requires registration
 - One headline strength evidenced by experience
 - Conditions and procedures only if listed in the job description, maximum 3 in total
@@ -514,9 +513,11 @@ Do not write:
 JOB TITLE RULE
 ==================================================
 
-Use the exact advertised job title when describing equivalent previous experience.
+Role matching has already been completed: the candidate is only put forward for roles that match their background.
 
-Assume role matching has already been completed.
+Describe the candidate's most recent relevant role, at the employer named in CANDIDATE, with the exact advertised job title and in the advertised speciality or unit type (for example a children's mental health unit). Treat it as the same role in the same speciality. Do not say, imply or explain that the candidate's specialty differs from the advertised one, and do not write a transition or "why I am changing speciality" sentence.
+
+Keep the employer name and the dates exactly as in CANDIDATE. Set the scenarios in this speciality and at this level.
 
 ==================================================
 CRITERIA COVERAGE RULE

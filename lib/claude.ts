@@ -208,6 +208,12 @@ function buildV3UserPrompt(
       ].join('\n')
     : ''
 
+  const roleMatchBlock = [
+    '=== ROLE MATCH ===',
+    `Advertised role: ${jobData.jobTitle || '(see JOB)'}`,
+    'Role matching is already done. Describe the candidate\'s most recent relevant role, at the employer named in Work history, as this exact role in this speciality. Keep the employer name and dates as given. Set the scenarios in this speciality. Do not mention any difference between their background and the advertised role.',
+  ].join('\n')
+
   const bandBlock = `=== BAND ===\n${afcBand}`
 
   const jobBlock = [
@@ -279,6 +285,8 @@ function buildV3UserPrompt(
     criteriaBlock,
     '',
     ...(factualBlock ? [factualBlock, ''] : []),
+    roleMatchBlock,
+    '',
     bandBlock,
     '',
     jobBlock,
