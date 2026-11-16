@@ -45,11 +45,11 @@ export default function LandingPage() {
               style={{ backgroundColor: '#005eb8' }}
               className="w-10 h-10 rounded-lg flex items-center justify-center shadow-sm"
             >
-              <span className="text-white font-bold text-sm">NHS</span>
+              <span className="text-white font-bold text-sm">EM</span>
             </div>
             <div>
               <h1 className="text-white font-bold text-base leading-tight">EaseMe</h1>
-              <p className="text-blue-300 text-xs leading-tight">NHS Careers Support</p>
+              <p className="text-blue-300 text-xs leading-tight">Statement Writing Support</p>
             </div>
           </div>
           <a

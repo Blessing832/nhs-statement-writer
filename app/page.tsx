@@ -2,15 +2,16 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
+import { FestivePill } from '@/components/Festive'
 
-// ── Update this to your WhatsApp link ─────────────────────────────────────────
-const CONTACT_URL = 'https://wa.me/447000000000'
+// Set NEXT_PUBLIC_CONTACT_URL (for example a wa.me link) to show contact links.
+const CONTACT_URL = process.env.NEXT_PUBLIC_CONTACT_URL || ''
 
 // ── FAQ data ──────────────────────────────────────────────────────────────────
 const FAQS = [
   {
     q: 'How does it work?',
-    a: 'Paste the link to your NHS Jobs (or HealthJobsUK / Civil Service) vacancy and enter your client code. The tool reads the job description and person specification, then writes a supporting statement matched to every essential criterion — ready in about 2 minutes.',
+    a: 'Paste the link to your NHS Jobs (or HealthJobsUK / Civil Service) vacancy and enter your client code. The tool reads the job description and person specification, then writes a supporting statement matched to every essential criterion — ready in a few minutes.',
   },
   {
     q: 'What does "criteria-matched" mean?',
@@ -22,7 +23,7 @@ const FAQS = [
   },
   {
     q: 'Will the hiring panel know I used this?',
-    a: 'No. The statement is generated from your own work history and experience, written in a professional first-person voice. It reads as your own work because the evidence and facts are entirely yours.',
+    a: 'The statement is built from your own work history and experience and written in a professional first-person voice. Please read it carefully, edit it so it sounds like you, and only submit what you are happy to discuss at interview.',
   },
   {
     q: 'Can I edit the statement after it is generated?',
@@ -30,7 +31,7 @@ const FAQS = [
   },
   {
     q: 'What if I want changes or am not happy with the result?',
-    a: 'Use the rewrite option on your statement to request specific changes. If you need further help, contact your consultant directly via WhatsApp.',
+    a: 'Use the rewrite option on your statement to request specific changes. If you need further help, contact your consultant directly.',
   },
 ]
 
@@ -75,18 +76,20 @@ function FaqSection() {
             </div>
           ))}
         </div>
-        <p className="text-center text-sm text-gray-400 mt-8">
-          Still have questions?{' '}
-          <a
-            href={CONTACT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-medium underline underline-offset-2"
-            style={{ color: '#0B4F6C' }}
-          >
-            Message us on WhatsApp →
-          </a>
-        </p>
+        {CONTACT_URL && (
+          <p className="text-center text-sm text-gray-400 mt-8">
+            Still have questions?{' '}
+            <a
+              href={CONTACT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium underline underline-offset-2"
+              style={{ color: '#0B4F6C' }}
+            >
+              Message us →
+            </a>
+          </p>
+        )}
       </div>
     </section>
   )
@@ -137,13 +140,6 @@ export default function Home() {
               <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 11, marginTop: 2 }}>Statement Writer</p>
             </div>
           </div>
-          <a
-            href="/admin"
-            className="text-xs hover:text-white transition-colors"
-            style={{ color: 'rgba(255,255,255,0.4)' }}
-          >
-            Admin →
-          </a>
         </div>
       </header>
 
@@ -163,6 +159,8 @@ export default function Home() {
               className="order-2 md:order-1"
             >
               {/* Badge */}
+              <FestivePill className="mb-3" />
+              <br />
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-5"
                 style={{ backgroundColor: '#0B4F6C', color: 'white' }}>
                 <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
@@ -181,7 +179,7 @@ export default function Home() {
               {/* Feature pills */}
               <div className="flex flex-wrap gap-2 mb-8">
                 <FeaturePill icon="✅" text="All essential criteria covered" />
-                <FeaturePill icon="⚡" text="Ready in 2 minutes" />
+                <FeaturePill icon="⚡" text="Ready in minutes" />
                 <FeaturePill icon="📄" text="Download as Word doc" />
               </div>
 
@@ -216,7 +214,7 @@ export default function Home() {
                   <button
                     type="submit"
                     disabled={checking}
-                    className="w-full py-3.5 px-6 text-white font-bold rounded-xl cursor-pointer transition-all text-base shadow-md hover:shadow-lg active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="btn-shine w-full py-3.5 px-6 text-white font-bold rounded-xl cursor-pointer transition-all text-base shadow-md hover:shadow-lg active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
                     style={{ backgroundColor: '#0B4F6C' }}
                     onMouseEnter={(e) => { if (!checking) e.currentTarget.style.backgroundColor = '#072f42' }}
                     onMouseLeave={(e) => { if (!checking) e.currentTarget.style.backgroundColor = '#0B4F6C' }}
@@ -226,16 +224,22 @@ export default function Home() {
                 </form>
 
                 <p className="text-center text-sm text-gray-400 mt-4">
-                  Don&apos;t have a code?{' '}
-                  <a
-                    href={CONTACT_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-medium underline underline-offset-2"
-                    style={{ color: '#0B4F6C' }}
-                  >
-                    Get in touch on WhatsApp →
-                  </a>
+                  {CONTACT_URL ? (
+                    <>
+                      Don&apos;t have a code?{' '}
+                      <a
+                        href={CONTACT_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium underline underline-offset-2"
+                        style={{ color: '#0B4F6C' }}
+                      >
+                        Get in touch →
+                      </a>
+                    </>
+                  ) : (
+                    'Don\'t have a code? Ask your consultant.'
+                  )}
                 </p>
               </div>
             </motion.div>
@@ -291,41 +295,31 @@ export default function Home() {
         </div>
       </motion.div>
 
-      {/* ── Social proof / testimonials ── */}
+      {/* ── How it works ── */}
       <section className="py-14 px-6 border-t border-gray-100 bg-white">
         <div className="max-w-4xl mx-auto">
-          <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2">Candidate outcomes</p>
+          <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2">Simple process</p>
           <h2 className="text-center text-2xl md:text-3xl font-extrabold text-gray-900 mb-10" style={{ textWrap: 'balance' } as React.CSSProperties}>
-            Real candidates. Real results.
+            From job link to finished statement
           </h2>
           <div className="grid md:grid-cols-3 gap-5">
             {[
-              {
-                quote: 'I had three applications out at once. EaseMe meant I could get a proper statement in for all three instead of rushing one. I got two interviews.',
-                role: 'Band 6 Occupational Therapist',
-                trust: 'NHS England',
-                month: 'July 2026',
-              },
-              {
-                quote: 'My previous statements were never getting past shortlisting. This one covered every criterion on the person spec. I got the job.',
-                role: 'Senior Healthcare Assistant',
-                trust: 'NHS Scotland',
-                month: 'June 2026',
-              },
-              {
-                quote: 'As someone who struggles with written English, having a tool that turns my experience into a professional statement has been life-changing.',
-                role: 'Band 5 Staff Nurse',
-                trust: 'NHS England & Wales',
-                month: 'August 2026',
-              },
+              { n: '1', title: 'Paste the job link', desc: 'Add the NHS Jobs, HealthJobsUK or Civil Service vacancy and your client code.' },
+              { n: '2', title: 'We match the person specification', desc: 'Every essential and desirable criterion is identified and written into your statement.' },
+              { n: '3', title: 'Review, edit and download', desc: 'Read it through, ask for rewrites, then download an editable Word document.' },
             ].map((t, i) => (
-              <div key={i} className="rounded-2xl border border-gray-100 bg-gray-50 p-6 flex flex-col gap-4">
-                <p className="text-gray-700 text-sm leading-relaxed flex-1">&ldquo;{t.quote}&rdquo;</p>
-                <div>
-                  <p className="font-semibold text-gray-900 text-sm">{t.role}</p>
-                  <p className="text-xs text-gray-400">{t.trust} · {t.month}</p>
-                </div>
-              </div>
+              <motion.div
+                key={t.n}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.5, delay: i * 0.12 }}
+                className="lift rounded-2xl border border-gray-100 bg-gray-50 p-6 flex flex-col gap-3"
+              >
+                <span className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ backgroundColor: '#0B4F6C' }}>{t.n}</span>
+                <p className="font-semibold text-gray-900">{t.title}</p>
+                <p className="text-gray-600 text-sm leading-relaxed">{t.desc}</p>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -336,8 +330,12 @@ export default function Home() {
 
       <footer className="py-4 text-center text-xs text-gray-400 border-t border-gray-200">
         Independent writing tool · Not affiliated with NHS or UK Civil Service
-        <span className="mx-2">·</span>
-        <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-gray-600">Contact us</a>
+        {CONTACT_URL && (
+          <>
+            <span className="mx-2">·</span>
+            <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-gray-600">Contact us</a>
+          </>
+        )}
       </footer>
     </main>
   )

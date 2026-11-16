@@ -1376,7 +1376,7 @@ function GeneratePage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold text-blue-900 mb-1">{loadingStep || 'Starting…'}</p>
-                      <p className="text-xs text-blue-600">This takes 30–60 seconds. Please keep this tab open.</p>
+                      <p className="text-xs text-blue-600">This usually takes 2 to 4 minutes. Please keep this tab open.</p>
                       <div className="flex items-center gap-1.5 mt-2.5">
                         {['Reading advert', 'Writing statement', 'Checking criteria'].map((s, i) => {
                           const isReading = loadingStep.includes('Reading')
