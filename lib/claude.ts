@@ -61,8 +61,13 @@ async function withRetry<T>(fn: () => Promise<T>, maxRetries = 2): Promise<T> {
       const isOverloaded =
         err instanceof Anthropic.APIError &&
         (err.status === 529 || err.type === 'overloaded_error')
-      if (isOverloaded && attempt < maxRetries) {
-        await new Promise(r => setTimeout(r, 1500 * (attempt + 1)))
+      const isRateLimit =
+        err instanceof Anthropic.APIError &&
+        (err.status === 429 || err.type === 'rate_limit_error')
+      if ((isOverloaded || isRateLimit) && attempt < maxRetries) {
+        // Rate limit needs longer backoff than overload
+        const delay = isRateLimit ? 5000 * (attempt + 1) : 1500 * (attempt + 1)
+        await new Promise(r => setTimeout(r, delay))
         continue
       }
       throw err
@@ -699,7 +704,7 @@ async function generateParallelV3(
       withRetry(() =>
         anthropic.messages.create({
           model: generationModel,
-          max_tokens: 3500,
+          max_tokens: 4096,
           temperature: 1.0,
           system: v3SystemPrompt,
           messages: [{ role: 'user', content: v3UserPrompt }],

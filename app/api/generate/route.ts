@@ -213,6 +213,22 @@ export async function POST(req: NextRequest) {
           { status: 503 }
         )
       }
+      // Rate limited — too many requests
+      if (err.status === 429 || err.type === 'rate_limit_error') {
+        void logGenerateError({ ...logBase, errorType: 'rate_limit', errorMessage: message, httpStatus: 429 })
+        return NextResponse.json(
+          { error: 'Too many requests. Please wait 30 seconds and try again.' },
+          { status: 429 }
+        )
+      }
+      // Connection timeout or network error
+      if (err.status === 408 || err.type === 'timeout_error' || message.toLowerCase().includes('timeout') || message.toLowerCase().includes('timed out')) {
+        void logGenerateError({ ...logBase, errorType: 'timeout', errorMessage: message, httpStatus: 503 })
+        return NextResponse.json(
+          { error: 'The request timed out. Please try again.' },
+          { status: 503 }
+        )
+      }
       // Invalid / missing API key
       if (err.status === 401 || err.type === 'authentication_error') {
         void logGenerateError({ ...logBase, errorType: 'auth', errorMessage: message, httpStatus: 503 })
@@ -235,6 +251,13 @@ export async function POST(req: NextRequest) {
           { status: 503 }
         )
       }
+      // Any other Anthropic API error (400 bad request, 404 model not found, 500 server error, etc.)
+      void logGenerateError({ ...logBase, errorType: `api_${err.status ?? 'unknown'}`, errorMessage: message, httpStatus: 503 })
+      const isAdminRequestApi = !!req.headers.get('x-admin-token')
+      return NextResponse.json(
+        { error: isAdminRequestApi ? `API error ${err.status}: ${message}` : 'The AI service returned an error. Please try again in a moment.' },
+        { status: 503 }
+      )
     } else if (
       message.toLowerCase().includes('credit balance') ||
       message.toLowerCase().includes('billing') ||
@@ -246,10 +269,16 @@ export async function POST(req: NextRequest) {
         { error: 'The statement writer is temporarily unavailable. Please wait a moment and try again.' },
         { status: 503 }
       )
+    } else if (message.toLowerCase().includes('timeout') || message.toLowerCase().includes('timed out')) {
+      void logGenerateError({ ...logBase, errorType: 'timeout', errorMessage: message, httpStatus: 503 })
+      return NextResponse.json(
+        { error: 'The request timed out. Please try again.' },
+        { status: 503 }
+      )
     }
 
     void logGenerateError({ ...logBase, errorType: 'unknown', errorMessage: message, httpStatus: 500 })
-    // Surface the real error for admin/Copilot failures so the admin can diagnose
+    // Surface the real error for admin requests so the admin can diagnose
     const isAdminRequest = !!req.headers.get('x-admin-token')
     const userFacingError = isAdminRequest
       ? message
