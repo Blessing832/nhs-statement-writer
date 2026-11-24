@@ -166,6 +166,37 @@ export function parseNotesSection(notes: string): { titleCheck?: string; gaps: s
   }
 }
 
+export interface JobContext {
+  country: 'Wales' | 'England'
+  patientGroup: string
+  children: boolean
+}
+
+// Works out the country and patient group from the advert so the writer applies the right
+// frameworks (PEWS not NEWS2 for children, Wales content for Welsh health boards).
+export function detectJobContext(job: { jobTitle?: string; organisation?: string; rawText?: string | null }): JobContext {
+  const head = `${job.jobTitle ?? ''} ${job.organisation ?? ''}`
+  const body = (job.rawText ?? '').slice(0, 12000)
+  const text = `${head} ${body}`
+
+  const wales = /\b(NHS Wales|health board|UHB|jobs\.wales|Aneurin Bevan|ABUHB|Betsi Cadwaladr|Cwm Taf|Hywel Dda|Powys Teaching|Swansea Bay|Cardiff and Vale|Velindre|Welsh Ambulance|Public Health Wales|Digital Health and Care Wales|Cymraeg)\b/i.test(text)
+
+  const count = (re: RegExp) => (body.match(new RegExp(re.source, 'gi')) ?? []).length
+  const children = /\b(child|children|paediatric|pediatric|young people|adolescent|neonat|CAMHS|PEWS)/i.test(head) || count(/\b(child|children|paediatric|pediatric|young people|adolescent|CAMHS|PEWS)/) >= 4
+  const maternity = /\b(maternity|midwif|antenatal|postnatal|obstetric)/i.test(head) || count(/\b(maternity|midwif|antenatal|postnatal|obstetric)/) >= 4
+  const mental = /\b(mental health|psychiatric|CAMHS)/i.test(head) || count(/\b(mental health|psychiatric|CAMHS)/) >= 4
+
+  const groups: string[] = []
+  if (children) groups.push('children and young people under 16 (use PEWS, never NEWS2; All Wales PEWS charts in Wales)')
+  if (maternity) groups.push('maternity (women and babies)')
+  if (mental) groups.push('mental health')
+  return {
+    country: wales ? 'Wales' : 'England',
+    patientGroup: groups.length ? groups.join('; ') : 'adults, or not stated in the advert',
+    children,
+  }
+}
+
 function buildV3UserPrompt(
   client: Client,
   jobData: ScrapeResult,
@@ -211,10 +242,11 @@ function buildV3UserPrompt(
       ].join('\n')
     : ''
 
-  const roleMatchBlock = [
-    '=== ROLE MATCH ===',
-    `Advertised role: ${jobData.jobTitle || '(see JOB)'}`,
-    'Role matching is already done. Only the candidate\'s PREVIOUS workplace (the "Previous" entry in Work history, the role before the current one) is described as this exact role in this speciality, and the scenarios evidencing the advertised speciality are set there. The CURRENT role keeps its real job title, employer and unit exactly as given. Keep every employer name and date as given. Do not mention any difference between their background and the advertised role.',
+  const jobContext = detectJobContext(jobData)
+  const contextBlock = [
+    '=== COUNTRY AND PATIENT GROUP ===',
+    `Country: ${jobContext.country}${jobContext.country === 'Wales' ? ' (use the NHS Wales content in the rules; take the health board values only from the advert)' : ''}`,
+    `Patient group: ${jobContext.patientGroup}`,
   ].join('\n')
 
   const bandBlock = `=== BAND ===\n${afcBand}`
@@ -288,7 +320,7 @@ function buildV3UserPrompt(
     criteriaBlock,
     '',
     ...(factualBlock ? [factualBlock, ''] : []),
-    roleMatchBlock,
+    contextBlock,
     '',
     bandBlock,
     '',
@@ -349,6 +381,9 @@ const V3_ORDINARY_NHS_WORDS = new Set([
 ])
 
 const V3_TELL_DESCRIPTIONS: Record<string, string> = {
+  'banned-phrase': 'a stock phrase (say the plain thing, with a concrete detail)',
+  'genuine': 'the word genuine or genuinely',
+  'spec-echo': 'repeating the person specification wording (describe the candidate\'s own work instead)',
   'spec-meta': 'any mention of the person specification, essential or desirable criteria, or what the role requires (describe the candidate\'s own work instead)',
   'stock-metaphor': 'stock metaphors such as thread, grounding, underpin, second nature (say the plain thing)',
   'contrast-not': 'the "X is not Y, it is Z" or "not from X" contrast pattern (state the point directly)',
@@ -368,7 +403,8 @@ async function applyV3WordFilter(
   statement: string,
   essentialCriteria: string[],
   desirableCriteria: string[],
-  dbRows: Array<{ word: string; replacement: string; enabled: boolean }>
+  dbRows: Array<{ word: string; replacement: string; enabled: boolean }>,
+  ctx: { children: boolean } = { children: false }
 ): Promise<string> {
   const { scanBanned } = await import('./bannedWords')
   const allCriterionText = [...essentialCriteria, ...desirableCriteria].join(' ').toLowerCase()
@@ -395,6 +431,23 @@ async function applyV3WordFilter(
   for (const h of staticHits) {
     flag(h.sentence, V3_TELL_DESCRIPTIONS[h.word] ?? `"${h.found}"`)
   }
+
+  // NEWS2 is an adult tool: for children's roles it must be PEWS unless it is a completed course.
+  if (ctx.children) {
+    for (const s of sentences) {
+      if (/\bNEWS2?\b/i.test(s) && !/\b(adult|training|course|completed|certificate|trained)\b/i.test(s)) {
+        flag(s, 'NEWS2, which is an adult tool (use PEWS for children under 16)')
+      }
+    }
+  }
+
+  // Only one sentence in the statement may start with an -ing word.
+  const NOT_GERUND = /^(during|morning|evening|nursing|something|anything|everything|nothing|following|including|regarding|according|beginning|building|ceiling|training)$/i
+  const gerundOpeners = sentences.filter(s => {
+    const first = s.trim().split(/\s+/)[0]?.replace(/[^A-Za-z]/g, '') ?? ''
+    return /^[A-Z][a-z]{3,}ing$/.test(first) && !NOT_GERUND.test(first)
+  })
+  gerundOpeners.slice(1).forEach(s => flag(s, 'starting the sentence with an -ing word (start with the subject or "I" instead)'))
 
   // Admin-managed banned words (whole-word, case-insensitive)
   for (const r of dbRows.filter(r => r.enabled)) {
@@ -641,22 +694,24 @@ async function answerQuestionsV3(
   trustIntelText: string | undefined,
   trustValues: string[],
   model: string,
-  instructions?: string
+  instructions?: string,
+  statementText?: string
 ): Promise<string> {
   const questionBlock = questions.map(q => [
     `QUESTION ${q.number}${q.title ? ` (${q.title})` : ''}`,
     ...q.requirements.map((r, i) => `  R${i + 1}. ${r}`),
   ].join('\n')).join('\n\n')
 
+  const jobContext = detectJobContext(jobData)
   const userPrompt = [
     '=== JOB ===',
     `Title: ${jobData.jobTitle}`,
     `Organisation: ${jobData.organisation}`,
     buildRawText(jobData.rawText).slice(0, 6000),
     '',
-    '=== ROLE MATCH ===',
-    `Advertised role: ${jobData.jobTitle || '(see JOB)'}`,
-    'Only the candidate\'s PREVIOUS workplace (the "Previous" entry in Work history) is described as this exact role in this speciality. The CURRENT role keeps its real title, employer and unit. Keep every employer name and date as given.',
+    '=== COUNTRY AND PATIENT GROUP ===',
+    `Country: ${jobContext.country}`,
+    `Patient group: ${jobContext.patientGroup}`,
     '',
     '=== TRUST ===',
     trustValues.length ? `Trust values (from the advert): ${trustValues.join('; ')}` : '(Trust values not stated)',
@@ -668,6 +723,7 @@ async function answerQuestionsV3(
     '=== INSTRUCTIONS ===',
     instructions || '(none)',
     '',
+    ...(statementText ? ['=== STATEMENT ALREADY WRITTEN (keep any shared example identical) ===', statementText.slice(0, 9000), ''] : []),
     '=== QUESTIONS TO ANSWER (answer every question and every requirement in it) ===',
     questionBlock,
   ].join('\n')
@@ -708,7 +764,7 @@ async function answerQuestionsV3(
         model,
         max_tokens: Math.min(2500, Math.round(Math.min(450, Math.max(180, 90 * q.requirements.length)) * 2) + 300),
         temperature: 0.7,
-        system: `${getEnglandWalesQuestionsPrompt()}\n\nYou are now repairing ONE answer that left out some requirements. Return the complete corrected answer, starting with its "Question N:" heading line, and nothing else. Keep what already works. Add a concrete sentence or short example for each missing requirement, using its own key words.`,
+        system: `${getEnglandWalesQuestionsPrompt()}\n\nYou are now repairing ONE answer that left out some requirements. Return the complete corrected answer, starting with its "Question N:" heading line, and nothing else. Keep what already works. For each missing requirement add one plain sentence, using its own key words: a real example from CANDIDATE if there is one, otherwise the closest real duty, or a short willingness-to-learn sentence for a skill or qualification the candidate has not listed. Invent nothing.`,
         messages: [{
           role: 'user',
           content: `CANDIDATE:\n${candidateBlockForQuestions(client)}\n\nJOB: ${jobData.jobTitle} at ${jobData.organisation}\n\nQUESTION ${q.number}${q.title ? ` (${q.title})` : ''}\n${q.requirements.map((r, k) => `R${k + 1}. ${r}`).join('\n')}\n\nREQUIREMENTS MISSING FROM THE ANSWER:\n${missing.map(m => `- ${m}`).join('\n')}\n\nCURRENT ANSWER:\n${answer}`,
@@ -749,13 +805,13 @@ async function generatePreviousRoleDuties(client: Client, jobData: ScrapeResult,
       role: 'user',
       content: `JOB: ${jobData.jobTitle} at ${jobData.organisation}
 
-ROLE MATCH: the candidate's PREVIOUS workplace (the "Previous" entry in Work history) is described with the advertised job title and speciality. Keep the real employer name.
+Use the candidate's real job title and employer exactly as given. Do not change any job title.
 
 CANDIDATE:
 ${candidateBlockForQuestions(client)}
 
 Write exactly 7 key duties from that previous role, as a JSON object: {"duties":["...", ...]}
-Rules: every duty in past tense; begin each with a strong past-tense action verb (Delivered, Led, Coordinated, Managed, Monitored, Escalated, Improved, Developed, Supported); each over 25 words, specific and outcome-focused, with the situation, the action taken, any collaboration or governance angle, and the impact on patient care or the service; retain real employer or NHS Trust names from the candidate profile; do not name UK software by brand (write "electronic patient record system"); no pay bands; no dashes; no comments.`,
+Rules: every duty in past tense; begin each with a strong past-tense action verb (Delivered, Led, Coordinated, Managed, Monitored, Escalated, Improved, Developed, Supported); each over 25 words, specific and outcome-focused, with the situation, the action taken, any collaboration or governance angle, and the impact on patient care or the service only where the profile gives one (never invent numbers); retain real employer or NHS Trust names from the candidate profile; do not name UK software by brand (write "electronic patient record system"); no pay bands; no dashes; no comments.`,
     }],
   } as MessageCreateParamsNonStreaming, { timeout: 60000 })
   const text = msg.content[0]?.type === 'text' ? msg.content[0].text : ''
@@ -1064,7 +1120,7 @@ Rules:
       const { data } = await supabaseAdmin.from('banned_words').select('word, replacement, enabled')
       dbRows = (data ?? []) as Array<{ word: string; replacement: string; enabled: boolean }>
     } catch { /* non-critical */ }
-    statement = await applyV3WordFilter(statement, essentialCriteria, desirableCriteria, dbRows)
+    statement = await applyV3WordFilter(statement, essentialCriteria, desirableCriteria, dbRows, { children: detectJobContext(jobData).children })
   } catch (err) {
     console.warn('V3 word filter failed (non-fatal):', err)
   }
@@ -1091,7 +1147,7 @@ Rules:
 
   if (appMode === 'statement-questions' && questionList.length > 0) {
     const answers = await cleanNameFromStatementV3(
-      await answerQuestionsV3(client, jobData, questionList, trustIntelText, trustValues, generationModel, options.instructions),
+      await answerQuestionsV3(client, jobData, questionList, trustIntelText, trustValues, generationModel, options.instructions, statement),
       client.full_name
     )
     statement = `${statement}\n\nApplication Questions\n\n${answers}`

@@ -178,6 +178,9 @@ const BANNED_PATTERNS: BannedPattern[] = [
   { pattern: /\b(consistent thread|second nature|underpin(?:s|ned|ning)?|grounding|cornerstone|backbone|hallmark|fabric of)\b/i, word: 'stock-metaphor' },
   { pattern: /\b((?:is|are|was|were) not (?:an? )?[a-z]+(?: [a-z]+){0,3}[;,] (?:it|they|but))\b/i, word: 'contrast-not' },
   { pattern: /(, not from [^.,;]{3,60}[,.])/i, word: 'contrast-not' },
+  { pattern: /\b(ran through every part of my work|not an extra step but a natural one|is the specific reason this role stood out|shows in the small decisions|reflects exactly the approach I bring|that balance between|matches the kind of work I find most meaningful)\b/i, word: 'banned-phrase' },
+  { pattern: /\b(genuine(?:ly)?)\b/i, word: 'genuine' },
+  { pattern: /\b((?:is|are|was|were) (?:listed as )?(?:a )?desirable|something I regard as desirable|regard(?:s|ed)? as desirable)\b/i, word: 'spec-echo' },
   { pattern: /\b(one of the most (?:significant|important|challenging|vulnerable) (?:moments|times)|at a time when)\b/i, word: 'stock-opener' },
   { pattern: /\b((?:that|this) (?:experience|incident|situation|moment|shift) (?:reinforced|taught|showed|highlighted|reminded|strengthened)(?: my| me)?)\b/i, word: 'lesson-ending' },
 ]

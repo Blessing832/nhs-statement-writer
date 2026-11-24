@@ -1,4 +1,4 @@
-import { parseNotesSection, countWordsV3, stripLeadingCommentary } from '../lib/claude'
+import { parseNotesSection, countWordsV3, stripLeadingCommentary, detectJobContext } from '../lib/claude'
 import { scanBanned } from '../lib/bannedWords'
 import { verifyCriteriaV3 } from '../lib/verify-criteria'
 
@@ -341,5 +341,60 @@ describe('cleanDuties', () => {
 
   it('leaves normal duties unchanged', () => {
     expect(cleanDuties([duty, duty])).toEqual([duty, duty])
+  })
+})
+
+describe('job context detection', () => {
+  it('detects a Welsh health board and a children\'s role', () => {
+    const ctx = detectJobContext({
+      jobTitle: 'Healthcare Support Worker, Children\'s Outpatients',
+      organisation: 'Aneurin Bevan University Health Board',
+      rawText: 'Supporting children and young people attending designated clinics across Gwent.',
+    })
+    expect(ctx.country).toBe('Wales')
+    expect(ctx.children).toBe(true)
+    expect(ctx.patientGroup).toMatch(/PEWS/)
+  })
+
+  it('treats an ordinary English adult ward as England and adults', () => {
+    const ctx = detectJobContext({
+      jobTitle: 'Healthcare Assistant, Medical Ward',
+      organisation: 'Royal Meadow NHS Foundation Trust',
+      rawText: 'You will care for adult patients. Safeguarding children training is mandatory.',
+    })
+    expect(ctx.country).toBe('England')
+    expect(ctx.children).toBe(false)
+  })
+
+  it('does not call a role Welsh because the advert says England and Wales once', () => {
+    const ctx = detectJobContext({ jobTitle: 'Band 3 HCA', organisation: 'Some NHS Trust', rawText: 'We recruit across England and Wales.' })
+    expect(ctx.country).toBe('England')
+  })
+})
+
+describe('writer prompts carry the accuracy rules', () => {
+  const { getEnglandWalesV3Prompt } = require('../lib/prompts/england-wales-v3')
+  const { getEnglandWalesQuestionsPrompt } = require('../lib/prompts/england-wales-questions')
+
+  it('includes PEWS, consistency and Wales rules in both prompts', () => {
+    for (const p of [getEnglandWalesV3Prompt(), getEnglandWalesQuestionsPrompt()]) {
+      expect(p).toContain('PEWS')
+      expect(p).toContain('All Wales Induction Framework')
+      expect(p).toContain('Never reword a past job title')
+      expect(p).not.toContain('${SHARED_ACCURACY_RULES}')
+    }
+  })
+
+  it('no longer aligns the previous role to the advertised title', () => {
+    expect(getEnglandWalesV3Prompt()).not.toMatch(/advertised job title and (?:in the advertised )?speciality/)
+  })
+})
+
+describe('new phrase detectors', () => {
+  const words = (s: string) => scanBanned(s).map(h => h.word)
+  it('flags stock phrases, genuine, and echoes of the specification', () => {
+    expect(words('Respect ran through every part of my work.')).toContain('banned-phrase')
+    expect(words('I take a genuine interest in my patients.')).toContain('genuine')
+    expect(words('Welsh is listed as a desirable skill and I am willing to learn.')).toContain('spec-echo')
   })
 })
