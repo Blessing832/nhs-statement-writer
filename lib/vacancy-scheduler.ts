@@ -3,6 +3,21 @@ const TASK_ID = 'deola1122~nhs-uk-jobs-scraper-task'
 const APIFY_BASE = 'https://api.apify.com/v2'
 const WEBHOOK_URL = `${process.env.NEXT_PUBLIC_BASE_URL ?? 'https://easeme.live'}/api/vacancies/ingest`
 
+// Railway variables often arrive with a trailing space, quotes or a "Bearer " prefix pasted in.
+export function cleanApifyToken(raw: string | undefined): string {
+  return (raw ?? '').trim().replace(/^["']+|["']+$/g, '').replace(/^Bearer\s+/i, '').trim()
+}
+
+// Describes the token without revealing it, for the admin error message.
+function describeToken(raw: string | undefined, cleaned: string): string {
+  const parts = [
+    `length ${cleaned.length}`,
+    cleaned.startsWith('apify_api_') ? 'starts with apify_api_' : 'does NOT start with apify_api_',
+  ]
+  if (raw && raw !== cleaned) parts.push('had stray spaces, quotes or a Bearer prefix (removed)')
+  return parts.join(', ')
+}
+
 export interface ScrapeTriggerResult {
   runId: string | null
   error?: string
@@ -14,7 +29,8 @@ export async function triggerApifyScrape(): Promise<string | null> {
 
 // Same as triggerApifyScrape but says why it failed, so the admin screen can show the reason.
 export async function triggerApifyScrapeDetailed(): Promise<ScrapeTriggerResult> {
-  const token = process.env.APIFY_API_TOKEN
+  const rawToken = process.env.APIFY_API_TOKEN
+  const token = cleanApifyToken(rawToken)
   if (!token) {
     console.error('VACANCY_SCHEDULER: APIFY_API_TOKEN not set, skipping scrape')
     return { runId: null, error: 'APIFY_API_TOKEN is not set on the server' }
@@ -44,7 +60,8 @@ export async function triggerApifyScrapeDetailed(): Promise<ScrapeTriggerResult>
   if (!res.ok) {
     const body = await res.text()
     console.error(`VACANCY_SCHEDULER: Apify trigger failed ${res.status} — ${body.slice(0, 300)}`)
-    return { runId: null, error: `Apify refused the run (HTTP ${res.status}): ${body.slice(0, 200)}` }
+    const shape = res.status === 401 ? ` The server's APIFY_API_TOKEN: ${describeToken(rawToken, token)}.` : ''
+    return { runId: null, error: `Apify refused the run (HTTP ${res.status}): ${body.slice(0, 200)}${shape}` }
   }
 
   const json = await res.json()
@@ -54,7 +71,7 @@ export async function triggerApifyScrapeDetailed(): Promise<ScrapeTriggerResult>
 }
 
 export async function fetchApifyDataset(datasetId: string): Promise<Record<string, unknown>[]> {
-  const token = process.env.APIFY_API_TOKEN
+  const token = cleanApifyToken(process.env.APIFY_API_TOKEN)
   const res = await fetch(
     `${APIFY_BASE}/datasets/${datasetId}/items?format=json&token=${token}`,
     { headers: { Accept: 'application/json' } }
