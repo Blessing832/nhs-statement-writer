@@ -549,9 +549,11 @@ METHOD C criteria (qualifications, registration, DBS, driving licence): one plai
 OUTPUT FORMAT
 ==================================================
 
-Output the supporting statement first.
+Output the supporting statement first. The first word of your output is the first word of the statement.
 
-Do not include explanations before the statement.
+Never write comments, issues, warnings, caveats, refusals or remarks about how suitable or unsuitable the candidate is for the role, before, inside or after the statement text. Applicants read the statement as it is.
+
+If two instructions seem to conflict, apply them as written: the JOB TITLE RULE and ROLE MATCH decide how the previous role is described, the CREDENTIAL RULE decides qualifications, registrations, courses and employers, and the SCENARIO RULE decides scenarios. Do not discuss the conflict. Put any concern under GAPS or QUESTIONS in the notes.
 
 After the statement write:
 

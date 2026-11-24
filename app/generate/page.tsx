@@ -130,87 +130,34 @@ function StatementDisplay({
   )
 }
 
-// Compact criteria panel for the results sidebar
-function CriteriaListPanel({
-  analysis,
-  coverageReport,
-  statement,
-}: {
-  analysis: StatementAnalysis | null
-  coverageReport: CoverageReport | null | undefined
-  statement: string
-}) {
+// Plain person specification list. It deliberately shows no ticks, counts or
+// coverage marks: applicants read the list and check their own statement.
+function CriteriaListPanel({ analysis }: { analysis: StatementAnalysis | null }) {
   const essential = analysis?.essentialCriteria ?? []
   const desirable = analysis?.desirableCriteria ?? []
 
   if (essential.length === 0 && desirable.length === 0) {
-    return <p className="text-gray-400 text-xs leading-relaxed">Criteria not extracted from this job advert. Statement was written from the full job text.</p>
+    return <p className="text-gray-400 text-xs leading-relaxed">Criteria could not be listed for this job advert.</p>
   }
 
-  // Prefer deterministic coverage report; fall back to keyword matching
-  const foundMap: Record<string, boolean> = {}
-  if (coverageReport?.criteria?.length) {
-    coverageReport.criteria.forEach(c => { foundMap[c.criterion] = c.deterministicPresent })
-  }
-  const isFound = (c: string) => c in foundMap ? foundMap[c] : isCriterionAddressed(c, statement)
-
-  const essentialFound = essential.filter(c => isFound(c)).length
-  const desirableFound = desirable.filter(c => isFound(c)).length
+  const list = (title: string, items: string[]) => (
+    <div>
+      <p className="font-semibold text-gray-500 uppercase tracking-wide mb-2">{title}</p>
+      <ol className="space-y-1.5 list-none">
+        {items.map((c, i) => (
+          <li key={i} className="flex gap-1.5 items-start">
+            <span className="flex-shrink-0 font-bold mt-0.5 min-w-[1.2rem] text-gray-400">{i + 1}.</span>
+            <span className="text-gray-700 flex-1">{c}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
 
   return (
     <div className="space-y-5 text-xs">
-      {coverageReport?.patched && (
-        <div className="rounded bg-blue-50 border border-blue-200 px-2.5 py-1.5 text-blue-700 font-medium">
-          Auto-improved after review
-        </div>
-      )}
-      {coverageReport?.warningBanner && coverageReport.warningBanner.length > 0 && (
-        <div className="rounded bg-amber-50 border border-amber-200 px-2.5 py-1.5 text-amber-700">
-          {coverageReport.warningBanner.join(' · ')}
-        </div>
-      )}
-      {essential.length > 0 && (
-        <div>
-          <p className="font-semibold text-gray-500 uppercase tracking-wide mb-2">
-            Essential <span className="font-normal normal-case">({essentialFound}/{essential.length} found)</span>
-          </p>
-          <ol className="space-y-1.5 list-none">
-            {essential.map((c, i) => {
-              const found = isFound(c)
-              return (
-                <li key={i} className="flex gap-1.5 items-start">
-                  <span style={{ color: '#0B4F6C' }} className="flex-shrink-0 font-bold mt-0.5 min-w-[1.2rem]">{i + 1}.</span>
-                  <span className={found ? 'text-gray-700 flex-1' : 'text-red-600 flex-1'}>{c}</span>
-                  <span className={`flex-shrink-0 font-bold ml-1 ${found ? 'text-green-600' : 'text-red-500'}`}>
-                    {found ? '✓' : '✗'}
-                  </span>
-                </li>
-              )
-            })}
-          </ol>
-        </div>
-      )}
-      {desirable.length > 0 && (
-        <div>
-          <p className="font-semibold text-gray-500 uppercase tracking-wide mb-2">
-            Desirable <span className="font-normal normal-case">({desirableFound}/{desirable.length} found)</span>
-          </p>
-          <ol className="space-y-1.5 list-none">
-            {desirable.map((c, i) => {
-              const found = isFound(c)
-              return (
-                <li key={i} className="flex gap-1.5 items-start">
-                  <span className="flex-shrink-0 font-bold mt-0.5 min-w-[1.2rem] text-gray-400">{i + 1}.</span>
-                  <span className={found ? 'text-gray-600 flex-1' : 'text-gray-400 flex-1'}>{c}</span>
-                  <span className={`flex-shrink-0 font-bold ml-1 ${found ? 'text-green-600' : 'text-gray-400'}`}>
-                    {found ? '✓' : '○'}
-                  </span>
-                </li>
-              )
-            })}
-          </ol>
-        </div>
-      )}
+      {essential.length > 0 && list('Essential', essential)}
+      {desirable.length > 0 && list('Desirable', desirable)}
     </div>
   )
 }
@@ -1081,14 +1028,6 @@ function GeneratePage() {
 
   const wc = result ? wordCount(result.statement) : 0
   const wcLimit = result?.promptRegion === 'scotland' ? 1100 : 1400
-  const failingCriteria = result?.coverageReport?.criteria?.filter(c => !c.deterministicPresent || !c.pass) ?? []
-  const coveredCount = result?.coverageReport?.criteria?.filter(c => c.deterministicPresent && c.pass).length ?? 0
-  const totalCriteria = result?.coverageReport?.criteria?.length ?? 0
-  const handleFixGaps = () => {
-    setRewriteInstruction(`Strengthen the evidence for these criteria with a clear example for each, and keep everything else as it is: ${failingCriteria.slice(0, 6).map(c => c.criterion).join('; ')}`)
-    setShowRewrite(true)
-    setTimeout(() => document.getElementById('rewrite-panel')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50)
-  }
   const wcColour = wc > wcLimit ? 'text-red-600 font-bold' : wc > wcLimit * 0.93 ? 'text-amber-600' : 'text-green-700'
 
   if (invalidCode) {
@@ -1506,16 +1445,7 @@ function GeneratePage() {
             <div className="hidden md:flex md:flex-col w-72 flex-shrink-0 border-r border-gray-200 bg-gray-50 overflow-y-auto">
               <div className="p-5">
                 <p className="font-bold text-xs uppercase tracking-wide text-gray-500 mb-4">Person Specification</p>
-                <CriteriaListPanel
-                  analysis={result.analysis}
-                  coverageReport={result.coverageReport}
-                  statement={result.statement}
-                />
-                {failingCriteria.length > 0 && (
-                  <button type="button" onClick={handleFixGaps} className="mt-4 w-full py-2 text-xs font-semibold text-white rounded-md cursor-pointer" style={{ backgroundColor: '#0B4F6C' }}>
-                    Rewrite to strengthen {failingCriteria.length} {failingCriteria.length === 1 ? 'criterion' : 'criteria'}
-                  </button>
-                )}
+                <CriteriaListPanel analysis={result.analysis} />
               </div>
             </div>
             {/* Right: statement */}
@@ -1523,19 +1453,10 @@ function GeneratePage() {
               <div className="p-6 max-w-3xl mx-auto">
                 <details className="md:hidden mb-5 rounded-lg border border-gray-200 bg-gray-50">
                   <summary className="px-4 py-3 text-sm font-semibold text-gray-700 cursor-pointer">
-                    Person specification check{totalCriteria > 0 ? `: ${coveredCount} of ${totalCriteria} strongly covered` : ''}
+                    Person specification
                   </summary>
                   <div className="px-4 pb-4">
-                    <CriteriaListPanel
-                      analysis={result.analysis}
-                      coverageReport={result.coverageReport}
-                      statement={result.statement}
-                    />
-                    {failingCriteria.length > 0 && (
-                      <button type="button" onClick={handleFixGaps} className="mt-4 w-full py-2.5 text-sm font-semibold text-white rounded-md cursor-pointer" style={{ backgroundColor: '#0B4F6C' }}>
-                        Rewrite to strengthen {failingCriteria.length} {failingCriteria.length === 1 ? 'criterion' : 'criteria'}
-                      </button>
-                    )}
+                    <CriteriaListPanel analysis={result.analysis} />
                   </div>
                 </details>
 

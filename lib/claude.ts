@@ -305,6 +305,25 @@ function buildV3UserPrompt(
   ].join('\n')
 }
 
+// The writer sometimes opens with remarks to the operator ("First issue: ...") before the
+// statement. Applicants must never see them; they are kept for the admin notes instead.
+const COMMENTARY_START = /^(?:(?:first|second|third|fourth|fifth|another|final)\s+(?:issue|concern|problem|point)\b|issues?\b|concerns?\b|before (?:i|writing|we)\b|i (?:need|want) to (?:flag|note|point out|raise|clarify|mention)\b|i must (?:flag|note|point out)\b|i (?:cannot|can't|am unable to|am not able to|won't|will not)\b|notes?\s*[:\-]|important\s*[:\-]|warning\s*[:\-]|a (?:few|couple of) (?:issues|concerns|points|things)\b|heads[- ]up|here(?:'s| is| are) (?:the|your|a)\b|below is\b|statement\s*:)/i
+const STATEMENT_OPENING = /^(?:I|My|As|Having|With|Since|Currently|After|Over|In)\b/
+
+export function stripLeadingCommentary(text: string): { statement: string; removed: string } {
+  const paras = text.split(/\n\s*\n/)
+  const probe = (p: string) => p.trim().replace(/^[#>*_\s-]+/, '')
+  let i = 0
+  let hit = false
+  while (i < paras.length && (COMMENTARY_START.test(probe(paras[i])) || /^[-_=*]{3,}$/.test(paras[i].trim()))) {
+    hit = true
+    i++
+  }
+  if (!hit) return { statement: text, removed: '' }
+  while (i < paras.length - 1 && !STATEMENT_OPENING.test(probe(paras[i]))) i++
+  return { statement: paras.slice(i).join('\n\n').trim(), removed: paras.slice(0, i).join('\n\n').trim() }
+}
+
 function stripNotesSection(text: string): string {
   // Strip ===NOTES=== and everything after it (handles spaces/case variants)
   const idx = text.search(/={3}\s*NOTES\s*={3}/i)
@@ -768,7 +787,14 @@ Rules:
   const notesMatch = rawOutput.match(/={3}\s*NOTES\s*={3}/i)
   const delimIdx = notesMatch ? rawOutput.indexOf(notesMatch[0]) : -1
   let statement = delimIdx >= 0 ? rawOutput.slice(0, delimIdx).trim() : rawOutput.trim()
-  const notesText = delimIdx >= 0 ? rawOutput.slice(delimIdx + (notesMatch?.[0].length ?? 11)).trim() : ''
+  let notesText = delimIdx >= 0 ? rawOutput.slice(delimIdx + (notesMatch?.[0].length ?? 11)).trim() : ''
+
+  const cleanedOpening = stripLeadingCommentary(statement)
+  if (cleanedOpening.removed) {
+    console.warn(`V3_PREAMBLE_STRIPPED chars=${cleanedOpening.removed.length}`)
+    statement = cleanedOpening.statement
+    notesText = `WRITER COMMENTARY (removed from the statement, admin only):\n${cleanedOpening.removed}\n\n${notesText}`
+  }
 
   const parsedNotes = parseNotesSection(notesText)
   const hasTitleMismatch = parsedNotes.titleCheck?.toLowerCase().includes('mismatch') ?? false

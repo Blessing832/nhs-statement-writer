@@ -1,4 +1,4 @@
-import { parseNotesSection, countWordsV3 } from '../lib/claude'
+import { parseNotesSection, countWordsV3, stripLeadingCommentary } from '../lib/claude'
 import { scanBanned } from '../lib/bannedWords'
 import { verifyCriteriaV3 } from '../lib/verify-criteria'
 
@@ -223,5 +223,30 @@ describe('machine-writing tell detection', () => {
       'My Care Certificate was signed off by my line manager.',
     ]
     for (const s of plain) expect(words(s)).toEqual([])
+  })
+})
+
+describe('stripLeadingCommentary', () => {
+  const opening = 'I work as a Healthcare Support Worker on a 24-bed ward. I have worked there for two years and I note changes early.'
+
+  it('removes numbered issue commentary before the statement', () => {
+    const text = `Before writing, I need to flag three issues.\n\nFirst issue: the advert asks for theatre experience.\n\nSecond issue: the role match rule asks me to describe the previous role differently.\n\nThird issue: I cannot invent training.\n\n${opening}\n\nQualifications and Requirements\n\nI hold a Level 3 Diploma.`
+    const out = stripLeadingCommentary(text)
+    expect(out.statement.startsWith('I work as a Healthcare Support Worker')).toBe(true)
+    expect(out.removed).toContain('First issue')
+    expect(out.statement).not.toContain('Second issue')
+  })
+
+  it('leaves a normal statement untouched, including openings that start with I have / I note', () => {
+    const text = `I have worked on a ward for four years and I note changes early.\n\nQualifications\n\nI hold a Level 3 Diploma.`
+    const out = stripLeadingCommentary(text)
+    expect(out.statement).toBe(text)
+    expect(out.removed).toBe('')
+  })
+
+  it('handles markdown-bold commentary and divider lines', () => {
+    const text = `**Note:** one concern about the advert.\n\n---\n\n${opening}`
+    const out = stripLeadingCommentary(text)
+    expect(out.statement).toBe(opening)
   })
 })
