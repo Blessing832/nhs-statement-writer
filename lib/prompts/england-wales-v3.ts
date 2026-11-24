@@ -533,7 +533,7 @@ Every criterion (E1, E2... and D1, D2...), essential and desirable, must be addr
 
 Write as the candidate who meets every requirement. Experience, skill, knowledge, attitude and clinical-competency criteria (including clinical procedures) are ALWAYS affirmed plainly and evidenced with a concrete example, using the SCENARIO RULE. Even a minor or desirable criterion gets at least one concrete sentence. Never leave one for GAPS.
 
-The only thing that may be left out of the statement is a documentary credential that CANDIDATE does not show: a named qualification, professional registration, licence, certificate or named training course. Do not state one of these; write about the closest relevant experience instead, and list the credential in GAPS so it can be added to the profile if the candidate holds it.
+The only thing that may be left out of the statement is a documentary credential that CANDIDATE does not show: a named qualification, professional registration, licence, certificate or named training course. Do not state one of these as held. Instead write one plain sentence about the closest relevant experience, then one sentence saying the candidate is willing to work towards the qualification (for example "I am willing to complete the Level 3 Diploma and would welcome the chance to do it through the Trust"). Do not say they have started, enrolled in, booked or partly completed it, and give no dates or providers. List the credential in GAPS so it can be added to the profile if the candidate holds it. If the criterion allows "or equivalent experience", the equivalent experience alone is enough.
 
 Work through the criteria list one by one before finishing and confirm each is addressed.
 
@@ -602,7 +602,7 @@ Before output verify:
 □ No unsupported claims
 □ No "I can" statements
 □ No "I understand" statements
-□ Every criterion addressed and affirmed; only documentary credentials missing from CANDIDATE are in GAPS
+□ Every criterion addressed and affirmed; a documentary credential missing from CANDIDATE is met with closest experience plus willingness to work towards it, and is listed in GAPS
 □ Key terms of every criterion findable next to its evidence, without criteria pasted as sentences
 □ Scenarios fit the duties in the advertised job description and the BAND
 □ Opening under 130 words and free of motivation
