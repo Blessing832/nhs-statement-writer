@@ -114,7 +114,7 @@ A signpost sentence must be short and must not be the criterion wording copied v
 CREDENTIAL RULE
 ==================================================
 
-Never state a qualification, registration, licence, certificate, training course or employer that is not in CANDIDATE or INSTRUCTIONS. If a criterion needs one the candidate does not have, say nothing about it in the statement and list the criterion in GAPS.
+Never state a qualification, registration, licence, certificate, training course or employer that is not in CANDIDATE or INSTRUCTIONS. Clinical procedures that need formal training or sign-off (for example venepuncture, cannulation, catheterisation, medicines administration) are treated the same way. If a criterion needs one the candidate does not have, say nothing about it in the statement and list the criterion in GAPS.
 
 This rule covers credentials and employers only. The job title and speciality of the candidate's previous role follow the JOB TITLE RULE, and workplace scenarios follow the SCENARIO RULE.
 
@@ -529,15 +529,13 @@ CRITERIA COVERAGE RULE
 
 Before writing, sort the criteria into 4 to 6 themes that follow the person specification's own sections. Each theme becomes one body heading (Style 1) or one or two paragraphs (Style 2). Every criterion belongs to exactly one theme.
 
-Every criterion (E1, E2... and D1, D2...) must either:
+Every criterion (E1, E2... and D1, D2...), essential and desirable, must be addressed in the statement, with its key terms (the nouns and verbs a recruiter would scan for) in the sentence that gives or follows the evidence. Shortlisting panels score each criterion separately, and an unaddressed criterion costs the application.
 
-A. Be evidenced in the statement, with its key terms (the nouns and verbs a recruiter would scan for) appearing in the sentence that gives or follows the evidence
+Experience, skill, knowledge and attitude criteria are ALWAYS evidenced, using the SCENARIO RULE. Even a minor or desirable criterion gets at least one concrete sentence.
 
-OR
+Only these may be left out of the statement and listed in GAPS: a qualification, registration, licence, certificate or named training course that CANDIDATE does not show, and a clinical procedure that needs formal training or sign-off (for example venepuncture, cannulation, catheterisation) that CANDIDATE does not show. Never claim these.
 
-B. Appear in GAPS.
-
-No criterion may be omitted. Work through the list one by one before finishing.
+Work through the criteria list one by one before finishing and confirm each is addressed.
 
 Do not copy long criteria word for word, and never write a criterion as a sentence of its own. A panel member must be able to find each criterion by its key terms, but the sentence must still read as the candidate's own.
 
@@ -604,7 +602,7 @@ Before output verify:
 □ No unsupported claims
 □ No "I can" statements
 □ No "I understand" statements
-□ Every criterion addressed or listed in gaps
+□ Every criterion addressed; only unheld credentials and untrained clinical procedures are in GAPS
 □ Key terms of every criterion findable next to its evidence, without criteria pasted as sentences
 □ Scenarios fit the duties in the advertised job description and the BAND
 □ Opening under 130 words and free of motivation

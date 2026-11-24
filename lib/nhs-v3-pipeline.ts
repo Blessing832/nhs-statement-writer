@@ -17,7 +17,7 @@ const BANNED_PHRASES_V3 = [
 
 const WORD_COUNT_MIN = 1150
 const WORD_COUNT_MAX = 1400
-const MAX_PATCHED_PARAGRAPHS = 4
+const MAX_PATCHED_PARAGRAPHS = 6
 
 const PATCH_SYSTEM = `You repair an NHS supporting statement so that specific person specification criteria are properly evidenced. You are given the statement as numbered paragraphs, the criteria that are missing or weak, and the candidate's real facts.
 
@@ -170,19 +170,20 @@ export async function runNHSV3Pipeline(
   // ── Deterministic verify ───────────────────────────────────────────────────
   let criteriaChecks = verifyCriteriaV3(statement, essentialCriteria, desirableCriteria)
 
-  // A keyword miss alone is not a failure: only patch a criterion the auditor also
-  // scored 3 or below (or did not score at all).
-  const auditScore = new Map((auditResult.criteria ?? []).map(c => [c.id, c.score]))
-  const notFoundIds = criteriaChecks
-    .filter(c => !c.found && (auditScore.get(c.id) ?? 0) <= 3)
-    .map(c => c.id)
+  // A criterion that cannot be found in the text is always a failure: shortlisters score
+  // each one and will not search for it.
+  // Credentials the candidate may not hold (certificates, formally trained procedures) are
+  // never "fixed" by writing about them, so they do not trigger a repair.
+  const credentialLike = (wording: string) =>
+    analysis.criteriaMethods?.[wording] === 'C' || /\b(venepuncture|cannulat|catheteris|phlebotomy)/i.test(wording)
+  const notFoundIds = criteriaChecks.filter(c => !c.found && !credentialLike(c.wording)).map(c => c.id)
   const combinedFailingIds = [...new Set([...failingIds, ...notFoundIds])]
 
   let currentStatement = statement
   let patched = false
 
   // ── Patch if needed: rewrite only the affected paragraphs, splice in code ───
-  if (!firstAllPass && combinedFailingIds.length > 0) {
+  if (combinedFailingIds.length > 0) {
     try {
       const idOf = (i: number) => i < essentialCriteria.length ? `E${i + 1}` : `D${i - essentialCriteria.length + 1}`
       const failingLines = allCriteria

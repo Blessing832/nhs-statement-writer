@@ -8,6 +8,9 @@ import { getEnglandWalesV3Prompt } from './prompts/england-wales-v3'
 import { getScotlandPrompt } from './prompts/scotland'
 import { getScotlandQ2Variation } from './scotland-q2-variations'
 import { fetchTrustIntel, formatTrustIntel } from './trust-intel'
+import { getEnglandWalesQuestionsPrompt } from './prompts/england-wales-questions'
+import { parseApplicationQuestions, splitAnswers, ParsedQuestion } from './application-questions'
+import { verifyCriteriaV3 } from './verify-criteria'
 import { supabaseAdmin } from './supabase'
 
 const anthropic = new Anthropic({
@@ -596,6 +599,136 @@ async function cleanNameFromStatementV3(
     .trim()
 }
 
+// ── Specific application questions (England and Wales, V3) ────────────────────
+
+function candidateBlockForQuestions(client: Client): string {
+  // Privacy: do NOT include client.full_name
+  return [
+    `Work history: ${client.work_history || ''}`,
+    `Qualifications: ${client.qualifications || ''}`,
+    `Skills: ${client.skills || ''}`,
+    `Background: ${client.background || ''}`,
+    client.special_instructions || '',
+    `Difficult situation: ${client.q_difficult_situation || '(not provided)'}`,
+    `Proudest moment: ${client.q_proudest_moment || '(not provided)'}`,
+    `What colleagues say: ${client.q_colleagues_say || '(not provided)'}`,
+    `Skills and equipment: ${client.q_skills_equipment || '(not provided)'}`,
+  ].filter(Boolean).join('\n')
+}
+
+function questionHeading(q: ParsedQuestion): string {
+  const base = q.title || q.requirements[0].split(/\s+/).slice(0, 8).join(' ')
+  return `Question ${q.number}: ${base}`
+}
+
+function tidyAnswers(text: string): string {
+  return fixKnownSpellings(
+    text
+      .replace(/(\d)\s*[–—]\s*(\d)/g, '$1 to $2')
+      .replace(/ — /g, ', ').replace(/—/g, ', ')
+      .replace(/ – /g, ', ').replace(/–/g, ', ')
+      .replace(/\*\*/g, '')
+      .replace(/^[ \t]*[-_*=]{3,}[ \t]*$/gm, '')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim()
+  )
+}
+
+async function answerQuestionsV3(
+  client: Client,
+  jobData: ScrapeResult,
+  questions: ParsedQuestion[],
+  trustIntelText: string | undefined,
+  trustValues: string[],
+  model: string,
+  instructions?: string
+): Promise<string> {
+  const questionBlock = questions.map(q => [
+    `QUESTION ${q.number}${q.title ? ` (${q.title})` : ''}`,
+    ...q.requirements.map((r, i) => `  R${i + 1}. ${r}`),
+  ].join('\n')).join('\n\n')
+
+  const userPrompt = [
+    '=== JOB ===',
+    `Title: ${jobData.jobTitle}`,
+    `Organisation: ${jobData.organisation}`,
+    buildRawText(jobData.rawText).slice(0, 6000),
+    '',
+    '=== ROLE MATCH ===',
+    `Advertised role: ${jobData.jobTitle || '(see JOB)'}`,
+    'Only the candidate\'s PREVIOUS workplace (the "Previous" entry in Work history) is described as this exact role in this speciality. The CURRENT role keeps its real title, employer and unit. Keep every employer name and date as given.',
+    '',
+    '=== TRUST ===',
+    trustValues.length ? `Trust values (from the advert): ${trustValues.join('; ')}` : '(Trust values not stated)',
+    trustIntelText || '',
+    '',
+    '=== CANDIDATE ===',
+    candidateBlockForQuestions(client),
+    '',
+    '=== INSTRUCTIONS ===',
+    instructions || '(none)',
+    '',
+    '=== QUESTIONS TO ANSWER (answer every question and every requirement in it) ===',
+    questionBlock,
+  ].join('\n')
+
+  const budget = questions.reduce((n, q) => n + Math.min(450, Math.max(180, 90 * q.requirements.length)), 0)
+  const maxTokens = Math.min(7000, Math.round(budget * 1.7) + 600)
+
+  const msg = await withRetry(() =>
+    anthropic.messages.create({
+      model,
+      max_tokens: maxTokens,
+      temperature: 1.0,
+      system: [{ type: 'text', text: getEnglandWalesQuestionsPrompt(), cache_control: { type: 'ephemeral' } }],
+      messages: [{ role: 'user', content: userPrompt }],
+    } as MessageCreateParamsNonStreaming, { timeout: 180000 })
+  )
+  let text = msg.content[0]?.type === 'text' ? msg.content[0].text.trim() : ''
+  console.log(`V3_QUESTIONS questions=${questions.length} requirements=${questions.reduce((n, q) => n + q.requirements.length, 0)} stop=${msg.stop_reason}`)
+
+  const cleaned = stripLeadingCommentary(text)
+  if (cleaned.removed) console.warn(`V3_PREAMBLE_STRIPPED chars=${cleaned.removed.length}`)
+  text = tidyAnswers(cleaned.statement)
+
+  const blocks = splitAnswers(text, questions.length)
+  if (!blocks) {
+    console.warn('V3_QUESTIONS could not split answers by heading; skipping coverage check')
+    return text
+  }
+
+  // Every requirement must be findable in its answer; repair any answer that skips one.
+  const repaired = await Promise.all(questions.map(async (q, i) => {
+    const answer = blocks[i]
+    const missing = verifyCriteriaV3(answer, q.requirements, []).filter(c => !c.found).map(c => c.wording)
+    if (missing.length === 0) return answer
+    console.warn(`V3_QUESTIONS_REPAIR q=${q.number} missing=${missing.length}`)
+    try {
+      const fix = await anthropic.messages.create({
+        model,
+        max_tokens: Math.min(2500, Math.round(Math.min(450, Math.max(180, 90 * q.requirements.length)) * 2) + 300),
+        temperature: 0.7,
+        system: `${getEnglandWalesQuestionsPrompt()}\n\nYou are now repairing ONE answer that left out some requirements. Return the complete corrected answer, starting with its "Question N:" heading line, and nothing else. Keep what already works. Add a concrete sentence or short example for each missing requirement, using its own key words.`,
+        messages: [{
+          role: 'user',
+          content: `CANDIDATE:\n${candidateBlockForQuestions(client)}\n\nJOB: ${jobData.jobTitle} at ${jobData.organisation}\n\nQUESTION ${q.number}${q.title ? ` (${q.title})` : ''}\n${q.requirements.map((r, k) => `R${k + 1}. ${r}`).join('\n')}\n\nREQUIREMENTS MISSING FROM THE ANSWER:\n${missing.map(m => `- ${m}`).join('\n')}\n\nCURRENT ANSWER:\n${answer}`,
+        }],
+      } as MessageCreateParamsNonStreaming, { timeout: 120000 })
+      const out = fix.content[0]?.type === 'text' ? tidyAnswers(stripLeadingCommentary(fix.content[0].text.trim()).statement) : ''
+      const outBlock = splitAnswers(out, 1) ?? (out ? [out] : null)
+      const candidate = outBlock?.[0]
+      if (candidate && verifyCriteriaV3(candidate, q.requirements, []).filter(c => !c.found).length < missing.length) {
+        return candidate.replace(/^\W*Question\s+\d+[^\n]*/i, questionHeading(q))
+      }
+    } catch (err) {
+      console.warn('V3_QUESTIONS_REPAIR failed (non-fatal):', err instanceof Error ? err.message : err)
+    }
+    return answer
+  }))
+
+  return repaired.join('\n\n')
+}
+
 async function generateParallelV3(
   client: Client,
   jobData: ScrapeResult,
@@ -735,6 +868,28 @@ Rules:
 
   const trustIntelText = intelResult ? formatTrustIntel(intelResult) : undefined
 
+  const questionList = appMode !== 'full' && options.specificQuestions
+    ? parseApplicationQuestions(options.specificQuestions)
+    : []
+
+  if (appMode === 'questions-only') {
+    if (questionList.length === 0) throw new Error('Please add at least one question to answer.')
+    const answers = await cleanNameFromStatementV3(
+      await answerQuestionsV3(client, jobData, questionList, trustIntelText, trustValues, generationModel, options.instructions),
+      client.full_name
+    )
+    return {
+      statement: answers,
+      previousRoleDuties: [],
+      currentRoleDuties: [],
+      analysis: essentialCriteria.length > 0
+        ? { jobSummary, essentialCriteria, desirableCriteria, criteriaMethods, candidateStrengths: [], potentialGaps: [], keyDuties: [], promptVersion: 'v3' }
+        : null,
+      promptRegion: 'england-wales',
+      rawStatement: answers,
+    }
+  }
+
   // ── Step 2: generation ─────────────────────────────────────────────────────
   const v3UserPrompt = buildV3UserPrompt(
     client,
@@ -798,7 +953,7 @@ Rules:
 
   // If the reply was only remarks, or far too short to be a statement, ask once more
   // with a plain reminder rather than showing the applicant anything unusable.
-  if (appMode !== 'questions-only' && options.provider !== 'copilot' && countWordsV3(statement) < 400) {
+  if (options.provider !== 'copilot' && countWordsV3(statement) < 400) {
     console.warn(`V3_RETRY reply had ${countWordsV3(statement)} statement words`)
     const retryMsg = await withRetry(() =>
       anthropic.messages.create({
@@ -848,9 +1003,7 @@ Rules:
   if (!statement) throw new Error('V3 generation returned empty statement')
 
   // ── Paragraph-level word limit enforcement ────────────────────────────────
-  if (appMode !== 'questions-only') {
-    statement = await trimStatementV3(statement, essentialCriteria, desirableCriteria)
-  }
+  statement = await trimStatementV3(statement, essentialCriteria, desirableCriteria)
 
   // ── V3 flag-mode word filter ───────────────────────────────────────────────
   const preFilterStatement = statement
@@ -867,7 +1020,7 @@ Rules:
 
   // Second trim pass if filter changed word count significantly
   const filterChangedWords = Math.abs(countWordsV3(statement) - countWordsV3(preFilterStatement)) > 5
-  if (filterChangedWords && appMode !== 'questions-only') {
+  if (filterChangedWords) {
     statement = await trimStatementV3(statement, essentialCriteria, desirableCriteria)
   }
 
@@ -884,6 +1037,14 @@ Rules:
 
   // Final defensive strip — ensure NOTES never leak into the returned statement
   statement = stripNotesSection(statement)
+
+  if (appMode === 'statement-questions' && questionList.length > 0) {
+    const answers = await cleanNameFromStatementV3(
+      await answerQuestionsV3(client, jobData, questionList, trustIntelText, trustValues, generationModel, options.instructions),
+      client.full_name
+    )
+    statement = `${statement}\n\nApplication Questions\n\n${answers}`
+  }
 
   // Final word count log — warn if over limit but never fail generation for a small overage
   const finalWc = countWordsV3(statement)

@@ -283,3 +283,46 @@ describe('stripLeadingCommentary: real failure from production', () => {
     expect(strip(real).statement).toBe(real)
   })
 })
+
+describe('application question parsing', () => {
+  const { parseApplicationQuestions, splitAnswers } = require('../lib/application-questions')
+
+  const section1 = `Qualifications\n• Vocational healthcare qualification at level 3 or equivalent experience.\n• Completed Fundamental Care Certificate\n• Evidence of competency in band 3 clinical skills.\nHow do you meet these essential criteria?*`
+  const section2 = `Experience\n- Experience of working in a healthcare environment, undertaking a range of clinical commitments.\n- Experience of working with a multi-disciplinary team\nHow do you meet these essential criteria?*`
+
+  it('keeps every requirement of a pasted section and drops the form prompt', () => {
+    const [q] = parseApplicationQuestions(`1. ${section1}`)
+    expect(q.title).toBe('Qualifications')
+    expect(q.requirements).toEqual([
+      'Vocational healthcare qualification at level 3 or equivalent experience.',
+      'Completed Fundamental Care Certificate',
+      'Evidence of competency in band 3 clinical skills.',
+    ])
+  })
+
+  it('splits several sections and works without bullet characters', () => {
+    const plain = section2.replace(/- /g, '')
+    const qs = parseApplicationQuestions(`1. ${section1}\n\n2. ${plain}`)
+    expect(qs).toHaveLength(2)
+    expect(qs[1].title).toBe('Experience')
+    expect(qs[1].requirements).toHaveLength(2)
+  })
+
+  it('treats a single-line question as one requirement', () => {
+    const [q] = parseApplicationQuestions('1. Describe a time you supported a distressed patient.')
+    expect(q.requirements).toHaveLength(1)
+  })
+
+  it('does not split on numbers that are not the next question', () => {
+    const qs = parseApplicationQuestions('1. Skills\n\n3. Basic IT skills\n2. Another line')
+    expect(qs).toHaveLength(1)
+  })
+
+  it('splits answers back by their Question headings', () => {
+    const text = 'Question 1: Qualifications\n\nI hold a Level 3 Diploma.\n\nQuestion 2: Experience\n\nI work on a ward.'
+    const blocks = splitAnswers(text, 2)
+    expect(blocks).toHaveLength(2)
+    expect(blocks[1]).toContain('I work on a ward')
+    expect(splitAnswers(text, 3)).toBeNull()
+  })
+})

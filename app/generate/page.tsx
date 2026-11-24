@@ -938,7 +938,7 @@ function GeneratePage() {
   }
 
   const questionsText = () =>
-    specificQuestions.filter(q => q.trim()).map((q, i) => `${i + 1}. ${q.trim()}`).join('\n')
+    specificQuestions.filter(q => q.trim()).map((q, i) => `${i + 1}. ${q.trim()}`).join('\n\n')
 
   const addQuestion = () => setSpecificQuestions(prev => [...prev, ''])
   const updateQuestion = (i: number, val: string) =>
@@ -1225,7 +1225,7 @@ function GeneratePage() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Your questions <span className="text-red-500">*</span>
                     </label>
-                    <p className="text-xs text-gray-500 mb-2">One question per box. If a question has multiple parts, paste them all in one box.</p>
+                    <p className="text-xs text-gray-500 mb-2">One box per section or question. Paste the section heading and every requirement listed under it, exactly as shown on the form. Each requirement will be answered.</p>
                     <div className="space-y-3">
                       {specificQuestions.map((q, i) => (
                         <div key={i} className="flex items-start gap-2">
@@ -1233,8 +1233,8 @@ function GeneratePage() {
                             {i + 1}.
                           </span>
                           <textarea value={q} onChange={(e) => updateQuestion(i, e.target.value)}
-                            placeholder={`Type or paste question ${i + 1} here — including any sub-points…`}
-                            rows={3} disabled={loading}
+                            placeholder={`Paste question ${i + 1} here, with its heading and every requirement listed under it…`}
+                            rows={5} disabled={loading}
                             className="flex-1 px-3 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none resize-y" />
                           {specificQuestions.length > 1 && (
                             <button type="button" onClick={() => removeQuestion(i)}
