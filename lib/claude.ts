@@ -729,6 +729,39 @@ async function answerQuestionsV3(
   return repaired.join('\n\n')
 }
 
+// Safety net: the duties list normally comes with the writer's notes, but if the notes are
+// missing or cut short the applicant must still get their list.
+async function generatePreviousRoleDuties(client: Client, jobData: ScrapeResult, model: string): Promise<string[]> {
+  const msg = await anthropic.messages.create({
+    model,
+    max_tokens: 1800,
+    temperature: 0.7,
+    system: 'You write the "previous role duties" list for an NHS job application. Reply with JSON only.',
+    messages: [{
+      role: 'user',
+      content: `JOB: ${jobData.jobTitle} at ${jobData.organisation}
+
+ROLE MATCH: the candidate's PREVIOUS workplace (the "Previous" entry in Work history) is described with the advertised job title and speciality. Keep the real employer name.
+
+CANDIDATE:
+${candidateBlockForQuestions(client)}
+
+Write exactly 7 key duties from that previous role, as a JSON object: {"duties":["...", ...]}
+Rules: every duty in past tense; begin each with a strong past-tense action verb (Delivered, Led, Coordinated, Managed, Monitored, Escalated, Improved, Developed, Supported); each over 25 words, specific and outcome-focused, with the situation, the action taken, any collaboration or governance angle, and the impact on patient care or the service; retain real employer or NHS Trust names from the candidate profile; do not name UK software by brand (write "electronic patient record system"); no pay bands; no dashes; no comments.`,
+    }],
+  } as MessageCreateParamsNonStreaming, { timeout: 60000 })
+  const text = msg.content[0]?.type === 'text' ? msg.content[0].text : ''
+  const json = text.match(/\{[\s\S]*\}/)
+  if (!json) return []
+  try {
+    const parsed = JSON.parse(json[0])
+    return (Array.isArray(parsed.duties) ? parsed.duties : [])
+      .filter((d: unknown): d is string => typeof d === 'string' && d.trim().length > 0)
+      .map((d: string) => tidyAnswers(d))
+      .slice(0, 7)
+  } catch { return [] }
+}
+
 async function generateParallelV3(
   client: Client,
   jobData: ScrapeResult,
@@ -982,6 +1015,15 @@ Rules:
   // Use duties from the V3 generation output; fall back to analysis-extracted duties
   if (parsedNotes.previousRoleDuties.length > 0) {
     previousRoleDuties = parsedNotes.previousRoleDuties
+  }
+  if (previousRoleDuties.length < 5) {
+    console.warn(`V3_DUTIES_FALLBACK notes gave ${previousRoleDuties.length} duties; generating the list separately`)
+    try {
+      const generated = await generatePreviousRoleDuties(client, jobData, generationModel)
+      if (generated.length >= 5) previousRoleDuties = generated
+    } catch (err) {
+      console.warn('V3_DUTIES_FALLBACK failed (non-fatal):', err instanceof Error ? err.message : err)
+    }
   }
 
   // ── Basic cleaning ─────────────────────────────────────────────────────────

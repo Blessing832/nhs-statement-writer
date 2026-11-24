@@ -549,7 +549,9 @@ OUTPUT FORMAT
 
 Output the supporting statement first. The first word of your output is the first word of the statement.
 
-Never write comments, issues, warnings, caveats, refusals or remarks about how suitable or unsuitable the candidate is for the role, before, inside or after the statement text. Applicants read the statement as it is.
+Never write comments, issues, warnings, caveats, refusals or remarks about how suitable or unsuitable the candidate is for the role, before or inside the statement text. Applicants read the statement as it is.
+
+After the statement you MUST always write the ===NOTES=== section described below, including the complete PREVIOUS ROLE DUTIES list. It is required every time. The notes are read only by the administrator and are the one place for concerns, gaps and questions.
 
 If two instructions seem to conflict, apply them as written: the JOB TITLE RULE and ROLE MATCH decide how the previous role is described, the CREDENTIAL RULE decides qualifications, registrations, courses and employers, and the SCENARIO RULE decides scenarios. Do not discuss the conflict. Put any concern under GAPS or QUESTIONS in the notes.
 
