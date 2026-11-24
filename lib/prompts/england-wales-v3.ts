@@ -586,7 +586,7 @@ Include: the situation or context, the specific action taken, any collaboration 
 Retain real employer or NHS Trust names where they appear in the candidate profile.
 Do not name UK-specific software by brand — write "electronic patient record system" or "clinical information system".
 Do not reference NHS pay bands.
-Format: numbered list, 1 through 7, one duty per line.
+Format: numbered list, 1 through 7, one duty per line. Write only the duties. Never add an employer, hospital or trust name as a heading, label or bracketed tag before or between the duties, and never start a duty with a bracketed name.
 
 ==================================================
 FINAL QUALITY CHECK

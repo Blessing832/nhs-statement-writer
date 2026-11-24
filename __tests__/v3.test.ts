@@ -326,3 +326,20 @@ describe('application question parsing', () => {
     expect(splitAnswers(text, 3)).toBeNull()
   })
 })
+
+describe('cleanDuties', () => {
+  const { cleanDuties } = require('../lib/claude')
+  const duty = 'Delivered direct clinical care and administrative support to children and young people attending designated outpatient clinics, ensuring each appointment ran safely.'
+
+  it('drops a hospital name tag line from the top of the list', () => {
+    expect(cleanDuties(['(Victory Medical Centre):', duty])).toEqual([duty])
+  })
+
+  it('removes a bracketed employer tag from the front of a duty', () => {
+    expect(cleanDuties([`(Victory Medical Centre): ${duty}`])).toEqual([duty])
+  })
+
+  it('leaves normal duties unchanged', () => {
+    expect(cleanDuties([duty, duty])).toEqual([duty, duty])
+  })
+})

@@ -729,6 +729,14 @@ async function answerQuestionsV3(
   return repaired.join('\n\n')
 }
 
+// A duty is a full sentence. Drop heading lines such as "(Victory Medical Centre):" and strip
+// any bracketed employer tag from the front of a duty.
+export function cleanDuties(list: string[]): string[] {
+  return list
+    .map(d => d.trim().replace(/^\(\s*[^)]{2,100}\)\s*:?\s*/, '').replace(/^\*+|\*+$/g, '').trim())
+    .filter(d => d.split(/\s+/).filter(Boolean).length >= 12 && !/:\s*$/.test(d))
+}
+
 // Safety net: the duties list normally comes with the writer's notes, but if the notes are
 // missing or cut short the applicant must still get their list.
 async function generatePreviousRoleDuties(client: Client, jobData: ScrapeResult, model: string): Promise<string[]> {
@@ -758,7 +766,7 @@ Rules: every duty in past tense; begin each with a strong past-tense action verb
     return (Array.isArray(parsed.duties) ? parsed.duties : [])
       .filter((d: unknown): d is string => typeof d === 'string' && d.trim().length > 0)
       .map((d: string) => tidyAnswers(d))
-      .slice(0, 7)
+      .slice(0, 8)
   } catch { return [] }
 }
 
@@ -1014,13 +1022,14 @@ Rules:
 
   // Use duties from the V3 generation output; fall back to analysis-extracted duties
   if (parsedNotes.previousRoleDuties.length > 0) {
-    previousRoleDuties = parsedNotes.previousRoleDuties
+    previousRoleDuties = cleanDuties(parsedNotes.previousRoleDuties)
   }
   if (previousRoleDuties.length < 5) {
     console.warn(`V3_DUTIES_FALLBACK notes gave ${previousRoleDuties.length} duties; generating the list separately`)
     try {
       const generated = await generatePreviousRoleDuties(client, jobData, generationModel)
-      if (generated.length >= 5) previousRoleDuties = generated
+      const cleaned = cleanDuties(generated).slice(0, 7)
+      if (cleaned.length >= 5) previousRoleDuties = cleaned
     } catch (err) {
       console.warn('V3_DUTIES_FALLBACK failed (non-fatal):', err instanceof Error ? err.message : err)
     }
