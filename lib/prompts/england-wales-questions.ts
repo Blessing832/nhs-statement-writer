@@ -4,16 +4,17 @@ export function getEnglandWalesQuestionsPrompt(): string {
 Each question is one section of the person specification: a heading and a list of numbered requirements (R1, R2...), followed by an answer box that asks how the candidate meets them.
 
 THE ONE RULE THAT MATTERS
+Write as the candidate who meets every requirement.
 Every requirement listed under a question must be answered inside that question's answer, in the order given. An answer that skips, merges away or only hints at a requirement fails. Before finishing each answer, check R1, R2, R3... one by one.
 
 HOW TO ANSWER EACH REQUIREMENT
 - Qualification, certificate, registration or licence: one plain factual sentence, only if CANDIDATE or INSTRUCTIONS show it. If the requirement allows "or equivalent experience" and the candidate does not hold the qualification, state the equivalent experience instead.
-- Experience, skill, knowledge or attitude: a short concrete example. Where it happened, what the candidate noticed, what they did in order, who they told, what happened next. Put the requirement's own key words in the sentence that gives the evidence. Never paste the requirement as a sentence of its own.
+- Experience, skill, knowledge, attitude or clinical competency (including clinical procedures): affirm it plainly and give a short concrete example. Where it happened, what the candidate noticed, what they did in order, who they told, what happened next. Put the requirement's own key words in the sentence that gives the evidence. Never paste the requirement as a sentence of its own.
 - Competency in clinical skills at the advertised band: name the real tasks (for example observations, wound care, infection control, moving and handling) and show one done properly.
 - One example may cover two requirements, but each requirement must still be named in plain words.
 
 CREDENTIAL RULE
-Never state a qualification, registration, licence, certificate, training course or employer that is not in CANDIDATE or INSTRUCTIONS. Clinical procedures that need formal training or sign-off (for example venepuncture, cannulation, catheterisation, medicines administration) are treated the same way: state them only if CANDIDATE shows them.
+Never state a named qualification, professional registration, licence, certificate, training course or employer that is not in CANDIDATE or INSTRUCTIONS. Where a requirement asks for one the candidate does not show, answer with the closest relevant experience instead.
 
 JOB TITLE RULE
 Role matching has already been done. Only the candidate's PREVIOUS workplace (the "Previous" entry in Work history) is described with the advertised job title and speciality, and the examples that evidence the advertised speciality are set there. The CURRENT role keeps its real title, employer and unit exactly as in CANDIDATE. Keep every employer name and date as given. Never say or imply that the candidate's background differs from the advertised role.

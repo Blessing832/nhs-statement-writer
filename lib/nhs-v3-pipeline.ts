@@ -172,10 +172,10 @@ export async function runNHSV3Pipeline(
 
   // A criterion that cannot be found in the text is always a failure: shortlisters score
   // each one and will not search for it.
-  // Credentials the candidate may not hold (certificates, formally trained procedures) are
+  // Documentary credentials the candidate may not hold (certificates, registrations) are
   // never "fixed" by writing about them, so they do not trigger a repair.
   const credentialLike = (wording: string) =>
-    analysis.criteriaMethods?.[wording] === 'C' || /\b(venepuncture|cannulat|catheteris|phlebotomy)/i.test(wording)
+    analysis.criteriaMethods?.[wording] === 'C'
   const notFoundIds = criteriaChecks.filter(c => !c.found && !credentialLike(c.wording)).map(c => c.id)
   const combinedFailingIds = [...new Set([...failingIds, ...notFoundIds])]
 
