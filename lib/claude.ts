@@ -242,6 +242,12 @@ function buildV3UserPrompt(
       ].join('\n')
     : ''
 
+  const roleMatchBlock = [
+    '=== ROLE MATCH ===',
+    `Advertised role: ${jobData.jobTitle || '(see JOB)'}`,
+    'Role matching is already done. Only the candidate\'s PREVIOUS workplace (the "Previous" entry in Work history, the role before the current one) is described as this exact role in this speciality, and the scenarios evidencing the advertised speciality are set there. The CURRENT role keeps its real job title, employer and unit exactly as given. Keep every employer name and date as given. Do not mention any difference between their background and the advertised role.',
+  ].join('\n')
+
   const jobContext = detectJobContext(jobData)
   const contextBlock = [
     '=== COUNTRY AND PATIENT GROUP ===',
@@ -320,6 +326,8 @@ function buildV3UserPrompt(
     criteriaBlock,
     '',
     ...(factualBlock ? [factualBlock, ''] : []),
+    roleMatchBlock,
+    '',
     contextBlock,
     '',
     bandBlock,
@@ -709,6 +717,10 @@ async function answerQuestionsV3(
     `Organisation: ${jobData.organisation}`,
     buildRawText(jobData.rawText).slice(0, 6000),
     '',
+    '=== ROLE MATCH ===',
+    `Advertised role: ${jobData.jobTitle || '(see JOB)'}`,
+    'Only the candidate\'s PREVIOUS workplace (the "Previous" entry in Work history) is described as this exact role in this speciality. The CURRENT role keeps its real title, employer and unit. Keep every employer name and date as given.',
+    '',
     '=== COUNTRY AND PATIENT GROUP ===',
     `Country: ${jobContext.country}`,
     `Patient group: ${jobContext.patientGroup}`,
@@ -805,13 +817,13 @@ async function generatePreviousRoleDuties(client: Client, jobData: ScrapeResult,
       role: 'user',
       content: `JOB: ${jobData.jobTitle} at ${jobData.organisation}
 
-Use the candidate's real job title and employer exactly as given. Do not change any job title.
+ROLE MATCH: the candidate's PREVIOUS workplace (the "Previous" entry in Work history) is described with the advertised job title and speciality. Keep the real employer name.
 
 CANDIDATE:
 ${candidateBlockForQuestions(client)}
 
 Write exactly 7 key duties from that previous role, as a JSON object: {"duties":["...", ...]}
-Rules: every duty in past tense; begin each with a strong past-tense action verb (Delivered, Led, Coordinated, Managed, Monitored, Escalated, Improved, Developed, Supported); each over 25 words, specific and outcome-focused, with the situation, the action taken, any collaboration or governance angle, and the impact on patient care or the service only where the profile gives one (never invent numbers); retain real employer or NHS Trust names from the candidate profile; do not name UK software by brand (write "electronic patient record system"); no pay bands; no dashes; no comments.`,
+Rules: every duty in past tense; begin each with a strong past-tense action verb (Delivered, Led, Coordinated, Managed, Monitored, Escalated, Improved, Developed, Supported); each over 25 words, specific and outcome-focused, with the situation, the action taken, any collaboration or governance angle, and a measurable impact on patient care or the service; retain real employer or NHS Trust names from the candidate profile; do not name UK software by brand (write "electronic patient record system"); no pay bands; no dashes; no comments.`,
     }],
   } as MessageCreateParamsNonStreaming, { timeout: 60000 })
   const text = msg.content[0]?.type === 'text' ? msg.content[0].text : ''

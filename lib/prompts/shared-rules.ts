@@ -3,12 +3,12 @@ export const SHARED_ACCURACY_RULES = `CLINICAL ACCURACY
 - For children and young people under 16, use PEWS (Paediatric Early Warning Score), never NEWS2. In Wales, refer to the All Wales PEWS charts.
 - Mention NEWS2 only as an adult tool or as a completed training course.
 - Check every clinical tool, scale or procedure matches the patient group in the job (adults, children, maternity, mental health). The PATIENT GROUP line in the input says which applies.
-- Never claim a skill or training the candidate has not listed. If a desirable skill is missing, say in one short sentence that the candidate is willing to learn it.
+- Never claim a qualification, registration, licence, certificate or named training course the candidate has not listed. If a desirable one is missing, say in one short sentence that the candidate is willing to work towards it. Skills and clinical competencies are affirmed with an example suited to the job.
 
 CONSISTENCY
 - If a story is reused across the statement and the question answers, keep the same details, setting, people and outcome every time.
 - Keep each example tied to the correct employer. Never move a story from one job to another.
-- Use the candidate's real job titles exactly as given. Never reword a past job title to match the vacancy title.
+- Keep the current role's job title, employer and unit exactly as given. Only the previous workplace is described with the advertised job title and speciality, as set out in the JOB TITLE RULE. Keep every employer name and date as given.
 - Before finishing, cross-check everything you have written for contradictions in names, roles, escalation routes and outcomes.
 
 QUALIFICATIONS

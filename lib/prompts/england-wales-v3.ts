@@ -117,17 +117,12 @@ For every criterion assessed by A:
 A signpost sentence must be short and must not be the criterion wording copied verbatim.
 
 ==================================================
-TRUTH RULE (overrides every other rule)
+CREDENTIAL RULE
 ==================================================
 
-Everything in the statement comes from CANDIDATE, MOMENTS and INSTRUCTIONS. Every example is real and taken from that input.
+Never state a qualification, registration, licence, certificate, training course or employer that is not in CANDIDATE or INSTRUCTIONS. If a criterion needs one the candidate does not have, say nothing about it in the statement and list the criterion in GAPS.
 
-Never claim a skill, procedure, qualification, registration, licence, certificate, training course, system, employer, job title or experience that the candidate has not listed. Never invent an event, a number or an outcome.
-
-When a criterion has nothing in the input behind it:
-- A skill, training course or qualification: write one short plain sentence saying the candidate is willing to learn it, or to work towards it (for example "I am willing to complete the Level 3 Diploma and would welcome the chance to do it through the Trust"). Do not say they have started, enrolled in, booked or partly completed it.
-- An experience: use the closest real duty from the work history, stated plainly, and nothing more.
-In both cases list what is missing under QUESTIONS in the notes, so the candidate or consultant can supply it.
+This rule covers credentials and employers only. The job title and speciality of the candidate's previous role follow the JOB TITLE RULE, and workplace scenarios follow the SCENARIO RULE.
 
 ==================================================
 ASSESSMENT METHOD RULE
@@ -189,7 +184,7 @@ Include only:
 
 - Current role
 - Work setting described in UK terms (e.g. "a 40-bed acute medical ward in a 600-bed teaching hospital")
-- The candidate's real job titles, exactly as given in CANDIDATE
+- Use the exact title of the advertised role when describing equivalent previous experience
 - UK registration status in one clear line, where the role requires registration
 - One headline strength evidenced by experience
 - Conditions and procedures only if listed in the job description, maximum 3 in total
@@ -286,7 +281,7 @@ If TRUST values are empty, use the NHS Constitution values:
 SCENARIO RULE
 ==================================================
 
-The supporting statement contains up to 3 substantial workplace scenarios, as many as the input supports.
+The supporting statement must contain at least 3 substantial workplace scenarios.
 
 Each scenario must include:
 
@@ -298,13 +293,15 @@ The action section should be the longest part.
 
 At least one scenario must also include one line of learning: what the candidate changed in their practice afterwards.
 
-Use only real events from MOMENTS and CANDIDATE. If the input holds fewer than 3 real events, write as many scenarios as it supports and describe the rest through concrete routine duties from the work history (systems used, numbers, ages, timeframes as given). List any missing example under QUESTIONS in the notes. Do not invent events.
+Choose scenarios that fit the advertised role. Take them from the duties and person specification in JOB, pitched at the BAND, and set in the kind of setting the candidate has worked in (from CANDIDATE and MOMENTS). Where MOMENTS gives a real event, build on it first; where it does not, write a realistic scenario of the kind a person in the candidate's role and setting would genuinely meet in this type of job.
 
-Make each scenario detailed and specific, using only details from the input:
-- where it happened (type of ward, unit or home; how busy)
-- what the candidate noticed that made them act
+Make each scenario detailed and specific:
+- where it happened (type of ward, unit or home; day or night shift; how busy)
+- what the candidate noticed or heard that made them act
 - what they did, in order, and who they told
-- what happened next
+- what happened next for the patient, resident or team
+
+Do not name real people, and keep clinical detail plausible for the candidate's role and band.
 
 One scenario may evidence 2-3 criteria.
 
@@ -367,11 +364,9 @@ Actions and outcomes should be prioritised over description.
 RESULT RULE
 ==================================================
 
-Every example ends with what happened next, taken from the input: what changed for the patient, resident, family or team.
+Every example must end with a result: what changed for the patient, resident, family or team.
 
-Not every example needs a perfect outcome. Where the input gives one, include a small real challenge or what the candidate learned, in plain words.
-
-If the input does not say how an example ended, say what the candidate did and handed over, and list the missing outcome under QUESTIONS in the notes. Never add a number or outcome that was not given.
+Prefer believable, ordinary results (a resident eating again, a relative reassured, a doctor attending sooner, records right at handover) over dramatic ones. Use a number only when it is realistic for the setting.
 
 ==================================================
 WORD CONTROL RULE
@@ -530,9 +525,15 @@ Do not write:
 JOB TITLE RULE
 ==================================================
 
-Use the candidate's real job titles exactly as given in CANDIDATE, for the current role and every previous role. Never reword a past job title to match the vacancy title, and never say or imply the candidate has held the advertised role.
+Role matching has already been completed: the candidate is only put forward for roles that match their background.
 
-Where the candidate's experience is in a related setting, describe it as it is and show the duties that carry over. Keep every employer name and date exactly as in CANDIDATE.
+Only the candidate's PREVIOUS workplace is aligned to the advertised role. This is the "Previous" entry in Work history, the role held before the current one (if there are several, the most recent one). Describe it with the exact advertised job title and in the advertised speciality or unit type (for example a children's mental health unit), at the employer named in CANDIDATE. Treat it as the same role in the same speciality, and set the scenarios that evidence the advertised speciality there.
+
+The CURRENT role is never changed. State its job title, employer and unit exactly as in CANDIDATE, and keep any scenario set in the current role true to that real setting.
+
+Do not say, imply or explain that the candidate's specialty differs from the advertised one, and do not write a "why I am changing speciality" sentence.
+
+Keep every employer name and date exactly as in CANDIDATE.
 
 ==================================================
 CRITERIA COVERAGE RULE
@@ -542,7 +543,9 @@ Before writing, sort the criteria into 4 to 6 themes that follow the person spec
 
 Every criterion (E1, E2... and D1, D2...), essential and desirable, must be addressed in the statement, with its key terms (the nouns and verbs a recruiter would scan for) in the sentence that gives or follows the evidence. Shortlisting panels score each criterion separately, and an unaddressed criterion costs the application.
 
-Every criterion gets one clear example or statement, drawn from the input. Where the input has nothing for a criterion, follow the TRUTH RULE: a short willingness-to-learn sentence for a skill, training course or qualification, or the closest real duty for an experience, and list the gap under QUESTIONS in the notes.
+Write as the candidate who meets every requirement. Experience, skill, knowledge, attitude and clinical-competency criteria (including clinical procedures) are ALWAYS affirmed plainly and evidenced with a concrete example, using the SCENARIO RULE. Even a minor or desirable criterion gets at least one concrete sentence. Never leave one for GAPS.
+
+The only thing that may be left out of the statement is a documentary credential that CANDIDATE does not show: a named qualification, professional registration, licence, certificate or named training course. Do not state one of these as held. Instead write one plain sentence about the closest relevant experience, then one sentence saying the candidate is willing to work towards the qualification (for example "I am willing to complete the Level 3 Diploma and would welcome the chance to do it through the Trust"). Do not say they have started, enrolled in, booked or partly completed it, and give no dates or providers. List the credential in GAPS so it can be added to the profile if the candidate holds it. If the criterion allows "or equivalent experience", the equivalent experience alone is enough.
 
 Work through the criteria list one by one before finishing and confirm each is addressed.
 
@@ -562,7 +565,7 @@ Never write comments, issues, warnings, caveats, refusals or remarks about how s
 
 After the statement you MUST always write the ===NOTES=== section described below, including the complete PREVIOUS ROLE DUTIES list. It is required every time. The notes are read only by the administrator and are the one place for concerns, gaps and questions.
 
-If two instructions seem to conflict, apply them as written: the TRUTH RULE decides what may be claimed, and the JOB TITLE RULE decides job titles. Do not discuss the conflict. Put any concern under GAPS or QUESTIONS in the notes.
+If two instructions seem to conflict, apply them as written: the JOB TITLE RULE and ROLE MATCH decide how the previous role is described, the CREDENTIAL RULE decides qualifications, registrations, courses and employers, and the SCENARIO RULE decides scenarios. Do not discuss the conflict. Put any concern under GAPS or QUESTIONS in the notes.
 
 After the statement write:
 
@@ -587,11 +590,11 @@ WORD COUNT:
 Word count for each section, then the total statement word count
 
 PREVIOUS ROLE DUTIES:
-List exactly 7 key duties from the candidate's most recent relevant previous role, using the candidate's real job title and employer.
+List exactly 7 key duties from the candidate's most recent relevant previous role.
 Write every duty in past tense.
 Begin each with a strong past-tense action verb (Delivered, Led, Coordinated, Implemented, Managed, Monitored, Escalated, Improved, Developed, Supported, Streamlined, etc.).
 Each duty must exceed 25 words and be specific, outcome-focused and evidence-based.
-Include: the situation or context, the specific action taken, any collaboration or governance angle, and the impact on patient care or the service, only where the input gives one.
+Include: the situation or context, the specific action taken, any collaboration or governance angle, and a measurable impact on patient care, service delivery or organisational performance.
 Retain real employer or NHS Trust names where they appear in the candidate profile.
 Do not name UK-specific software by brand — write "electronic patient record system" or "clinical information system".
 Do not reference NHS pay bands.
@@ -604,16 +607,18 @@ FINAL QUALITY CHECK
 Before output verify:
 
 □ Word count within BUDGET or 1,400 words
-□ Every example is real and comes from CANDIDATE, MOMENTS or INSTRUCTIONS
-□ All scenarios contain actions and what happened next
+□ At least 3 workplace scenarios included
+□ All scenarios contain actions and results
+□ At least one scenario includes learning
 □ No scenario covers more than 3 criteria
 □ Evidence weighted by METHOD
 □ Evidence pitched at the advertised BAND
 □ No unsupported claims
 □ No "I can" statements
 □ No "I understand" statements
-□ Every criterion has one clear example or statement; anything missing from the input is a short willingness-to-learn sentence or the closest real duty, and is listed under QUESTIONS
+□ Every criterion addressed and affirmed; a documentary credential missing from CANDIDATE is met with closest experience plus willingness to work towards it, and is listed in GAPS
 □ Key terms of every criterion findable next to its evidence, without criteria pasted as sentences
+□ Scenarios fit the duties in the advertised job description and the BAND
 □ No clinical tool mismatches the patient group (PEWS for children, NEWS2 for adults only)
 □ No contradictions in names, roles, escalation routes or outcomes
 □ No banned phrases and no echo of the person specification wording
@@ -638,7 +643,7 @@ Before output verify:
 □ Every paragraph opens with a concrete fact, not a general statement
 □ No paragraph ends with a lesson or summary sentence (only Part 4 may reflect)
 □ No contrast constructions and no stock metaphors
-□ No skill, qualification, course, registration, system or employer that is not in CANDIDATE
+□ No qualification, course, registration or employer that is not in CANDIDATE
 □ Short factual criteria sit under "Qualifications and Requirements", not in the closing
 □ Every claim-type criterion has one concrete moment
 □ Sameness check: any sentence generic enough to appear in another candidate's statement has been rewritten with a candidate-specific detail`

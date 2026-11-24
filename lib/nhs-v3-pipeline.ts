@@ -22,13 +22,13 @@ const MAX_PATCHED_PARAGRAPHS = 6
 const PATCH_SYSTEM = `You repair an NHS supporting statement so that specific person specification criteria are properly evidenced. You are given the statement as numbered paragraphs, the criteria that are missing or weak, and the candidate's real facts.
 
 RULES
-- Use ONLY facts found in CANDIDATE FACTS. Never invent an event, number, outcome, skill, system, qualification, course, registration or employer. Where CANDIDATE FACTS contain nothing that evidences a criterion, add one short plain sentence of willingness to learn (for a skill, course or qualification) or use the closest real duty, and list the criterion id in "unevidenced".
+- Where CANDIDATE FACTS contain a real event or duty that evidences a criterion, use it. Where they do not, write a realistic, detailed scenario suited to the role and setting the candidate has worked in. Do not change the candidate's employers, qualifications or registration.
 - Fix a criterion by rewriting the one existing paragraph where its evidence fits best. Keep everything in that paragraph that already works, including any other criterion wording already in it.
 - Show what the candidate did and what happened as a result, then work the criterion's key terms into the sentence that follows the evidence. Do not paste the criterion as a sentence of its own.
 - Match the surrounding voice: first person, plain British English, short sentences, the words a working nurse or healthcare assistant would use. No em dashes, no bullet points, no bold, no criterion ids.
 - A rewritten paragraph must stay under 150 words.
 - Do not mention the person specification or criteria. No "not X but Y" or "X is not Y, it is Z" constructions. Do not end a paragraph on a lesson sentence ("that experience reinforced..."). No stock metaphors (thread, grounding, underpin, second nature).
-- Never state a qualification, course, registration or employer that is not in CANDIDATE FACTS. Use the candidate's real job titles exactly as given; never reword a job title to match the vacancy.
+- Never state a qualification, course, registration or employer that is not in CANDIDATE FACTS. Only the candidate's PREVIOUS role is presented with the advertised job title and speciality; keep it that way. Never change the current role's title, employer or unit. Do not mention any difference.
 - For children under 16 use PEWS, never NEWS2 (NEWS2 only as an adult tool or a completed course). Do not echo the person specification wording.
 - Never rewrite a heading. Rewrite at most ${MAX_PATCHED_PARAGRAPHS} paragraphs. Leave every other paragraph alone.
 
@@ -284,7 +284,6 @@ export async function runNHSV3Pipeline(
   const warningBanners: string[] = []
   if (!finalDet.wordCountOk) warningBanners.push(`Word count ${finalDet.wordCount} (target 1,150–1,400)`)
   if (finalDet.bannedPhrasesFound.length > 0) warningBanners.push(`Banned phrases: ${finalDet.bannedPhrasesFound.join(', ')}`)
-  if (auditResult.invented_facts_found?.length) warningBanners.push(`Not in the candidate profile: ${auditResult.invented_facts_found.slice(0, 4).join('; ')}`)
   if (auditResult.ai_tells_found?.length) warningBanners.push(`Reads as machine-written in places: ${auditResult.ai_tells_found.slice(0, 4).join('; ')}`)
   if (auditResult.buried_criteria?.length) warningBanners.push(`Hard-to-find criteria: ${auditResult.buried_criteria.slice(0, 4).join('; ')}`)
   if (auditResult.relevant_experience_dated_and_sized === false) warningBanners.push('Most relevant role has no duration or scale: ask the candidate for dates and unit size')

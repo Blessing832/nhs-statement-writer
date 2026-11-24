@@ -376,17 +376,27 @@ describe('writer prompts carry the accuracy rules', () => {
   const { getEnglandWalesV3Prompt } = require('../lib/prompts/england-wales-v3')
   const { getEnglandWalesQuestionsPrompt } = require('../lib/prompts/england-wales-questions')
 
-  it('includes PEWS, consistency and Wales rules in both prompts', () => {
+  it('includes PEWS, Wales and consistency rules in both prompts', () => {
     for (const p of [getEnglandWalesV3Prompt(), getEnglandWalesQuestionsPrompt()]) {
       expect(p).toContain('PEWS')
       expect(p).toContain('All Wales Induction Framework')
-      expect(p).toContain('Never reword a past job title')
       expect(p).not.toContain('${SHARED_ACCURACY_RULES}')
     }
   })
 
-  it('no longer aligns the previous role to the advertised title', () => {
-    expect(getEnglandWalesV3Prompt()).not.toMatch(/advertised job title and (?:in the advertised )?speciality/)
+  it('aligns only the previous workplace to the advertised role and keeps the current role', () => {
+    for (const p of [getEnglandWalesV3Prompt(), getEnglandWalesQuestionsPrompt()]) {
+      expect(p).toMatch(/PREVIOUS workplace/)
+      expect(p).toMatch(/CURRENT role/)
+      expect(p).not.toContain('Never reword a past job title')
+    }
+  })
+
+  it('lets scenarios be written to suit the job and does not restrict skills to those listed', () => {
+    const v3 = getEnglandWalesV3Prompt()
+    expect(v3).toContain('write a realistic scenario')
+    expect(v3).not.toContain('Every example is real')
+    expect(v3).not.toContain('Never claim a skill or training the candidate has not listed')
   })
 })
 
