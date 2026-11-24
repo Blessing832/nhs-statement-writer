@@ -227,6 +227,7 @@ function LiveVacanciesTab({ token }: { token: string }) {
   const [scraping, setScraping] = useState(false)
   const [search, setSearch] = useState('')
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null)
+  const [scrapeMessage, setScrapeMessage] = useState<{ ok: boolean; text: string } | null>(null)
 
   const loadVacancies = useCallback(async () => {
     const res = await fetch('/api/vacancies/live', { headers: { 'x-admin-token': token } })
@@ -247,15 +248,22 @@ function LiveVacanciesTab({ token }: { token: string }) {
         headers: { 'x-admin-token': token },
       })
       if (res.ok) {
-        alert('Scrape started! Results will appear here within a few minutes once the Apify actor completes.')
+        setScrapeMessage({ ok: true, text: 'Scrape started. New vacancies appear here within a few minutes, once the Apify run finishes. Press Refresh then.' })
       } else {
-        const j = await res.json()
-        alert(`Failed: ${j.error ?? 'Unknown error'}`)
+        const j = await res.json().catch(() => ({}))
+        setScrapeMessage({ ok: false, text: `The scrape could not be started. ${j.error ?? 'Unknown error'}` })
       }
     } finally {
       setScraping(false)
     }
   }
+
+  const newestScrape = vacancies.reduce((max, v) => {
+    const t = new Date(v.scraped_at).getTime()
+    return Number.isFinite(t) && t > max ? t : max
+  }, 0)
+  const dataAgeHours = newestScrape ? (Date.now() - newestScrape) / 3_600_000 : null
+  const staleData = dataAgeHours !== null && dataAgeHours > 30
 
   const filtered = vacancies.filter(v => {
     if (!search.trim()) return true
@@ -310,6 +318,22 @@ function LiveVacanciesTab({ token }: { token: string }) {
           </button>
         </div>
       </div>
+
+      {staleData && dataAgeHours !== null && (
+        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <p className="font-semibold">
+            These vacancies are {Math.floor(dataAgeHours / 24)} day{Math.floor(dataAgeHours / 24) === 1 ? '' : 's'} old: the scraper has not delivered new ones since {new Date(newestScrape).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })}.
+          </p>
+          <p className="mt-1 text-xs text-red-600">
+            Press Scrape Now. If it reports an error, that is the cause. If it starts but nothing new arrives, check the Apify run history and the NHS Jobs scraper subscription.
+          </p>
+        </div>
+      )}
+      {scrapeMessage && (
+        <div className={`mb-4 rounded-lg border px-4 py-3 text-sm ${scrapeMessage.ok ? 'border-green-200 bg-green-50 text-green-800' : 'border-red-200 bg-red-50 text-red-700'}`}>
+          {scrapeMessage.text}
+        </div>
+      )}
 
       {/* Count */}
       {vacancies.length > 0 && (

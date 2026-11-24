@@ -135,7 +135,8 @@ export async function POST(req: NextRequest) {
   console.log(`INGEST: mapped ${rows.length} valid rows (today's postings) from ${items.length} items`)
 
   if (rows.length === 0) {
-    console.warn(`INGEST: 0 rows kept — all ${items.length} items were filtered out (not posted today or unmappable)`)
+    const sampleDates = items.slice(0, 5).map(i => str(i.datePosted || i.date_posted || i.publicationDate || i.postedDate || i.posted) || '(no date field)')
+    console.warn(`INGEST: 0 rows kept — all ${items.length} items were filtered out (not posted today ${today} or unmappable). Sample date values: ${sampleDates.join(' | ')}`)
     return NextResponse.json({ ok: true, inserted: 0, warning: 'no items posted today' })
   }
 

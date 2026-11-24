@@ -1,6 +1,6 @@
 import { verifyAdminToken } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
-import { triggerApifyScrape } from '@/lib/vacancy-scheduler'
+import { triggerApifyScrapeDetailed } from '@/lib/vacancy-scheduler'
 
 
 export async function POST(req: NextRequest) {
@@ -8,10 +8,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })  
   }
 
-  const runId = await triggerApifyScrape()
-  if (!runId) {
-    return NextResponse.json({ error: 'Failed to trigger Apify run — check APIFY_API_TOKEN' }, { status: 502 })
+  const result = await triggerApifyScrapeDetailed()
+  if (!result.runId) {
+    return NextResponse.json({ error: result.error ?? 'Failed to trigger the Apify run' }, { status: 502 })
   }
 
-  return NextResponse.json({ ok: true, runId })
+  return NextResponse.json({ ok: true, runId: result.runId })
 }
