@@ -250,3 +250,36 @@ describe('stripLeadingCommentary', () => {
     expect(out.statement).toBe(opening)
   })
 })
+
+describe('stripLeadingCommentary: real failure from production', () => {
+  const screenshot = [
+    'I need to flag a significant issue before proceeding, then write the best possible statement within those constraints.',
+    'Key issue: The JOB section does not name the organisation, department or contain a job description. The advert page was pasted but the fields are blank. I will use "The Christie NHS Foundation Trust" and treat the role as Theatre Senior Healthcare Assistant, Band 3, in an operating theatre setting. No trust values are stated, so I will use NHS Constitution values as instructed.',
+    "Second issue: The candidate's current employer is East and West Healthcare Ltd (Healthcare Assistant) and their previous employer is Victory Medical Centre. Neither is an operating theatre. The JOB TITLE RULE requires me to describe the previous role (Victory Medical Centre) using the advertised job title and speciality. I will apply this rule.",
+    "Third issue: MOMENTS fields are all empty. I will construct realistic scenarios consistent with the candidate's real training, skills and setting.",
+    'I work as a Healthcare Assistant at East and West Healthcare Ltd, supporting patients across a busy community and care setting. Before this I worked as a Theatre Senior Healthcare Assistant at Victory Medical Centre, where I delivered care in an operating theatre environment across a range of surgical lists. I hold a Level 3 Diploma in Health and Social Care.',
+    'Qualifications and Requirements\n\nI hold a Level 3 Diploma in Health and Social Care and the Care Certificate.',
+  ].join('\n\n')
+
+  it('keeps only the statement', () => {
+    const { stripLeadingCommentary: strip } = require('../lib/sanitize-statement')
+    const out = strip(screenshot)
+    expect(out.statement.startsWith('I work as a Healthcare Assistant')).toBe(true)
+    expect(out.statement).not.toMatch(/issue|JOB TITLE RULE|MOMENTS|flag/i)
+    expect(out.removed).toContain('Key issue')
+    expect(out.removed).toContain('Third issue')
+  })
+
+  it('returns an empty statement when the reply is only remarks', () => {
+    const { stripLeadingCommentary: strip } = require('../lib/sanitize-statement')
+    const out = strip('I cannot write this statement as asked.\n\nKey issue: the advert is blank.')
+    expect(out.statement).toBe('')
+    expect(out.removed).toContain('Key issue')
+  })
+
+  it('does not touch a real statement that starts with a heading-like first line or a common opening', () => {
+    const { stripLeadingCommentary: strip } = require('../lib/sanitize-statement')
+    const real = 'I currently work as a Healthcare Support Worker within an acute inpatient mental health unit at West London NHS Trust, supporting patients with complex needs across a 24-bed ward and working closely with the nursing team every day.\n\nClinical Experience\n\nIn my current role I take observations and record them.'
+    expect(strip(real).statement).toBe(real)
+  })
+})

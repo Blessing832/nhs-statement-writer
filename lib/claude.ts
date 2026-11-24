@@ -305,24 +305,8 @@ function buildV3UserPrompt(
   ].join('\n')
 }
 
-// The writer sometimes opens with remarks to the operator ("First issue: ...") before the
-// statement. Applicants must never see them; they are kept for the admin notes instead.
-const COMMENTARY_START = /^(?:(?:first|second|third|fourth|fifth|another|final)\s+(?:issue|concern|problem|point)\b|issues?\b|concerns?\b|before (?:i|writing|we)\b|i (?:need|want) to (?:flag|note|point out|raise|clarify|mention)\b|i must (?:flag|note|point out)\b|i (?:cannot|can't|am unable to|am not able to|won't|will not)\b|notes?\s*[:\-]|important\s*[:\-]|warning\s*[:\-]|a (?:few|couple of) (?:issues|concerns|points|things)\b|heads[- ]up|here(?:'s| is| are) (?:the|your|a)\b|below is\b|statement\s*:)/i
-const STATEMENT_OPENING = /^(?:I|My|As|Having|With|Since|Currently|After|Over|In)\b/
-
-export function stripLeadingCommentary(text: string): { statement: string; removed: string } {
-  const paras = text.split(/\n\s*\n/)
-  const probe = (p: string) => p.trim().replace(/^[#>*_\s-]+/, '')
-  let i = 0
-  let hit = false
-  while (i < paras.length && (COMMENTARY_START.test(probe(paras[i])) || /^[-_=*]{3,}$/.test(paras[i].trim()))) {
-    hit = true
-    i++
-  }
-  if (!hit) return { statement: text, removed: '' }
-  while (i < paras.length - 1 && !STATEMENT_OPENING.test(probe(paras[i]))) i++
-  return { statement: paras.slice(i).join('\n\n').trim(), removed: paras.slice(0, i).join('\n\n').trim() }
-}
+import { stripLeadingCommentary } from './sanitize-statement'
+export { stripLeadingCommentary }
 
 function stripNotesSection(text: string): string {
   // Strip ===NOTES=== and everything after it (handles spaces/case variants)
@@ -670,12 +654,13 @@ async function generateParallelV3(
 
   const EXTRACT_SYSTEM = `You are an NHS job application analyst. Read the whole job posting; the person specification is often at the END.
 Return ONLY valid JSON, no markdown, in this shape:
-{"essential":[{"text":"...","method":"A"}],"desirable":[{"text":"...","method":"A"}],"trustValues":["..."],"jobSummary":"..."}
+{"essential":[{"text":"...","method":"A"}],"desirable":[{"text":"...","method":"A"}],"trustValues":["..."],"jobSummary":"...","jobTitle":"...","organisation":"..."}
 Rules:
 - "essential" and "desirable": EVERY person specification criterion from every section (Qualifications, Experience, Knowledge, Skills, Aptitudes, Values, Other requirements). One criterion per item, in the order they appear, using the advert's exact wording. Split a bullet only when it clearly lists separate requirements. Do not include job duties.
 - "method": how the advert says the criterion is assessed: A (application form), I (interview), T (test), C (certificate or document check), or a combination such as "A/I". If the advert does not say, use "C" for a bare qualification, professional registration, DBS, driving licence or right-to-work requirement, and "A" for everything else.
 - "trustValues": the organisation's own stated values exactly as written in the advert (for example "Kind", "Respectful", "Teamwork"). Empty array if the advert does not state them.
-- "jobSummary": one or two plain sentences on the role, the service and the band.`
+- "jobSummary": one or two plain sentences on the role, the service and the band.
+- "jobTitle" and "organisation": the advertised job title and the employing organisation exactly as written in the advert, or "" if not stated.`
 
   const runExtract = (model: string) => anthropic.messages.create({
     model,
@@ -690,6 +675,8 @@ Rules:
   const criteriaMethods: Record<string, string> = {}
   let trustValues: string[] = []
   let jobSummary = ''
+  let extractedTitle = ''
+  let extractedOrg = ''
 
   const parseExtract = (msg: Anthropic.Message | null): boolean => {
     if (!msg) return false
@@ -718,6 +705,8 @@ Rules:
       desirableCriteria = read(parsed.desirable).filter(c => !ess.includes(c))
       trustValues = Array.isArray(parsed.trustValues) ? parsed.trustValues.filter((v: unknown) => typeof v === 'string' && v.trim()).slice(0, 8) : []
       jobSummary = typeof parsed.jobSummary === 'string' ? parsed.jobSummary : ''
+      extractedTitle = typeof parsed.jobTitle === 'string' ? parsed.jobTitle.trim() : ''
+      extractedOrg = typeof parsed.organisation === 'string' ? parsed.organisation.trim() : ''
       return true
     } catch { return false }
   }
@@ -734,6 +723,15 @@ Rules:
     parseExtract(await runExtract(generationModel))
   }
   console.log(`V3_EXTRACT essential=${essentialCriteria.length} desirable=${desirableCriteria.length} trustValues=${trustValues.length}`)
+
+  // Pasted adverts arrive without a title or organisation; take them from the advert text.
+  if ((!jobData.jobTitle && extractedTitle) || (!jobData.organisation && extractedOrg)) {
+    jobData = {
+      ...jobData,
+      jobTitle: jobData.jobTitle || extractedTitle,
+      organisation: jobData.organisation || extractedOrg,
+    }
+  }
 
   const trustIntelText = intelResult ? formatTrustIntel(intelResult) : undefined
 
@@ -782,18 +780,45 @@ Rules:
     : null
 
   // ── Parse ===NOTES=== ──────────────────────────────────────────────────────
-  const rawStatementFull = rawOutput
-  // Use regex to handle spaces/case variants: ===NOTES===, === NOTES ===, etc.
-  const notesMatch = rawOutput.match(/={3}\s*NOTES\s*={3}/i)
-  const delimIdx = notesMatch ? rawOutput.indexOf(notesMatch[0]) : -1
-  let statement = delimIdx >= 0 ? rawOutput.slice(0, delimIdx).trim() : rawOutput.trim()
-  let notesText = delimIdx >= 0 ? rawOutput.slice(delimIdx + (notesMatch?.[0].length ?? 11)).trim() : ''
+  const splitWriterOutput = (raw: string) => {
+    const m = raw.match(/={3}\s*NOTES\s*={3}/i)
+    const idx = m ? raw.indexOf(m[0]) : -1
+    const body = idx >= 0 ? raw.slice(0, idx).trim() : raw.trim()
+    const notes = idx >= 0 ? raw.slice(idx + (m?.[0].length ?? 11)).trim() : ''
+    const cleaned = stripLeadingCommentary(body)
+    if (cleaned.removed) console.warn(`V3_PREAMBLE_STRIPPED chars=${cleaned.removed.length}`)
+    return {
+      statement: cleaned.statement,
+      notesText: cleaned.removed ? `WRITER COMMENTARY (removed from the statement, admin only):\n${cleaned.removed}\n\n${notes}` : notes,
+    }
+  }
 
-  const cleanedOpening = stripLeadingCommentary(statement)
-  if (cleanedOpening.removed) {
-    console.warn(`V3_PREAMBLE_STRIPPED chars=${cleanedOpening.removed.length}`)
-    statement = cleanedOpening.statement
-    notesText = `WRITER COMMENTARY (removed from the statement, admin only):\n${cleanedOpening.removed}\n\n${notesText}`
+  let rawStatementFull = rawOutput
+  let { statement, notesText } = splitWriterOutput(rawOutput)
+
+  // If the reply was only remarks, or far too short to be a statement, ask once more
+  // with a plain reminder rather than showing the applicant anything unusable.
+  if (appMode !== 'questions-only' && options.provider !== 'copilot' && countWordsV3(statement) < 400) {
+    console.warn(`V3_RETRY reply had ${countWordsV3(statement)} statement words`)
+    const retryMsg = await withRetry(() =>
+      anthropic.messages.create({
+        model: generationModel,
+        max_tokens: 4096,
+        temperature: 1.0,
+        system: [{ type: 'text', text: v3SystemPrompt, cache_control: { type: 'ephemeral' } }],
+        messages: [{
+          role: 'user',
+          content: `${v3UserPrompt}\n\n=== OUTPUT REMINDER ===\nReply with the finished statement only. The first word of your reply is the first word of the statement, followed by ===NOTES===. Write no comments, issues or explanations. Work with the information given, and use the NHS Constitution values if no trust values are stated.`,
+        }],
+      } as MessageCreateParamsNonStreaming, { timeout: 180000 })
+    )
+    const retryRaw = retryMsg.content[0]?.type === 'text' ? retryMsg.content[0].text.trim() : ''
+    const retried = splitWriterOutput(retryRaw)
+    if (countWordsV3(retried.statement) > countWordsV3(statement)) {
+      rawStatementFull = retryRaw
+      statement = retried.statement
+      notesText = retried.notesText
+    }
   }
 
   const parsedNotes = parseNotesSection(notesText)

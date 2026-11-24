@@ -7,6 +7,7 @@ import { runScotlandPipeline } from '@/lib/statement-pipeline'
 import { runNHSV2Pipeline } from '@/lib/nhs-v2-pipeline'
 import { runNHSV3Pipeline } from '@/lib/nhs-v3-pipeline'
 import { applyReplacements } from '@/lib/bannedWords'
+import { stripLeadingCommentary } from '@/lib/sanitize-statement'
 
 // ── Banned-word replacement map — cached in-process for 5 minutes ─────────────
 let bwCache: { map: Map<string, string>; expiresAt: number } | null = null
@@ -139,7 +140,7 @@ export async function POST(req: NextRequest) {
         // Run a quick analysis so the PS coverage panel and highlights still work
         const cachedAnalysis = await analyzeJobPosting(client, enrichedJobData as ScrapeResult, vacancy_url).catch(() => null)
         return NextResponse.json({
-          statement: existing.generated_statement,
+          statement: stripLeadingCommentary(existing.generated_statement).statement || existing.generated_statement,
           previousRoleDuties: [],
           currentRoleDuties: [],
           analysis: cachedAnalysis,
@@ -287,6 +288,12 @@ export async function POST(req: NextRequest) {
   }
 
   let { statement, previousRoleDuties, analysis, promptRegion } = generated
+  const sanitized = stripLeadingCommentary(statement)
+  if (!sanitized.statement.trim()) {
+    void logGenerateError({ clientId: client.id, clientCode: client_code, vacancyUrl: vacancy_url, errorType: 'commentary_only', errorMessage: sanitized.removed, httpStatus: 503 })
+    return NextResponse.json({ error: 'The statement could not be written this time. Please try again.' }, { status: 503 })
+  }
+  statement = sanitized.statement
   const rawStatement = (generated as { rawStatement?: string }).rawStatement ?? null
   const promptVersion = (process.env.PROMPT_VERSION || 'v2').toLowerCase()
 

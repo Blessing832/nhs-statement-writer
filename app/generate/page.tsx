@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { StatementAnalysis, CoverageReport } from '@/lib/types'
 import { FileDropZone } from '@/components/FileDropZone'
+import { stripLeadingCommentary } from '@/lib/sanitize-statement'
 
 interface Result {
   statement: string
@@ -25,6 +26,12 @@ const OPENING_OPTIONS = [
                         { val: '4' as const, label: '4', title: '"Having cared for people with [condition] for over [X] years, I believe I have the necessary skills to take up the role of [vacancy title]..."' },
                         { val: '5' as const, label: '5', title: '"My background and experience match the requirements of the role of [vacancy title]..."' }
 ] as const
+
+// Applicants only ever see the statement itself, never the writer's remarks.
+function cleanResult(r: Result): Result {
+  const cleaned = stripLeadingCommentary(r.statement ?? '').statement
+  return { ...r, statement: cleaned || r.statement }
+}
 
 function wordCount(text: string): number {
   return text.trim().split(/\s+/).filter((w) => w.length > 0).length
@@ -830,7 +837,7 @@ function GeneratePage() {
       const raw = sessionStorage.getItem(`easeme_result_${clientCode}`)
       const stored = raw ? JSON.parse(raw) : null
       if (stored?.result?.statement) {
-        setResult(stored.result)
+        setResult(cleanResult(stored.result))
         setCachedJobData(stored.jobData ?? null)
         setVacancyUrl(stored.vacancyUrl ?? '')
       }
@@ -979,7 +986,7 @@ function GeneratePage() {
         controller.signal
       )
       stopProgress(true)
-      setResult(data)
+      setResult(cleanResult(data))
       window.scrollTo({ top: 0 })
       setCachedJobData(jobData)
       setShowRewrite(false)
@@ -1016,7 +1023,7 @@ function GeneratePage() {
         () => {},
         cachedJobData ?? undefined
       )
-      setResult(data)
+      setResult(cleanResult(data))
       setShowRewrite(false)
       setRewriteInstruction('')
     } catch (err) {
