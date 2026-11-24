@@ -247,11 +247,23 @@ function LiveVacanciesTab({ token }: { token: string }) {
         method: 'POST',
         headers: { 'x-admin-token': token },
       })
-      if (res.ok) {
-        setScrapeMessage({ ok: true, text: 'Scrape started. New vacancies appear here within a few minutes, once the Apify run finishes. Press Refresh then.' })
-      } else {
-        const j = await res.json().catch(() => ({}))
+      const j = await res.json().catch(() => ({}))
+      if (!res.ok) {
         setScrapeMessage({ ok: false, text: `The scrape could not be started. ${j.error ?? 'Unknown error'}` })
+      } else if (!j.finished) {
+        setScrapeMessage({ ok: j.status !== 'FAILED' && j.status !== 'ABORTED' && j.status !== 'TIMED-OUT', text: `The Apify run is ${String(j.status).toLowerCase()}${j.message ? ` (${j.message})` : ''}. It had not finished after 90 seconds. Press Refresh in a minute or two.` })
+      } else {
+        const s = j.summary
+        if (s.error) {
+          setScrapeMessage({ ok: false, text: `Apify found ${s.total} vacancies but saving them failed: ${s.error}` })
+        } else if (s.total === 0) {
+          setScrapeMessage({ ok: false, text: 'The Apify run finished but returned no vacancies. Check the task settings in Apify (the NHS Jobs search URL and filters).' })
+        } else if (s.kept === 0) {
+          setScrapeMessage({ ok: false, text: `Apify found ${s.total} vacancies but none were posted today (${s.today}), so none were saved. Dates seen: ${s.sampleDates.join(' | ')}` })
+        } else {
+          setScrapeMessage({ ok: true, text: `Done. Apify found ${s.total} vacancies, ${s.kept} posted today and saved.` })
+          await loadVacancies()
+        }
       }
     } finally {
       setScraping(false)

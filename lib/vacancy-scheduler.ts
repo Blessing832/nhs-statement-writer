@@ -79,3 +79,21 @@ export async function fetchApifyDataset(datasetId: string): Promise<Record<strin
   if (!res.ok) throw new Error(`Apify dataset fetch failed: ${res.status}`)
   return res.json()
 }
+
+export interface ApifyRunInfo {
+  status: string
+  datasetId: string
+  message: string
+}
+
+export async function fetchApifyRun(runId: string): Promise<ApifyRunInfo | null> {
+  const token = cleanApifyToken(process.env.APIFY_API_TOKEN)
+  const res = await fetch(`${APIFY_BASE}/actor-runs/${runId}?token=${token}`, { headers: { Accept: 'application/json' } })
+  if (!res.ok) return null
+  const json = await res.json()
+  return {
+    status: String(json?.data?.status ?? 'UNKNOWN'),
+    datasetId: String(json?.data?.defaultDatasetId ?? ''),
+    message: String(json?.data?.statusMessage ?? ''),
+  }
+}
